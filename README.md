@@ -63,7 +63,7 @@ michael.reichart@gfu.net
 -   Wiederholbarkeit
 -   Abschaltbarkeit
 
-### Barrierefreiheit nach BITV und WCAG Testen
+### Barrierefreiheit nach BITV und WCAG testen
 
 -   Chrome Lighthouse (Checklisten)
 -   Chrome-Extensions
