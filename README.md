@@ -1,2 +1,69 @@
-# accessibility-workshop
- 
+# Accessibility Workshop für Webdeveloper
+
+**Herzlich willkommen**
+
+Mein Name ist Michael Reichart, wir erarbeiten in den nächsten drei Tagen die Grundlagen zur Entwicklung barrierefreier Webinterfaces.
+
+Sie können mich unter michael.reichart@gfu.net per Email erreichen.
+
+## Seminarzeiten
+
+-   9:00 bis 16:00 Uhr
+-   Mittagspause von 12:00 Uhr bis 13:00 Uhr
+-   kleine Pausen etwa gegen 10:30 Uhr und gegen 14:30 Uhr.
+
+## Inhalte
+
+### Einführung in die Barrierefreiheit
+
+-   Definition und Verständnis
+-   Gesetze und Erwartungen
+-   WCAG, BITV
+
+### Entwicklungsumgebung
+
+-   Chrome, Lighthouse
+-   VS Code, SASS, ggf. Pug
+
+### Semantik
+
+-   Aufbau einer Webseite oder eines Webinterfacs
+-   Auswirkungen auf assistive Systeme, z. B. Screenreader
+-   Elemente für Menschen mit Beeinträchtigungen
+
+### Tastatur-Steuerung
+
+-   Eine Seite nur über die Tastatur steuern?
+-   Tabulator-Steuerung
+-   Cursor-Tasten-Seuerung
+
+### Medieneinbindung und Abbildungen
+
+-   Abbildungen und Text-Alternativen
+-   Video, Audio, Untertitel und Transkriptionen
+
+### Skalierbarkeit
+
+-   Adaptives Layout
+-   Adaptiver Zoom
+-   CSS für barrierefreie Typografie
+
+### Farbe und Kontrast
+
+-   Fehlsichtigeiten
+-   Simulation von Fehlsichtigkeit
+-   Einrichten und Steuern von Farbe und Kontrast
+-   Bewerten
+
+### Animationen
+
+-   Dynamisches Verhalten bei Veränderungen
+-   Wiederholbarkeit
+-   Abschaltbarkeit
+
+### Barrierefreiheit nach BITV und WCAG Testen
+
+-   Chrome Lighthouse (Checklisten)
+-   Chrome-Extensions
+-   Simulationen
+-   Screenreader
