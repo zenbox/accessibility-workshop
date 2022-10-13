@@ -2,11 +2,11 @@
 
 **Herzlich willkommen**
 
-Mein Name ist Michael Reichart, wir erarbeiten in den nächsten drei Tagen die Grundlagen zur Entwicklung barrierefreier Webinterfaces.
-
-Sie können mich unter michael.reichart@gfu.net per Email erreichen.
+Mein Name ist Michael Reichart, wir erarbeiten in den nächsten zwei Tagen die Grundlagen zur Entwicklung barrierefreier Webinterfaces.
 
 Die Workshop-Ergebnisse finden Sie unter `https://github.com/zenbox/accessibility-workshop`.
+
+michael.reichart@gfu.net
 
 ## Seminarzeiten
 
