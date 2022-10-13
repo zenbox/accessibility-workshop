@@ -1,0 +1,19 @@
+html {
+    font-size: 16px; // Basis for rem!
+    line-height: 1.4; // 22.4px
+}
+
+body {
+    margin: 1rem;
+}
+
+section {
+    font-size: 1rem;
+    column-width: 16rem;
+}
+
+ul {
+    li {
+        font-size: 1rem;
+    }
+}
