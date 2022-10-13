@@ -6,6 +6,8 @@ Mein Name ist Michael Reichart, wir erarbeiten in den nächsten drei Tagen die G
 
 Sie können mich unter michael.reichart@gfu.net per Email erreichen.
 
+Die Workshop-Ergebnisse finden Sie unter `https://github.com/zenbox/accessibility-workshop`.
+
 ## Seminarzeiten
 
 -   9:00 bis 16:00 Uhr
