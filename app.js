@@ -34,5 +34,5 @@ app.use("/", (request, response, next) => {
 app.listen(port, (error) => {
     if (error) throw error
 
-    console.log(`Webservice and socket proxy run on port ${port}`)
+    console.log(`Webservice runs on port ${port}`)
 })
