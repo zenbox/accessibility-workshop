@@ -1,0 +1,15 @@
+// Colors
+// CSS Variable
+:root {
+    --primary: hsla(300, 100%, 25%, 0.85);
+    --secondary: hsla(120, 100%, 25%, 0.85);
+
+    --error: hsla(0, 100%, 50%, 0.85);
+    --warning: hsla(50, 100%, 50%, 0.85);
+    --info: hsla(210, 100%, 50%, 0.85);
+    --success: hsla(110, 100%, 50%, 0.85);
+
+    --bright: hsla(0, 0%, 100%, 0.85);
+    --dark: hsla(0, 0%, 0%, 0.85);
+}
+
