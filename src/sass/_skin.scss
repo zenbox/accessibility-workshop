@@ -1,0 +1,30 @@
+html {
+    background-color: var(--bright);
+    color: var(--dark);
+
+    &.dark {
+        background-color: var(--dark);
+        color: var(--bright);
+    }
+}
+
+.color {
+    display: inline-block;
+    width: 8rem;
+    height: 8rem;
+
+    margin: 0.5rem;
+
+    &.error {
+        background-color: var(--error);
+    }
+    &.warning {
+        background-color: var(--warning);
+    }
+    &.success {
+        background-color: var(--success);
+    }
+    &.info {
+        background-color: var(--info);
+    }
+}
