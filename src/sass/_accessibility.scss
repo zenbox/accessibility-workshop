@@ -1,9 +1,63 @@
 .sr-only {
+    word-wrap: normal;
+    position: absolute;
+
+    height: 0.0625rem;
+    width: 0.0625rem;
+
+    margin: -0.0625rem;
+    padding: 0;
+    border: 0;
+
+    overflow: hidden;
+
+    clip: rect(0.0625rem, 0.0625rem, 0.0625rem, 0.0625rem);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+}
+.sr-hidden, .hidden {
     display: none;
 }
+.sr-focus:focus {
+    display: block;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    text-align: center;
+
+    word-wrap: normal !important;
+
+    height: 5rem;
+    width: 100vw;
+
+    padding: 1rem;
+
+    clip: unset;
+    -webkit-clip-path: inset(0);
+    clip-path: inset(0%);
+    font-size: var(--big);
+    background-color: var(--bright);
+}
+
+footer .sr-focus:focus {
+    bottom: 0;
+    top: auto;
+}
+
 .invisible {
     display: none !important;
 }
+time {
+    display: block;
+}
+*:focus {
+    outline: 2px dotted red;
+    outline-offset: 2px;
+}
+.mouseenter {
+    background: hsla(210, 50%, 50%, 0.125);
+}
+
 .blurred-vision {
     filter: blur(2px);
 }

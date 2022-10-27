@@ -1,0 +1,128 @@
+doctype html
+-title= "Claiming Accessible Design"
+-index= 1
+html.dark(lang="en-UK, la, de-DE")
+    include includes/head.pug
+    
+    body
+        
+        include includes/keyboard-navigation.pug
+
+
+
+        section.teaser-1
+            h1.caption #{title}
+            
+        article.info-1
+            h2 Die Grundlagen barrierefreier Gestaltung
+            p Parallax scrolling ist cool und beliebt beim Designer und beim Leser. Was bedeutet das hinsichltich der Barrierefreiheit? 
+                | Gehen Designanspruch und geforderte Funktionalität hier zusammen? Mit welchen Stellhebeln können Informationen und Funktionen so ergänzt werden,
+                | damit die Barrieren für alle Beeinträchtigungen in Kognition, Mobilität und physiologischer Wahrnehmung überwunden werden?
+                | Das Design muss und kann vieles planen, z.B. Leserlichkeit, Farbe und Kontrast. Anderes kann in der Zusammenarbeit von 
+                | Konzeption, Text, Design und Programmierung gelöst werden. <br><br>
+                | <strong>Barrierefreiheit ist Teamwork!</strong>
+
+
+
+        section.teaser-2
+            h2.caption Color and Contrast
+
+        article.info-2
+            h2 Farbe und Kontrast
+            p Viele Beeinträchtigungen im Sehen, also der Augen, lassen sich durch eine gezielte Ausarbeitung von Farben und Kontrasten 
+                | verbessern oder beheben. Rot-Grün-Fehlsichtigkeiten vermindern zwar die Unterscheidung der beiden Farben, 
+                | aber die richtigen Kontraste helfen bei der Unterscheidung. Bei Fehlsichtigkeit oder Farbenblindheit helfen 
+                | ebenfalls deutliche Kostraste, aber auch Skalierbarkeit, also das Vergrößern können von Texten.
+            p Während des Entwurfs helfen hier <strong>Simulationen von Fehlsichtigkeiten.</strong> Sie können zum Beispiel über Browser-Erweiterungen durchgeführt werden.
+                | Am Ende benötigt die technische Umsetzung präsize Angaben vom Design.
+
+
+        section.teaser-3
+            h2.caption Typography and Text
+            
+        article.info-3
+            h2 Leserlichkeit und Lesbarkeit
+            p Leserlichkeit ist die Aufgabe des Typografen. Schrift, Größe, Zeilenabstand gehören zu den wichtigsten Eigenschaften.
+                | Sie müssen den möglichen Sehbeeinträchtungen entsprechend eingestellt werden.
+                | Die Anpassungen sind ausserdem pro Gerät (Mobile, Tablet Desktop) unterschiedlich einzustellen.
+            p <strong>Hier hilft uns die DIN 1450 und ein profunder Sachverstand in Mikro- und Makrotypografie.</strong> 
+                | Für Dyslexie (graduelle Leseunfähigkeit) ist ein sauberer Schriftsatz hilfreich.
+
+            p Lesbarkeit ist eine Angelegenheit des Texters und Redakteurs. Wichtig ist eine für die Zielgruppe verständlichen Sprache.
+                | Selbst vermeintlich normal geschriebene Texte sind oft genug unverständlich mit durchschnittlichen kognitiven Fähigkeiten.
+                | Menschen mit Lese- oder Verständnisbeeinträchtigungen ist <strong>vereinfachte oder einfache Sprache</strong> erforderlich.
+
+
+
+        section.teaser-4
+            h2.caption Consistency in Design
+            
+        article.info-4
+            h2 Wahrnehmung und Interpretation gestalten
+            p Die Grundlagen der Wahrnehmungspsychologie stammen aus dem 19ten Jahrhunderet. Sie werden bis heute weiter erforscht.
+                | und sind eine großartige Grundlage für Layouts und bildhafte Aussagen.
+                | Was bewirkt Anordnung, zu welchen Interpretationen führt sie? Wie werden Symbole 
+                | und Icons interpretiert und warum? Welche Rolle spielt die gelernte und gelebte Lebenskultur?
+                | <strong>Die Macht der inneren Bilder</strong> von Gerald Hüther ist hierzu eine gute ergänzende Lektüre.
+            
+
+
+        section#content.teaser-5(tabindex="0", aria-describedby="teaser-images-description")
+            h2.caption Unseen images
+            p#teaser-images-description.sr-hidden Atmosphärisches Foto: Ein hölzener Steg an einer Mole. In der Ferne erkennt man die Silhouette einer Stadt. Es ist ein klarer und sonniger Tag.
+
+        article.info-5(tabindex="0")
+            h2(tabindex="0") Können Bilder für alle zugänglich gestaltet werden? Selbst wenn man sie nicht sieht?
+            p Visuelle Elemente (Nicht-Text-Inhalte) müssen für Screenreader als <strong>Textalternativen redaktionell aufbereitet und technisch implementiert</strong> werden. Dafür gibt es verschiedene Vorgehensweisen.
+                | z.B. können <code>aria-decriptions</code> ergänzt werden. Sie werden über <code>aria-descripedby</code> verbunden und mit <code>display:none</code> 
+                | vollständig unsichtbar gemacht.
+            p Auch Icons und Buttons ohne sichtbare Texte können zugänglich gemacht werden. Hier wird im Quelltext eine Textbeschreibung angelegt, die mit einer <code>sr-only</code>-Klasse versteckt wird.
+                | <code>sr-only</code> blendet die Texte nicht einfach aus, sondern verschiebt sie nach ausserhalb des Layouts. 
+            nav 
+                ul
+                    li(role="search")
+                        a#search.icon(href="#", aria-label="Seiten durchsuchen", role="button", aria-haspopup="true")
+                            svg(width="24px", height="24px")
+                                use(xlink:href="#search-icon")
+                            span.sr-only Suchen
+                    li
+                        a#basket.icon(href="#", aria-label="Einkaufstasche", role="button", aria-haspopup="true", aria-expanded="false", aria-controls="basket-view-content")
+                            svg(width="24px", height="24px")
+                                use(xlink:href="#basket-icon")
+                            span.sr-only Einkaufstasche
+
+
+        section.teaser-6
+            h2.caption Conventions - WCAG und BITV
+            
+        article.info-6
+            h2 Lösungen kennenlernen und zum eigenen Standard machen
+            p Die konzeptionellen Grundlagen zur Barrierefreiheit sind in der WCAG (Web Content Accessability Guidelines) zusammengetragen und in praktischen
+                | Beispiel dokumentiert. Vorbildlich. Und viele Lösungen wurden bereits vorgeschlagen, einige davon haben einen Quasi-Standard-Status erreicht.
+                | Sie muss man finden. Die Problemstellungen werden in viel Arbeitsgruppen diskutiert und Lösungen veröffentlicht.
+                
+            p <strong>Net is good!</strong>
+
+
+
+        section.teaser-7
+            h2.caption Pioneering Conventions
+            
+        article.info-7
+            h2 Lösungen erfinden, testen und teilen
+            p Auch in den Agenturen und Entwicklungsteams der Unternehmen entstehen neue Lösungen.
+                | Dennoch ist Barrierefreiheit in der IT immer noch oft Pionierarbeit. Vieles muss noch erfunden werden und in Tests seine Gültigkeit beweisen.
+                | Hierbei helfen <strong>Tools, Usertests und offizielle Testinstitutionen</strong>, die zum Beispiel Bei Bund, ländern und Kommunen, aber auch in der Wirtschaft
+                | angesprochen werden können. Ausserdem gibt es <strong>Hilfe von den Verbänden</strong> der von Beeinträchtigungen betroffenen Menschen.
+            
+            p <strong>Networking is Gold!</strong>
+
+
+
+        div.teaser-8
+            h2.caption nice!
+            
+
+        include includes/footer.pug    
+        include includes/script.pug
+        include includes/icons.pug

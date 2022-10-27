@@ -4,27 +4,64 @@ html {
 
     &.dark {
         background-color: var(--dark);
-        color: var(--bright);
+        color: var(--on-dark);
+    }
+    &.bright {
+        background-color: var(--bright);
+        color: var(--on-bright);
+    }
+    &.neutral {
+        background-color: var(--neutral);
+        color: var(--on-neutral);
     }
 }
 
 .color {
     display: inline-block;
-    width: 8rem;
-    height: 8rem;
+    width: 12rem;
+    height: 12rem;
 
-    margin: 0.5rem;
+    margin: 0.25rem;
+    padding: 0.25rem;
 
     &.error {
         background-color: var(--error);
+        color: var(--on-error);
     }
     &.warning {
         background-color: var(--warning);
+        color: var(--on-warning);
     }
     &.success {
         background-color: var(--success);
+        color: var(--on-success);
     }
     &.info {
         background-color: var(--info);
+        color: var(--on-info);
+    }
+    &.primary {
+        background-color: var(--primary);
+        color: var(--on-primary);
+    }
+    &.secondary {
+        background-color: var(--secondary);
+        color: var(--on-secondary);
+    }
+    &.tertiary {
+        background-color: var(--tertiary);
+        color: var(--on-tertiary);
+    }
+    &.neutral {
+        background-color: var(--neutral);
+        color: var(--on-neutral);
+    }
+    &.dark {
+        background-color: var(--dark);
+        color: var(--on-dark);
+    }
+    &.bright {
+        background-color: var(--bright);
+        color: var(--on-bright);
     }
 }

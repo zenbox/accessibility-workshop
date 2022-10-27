@@ -1,35 +1,73 @@
 doctype html
-html.dark(lang="de-DE")
+html.bright(lang="la, de-DE, en-UK")
     include includes/head.pug
     
     body
 
-        section#colors
-            div.color.error
-                h2 Headline
-                p Lorem ispum
-            div.color.warning
-                h2 Headline
-                p Lorem ispum
-            div.color.success
-                h2 Headline
-                p Lorem ispum
-            div.color.info
-                h2 Headline
-                p Lorem ispum
-            div.color.primary
-                h2 Headline
-                p Lorem ispum
-            div.color.secondary
-                h2 Headline
-                p Lorem ispum
+        include includes/keyboard-navigation.pug
+       
+        //- section#colors
+        //-     div.color.primary
+        //-         h2 Primary
+        //-         p Lorem ipsum dolor sit amet consetur ad piscit.
+        //-     div.color.secondary
+        //-         h2 Secondary
+        //-         p Lorem ipsum dolor sit amet consetur ad piscit.
+        //-     div.color.tertiary
+        //-         h2 Tertiary
+        //-         p Lorem ipsum dolor sit amet consetur ad piscit.
 
-        section
+        //-     div.color.dark
+        //-         h2 Dark
+        //-         p Lorem ipsum dolor sit amet consetur ad piscit.
+        //-     div.color.bright
+        //-         h2 Bright
+        //-         p Lorem ipsum dolor sit amet consetur ad piscit.
+        //-     .color.neutral 
+        //-         h2 Neutral
+        //-         p Lorem ipsum dolor sit amet consetur ad piscit.
+
+        //-     div.color.error
+        //-         h2 Error
+        //-         p Lorem ipsum dolor sit amet consetur ad piscit.
+        //-     div.color.warning
+        //-         h2 Warning
+        //-         p Lorem ipsum dolor sit amet consetur ad piscit.
+        //-     div.color.success
+        //-         h2 Success Headline
+        //-         p Lorem ipsum dolor sit amet consetur ad piscit.
+        //-     div.color.info
+        //-         h2 Info
+        //-         p Lorem ipsum dolor sit amet consetur ad piscit.
+        //- hr
+
+        section#semantics
             h1 Lorem Accessibilitum dolor est
+
+            table
+                caption
+                    span.sr-only Es folgt eine Tabelle mit den
+                    | Daten zur Verteilung der Zahlen
+
+                thead
+                    tr
+                        th Primus
+                        th Secundis 
+                        th Terzium
+                
+                tfoot
+                    td(colspan="3") Footeribus ist dolor quid
+                
+                tbody
+                    td Primus ipsum sit ad piscit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Praesentium aut voluptate inventore.
+                    td Secundis ipsum sit ad piscit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Praesentium aut voluptate inventore.
+                    td Terzium ipsum sit ad piscit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Praesentium aut voluptate inventore.
 
             p Ipsum dolor sit amet Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga nihil deleniti dignissimos minima facere modi sequi dolores soluta, similique animi ut repellendus beatae unde ullam obcaecati harum magni hic ipsam, voluptatem reprehenderit.
                 abbr(title="Customer Experience Plattform", lang="en") CEP 
-                | consectetur.
+                | consectetur. Lorem 
+                strong ipsum strong 
+                | dolor sit.
 
             ul#my-list.my-class(aria-labeledby="label" )
                 li Lorem
@@ -39,37 +77,77 @@ html.dark(lang="de-DE")
 
             p Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque ratione, voluptatibus voluptatum eveniet dolores corporis voluptates, libero ex explicabo beatae doloribus tenetur ipsa, voluptas tempore? Dolores facere harum saepe, nihil veritatis possimus qui consectetur rem incidunt quam, asperiores dolore nemo pariatur assumenda ratione animi ab placeat amet. Aliquam nam, tempora obcaecati ipsam ea repudiandae quam assumenda soluta, ratione eveniet vitae. Reprehenderit molestiae officia ipsa quis quos omnis tempora officiis, repellat impedit maxime quod adipisci sed magnam ullam minus aliquid dolor ad at aut saepe ea dolores. Facilis saepe numquam tempore, autem cum ab consectetur. Autem ex optio odio eligendi! Cumque tenetur ad pariatur eos. Amet facere earum suscipit enim consectetur, ratione similique officia labore repellendus sint. Ea cumque dolorem distinctio dicta, accusamus praesentium quasi eveniet nobis omnis cum.
 
+            time(time="2022/06/21") 
+                span.sr-only Diese Info wurde veröffentlicht
+                | am 21. Juni 2022
 
-        form#login
-            fieldset
-                legend Login
+            h2 Zitate 
 
-                div(role="group")
-                    h4 Email
-                    label(for="email") Email
-                    input(id="email", type="email")
+            p(lang="en")
+                q(lang="en") There is a short cite following.  
+                |  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                | sagte Hans zu Lara, lorem ipsum dolor sit.
 
-                div(role="group")
-                    h4 Password
-                    label(for="password") Password
-                    input(id="password", type="password")
+            blockquote Es folgt ein langes Zitat mit viel Text. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti hic sit soluta accusamus, 
+                | enim quam temporibus consectetur ratione vero quia molestias fugit unde libero neque dolorum quisquam saepe eveniet quos 
+                | earum. Amet facilis et esse, quod tempore voluptate officiis, harum animi distinctio, odio expedita pariatur reiciendis! 
+                | Et voluptatem illum sint fugit corrupti. Quibusdam iste dolores, error similique voluptate odit! Possimus ipsum nam aliquam? 
+                | Libero doloremque ducimus inventore vel veritatis, aliquid enim earum nisi voluptate cum quisquam similique veniam omnis 
+                | dolores? Dicta quidem laudantium ex ipsum vitae et consequuntur dolores quae quod neque quam nesciunt, fuga reiciendis asperiores? 
+                | Necessitatibus quisquam quaerat libero, nulla voluptate quos natus, laudantium molestias maxime obcaecati tempore aliquam 
+                | voluptatibus accusamus perferendis tempora ea odio repellendus iste earum harum modi praesentium quia! Fugiat eligendi nemo accusamus!
 
+
+
+        section#navigation
+            nav
+                ul 
+                    li 
+                        a(href="http://domain.de" target="blank") Externer Link
+                    li 
+                        a(href="seite-2.html") Zur Seite 2
+                    li 
+                        a(href="#bottom") Interner Link zum unteren Ende der Seite
+
+            ul(role="navigation") 
+                    li 
+                        a(href="http://domain.de" target="blank") Externer Link
+                    li 
+                        a(href="seite-2.html") Zur Seite 2
+                    li 
+                        a(href="#bottom") Interner Link zum unteren Ende der Seite
+
+        section#forms
+            form#login
                 fieldset
-                    legend Choice
-                    label
-                        input(type="checkbox")
-                        | Green
-                    label
-                        input(type="checkbox")
-                        | Red
+                    legend Login
 
-                label(for="textfield") Text
-                textarea#textfield(aria-describedby="note" aria-errormessage="error") your text here ...
-                
-                p#note.sr-only note for this fields
-                
-                p#error.sr-only(aria-live="true" aria-atomic="true")
+                    div(role="group")
+                        h4 Email
+                        label(for="email") Email
+                        input(id="email", type="email")
 
-                button(type="submit") login
+                    div(role="group")
+                        h4 Password
+                        label(for="password") Password
+                        input(id="password", type="password")
+
+                    fieldset
+                        legend Choice
+                        label
+                            input(type="checkbox")
+                            | Green
+                        label
+                            input(type="checkbox")
+                            | Red
+
+                    label(for="textfield") Text
+                    textarea#textfield(aria-describedby="note" aria-errormessage="error") your text here ...
+                    
+                    p#note.sr-only note for this fields
+                    
+                    p#error.sr-only(aria-live="true" aria-atomic="true")
+
+                    button(type="submit") login
 
     include includes/script.pug

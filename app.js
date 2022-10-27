@@ -13,6 +13,8 @@
 import path from "path"
 import express from "express"
 
+import live from "./src/lib/live.js"
+
 const app = express()
 const host = "http://localhost"
 const port = 3000
@@ -26,6 +28,9 @@ app.set("view engine", "pug")
 app.set("views", path.resolve("./src/views"))
 
 // Dynamic routes
+app.use("/parallax", (request, response, next) => {
+    response.status(200).render("parallax")
+})
 app.use("/", (request, response, next) => {
     response.status(200).render("index")
 })

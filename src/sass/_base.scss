@@ -2,3 +2,15 @@ html,
 html * {
     box-sizing: border-box;
 }
+
+nav {
+    ol,
+    ul {
+        display: flex;
+        flex-direction: row;
+        list-style-type: none;
+        gap: 1rem;      
+        margin: 0;
+        padding: 0;
+    }
+}

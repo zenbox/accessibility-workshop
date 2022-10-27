@@ -1,14 +1,33 @@
 // Colors
 // CSS Variable
 :root {
-    --primary: hsla(300, 100%, 25%, 0.85);
-    --secondary: hsla(120, 100%, 25%, 0.85);
+    --primary: hsla(300, 93%, 12%, 1);
+    --on-primary: hsla(300, 93%, 85%, 1);
+    --secondary: hsla(120, 94%, 33%, 1);
+    --on-secondary: hsla(120, 94%, 85%, 1);
+    --tertiary: hsla(120, 90%, 37%, 1);
+    --on-tertiary: hsla(120, 90%, 85%, 1);
+    --neutral: hsla(0, 0%, 50%, 1);
+    --on-neutral: hsla(0, 0%, 85%, 1);
 
-    --error: hsla(0, 100%, 50%, 0.85);
-    --warning: hsla(50, 100%, 50%, 0.85);
-    --info: hsla(210, 100%, 50%, 0.85);
-    --success: hsla(110, 100%, 50%, 0.85);
+    --error: hsla(0, 100%, 50%, 1);
+    --on-error: hsla(0, 100%, 85%, 1);
+    --warning: hsla(50, 100%, 50%, 1);
+    --on-warning: hsla(50, 100%, 15%, 1);
+    --info: hsla(210, 100%, 50%, 1);
+    --on-info: hsla(210, 100%, 15%, 1);
+    --success: hsla(110, 100%, 50%, 1);
+    --on-success: hsla(110, 100%, 15%, 1);
 
-    --bright: hsla(0, 0%, 100%, 0.85);
-    --dark: hsla(0, 0%, 0%, 0.85);
+    --bright: hsla(0, 0%, 100%, 1);
+    --on-bright: hsla(0, 0%, 15%, 1);
+    --dark: hsla(0, 0%, 0%, 1);
+    --on-dark: hsla(0, 0%, 85%, 1);
+
+    --shadow: hsla(0, 0%, 0%, 0.5);
+
+    --fontSize: 16px;
+    --default: 1rem;
+    --big: 2rem;
+    --small: 0.75rem;
 }
