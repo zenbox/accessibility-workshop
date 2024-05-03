@@ -31,6 +31,12 @@ app.set("views", path.resolve("./src/views"))
 app.use("/parallax", (request, response, next) => {
     response.status(200).render("parallax")
 })
+app.use("/svg", (request, response, next) => {
+    response.status(200).render("svg")
+})
+app.use("/typography", (request, response, next) => {
+    response.status(200).render("typography")
+})
 app.use("/", (request, response, next) => {
     response.status(200).render("index")
 })

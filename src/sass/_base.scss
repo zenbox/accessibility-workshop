@@ -9,8 +9,43 @@ nav {
         display: flex;
         flex-direction: row;
         list-style-type: none;
-        gap: 1rem;      
+        gap: 1rem;
         margin: 0;
         padding: 0;
     }
+}
+body > nav:first-child {
+    display: block;
+    position: fixed;
+    top: 0 !important;
+    z-index: 1000;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
+    :link,
+    :visited {
+        color: black;
+        text-decoration: none;
+    }
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background: #eaeaea;
+}
+section {
+    background: white;
+}
+body > *:not(:first-child) {
+    min-height: 10vh;
+}
+body > *:first-child {
+}
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

@@ -1,6 +1,6 @@
 {
     // LIVE SERVER
-    "liveServer.settings.port": 5502,
+    "liveServer.settings.port": 5503,
 
     // LIVE SASS COMPILER
     "liveSassCompile.settings.formats": [

@@ -19,6 +19,7 @@ window.onload = () => {
         var darkest = Math.min(lum1, lum2)
         return ((brightest + 0.05) / (darkest + 0.05)).toFixed(2)
     }
+    
     function switchToDark() {
         let luminance_1 = colors[0].luminance(
             colors[0]._r,
@@ -41,31 +42,33 @@ window.onload = () => {
         else document.querySelector("#color_1").classList.remove("dark")
     }
 
-    for (let index = 0; index < 2; index++) {
-        sections[index] = document.createElement("section")
-        colors[index] = new Color(index)
-        sliders[index] = new Slider(colors[index], sections[index])
-        context.appendChild(sections[index])
-    }
+    // for (let index = 0; index < 2; index++) {
+    //     sections[index] = document.createElement("section")
+    //     colors[index] = new Color(index)
+    //     sliders[index] = new Slider(colors[index], sections[index])
+    //     context.appendChild(sections[index])
+    // }
 
-    context.append(contrastSection)
-    contrastSection.innerHTML = contrast(
-        [colors[0]._r, colors[0]._g, colors[0]._b],
-        [colors[1]._r, colors[1]._g, colors[1]._b]
-    )
+    // context.append(contrastSection)
+    // contrastSection.innerHTML = contrast(
+    //     [colors[0]._r, colors[0]._g, colors[0]._b],
+    //     [colors[1]._r, colors[1]._g, colors[1]._b]
+    // )
 
-    switchToDark()
+    // switchToDark()
 
-    document.body.addEventListener("input", (event) => {
-        let rgb_1 = [colors[0]._r, colors[0]._g, colors[0]._b],
-            rgb_2 = [colors[1]._r, colors[1]._g, colors[1]._b]
+    // document.body.addEventListener("input", (event) => {
+    //     let rgb_1 = [colors[0]._r, colors[0]._g, colors[0]._b],
+    //         rgb_2 = [colors[1]._r, colors[1]._g, colors[1]._b]
 
-        contrastSection.innerHTML = contrast(rgb_1, rgb_2)
-        switchToDark()
-    })
+    //     contrastSection.innerHTML = contrast(rgb_1, rgb_2)
+    //     switchToDark()
+    // })
 
     function switchDisabilites() {
         document.querySelector("section").classList.toggle("red-disability")
     }
+
+    console.log(contrast([255, 10, 10], [255, 255, 255]))
     // - - - - - - - - - -
 }

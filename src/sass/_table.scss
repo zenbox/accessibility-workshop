@@ -1,0 +1,65 @@
+
+            table {
+                border-collapse: collapse;
+            }
+            th,
+            td {
+                border: 1px solid black;
+                padding: 8px;
+            }
+         
+            .icon {
+                display: inline-block;
+                width: 1.5em;
+                height: 1.5em;
+                white-space: nowrap;
+                overflow: hidden;
+                text-indent: 2em;
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
+            .icon-tel {
+                background-image: url("../figures/telephone.svg");
+            }
+            :root {
+                --blau-1: hsl(241, 38%, 25%);
+                --blau-2: hsl(248, 66%, 11%);
+                --gelb: hsl(38, 92%, 60%);
+                --lila: hsl(302, 57%, 9%);
+                --gruen: hsl(176, 100%, 8%);
+
+                --on-blau-1: hsl(241, 38%, 75%);
+                --on-blau-2: hsl(248, 66%, 89%);
+                --on-gelb: hsl(38, 92%, 10%);
+                --on-lila: hsl(302, 57%, 89%);
+                --on-gruen: hsl(176, 100%, 89%);
+            }
+            .color {
+                width: 100px;
+                height: 100px;
+                font-family: Silka;
+                font-size: 18.7px;
+                line-height: 1.2;
+                padding: 0.5rem;
+                display: inline-block;
+            }
+            .blau-1 {
+                background-color: var(--blau-1);
+                color: var(--on-blau-1);
+            }
+            .blau-2 {
+                background-color: var(--blau-2);
+                color: var(--on-blau-2);
+            }
+            .gelb {
+                background-color: var(--gelb);
+                color: var(--on-gelb);
+            }
+            .lila {
+                background-color: var(--lila);
+                color: var(--on-lila);
+            }
+            .gruen {
+                background-color: var(--gruen);
+                color: var(--on-gruen);
+            }

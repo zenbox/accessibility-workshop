@@ -15,9 +15,12 @@
     -webkit-clip-path: inset(50%);
     clip-path: inset(50%);
 }
-.sr-hidden, .hidden {
+
+.sr-hidden,
+.hidden {
     display: none;
 }
+
 .sr-focus:focus {
     display: block;
     z-index: 1;
@@ -39,25 +42,62 @@
     background-color: var(--bright);
 }
 
-footer .sr-focus:focus {
-    bottom: 0;
-    top: auto;
+[tabindex] {
+    outline: 2px dotted hsla(0, 0%, 0%, 0.1);
+    outline-offset: 4px;
+}
+svg [tabindex] {
+    outline: none;
+}
+
+.visually-hidden:not(:focus):not(:active) {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
 }
 
 .invisible {
     display: none !important;
 }
+
 time {
     display: block;
 }
-*:focus {
-    outline: 2px dotted red;
-    outline-offset: 2px;
+
+@keyframes focus-animation {
+    0% {
+        outline-offset: 0px;
+        outline-width: 5px;
+        outline-color: rgba(3, 139, 250, 1);
+    }
+    90% {
+        outline-offset: 5px;
+        outline-width: 5px;
+        outline-color: rgba(3, 139, 250, 0.1);
+    }
+    100% {
+        outline-offset: 0;
+        outline-width: 0;
+        outline-color: transparent;
+    }
 }
+
+*:focus {
+    animation: focus-animation 1s;
+    outline-style: solid;
+    // outline: none;
+}
+
 .mouseenter {
     background: hsla(210, 50%, 50%, 0.125);
 }
-
+// - - - - - - - - - -
+// VISION IMPAIRMENT
+// - - - - - - - - - -
 .blurred-vision {
     filter: blur(2px);
 }
@@ -107,4 +147,70 @@ time {
                                0.000  0.000  0.000  1.000  0.000" />\
         </filter>\
       </svg>#tritanopia');
+}
+// - - - - - - - - - -
+// VISUALLY HIDDEN WITH FOCUS
+// - - - - - - - - - -
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: rect(0, 0, 0, 0);
+    border: 0;
+}
+.visually-hidden-focusable:active,
+.visually-hidden-focusable:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip-path: auto;
+}
+
+// nav>ul>li*3>a{Link $} !! skiplink navigation in nav-ul
+.visually-hidden:has(a:focus, a:active) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    background-color: lightgrey;
+    color: black;
+    font-size: 3rem;
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    li:has(a:focus) {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        clip-path: auto;
+    }
+    li:has(a:not(:focus)) {
+        position: absolute;
+        left: -9999px;
+    }
+}
+
+// - - - - - - - - - -
+// TABLES
+// - - - - - - - - - -
+table,
+th,
+td {
+    border: 1px dotted black;
 }

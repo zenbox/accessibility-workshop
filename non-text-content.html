@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Nicht-Text Inhalte</title>
+        <link
+            rel="stylesheet"
+            href="static/assets/css/style.css"
+        />
+    </head>
+    <body>
+        <section>
+            <!-- - - - -->
+            <article>
+                <style>
+                    svg text {
+                        font-family: Barlow;
+                        font-size: 10px;
+                        white-space: pre;
+                        text-anchor: middle;
+                    }
+                    svg text:nth-of-type(2) {
+                        fill: rgb(255, 255, 255);
+                    }
+                    svg * {
+                        fill: rgb(0, 0, 0);
+                    }
+                    svg g {
+                        stroke: rgb(255, 0, 0);
+                        stroke-width: 1;
+                    }
+                </style>
+                <svg
+                    tabindex="0"
+                    viewBox="0 9 137 100"
+                    width="320"
+                    height="240     "
+                >
+                    <title>Säulengrafik: Quartalszahlen im Vergleich</title>
+                    <desc>
+                        Du bist ein einem Säulendiagramm. Das ist ganz toll.
+                    </desc>
+                    <g>
+                        <rect
+                            tabindex="0"
+                            x="0"
+                            y="40"
+                            width="40"
+                            height="53"
+                            aria-labelledby="label-januar"
+                            aria-describedby="januar-description"
+                        >
+                            <desc id="januar-description">
+                                Im Januar wurden 53 Einheiten verkauft. Das ist
+                                ein mittlerer Wert im Vergleich zu den anderen
+                                Monaten.
+                            </desc>
+                        </rect>
+                        <text
+                            id="label-januar"
+                            x="16"
+                            y="105"
+                        >
+                            Januar
+                        </text>
+                        <text
+                            id="desc-januar"
+                            x="16"
+                            y="54"
+                        >
+                            53
+                        </text>
+                    </g>
+                    <g>
+                        <rect
+                            tabindex="0"
+                            x="49"
+                            y="29"
+                            width="40"
+                            height="64"
+                            aria-labelledby="label-februar"
+                            aria-describedby="februar-description"
+                        >
+                            <desc id="februar-description">
+                                Im Februar wurden 64 Einheiten verkauft. Das ist
+                                der beste Wert im Vergleich zu den anderen
+                                Monaten.
+                            </desc>
+                        </rect>
+                        <text
+                            id="label-februar"
+                            x="65"
+                            y="105"
+                        >
+                            Februar
+                        </text>
+                        <text
+                            id="desc-februar"
+                            x="64"
+                            y="43"
+                        >
+                            64
+                        </text>
+                    </g>
+                    <g>
+                        <rect
+                            tabindex="0"
+                            x="97"
+                            y="49"
+                            width="40"
+                            height="45"
+                            aria-labelledby="label-maerz"
+                            aria-describedby="maerz-description"
+                        >
+                            <desc id="maerz-description">
+                                Im März wurden 45 Einheiten verkauft. Das ist
+                                der kleinste Wert im Vergleich zu den anderen
+                                Monaten.
+                            </desc>
+                        </rect>
+                        <text
+                            id="label-maerz"
+                            x="113"
+                            y="105"
+                        >
+                            März
+                        </text>
+                        <text
+                            id="desc-maerz"
+                            x="112"
+                            y="63"
+                        >
+                            45
+                        </text>
+                    </g>
+                </svg>
+
+                <aside
+                    class="visually-hidden"
+                    id="svg-desciption"
+                >
+                    <h2 id="svg-label">Ein Säulendiagramm</h2>
+                    <p>
+                        Im ersten Quartal wurden folgende Einheiten verkauft: -
+                        Januar: 53 Einheiten - Februar: 64 Einheiten - März: 45
+                        Einheiten Das Diagramm zeigt, dass im Februar die
+                        meisten Einheiten verkauft wurden. Quelle: Eigene
+                        Darstellung.
+                    </p>
+                </aside>
+            </article>
+            <!-- - - - -->
+        </section>
+        <section>
+            <article>
+                <figure tabindex="0">
+                    <img
+                        src="https://picsum.photos/id/106/320/240"
+                        alt="Foto: Rosa Rododenthron-Blüte."
+                    />
+                    <figcaption>
+                        <p>Foto: Rosa Rododenthron-Blüte.</p>
+                    </figcaption>
+                </figure>
+            </article>
+            <!-- - - - -->
+        </section>
+        <script src="static/assets/js/navigation.js"></script>
+    </body>
+</html>
