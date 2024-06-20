@@ -16,29 +16,13 @@
         <section>
             <!-- - - - -->
             <article>
-                <style>
-                    svg text {
-                        font-family: Barlow;
-                        font-size: 10px;
-                        white-space: pre;
-                        text-anchor: middle;
-                    }
-                    svg text:nth-of-type(2) {
-                        fill: rgb(255, 255, 255);
-                    }
-                    svg * {
-                        fill: rgb(0, 0, 0);
-                    }
-                    svg g {
-                        stroke: rgb(255, 0, 0);
-                        stroke-width: 1;
-                    }
-                </style>
+                <h2>SVG Grafik für Screenreader</h2>
                 <svg
+                    class="svg"
                     tabindex="0"
                     viewBox="0 9 137 100"
                     width="320"
-                    height="240     "
+                    height="240"
                 >
                     <title>Säulengrafik: Quartalszahlen im Vergleich</title>
                     <desc>
@@ -157,6 +141,7 @@
         </section>
         <section>
             <article>
+                <h2>Ein einfaches Foto</h2>
                 <figure tabindex="0">
                     <img
                         src="https://picsum.photos/id/106/320/240"
@@ -164,6 +149,28 @@
                     />
                     <figcaption>
                         <p>Foto: Rosa Rododendron-Blüte.</p>
+                    </figcaption>
+                </figure>
+            </article>
+            <!-- - - - -->
+            <article>
+                <h2>Eine Gruppe von mehreren Fotos</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <figure>
+                    <img
+                        src="https://picsum.photos/id/67/200"
+                        alt="Schwarz-Weiss-Foto: Blick ins Tal bei schlecht Wetter."
+                    />
+                    <img
+                        src="https://picsum.photos/id/68/200"
+                        alt="Schwarz-Weiss-Foto: Blick ins Tal bei schlecht Wetter."
+                    />
+                    <img
+                        src="https://picsum.photos/id/69/200"
+                        alt="Schwarz-Weiss-Foto: Blick ins Tal bei schlecht Wetter."
+                    />
+                    <figcaption class="sr-only">
+                        Quelle: <a href="https://picsum.photos/">Picsum</a>
                     </figcaption>
                 </figure>
             </article>

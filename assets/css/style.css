@@ -4838,6 +4838,23 @@ fieldset:not(:has(legend)) {
   text-decoration: underline;
 }
 
+.svg svg text {
+  font-family: Barlow;
+  font-size: 10px;
+  white-space: pre;
+  text-anchor: middle;
+}
+.svg svg text:nth-of-type(2) {
+  fill: rgb(255, 255, 255);
+}
+.svg svg * {
+  fill: rgb(0, 0, 0);
+}
+.svg svg g {
+  stroke: rgb(255, 0, 0);
+  stroke-width: 1;
+}
+
 html {
   background-color: var(--bright);
   color: var(--dark);
