@@ -1,6 +1,8 @@
-.sr-only {
-    word-wrap: normal;
+.sr-only { 
+   word-wrap: normal;
     position: absolute;
+
+    left: -20000px;
 
     height: 0.0625rem;
     width: 0.0625rem;

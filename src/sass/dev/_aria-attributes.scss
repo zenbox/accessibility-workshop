@@ -44,6 +44,9 @@ $aria-attribute-color: hsla(200, 100%, 100%, 0.85);
 [aria-valuetext] {
     outline: 3px dotted $aria-attribute-background-color;outline-offset: 1px;
     &::before {
+        z-index: 10;
+        margin-top: -0.2rem;
+        margin-right: -0.5rem;
         display: block;
         position: absolute;
         right: 1rem;
@@ -54,125 +57,125 @@ $aria-attribute-color: hsla(200, 100%, 100%, 0.85);
     }
 }
 [aria-activedescendant]::before {
-    content: attr(aria-activedescendant);
+    content: "activedescendent = "attr(aria-activedescendant);
 }
 [aria-atomic]::before {
-    content: attr(aria-atomic);
+    content: "atomic = "attr(aria-atomic);
 }
 [aria-autocomplete]::before {
-    content: attr(aria-autocomplete);
+    content: "autocomplete = "attr(aria-autocomplete);
 }
 [aria-busy]::before {
-    content: attr(aria-busy);
+    content: "busy = "attr(aria-busy);
 }
 [aria-checked]::before {
-    content: attr(aria-checked);
+    content: "checked = "attr(aria-checked);
 }
 [aria-controls]::before {
-    content: attr(aria-controls);
+    content: "controls = "attr(aria-controls);
 }
 [aria-current]::before {
-    content: attr(aria-current);
+    content: "current = "attr(aria-current);
 }
 [aria-describedby]::before {
-    content: attr(aria-describedby);
+    content: "describedby = "attr(aria-describedby);
 }
 [aria-disabled]::before {
-    content: attr(aria-disabled);
+    content: "disabled = "attr(aria-disabled);
 }
 [aria-dropeffect]::before {
-    content: attr(aria-dropeffect);
+    content: "dropeffect = "attr(aria-dropeffect);
 }
 [aria-expanded]::before {
-    content: attr(aria-expanded);
+    content: "expanded = "attr(aria-expanded);
 }
 [aria-flowto]::before {
-    content: attr(aria-flowto);
+    content: "flowto = "attr(aria-flowto);
 }
 [aria-grabbed]::before {
-    content: attr(aria-grabbed);
+    content: "grabbed = "attr(aria-grabbed);
 }
 [aria-haspopup]::before {
-    content: attr(aria-haspopup);
+    content: "haspopup = "attr(aria-haspopup);
 }
 [aria-hidden]::before {
-    content: attr(aria-hidden);
+    content: "hidden = "attr(aria-hidden);
 }
 [aria-invalid]::before {
-    content: attr(aria-invalid);
+    content: "invalid = "attr(aria-invalid);
 }
 [aria-label]::before {
-    content: attr(aria-label);
+    content: "label = "attr(aria-label);
 }
 [aria-labelledby]::before {
-    content: attr(aria-labelledby);
+    content: "labelledby = "attr(aria-labelledby);
 }
 [aria-level]::before {
-    content: attr(aria-level);
+    content: "level = "attr(aria-level);
 }
 [aria-live]::before {
-    content: attr(aria-live);
+    content: "live = "attr(aria-live);
 }
 [aria-multiline]::before {
-    content: attr(aria-multiline);
+    content: "multiline = "attr(aria-multiline);
 }
 [aria-multiselectable]::before {
-    content: attr(aria-multiselectable);
+    content: "multiselectable = "attr(aria-multiselectable);
 }
 [aria-orientation]::before {
-    content: attr(aria-orientation);
+    content: "orientation = "attr(aria-orientation);
 }
 [aria-owns]::before {
-    content: attr(aria-owns);
+    content: "owns = "attr(aria-owns);
 }
 [aria-posinset]::before {
-    content: attr(aria-posinset);
+    content: "posinset = "attr(aria-posinset);
 }
 [aria-pressed]::before {
-    content: attr(aria-pressed);
+    content: "pressed = "attr(aria-pressed);
 }
 [aria-selected]::before {
-    content: attr(aria-selected);
+    content: "selected = "attr(aria-selected);
 }
 [aria-readonly]::before {
-    content: attr(aria-readonly);
+    content: "readonly = "attr(aria-readonly);
 }
 [aria-relevant]::before {
-    content: attr(aria-relevant);
+    content: "relevant = "attr(aria-relevant);
 }
 [aria-atomic]::before {
-    content: attr(aria-atomic);
+    content: "atomic = "attr(aria-atomic);
 }
 [aria-required]::before {
-    content: attr(aria-required);
+    content: "required = "attr(aria-required);
 }
 [aria-selected]::before {
-    content: attr(aria-selected);
+    content: "selected = "attr(aria-selected);
 }
 [aria-checked]::before {
-    content: attr(aria-checked);
+    content: "checked = "attr(aria-checked);
 }
 [aria-pressed]::before {
-    content: attr(aria-pressed);
+    content: "pressed = "attr(aria-pressed);
 }
 [aria-setsize]::before {
-    content: attr(aria-setsize);
+    content: "setsize = "attr(aria-setsize);
 }
 [aria-posinset]::before {
-    content: attr(aria-posinset);
+    content: "posinset = "attr(aria-posinset);
 }
 [aria-sort]::before {
-    content: attr(aria-sort);
+    content: "sort = "attr(aria-sort);
 }
 [aria-valuemax]::before {
-    content: attr(aria-valuemax);
+    content: "valuemax = "attr(aria-valuemax);
 }
 [aria-valuemin]::before {
-    content: attr(aria-valuemin);
+    content: "valuemin = "attr(aria-valuemin);
 }
 [aria-valuenow]::before {
-    content: attr(aria-valuenow);
+    content: "valuenow = "attr(aria-valuenow);
 }
 [aria-valuetext]:before {
-    content: attr(aria-valuetext);
+    content: "valuetext = "attr(aria-valuetext);
 }

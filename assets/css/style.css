@@ -1,32 +1,4 @@
 @charset "UTF-8";
-:root {
-  --primary: hsla(300, 93%, 12%, 1);
-  --on-primary: hsla(300, 93%, 85%, 1);
-  --secondary: hsla(120, 94%, 33%, 1);
-  --on-secondary: hsla(120, 94%, 85%, 1);
-  --tertiary: hsla(120, 90%, 37%, 1);
-  --on-tertiary: hsla(120, 90%, 85%, 1);
-  --neutral: hsla(0, 0%, 50%, 1);
-  --on-neutral: hsla(0, 0%, 85%, 1);
-  --error: hsla(0, 100%, 50%, 1);
-  --on-error: hsla(0, 100%, 85%, 1);
-  --warning: hsla(50, 100%, 50%, 1);
-  --on-warning: hsla(50, 100%, 15%, 1);
-  --info: hsla(210, 100%, 50%, 1);
-  --on-info: hsla(210, 100%, 15%, 1);
-  --success: hsla(110, 100%, 50%, 1);
-  --on-success: hsla(110, 100%, 15%, 1);
-  --bright: hsla(0, 0%, 100%, 1);
-  --on-bright: hsla(0, 0%, 15%, 1);
-  --dark: hsla(0, 0%, 0%, 1);
-  --on-dark: hsla(0, 0%, 85%, 1);
-  --shadow: hsla(0, 0%, 0%, 0.5);
-  --fontSize: 16px;
-  --default: 1rem;
-  --big: 2rem;
-  --small: 0.75rem;
-}
-
 body {
   font-size: 1rem;
 }
@@ -416,6 +388,34 @@ figcaption {
 .fourth-octave::after {
   content: " 95.2px";
   font-size: 0.75rem;
+}
+
+:root {
+  --primary: hsla(300, 93%, 12%, 1);
+  --on-primary: hsla(300, 93%, 85%, 1);
+  --secondary: hsla(120, 94%, 33%, 1);
+  --on-secondary: hsla(120, 94%, 85%, 1);
+  --tertiary: hsla(120, 90%, 37%, 1);
+  --on-tertiary: hsla(120, 90%, 85%, 1);
+  --neutral: hsla(0, 0%, 50%, 1);
+  --on-neutral: hsla(0, 0%, 85%, 1);
+  --error: hsla(0, 100%, 50%, 1);
+  --on-error: hsla(0, 100%, 85%, 1);
+  --warning: hsla(50, 100%, 50%, 1);
+  --on-warning: hsla(50, 100%, 15%, 1);
+  --info: hsla(210, 100%, 50%, 1);
+  --on-info: hsla(210, 100%, 15%, 1);
+  --success: hsla(110, 100%, 50%, 1);
+  --on-success: hsla(110, 100%, 15%, 1);
+  --bright: hsla(0, 0%, 100%, 1);
+  --on-bright: hsla(0, 0%, 15%, 1);
+  --dark: hsla(0, 0%, 0%, 1);
+  --on-dark: hsla(0, 0%, 85%, 1);
+  --shadow: hsla(0, 0%, 0%, 0.5);
+  --fontSize: 16px;
+  --default: 1rem;
+  --big: 2rem;
+  --small: 0.75rem;
 }
 
 /* This Source Code Form is subject to the terms of the Mozilla Public
@@ -2894,43 +2894,117 @@ template {
 }
 
 @font-face {
-  font-family: "Weiter Sans";
-  src: url(../fonts/WeiterSans-v3-Regular.otf) format("opentype");
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Thin.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 100;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-ExtraLight.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Light.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Regular.ttf) format("ttf");
   font-style: normal;
   font-weight: 400;
 }
 @font-face {
-  font-family: "Weiter Sans";
-  src: url(../fonts/WeiterSans-v3-Medium.otf) format("opentype");
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Medium.ttf) format("ttf");
   font-style: normal;
   font-weight: 500;
 }
 @font-face {
-  font-family: "Weiter Sans";
-  src: url(../fonts/WeiterSans-v3-SemiBold.otf) format("opentype");
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-SemiBold.ttf) format("ttf");
   font-style: normal;
   font-weight: 600;
 }
 @font-face {
-  font-family: "Silka Mono";
-  src: url(../fonts/silkamono-regular-webfont.woff2) format("woff2");
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Bold.ttf) format("ttf");
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
 }
 @font-face {
-  font-family: "Silka";
-  src: url(../fonts/silka-regular-webfont.woff2) format("woff2");
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-ExtraBold.ttf) format("ttf");
   font-style: normal;
-  font-weight: 400;
+  font-weight: 800;
 }
 @font-face {
-  font-family: "Silka";
-  src: url(../fonts/silka-regularitalic-webfont.woff2) format("woff2");
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Black.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 900;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Thin.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 100;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-ExtraLight.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-LightItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-RegularItalic.ttf) format("ttf");
   font-style: italic;
   font-weight: 400;
 }
-html {
+@font-face {
   font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-MediumItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-SemiBoldItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-BoldItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-ExtraBoldItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 800;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-BlackItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 900;
+}
+html {
+  font-family: "Barlow", sans-serif;
+  font-size: 11.9px;
+  line-height: 1.414;
   font-weight: 400;
 }
 
@@ -2947,7 +3021,7 @@ tt,
 code,
 kbd,
 samp {
-  font-family: "Menlo";
+  font-family: "Menlo", monospace;
 }
 
 nav ol,
@@ -3000,9 +3074,27 @@ section {
   margin-block: 1rem;
 }
 
+html {
+  font-family: "Barlow", sans-serif;
+  font-size: 11.9px;
+  line-height: 1.414;
+  text-align: left;
+}
+
+article:first-of-type {
+  margin-block-start: 5rem;
+}
+
+p {
+  font-size: 1rem;
+  hyphens: auto;
+  column-width: 25rem;
+}
+
 .sr-only {
   word-wrap: normal;
   position: absolute;
+  left: -20000px;
   height: 0.0625rem;
   width: 0.0625rem;
   margin: -0.0625rem;
@@ -4809,4 +4901,265 @@ html.neutral {
 .color.bright {
   background-color: var(--bright);
   color: var(--on-bright);
+}
+
+[aria-activedescendant],
+[aria-atomic],
+[aria-autocomplete],
+[aria-busy],
+[aria-checked],
+[aria-controls],
+[aria-current],
+[aria-describedby],
+[aria-disabled],
+[aria-dropeffect],
+[aria-expanded],
+[aria-flowto],
+[aria-grabbed],
+[aria-haspopup],
+[aria-hidden],
+[aria-invalid],
+[aria-label],
+[aria-labelledby],
+[aria-level],
+[aria-live],
+[aria-multiline],
+[aria-multiselectable],
+[aria-orientation],
+[aria-owns],
+[aria-posinset],
+[aria-pressed],
+[aria-selected],
+[aria-readonly],
+[aria-relevant],
+[aria-atomic],
+[aria-required],
+[aria-selected],
+[aria-checked],
+[aria-pressed],
+[aria-setsize],
+[aria-posinset],
+[aria-sort],
+[aria-valuemax],
+[aria-valuemin],
+[aria-valuenow],
+[aria-valuetext] {
+  outline: 3px dotted hsla(200, 100%, 25%, 0.85);
+  outline-offset: 1px;
+}
+[aria-activedescendant]::before,
+[aria-atomic]::before,
+[aria-autocomplete]::before,
+[aria-busy]::before,
+[aria-checked]::before,
+[aria-controls]::before,
+[aria-current]::before,
+[aria-describedby]::before,
+[aria-disabled]::before,
+[aria-dropeffect]::before,
+[aria-expanded]::before,
+[aria-flowto]::before,
+[aria-grabbed]::before,
+[aria-haspopup]::before,
+[aria-hidden]::before,
+[aria-invalid]::before,
+[aria-label]::before,
+[aria-labelledby]::before,
+[aria-level]::before,
+[aria-live]::before,
+[aria-multiline]::before,
+[aria-multiselectable]::before,
+[aria-orientation]::before,
+[aria-owns]::before,
+[aria-posinset]::before,
+[aria-pressed]::before,
+[aria-selected]::before,
+[aria-readonly]::before,
+[aria-relevant]::before,
+[aria-atomic]::before,
+[aria-required]::before,
+[aria-selected]::before,
+[aria-checked]::before,
+[aria-pressed]::before,
+[aria-setsize]::before,
+[aria-posinset]::before,
+[aria-sort]::before,
+[aria-valuemax]::before,
+[aria-valuemin]::before,
+[aria-valuenow]::before,
+[aria-valuetext]::before {
+  z-index: 10;
+  margin-top: -0.2rem;
+  margin-right: -0.5rem;
+  display: block;
+  position: absolute;
+  right: 1rem;
+  padding: 0.2rem;
+  font-size: 0.8rem;
+  color: hsla(200, 100%, 100%, 0.85);
+  background: hsla(200, 100%, 25%, 0.85);
+}
+
+[aria-activedescendant]::before {
+  content: "activedescendent = " attr(aria-activedescendant);
+}
+
+[aria-atomic]::before {
+  content: "atomic = " attr(aria-atomic);
+}
+
+[aria-autocomplete]::before {
+  content: "autocomplete = " attr(aria-autocomplete);
+}
+
+[aria-busy]::before {
+  content: "busy = " attr(aria-busy);
+}
+
+[aria-checked]::before {
+  content: "checked = " attr(aria-checked);
+}
+
+[aria-controls]::before {
+  content: "controls = " attr(aria-controls);
+}
+
+[aria-current]::before {
+  content: "current = " attr(aria-current);
+}
+
+[aria-describedby]::before {
+  content: "describedby = " attr(aria-describedby);
+}
+
+[aria-disabled]::before {
+  content: "disabled = " attr(aria-disabled);
+}
+
+[aria-dropeffect]::before {
+  content: "dropeffect = " attr(aria-dropeffect);
+}
+
+[aria-expanded]::before {
+  content: "expanded = " attr(aria-expanded);
+}
+
+[aria-flowto]::before {
+  content: "flowto = " attr(aria-flowto);
+}
+
+[aria-grabbed]::before {
+  content: "grabbed = " attr(aria-grabbed);
+}
+
+[aria-haspopup]::before {
+  content: "haspopup = " attr(aria-haspopup);
+}
+
+[aria-hidden]::before {
+  content: "hidden = " attr(aria-hidden);
+}
+
+[aria-invalid]::before {
+  content: "invalid = " attr(aria-invalid);
+}
+
+[aria-label]::before {
+  content: "label = " attr(aria-label);
+}
+
+[aria-labelledby]::before {
+  content: "labelledby = " attr(aria-labelledby);
+}
+
+[aria-level]::before {
+  content: "level = " attr(aria-level);
+}
+
+[aria-live]::before {
+  content: "live = " attr(aria-live);
+}
+
+[aria-multiline]::before {
+  content: "multiline = " attr(aria-multiline);
+}
+
+[aria-multiselectable]::before {
+  content: "multiselectable = " attr(aria-multiselectable);
+}
+
+[aria-orientation]::before {
+  content: "orientation = " attr(aria-orientation);
+}
+
+[aria-owns]::before {
+  content: "owns = " attr(aria-owns);
+}
+
+[aria-posinset]::before {
+  content: "posinset = " attr(aria-posinset);
+}
+
+[aria-pressed]::before {
+  content: "pressed = " attr(aria-pressed);
+}
+
+[aria-selected]::before {
+  content: "selected = " attr(aria-selected);
+}
+
+[aria-readonly]::before {
+  content: "readonly = " attr(aria-readonly);
+}
+
+[aria-relevant]::before {
+  content: "relevant = " attr(aria-relevant);
+}
+
+[aria-atomic]::before {
+  content: "atomic = " attr(aria-atomic);
+}
+
+[aria-required]::before {
+  content: "required = " attr(aria-required);
+}
+
+[aria-selected]::before {
+  content: "selected = " attr(aria-selected);
+}
+
+[aria-checked]::before {
+  content: "checked = " attr(aria-checked);
+}
+
+[aria-pressed]::before {
+  content: "pressed = " attr(aria-pressed);
+}
+
+[aria-setsize]::before {
+  content: "setsize = " attr(aria-setsize);
+}
+
+[aria-posinset]::before {
+  content: "posinset = " attr(aria-posinset);
+}
+
+[aria-sort]::before {
+  content: "sort = " attr(aria-sort);
+}
+
+[aria-valuemax]::before {
+  content: "valuemax = " attr(aria-valuemax);
+}
+
+[aria-valuemin]::before {
+  content: "valuemin = " attr(aria-valuemin);
+}
+
+[aria-valuenow]::before {
+  content: "valuenow = " attr(aria-valuenow);
+}
+
+[aria-valuetext]:before {
+  content: "valuetext = " attr(aria-valuetext);
 }

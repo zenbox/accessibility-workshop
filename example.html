@@ -9,7 +9,7 @@
         <title>HTML Beispiele</title>
         <link
             rel="stylesheet"
-            href="static/assets/css/accessible.css"
+            href="assets/css/style.css"
         />
     </head>
     <body>
@@ -26,6 +26,26 @@
                 </ul>
             </nav>
         </header>
+
+        <article>
+            <h2>Überschrift</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <figure>
+                <img
+                src="https://picsum.photos/id/67/200"
+                alt="Schwarz-Weiss-Foto: Blick ins Tal bei schlecht Wetter."
+                />
+                <img
+                src="https://picsum.photos/id/68/200"
+                alt="Schwarz-Weiss-Foto: Blick ins Tal bei schlecht Wetter."
+                />
+                <img
+                src="https://picsum.photos/id/69/200"
+                alt="Schwarz-Weiss-Foto: Blick ins Tal bei schlecht Wetter."
+                />
+                <ficaption class="sr-only ">Quelle: <a href="https://picsum.photos/">Picsum</a></figcaption>
+            </figure>
+        </article>
 
         <style>
             nav.breadcrumb {
@@ -116,7 +136,8 @@
                 </fieldset>
             </form>
             <article
-                aria-label="Text aus dem [ARIA-Attribut, der vorgelesen wird, ,wenn der Artikel fokussiert wird."
+                tabindex="1"
+                aria-label="Text aus dem ARIA-Attribut, der vorgelesen wird, ,wenn der Artikel fokussiert wird."
             >
                 <h2
                     tabindex="2"

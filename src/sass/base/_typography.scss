@@ -1,0 +1,17 @@
+
+html {
+    font-family: $font-family-sans-serif;
+    font-size: $font-size;
+    line-height: $line-height;
+    text-align: left;
+}
+
+article:first-of-type {
+    margin-block-start: toRem(5);
+}
+
+p {
+    font-size: toRem(1);
+    hyphens: auto;
+    column-width: toRem(25); // 50 bis 75 Zeichen
+}

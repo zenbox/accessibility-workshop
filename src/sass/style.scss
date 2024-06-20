@@ -1,21 +1,25 @@
-@import "functions";
-@import "variables";
-@import "variables-harmonic-rhytmn";
+@import "base/functions";
+@import "base/harmonic-rhytmn";
+@import "base/variables";
 
 @import "ua/moz";
 @import "ua/webkit";
 @import "ua/normalize";
 
-@import "base";
-@import "accessibility";
+@import "base/base";
+@import "base/typography";
+@import "base/accessibility";
 
-@import "color-conversion";
-@import "color-and-contrast";
-@import "icons";
-@import "infographic";
-@import "footer";
-@import "form";
-@import "parallax";
-@import "pattern";
+@import "components/color-conversion";
+@import "components/color-and-contrast";
+@import "components/icons";
+@import "components/infographic";
+@import "components/footer";
+@import "components/form";
+@import "components/parallax";
+@import "components/pattern";
 
-@import "skin";
+@import "theme/color-scheme-1";
+
+@import "dev/aria-attributes";
+

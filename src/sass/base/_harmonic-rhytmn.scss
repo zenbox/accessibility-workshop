@@ -97,11 +97,7 @@ $font-sizes: (
     figcaption: $-major-third,
 );
 
-$font-family-sans-serif: "Silka", sans-serif;
-$font-family-serif: "Playground", serif;
-$font-family-monospace: "Silka Mono", monospace;
 
-$line-height: $augmented-fourth;
 
 @each $name, $size in $font-sizes {
     #{$name} {
