@@ -4,7 +4,7 @@ Das Repository enthält die Materialien für den Workshop "Accessibility für We
 
 Das Repository bleibt als Ganzes erhalten, mag sich aber im Detail moch oft ändern. Alla Arbeiten sind "work in progress". Wer mag, kann das Repository forken und eigene Beispiele hinzufügen oder die Beispiele verbessern.
 
-`20. Juni 2024, Michael Reichart
+Köln, 20. Juni 2024, Michael Reichart
 
 ## Vorraussetzungen
 
