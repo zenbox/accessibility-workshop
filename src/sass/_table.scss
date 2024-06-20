@@ -10,11 +10,11 @@
          
             .icon {
                 display: inline-block;
-                width: 1.5em;
-                height: 1.5em;
+                width: toRem(1.5);
+                height: toRem(1.5);
                 white-space: nowrap;
                 overflow: hidden;
-                text-indent: 2em;
+                text-indent: toRem(2);
                 background-size: contain;
                 background-repeat: no-repeat;
             }
@@ -37,10 +37,10 @@
             .color {
                 width: 100px;
                 height: 100px;
-                font-family: Silka;
-                font-size: 18.7px;
-                line-height: 1.2;
-                padding: 0.5rem;
+                // font-family: Silka;
+                // font-size: 18.7px;
+                // line-height: 1.2;
+                padding: toRem(0.5);
                 display: inline-block;
             }
             .blau-1 {

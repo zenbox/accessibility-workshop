@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,900&display=swap");
+@charset "UTF-8";
 :root {
   --primary: hsla(300, 93%, 12%, 1);
   --on-primary: hsla(300, 93%, 85%, 1);
@@ -27,9 +27,2927 @@
   --small: 0.75rem;
 }
 
+body {
+  font-size: 1rem;
+}
+
+small {
+  font-size: 0.8rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 2.667rem;
+}
+
+h3 {
+  font-size: 1.778rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+figcaption {
+  font-size: 0.8rem;
+}
+
+._minor-second {
+  font-size: 0.938rem;
+}
+
+._minor-second::after {
+  content: " 11.1622px";
+  font-size: 0.75rem;
+}
+
+._major-second {
+  font-size: 0.889rem;
+}
+
+._major-second::after {
+  content: " 10.5791px";
+  font-size: 0.75rem;
+}
+
+._minor-third {
+  font-size: 0.833rem;
+}
+
+._minor-third::after {
+  content: " 9.9127px";
+  font-size: 0.75rem;
+}
+
+._major-third {
+  font-size: 0.8rem;
+}
+
+._major-third::after {
+  content: " 9.52px";
+  font-size: 0.75rem;
+}
+
+._perfect-fourth {
+  font-size: 0.75rem;
+}
+
+._perfect-fourth::after {
+  content: " 8.925px";
+  font-size: 0.75rem;
+}
+
+._augmented-fourth {
+  font-size: 0.707rem;
+}
+
+._augmented-fourth::after {
+  content: " 8.4133px";
+  font-size: 0.75rem;
+}
+
+._perfect-fifth {
+  font-size: 0.667rem;
+}
+
+._perfect-fifth::after {
+  content: " 7.9373px";
+  font-size: 0.75rem;
+}
+
+._minor-sixth {
+  font-size: 0.625rem;
+}
+
+._minor-sixth::after {
+  content: " 7.4375px";
+  font-size: 0.75rem;
+}
+
+._golden {
+  font-size: 0.618rem;
+}
+
+._golden::after {
+  content: " 7.3542px";
+  font-size: 0.75rem;
+}
+
+._major-sixth {
+  font-size: 0.577rem;
+}
+
+._major-sixth::after {
+  content: " 6.8663px";
+  font-size: 0.75rem;
+}
+
+._minor-seventh {
+  font-size: 0.562rem;
+}
+
+._minor-seventh::after {
+  content: " 6.6878px";
+  font-size: 0.75rem;
+}
+
+._major-seventh {
+  font-size: 0.533rem;
+}
+
+._major-seventh::after {
+  content: " 6.3427px";
+  font-size: 0.75rem;
+}
+
+._octave {
+  font-size: 0.5rem;
+}
+
+._octave::after {
+  content: " 5.95px";
+  font-size: 0.75rem;
+}
+
+._major-ninth {
+  font-size: 0.444rem;
+}
+
+._major-ninth::after {
+  content: " 5.2836px";
+  font-size: 0.75rem;
+}
+
+._major-tenth {
+  font-size: 0.375rem;
+}
+
+._major-tenth::after {
+  content: " 4.4625px";
+  font-size: 0.75rem;
+}
+
+._major-eleventh {
+  font-size: 0.353rem;
+}
+
+._major-eleventh::after {
+  content: " 4.2007px";
+  font-size: 0.75rem;
+}
+
+._major-twelve {
+  font-size: 0.333rem;
+}
+
+._major-twelve::after {
+  content: " 3.9627px";
+  font-size: 0.75rem;
+}
+
+._double-octave {
+  font-size: 0.25rem;
+}
+
+._double-octave::after {
+  content: " 2.975px";
+  font-size: 0.75rem;
+}
+
+.unison {
+  font-size: 1rem;
+}
+
+.unison::after {
+  content: " 11.9px";
+  font-size: 0.75rem;
+}
+
+.minor-second {
+  font-size: 1.067rem;
+}
+
+.minor-second::after {
+  content: " 12.6973px";
+  font-size: 0.75rem;
+}
+
+.major-second {
+  font-size: 1.125rem;
+}
+
+.major-second::after {
+  content: " 13.3875px";
+  font-size: 0.75rem;
+}
+
+.minor-third {
+  font-size: 1.2rem;
+}
+
+.minor-third::after {
+  content: " 14.28px";
+  font-size: 0.75rem;
+}
+
+.major-third {
+  font-size: 1.25rem;
+}
+
+.major-third::after {
+  content: " 14.875px";
+  font-size: 0.75rem;
+}
+
+.perfect-fourth {
+  font-size: 1.333rem;
+}
+
+.perfect-fourth::after {
+  content: " 15.8627px";
+  font-size: 0.75rem;
+}
+
+.augmented-fourth {
+  font-size: 1.414rem;
+}
+
+.augmented-fourth::after {
+  content: " 16.8266px";
+  font-size: 0.75rem;
+}
+
+.perfect-fifth {
+  font-size: 1.5rem;
+}
+
+.perfect-fifth::after {
+  content: " 17.85px";
+  font-size: 0.75rem;
+}
+
+.minor-sixth {
+  font-size: 1.6rem;
+}
+
+.minor-sixth::after {
+  content: " 19.04px";
+  font-size: 0.75rem;
+}
+
+.golden {
+  font-size: 1.618rem;
+}
+
+.golden::after {
+  content: " 19.2542px";
+  font-size: 0.75rem;
+}
+
+.major-sixth {
+  font-size: 1.732rem;
+}
+
+.major-sixth::after {
+  content: " 20.6108px";
+  font-size: 0.75rem;
+}
+
+.minor-seventh {
+  font-size: 1.778rem;
+}
+
+.minor-seventh::after {
+  content: " 21.1582px";
+  font-size: 0.75rem;
+}
+
+.major-seventh {
+  font-size: 1.875rem;
+}
+
+.major-seventh::after {
+  content: " 22.3125px";
+  font-size: 0.75rem;
+}
+
+.octave {
+  font-size: 2rem;
+}
+
+.octave::after {
+  content: " 23.8px";
+  font-size: 0.75rem;
+}
+
+.major-ninth {
+  font-size: 2.25rem;
+}
+
+.major-ninth::after {
+  content: " 26.775px";
+  font-size: 0.75rem;
+}
+
+.major-tenth {
+  font-size: 2.667rem;
+}
+
+.major-tenth::after {
+  content: " 31.7373px";
+  font-size: 0.75rem;
+}
+
+.major-eleventh {
+  font-size: 2.833rem;
+}
+
+.major-eleventh::after {
+  content: " 33.7127px";
+  font-size: 0.75rem;
+}
+
+.major-twelve {
+  font-size: 3rem;
+}
+
+.major-twelve::after {
+  content: " 35.7px";
+  font-size: 0.75rem;
+}
+
+.double-octave {
+  font-size: 4rem;
+}
+
+.double-octave::after {
+  content: " 47.6px";
+  font-size: 0.75rem;
+}
+
+.third-octave {
+  font-size: 6rem;
+}
+
+.third-octave::after {
+  content: " 71.4px";
+  font-size: 0.75rem;
+}
+
+.fourth-octave {
+  font-size: 8rem;
+}
+
+.fourth-octave::after {
+  content: " 95.2px";
+  font-size: 0.75rem;
+}
+
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+@namespace url(http://www.w3.org/1999/xhtml); /* set default namespace to HTML */
+@namespace xul url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+@font-face {
+  font-family: -moz-bullet-font;
+  src: url("data:font/woff2;base64,d09GMgABAAAAAARYAAwAAAAACqAAAAQFAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP0ZGVE0cBmAAgwIRCAqKDIcYATYCJAMsCxgABCAFg2AHIBtDCFGUrM0MyM/DGJyndUclpZwnU8QPQ6wsFOHO+/yHNvV9IEqSQgsVJW2p+uZkohKbVExPEz/JUW7zk6rzYH9723UJ/4DzBII8CSzwgFMOOE4KW2rjAmh4qQWSiid60f7Y9FsXScfUpeluagFqTTQYyoQaQSubXil0lHRsBehAI9KofG/6ogF9/Hl6lBd920LmeTxj8JXBfFWKwYAY3QsAAXD17ZAB4M6Ocv/nsZlkaTl0gLipewIQEMB2d9lKDAT1ZjP/F7jmWsQ3wn8AZvZFgIIC7ESh4AP1iFb4nPnfWyJgcQArpUWqW9W96j71kHr/L9a/dNRbj+8/ujXLWCMMFYVYiXoEaZQ4YOC/E7Dkz3JEjaokxAP6i3hIUjv9fwYyE6I3yIozKkaGN63fP36aeLJmxlRZwZiFziPrMVvOlnCF98SQJfGO/Xllv/FnWAcEjrMqaMCPwVmktCDO5zzxcXqeKS+QFxYnvJLFVzKZAFcKnlZRwHEPVM3mXxNt2gdZEpkKaIAG9gbgDTU5SOYDcmX7Rr61evEA1U+1/3SMb6FFtUqh55nYleE95j2zPNxzdlnGoR5xu/PxQKzb7bFaFLvl79Z54Lx9OH+g0/PPYlcsNo/nwP2V2vsHUHsV4KqEsd+e2r6Fu2v7abkfvsb65b41uwvRvqewH25kTntqolbYsEr5DAqrX97a0jrBLjFRExVHR2dH1Za6unyZfCVZHqQP0BtYjuUYlg9J6SurcrTEiOr26m5xcuTW4Sp3ljkUYWJ9+/iVmzbzPpcuXnGeqU3U7IKjz/qeKSSCltyhuSoxkqqTZX+DXt/OMmAikC8SzVD0jg3dbhIE0eUqc04UFFrxCSXzFxgHclzRMPe0ocOjiKRoSZISE0OtpkBjECdxkkRM1KiaJV0ed0V5umBP1wyUPL2ZBGLSDh5itIHahHRF0CY5nZMGib6T3cOmDvcTSZKuPiFJFpPRGNTIOq7jl5OjDiGIoo6qEE0QtfQJ3VYUD2RZvbm5uWWCWOgR4HXAk5GxLEO0izhLdvPTfpTV3xeOnOfT96uR53CdPrPq+P9HZvzO4QCMmDr7lTcNZorT6iMOYgI+IxClMzeCspeoLt5ABGSpta6gRZmQSnzk9e9jmOAYKC7RsyGMYaB6MpbNKMiRq2U6vI0yPZuTMiODFytMrGEBi7pjGgkAMoaNLGOFSoYceaZMx1+XTC/UNpmRzY1nmwT7AIcK+fK5lYNjz893lwMTuXlD2AKl8Md+24AxitRaLH/MUMqd9z862owy/bZTuZUqs1iRQop0KdLgZwPc9JS0lprnkef1gitBCRhjgV+vjGK8BfIV8CrlVghj1vIyZfyC/AJvqbsQYAEA/v+IAQA=");
+}
+/* bidi */
+:-moz-has-dir-attr {
+  unicode-bidi: isolate;
+}
+
+:-moz-dir-attr-rtl {
+  direction: rtl;
+}
+
+:-moz-dir-attr-ltr {
+  direction: ltr;
+}
+
+:-moz-dir-attr-like-auto:dir(ltr) {
+  direction: ltr;
+}
+
+:-moz-dir-attr-like-auto:dir(rtl) {
+  direction: rtl;
+}
+
+/* https://html.spec.whatwg.org/#bidi-rendering */
+input[type=tel]:dir(ltr) {
+  direction: ltr;
+}
+
+/* To ensure http://www.w3.org/TR/REC-html40/struct/dirlang.html#style-bidi:
+ *
+ * "When a block element that does not have a dir attribute is transformed to
+ * the style of an inline element by a style sheet, the resulting presentation
+ * should be equivalent, in terms of bidirectional formatting, to the
+ * formatting obtained by explicitly adding a dir attribute (assigned the
+ * inherited value) to the transformed element."
+ *
+ * and the rules in http://dev.w3.org/html5/spec/rendering.html#rendering
+ */
+address,
+article,
+aside,
+blockquote,
+body,
+caption,
+center,
+col,
+colgroup,
+dd,
+dir,
+div,
+dl,
+dt,
+fieldset,
+figcaption,
+figure,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+hr,
+html,
+legend,
+li,
+listing,
+main,
+marquee,
+menu,
+nav,
+noframes,
+ol,
+p,
+plaintext,
+pre,
+search,
+section,
+summary,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr,
+ul,
+xmp {
+  unicode-bidi: isolate;
+}
+
+bdi,
+output {
+  unicode-bidi: isolate;
+}
+
+/* We need the "bdo:-moz-has-dir-attr" bit because "bdo" has lower
+   specificity than the ":-moz-has-dir-attr" selector above. */
+bdo,
+bdo:-moz-has-dir-attr {
+  unicode-bidi: isolate-override;
+}
+
+textarea:-moz-dir-attr-like-auto,
+pre:-moz-dir-attr-like-auto {
+  unicode-bidi: plaintext;
+}
+
+/* blocks */
+article,
+aside,
+details,
+div,
+dt,
+figcaption,
+footer,
+form,
+header,
+hgroup,
+html,
+main,
+nav,
+search,
+section,
+summary {
+  display: block;
+}
+
+body {
+  display: block;
+  margin: 8px;
+}
+
+p,
+dl {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+}
+
+dd {
+  display: block;
+  margin-inline-start: 40px;
+}
+
+blockquote,
+figure {
+  display: block;
+  margin-block: 1em;
+  margin-inline: 40px;
+}
+
+address {
+  display: block;
+  font-style: italic;
+}
+
+center {
+  display: block;
+  text-align: -moz-center;
+}
+
+h1 {
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+  margin-block: 0.67em;
+}
+
+h2 {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-block: 0.83em;
+}
+
+h3 {
+  display: block;
+  font-size: 1.17em;
+  font-weight: bold;
+  margin-block: 1em;
+}
+
+h4 {
+  display: block;
+  font-size: 1em;
+  font-weight: bold;
+  margin-block: 1.33em;
+}
+
+h5 {
+  display: block;
+  font-size: 0.83em;
+  font-weight: bold;
+  margin-block: 1.67em;
+}
+
+h6 {
+  display: block;
+  font-size: 0.67em;
+  font-weight: bold;
+  margin-block: 2.33em;
+}
+
+/* stylelint-disable-next-line media-query-no-invalid */
+@media (-moz-bool-pref: layout.css.h1-in-section-ua-styles.enabled) {
+  :is(article, aside, nav, section) h1 {
+    margin-block: 0.83em;
+    font-size: 1.5em;
+  }
+  :is(article, aside, nav, section) :is(article, aside, nav, section) h1 {
+    margin-block: 1em;
+    font-size: 1.17em;
+  }
+  :is(article, aside, nav, section) :is(article, aside, nav, section) :is(article, aside, nav, section) h1 {
+    margin-block: 1.33em;
+    font-size: 1em;
+  }
+  :is(article, aside, nav, section) :is(article, aside, nav, section) :is(article, aside, nav, section) :is(article, aside, nav, section) h1 {
+    margin-block: 1.67em;
+    font-size: 0.83em;
+  }
+  :is(article, aside, nav, section) :is(article, aside, nav, section) :is(article, aside, nav, section) :is(article, aside, nav, section) :is(article, aside, nav, section) h1 {
+    margin-block: 2.33em;
+    font-size: 0.67em;
+  }
+}
+listing {
+  display: block;
+  font-family: -moz-fixed;
+  font-size: medium;
+  white-space: pre;
+  margin-block: 1em;
+}
+
+xmp,
+pre,
+plaintext {
+  display: block;
+  font-family: -moz-fixed;
+  white-space: pre;
+  margin-block: 1em;
+}
+
+/* tables */
+table {
+  display: table;
+  border-spacing: 2px;
+  border-collapse: separate;
+  /* XXXldb do we want this if we're border-collapse:collapse ? */
+  box-sizing: border-box;
+  text-indent: 0;
+}
+
+table[align=left] {
+  float: left;
+}
+
+table[align=right] {
+  float: right;
+  text-align: start;
+}
+
+/* border collapse rules */
+/* Set hidden if we have 'frame' or 'rules' attribute.
+     Set it on all sides when we do so there's more consistency
+     in what authors should expect */
+/* Put this first so 'border' and 'frame' rules can override it. */
+table[rules] {
+  border-width: thin;
+  border-style: hidden;
+}
+
+/* 'border' before 'frame' so 'frame' overrides
+      A border with a given value should, of course, pass that value
+      as the border-width in pixels -> attr mapping */
+/* :-moz-table-border-nonzero is like [border]:not([border="0"]) except it
+     also checks for other zero-like values according to HTML attribute
+     parsing rules */
+table:-moz-table-border-nonzero {
+  border-width: thin;
+  border-style: outset;
+}
+
+table[frame] {
+  border: thin hidden;
+}
+
+/* specificity must beat table:-moz-table-border-nonzero rule above */
+table[frame=void] {
+  border-style: hidden;
+}
+
+table[frame=above] {
+  border-style: outset hidden hidden hidden;
+}
+
+table[frame=below] {
+  border-style: hidden hidden outset hidden;
+}
+
+table[frame=lhs] {
+  border-style: hidden hidden hidden outset;
+}
+
+table[frame=rhs] {
+  border-style: hidden outset hidden hidden;
+}
+
+table[frame=hsides] {
+  border-style: outset hidden;
+}
+
+table[frame=vsides] {
+  border-style: hidden outset;
+}
+
+table[frame=box],
+table[frame=border] {
+  border-style: outset;
+}
+
+/* Internal Table Borders */
+/* 'border' cell borders first */
+table:-moz-table-border-nonzero > * > tr > td,
+table:-moz-table-border-nonzero > * > tr > th,
+table:-moz-table-border-nonzero > * > td,
+table:-moz-table-border-nonzero > * > th,
+table:-moz-table-border-nonzero > td,
+table:-moz-table-border-nonzero > th {
+  border-width: thin;
+  border-style: inset;
+}
+
+/* collapse only if rules are really specified */
+table[rules]:not([rules=none], [rules=""]) {
+  border-collapse: collapse;
+}
+
+/* only specified rules override 'border' settings
+  (increased specificity to achieve this) */
+table[rules]:not([rules=""]) > tr > td,
+table[rules]:not([rules=""]) > * > tr > td,
+table[rules]:not([rules=""]) > tr > th,
+table[rules]:not([rules=""]) > * > tr > th,
+table[rules]:not([rules=""]) > td,
+table[rules]:not([rules=""]) > th {
+  border-width: thin;
+  border-style: none;
+}
+
+table[rules][rules=none] > tr > td,
+table[rules][rules=none] > * > tr > td,
+table[rules][rules=none] > tr > th,
+table[rules][rules=none] > * > tr > th,
+table[rules][rules=none] > td,
+table[rules][rules=none] > th {
+  border-width: thin;
+  border-style: none;
+}
+
+table[rules][rules=all] > tr > td,
+table[rules][rules=all] > * > tr > td,
+table[rules][rules=all] > tr > th,
+table[rules][rules=all] > * > tr > th,
+table[rules][rules=all] > td,
+table[rules][rules=all] > th {
+  border-width: thin;
+  border-style: solid;
+}
+
+table[rules][rules=rows] > tr,
+table[rules][rules=rows] > * > tr {
+  border-block-start-width: thin;
+  border-block-end-width: thin;
+  border-block-start-style: solid;
+  border-block-end-style: solid;
+}
+
+table[rules][rules=cols] > tr > td,
+table[rules][rules=cols] > * > tr > td,
+table[rules][rules=cols] > tr > th,
+table[rules][rules=cols] > * > tr > th {
+  border-inline-width: thin;
+  border-inline-style: solid;
+}
+
+table[rules][rules=groups] > colgroup {
+  border-inline-width: thin;
+  border-inline-style: solid;
+}
+
+table[rules][rules=groups] > tfoot,
+table[rules][rules=groups] > thead,
+table[rules][rules=groups] > tbody {
+  border-block-width: thin;
+  border-block-style: solid;
+}
+
+/* caption inherits from table not table-outer */
+caption {
+  display: table-caption;
+  text-align: center;
+}
+
+table[align=center] > caption {
+  margin-inline: auto;
+}
+
+table[align=center] > caption[align=left]:dir(ltr) {
+  margin-inline-end: 0;
+}
+
+table[align=center] > caption[align=left]:dir(rtl) {
+  margin-inline-start: 0;
+}
+
+table[align=center] > caption[align=right]:dir(ltr) {
+  margin-inline-start: 0;
+}
+
+table[align=center] > caption[align=right]:dir(rtl) {
+  margin-inline-end: 0;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+}
+
+col {
+  display: table-column;
+}
+
+colgroup {
+  display: table-column-group;
+}
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+}
+
+thead {
+  display: table-header-group;
+  vertical-align: middle;
+}
+
+tfoot {
+  display: table-footer-group;
+  vertical-align: middle;
+}
+
+/* for XHTML tables without tbody */
+table > tr {
+  vertical-align: middle;
+}
+
+td {
+  display: table-cell;
+  vertical-align: inherit;
+  text-align: unset;
+  padding: 1px;
+}
+
+th {
+  display: table-cell;
+  vertical-align: inherit;
+  font-weight: bold;
+  padding: 1px;
+  text-align: -moz-center-or-inherit;
+}
+
+:is(tr, tbody, thead, tfoot, table) > form:-moz-is-html {
+  /* Important: don't show these forms in HTML */
+  display: none !important;
+}
+
+table[bordercolor] > tbody,
+table[bordercolor] > thead,
+table[bordercolor] > tfoot,
+table[bordercolor] > col,
+table[bordercolor] > colgroup,
+table[bordercolor] > tr,
+table[bordercolor] > * > tr,
+table[bordercolor] > tr > td,
+table[bordercolor] > * > tr > td,
+table[bordercolor] > tr > th,
+table[bordercolor] > * > tr > th {
+  border-color: inherit;
+}
+
+/* inlines */
+q:before {
+  content: open-quote;
+}
+
+q:after {
+  content: close-quote;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+i,
+cite,
+em,
+var,
+dfn {
+  font-style: italic;
+}
+
+tt,
+code,
+kbd,
+samp {
+  font-family: -moz-fixed;
+}
+
+u,
+ins {
+  text-decoration: underline;
+}
+
+s,
+strike,
+del {
+  text-decoration: line-through;
+}
+
+big {
+  font-size: larger;
+}
+
+small {
+  font-size: smaller;
+}
+
+sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+nobr {
+  white-space: nowrap;
+}
+
+mark {
+  background: Mark;
+  color: MarkText;
+}
+
+/* titles */
+abbr[title],
+acronym[title] {
+  text-decoration: dotted underline;
+}
+
+/* lists */
+ul,
+menu,
+dir {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+}
+
+ul,
+ol,
+menu {
+  counter-reset: list-item;
+}
+
+ol {
+  display: block;
+  list-style-type: decimal;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+}
+
+li {
+  display: list-item;
+  text-align: match-parent;
+}
+
+/* nested lists have no top/bottom margins */
+:is(ul, ol, dir, menu, dl) ul,
+:is(ul, ol, dir, menu, dl) ol,
+:is(ul, ol, dir, menu, dl) dir,
+:is(ul, ol, dir, menu, dl) menu,
+:is(ul, ol, dir, menu, dl) dl {
+  margin-block: 0;
+}
+
+/* 2 deep unordered lists use a circle */
+:is(ol, ul, menu, dir) ul,
+:is(ol, ul, menu, dir) menu,
+:is(ol, ul, menu, dir) dir {
+  list-style-type: circle;
+}
+
+/* 3 deep (or more) unordered lists use a square */
+:is(ol, ul, menu, dir) :is(ol, ul, menu, dir) ul,
+:is(ol, ul, menu, dir) :is(ol, ul, menu, dir) menu,
+:is(ol, ul, menu, dir) :is(ol, ul, menu, dir) dir {
+  list-style-type: square;
+}
+
+/* leafs */
+/* <hr> noshade and color attributes are handled completely by
+ * HTMLHRElement::MapAttributesIntoRule.
+ * https://html.spec.whatwg.org/#the-hr-element-2
+ */
+hr {
+  color: gray;
+  border-width: 1px;
+  border-style: inset;
+  margin-block: 0.5em;
+  margin-inline: auto;
+  overflow: hidden;
+  /* FIXME: This is not really per spec */
+  display: block;
+}
+
+hr[size="1"] {
+  border-style: solid none none none;
+}
+
+/* Note that we only intend for the alt content to show up if the image is
+ * broken. But non-broken images/inputs will have a replaced box, and thus we
+ * won't we don't generate the pseudo-element anyways. This prevents
+ * unnecessary reframing when images become broken / non-broken. */
+input[type=image]::before,
+img::before {
+  content: -moz-alt-content !important;
+  unicode-bidi: isolate;
+}
+
+img[usemap],
+object[usemap] {
+  color: blue;
+}
+
+frameset {
+  display: block !important;
+  overflow: clip;
+  position: static !important;
+  float: none !important;
+  border: none !important;
+}
+
+frame {
+  border-radius: 0 !important;
+}
+
+iframe {
+  border: 2px inset;
+}
+
+spacer {
+  position: static !important;
+  float: none !important;
+}
+
+canvas {
+  user-select: none;
+}
+
+iframe:focus-visible,
+body:focus-visible,
+html:focus-visible {
+  /* These elements historically don't show outlines when focused by default.
+  * We could consider changing that if needed. */
+  outline-style: none;
+}
+
+/* hidden elements: https://html.spec.whatwg.org/#hidden-elements
+ *
+ * Exceptions:
+ *
+ *  * area declaration needs to be !important, see below / bug 135040.  That's
+ *    hacky and broken.
+ *
+ *  * [hidden] is implemented as a presentation attribute to avoid a global
+ *    selector in a UA sheet.
+ */
+base,
+basefont,
+datalist,
+head,
+link,
+meta,
+noembed,
+noframes,
+param,
+rp,
+script,
+style,
+template,
+title {
+  display: none;
+}
+
+area {
+  /* Don't give it frames other than its imageframe */
+  display: none !important;
+}
+
+iframe:fullscreen {
+  /* iframes in full-screen mode don't show a border. */
+  border: none !important;
+  padding: unset !important;
+}
+
+/* https://html.spec.whatwg.org/#the-marquee-element-2 */
+marquee {
+  display: inline-block;
+  text-align: initial;
+  overflow: hidden !important;
+  /* See https://github.com/whatwg/html/issues/10249 */
+  inline-size: -moz-available;
+  vertical-align: text-bottom;
+  white-space: nowrap;
+}
+
+marquee:is([direction=up], [direction=down]) {
+  block-size: 200px;
+  white-space: unset;
+}
+
+/* Details and summary
+ * https://html.spec.whatwg.org/#the-details-and-summary-elements
+ *
+ * Note that these rules need to be duplicated in details.css for the anonymous
+ * summary, which wouldn't match otherwise.
+ *
+ * The spec here says something different, see
+ * https://github.com/whatwg/html/issues/8610
+ */
+details > summary:first-of-type {
+  display: list-item;
+  counter-increment: list-item 0;
+  list-style: disclosure-closed inside;
+}
+
+details[open] > summary:first-of-type {
+  list-style-type: disclosure-open;
+}
+
+/* media elements */
+video {
+  object-fit: contain;
+}
+
+video > img:-moz-native-anonymous {
+  /* Video poster images should render with the video element's "object-fit" &
+   "object-position" properties */
+  object-fit: inherit !important;
+  object-position: inherit !important;
+}
+
+audio:not([controls]) {
+  display: none !important;
+}
+
+audio[controls] {
+  /* This ensures that intrinsic sizing can reliably shrinkwrap our
+    controls (which are also always horizontal) and produce a
+    reasonable intrinsic size from them. */
+  writing-mode: horizontal-tb !important;
+}
+
+*|*::-moz-html-canvas-content {
+  display: block !important;
+  /* we want to be an absolute and fixed container */
+  transform: translate(0) !important;
+}
+
+video > .caption-box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/**
+ * The pseudo element won't inherit CSS styles from its direct parent, `::cue`
+ * would actually inherit styles from video because it's video's pseudo element.
+ * Therefore, we have to explicitly set some styles which are already defined
+ * in its parent element in vtt.sys.mjs.
+ */
+::cue {
+  color: rgb(255, 255, 255);
+  white-space: pre-line;
+  background-color: rgba(0, 0, 0, 0.8);
+  font: 10px sans-serif;
+  overflow-wrap: break-word;
+  /* TODO : enable unicode-bidi, right now enable it would cause incorrect
+          display direction, maybe related with bug 1558431. */
+}
+
+/* <dialog> element styles */
+dialog {
+  position: absolute;
+  display: block;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  margin: auto;
+  border-width: initial;
+  border-style: solid;
+  border-color: initial;
+  border-image: initial;
+  padding: 1em;
+  background-color: Canvas;
+  color: CanvasText;
+  width: -moz-fit-content;
+  height: -moz-fit-content;
+}
+
+dialog:not([open]) {
+  display: none;
+}
+
+dialog:modal {
+  -moz-top-layer: top !important;
+  position: fixed;
+  overflow: auto;
+  visibility: visible;
+  inset-block-start: 0;
+  inset-block-end: 0;
+  max-width: calc(100% - 6px - 2em);
+  max-height: calc(100% - 6px - 2em);
+}
+
+/* https://html.spec.whatwg.org/#flow-content-3 */
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Ruby */
+ruby {
+  display: ruby;
+}
+
+rb {
+  display: ruby-base;
+  white-space: nowrap;
+}
+
+rt {
+  display: ruby-text;
+}
+
+rtc {
+  display: ruby-text-container;
+}
+
+rtc,
+rt {
+  white-space: nowrap;
+  font-size: 50%;
+  -moz-min-font-size-ratio: 50%;
+  line-height: 1;
+}
+
+@media not (-moz-platform: windows) {
+  rtc,
+  rt {
+    /* The widely-used Windows font Meiryo doesn't work fine with this
+    * setting, so disable this on Windows. We should re-enable it once
+    * Microsoft fixes this issue. See bug 1164279. */
+    font-variant-east-asian: ruby;
+  }
+}
+rtc,
+rt {
+  text-emphasis: none;
+}
+
+rtc:lang(zh),
+rt:lang(zh) {
+  ruby-align: center;
+}
+
+rtc:lang(zh-TW),
+rt:lang(zh-TW) {
+  font-size: 30%; /* bopomofo */
+  -moz-min-font-size-ratio: 30%;
+}
+
+rtc > rt {
+  font-size: unset;
+}
+
+ruby,
+rb,
+rt,
+rtc {
+  unicode-bidi: isolate;
+}
+
+/* Popover UA style, https://html.spec.whatwg.org/#flow-content-3 */
+/* stylelint-disable-next-line media-query-no-invalid */
+@media (-moz-bool-pref: dom.element.popover.enabled) {
+  [popover]:not(:popover-open):not(dialog[open]) {
+    display: none;
+  }
+  dialog:popover-open {
+    display: block;
+  }
+  [popover] {
+    position: fixed;
+    inset: 0;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    border: solid;
+    padding: 0.25em;
+    overflow: auto;
+    color: CanvasText;
+    background-color: Canvas;
+  }
+  :popover-open {
+    -moz-top-layer: top;
+  }
+  :popover-open::backdrop {
+    position: fixed;
+    inset: 0;
+    pointer-events: none !important;
+    background-color: transparent;
+  }
+}
+/* Shadow DOM v1
+ * https://drafts.csswg.org/css-scoping/#slots-in-shadow-tree */
+slot {
+  display: contents;
+}
+
+/* Hide noscript elements if scripting is enabled */
+@media (scripting) {
+  noscript {
+    display: none !important;
+  }
+}
+@media print {
+  input,
+  textarea,
+  select,
+  button,
+  details {
+    -moz-user-input: none !important;
+    pointer-events: none !important;
+  }
+}
+/*
+ * The default style sheet used to render HTML.
+ *
+ * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public License
+ * along with this library; see the file COPYING.LIB.  If not, write to
+ * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ *
+ */
+@namespace "http://www.w3.org/1999/xhtml";
+html {
+  display: block;
+}
 html,
 html * {
   box-sizing: border-box;
+}
+
+/* children of the <head> element all have display:none */
+head {
+  display: none;
+}
+
+meta {
+  display: none;
+}
+
+title {
+  display: none;
+}
+
+link {
+  display: none;
+}
+
+style {
+  display: none;
+}
+
+script {
+  display: none;
+}
+
+body {
+  display: block;
+  margin: 8px;
+}
+
+body:-webkit-full-page-media {
+  background-color: rgb(0, 0, 0);
+}
+
+p {
+  display: block;
+  -webkit-margin-before: 1__qem;
+  -webkit-margin-after: 1__qem;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+}
+
+blockquote {
+  display: block;
+  -webkit-margin-before: 1__qem;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 40px;
+  -webkit-margin-end: 40px;
+}
+
+figcaption {
+  display: block;
+}
+
+figure {
+  display: block;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 40px;
+  -webkit-margin-end: 40px;
+}
+
+hr {
+  display: block;
+  -webkit-margin-before: 0.5em;
+  -webkit-margin-after: 0.5em;
+  -webkit-margin-start: auto;
+  -webkit-margin-end: auto;
+  border-style: inset;
+  border-width: 1px;
+}
+
+h1 {
+  display: block;
+  font-size: 2em;
+  font-size: 2em;
+  -webkit-margin-before: 0.67__qem;
+  -webkit-margin-after: 0.67em;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  font-weight: bold;
+}
+
+:-webkit-any(article, aside, nav, section) h1 {
+  font-size: 1.5em;
+  -webkit-margin-before: 0.83__qem;
+  -webkit-margin-after: 0.83em;
+}
+
+:-webkit-any(article, aside, nav, section) :-webkit-any(article, aside, nav, section) h1 {
+  font-size: 1.17em;
+  -webkit-margin-before: 1__qem;
+  -webkit-margin-after: 1em;
+}
+
+:-webkit-any(article, aside, nav, section) :-webkit-any(article, aside, nav, section) :-webkit-any(article, aside, nav, section) h1 {
+  font-size: 1em;
+  -webkit-margin-before: 1.33__qem;
+  -webkit-margin-after: 1.33em;
+}
+
+:-webkit-any(article, aside, nav, section) :-webkit-any(article, aside, nav, section) :-webkit-any(article, aside, nav, section) :-webkit-any(article, aside, nav, section) h1 {
+  font-size: 0.83em;
+  -webkit-margin-before: 1.67__qem;
+  -webkit-margin-after: 1.67em;
+}
+
+:-webkit-any(article, aside, nav, section) :-webkit-any(article, aside, nav, section) :-webkit-any(article, aside, nav, section) :-webkit-any(article, aside, nav, section) :-webkit-any(article, aside, nav, section) h1 {
+  font-size: 0.67em;
+  -webkit-margin-before: 2.33__qem;
+  -webkit-margin-after: 2.33em;
+}
+
+h2 {
+  display: block;
+  font-size: 1.5em;
+  -webkit-margin-before: 0.83__qem;
+  -webkit-margin-after: 0.83em;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  font-weight: bold;
+}
+
+h3 {
+  display: block;
+  font-size: 1.17em;
+  -webkit-margin-before: 1__qem;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  font-weight: bold;
+}
+
+h4 {
+  display: block;
+  -webkit-margin-before: 1.33__qem;
+  -webkit-margin-after: 1.33em;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  font-weight: bold;
+}
+
+h5 {
+  display: block;
+  font-size: 0.83em;
+  -webkit-margin-before: 1.67__qem;
+  -webkit-margin-after: 1.67em;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  font-weight: bold;
+}
+
+h6 {
+  display: block;
+  font-size: 0.67em;
+  -webkit-margin-before: 2.33__qem;
+  -webkit-margin-after: 2.33em;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  font-weight: bold;
+}
+
+div {
+  display: block;
+}
+
+layer {
+  display: block;
+}
+
+article,
+aside,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+  display: block;
+}
+
+marquee {
+  display: inline-block;
+}
+
+address {
+  display: block;
+}
+
+q {
+  display: inline;
+}
+
+q:before {
+  content: open-quote;
+}
+
+q:after {
+  content: close-quote;
+}
+
+center {
+  display: block;
+  /* special centering to be able to emulate the html4/netscape behaviour */
+  text-align: -webkit-center;
+}
+
+map {
+  display: inline;
+}
+
+video {
+  object-fit: contain;
+}
+
+/* tables */
+table {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-color: gray;
+}
+
+thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+tfoot {
+  display: table-footer-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+/* for tables without table section elements (can happen with XHTML or dynamically created tables) */
+table > tr {
+  vertical-align: middle;
+}
+
+col {
+  display: table-column;
+}
+
+colgroup {
+  display: table-column-group;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+
+td,
+th {
+  display: table-cell;
+  vertical-align: inherit;
+}
+
+th {
+  font-weight: bold;
+}
+
+caption {
+  display: table-caption;
+  text-align: -webkit-center;
+}
+
+/* lists */
+ul,
+menu,
+dir {
+  display: block;
+  list-style-type: disc;
+  -webkit-margin-before: 1__qem;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  -webkit-padding-start: 40px;
+}
+
+ol {
+  display: block;
+  list-style-type: decimal;
+  -webkit-margin-before: 1__qem;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  -webkit-padding-start: 40px;
+}
+
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+
+ul ul,
+ol ul {
+  list-style-type: circle;
+}
+
+ol ol ul,
+ol ul ul,
+ul ol ul,
+ul ul ul {
+  list-style-type: square;
+}
+
+dd {
+  display: block;
+  -webkit-margin-start: 40px;
+}
+
+dl {
+  display: block;
+  -webkit-margin-before: 1__qem;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+}
+
+dt {
+  display: block;
+}
+
+ol ul,
+ul ol,
+ul ul,
+ol ol {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+
+/* form elements */
+form {
+  display: block;
+  margin-top: 0__qem;
+}
+
+label {
+  cursor: default;
+}
+
+legend {
+  display: block;
+  -webkit-padding-start: 2px;
+  -webkit-padding-end: 2px;
+  border: none;
+}
+
+fieldset {
+  display: block;
+  -webkit-margin-start: 2px;
+  -webkit-margin-end: 2px;
+  -webkit-padding-before: 0.35em;
+  -webkit-padding-start: 0.75em;
+  -webkit-padding-end: 0.75em;
+  -webkit-padding-after: 0.625em;
+  border: 2px groove ThreeDFace;
+  min-width: -webkit-min-content;
+}
+
+button {
+  -webkit-appearance: button;
+}
+
+/* Form controls don't go vertical. */
+input,
+textarea,
+keygen,
+select,
+button,
+meter,
+progress {
+  -webkit-writing-mode: horizontal-tb !important;
+}
+
+input,
+textarea,
+keygen,
+select,
+button {
+  margin: 0__qem;
+  font: -webkit-small-control;
+  text-rendering: auto; /* FIXME: Remove when tabs work with optimizeLegibility. */
+  color: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: normal;
+  text-transform: none;
+  text-indent: 0;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+}
+
+input[type=hidden i] {
+  display: none;
+}
+
+input {
+  -webkit-appearance: textfield;
+  padding: 1px;
+  background-color: white;
+  border: 2px inset;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: text;
+  cursor: auto;
+}
+
+input[type=search i] {
+  -webkit-appearance: searchfield;
+  box-sizing: border-box;
+}
+
+input::-webkit-textfield-decoration-container {
+  display: flex;
+  align-items: center;
+  -webkit-user-modify: read-only !important;
+  content: none !important;
+}
+
+input[type=search i]::-webkit-textfield-decoration-container {
+  direction: ltr;
+}
+
+input::-webkit-clear-button {
+  -webkit-appearance: searchfield-cancel-button;
+  display: inline-block;
+  flex: none;
+  -webkit-user-modify: read-only !important;
+  -webkit-margin-start: 2px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+input:enabled:read-write:-webkit-any(:focus, :hover)::-webkit-clear-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+input[type=search i]::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+  display: block;
+  flex: none;
+  -webkit-user-modify: read-only !important;
+  -webkit-margin-start: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+input[type=search i]:enabled:read-write:-webkit-any(:focus,
+:hover)::-webkit-search-cancel-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+input[type=search i]::-webkit-search-decoration {
+  -webkit-appearance: searchfield-decoration;
+  display: block;
+  flex: none;
+  -webkit-user-modify: read-only !important;
+  -webkit-align-self: flex-start;
+  margin: auto 0;
+}
+
+input[type=search i]::-webkit-search-results-decoration {
+  -webkit-appearance: searchfield-results-decoration;
+  display: block;
+  flex: none;
+  -webkit-user-modify: read-only !important;
+  -webkit-align-self: flex-start;
+  margin: auto 0;
+}
+
+input::-webkit-inner-spin-button {
+  -webkit-appearance: inner-spin-button;
+  display: inline-block;
+  cursor: default;
+  flex: none;
+  align-self: stretch;
+  -webkit-user-select: none;
+  -webkit-user-modify: read-only !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+input:enabled:read-write:-webkit-any(:focus,
+:hover)::-webkit-inner-spin-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+keygen,
+select {
+  border-radius: 5px;
+}
+
+keygen::-webkit-keygen-select {
+  margin: 0px;
+}
+
+textarea {
+  -webkit-appearance: textarea;
+  background-color: white;
+  border: 1px solid;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: text;
+  flex-direction: column;
+  resize: auto;
+  cursor: auto;
+  padding: 2px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+::-webkit-input-placeholder {
+  -webkit-text-security: none;
+  color: darkGray;
+  pointer-events: none !important;
+}
+
+input::-webkit-input-placeholder {
+  white-space: pre;
+  word-wrap: normal;
+  overflow: hidden;
+  -webkit-user-modify: read-only !important;
+}
+
+input[type=password i] {
+  -webkit-text-security: disc !important;
+}
+
+input[type=hidden i],
+input[type=image i],
+input[type=file i] {
+  -webkit-appearance: initial;
+  padding: initial;
+  background-color: initial;
+  border: initial;
+}
+
+input[type=file i] {
+  align-items: baseline;
+  color: initial;
+  text-align: start !important;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  background-color: #faffbd !important;
+  background-image: none !important;
+  color: #000000 !important;
+}
+
+input[type=radio i],
+input[type=checkbox i] {
+  margin: 3px 0.5ex;
+  padding: initial;
+  background-color: initial;
+  border: initial;
+}
+
+input[type=button i],
+input[type=submit i],
+input[type=reset i] {
+  -webkit-appearance: push-button;
+  -webkit-user-select: none;
+  white-space: pre;
+}
+
+input[type=file i]::-webkit-file-upload-button {
+  -webkit-appearance: push-button;
+  -webkit-user-modify: read-only !important;
+  white-space: nowrap;
+  margin: 0;
+  font-size: inherit;
+}
+
+input[type=button i],
+input[type=submit i],
+input[type=reset i],
+input[type=file i]::-webkit-file-upload-button,
+button {
+  align-items: flex-start;
+  text-align: center;
+  cursor: default;
+  color: ButtonText;
+  padding: 2px 6px 3px 6px;
+  border: 2px outset ButtonFace;
+  background-color: ButtonFace;
+  box-sizing: border-box;
+}
+
+input[type=range i] {
+  -webkit-appearance: slider-horizontal;
+  padding: initial;
+  border: initial;
+  margin: 2px;
+  color: #909090;
+}
+
+input[type=range i]::-webkit-slider-container,
+input[type=range i]::-webkit-media-slider-container {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  -webkit-user-modify: read-only !important;
+  display: flex;
+}
+
+input[type=range i]::-webkit-slider-runnable-track {
+  flex: 1;
+  min-width: 0;
+  -webkit-align-self: center;
+  box-sizing: border-box;
+  -webkit-user-modify: read-only !important;
+  display: block;
+}
+
+input[type=range i]::-webkit-slider-thumb,
+input[type=range i]::-webkit-media-slider-thumb {
+  -webkit-appearance: sliderthumb-horizontal;
+  box-sizing: border-box;
+  -webkit-user-modify: read-only !important;
+  display: block;
+}
+
+input[type=button i]:disabled,
+input[type=submit i]:disabled,
+input[type=reset i]:disabled,
+input[type=file i]:disabled::-webkit-file-upload-button,
+button:disabled,
+select:disabled,
+keygen:disabled,
+optgroup:disabled,
+option:disabled,
+select[disabled] > option {
+  color: GrayText;
+}
+
+input[type=button i]:active,
+input[type=submit i]:active,
+input[type=reset i]:active,
+input[type=file i]:active::-webkit-file-upload-button,
+button:active {
+  border-style: inset;
+}
+
+input[type=button i]:active:disabled,
+input[type=submit i]:active:disabled,
+input[type=reset i]:active:disabled,
+input[type=file i]:active:disabled::-webkit-file-upload-button,
+button:active:disabled {
+  border-style: outset;
+}
+
+option:-internal-spatial-navigation-focus {
+  outline: black dashed 1px;
+  outline-offset: -1px;
+}
+
+datalist {
+  display: none;
+}
+
+area {
+  display: inline;
+  cursor: pointer;
+}
+
+param {
+  display: none;
+}
+
+input[type=checkbox i] {
+  -webkit-appearance: checkbox;
+  box-sizing: border-box;
+}
+
+input[type=radio i] {
+  -webkit-appearance: radio;
+  box-sizing: border-box;
+}
+
+input[type=color i] {
+  -webkit-appearance: square-button;
+  width: 44px;
+  height: 23px;
+  background-color: ButtonFace;
+  /* Same as native_theme_base. */
+  border: 1px #a9a9a9 solid;
+  padding: 1px 2px;
+}
+
+input[type=color i]::-webkit-color-swatch-wrapper {
+  display: flex;
+  padding: 4px 2px;
+  box-sizing: border-box;
+  -webkit-user-modify: read-only !important;
+  width: 100%;
+  height: 100%;
+}
+
+input[type=color i]::-webkit-color-swatch {
+  background-color: #000000;
+  border: 1px solid #777777;
+  flex: 1;
+  min-width: 0;
+  -webkit-user-modify: read-only !important;
+}
+
+input[type=color i][list] {
+  -webkit-appearance: menulist;
+  width: 88px;
+  height: 23px;
+}
+
+input[type=color i][list]::-webkit-color-swatch-wrapper {
+  padding-left: 8px;
+  padding-right: 24px;
+}
+
+input[type=color i][list]::-webkit-color-swatch {
+  border-color: #000000;
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: inline-block;
+  width: 0.66em;
+  height: 0.66em;
+  padding: 0.17em 0.34em;
+  -webkit-user-modify: read-only !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+input::-webkit-calendar-picker-indicator:hover {
+  background-color: #eee;
+}
+
+input:enabled:read-write:-webkit-any(:focus,
+:hover)::-webkit-calendar-picker-indicator,
+input::-webkit-calendar-picker-indicator:focus {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+input[type=date i]:disabled::-webkit-clear-button,
+input[type=date i]:disabled::-webkit-inner-spin-button,
+input[type=datetime-local i]:disabled::-webkit-clear-button,
+input[type=datetime-local i]:disabled::-webkit-inner-spin-button,
+input[type=month i]:disabled::-webkit-clear-button,
+input[type=month i]:disabled::-webkit-inner-spin-button,
+input[type=week i]:disabled::-webkit-clear-button,
+input[type=week i]:disabled::-webkit-inner-spin-button,
+input:disabled::-webkit-calendar-picker-indicator,
+input[type=date i][readonly]::-webkit-clear-button,
+input[type=date i][readonly]::-webkit-inner-spin-button,
+input[type=datetime-local i][readonly]::-webkit-clear-button,
+input[type=datetime-local i][readonly]::-webkit-inner-spin-button,
+input[type=month i][readonly]::-webkit-clear-button,
+input[type=month i][readonly]::-webkit-inner-spin-button,
+input[type=week i][readonly]::-webkit-clear-button,
+input[type=week i][readonly]::-webkit-inner-spin-button,
+input[readonly]::-webkit-calendar-picker-indicator {
+  visibility: hidden;
+}
+
+select {
+  -webkit-appearance: menulist;
+  box-sizing: border-box;
+  align-items: center;
+  border: 1px solid;
+  white-space: pre;
+  -webkit-rtl-ordering: logical;
+  color: black;
+  background-color: white;
+  cursor: default;
+}
+
+select:not(:-internal-list-box) {
+  overflow: visible !important;
+}
+
+select:-internal-list-box {
+  -webkit-appearance: listbox;
+  align-items: flex-start;
+  border: 1px inset gray;
+  border-radius: initial;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  vertical-align: text-bottom;
+  -webkit-user-select: none;
+  white-space: nowrap;
+}
+
+optgroup {
+  font-weight: bolder;
+  display: block;
+}
+
+option {
+  font-weight: normal;
+  display: block;
+  padding: 0 2px 1px 2px;
+  white-space: pre;
+  min-height: 1.2em;
+}
+
+select:-internal-list-box optgroup option:before {
+  content: "    ";
+}
+
+select:-internal-list-box option,
+select:-internal-list-box optgroup {
+  line-height: initial !important;
+}
+
+select:-internal-list-box:focus option:checked {
+  background-color: -internal-active-list-box-selection !important;
+  color: -internal-active-list-box-selection-text !important;
+}
+
+select:-internal-list-box option:checked {
+  background-color: -internal-inactive-list-box-selection !important;
+  color: -internal-inactive-list-box-selection-text !important;
+}
+
+select:-internal-list-box:disabled option:checked,
+select:-internal-list-box option:checked:disabled {
+  color: gray !important;
+}
+
+select:-internal-list-box hr {
+  border-style: none;
+}
+
+output {
+  display: inline;
+}
+
+/* meter */
+meter {
+  -webkit-appearance: meter;
+  box-sizing: border-box;
+  display: inline-block;
+  height: 1em;
+  width: 5em;
+  vertical-align: -0.2em;
+}
+
+meter::-webkit-meter-inner-element {
+  -webkit-appearance: inherit;
+  box-sizing: inherit;
+  -webkit-user-modify: read-only !important;
+  height: 100%;
+  width: 100%;
+}
+
+meter::-webkit-meter-bar {
+  background: linear-gradient(to bottom, #ddd, #eee 20%, #ccc 45%, #ccc 55%, #ddd);
+  height: 100%;
+  width: 100%;
+  -webkit-user-modify: read-only !important;
+  box-sizing: border-box;
+}
+
+meter::-webkit-meter-optimum-value {
+  background: linear-gradient(to bottom, #ad7, #cea 20%, #7a3 45%, #7a3 55%, #ad7);
+  height: 100%;
+  -webkit-user-modify: read-only !important;
+  box-sizing: border-box;
+}
+
+meter::-webkit-meter-suboptimum-value {
+  background: linear-gradient(to bottom, #fe7, #ffc 20%, #db3 45%, #db3 55%, #fe7);
+  height: 100%;
+  -webkit-user-modify: read-only !important;
+  box-sizing: border-box;
+}
+
+meter::-webkit-meter-even-less-good-value {
+  background: linear-gradient(to bottom, #f77, #fcc 20%, #d44 45%, #d44 55%, #f77);
+  height: 100%;
+  -webkit-user-modify: read-only !important;
+  box-sizing: border-box;
+}
+
+/* should be removed later */
+/* progress */
+progress {
+  -webkit-appearance: progress-bar;
+  box-sizing: border-box;
+  display: inline-block;
+  height: 1em;
+  width: 10em;
+  vertical-align: -0.2em;
+}
+
+progress::-webkit-progress-inner-element {
+  -webkit-appearance: inherit;
+  box-sizing: inherit;
+  -webkit-user-modify: read-only;
+  height: 100%;
+  width: 100%;
+}
+
+progress::-webkit-progress-bar {
+  background-color: gray;
+  height: 100%;
+  width: 100%;
+  -webkit-user-modify: read-only !important;
+  box-sizing: border-box;
+}
+
+progress::-webkit-progress-value {
+  background-color: green;
+  height: 100%;
+  width: 50%; /* should be removed later */
+  -webkit-user-modify: read-only !important;
+  box-sizing: border-box;
+}
+
+/* inline elements */
+u,
+ins {
+  text-decoration: underline;
+}
+
+strong,
+b {
+  font-weight: bold;
+}
+
+i,
+cite,
+em,
+var,
+address,
+dfn {
+  font-style: italic;
+}
+
+tt,
+code,
+kbd,
+samp {
+  font-family: monospace;
+}
+
+pre,
+xmp,
+plaintext,
+listing {
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1__qem 0;
+}
+
+mark {
+  background-color: yellow;
+  color: black;
+}
+
+big {
+  font-size: larger;
+}
+
+small {
+  font-size: smaller;
+}
+
+s,
+strike,
+del {
+  text-decoration: line-through;
+}
+
+sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+nobr {
+  white-space: nowrap;
+}
+
+/* states */
+:focus {
+  outline: auto 5px -webkit-focus-ring-color;
+}
+
+/* Read-only text fields do not show a focus ring but do still receive focus */
+html:focus,
+body:focus,
+input[readonly]:focus {
+  outline: none;
+}
+
+embed:focus,
+iframe:focus,
+object:focus {
+  outline: none;
+}
+
+input:focus,
+textarea:focus,
+keygen:focus,
+select:focus {
+  outline-offset: -2px;
+}
+
+input[type=button i]:focus,
+input[type=checkbox i]:focus,
+input[type=file i]:focus,
+input[type=hidden i]:focus,
+input[type=image i]:focus,
+input[type=radio i]:focus,
+input[type=reset i]:focus,
+input[type=search i]:focus,
+input[type=submit i]:focus,
+input[type=file i]:focus::-webkit-file-upload-button {
+  outline-offset: 0;
+}
+
+a:-webkit-any-link {
+  color: -webkit-link;
+  text-decoration: underline;
+  cursor: auto;
+}
+
+a:-webkit-any-link:active {
+  color: -webkit-activelink;
+}
+
+/* HTML5 ruby elements */
+ruby,
+rt {
+  text-indent: 0; /* blocks used for ruby rendering should not trigger this */
+}
+
+rt {
+  line-height: normal;
+  -webkit-text-emphasis: none;
+}
+
+ruby > rt {
+  display: block;
+  font-size: 50%;
+  text-align: start;
+}
+
+ruby > rp {
+  display: none;
+}
+
+/* other elements */
+noframes {
+  display: none;
+}
+
+frameset,
+frame {
+  display: block;
+}
+
+frameset {
+  border-color: inherit;
+}
+
+iframe {
+  border: 2px inset;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: block;
+}
+
+summary::-webkit-details-marker {
+  display: inline-block;
+  width: 0.66em;
+  height: 0.66em;
+  -webkit-margin-end: 0.4em;
+}
+
+template {
+  display: none;
+}
+
+bdi,
+output {
+  unicode-bidi: -webkit-isolate;
+}
+
+bdo {
+  unicode-bidi: bidi-override;
+}
+
+textarea[dir=auto i] {
+  unicode-bidi: -webkit-plaintext;
+}
+
+dialog:not([open]) {
+  display: none;
+}
+
+dialog {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: -webkit-fit-content;
+  height: -webkit-fit-content;
+  margin: auto;
+  border: solid;
+  padding: 1em;
+  background: white;
+  color: black;
+}
+
+dialog::backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* page */
+@page {
+  /* FIXME: Define the right default values for page properties. */
+  size: auto;
+  margin: auto;
+  padding: 0px;
+  border-width: 0px;
+}
+/* Disable multicol in printing, since it's not implemented properly. See crbug.com/99358 */
+@media print {
+  * {
+    -webkit-columns: auto !important;
+  }
+}
+/* noscript is handled internally, as it depends on settings. */
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+/* Document
+   ========================================================================== */
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+   ========================================================================== */
+/**
+ * Remove the margin in all browsers.
+ */
+body {
+  margin: 0;
+}
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+main {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+a {
+  background-color: transparent;
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+img {
+  border-style: none;
+}
+
+/* Forms
+   ========================================================================== */
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+button,
+input { /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+button,
+select { /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  -webkit-appearance: button;
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+button::-moz-focus-inner,
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+button:-moz-focusring,
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+progress {
+  vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+[type=checkbox],
+[type=radio] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+[type=number]::-webkit-inner-spin-button,
+[type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+[type=search] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+/**
+ * Add the correct display in IE 10+.
+ */
+template {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+[hidden] {
+  display: none;
+}
+
+@font-face {
+  font-family: "Weiter Sans";
+  src: url(../fonts/WeiterSans-v3-Regular.otf) format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Weiter Sans";
+  src: url(../fonts/WeiterSans-v3-Medium.otf) format("opentype");
+  font-style: normal;
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Weiter Sans";
+  src: url(../fonts/WeiterSans-v3-SemiBold.otf) format("opentype");
+  font-style: normal;
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Silka Mono";
+  src: url(../fonts/silkamono-regular-webfont.woff2) format("woff2");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Silka";
+  src: url(../fonts/silka-regular-webfont.woff2) format("woff2");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Silka";
+  src: url(../fonts/silka-regularitalic-webfont.woff2) format("woff2");
+  font-style: italic;
+  font-weight: 400;
+}
+html {
+  font-family: "Barlow";
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+}
+
+tt,
+code,
+kbd,
+samp {
+  font-family: "Menlo";
 }
 
 nav ol,
@@ -37,45 +2955,49 @@ nav ul {
   display: flex;
   flex-direction: row;
   list-style-type: none;
-  gap: 1rem;
   margin: 0;
   padding: 0;
 }
 
-body > nav:first-child {
+body {
+  margin: 1rem;
+}
+
+body > nav:nth-child(2) {
   display: block;
   position: fixed;
+  left: 0 !important;
   top: 0 !important;
+  font-size: 0.75rem !important;
   z-index: 1000;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  background: hsla(0, 0%, 100%, 0.85);
 }
-body > nav:first-child :link,
-body > nav:first-child :visited {
+body > nav:nth-child(2) li {
+  transition-property: color, background;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
+  padding: 0.5rem;
+}
+body > nav:nth-child(2) a:link,
+body > nav:nth-child(2) a:visited {
   color: black;
   text-decoration: none;
 }
-
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  background: #eaeaea;
+body > nav:nth-child(2) li:has(a:hover) {
+  background: black;
+}
+body > nav:nth-child(2) li:has(a:hover) a {
+  color: white;
+}
+body > nav:nth-child(2) + * {
+  margin-top: 5rem;
 }
 
 section {
-  background: white;
-}
-
-body > *:not(:first-child) {
-  min-height: 10vh;
-}
-
-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  border: 1px dotted tomato;
+  margin-block: 1rem;
 }
 
 .sr-only {
@@ -187,339 +3109,96 @@ time {
   filter: url('data:image/svg+xml,      <svg xmlns="http://www.w3.org/2000/svg">        <filter id="tritanopia">        <feColorMatrix values="1.256 -0.077 -0.179  0.000  0.000                              -0.078  0.931  0.148  0.000  0.000                               0.005  0.691  0.304  0.000  0.000                               0.000  0.000  0.000  1.000  0.000" />        </filter>      </svg>#tritanopia');
 }
 
-html {
-  font-family: "Barlow";
-  font-size: 16px;
-  line-height: 1.4;
-}
-@media (max-width: 904px) {
-  html {
-    font-size: 12px;
-  }
-}
-@media (min-width: 905px) {
-  html {
-    font-size: 15px;
-  }
-}
-@media (min-width: 1240px) {
-  html {
-    font-size: 18px;
-  }
-}
-@media (min-width: 1440px) {
-  html {
-    font-size: 22px;
-  }
-}
-@media (max-width: 904px) {
-  html.dark {
-    font-size: 13.2px;
-    letter-spacing: 0.02rem;
-  }
-}
-@media (min-width: 905px) {
-  html.dark {
-    font-size: 16.5px;
-    letter-spacing: 0.02rem;
-  }
-}
-@media (min-width: 1240px) {
-  html.dark {
-    font-size: 19.8px;
-    letter-spacing: 0.02rem;
-  }
-}
-@media (min-width: 1440px) {
-  html.dark {
-    font-size: 24.2px;
-    letter-spacing: 0.02rem;
-  }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: rect(0, 0, 0, 0);
+  border: 0;
 }
 
-body {
-  margin: 1rem;
+.visually-hidden-focusable:active,
+.visually-hidden-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip-path: auto;
 }
 
-p {
-  font-size: 1rem;
-  column-width: 16rem;
-}
-
-ul li {
-  font-size: 1rem;
-}
-
-.c-fish-form *:where(:not(iframe, canvas, img, svg, video):not(svg *)) {
-  all: unset;
-  display: revert;
-}
-
-a.icon {
-  color: var(--on-primary);
-  background-color: var(--primary);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.25rem;
-  border-radius: 0.25rem;
-}
-
-a.icon:hover {
-  transform: translate(-0.06rem, -0.06rem);
-  box-shadow: 0.125rem 0.125rem 0.25rem var(--shadow);
-}
-
-.parallax .section {
-  border: 5px solid white;
-  border-top: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-gap: 0.5rem;
-  padding: 0.5rem;
-}
-.parallax .section:first-of-type {
-  border-top: 5px solid white;
-}
-.parallax .section > * {
+.visually-hidden:has(a:focus, a:active) {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: linear-gradient(to right bottom, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0));
-}
-.parallax h1,
-.parallax h2,
-.parallax h3,
-.parallax p {
-  font-size: 1.6667rem;
-  letter-spacing: 0.3rem;
-  text-transform: uppercase;
-  font-weight: 400;
-  color: var(--bright);
-  text-shadow: 0.125rem 0.125rem 0.25rem var(--shadow);
-}
-.parallax article:nth-child(1) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
   height: 100vh;
+  z-index: 1001;
+  background-color: lightgrey;
+  color: black;
+  font-size: 3rem;
 }
-.parallax .teaser-1 {
-  position: relative;
-  opacity: 0.85;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  perspective: 8px;
-  perspective-origin: 0%;
-  min-width: 100vw;
+.visually-hidden:has(a:focus, a:active) ul,
+.visually-hidden:has(a:focus, a:active) ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
-.parallax .teaser-2 {
-  position: relative;
-  opacity: 0.85;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  perspective: 8px;
-  perspective-origin: 0%;
-  min-width: 100vw;
+.visually-hidden:has(a:focus, a:active) li:has(a:focus) {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip-path: auto;
+  border: 2px dotted red;
 }
-.parallax .teaser-3 {
-  position: relative;
-  opacity: 0.85;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  perspective: 8px;
-  perspective-origin: 0%;
-  min-width: 100vw;
-}
-.parallax .teaser-4 {
-  position: relative;
-  opacity: 0.85;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  perspective: 8px;
-  perspective-origin: 0%;
-  min-width: 100vw;
-}
-.parallax .teaser-5 {
-  position: relative;
-  opacity: 0.85;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  perspective: 8px;
-  perspective-origin: 0%;
-  min-width: 100vw;
-}
-.parallax .teaser-6 {
-  position: relative;
-  opacity: 0.85;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  perspective: 8px;
-  perspective-origin: 0%;
-  min-width: 100vw;
-}
-.parallax .teaser-7 {
-  position: relative;
-  opacity: 0.85;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  perspective: 8px;
-  perspective-origin: 0%;
-  min-width: 100vw;
-}
-.parallax .teaser-8 {
-  position: relative;
-  opacity: 0.85;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  perspective: 8px;
-  perspective-origin: 0%;
-  min-width: 100vw;
-}
-.parallax .teaser-9 {
-  position: relative;
-  opacity: 0.85;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  perspective: 8px;
-  perspective-origin: 0%;
-  min-width: 100vw;
-}
-.parallax .teaser-10 {
-  position: relative;
-  opacity: 0.85;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  perspective: 8px;
-  perspective-origin: 0%;
-  min-width: 100vw;
-}
-.parallax .teaser-1 {
-  background-image: url("./../figures/588-2509x1673.jpg");
-  min-height: 50vh;
-}
-.parallax .teaser-2 {
-  background-image: url("./../figures/52-1280x853.jpg");
-  min-height: 50vh;
-}
-.parallax .teaser-3 {
-  background-image: url("./../figures/594-2509x1673.jpg");
-  min-height: 50vh;
-}
-.parallax .teaser-4 {
-  background-image: url("./../figures/1019-5472x3648.jpg");
-  min-height: 50vh;
-}
-.parallax .teaser-5 {
-  background-image: url("./../figures/588-2509x1673.jpg");
-  min-height: 50vh;
-}
-.parallax .teaser-6 {
-  background-image: url("./../figures/52-1280x853.jpg");
-  min-height: 50vh;
-}
-.parallax .teaser-7 {
-  background-image: url("./../figures/594-2509x1673.jpg");
-  min-height: 50vh;
-}
-.parallax .teaser-8 {
-  background-image: url("./../figures/1019-5472x3648.jpg");
-  min-height: 50vh;
-}
-.parallax .teaser-9 {
-  background-image: url("./../figures/588-2509x1673.jpg");
-  min-height: 50vh;
-}
-.parallax .teaser-10 {
-  background-image: url("./../figures/52-1280x853.jpg");
-  min-height: 50vh;
+.visually-hidden:has(a:focus, a:active) li:has(a:not(:focus)) {
+  position: absolute;
+  left: -9999px;
 }
 
-html {
-  background-color: var(--bright);
-  color: var(--dark);
-}
-html.dark {
-  background-color: var(--dark);
-  color: var(--on-dark);
-}
-html.bright {
-  background-color: var(--bright);
-  color: var(--on-bright);
-}
-html.neutral {
-  background-color: var(--neutral);
-  color: var(--on-neutral);
+table,
+th,
+td {
+  border: 1px dotted black;
 }
 
-.color {
-  display: inline-block;
-  width: 12rem;
-  height: 12rem;
-  margin: 0.25rem;
-  padding: 0.25rem;
+#skip-links a {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: rect(0, 0, 0, 0);
+  border: 0;
 }
-.color.error {
-  background-color: var(--error);
-  color: var(--on-error);
-}
-.color.warning {
-  background-color: var(--warning);
-  color: var(--on-warning);
-}
-.color.success {
-  background-color: var(--success);
-  color: var(--on-success);
-}
-.color.info {
-  background-color: var(--info);
-  color: var(--on-info);
-}
-.color.primary {
-  background-color: var(--primary);
-  color: var(--on-primary);
-}
-.color.secondary {
-  background-color: var(--secondary);
-  color: var(--on-secondary);
-}
-.color.tertiary {
-  background-color: var(--tertiary);
-  color: var(--on-tertiary);
-}
-.color.neutral {
-  background-color: var(--neutral);
-  color: var(--on-neutral);
-}
-.color.dark {
-  background-color: var(--dark);
-  color: var(--on-dark);
-}
-.color.bright {
-  background-color: var(--bright);
-  color: var(--on-bright);
+
+#skip-links:has(:focus) a:focus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1001;
+  background-color: hsla(0, 0%, 100%, 0.85);
+  color: black;
+  font-size: 3rem;
+  margin: 0;
+  overflow: visible;
+  clip-path: auto;
+  text-decoration: none;
 }
 
 .color-conversion {
@@ -738,6 +3417,21 @@ html.neutral {
   font-weight: 400;
 }
 
+a.icon {
+  color: var(--on-primary);
+  background-color: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+a.icon:hover {
+  transform: translate(-0.06rem, -0.06rem);
+  box-shadow: 0.125rem 0.125rem 0.25rem var(--shadow);
+}
+
 .infographic {
   border: 1px solid black;
   width: 500px;
@@ -776,75 +3470,1343 @@ svg *:focus-visible {
   fill: yellow;
 }
 
-table {
-  border-collapse: collapse;
+label:not(:has([type=radio]), :has([type=checkbox]))::before {
+  content: "";
+  display: block;
+  margin-block-end: 1rem;
 }
-
-th,
-td {
-  border: 1px solid black;
-  padding: 8px;
-}
-
-.icon {
+label:not(:has([type=radio]), :has([type=checkbox]))::after {
+  content: "";
   display: inline-block;
-  width: 1.5em;
-  height: 1.5em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-indent: 2em;
-  background-size: contain;
+  width: 2rem;
+}
+
+fieldset:not(:has(legend)) {
+  border: 2px dotted red;
+}
+
+.parallax .section {
+  border: 5px solid white;
+  border-top: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 0.5rem;
+  padding: 0.5rem;
+}
+.parallax .section:first-of-type {
+  border-top: 5px solid white;
+}
+.parallax .section > * {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: linear-gradient(to right bottom, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0));
+}
+.parallax h1,
+.parallax h2,
+.parallax h3,
+.parallax p {
+  font-size: 1.6667rem;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--bright);
+  text-shadow: 0.125rem 0.125rem 0.25rem var(--shadow);
+}
+.parallax article:nth-child(1) {
+  height: 100vh;
+}
+.parallax .teaser-1 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-2 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-3 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-4 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-5 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-6 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-7 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-8 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-9 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-10 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-1 {
+  background-image: url("./../figures/588-2509x1673.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-2 {
+  background-image: url("./../figures/52-1280x853.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-3 {
+  background-image: url("./../figures/594-2509x1673.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-4 {
+  background-image: url("./../figures/1019-5472x3648.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-5 {
+  background-image: url("./../figures/588-2509x1673.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-6 {
+  background-image: url("./../figures/52-1280x853.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-7 {
+  background-image: url("./../figures/594-2509x1673.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-8 {
+  background-image: url("./../figures/1019-5472x3648.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-9 {
+  background-image: url("./../figures/588-2509x1673.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-10 {
+  background-image: url("./../figures/52-1280x853.jpg");
+  min-height: 50vh;
 }
 
-.icon-tel {
-  background-image: url("../figures/telephone.svg");
+#accordion {
+  /* For Edge bug https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/4806035/ */
+}
+#accordion .accordion {
+  margin: 0;
+  padding: 0;
+  border: 2px solid hsl(0, 0%, 52%);
+  border-radius: 7px;
+  width: 20em;
+}
+#accordion .accordion h3 {
+  margin: 0;
+  padding: 0;
+}
+#accordion .accordion:focus-within {
+  border-color: hsl(216, 94%, 43%);
+}
+#accordion .accordion:focus-within h3 {
+  background-color: hsl(0, 0%, 97%);
+}
+#accordion .accordion > * + * {
+  border-top: 1px solid hsl(0, 0%, 52%);
+}
+#accordion .accordion-trigger {
+  background: none;
+  color: hsl(0, 0%, 13%);
+  display: block;
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 0;
+  padding: 1em 1.5em;
+  position: relative;
+  text-align: left;
+  width: 100%;
+  outline: none;
+}
+#accordion .accordion-trigger:focus,
+#accordion .accordion-trigger:hover {
+  background: hsl(216, 94%, 94%);
+}
+#accordion .accordion-trigger:focus {
+  outline: 4px solid transparent;
+}
+#accordion .accordion > *:first-child .accordion-trigger,
+#accordion .accordion > *:first-child {
+  border-radius: 5px 5px 0 0;
+}
+#accordion .accordion > *:last-child .accordion-trigger,
+#accordion .accordion > *:last-child {
+  border-radius: 0 0 5px 5px;
+}
+#accordion button {
+  border-style: none;
+}
+#accordion .accordion button::-moz-focus-inner {
+  border: 0;
+}
+#accordion .accordion-title {
+  display: block;
+  pointer-events: none;
+  border: transparent 2px solid;
+  border-radius: 5px;
+  padding: 0.25em;
+  outline: none;
+}
+#accordion .accordion-trigger:focus .accordion-title {
+  border-color: hsl(216, 94%, 43%);
+}
+#accordion .accordion-icon {
+  border: solid currentcolor;
+  border-width: 0 2px 2px 0;
+  height: 0.5rem;
+  pointer-events: none;
+  position: absolute;
+  right: 2em;
+  top: 50%;
+  transform: translateY(-60%) rotate(45deg);
+  width: 0.5rem;
+}
+#accordion .accordion-trigger:focus .accordion-icon,
+#accordion .accordion-trigger:hover .accordion-icon {
+  border-color: hsl(216, 94%, 43%);
+}
+#accordion .accordion-trigger[aria-expanded=true] .accordion-icon {
+  transform: translateY(-50%) rotate(-135deg);
+}
+#accordion .accordion-panel {
+  margin: 0;
+  padding: 1em 1.5em;
+}
+#accordion .accordion-panel[hidden] {
+  display: none;
+}
+#accordion fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+#accordion input {
+  border: 1px solid hsl(0, 0%, 42%);
+  border-radius: 0.3em;
+  display: block;
+  font-size: inherit;
+  padding: 0.3em 0.5em;
 }
 
-:root {
-  --blau-1: hsl(241, 38%, 25%);
-  --blau-2: hsl(248, 66%, 11%);
-  --gelb: hsl(38, 92%, 60%);
-  --lila: hsl(302, 57%, 9%);
-  --gruen: hsl(176, 100%, 8%);
-  --on-blau-1: hsl(241, 38%, 75%);
-  --on-blau-2: hsl(248, 66%, 89%);
-  --on-gelb: hsl(38, 92%, 10%);
-  --on-lila: hsl(302, 57%, 89%);
-  --on-gruen: hsl(176, 100%, 89%);
+#alert [role=alert] {
+  padding: 10px;
+  border: 2px solid hsl(206, 74%, 54%);
+  border-radius: 4px;
+  background: hsl(206, 74%, 90%);
+}
+#alert [role=alert]:empty {
+  display: none;
+}
+
+#modal-dialog {
+  /* native <dialog> element uses the ::backdrop pseudo-element */
+  /* dialog::backdrop, */
+  /* this is added to the body when a dialog is open */
+}
+#modal-dialog .hidden {
+  display: none;
+}
+#modal-dialog [role=dialog] {
+  box-sizing: border-box;
+  padding: 15px;
+  border: 1px solid #000;
+  background-color: #fff;
+  min-height: 100vh;
+}
+@media screen and (min-width: 640px) {
+  #modal-dialog [role=dialog] {
+    position: absolute;
+    top: 2rem;
+    left: 50vw; /* move to the middle of the screen (assumes relative parent is the body/viewport) */
+    transform: translateX(-50%); /* move backwards 50% of this element's width */
+    min-width: 610px; /* == breakpoint - left+right margin */
+    min-height: auto;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.12), 0 15px 12px rgba(0, 0, 0, 0.22);
+  }
+}
+#modal-dialog .dialog_label {
+  text-align: center;
+}
+#modal-dialog .dialog_form {
+  margin: 15px;
+}
+#modal-dialog .dialog_form .label_text {
+  box-sizing: border-box;
+  padding-right: 0.5em;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  width: 30%;
+  text-align: right;
+}
+#modal-dialog .dialog_form .label_info {
+  box-sizing: border-box;
+  padding-right: 0.5em;
+  font-size: 12px;
+  width: 30%;
+  text-align: right;
+  display: inline-block;
+}
+#modal-dialog .dialog_form_item {
+  margin: 10px 0;
+  font-size: 0;
+}
+#modal-dialog .dialog_form_item .wide_input {
+  box-sizing: border-box;
+  max-width: 70%;
+  width: 27em;
+}
+#modal-dialog .dialog_form_item .city_input {
+  box-sizing: border-box;
+  max-width: 70%;
+  width: 17em;
+}
+#modal-dialog .dialog_form_item .state_input {
+  box-sizing: border-box;
+  max-width: 70%;
+  width: 15em;
+}
+#modal-dialog .dialog_form_item .zip_input {
+  box-sizing: border-box;
+  max-width: 70%;
+  width: 9em;
+}
+#modal-dialog .dialog_form_actions {
+  text-align: right;
+  padding: 0 20px 20px;
+}
+#modal-dialog .dialog_close_button {
+  float: right;
+  position: absolute;
+  top: 10px;
+  left: 92%;
+  height: 25px;
+}
+#modal-dialog .dialog_close_button img {
+  border: 0;
+}
+#modal-dialog .dialog_desc {
+  padding: 10px 20px;
+}
+#modal-dialog .dialog-backdrop {
+  display: none;
+  position: fixed;
+  overflow-y: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+@media screen and (min-width: 640px) {
+  #modal-dialog .dialog-backdrop {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+#modal-dialog .dialog-backdrop.active {
+  display: block;
+}
+#modal-dialog .no-scroll {
+  overflow-y: auto !important;
+}
+#modal-dialog .has-dialog {
+  overflow: hidden;
+}
+
+#breadcrumb nav.breadcrumb {
+  padding: 0.8em 1em;
+  border: 1px solid hsl(0, 0%, 90%);
+  border-radius: 4px;
+  background: hsl(300, 14%, 97%);
+}
+#breadcrumb nav.breadcrumb ol {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+#breadcrumb nav.breadcrumb li {
+  display: inline;
+}
+#breadcrumb nav.breadcrumb li + li::before {
+  display: inline-block;
+  margin: 0 0.25em;
+  transform: rotate(15deg);
+  border-right: 0.1em solid currentcolor;
+  height: 0.8em;
+  content: "";
+}
+#breadcrumb nav.breadcrumb [aria-current=page] {
+  color: #000;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+#button [role=button] {
+  display: inline-block;
+  position: relative;
+  padding: 0.4em 0.7em;
+  border: 1px solid hsl(213, 71%, 49%);
+  border-radius: 5px;
+  box-shadow: 0 1px 2px hsl(216, 27%, 55%);
+  color: #fff;
+  text-shadow: 0 -1px 1px hsl(216, 27%, 25%);
+  background-color: hsl(216, 82%, 51%);
+  background-image: linear-gradient(to bottom, hsl(216, 82%, 53%), hsl(216, 82%, 47%));
+}
+#button [role=button]:hover {
+  border-color: hsl(213, 71%, 29%);
+  background-color: hsl(216, 82%, 31%);
+  background-image: linear-gradient(to bottom, hsl(216, 82%, 33%), hsl(216, 82%, 27%));
+  cursor: default;
+}
+#button [role=button]:focus {
+  outline: none;
+}
+#button [role=button]:focus::before {
+  position: absolute;
+  /* button border width - outline width - offset */
+  top: -7px;
+  right: -7px;
+  bottom: -7px;
+  left: -7px;
+  border: 3px solid hsl(213, 71%, 49%);
+  /* button border radius + outline width + offset */
+  border-radius: 11px;
+  content: "";
+}
+#button [role=button]:active {
+  border-color: hsl(213, 71%, 49%);
+  background-color: hsl(216, 82%, 31%);
+  background-image: linear-gradient(to bottom, hsl(216, 82%, 53%), hsl(216, 82%, 47%));
+  box-shadow: inset 0 3px 5px 1px hsl(216, 82%, 30%);
+}
+#button [role=button][aria-pressed] {
+  border-color: hsl(261, 71%, 49%);
+  box-shadow: 0 1px 2px hsl(261, 27%, 55%);
+  text-shadow: 0 -1px 1px hsl(261, 27%, 25%);
+  background-color: hsl(261, 82%, 51%);
+  background-image: linear-gradient(to bottom, hsl(261, 82%, 53%), hsl(261, 82%, 47%));
+}
+#button [role=button][aria-pressed]:hover {
+  border-color: hsl(261, 71%, 29%);
+  background-color: hsl(261, 82%, 31%);
+  background-image: linear-gradient(to bottom, hsl(261, 82%, 33%), hsl(261, 82%, 27%));
+}
+#button [role=button][aria-pressed=true] {
+  padding-top: 0.5em;
+  padding-bottom: 0.3em;
+  border-color: hsl(261, 71%, 49%);
+  background-color: hsl(261, 82%, 31%);
+  background-image: linear-gradient(to bottom, hsl(261, 82%, 63%), hsl(261, 82%, 57%));
+  box-shadow: inset 0 3px 5px 1px hsl(261, 82%, 30%);
+}
+#button [role=button][aria-pressed=true]:hover {
+  border-color: hsl(261, 71%, 49%);
+  background-color: hsl(261, 82%, 31%);
+  background-image: linear-gradient(to bottom, hsl(261, 82%, 43%), hsl(261, 82%, 37%));
+  box-shadow: inset 0 3px 5px 1px hsl(261, 82%, 20%);
+}
+#button [role=button][aria-pressed]:focus::before {
+  border-color: hsl(261, 71%, 49%);
+}
+#button [role=button] svg {
+  margin: 0.15em auto -0.15em;
+  height: 1em;
+  width: 1em;
+  pointer-events: none;
+}
+
+#carousel {
+  /* .carousel-tablist */
+  /* More like bootstrap, less accessible */
+  /* Shared CSS for Pause and Tab Controls */
+  /* SVG Controls */
+  /* Shared CSS for Tabs */
+  /* More accessible carousel styles, with caption and controls above/below image */
+  /* More accessible caption styling */
+  /* Shared CSS for Pause and Tab Controls */
+  /* Shared CSS for Tabs */
+}
+#carousel img.reload {
+  padding: 0.25em;
+  display: block-inline;
+  position: relative;
+  top: 6px;
+  height: 0.9em;
+}
+#carousel .carousel-tablist {
+  background-color: #eee;
+  max-width: 900px;
+}
+#carousel .carousel-tablist .carousel-inner {
+  position: relative;
+}
+#carousel .carousel-tablist .carousel-items {
+  padding: 5px;
+}
+#carousel .carousel-tablist .carousel-items.focus {
+  padding: 2px;
+  border: solid 3px #005a9c;
+}
+#carousel .carousel-tablist .carousel-item {
+  display: none;
+  max-height: 400px;
+  max-width: 900px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+#carousel .carousel-tablist .carousel-item.active {
+  display: block;
+}
+#carousel .carousel-tablist .carousel-item .carousel-image a img {
+  height: 100%;
+  width: 100%;
+}
+#carousel .carousel-tablist .carousel-item .carousel-caption a {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #fff;
+  font-weight: 600;
+}
+#carousel .carousel-tablist .carousel-item .carousel-caption a,
+#carousel .carousel-tablist .carousel-item .carousel-caption span.contrast {
+  margin: 0;
+  padding: 6px;
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.65);
+  border-radius: 5px;
+  border: 0 solid transparent;
+}
+#carousel .carousel-tablist-moreaccessible .carousel-items .carousel-image a {
+  display: block;
+  margin: 0;
+  padding: 5px;
+  text-decoration: none;
+  border: none;
+}
+#carousel .carousel-tablist-moreaccessible .carousel-item .carousel-caption a {
+  display: inline-block;
+  margin: 0;
+  padding: 6px;
+  color: black;
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+}
+#carousel .carousel-tablist-moreaccessible .carousel-item .carousel-caption span.contrast,
+#carousel .carousel-tablist-moreaccessible .carousel-item .carousel-caption span.contrast:hover {
+  background-color: transparent;
+}
+#carousel .carousel-tablist .carousel-item .carousel-caption a:hover,
+#carousel .carousel-tablist .carousel-item .carousel-caption span.contrast:hover {
+  background-color: rgb(0, 0, 0);
+}
+#carousel .carousel-tablist .carousel-item .carousel-caption a:focus {
+  padding: 4px;
+  border: 2px solid #eee;
+  background-color: rgb(0, 0, 0);
+  outline: none;
+  border-width: 2px solid #fff;
+  color: #fff;
+}
+#carousel .carousel-tablist .carousel-item .carousel-caption p {
+  font-size: 1em;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+#carousel .carousel-tablist .carousel-item .carousel-caption {
+  position: absolute;
+  right: 15%;
+  bottom: 0;
+  left: 15%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #fff;
+  text-align: center;
+}
+#carousel .carousel-tablist .controls {
+  box-sizing: border-box;
+  position: absolute;
+  top: 1em;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+  padding: 0.25em 1.25em 0;
+}
+#carousel .carousel-tablist .tab-wrapper {
+  flex: 1 1 auto;
+  height: 30px;
+  text-align: center;
+}
+#carousel .carousel-tablist .rotation {
+  flex: 0 0 auto;
+  height: 30px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  z-index: 10;
+}
+#carousel .carousel-tablist .svg-play .background {
+  stroke: black;
+  fill: black;
+  stroke-width: 1px;
+  opacity: 0.6;
+}
+#carousel .carousel-tablist .svg-play .border {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 2px;
+}
+#carousel .carousel-tablist .svg-play .pause {
+  stroke-width: 4;
+  fill: transparent;
+  stroke: transparent;
+}
+#carousel .carousel-tablist .svg-play .play {
+  stroke-width: 1;
+  fill: transparent;
+  stroke: transparent;
+}
+#carousel .carousel-tablist .pause .svg-play .pause,
+#carousel .carousel-tablist .play .svg-play .play {
+  fill: white;
+  stroke: white;
+}
+#carousel .carousel-tablist .rotation:focus .svg-play .background,
+#carousel .carousel-tablist .rotation:hover .svg-play .background,
+#carousel .carousel-tablist .rotation:hover .svg-play .border {
+  fill: #005a9c;
+  stroke: #005a9c;
+  opacity: 1;
+}
+#carousel .carousel-tablist .rotation:focus .svg-play .border {
+  stroke: white;
+}
+#carousel .carousel-tablist [role=tablist] {
+  box-sizing: border-box;
+  border: 0 transparent solid;
+  border-radius: 13px;
+  display: inline-block;
+  padding-top: 2px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+#carousel .carousel-tablist [role=tablist].focus {
+  border-width: 2px;
+  border-color: white;
+  padding-top: 0;
+  background-color: #005a9c;
+}
+#carousel .carousel-tablist [role=tab] {
+  position: relative;
+  top: -2px;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 34px;
+}
+#carousel .carousel-tablist [role=tab] circle.border {
+  display: none;
+  z-index: 12;
+}
+#carousel .carousel-tablist [role=tab] circle.tab {
+  z-index: 16;
+}
+#carousel .carousel-tablist [role=tab] circle.tab-background {
+  stroke: black;
+  fill: black;
+  stroke-width: 2px;
+  opacity: 0.6;
+  z-index: 14;
+}
+#carousel .carousel-tablist [role=tab] circle.tab,
+#carousel .carousel-tablist [role=tab] circle.border {
+  stroke: white;
+  fill: transparent;
+  stroke-width: 2px;
+}
+#carousel .carousel-tablist-moreaccessible [role=tab] circle.tab-background {
+  z-index: 16;
+}
+#carousel .carousel-tablist-moreaccessible [role=tab] circle.tab {
+  z-index: 18;
+}
+#carousel .carousel-tablist [role=tab][aria-selected=true] circle.tab {
+  fill: white;
+}
+#carousel .carousel-tablist-moreaccessible [role=tab] circle.border {
+  z-index: 14;
+}
+#carousel .carousel-tablist [role=tab]:focus circle.border {
+  display: block;
+  fill: #005a9c;
+  stroke: #fff;
+}
+#carousel .carousel-tablist [role=tablist].focus circle.tab-background {
+  stroke: #005a9c;
+  fill: #005a9c;
+}
+#carousel .carousel-tablist [role=tab]:hover circle.tab-background {
+  fill: white;
+  stroke: white;
+  opacity: 1;
+}
+#carousel .carousel-tablist [role=tab]:hover circle.border,
+#carousel .carousel-tablist [role=tab]:hover circle.tab {
+  fill: #005a9c;
+  stroke: #005a9c;
+  opacity: 1;
+}
+#carousel .carousel-tablist [role=tab][aria-selected=true]:hover circle.tab {
+  fill: white;
+}
+#carousel .carousel-tablist-moreaccessible {
+  padding: 0;
+  margin: 0;
+  position: relative;
+  border: #eee solid 4px;
+  border-radius: 5px;
+}
+#carousel .carousel-tablist-moreaccessible .carousel-items,
+#carousel .carousel-tablist-moreaccessible .carousel-items.focus {
+  padding: 0;
+  border: none;
+}
+#carousel .carousel-tablist-moreaccessible .carousel-items.focus .carousel-image a {
+  padding: 2px;
+  border: 3px solid #005a9c;
+}
+#carousel .carousel-tablist-moreaccessible .carousel-item {
+  padding: 0;
+  margin: 0;
+  max-height: none;
+}
+#carousel .carousel-tablist-moreaccessible .carousel-item .carousel-caption {
+  position: static;
+  padding: 0;
+  margin: 0;
+  height: 60px;
+  color: black;
+}
+#carousel .carousel-tablist-moreaccessible .carousel-item .carousel-caption p {
+  padding: 0;
+  margin: 0;
+}
+#carousel .carousel-tablist-moreaccessible .carousel-item .carousel-caption h3 {
+  font-size: 1.1em;
+  padding: 0;
+  margin: 0;
+}
+#carousel .carousel-tablist-moreaccessible .carousel-item .carousel-caption a:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+#carousel .carousel-tablist-moreaccessible .carousel-item .carousel-caption a:focus {
+  padding: 4px;
+  border: 2px solid #005a9c;
+  background-color: transparent;
+  color: black;
+  outline: none;
+}
+#carousel .carousel-tablist-moreaccessible .controls {
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 0.25em 0.25em 0;
+}
+#carousel .carousel-tablist-moreaccessible [role=tab] {
+  z-index: 20;
+}
+
+#checkbox .checkbox-mixed ul.checkboxes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#checkbox .checkbox-mixed ul.checkboxes li {
+  margin: 0;
+  padding: 0;
+  padding-left: 15px;
+}
+#checkbox .checkbox-mixed label {
+  margin: 1px;
+  padding: 4px;
+}
+#checkbox .checkbox-mixed [role=checkbox] {
+  display: inline-block;
+  padding: 4px;
+  cursor: pointer;
+}
+#checkbox .checkbox-mixed [role=checkbox]::before {
+  position: relative;
+  top: 1px;
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' style='forced-color-adjust: auto;'%3E%3Crect x='2' y='2' height='13' width='13' rx='2' stroke='currentcolor' stroke-width='1' fill-opacity='0' /%3E%3C/svg%3E");
+}
+#checkbox .checkbox-mixed [role=checkbox][aria-checked=true]::before {
+  position: relative;
+  top: 1px;
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' style='forced-color-adjust: auto;'%3E%3Crect x='2' y='2' height='13' width='13' rx='2' stroke='currentcolor' stroke-width='1' fill-opacity='0' /%3E%3Cpolyline points='4,8 7,12 12,5' fill='none' stroke='currentcolor' stroke-width='2' /%3E%3C/svg%3E");
+}
+#checkbox .checkbox-mixed [role=checkbox][aria-checked=mixed]::before {
+  position: relative;
+  top: 1px;
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' style='forced-color-adjust: auto;'%3E%3Crect x='2' y='2' height='13' width='13' rx='2' stroke='currentcolor' stroke-width='1' fill-opacity='0' /%3E%3Cline x1='5' y1='5' x2='12' y2='12' stroke='currentcolor' stroke-width='2' /%3E%3C/svg%3E");
+}
+#checkbox .checkbox-mixed input:focus,
+#checkbox .checkbox-mixed [role=checkbox] {
+  outline: none;
+}
+#checkbox .checkbox-mixed [role=checkbox]:focus,
+#checkbox .checkbox-mixed [role=checkbox]:hover {
+  padding: 2px;
+  border: 2px solid #005a9c;
+  border-radius: 5px;
+  background-color: #def;
+}
+#checkbox .checkbox-mixed label.focus,
+#checkbox .checkbox-mixed label:hover {
+  padding: 2px;
+  border: 2px solid #005a9c;
+  background-color: #def;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#table-sortable {
+  /* Focus and hover styling */
+}
+#table-sortable .sr-only {
+  position: absolute;
+  top: -30em;
+}
+#table-sortable table.sortable td,
+#table-sortable table.sortable th {
+  padding: 0.125em 0.25em;
+  width: 8em;
+}
+#table-sortable table.sortable th {
+  font-weight: bold;
+  border-bottom: thin solid #888;
+  position: relative;
+}
+#table-sortable table.sortable th.no-sort {
+  padding-top: 0.35em;
+}
+#table-sortable table.sortable th:nth-child(5) {
+  width: 10em;
+}
+#table-sortable table.sortable th button {
+  padding: 4px;
+  margin: 1px;
+  font-size: 100%;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  display: inline;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: left;
+  outline: none;
+  cursor: pointer;
+}
+#table-sortable table.sortable th button span {
+  position: absolute;
+  right: 4px;
+}
+#table-sortable table.sortable th[aria-sort=descending] span::after {
+  content: "▼";
+  color: currentcolor;
+  font-size: 100%;
+  top: 0;
+}
+#table-sortable table.sortable th[aria-sort=ascending] span::after {
+  content: "▲";
+  color: currentcolor;
+  font-size: 100%;
+  top: 0;
+}
+#table-sortable table.show-unsorted-icon th:not([aria-sort]) button span::after {
+  content: "♢";
+  color: currentcolor;
+  font-size: 100%;
+  position: relative;
+  top: -3px;
+  left: -4px;
+}
+#table-sortable table.sortable td.num {
+  text-align: right;
+}
+#table-sortable table.sortable tbody tr:nth-child(odd) {
+  background-color: #ddd;
+}
+#table-sortable table.sortable th button:focus,
+#table-sortable table.sortable th button:hover {
+  padding: 2px;
+  border: 2px solid currentcolor;
+  background-color: #e5f4ff;
+}
+#table-sortable table.sortable th button:focus span,
+#table-sortable table.sortable th button:hover span {
+  right: 2px;
+}
+#table-sortable table.sortable th:not([aria-sort]) button:focus span::after,
+#table-sortable table.sortable th:not([aria-sort]) button:hover span::after {
+  content: "▼";
+  color: currentcolor;
+  font-size: 100%;
+  top: 0;
+}
+
+#tabs .tabs {
+  font-family: "lucida grande", sans-serif;
+}
+#tabs [role=tablist] {
+  min-width: 100%;
+}
+#tabs [role=tab],
+#tabs [role=tab]:focus,
+#tabs [role=tab]:hover {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  top: 2px;
+  margin: 0;
+  margin-top: 4px;
+  padding: 3px 3px 4px;
+  border: 1px solid hsl(219, 1%, 72%);
+  border-bottom: 2px solid hsl(219, 1%, 72%);
+  border-radius: 5px 5px 0 0;
+  background: hsl(220, 20%, 94%);
+  outline: none;
+  font-weight: bold;
+  max-width: 22%;
+  overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+}
+#tabs [role=tab][aria-selected=true] {
+  padding: 2px 2px 4px;
+  margin-top: 0;
+  border-width: 2px;
+  border-top-width: 6px;
+  border-top-color: rgb(36, 116, 214);
+  border-bottom-color: hsl(220, 43%, 99%);
+  background: hsl(220, 43%, 99%);
+}
+#tabs [role=tab][aria-selected=false] {
+  border-bottom: 1px solid hsl(219, 1%, 72%);
+}
+#tabs [role=tab] span.focus {
+  display: inline-block;
+  margin: 2px;
+  padding: 4px 6px;
+}
+#tabs [role=tab]:hover span.focus,
+#tabs [role=tab]:focus span.focus,
+#tabs [role=tab]:active span.focus {
+  padding: 2px 4px;
+  border: 2px solid rgb(36, 116, 214);
+  border-radius: 3px;
+}
+#tabs [role=tabpanel] {
+  padding: 5px;
+  border: 2px solid hsl(219, 1%, 72%);
+  border-radius: 0 5px 5px;
+  background: hsl(220, 43%, 99%);
+  min-height: 10em;
+  width: 100%;
+  overflow: auto;
+}
+#tabs [role=tabpanel].is-hidden {
+  display: none;
+}
+#tabs [role=tabpanel] p {
+  margin: 0;
+}
+
+#switch fieldset {
+  width: 22em;
+}
+#switch legend {
+  font-size: 110%;
+}
+#switch label {
+  display: block;
+  margin: 0.5em;
+  padding: 4px 4px 6px 6px;
+  border: 0 solid #005a9c;
+  border-radius: 5px;
+  width: 16em;
+}
+#switch label .label {
+  display: inline-block;
+  width: 9em;
+  user-select: none;
+}
+#switch label input[role=switch] {
+  opacity: 0;
+}
+#switch label input[role=switch] ~ .state {
+  display: inline-block;
+  user-select: none;
+}
+#switch label input[role=switch] ~ .state > .container {
+  position: relative;
+  top: 2px;
+  display: inline-block;
+  border: 2px solid black;
+  width: 40px;
+  height: 20px;
+  border-radius: 11px;
+}
+#switch label input[role=switch] ~ .state > .container > .position {
+  position: relative;
+  top: 1px;
+  left: 2px;
+  display: inline-block;
+  border: 2px solid black;
+  border-radius: 9px;
+  width: 14px;
+  height: 14px;
+  background: black;
+  opacity: 0.6;
+}
+#switch label input[role=switch]:not(:checked) ~ .state span.on {
+  display: none;
+}
+#switch label input[role=switch]:checked ~ .state > span.off {
+  display: none;
+}
+#switch label input[role=switch]:checked ~ .state > .container > .position {
+  left: 20px;
+  border-color: green;
+  background: green;
+  opacity: 1;
+}
+#switch label.focus,
+#switch label:hover {
+  padding: 2px 2px 4px 4px;
+  border-width: 2px;
+  outline: none;
+  background-color: #def;
+  cursor: pointer;
+}
+#switch label.focus span.container,
+#switch label:hover span.container {
+  background-color: white;
+}
+
+#menubar-editor {
+  @charset "utf-8";
+  /* focus and hover styling */
+  /*
+  * Text area styles
+  */
+}
+#menubar-editor .menubar-editor {
+  margin: 0;
+  padding: 2px;
+  width: 560px;
+}
+#menubar-editor .menubar-editor.focus {
+  padding: 0;
+  border: solid 2px #034575;
+}
+#menubar-editor .menubar-editor textarea {
+  padding: 4px;
+  margin: 0;
+  border: 2px solid #eee;
+  height: 400px;
+  width: 548px;
+  font-size: medium;
+  font-family: sans-serif;
+}
+#menubar-editor .menubar-editor [role=menubar] {
+  margin: 0;
+  padding: 2px;
+  border: 2px solid #eee;
+  font-size: 110%;
+  list-style: none;
+  background-color: #eee;
+  height: 32px;
+  display: block;
+}
+#menubar-editor .menubar-editor [role=menubar] li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#menubar-editor .menubar-editor [role=menubar] > li {
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  left: 1px;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menuitem] > [aria-hidden]::before {
+  content: "▼";
+  padding-left: 0.25rem;
+  font-size: 11px;
+  vertical-align: middle;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menuitem][aria-expanded=true] > [aria-hidden]::before {
+  content: "▲";
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menu] {
+  display: none;
+  margin: 0;
+  padding: 2px;
+  position: absolute;
+  border: 2px solid #034575;
+  background-color: #eee;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=group] {
+  margin: 0;
+  padding: 0;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menuitem][aria-disabled=true] {
+  color: #666;
+  text-decoration: line-through;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=separator] {
+  padding-top: 3px;
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cline x1='0' y1='6' x2='12' y2='6' style='stroke:black;stroke-width:1' /%3E%3C/svg%3E%0A");
+  background-size: 10px 10px;
+  background-position: center;
+  background-repeat: repeat-x;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menuitem],
+#menubar-editor .menubar-editor [role=menubar] [role=menuitemcheckbox],
+#menubar-editor .menubar-editor [role=menubar] [role=menuitemradio],
+#menubar-editor .menubar-editor [role=menubar] [role=separator] {
+  padding: 6px;
+  background-color: #eee;
+  border: 0 solid #eee;
+  color: black;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menuitem][aria-expanded=true] {
+  padding: 4px;
+  border: 2px solid #034575;
+  background-color: #034575;
+  color: #fff;
+  outline: none;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menu] [role=menuitem],
+#menubar-editor .menubar-editor [role=menubar] [role=menu] [role=menuitemcheckbox],
+#menubar-editor .menubar-editor [role=menubar] [role=menu] [role=menuitemradio],
+#menubar-editor .menubar-editor [role=menubar] [role=menu] [role=separator] {
+  padding-left: 27px;
+  width: 8em;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menu] [aria-checked=true] {
+  padding: 6px;
+  padding-left: 8px;
+  padding-right: 18px;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menuitemradio][aria-checked=true] > [aria-hidden]::before {
+  content: "●";
+  display: inline-block;
+  width: 18px;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menuitemcheckbox][aria-checked=true] > [aria-hidden]::before {
+  content: "✓";
+  display: inline-block;
+  width: 18px;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menuitem]:focus,
+#menubar-editor .menubar-editor [role=menubar] [role=menuitemcheckbox]:focus,
+#menubar-editor .menubar-editor [role=menubar] [role=menuitemradio]:focus {
+  padding: 4px;
+  border: 2px solid #034575;
+  background-color: #034575;
+  color: #fff;
+  outline: none;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menuitemradio][aria-checked=true]:focus > [aria-hidden]::before,
+#menubar-editor .menubar-editor [role=menubar] [role=menuitemcheckbox][aria-checked=true]:focus > [aria-hidden]::before {
+  margin-left: -2px;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menuitem]:hover {
+  padding: 4px;
+  border: 2px solid #034575;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menu] [role=menuitem]:focus,
+#menubar-editor .menubar-editor [role=menubar] [role=menu] [role=menuitemcheckbox]:focus,
+#menubar-editor .menubar-editor [role=menubar] [role=menu] [role=menuitemradio]:focus {
+  padding-left: 25px;
+}
+#menubar-editor .menubar-editor [role=menubar] [role=menu] [role=menuitem][aria-checked=true]:focus,
+#menubar-editor .menubar-editor [role=menubar] [role=menu] [role=menuitemcheckbox][aria-checked=true]:focus,
+#menubar-editor .menubar-editor [role=menubar] [role=menu] [role=menuitemradio][aria-checked=true]:focus {
+  padding-left: 8px;
+  padding-right: 21px;
+}
+#menubar-editor .menubar-editor .italic {
+  font-style: italic;
+}
+#menubar-editor .menubar-editor .bold {
+  font-weight: bold;
+}
+#menubar-editor .menubar-editor .underline {
+  text-decoration: underline;
+}
+
+html {
+  background-color: var(--bright);
+  color: var(--dark);
+}
+html.dark {
+  background-color: var(--dark);
+  color: var(--on-dark);
+}
+html.bright {
+  background-color: var(--bright);
+  color: var(--on-bright);
+}
+html.neutral {
+  background-color: var(--neutral);
+  color: var(--on-neutral);
 }
 
 .color {
-  width: 100px;
-  height: 100px;
-  font-family: Silka;
-  font-size: 18.7px;
-  line-height: 1.2;
-  padding: 0.5rem;
   display: inline-block;
+  width: 12rem;
+  height: 12rem;
+  margin: 25rem;
+  padding: 0.25rem;
 }
-
-.blau-1 {
-  background-color: var(--blau-1);
-  color: var(--on-blau-1);
+.color.error {
+  background-color: var(--error);
+  color: var(--on-error);
 }
-
-.blau-2 {
-  background-color: var(--blau-2);
-  color: var(--on-blau-2);
+.color.warning {
+  background-color: var(--warning);
+  color: var(--on-warning);
 }
-
-.gelb {
-  background-color: var(--gelb);
-  color: var(--on-gelb);
+.color.success {
+  background-color: var(--success);
+  color: var(--on-success);
 }
-
-.lila {
-  background-color: var(--lila);
-  color: var(--on-lila);
+.color.info {
+  background-color: var(--info);
+  color: var(--on-info);
 }
-
-.gruen {
-  background-color: var(--gruen);
-  color: var(--on-gruen);
+.color.primary {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+.color.secondary {
+  background-color: var(--secondary);
+  color: var(--on-secondary);
+}
+.color.tertiary {
+  background-color: var(--tertiary);
+  color: var(--on-tertiary);
+}
+.color.neutral {
+  background-color: var(--neutral);
+  color: var(--on-neutral);
+}
+.color.dark {
+  background-color: var(--dark);
+  color: var(--on-dark);
+}
+.color.bright {
+  background-color: var(--bright);
+  color: var(--on-bright);
 }

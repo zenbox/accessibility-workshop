@@ -1,13 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schrift und Absatz</title>
-    <link rel="stylesheet" href="static/assets/css/style.css" />
-</head>
-<body>
-    
-    <script src="static/assets/js/navigation.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Schrift und Absatz</title>
+        <link
+            rel="stylesheet"
+            href="static/assets/css/style.css"
+        />
+    </head>
+    <body>
+        <article>
+            <p>
+                Lgorem gfcesjy ipsum golor sit amet consectetur
+                adipisicing elit. Lorem ipsum dolor, sit amet cÄonsectetur
+                adipisicing elit. Unde officiis numquam laboriosam optio
+                mollitia cum debitis, molestiae nobis quia est illo possimus,
+                eius odio aperiam fuga culpa tenetur cupiditate in modi quo
+                voluptatibus harum quae quam! Possimus inventore minima ipsum
+                officia, exercitationem praesentium, consequuntur dicta
+                similique, eligendi nam cumque laborum?
+            </p>
+            <h2>Textabsatz gfcesjy</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <p>
+                <small
+                    >Lorem ipsum dolor sit amet consectetur adipisicing
+                    elit.</small
+                >
+            </p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </article>
+
+        <article>
+            <h2>Code</h2>
+            <pre><code>10 REM My first 
+20 PRINT "Hello, World!"
+30 GOTO 40
+40 END</code>
+</pre>
+            <h2>Lorem headline h2 ipsum dolor sit amet consectetur adipisicing.</h2>
+        </article>
+
+        <article>
+            <h2>Keyboard</h2>
+            <p><kbd>F11</kbd> <kbd>F12</kbd> <kbd>Strg + A</kbd></p>
+        </article>
+
+        <article>
+            <h2>Listen</h2>
+            <ol>
+                <li>Lorem, ipsum dolor. Eins.</li>
+                <li>Lorem, ipsum dolor. Zwei.</li>
+                <li>Lorem, ipsum dolor. Drei.</li>
+                <li>Lorem, ipsum dolor. Vier.</li>
+            </ol>
+
+            <ul>
+                <li>Lorem, ipsum dolor. Eins.</li>
+                <li>Lorem, ipsum dolor. Zwei.</li>
+                <li>Lorem, ipsum dolor. Drei.</li>
+                <li>Lorem, ipsum dolor. Vier.</li>
+            </ul>
+
+            <dl>
+                <dt>HTML</dt>
+                <dd>HyperText Markup Language</dd>
+                <dt>CSS</dt>
+                <dd>Cascading Style Sheets</dd>
+                <dt>JS</dt>
+                <dd>JavaScript</dd>
+            </dl>
+        </article>
+
+        <article>
+            <h2>Abbildungen</h2>
+            <figure>
+                <img
+                    src="static/assets/figures/400.jpg"
+                    alt="Ein Platzhalterbild"
+                />
+                <figcaption>Ein Platzhalterbild</figcaption>
+            </figure>
+        </article>
+
+        <article>
+            <h2>Mehrspaltiger Text</h2>
+            <p id="loremipsum"></p>
+            <script>
+                let loremIpsum =
+                    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae facilis officia itaque architecto iure labore nam laboriosam ea vitae, ratione, aliquam sunt praesentium adipisci aliquid tempore, ad hic alias? Quo, harum. Cum sed explicabo voluptatum dolore unde similique aperiam autem tenetur natus, blanditiis quos labore cumque modi atque sit sint dolor incidunt temporibus recusandae sequi harum aspernatur cupiditate. Fugit, numquam delectus quod unde odio saepe incidunt provident eos cum, consectetur at dignissimos eligendi nemo aliquam deserunt officia excepturi, aliquid distinctio deleniti vitae ducimus! Ratione nostrum dolores eius, perferendis reiciendis minus magni est sit tempora rerum vero, eveniet nihil, id sed ipsam. Veniam iure ipsam voluptate molestiae, reprehenderit esse architecto commodi non est animi sint provident hic, beatae quos sequi dolor optio. Labore laborum dicta vel quae dolores cumque dolorem saepe qui! Reprehenderit, provident dolor? Quos, vitae dignissimos ratione pariatur aliquid fugiat qui reiciendis omnis natus! Quod, soluta eveniet cumque repudiandae error enim et ipsam repellendus totam accusamus tempora odio iure autem quos pariatur?"
+                let wrappedText = ""
+                for (let i = 0; i < loremIpsum.length; i++) {
+                    if ((i + 1) % 10 === 0) {
+                        wrappedText += `<span class='_10'>${loremIpsum[i]}</span>`
+                    } else {
+                        wrappedText += loremIpsum[i]
+                    }
+                }
+                document.getElementById("loremipsum").innerHTML = wrappedText
+            </script>
+        </article>
+
+        <article>
+            <h2>Überschriften</h2>
+
+            <h1>Überschrift 1</h1>
+            <h2>Überschrift 2</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+
+            <h3>Überschrift 3</h3>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+
+            <h4>Überschrift 4</h4>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+
+            <h5>Überschrift 5</h5>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+
+            <h6>Überschrift 6</h6>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+        </article>
+
+        <script src="static/assets/js/navigation.js"></script>
+    </body>
 </html>

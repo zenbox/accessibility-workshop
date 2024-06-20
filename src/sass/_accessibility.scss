@@ -183,11 +183,12 @@ time {
     top: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 10;
+    z-index: 1001;
     background-color: lightgrey;
     color: black;
     font-size: 3rem;
-    ul {
+    ul,
+    ol {
         list-style-type: none;
         margin: 0;
         padding: 0;
@@ -199,6 +200,7 @@ time {
         margin: 0;
         overflow: visible;
         clip-path: auto;
+        border: 2px dotted red;
     }
     li:has(a:not(:focus)) {
         position: absolute;
@@ -213,4 +215,33 @@ table,
 th,
 td {
     border: 1px dotted black;
+}
+#skip-links a {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+#skip-links:has(:focus) a:focus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1001;
+    background-color: hsla(0, 0%, 100%, 0.85);
+    color: black;
+    font-size: 3rem;
+    margin: 0;
+    overflow: visible;
+    clip-path: auto;
+    text-decoration: none;
 }

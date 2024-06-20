@@ -1,0 +1,178 @@
+$aria-attribute-background-color: hsla(200, 100%, 25%, 0.85);
+$aria-attribute-color: hsla(200, 100%, 100%, 0.85);
+
+[aria-activedescendant],
+[aria-atomic],
+[aria-autocomplete],
+[aria-busy],
+[aria-checked],
+[aria-controls],
+[aria-current],
+[aria-describedby],
+[aria-disabled],
+[aria-dropeffect],
+[aria-expanded],
+[aria-flowto],
+[aria-grabbed],
+[aria-haspopup],
+[aria-hidden],
+[aria-invalid],
+[aria-label],
+[aria-labelledby],
+[aria-level],
+[aria-live],
+[aria-multiline],
+[aria-multiselectable],
+[aria-orientation],
+[aria-owns],
+[aria-posinset],
+[aria-pressed],
+[aria-selected],
+[aria-readonly],
+[aria-relevant],
+[aria-atomic],
+[aria-required],
+[aria-selected],
+[aria-checked],
+[aria-pressed],
+[aria-setsize],
+[aria-posinset],
+[aria-sort],
+[aria-valuemax],
+[aria-valuemin],
+[aria-valuenow],
+[aria-valuetext] {
+    outline: 3px dotted $aria-attribute-background-color;outline-offset: 1px;
+    &::before {
+        display: block;
+        position: absolute;
+        right: 1rem;
+        padding: 0.2rem;
+        font-size: 0.8rem;
+        color: $aria-attribute-color;
+        background: $aria-attribute-background-color;
+    }
+}
+[aria-activedescendant]::before {
+    content: attr(aria-activedescendant);
+}
+[aria-atomic]::before {
+    content: attr(aria-atomic);
+}
+[aria-autocomplete]::before {
+    content: attr(aria-autocomplete);
+}
+[aria-busy]::before {
+    content: attr(aria-busy);
+}
+[aria-checked]::before {
+    content: attr(aria-checked);
+}
+[aria-controls]::before {
+    content: attr(aria-controls);
+}
+[aria-current]::before {
+    content: attr(aria-current);
+}
+[aria-describedby]::before {
+    content: attr(aria-describedby);
+}
+[aria-disabled]::before {
+    content: attr(aria-disabled);
+}
+[aria-dropeffect]::before {
+    content: attr(aria-dropeffect);
+}
+[aria-expanded]::before {
+    content: attr(aria-expanded);
+}
+[aria-flowto]::before {
+    content: attr(aria-flowto);
+}
+[aria-grabbed]::before {
+    content: attr(aria-grabbed);
+}
+[aria-haspopup]::before {
+    content: attr(aria-haspopup);
+}
+[aria-hidden]::before {
+    content: attr(aria-hidden);
+}
+[aria-invalid]::before {
+    content: attr(aria-invalid);
+}
+[aria-label]::before {
+    content: attr(aria-label);
+}
+[aria-labelledby]::before {
+    content: attr(aria-labelledby);
+}
+[aria-level]::before {
+    content: attr(aria-level);
+}
+[aria-live]::before {
+    content: attr(aria-live);
+}
+[aria-multiline]::before {
+    content: attr(aria-multiline);
+}
+[aria-multiselectable]::before {
+    content: attr(aria-multiselectable);
+}
+[aria-orientation]::before {
+    content: attr(aria-orientation);
+}
+[aria-owns]::before {
+    content: attr(aria-owns);
+}
+[aria-posinset]::before {
+    content: attr(aria-posinset);
+}
+[aria-pressed]::before {
+    content: attr(aria-pressed);
+}
+[aria-selected]::before {
+    content: attr(aria-selected);
+}
+[aria-readonly]::before {
+    content: attr(aria-readonly);
+}
+[aria-relevant]::before {
+    content: attr(aria-relevant);
+}
+[aria-atomic]::before {
+    content: attr(aria-atomic);
+}
+[aria-required]::before {
+    content: attr(aria-required);
+}
+[aria-selected]::before {
+    content: attr(aria-selected);
+}
+[aria-checked]::before {
+    content: attr(aria-checked);
+}
+[aria-pressed]::before {
+    content: attr(aria-pressed);
+}
+[aria-setsize]::before {
+    content: attr(aria-setsize);
+}
+[aria-posinset]::before {
+    content: attr(aria-posinset);
+}
+[aria-sort]::before {
+    content: attr(aria-sort);
+}
+[aria-valuemax]::before {
+    content: attr(aria-valuemax);
+}
+[aria-valuemin]::before {
+    content: attr(aria-valuemin);
+}
+[aria-valuenow]::before {
+    content: attr(aria-valuenow);
+}
+[aria-valuetext]:before {
+    content: attr(aria-valuetext);
+}

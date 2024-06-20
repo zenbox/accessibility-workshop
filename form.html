@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Schrift und Absatz</title>
+        <link
+            rel="stylesheet"
+            href="static/assets/css/style.css"
+        />
+    </head>
+    <body>
+        <article>
+            <h2>Formular</h2>
+            <form action="">
+                <fieldset>
+                    <fieldset>Fieldset ohne Legende</fieldset>
+                    <legend>Formular</legend>
+
+                    <label for="name">Name:</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                    />
+
+                    <label for="email">E-Mail:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                    />
+
+                    <label>Datum</label
+                    ><input
+                        type="date"
+                        name="date"
+                        id="date"
+                    />
+
+                    <fieldset>
+                        <legend>Farben</legend>
+                        <label
+                            ><input
+                                type="checkbox"
+                                name="color"
+                                id="magenta"
+                            />Magenta</label
+                        >
+                        <label
+                            ><input
+                                type="checkbox"
+                                name="color"
+                                id="yellow"
+                            />Gelb</label
+                        >
+                        <label
+                            ><input
+                                type="checkbox"
+                                name="color"
+                                id="cyan"
+                            />Cyan</label
+                        >
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Farben</legend>
+                        <label
+                            ><input
+                                type="radio"
+                                name="color"
+                                id="red"
+                            />Rot</label
+                        >
+                        <label
+                            ><input
+                                type="radio"
+                                name="color"
+                                id="green"
+                            />Grün</label
+                        >
+                        <label
+                            ><input
+                                type="radio"
+                                name="color"
+                                id="blue"
+                            />Blau</label
+                        >
+                    </fieldset>
+
+                    <label for="message">Nachricht:</label>
+                    <textarea
+                        name="message"
+                        id="message"
+                        cols="30"
+                        rows="10"
+                    ></textarea>
+
+                    <label for="cars">Auswahl:</label>
+                    <select
+                        name="cars"
+                        id="cars"
+                    >
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
+
+                    <button type="submit">Absenden</button>
+                </fieldset>
+                <fieldset>
+                    <legend>Weitere Elemente</legend>
+
+                    <label for="">Farbe:</label>
+                    <input
+                        type="color"
+                        name="color"
+                        id="color"
+                    />
+
+                    <label for="">Schieberegler:</label>
+                    <input
+                        type="range"
+                        name="range"
+                        id="range"
+                    />
+
+                    <label for="">Fortschrittsbalken:</label>
+                    <progress
+                        value="50"
+                        max="100"
+                    ></progress>
+
+                    <label for="">Meter:</label>
+                    <meter
+                        value="0.5"
+                        min="0"
+                        max="1"
+                    ></meter>
+
+                    <label for="">Suchen:</label>
+                    <input
+                        type="search"
+                        name="search"
+                        id="search"
+                    />
+
+                    <label for="">Telefon:</label>
+                    <input
+                        type="tel"
+                        name="tel"
+                        id="tel"
+                    />
+
+                    <label for="">URL:</label>
+                    <input
+                        type="url"
+                        name="url"
+                        id="url"
+                    />
+
+                    <label for="">Wochen:</label>
+                    <input
+                        type="week"
+                        name="week"
+                        id="week"
+                    />
+
+                    <label for="">Zeit:</label>
+                    <input
+                        type="time"
+                        name="time"
+                        id="time"
+                    />
+
+                    <label for="">Monat:</label>
+                    <input
+                        type="month"
+                        name="month"
+                        id="month"
+                    />
+
+                    <label for="">Zahl:</label>
+                    <input
+                        type="number"
+                        name="number"
+                        id="number"
+                    />
+
+                    <label for="">Passwort:</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                    />
+
+                    <label for="">Versteckt:</label>
+                    <input
+                        type="hidden"
+                        name="hidden"
+                        id="hidden"
+                    />
+
+                    <label for="">Datei:</label>
+                    <input
+                        type="file"
+                        name="file"
+                        id="file"
+                    />
+                </fieldset>
+            </form>
+        </article>
+        <script src="static/assets/js/navigation.js"></script>
+    </body>
+</html>

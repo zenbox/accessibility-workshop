@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Pattern</title>
+        <link
+            rel="stylesheet"
+            href="static/assets/css/style.css"
+        />
+    </head>
+    <body>
+        <article id="accordion">
+            <h2>Accordion</h2>
+            <div
+                id="accordionGroup"
+                class="accordion"
+            >
+                <h3>
+                    <button
+                        type="button"
+                        aria-expanded="true"
+                        class="accordion-trigger"
+                        aria-controls="sect1"
+                        id="accordion1id"
+                    >
+                        <span class="accordion-title">
+                            Personal Information
+                            <span class="accordion-icon"></span>
+                        </span>
+                    </button>
+                </h3>
+                <div
+                    id="sect1"
+                    role="region"
+                    aria-labelledby="accordion1id"
+                    class="accordion-panel"
+                >
+                    <div>
+                        <fieldset>
+                            <p>
+                                <label for="cufc1">
+                                    Name
+                                    <span aria-hidden="true"> * </span>
+                                    :
+                                </label>
+                                <input
+                                    type="text"
+                                    value=""
+                                    name="Name"
+                                    id="cufc1"
+                                    class="required"
+                                    aria-required="true"
+                                />
+                            </p>
+                            <p>
+                                <label for="cufc2">
+                                    Email
+                                    <span aria-hidden="true"> * </span>
+                                    :
+                                </label>
+                                <input
+                                    type="text"
+                                    value=""
+                                    name="Email"
+                                    id="cufc2"
+                                    aria-required="true"
+                                />
+                            </p>
+                            <p>
+                                <label for="cufc3"> Phone: </label>
+                                <input
+                                    type="text"
+                                    value=""
+                                    name="Phone"
+                                    id="cufc3"
+                                />
+                            </p>
+                            <p>
+                                <label for="cufc4"> Extension: </label>
+                                <input
+                                    type="text"
+                                    value=""
+                                    name="Ext"
+                                    id="cufc4"
+                                />
+                            </p>
+                            <p>
+                                <label for="cufc5"> Country: </label>
+                                <input
+                                    type="text"
+                                    value=""
+                                    name="Country"
+                                    id="cufc5"
+                                />
+                            </p>
+                            <p>
+                                <label for="cufc6"> City/Province: </label>
+                                <input
+                                    type="text"
+                                    value=""
+                                    name="City_Province"
+                                    id="cufc6"
+                                />
+                            </p>
+                        </fieldset>
+                    </div>
+                </div>
+                <h3>
+                    <button
+                        type="button"
+                        aria-expanded="false"
+                        class="accordion-trigger"
+                        aria-controls="sect2"
+                        id="accordion2id"
+                    >
+                        <span class="accordion-title">
+                            Billing Address
+                            <span class="accordion-icon"></span>
+                        </span>
+                    </button>
+                </h3>
+                <div
+                    id="sect2"
+                    role="region"
+                    aria-labelledby="accordion2id"
+                    class="accordion-panel"
+                    hidden=""
+                >
+                    <div>
+                        <fieldset>
+                            <p>
+                                <label for="b-add1"> Address 1: </label>
+                                <input
+                                    type="text"
+                                    name="b-add1"
+                                    id="b-add1"
+                                />
+                            </p>
+                            <p>
+                                <label for="b-add2"> Address 2: </label>
+                                <input
+                                    type="text"
+                                    name="b-add2"
+                                    id="b-add2"
+                                />
+                            </p>
+                            <p>
+                                <label for="b-city"> City: </label>
+                                <input
+                                    type="text"
+                                    name="b-city"
+                                    id="b-city"
+                                />
+                            </p>
+                            <p>
+                                <label for="b-state"> State: </label>
+                                <input
+                                    type="text"
+                                    name="b-state"
+                                    id="b-state"
+                                />
+                            </p>
+                            <p>
+                                <label for="b-zip"> Zip Code: </label>
+                                <input
+                                    type="text"
+                                    name="b-zip"
+                                    id="b-zip"
+                                />
+                            </p>
+                        </fieldset>
+                    </div>
+                </div>
+                <h3>
+                    <button
+                        type="button"
+                        aria-expanded="false"
+                        class="accordion-trigger"
+                        aria-controls="sect3"
+                        id="accordion3id"
+                    >
+                        <span class="accordion-title">
+                            Shipping Address
+                            <span class="accordion-icon"></span>
+                        </span>
+                    </button>
+                </h3>
+                <div
+                    id="sect3"
+                    role="region"
+                    aria-labelledby="accordion3id"
+                    class="accordion-panel"
+                    hidden=""
+                >
+                    <div>
+                        <fieldset>
+                            <p>
+                                <label for="m-add1"> Address 1: </label>
+                                <input
+                                    type="text"
+                                    name="m-add1"
+                                    id="m-add1"
+                                />
+                            </p>
+                            <p>
+                                <label for="m-add2"> Address 2: </label>
+                                <input
+                                    type="text"
+                                    name="m-add2"
+                                    id="m-add2"
+                                />
+                            </p>
+                            <p>
+                                <label for="m-city"> City: </label>
+                                <input
+                                    type="text"
+                                    name="m-city"
+                                    id="m-city"
+                                />
+                            </p>
+                            <p>
+                                <label for="m-state"> State: </label>
+                                <input
+                                    type="text"
+                                    name="m-state"
+                                    id="m-state"
+                                />
+                            </p>
+                            <p>
+                                <label for="m-zip"> Zip Code: </label>
+                                <input
+                                    type="text"
+                                    name="m-zip"
+                                    id="m-zip"
+                                />
+                            </p>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article id="alert">
+            <h2>Alert</h2>
+            <button
+                type="button"
+                id="alert-trigger"
+            >
+                Trigger Alert
+            </button>
+            <div
+                id="example"
+                role="alert"
+            ></div>
+            <script
+                type="text/template"
+                id="alert-template"
+            >
+                <p>Hello</p>
+            </script>
+        </article>
+
+        <article id="modal-dialog">
+            <h2>Modal Dialog</h2>
+            <button
+                type="button"
+                onclick="openDialog('dialog1', this)"
+            >
+                Add Delivery Address
+            </button>
+            <div
+                id="dialog_layer"
+                class="dialogs"
+            >
+                <div
+                    role="dialog"
+                    id="dialog1"
+                    aria-labelledby="dialog1_label"
+                    aria-modal="true"
+                    class="hidden"
+                >
+                    <h2
+                        id="dialog1_label"
+                        class="dialog_label"
+                    >
+                        Add Delivery Address
+                    </h2>
+                    <div class="dialog_form">
+                        <div class="dialog_form_item">
+                            <label>
+                                <span class="label_text">Street:</span>
+                                <input
+                                    type="text"
+                                    class="wide_input"
+                                />
+                            </label>
+                        </div>
+                        <div class="dialog_form_item">
+                            <label>
+                                <span class="label_text">City:</span>
+                                <input
+                                    type="text"
+                                    class="city_input"
+                                />
+                            </label>
+                        </div>
+                        <div class="dialog_form_item">
+                            <label>
+                                <span class="label_text">State:</span>
+                                <input
+                                    type="text"
+                                    class="state_input"
+                                />
+                            </label>
+                        </div>
+                        <div class="dialog_form_item">
+                            <label>
+                                <span class="label_text">Zip:</span>
+                                <input
+                                    type="text"
+                                    class="zip_input"
+                                />
+                            </label>
+                        </div>
+
+                        <div class="dialog_form_item">
+                            <label for="special_instructions">
+                                <span class="label_text"
+                                    >Special instructions:</span
+                                >
+                            </label>
+                            <input
+                                id="special_instructions"
+                                type="text"
+                                aria-describedby="special_instructions_desc"
+                                class="wide_input"
+                            />
+                            <div
+                                class="label_info"
+                                id="special_instructions_desc"
+                            >
+                                For example, gate code or other information to
+                                help the driver find you
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dialog_form_actions">
+                        <button
+                            type="button"
+                            onclick="openDialog('dialog2', this, 'dialog2_para1')"
+                        >
+                            Verify Address
+                        </button>
+                        <button
+                            type="button"
+                            onclick="replaceDialog('dialog3', undefined, 'dialog3_close_btn')"
+                        >
+                            Add
+                        </button>
+                        <button
+                            type="button"
+                            onclick="closeDialog(this)"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    id="dialog2"
+                    role="dialog"
+                    aria-labelledby="dialog2_label"
+                    aria-describedby="dialog2_desc"
+                    aria-modal="true"
+                    class="hidden"
+                >
+                    <h2
+                        id="dialog2_label"
+                        class="dialog_label"
+                    >
+                        Verification Result
+                    </h2>
+                    <div
+                        id="dialog2_desc"
+                        class="dialog_desc"
+                    >
+                        <p
+                            tabindex="-1"
+                            id="dialog2_para1"
+                        >
+                            This is just a demonstration. If it were a real
+                            application, it would provide a message telling
+                            whether the entered address is valid.
+                        </p>
+                        <p>
+                            For demonstration purposes, this dialog has a lot of
+                            text. It demonstrates a scenario where:
+                        </p>
+                        <ul>
+                            <li>
+                                The first interactive element, the help link, is
+                                at the bottom of the dialog.
+                            </li>
+                            <li>
+                                If focus is placed on the first interactive
+                                element when the dialog opens, the validation
+                                message may not be visible.
+                            </li>
+                            <li>
+                                If the validation message is visible and the
+                                focus is on the help link, then the focus may
+                                not be visible.
+                            </li>
+                            <li>
+                                When the dialog opens, it is important that
+                                both:
+                                <ul>
+                                    <li>
+                                        The beginning of the text is visible so
+                                        users do not have to scroll back to
+                                        start reading.
+                                    </li>
+                                    <li>
+                                        The keyboard focus always remains
+                                        visible.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p>There are several ways to resolve this issue:</p>
+                        <ul>
+                            <li>
+                                Place an interactive element at the top of the
+                                dialog, e.g., a button or link.
+                            </li>
+                            <li>
+                                Make a static element focusable, e.g., the
+                                dialog title or the first block of text.
+                            </li>
+                        </ul>
+                        <p>
+                            Please <em>DO NOT </em> make the element with role
+                            dialog focusable!
+                        </p>
+                        <ul>
+                            <li>
+                                The larger a focusable element is, the more
+                                difficult it is to visually identify the
+                                location of focus, especially for users with a
+                                narrow field of view.
+                            </li>
+                            <li>
+                                The dialog has a visual border, so creating a
+                                clear visual indicator of focus when the entire
+                                dialog has focus is not very feasible.
+                            </li>
+                            <li>
+                                Screen readers read the label and content of
+                                focusable elements. The dialog contains its
+                                label and a lot of content! If a dialog like
+                                this one has focus, the actual focus is
+                                difficult to comprehend.
+                            </li>
+                        </ul>
+                        <p>
+                            In this dialog, the first paragraph has
+                            <code>tabindex=<q>-1</q></code
+                            >. The first paragraph is also contained inside the
+                            element that provides the dialog description, i.e.,
+                            the element that is referenced by
+                            <code>aria-describedby</code>. With some screen
+                            readers, this may have one negative but relatively
+                            insignificant side effect when the dialog opens --
+                            the first paragraph may be announced twice.
+                            Nonetheless, making the first paragraph focusable
+                            and setting the initial focus on it is the most
+                            broadly accessible option.
+                        </p>
+                    </div>
+                    <div class="dialog_form_actions">
+                        <a
+                            href="#"
+                            onclick="openDialog('dialog4', this)"
+                            >link to help</a
+                        >
+                        <button
+                            type="button"
+                            onclick="openDialog('dialog4', this)"
+                        >
+                            accepting an alternative form
+                        </button>
+                        <button
+                            type="button"
+                            onclick="closeDialog(this)"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    id="dialog3"
+                    role="dialog"
+                    aria-labelledby="dialog3_label"
+                    aria-describedby="dialog3_desc"
+                    aria-modal="true"
+                    class="hidden"
+                >
+                    <h2
+                        id="dialog3_label"
+                        class="dialog_label"
+                    >
+                        Address Added
+                    </h2>
+                    <p
+                        id="dialog3_desc"
+                        class="dialog_desc"
+                    >
+                        The address you provided has been added to your list of
+                        delivery addresses. It is ready for immediate use. If
+                        you wish to remove it, you can do so from
+                        <a
+                            href="#"
+                            onclick="openDialog('dialog4', this)"
+                            >your profile.</a
+                        >
+                    </p>
+                    <div class="dialog_form_actions">
+                        <button
+                            type="button"
+                            id="dialog3_close_btn"
+                            onclick="closeDialog(this)"
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    id="dialog4"
+                    role="dialog"
+                    aria-labelledby="dialog4_label"
+                    aria-describedby="dialog4_desc"
+                    class="hidden"
+                    aria-modal="true"
+                >
+                    <h2
+                        id="dialog4_label"
+                        class="dialog_label"
+                    >
+                        End of the Road!
+                    </h2>
+                    <p
+                        id="dialog4_desc"
+                        class="dialog_desc"
+                    >
+                        You activated a fake link or button that goes nowhere!
+                        The link or button is present for demonstration purposes
+                        only.
+                    </p>
+                    <div class="dialog_form_actions">
+                        <button
+                            type="button"
+                            id="dialog4_close_btn"
+                            onclick="closeDialog(this)"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article id="breadcrumb">
+            <h2>Breadcrumb</h2>
+            <nav
+                aria-label="Breadcrumb"
+                class="breadcrumb"
+            >
+                <ol>
+                    <li>
+                        <a href="../../../.."
+                            >WAI-ARIA Authoring Practices Guide (APG)</a
+                        >
+                    </li>
+                    <li>
+                        <a href="../../../">Patterns</a>
+                    </li>
+                    <li>
+                        <a href="../../">Breadcrumb Pattern</a>
+                    </li>
+                    <li>
+                        <a
+                            href=""
+                            aria-current="page"
+                            >Breadcrumb Example</a
+                        >
+                    </li>
+                </ol>
+            </nav>
+        </article>
+
+        <article id="button">
+            <h2>Button</h2>
+            <p>
+                This <q>Print</q> action button uses a <code>div</code> element.
+            </p>
+            <div
+                tabindex="0"
+                role="button"
+                id="action"
+            >
+                Print Page
+            </div>
+
+            <p>
+                This <q>Mute</q> toggle button uses an <code>a</code> element.
+            </p>
+            <a
+                tabindex="0"
+                role="button"
+                id="toggle"
+                aria-pressed="false"
+            >
+                Mute
+                <svg
+                    aria-hidden="true"
+                    focusable="false"
+                >
+                    <use xlink:href="#icon-sound"></use>
+                </svg>
+            </a>
+
+            <svg
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                style="display: none"
+                id="svg_definitions"
+            >
+                <defs>
+                    <symbol
+                        id="icon-mute"
+                        viewBox="0 0 75 75"
+                    >
+                        <polygon
+                            id="polygon1"
+                            points="39.389,13.769 22.235,28.606 6,28.606 6,47.699 21.989,47.699 39.389,62.75 39.389,13.769"
+                            style="
+                                stroke: currentcolor;
+                                stroke-width: 5;
+                                stroke-linejoin: round;
+                                fill: currentcolor;
+                            "
+                        ></polygon>
+                        <path
+                            id="path3003"
+                            d="M 48.651772,50.269646 69.395223,25.971024"
+                            style="
+                                fill: none;
+                                stroke: currentcolor;
+                                stroke-width: 5;
+                                stroke-linecap: round;
+                            "
+                        ></path>
+                        <path
+                            id="path3003-1"
+                            d="M 69.395223,50.269646 48.651772,25.971024"
+                            style="
+                                fill: none;
+                                stroke: currentcolor;
+                                stroke-width: 5;
+                                stroke-linecap: round;
+                            "
+                        ></path>
+                    </symbol>
+                    <symbol
+                        id="icon-sound"
+                        viewBox="0 0 75 75"
+                    >
+                        <polygon
+                            points="39.389,13.769 22.235,28.606 6,28.606 6,47.699 21.989,47.699 39.389,62.75 39.389,13.769"
+                            style="
+                                stroke: currentcolor;
+                                stroke-width: 5;
+                                stroke-linejoin: round;
+                                fill: currentcolor;
+                            "
+                        ></polygon>
+                        <path
+                            d="M 48.128,49.03 C 50.057,45.934 51.19,42.291 51.19,38.377 C 51.19,34.399 50.026,30.703 48.043,27.577"
+                            style="
+                                fill: none;
+                                stroke: currentcolor;
+                                stroke-width: 5;
+                                stroke-linecap: round;
+                            "
+                        ></path>
+                        <path
+                            d="M 55.082,20.537 C 58.777,25.523 60.966,31.694 60.966,38.377 C 60.966,44.998 58.815,51.115 55.178,56.076"
+                            style="
+                                fill: none;
+                                stroke: currentcolor;
+                                stroke-width: 5;
+                                stroke-linecap: round;
+                            "
+                        ></path>
+                        <path
+                            d="M 61.71,62.611 C 66.977,55.945 70.128,47.531 70.128,38.378 C 70.128,29.161 66.936,20.696 61.609,14.01"
+                            style="
+                                fill: none;
+                                stroke: currentcolor;
+                                stroke-width: 5;
+                                stroke-linecap: round;
+                            "
+                        ></path>
+                    </symbol>
+                </defs>
+            </svg>
+        </article>
+
+        <article id="carousel">
+            <h2>Carousel</h2>
+            <section
+                id="myCarousel"
+                class="carousel-tablist"
+                aria-roledescription="carousel"
+                aria-label="Highlighted television shows"
+            >
+                <div class="carousel-inner">
+                    <div class="controls">
+                        <button
+                            class="rotation"
+                            type="button"
+                        >
+                            <svg
+                                width="42"
+                                height="34"
+                                version="1.1"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="svg-play"
+                            >
+                                <rect
+                                    class="background"
+                                    x="2"
+                                    y="2"
+                                    rx="5"
+                                    ry="5"
+                                    width="38"
+                                    height="24"
+                                ></rect>
+                                <rect
+                                    class="border"
+                                    x="4"
+                                    y="4"
+                                    rx="5"
+                                    ry="5"
+                                    width="34"
+                                    height="20"
+                                ></rect>
+
+                                <polygon
+                                    class="pause"
+                                    points="17 8 17 20"
+                                ></polygon>
+
+                                <polygon
+                                    class="pause"
+                                    points="24 8 24 20"
+                                ></polygon>
+
+                                <polygon
+                                    class="play"
+                                    points="15 8 15 20 27 14"
+                                ></polygon>
+                            </svg>
+                        </button>
+
+                        <div class="tab-wrapper">
+                            <div
+                                role="tablist"
+                                aria-label="Slides"
+                            >
+                                <button
+                                    id="carousel-tab-1"
+                                    type="button"
+                                    role="tab"
+                                    aria-label="Slide 1"
+                                    aria-selected="true"
+                                    aria-controls="carousel-item-1"
+                                >
+                                    <svg
+                                        width="34"
+                                        height="34"
+                                        version="1.1"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <circle
+                                            class="border"
+                                            cx="16"
+                                            cy="15"
+                                            r="10"
+                                        ></circle>
+                                        <circle
+                                            class="tab-background"
+                                            cx="16"
+                                            cy="15"
+                                            r="8"
+                                        ></circle>
+                                        <circle
+                                            class="tab"
+                                            cx="16"
+                                            cy="15"
+                                            r="6"
+                                        ></circle>
+                                    </svg>
+                                </button>
+                                <button
+                                    id="carousel-tab-2"
+                                    type="button"
+                                    role="tab"
+                                    tabindex="-1"
+                                    aria-label="Slide 2"
+                                    aria-selected="false"
+                                    aria-controls="carousel-item-2"
+                                >
+                                    <svg
+                                        width="34"
+                                        height="34"
+                                        version="1.1"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <circle
+                                            class="border"
+                                            cx="16"
+                                            cy="15"
+                                            r="10"
+                                        ></circle>
+                                        <circle
+                                            class="tab-background"
+                                            cx="16"
+                                            cy="15"
+                                            r="8"
+                                        ></circle>
+                                        <circle
+                                            class="tab"
+                                            cx="16"
+                                            cy="15"
+                                            r="6"
+                                        ></circle>
+                                    </svg>
+                                </button>
+                                <button
+                                    id="carousel-tab-3"
+                                    type="button"
+                                    role="tab"
+                                    tabindex="-1"
+                                    aria-label="Slide 3"
+                                    aria-selected="false"
+                                    aria-controls="carousel-item-3"
+                                >
+                                    <svg
+                                        width="34"
+                                        height="34"
+                                        version="1.1"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <circle
+                                            class="border"
+                                            cx="16"
+                                            cy="15"
+                                            r="10"
+                                        ></circle>
+                                        <circle
+                                            class="tab-background"
+                                            cx="16"
+                                            cy="15"
+                                            r="8"
+                                        ></circle>
+                                        <circle
+                                            class="tab"
+                                            cx="16"
+                                            cy="15"
+                                            r="6"
+                                        ></circle>
+                                    </svg>
+                                </button>
+                                <button
+                                    id="carousel-tab-4"
+                                    type="button"
+                                    role="tab"
+                                    tabindex="-1"
+                                    aria-label="Slide 4"
+                                    aria-selected="false"
+                                    aria-controls="carousel-item-4"
+                                >
+                                    <svg
+                                        width="34"
+                                        height="34"
+                                        version="1.1"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <circle
+                                            class="border"
+                                            cx="16"
+                                            cy="15"
+                                            r="10"
+                                        ></circle>
+                                        <circle
+                                            class="tab-background"
+                                            cx="16"
+                                            cy="15"
+                                            r="8"
+                                        ></circle>
+                                        <circle
+                                            class="tab"
+                                            cx="16"
+                                            cy="15"
+                                            r="6"
+                                        ></circle>
+                                    </svg>
+                                </button>
+                                <button
+                                    id="carousel-tab-5"
+                                    type="button"
+                                    role="tab"
+                                    tabindex="-1"
+                                    aria-label="Slide 5"
+                                    aria-selected="false"
+                                    aria-controls="carousel-item-5"
+                                >
+                                    <svg
+                                        width="34"
+                                        height="34"
+                                        version="1.1"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <circle
+                                            class="border"
+                                            cx="16"
+                                            cy="15"
+                                            r="10"
+                                        ></circle>
+                                        <circle
+                                            class="tab-background"
+                                            cx="16"
+                                            cy="15"
+                                            r="8"
+                                        ></circle>
+                                        <circle
+                                            class="tab"
+                                            cx="16"
+                                            cy="15"
+                                            r="6"
+                                        ></circle>
+                                    </svg>
+                                </button>
+                                <button
+                                    id="carousel-tab-6"
+                                    type="button"
+                                    role="tab"
+                                    tabindex="-1"
+                                    aria-label="Slide 6"
+                                    aria-selected="false"
+                                    aria-controls="carousel-item-6"
+                                >
+                                    <svg
+                                        width="34"
+                                        height="34"
+                                        version="1.1"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <circle
+                                            class="border"
+                                            cx="16"
+                                            cy="15"
+                                            r="10"
+                                        ></circle>
+                                        <circle
+                                            class="tab-background"
+                                            cx="16"
+                                            cy="15"
+                                            r="8"
+                                        ></circle>
+                                        <circle
+                                            class="tab"
+                                            cx="16"
+                                            cy="15"
+                                            r="6"
+                                        ></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        id="myCarousel-items"
+                        class="carousel-items playing"
+                        aria-live="off"
+                    >
+                        <div
+                            class="carousel-item active"
+                            id="carousel-item-1"
+                            role="tabpanel"
+                            aria-roledescription="slide"
+                            aria-label="1 of 6"
+                        >
+                            <div class="carousel-image">
+                                <a
+                                    href="#"
+                                    id="carousel-image-1"
+                                >
+                                    <img
+                                        src="static/assets/figures/609-2580x1626.jpg"
+                                        alt="Walking Tour in Amsterdam"
+                                    />
+                                </a>
+                            </div>
+
+                            <div class="carousel-caption">
+                                <h3>
+                                    <a href="#">
+                                        Dynamic Europe: Amsterdam, Prague,
+                                        Berlin
+                                    </a>
+                                </h3>
+
+                                <div class="hidden-xs hidden-sm">
+                                    <p>
+                                        <span class="contrast"
+                                            >7 pm Tuesday, March 3, on TV</span
+                                        >
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="carousel-item"
+                            id="carousel-item-2"
+                            role="tabpanel"
+                            aria-roledescription="slide"
+                            aria-label="2 of 6"
+                        >
+                            <div class="carousel-image">
+                                <a
+                                    href="#"
+                                    id="carousel-image-2"
+                                >
+                                    <img
+                                        src="static/assets/figures/52-1280x853.jpg"
+                                        alt="Land's End in Cornwall"
+                                    />
+                                </a>
+                            </div>
+
+                            <div class="carousel-caption">
+                                <h3>
+                                    <a href="#">
+                                        Travel to Southwest England and Paris
+                                    </a>
+                                </h3>
+
+                                <div>
+                                    <p>
+                                        <span class="contrast"
+                                            >Sept. 14 to Sept. 24 or 27</span
+                                        >
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="carousel-item"
+                            id="carousel-item-3"
+                            role="tabpanel"
+                            aria-roledescription="slide"
+                            aria-label="3 of 6"
+                        >
+                            <div class="carousel-image">
+                                <a
+                                    href="#!"
+                                    id="carousel-image-3"
+                                >
+                                    <img
+                                        src="static/assets/figures/594-2509x1673.jpg"
+                                        alt="Mom and daughter play Daniel Tiger game on notebook computer."
+                                    />
+                                </a>
+                            </div>
+
+                            <div class="carousel-caption">
+                                <h3>
+                                    <a href="#">
+                                        Great Children's Programming on Public
+                                        TV
+                                    </a>
+                                </h3>
+
+                                <div></div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="carousel-item"
+                            id="carousel-item-4"
+                            role="tabpanel"
+                            aria-roledescription="slide"
+                            aria-label="4 of 6"
+                        >
+                            <div class="carousel-image">
+                                <a
+                                    href="#"
+                                    id="carousel-image-4"
+                                >
+                                    <img
+                                        src="static/assets/figures/588-2509x1673.jpg"
+                                        alt="A man in a suit and fedora and a woman with coiffed hair look sternly into the camera."
+                                    />
+                                </a>
+                            </div>
+
+                            <div class="carousel-caption">
+                                <h3>
+                                    <a href="#"> Foyle’s War Revisited </a>
+                                </h3>
+
+                                <div>
+                                    <p>
+                                        <span class="contrast"
+                                            >8 pm Sunday, March 8, on TV: Sneak
+                                            peek at the final season.</span
+                                        >
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="carousel-item"
+                            id="carousel-item-5"
+                            role="tabpanel"
+                            aria-roledescription="slide"
+                            aria-label="5 of 6"
+                        >
+                            <div class="carousel-image">
+                                <a
+                                    href="#"
+                                    id="carousel-image-5"
+                                >
+                                    <img
+                                        src="static/assets/figures/400.jpg"
+                                        alt="British flag with WILL-TV host David Thiel."
+                                    />
+                                </a>
+                            </div>
+
+                            <div class="carousel-caption">
+                                <h3>
+                                    <a href="#">
+                                        Great Britain Vote: 7 pm Sat.
+                                    </a>
+                                </h3>
+
+                                <div></div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="carousel-item"
+                            id="carousel-item-6"
+                            role="tabpanel"
+                            aria-roledescription="slide"
+                            aria-label="6 of 6"
+                        >
+                            <div class="carousel-image">
+                                <a
+                                    href="#"
+                                    id="carousel-image-6"
+                                >
+                                    <img
+                                        src="static/assets/figures/351-400x400.jpg"
+                                        alt="Mid-American Gardener panelists on the set"
+                                    />
+                                </a>
+                            </div>
+
+                            <div class="carousel-caption">
+                                <h3>
+                                    <a href="#">
+                                        Mid-American Gardener: Thursdays at 7 pm
+                                    </a>
+                                </h3>
+
+                                <div class="hidden-xs hidden-sm">
+                                    <p>
+                                        <span class="contrast"
+                                            >Watch the latest episodes.</span
+                                        >
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="col-sm-1"></div>
+        </article>
+
+        <article id="checkbox">
+            <h2>Checkbox</h2>
+            <fieldset class="checkbox-mixed">
+                <legend>Sandwich Condiments</legend>
+                <div
+                    role="checkbox"
+                    class="group_checkbox"
+                    aria-checked="mixed"
+                    aria-controls="cond1 cond2 cond3 cond4"
+                    tabindex="0"
+                >
+                    All condiments
+                </div>
+                <ul class="checkboxes">
+                    <li>
+                        <label
+                            ><input
+                                type="checkbox"
+                                id="cond1"
+                            />Lettuce</label
+                        >
+                    </li>
+                    <li>
+                        <label
+                            ><input
+                                type="checkbox"
+                                id="cond2"
+                                checked=""
+                            />Tomato</label
+                        >
+                    </li>
+                    <li>
+                        <label
+                            ><input
+                                type="checkbox"
+                                id="cond3"
+                            />Mustard</label
+                        >
+                    </li>
+                    <li>
+                        <label
+                            ><input
+                                type="checkbox"
+                                id="cond4"
+                            />Sprouts</label
+                        >
+                    </li>
+                </ul>
+            </fieldset>
+        </article>
+
+        <article id="table-sortable">
+            <h2>Sortable Table</h2>
+            <div class="table-wrap">
+                <table class="sortable">
+                    <caption>
+                        Students currently enrolled in WAI-ARIA 101
+                        <span class="sr-only"
+                            >, column headers with buttons are sortable.</span
+                        >
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th>
+                                <button>
+                                    First Name
+                                    <span aria-hidden="true"></span>
+                                </button>
+                            </th>
+                            <th aria-sort="ascending">
+                                <button>
+                                    Last Name
+                                    <span aria-hidden="true"></span>
+                                </button>
+                            </th>
+                            <th>
+                                <button>
+                                    Company
+                                    <span aria-hidden="true"></span>
+                                </button>
+                            </th>
+                            <th class="no-sort">Address</th>
+                            <th class="num">
+                                <button>
+                                    Favorite Number
+                                    <span aria-hidden="true"></span>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fred</td>
+                            <td>Jackson</td>
+                            <td>Canary, Inc.</td>
+                            <td>123 Broad St.</td>
+                            <td class="num">56</td>
+                        </tr>
+                        <tr>
+                            <td>Sara</td>
+                            <td>James</td>
+                            <td>Cardinal, Inc.</td>
+                            <td>457 First St.</td>
+                            <td class="num">7</td>
+                        </tr>
+                        <tr>
+                            <td>Ralph</td>
+                            <td>Jefferson</td>
+                            <td>Robin, Inc.</td>
+                            <td>456 Main St.</td>
+                            <td class="num">513</td>
+                        </tr>
+                        <tr>
+                            <td>Nancy</td>
+                            <td>Jensen</td>
+                            <td>Eagle, Inc.</td>
+                            <td>2203 Logan Dr.</td>
+                            <td class="num">3.5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
+        <article id="tabs">
+            <h2>Tabs</h2>
+            <div class="tabs">
+                <h3 id="tablist-1">Danish Composers</h3>
+                <div
+                    role="tablist"
+                    aria-labelledby="tablist-1"
+                    class="automatic"
+                >
+                    <button
+                        id="tab-1"
+                        type="button"
+                        role="tab"
+                        aria-selected="true"
+                        aria-controls="tabpanel-1"
+                    >
+                        <span class="focus">Maria Ahlefeldt</span>
+                    </button>
+                    <button
+                        id="tab-2"
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="tabpanel-2"
+                        tabindex="-1"
+                    >
+                        <span class="focus">Carl Andersen</span>
+                    </button>
+                    <button
+                        id="tab-3"
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="tabpanel-3"
+                        tabindex="-1"
+                    >
+                        <span class="focus">Ida da Fonseca</span>
+                    </button>
+                    <button
+                        id="tab-4"
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="tabpanel-4"
+                        tabindex="-1"
+                    >
+                        <span class="focus">Peter Müller</span>
+                    </button>
+                </div>
+
+                <div
+                    id="tabpanel-1"
+                    role="tabpanel"
+                    tabindex="0"
+                    aria-labelledby="tab-1"
+                >
+                    <p>
+                        Maria Theresia Ahlefeldt (16 January 1755 – 20 December
+                        1810) was a Danish, (originally German), composer. She
+                        is known as the first female composer in Denmark. Maria
+                        Theresia composed music for several ballets, operas, and
+                        plays of the royal theatre. She was given good critic as
+                        a composer and described as a “<span lang="da"
+                            >virkelig Tonekunstnerinde</span
+                        >” ('a True Artist of Music').
+                    </p>
+                </div>
+                <div
+                    id="tabpanel-2"
+                    role="tabpanel"
+                    tabindex="0"
+                    aria-labelledby="tab-2"
+                    class="is-hidden"
+                >
+                    <p>
+                        Carl Joachim Andersen (29 April 1847 – 7 May 1909) was a
+                        Danish flutist, conductor and composer born in
+                        Copenhagen, son of the flutist Christian Joachim
+                        Andersen. Both as a virtuoso and as composer of flute
+                        music, he is considered one of the best of his time. He
+                        was considered to be a tough leader and teacher and
+                        demanded as such a lot from his orchestras but through
+                        that style he reached a high level.
+                    </p>
+                </div>
+                <div
+                    id="tabpanel-3"
+                    role="tabpanel"
+                    tabindex="0"
+                    aria-labelledby="tab-3"
+                    class="is-hidden"
+                >
+                    <p>
+                        Ida Henriette da Fonseca (July 27, 1802 – July 6, 1858)
+                        was a Danish opera singer and composer. Ida Henriette da
+                        Fonseca was the daughter of Abraham da Fonseca
+                        (1776–1849) and Marie Sofie Kiærskou (1784–1863). She
+                        and her sister Emilie da Fonseca were students of
+                        Giuseppe Siboni, choir master of the Opera in
+                        Copenhagen. She was given a place at the royal Opera
+                        alongside her sister the same year she debuted in 1827.
+                    </p>
+                </div>
+                <div
+                    id="tabpanel-4"
+                    role="tabpanel"
+                    tabindex="0"
+                    aria-labelledby="tab-4"
+                    class="is-hidden"
+                >
+                    <p>
+                        Peter Erasmus Lange-Müller (1 December 1850 – 26
+                        February 1926) was a Danish composer and pianist. His
+                        compositional style was influenced by Danish folk music
+                        and by the work of Robert Schumann; Johannes Brahms; and
+                        his Danish countrymen, including J.P.E. Hartmann.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article id="switch">
+            <h2>Switch</h2>
+            <fieldset>
+                <legend>Accessibility Preferences</legend>
+                <label>
+                    <span class="label">Reduced motion</span>
+                    <input
+                        id="id-switch-1"
+                        type="checkbox"
+                        role="switch"
+                    />
+                    <span class="state">
+                        <span class="container">
+                            <span class="position"> </span>
+                        </span>
+                        <span
+                            class="on"
+                            aria-hidden="true"
+                            >On</span
+                        >
+                        <span
+                            class="off"
+                            aria-hidden="true"
+                            >Off</span
+                        >
+                    </span>
+                </label>
+
+                <label>
+                    <span class="label">Show captions</span>
+                    <input
+                        id="id-switch-2"
+                        type="checkbox"
+                        role="switch"
+                    />
+                    <span class="state">
+                        <span class="container">
+                            <span class="position"> </span>
+                        </span>
+                        <span
+                            class="on"
+                            aria-hidden="true"
+                            >On</span
+                        >
+                        <span
+                            class="off"
+                            aria-hidden="true"
+                            >Off</span
+                        >
+                    </span>
+                </label>
+            </fieldset>
+        </article>
+
+        <article id="menubar-editor">
+            <h2>Menubar Editor</h2>
+            <div class="menubar-editor">
+                <ul
+                    role="menubar"
+                    aria-label="Text Formatting"
+                >
+                    <li role="none">
+                        <span
+                            role="menuitem"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            tabindex="0"
+                            >Font<span aria-hidden="true"></span
+                        ></span>
+                        <ul
+                            role="menu"
+                            data-option="font-family"
+                            aria-label="Font"
+                        >
+                            <li
+                                role="menuitemradio"
+                                aria-checked="true"
+                            >
+                                <span aria-hidden="true"></span>Sans-serif
+                            </li>
+                            <li
+                                role="menuitemradio"
+                                aria-checked="false"
+                            >
+                                <span aria-hidden="true"></span>Serif
+                            </li>
+                            <li
+                                role="menuitemradio"
+                                aria-checked="false"
+                            >
+                                <span aria-hidden="true"></span>Monospace
+                            </li>
+                            <li
+                                role="menuitemradio"
+                                aria-checked="false"
+                            >
+                                <span aria-hidden="true"></span>Fantasy
+                            </li>
+                        </ul>
+                    </li>
+                    <li role="none">
+                        <span
+                            role="menuitem"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            tabindex="-1"
+                            >Style/Color<span aria-hidden="true"></span
+                        ></span>
+                        <ul
+                            role="menu"
+                            aria-label="Style/Color"
+                        >
+                            <li role="none">
+                                <ul
+                                    role="group"
+                                    data-option="font-style"
+                                    aria-label="Font Style"
+                                >
+                                    <li
+                                        role="menuitemcheckbox"
+                                        data-option="font-bold"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span>Bold
+                                    </li>
+                                    <li
+                                        role="menuitemcheckbox"
+                                        data-option="font-italic"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span>Italic
+                                    </li>
+                                </ul>
+                            </li>
+                            <li role="separator"></li>
+                            <li role="none">
+                                <ul
+                                    role="group"
+                                    data-option="font-color"
+                                    aria-label="Text Color"
+                                >
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="true"
+                                    >
+                                        <span aria-hidden="true"></span>Black
+                                    </li>
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span>Blue
+                                    </li>
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span>Red
+                                    </li>
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span>Green
+                                    </li>
+                                </ul>
+                            </li>
+                            <li role="separator"></li>
+                            <li role="none">
+                                <ul
+                                    role="group"
+                                    data-option="text-decoration"
+                                    aria-label="Text Decoration"
+                                >
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="true"
+                                    >
+                                        <span aria-hidden="true"></span>None
+                                    </li>
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span>Overline
+                                    </li>
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span
+                                        >Line-through
+                                    </li>
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span
+                                        >Underline
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li role="none">
+                        <span
+                            role="menuitem"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            tabindex="-1"
+                            >Text Align<span aria-hidden="true"></span
+                        ></span>
+                        <ul
+                            role="menu"
+                            data-option="text-align"
+                            aria-label="Text Align"
+                        >
+                            <li
+                                role="menuitemradio"
+                                aria-checked="true"
+                            >
+                                <span aria-hidden="true"></span>Left
+                            </li>
+                            <li
+                                role="menuitemradio"
+                                aria-checked="false"
+                            >
+                                <span aria-hidden="true"></span>Center
+                            </li>
+                            <li
+                                role="menuitemradio"
+                                aria-checked="false"
+                            >
+                                <span aria-hidden="true"></span>Right
+                            </li>
+                            <li
+                                role="menuitemradio"
+                                aria-checked="false"
+                            >
+                                <span aria-hidden="true"></span>Justify
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li role="none">
+                        <span
+                            role="menuitem"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            tabindex="-1"
+                            >Size<span aria-hidden="true"></span
+                        ></span>
+                        <ul
+                            role="menu"
+                            aria-label="Size"
+                        >
+                            <li
+                                role="menuitem"
+                                data-option="font-smaller"
+                                aria-disabled="false"
+                            >
+                                Smaller
+                            </li>
+                            <li
+                                role="menuitem"
+                                data-option="font-larger"
+                                aria-disabled="false"
+                            >
+                                Larger
+                            </li>
+                            <li role="separator"></li>
+                            <li role="none">
+                                <ul
+                                    role="group"
+                                    data-option="font-size"
+                                    aria-label="Font Sizes"
+                                >
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span>X-Small
+                                    </li>
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span>Small
+                                    </li>
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="true"
+                                    >
+                                        <span aria-hidden="true"></span>Medium
+                                    </li>
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span>Large
+                                    </li>
+                                    <li
+                                        role="menuitemradio"
+                                        aria-checked="false"
+                                    >
+                                        <span aria-hidden="true"></span>X-Large
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <textarea
+                    style="font-size: medium; font-family: sans-serif"
+                    aria-label="Text Sample"
+                >
+            Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.
+
+  Now we are engaged in a great civil war, testing whether that nation, or any nation, so conceived and so dedicated, can long endure. We are met on a great battle-field of that war. We have come to dedicate a portion of that field, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this.
+  </textarea
+                >
+            </div>
+
+            <p>
+                <a href="https://en.wikipedia.org/wiki/Gettysburg,_Pennsylvania"
+                    >More information on Gettysburg Address</a
+                >
+            </p>
+        </article>
+        <script src="static/assets/js/navigation.js"></script>
+        <script src="static/assets/js/pattern.js"></script>
+    </body>
+</html>

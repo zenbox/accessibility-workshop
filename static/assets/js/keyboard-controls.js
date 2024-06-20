@@ -28,8 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     break
                 case "Tab":
+                case "ArrowRight":
+                case "ArrowLeft":
                     event.preventDefault()
-                    if (event.shiftKey) {
+                    if (event.shiftKey || event.key === "ArrowLeft") {
                         currentCellIndex =
                             (currentCellIndex - 1 + cells.length) % cells.length
                     } else {
