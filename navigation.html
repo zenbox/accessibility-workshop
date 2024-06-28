@@ -14,49 +14,58 @@
     </head>
     <body>
         <header id="header">
-            header
-            <form id="main-search">
-                <fieldset>
-                    <legend>Suche über alle Inhalte</legend>
-                    <label for="search-field">Stichwortsuche</label>
-                    <input
-                        id="search-field"
-                        type="search"
-                        placeholder="Stichworte ..."
-                    /><button>suchen</button>
-                </fieldset>
-            </form>
+            <h1>Navigationen</h1>
         </header>
-        <nav
-            aria-label="Breadcrumb"
-            id="breadcrumb"
-            class="breadcrumb"
-        >
-            <ol>
-                <li>
-                    <a href="../../../..">
-                        WAI-ARIA Authoring Practices Guide (APG)
-                    </a>
-                </li>
-                <li>
-                    <a href="../../../"> Patterns </a>
-                </li>
-                <li>
-                    <a href="../../"> Subpage </a>
-                </li>
-                <li>
-                    <a
-                        href=""
-                        aria-current="page"
-                    >
-                        Breadcrumb Example
-                    </a>
-                </li>
-            </ol>
-        </nav>
-        <nav id="main-navigation">main-navigation</nav>
-        <main id="main-content">main content</main>
-        <footer id="footer">footer</footer>
+
+        <main>
+            <section>
+                <form id="main-search" tabindex="0" aria-labelledby="search-label">
+                    <fieldset>
+                        <legend id=""search-label">Suche über alle Inhalte</legend>
+                        <label for="search-field">Stichwortsuche</label>
+                        <input
+                            id="search-field"
+                            type="search"
+                            placeholder="Stichworte ..."
+                        /><button>suchen</button>
+                    </fieldset>
+                </form>
+            </section>
+            <section>
+                <nav
+                    aria-label="Breadcrumb"
+                    id="breadcrumb"
+                    class="breadcrumb"
+                >
+                    <ol>
+                        <li>
+                            <a href="../../../..">
+                                WAI-ARIA Authoring Practices Guide (APG)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../../../"> Patterns </a>
+                        </li>
+                        <li>
+                            <a href="../../"> Subpage </a>
+                        </li>
+                        <li>
+                            <a
+                                href=""
+                                aria-current="page"
+                            >
+                                Breadcrumb Example
+                            </a>
+                        </li>
+                    </ol>
+                </nav>
+            </section>  
+        </main>
+
+        <footer>
+            <address>&copy; <time datetime="2024">2024</time> Michael</address>
+        </footer>
+
         <script src="assets/js/navigation.js"></script>
     </body>
 </html>

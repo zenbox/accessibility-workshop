@@ -13,89 +13,108 @@
         />
     </head>
     <body>
-        <section>
-            <h1 tabindex="0">Tastatur-Steuerung</h1>
-        </section>
+        <header>
+            <section>
+                <h1 tabindex="1">Tastatur-Steuerung</h1>
+            </section>
+        </header>
 
-        <section>
-            <nav
-                id="navigation"
-                tabindex="0"
-                aria-label="Du bist jetzt im Hauptmenü."
-                aria-labelledby="nav-description"
-            >
-                <p
-                    id="nav-description"
-                    class="sr-only visually-hidden"
+        <main>
+            <section>
+                <nav
+                    id="breadcrumbs"
+                    tabindex="0"
+                    aria-label="Du bist jetzt in der Brotkrümel-Navigation."
+                    aria-labelledby="breadcrumbs-description"
                 >
-                    Es steht ja noch gar nichts in der Navigation. Aber wenn,
-                    dann würde das jetzt prima funktionieren.
+                    <p
+                        id="breadcrumbs-description"
+                        class="sr-only visually-hidden"
+                    >
+                        Im Grunde ist das eine Brotkrümel-Navigation. Das
+                        bedeutet, dass du dich in einer Navigation befindest,
+                        die dir den Weg durch die Seite zeigt. Du kannst mit der
+                        Tab-Taste durch die Links navigieren und mit der
+                        Enter-Taste die Links öffnen.
+                    </p>
+                    <ul>
+                        <li><a href="">Link 1</a></li>
+                        <li>/ <a href="">Link 2</a></li>
+                        <li>/ <a href="">Link 3</a></li>
+                    </ul>
+                </nav>
+            </section>
+
+            <section aria-live="assertive">
+                <address>
+                    <p>
+                        <span class="icon icon-tel">Telefonnummer:</span>
+                        <a
+                            href="tel:+49 221123457890"
+                            aria-label="Telefonnummer des Kontakts: +49 221 12 34 57 89-0"
+                            >+49 221 12 34 57 89-0</a
+                        >
+                    </p>
+                </address>
+            </section>
+
+            <section>
+                <table
+                    tabindex="0"
+                    id="data-table"
+                >
+                    <caption>
+                        Stadt, Land, Fluss
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th>Stadt</th>
+                            <th>Land</th>
+                            <th>Fluss</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Aachen</td>
+                            <td>Andorra</td>
+                            <td>Amazonas</td>
+                        </tr>
+                        <tr>
+                            <td>Berlin</td>
+                            <td>Buthan</td>
+                            <td>Brahmaputra</td>
+                        </tr>
+                        <tr>
+                            <td>Celle</td>
+                            <td>Chile</td>
+                            <td>Colorado</td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td>Fußbereich</td>
+                            <td>der</td>
+                            <td>Tabelle</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <p>Next Sibling Paragraph</p>
+            </section>
+
+            <section>
+                <h2>Weiterer Inhalt</h2>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Accusamus amet quis maiores.
                 </p>
-                <ul>
-                    <li><a href="">Link 1</a></li>
-                    <li><a href="">Link 2</a></li>
-                    <li><a href="">Link 3</a></li>
-                </ul>
-            </nav>
-        </section>
+            </section>
+        </main>
 
-        <section>
-            <p>
-                <span class="icon icon-tel">Telefonnummer:</span>
-                <a href="tel:+49 221123457890">+49 221 12 34 57 89-0</a>
-            </p>
-        </section>
-
-        <section>
-            <table
-                tabindex="0"
-                id="data-table"
-            >
-                <caption>
-                    Stadt, Land, Fluss
-                </caption>
-                <thead>
-                    <tr>
-                        <th>Stadt</th>
-                        <th>Land</th>
-                        <th>Fluss</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    <tr>
-                        <td>Aachen</td>
-                        <td>Andorra</td>
-                        <td>Amazonas</td>
-                    </tr>
-                    <tr>
-                        <td>Berlin</td>
-                        <td>Buthan</td>
-                        <td>Brahmaputra</td>
-                    </tr>
-                    <tr>
-                        <td>Celle</td>
-                        <td>Chile</td>
-                        <td>Colorado</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p>Next Sibling Paragraph</p>
-        </section>
-
-        <section>
-            <h2>Weiterer Inhalt</h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusamus amet quis maiores.
-            </p>
-        </section>
+        <footer>
+            <address>&copy; <time datetime="2024">2024</time> Michael</address>
+        </footer>
         <script src="assets/js/navigation.js"></script>
         <script src="assets/js/keyboard-controls.js"></script>
     </body>

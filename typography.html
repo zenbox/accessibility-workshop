@@ -16,7 +16,7 @@
                 margin-inline: 20vw;
             }
             p {
-                column-count: 1;
+                /* column-count: 1; */
             }
             article {
                 border-bottom: 1px dotted hsla(0, 0%, 0%, 0.5);
@@ -25,201 +25,282 @@
         </style>
     </head>
     <body>
-        <h1>Typografie</h1>
-        <article>
-            <h2>Die typografische Organisation der HTML Elemente</h2>
-            <p>
-                HTML umfasst rund 100 Elemente, die in vier Kategorien
-                unterteilt werden können: Textabsätze, Überschriften, Listen,
-                Abbildungen. Zur Darstellung von Absätzen und Listen stehen zum
-                Beispiel die Elemente <code>p</code>, <code>h1</code> bis
-                <code>h6</code>, <code>ol</code>, <code>ul</code>,
-                <code>dl</code> zur Verfügung. Die Elemente
-                <code>figure</code> und <code>figcaption</code> dienen der
-                Darstellung von Abbildungen. Alle Elemente müssen gemeinsam
-                betrachtet werden, um eine konsistente und harmonische
-                Gestaltung zu erreichen.
-            </p>
-            <h2>2 Textabsätze <code>&lt;p></code></h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem
-                ipsum dolor sit amet consectetur, adipisicing elit. Assumenda
-                dolor, magnam adipisci beatae natus necessitatibus quia ipsa
-                dignissimos quam molestiae, suscipit iure atque asperiores
-                itaque nulla, perferendis amet?
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem
-                ipsum dolor sit amet consectetur adipisicing elit. Iure corporis
-                velit quis magnam ad cupiditate. Vero voluptatum quas, suscipit,
-                minus numquam beatae omnis unde alias odit dolores esse, nihil
-                iure blanditiis quos saepe? Architecto laudantium id ratione.
-                Modi, animi sequi!
-            </p>
-            <p>
-                Kleine Schrift <code>&lt;small></code>:
-                <small
-                    >Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit.</small
-                >
-            </p>
-        </article>
+        <header><h1>Typografie</h1></header>
+        <main>
+            <article>
+                <h2>Die typografische Organisation der HTML Elemente</h2>
+                <p>
+                    HTML umfasst rund 100 Elemente, die in vier Kategorien
+                    unterteilt werden können: Textabsätze, Überschriften,
+                    Listen, Abbildungen. Zur Darstellung von Absätzen und Listen
+                    stehen zum Beispiel die Elemente <code>p</code>,
+                    <code>h1</code> bis <code>h6</code>, <code>ol</code>,
+                    <code>ul</code>, <code>dl</code> zur Verfügung. Die Elemente
+                    <code>figure</code> und <code>figcaption</code> dienen der
+                    Darstellung von Abbildungen. Alle Elemente müssen gemeinsam
+                    betrachtet werden, um eine konsistente und harmonische
+                    Gestaltung zu erreichen.
+                </p>
+                <h2>2 Textabsätze <code>&lt;p></code></h2>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Assumenda dolor, magnam adipisci beatae natus necessitatibus
+                    quia ipsa dignissimos quam molestiae, suscipit iure atque
+                    asperiores itaque nulla, perferendis amet?
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Iure corporis velit quis magnam ad cupiditate. Vero
+                    voluptatum quas, suscipit, minus numquam beatae omnis unde
+                    alias odit dolores esse, nihil iure blanditiis quos saepe?
+                    Architecto laudantium id ratione. Modi, animi sequi!
+                </p>
+                <p>
+                    Kleine Schrift <code>&lt;small></code>:
+                    <small
+                        >Lorem ipsum dolor sit amet consectetur adipisicing
+                        elit.</small
+                    >
+                </p>
+            </article>
 
-        <article>
-            <h2>Code <code>&lt;code>&lt;pre></code></h2>
-            <pre><code>10 REM My first code
+            <article>
+                <h2>Code <code>&lt;code>&lt;pre></code></h2>
+                <pre><code>10 REM My first code
 20 PRINT "Hello, World!"
 30 GOTO 40
 40 END
 10000 DATA 12,34,56,67
 10010 DATA 24,35,46,57</code>
 </pre>
-        </article>
+            </article>
 
-        <article>
-            <style>
-                ._key {
-                    background: hsla(0, 0%, 50%, 0.5);
-                    padding: 0.4rem 0.5rem;
-                    border-radius: 0.2rem;
-                    border: 1px solid hsla(0, 0%, 0%, 0.9);
-                }
-            </style>
-            <h2>Keyboard <code>&lt;kbd></code></h2>
-            <p><kbd>F11</kbd> <kbd>F12</kbd> <kbd>Strg + A</kbd></p>
-            <p>
-                <kbd class="_key">F11</kbd> <kbd class="_key">F12</kbd>
-                <kbd class="_key">Strg + A</kbd>
-            </p>
-        </article>
-
-        <article>
-            <h2>
-                Listen <code>&lt;ul></code>, <code>&lt;ol></code>,
-                <code>&lt;dl></code>
-            </h2>
-            <ol>
-                <li>Lorem, ipsum dolor. Eins.</li>
-                <li>Lorem, ipsum dolor. Zwei.</li>
-                <li>Lorem, ipsum dolor. Drei.</li>
-                <li>Lorem, ipsum dolor. Vier.</li>
-            </ol>
-
-            <ul>
-                <li>Lorem, ipsum dolor. Eins.</li>
-                <li>Lorem, ipsum dolor. Zwei.</li>
-                <li>Lorem, ipsum dolor. Drei.</li>
-                <li>Lorem, ipsum dolor. Vier.</li>
-            </ul>
-
-            <dl>
-                <dt>HTML</dt>
-                <dd>HyperText Markup Language</dd>
-                <dt>CSS</dt>
-                <dd>Cascading Style Sheets</dd>
-                <dt>JS</dt>
-                <dd>JavaScript</dd>
-            </dl>
-        </article>
-
-        <article>
-            <h2>
-                Abbildungen <code>&lt;figure></code>, <code>&lt;img></code>,
-                <code>&lt;figcaption></code>
-            </h2>
-            <figure>
-                <img
-                    src="assets/figures/400.jpg"
-                    alt="Ein Platzhalterbild"
-                />
-                <figcaption>Ein Platzhalterbild</figcaption>
-            </figure>
-        </article>
-
-        <article>
-            <style>
-                ._10 {
-                    background: hsla(0, 100%, 50%, 0.5);
-                }
-            </style>
-            <h2>Mehrspaltiger Text im Blocksatz <code>&lt;p></code></h2>
-            <p
-                style="
-                    text-align: justify;
-                    hyphens: auto;
-                    column-count: 2;
-                    column-gap: 2rem !important;
-                "
-                id="loremipsum"
-            ></p>
-            <script>
-                let loremIpsum =
-                    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae facilis officia itaque architecto iure labore nam laboriosam ea vitae, ratione, aliquam sunt praesentium adipisci aliquid tempore, ad hic alias? Quo, harum. Cum sed explicabo voluptatum dolore unde similique aperiam autem tenetur natus, blanditiis quos labore cumque modi atque sit sint dolor incidunt temporibus recusandae sequi harum aspernatur cupiditate. Fugit, numquam delectus quod unde odio saepe incidunt provident eos cum, consectetur at dignissimos eligendi nemo aliquam deserunt officia excepturi, aliquid distinctio deleniti vitae ducimus! Ratione nostrum dolores eius, perferendis reiciendis minus magni est sit tempora rerum vero, eveniet nihil, id sed ipsam. Veniam iure ipsam voluptate molestiae, reprehenderit esse architecto commodi non est animi sint provident hic, beatae quos sequi dolor optio. Labore laborum dicta vel quae dolores cumque dolorem saepe qui! Reprehenderit, provident dolor? Quos, vitae dignissimos ratione pariatur aliquid fugiat qui reiciendis omnis natus! Quod, soluta eveniet cumque repudiandae error enim et ipsam repellendus totam accusamus tempora odio iure autem quos pariatur?"
-                let wrappedText = ""
-                for (let i = 0; i < loremIpsum.length; i++) {
-                    if ((i + 1) % 10 === 0) {
-                        wrappedText += `<span class='_10'>${loremIpsum[i]}</span>`
-                    } else {
-                        wrappedText += loremIpsum[i]
+            <article>
+                <style>
+                    ._key {
+                        background: hsla(0, 0%, 50%, 0.5);
+                        padding: 0.4rem 0.5rem;
+                        border-radius: 0.2rem;
+                        border: 1px solid hsla(0, 0%, 0%, 0.9);
                     }
-                }
-                document.getElementById("loremipsum").innerHTML = wrappedText
-            </script>
-        </article>
+                </style>
+                <h2>Keyboard <code>&lt;kbd></code></h2>
+                <p><kbd>F11</kbd> <kbd>F12</kbd> <kbd>Strg + A</kbd></p>
+                <p>
+                    <kbd class="_key">F11</kbd> <kbd class="_key">F12</kbd>
+                    <kbd class="_key">Strg + A</kbd>
+                </p>
+            </article>
 
-        <article>
-            <h2>Überschriften</h2>
+            <article>
+                <h2>
+                    Listen <code>&lt;ul></code>, <code>&lt;ol></code>,
+                    <code>&lt;dl></code>
+                </h2>
+                <ol>
+                    <li>Lorem, ipsum dolor. Eins.</li>
+                    <li>Lorem, ipsum dolor. Zwei.</li>
+                    <li>Lorem, ipsum dolor. Drei.</li>
+                    <li>Lorem, ipsum dolor. Vier.</li>
+                </ol>
 
-            <h1>Überschrift 1 <code>&lt;h1></code></h1>
-            <h2>Überschrift 2 <code>&lt;h2></code></h2>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <ul>
+                    <li>Lorem, ipsum dolor. Eins.</li>
+                    <li>Lorem, ipsum dolor. Zwei.</li>
+                    <li>Lorem, ipsum dolor. Drei.</li>
+                    <li>Lorem, ipsum dolor. Vier.</li>
+                </ul>
 
-            <h3>Überschrift 3 <code>&lt;h3></code></h3>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <dl>
+                    <dt>HTML</dt>
+                    <dd>HyperText Markup Language</dd>
+                    <dt>CSS</dt>
+                    <dd>Cascading Style Sheets</dd>
+                    <dt>JS</dt>
+                    <dd>JavaScript</dd>
+                </dl>
+            </article>
 
-            <h4>Überschrift 4 <code>&lt;h4></code></h4>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+            <article>
+                <h2>
+                    Abbildungen <code>&lt;figure></code>, <code>&lt;img></code>,
+                    <code>&lt;figcaption></code>
+                </h2>
+                <figure>
+                    <img
+                        src="assets/figures/400.jpg"
+                        alt="Ein Platzhalterbild"
+                    />
+                    <figcaption>Ein Platzhalterbild</figcaption>
+                </figure>
+            </article>
 
-            <h5>Überschrift 5 <code>&lt;h5></code></h5>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+            <article>
+                <style>
+                    ._10 {
+                        background: hsla(0, 100%, 50%, 0.5);
+                    }
+                </style>
+                <h2>
+                    Mehrspaltiger Text im Blocksatz (40 bis 70 Zeichen)
+                    <code>&lt;p></code>
+                </h2>
+                <p
+                    style="
+                        text-align: justify;
+                        column-width: 20rem;
+                        column-gap: 2rem;
+                    "
+                    id="loremipsum"
+                ></p>
+                <script>
+                    let loremIpsum =
+                        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae facilis officia itaque architecto iure labore nam laboriosam ea vitae, ratione, aliquam sunt praesentium adipisci aliquid tempore, ad hic alias? Quo, harum. Cum sed explicabo voluptatum dolore unde similique aperiam autem tenetur natus, blanditiis quos labore cumque modi atque sit sint dolor incidunt temporibus recusandae sequi harum aspernatur cupiditate. Fugit, numquam delectus quod unde odio saepe incidunt provident eos cum, consectetur at dignissimos eligendi nemo aliquam deserunt officia excepturi, aliquid distinctio deleniti vitae ducimus! Ratione nostrum dolores eius, perferendis reiciendis minus magni est sit tempora rerum vero, eveniet nihil, id sed ipsam. Veniam iure ipsam voluptate molestiae, reprehenderit esse architecto commodi non est animi sint provident hic, beatae quos sequi dolor optio. Labore laborum dicta vel quae dolores cumque dolorem saepe qui! Reprehenderit, provident dolor? Quos, vitae dignissimos ratione pariatur aliquid fugiat qui reiciendis omnis natus! Quod, soluta eveniet cumque repudiandae error enim et ipsam repellendus totam accusamus tempora odio iure autem quos pariatur?"
+                    let wrappedText = ""
+                    for (let i = 0; i < loremIpsum.length; i++) {
+                        if ((i + 1) % 10 === 0) {
+                            wrappedText += `<span class='_10'>${loremIpsum[i]}</span>`
+                        } else {
+                            wrappedText += loremIpsum[i]
+                        }
+                    }
+                    document.getElementById("loremipsum").innerHTML =
+                        wrappedText
+                </script>
+            </article>
 
-            <h6>Überschrift 6 <code>&lt;h6></code></h6>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-        </article>
+            <article>
+                <h2>Überschriften</h2>
 
-        <article>
-            <h2>Weitere Elemente</h2>
-            <p>
-                <code>&lt;a></code>, <code>&lt;abbr></code>,
-                <code>&lt;address></code>, <code>&lt;area></code>,
-                <code>&lt;audio></code>, <code>&lt;b></code>,
-                <code>&lt;base></code>, <code>&lt;bdi></code>,
-                <code>&lt;bdo></code>, <code>&lt;blockquote></code>,
-                <code>&lt;button></code>, <code>&lt;caption></code>,
-                <code>&lt;center></code>, <code>&lt;cite></code>,
-                <code>&lt;col></code>, <code>&lt;colgroup></code>,
-                <code>&lt;data></code>, <code>&lt;datalist></code>,
-                <code>&lt;del></code>, <code>&lt;details></code>,
-                <code>&lt;dfn></code>, <code>&lt;dialog></code>,
-                <code>&lt;dir></code>, <code>&lt;em></code>,
-                <code>&lt;hgroup></code>, <code>&lt;hr></code>,
-                <code>&lt;i></code>, <code>&lt;ins></code>,
-                <code>&lt;map></code>, <code>&lt;mark></code>,
-                <code>&lt;math></code>, <code>&lt;menu></code>,
-                <code>&lt;output></code>, <code>&lt;picture></code>,
-                <code>&lt;q></code>, <code>&lt;rp></code>, <code>&lt;rt></code>,
-                <code>&lt;ruby></code>, <code>&lt;s></code>,
-                <code>&lt;samp></code>, <code>&lt;search></code>,
-                <code>&lt;slot></code>, <code>&lt;source></code>,
-                <code>&lt;strike></code>, <code>&lt;strong></code>,
-                <code>&lt;sub></code>, <code>&lt;summary></code>,
-                <code>&lt;sup></code>, <code>&lt;time></code>,
-                <code>&lt;track></code>, <code>&lt;u></code>,
-                <code>&lt;var></code>, <code>&lt;video></code>,
-                <code>&lt;wbr></code>
-            </p>
-        </article>
+                <h1>Überschrift 1 <code>&lt;h1></code></h1>
+                <h2>Überschrift 2 <code>&lt;h2></code></h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
 
+                <h3>Überschrift 3 <code>&lt;h3></code></h3>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+
+                <h4>Überschrift 4 <code>&lt;h4></code></h4>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+
+                <h5>Überschrift 5 <code>&lt;h5></code></h5>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+
+                <h6>Überschrift 6 <code>&lt;h6></code></h6>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+            </article>
+
+            <article>
+                <h2>
+                    Ruby Annotation <code>&lt;ruby></code>,
+                    <code>&lt;rp></code>,
+                    <code>&lt;rt></code>
+                </h2>
+                <p>
+                    <ruby>
+                        漢 <rp>(</rp><rt>kan</rt><rp>)</rp> 字 <rp>(</rp
+                        ><rt>ji</rt><rp>)</rp>
+                    </ruby>
+                </p>
+            </article>
+
+            <article>
+                <h2>Dialog <code>&lt;dialog></code></h2>
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        // - - - - -
+                        const dialog = document.querySelector("dialog")
+                        const dialogButton =
+                            document.querySelector("#dialog-button")
+                        let dialogState = false
+
+                        dialogButton.addEventListener("click", () => {
+                            if (dialogState) {
+                                dialog.removeAttribute("open")
+                                dialogButton.textContent = "Dialog öffnen"
+                                dialogState = false
+                                return
+                            } else {
+                                dialog.setAttribute("open", "")
+                                dialogButton.textContent = "Dialog schließen"
+                                dialogState = true
+                            }
+                        })
+                        // - - - - -
+                    })
+                </script>
+                <button id="dialog-button">Dialog öffnen</button>
+                <dialog id="dialog">
+                    <p>Dialog</p>
+                    <button>OK</button>
+                    <button>Abbrechen</button>
+                </dialog>
+            </article>
+
+            <article>
+                <h2>
+                    Zitate <code>&lt;blockquote></code>,
+                    <code>&lt;cite></code>,<code>&lt;q></code>
+                </h2>
+                <blockquote>
+                    <p>Die Welt ist alles, was der Fall ist.</p>
+                    <cite>Ludwig Wittgenstein</cite>
+                </blockquote>
+                <p>
+                    <q>Die Welt ist alles, was der Fall ist.</q>
+                    <cite>Ludwig Wittgenstein</cite>
+                </p>
+            </article>
+
+            <article>
+                <h2>
+                    Textauszeichnungen <code>&lt;a></code>,
+                    <code>&lt;abbr></code>, <code>&lt;del></code>,
+                    <code>&lt;em></code>, <code>&lt;i></code>,
+                    <code>&lt;ins></code>, <code>&lt;mark></code>,
+                    <code>&lt;s></code>,
+                    <code>&lt;u></code>
+                </h2>
+                <p>
+                    <a href="#">Link</a>,
+                    <abbr title="HyperText Markup Language">HTML</abbr>,
+                    <del>gelöscht</del>, <em>betont</em>, <i>kursiv</i>,
+                    <ins>eingefügt</ins>, <mark>markiert</mark>,
+                    <s>durchgestrichen</s>,
+                    <u>unterstrichen</u>
+                </p>
+            </article>
+
+            <article>
+                <h2>Weitere Elemente</h2>
+                <p>
+                    <code>&lt;address></code>, <code>&lt;area></code>,
+                    <code>&lt;audio></code>, <code>&lt;b></code>,
+                    <code>&lt;base></code>, <code>&lt;bdi></code>,
+                    <code>&lt;bdo></code>, <code>&lt;button></code>,
+                    <code>&lt;caption></code>, <code>&lt;center></code>,
+                    <code>&lt;col></code>, <code>&lt;colgroup></code>,
+                    <code>&lt;data></code>, <code>&lt;datalist></code>,
+                    <code>&lt;details></code>, <code>&lt;dfn></code>,
+                    <code>&lt;dialog></code>, <code>&lt;dir></code>,
+                    <code>&lt;hgroup></code>, <code>&lt;hr></code>,
+                    <code>&lt;map></code>, <code>&lt;math></code>,
+                    <code>&lt;menu></code>, <code>&lt;output></code>,
+                    <code>&lt;picture></code>, <code>&lt;samp></code>,
+                    <code>&lt;search></code>, <code>&lt;slot></code>,
+                    <code>&lt;source></code>, <code>&lt;strike></code>,
+                    <code>&lt;strong></code>, <code>&lt;sub></code>,
+                    <code>&lt;summary></code>, <code>&lt;sup></code>,
+                    <code>&lt;time></code>, <code>&lt;track></code>,
+                    <code>&lt;var></code>, <code>&lt;video></code>,
+                    <code>&lt;wbr></code>
+                </p>
+            </article>
+        </main>
+        <footer>
+            <address>&copy; <time datetime="2024">2024</time> Michael</address>
+        </footer>
         <script src="assets/js/navigation.js"></script>
     </body>
 </html>
