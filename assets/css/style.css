@@ -3795,6 +3795,96 @@ fieldset:not(:has(legend)) {
   min-height: 50vh;
 }
 
+#combobox {
+  /* focus and hover styling */
+}
+#combobox .combobox-list {
+  position: relative;
+}
+#combobox .combobox .group {
+  display: inline-flex;
+  padding: 4px;
+  cursor: pointer;
+}
+#combobox .combobox input,
+#combobox .combobox button {
+  background-color: white;
+  color: black;
+  box-sizing: border-box;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+  vertical-align: bottom;
+  border: 1px solid gray;
+  position: relative;
+  cursor: pointer;
+}
+#combobox .combobox input {
+  width: 150px;
+  border-right: none;
+  outline: none;
+  font-size: 87.5%;
+  padding: 1px 3px;
+}
+#combobox .combobox button {
+  width: 19px;
+  border-left: none;
+  outline: none;
+  color: rgb(0, 90, 156);
+}
+#combobox .combobox button[aria-expanded=true] svg {
+  transform: rotate(180deg) translate(0, -3px);
+}
+#combobox ul[role=listbox] {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 4px;
+  top: 34px;
+  list-style: none;
+  background-color: white;
+  display: none;
+  box-sizing: border-box;
+  border: 2px currentcolor solid;
+  max-height: 250px;
+  width: 168px;
+  overflow: scroll;
+  overflow-x: hidden;
+  font-size: 87.5%;
+  cursor: pointer;
+}
+#combobox ul[role=listbox] li[role=option] {
+  margin: 0;
+  display: block;
+  padding-left: 3px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+#combobox .combobox .group.focus,
+#combobox .combobox .group:hover {
+  padding: 2px;
+  border: 2px solid currentcolor;
+  border-radius: 4px;
+}
+#combobox .combobox .group.focus polygon,
+#combobox .combobox .group:hover polygon {
+  fill-opacity: 1;
+}
+#combobox .combobox .group.focus input,
+#combobox .combobox .group.focus button,
+#combobox .combobox .group input:hover,
+#combobox .combobox .group button:hover {
+  background-color: #def;
+}
+#combobox [role=listbox].focus [role=option][aria-selected=true],
+#combobox [role=listbox] [role=option]:hover {
+  background-color: #def;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-top: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+}
+
 #accordion {
   /* For Edge bug https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/4806035/ */
 }
