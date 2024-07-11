@@ -19,4 +19,8 @@ button.off {
 }
 
 .developer {
+    [tabindex] {
+        outline: 2px dotted hsla(0, 0%, 0%, 0.85);
+        outline-offset: 4px;
+    }
 }

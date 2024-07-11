@@ -3077,7 +3077,7 @@ section {
 html, :root {
   font-family: "Barlow", sans-serif;
   font-size: 22px;
-  line-height: 1.3;
+  line-height: 1.41549;
   text-align: left;
 }
 
@@ -3125,11 +3125,6 @@ p {
   clip-path: inset(0%);
   font-size: var(--big);
   background-color: var(--bright);
-}
-
-[tabindex] {
-  outline: 2px dotted hsla(0, 0%, 0%, 0.1);
-  outline-offset: 4px;
 }
 
 svg [tabindex] {
@@ -4976,6 +4971,176 @@ fieldset:not(:has(legend)) {
   stroke-width: 1;
 }
 
+#menubar {
+  /* aria-current styling */
+  /* focus styling */
+}
+#menubar .page header {
+  border: #005a9c solid 2px;
+  background: #005a9c;
+  color: white;
+  text-align: center;
+}
+#menubar .page header .title {
+  font-size: 2.5em;
+  font-weight: bold;
+  font-family: serif;
+}
+#menubar .page header .tagline {
+  font-style: italic;
+}
+#menubar .page .main {
+  padding: 1em 5% 5em;
+  border-left: 2px solid #eee;
+  border-right: 2px solid #eee;
+}
+#menubar .page footer {
+  border: #005a9c solid 2px;
+  background: #005a9c;
+  font-family: serif;
+  color: white;
+  font-style: italic;
+  padding-left: 1em;
+}
+#menubar .page nav {
+  margin: 0;
+  padding: 0;
+  border: 2px solid #eee;
+}
+#menubar .menubar-navigation {
+  margin: 0;
+  padding: 2px;
+  font-size: 110%;
+  list-style: none;
+  background-color: #eee;
+  border: #eee solid 1px;
+}
+#menubar .menubar-navigation li {
+  margin: 0;
+  padding: 0;
+  border: 0 solid black;
+  list-style: none;
+}
+#menubar .menubar-navigation > li {
+  display: inline-block;
+  position: relative;
+}
+#menubar .menubar-navigation > li li {
+  display: block;
+}
+#menubar .menubar-navigation > li > [role=menuitem] {
+  display: inline-block;
+  margin: 2px;
+  padding: 4px;
+  padding-bottom: 8px;
+  background-color: #eee;
+  border: 0 solid #eee;
+  color: black;
+}
+#menubar .menubar-navigation [role=separator] {
+  padding-top: 3px;
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cline x1='0' y1='6' x2='12' y2='6' style='stroke:black;stroke-width:1' /%3E%3C/svg%3E%0A");
+  background-size: 10px 10px;
+  background-position: center;
+  background-repeat: repeat-x;
+}
+#menubar .menubar-navigation [role=menu] [role=menuitem],
+#menubar .menubar-navigation [role=menu] [role=separator] {
+  display: block;
+  width: 12em;
+  margin: 2px;
+  padding: 4px;
+  padding-left: 8px;
+  background-color: #eee;
+  border: 0 solid #eee;
+  color: black;
+}
+#menubar .menubar-navigation [role=menuitem] svg {
+  fill: currentcolor;
+  stroke: currentcolor;
+}
+#menubar .menubar-navigation [role=menuitem] svg.down {
+  padding-left: 0.125em;
+}
+#menubar .menubar-navigation [role=menuitem] svg.right {
+  position: absolute;
+  padding-top: 0.35em;
+  right: 0.75em;
+}
+#menubar .menubar-navigation [role=menuitem][aria-expanded=true] svg.down {
+  transform: rotate(180deg);
+}
+#menubar .menubar-navigation [role=menuitem][aria-expanded=true] svg.right {
+  transform: rotate(90deg) translate(5px, -5px);
+}
+#menubar .menubar-navigation [role=menu] {
+  display: none;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  padding: 7px 4px;
+  border: 2px solid #034575;
+  background-color: #eee;
+}
+#menubar .menubar-navigation [role=group] {
+  margin: 0;
+  padding: 0;
+}
+#menubar .menubar-navigation > li > [role=menuitem][aria-current],
+#menubar .menubar-navigation > li > [role=menuitem].aria-current-path {
+  padding-bottom: 2px;
+  border-bottom: 4px solid #034575;
+}
+#menubar .menubar-navigation [role=menu] [role=menuitem].aria-current-path,
+#menubar .menubar-navigation [role=menu] [role=menuitem][aria-current] {
+  padding-left: 4px;
+  border-left: 4px solid #034575;
+}
+#menubar .menubar-navigation.focus {
+  padding: 0;
+  border: #034575 solid 3px;
+}
+#menubar .menubar-navigation > li > [aria-expanded=true],
+#menubar .menubar-navigation > li > [role=menuitem]:focus,
+#menubar .menubar-navigation > li > [role=menuitem]:hover {
+  outline: none;
+  background-color: #ccc;
+}
+#menubar .menubar-navigation > li > [role=menuitem]:focus,
+#menubar .menubar-navigation > li > [role=menuitem]:hover {
+  padding: 2px;
+  padding-bottom: 4px;
+  border: 2px solid #034575;
+}
+#menubar .menubar-navigation [role=menu] [aria-expanded=true],
+#menubar .menubar-navigation [role=menu] [role=menuitem]:focus,
+#menubar .menubar-navigation [role=menu] [role=menuitem]:hover {
+  outline: none;
+  background-color: #ccc;
+}
+#menubar .menubar-navigation [role=menu] [role=menuitem]:focus,
+#menubar .menubar-navigation [role=menu] [role=menuitem]:hover {
+  padding: 2px;
+  padding-left: 6px;
+  border: 2px solid #034575;
+}
+#menubar .menubar-navigation > li > [aria-expanded=true].aria-current-path,
+#menubar .menubar-navigation > li > [role=menuitem].aria-current-path:focus,
+#menubar .menubar-navigation > li > [role=menuitem].aria-current-path:hover,
+#menubar .menubar-navigation > li > [role=menuitem][aria-current]:focus,
+#menubar .menubar-navigation > li > [role=menuitem][aria-current]:hover {
+  padding-bottom: 2px;
+  border-bottom: 4px solid #034575;
+}
+#menubar .menubar-navigation [role=menu] [aria-expanded=true].aria-current-path,
+#menubar .menubar-navigation [role=menu] [role=menuitem].aria-current-path:focus,
+#menubar .menubar-navigation [role=menu] [role=menuitem].aria-current-path:hover,
+#menubar .menubar-navigation [role=menu] [role=menuitem][aria-current]:focus,
+#menubar .menubar-navigation [role=menu] [role=menuitem][aria-current]:hover {
+  padding-left: 4px;
+  border-left: 4px solid #034575;
+}
+
 html {
   background-color: var(--bright);
   color: var(--dark);
@@ -5059,6 +5224,11 @@ button.off {
   background-position: center;
   border: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%235f6368'%3E%3Cpath d='M819-28 27-820l57-57L876-85l-57 57ZM233-840h487q33 0 56.5 23.5T800-760v80h80v80h-80v80h80v80h-80v80h80v80h-87l-73-73v-407H313l-80-80Zm207 207-47-47h47v47Zm73 73-33-33v-87h160v120H513Zm127 126-86-86h86v86Zm-233-6Zm110-118ZM240-280v-160h200v160H240ZM128-833l73 73h-41v560h560v-41l80 80q-14 20-35 30.5T720-120H160q-33 0-56.5-23.5T80-200v-560q0-25 13.5-44.5T128-833Zm352 352 160 160v41H480v-201ZM281-680l159 159v41H240v-200h41Z'/%3E%3C/svg%3E");
+}
+
+.developer [tabindex] {
+  outline: 2px dotted hsla(0, 0%, 0%, 0.85);
+  outline-offset: 4px;
 }
 
 .developer [aria-activedescendant],

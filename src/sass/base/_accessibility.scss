@@ -44,10 +44,8 @@
     background-color: var(--bright);
 }
 
-[tabindex] {
-    outline: 2px dotted hsla(0, 0%, 0%, 0.1);
-    outline-offset: 4px;
-}
+
+
 svg [tabindex] {
     outline: none;
 }
