@@ -44,7 +44,7 @@ figcaption {
 }
 
 ._minor-second::after {
-  content: " 15.008px";
+  content: " 11.256px";
   font-size: 0.75rem;
 }
 
@@ -53,7 +53,7 @@ figcaption {
 }
 
 ._major-second::after {
-  content: " 14.224px";
+  content: " 10.668px";
   font-size: 0.75rem;
 }
 
@@ -62,7 +62,7 @@ figcaption {
 }
 
 ._minor-third::after {
-  content: " 13.328px";
+  content: " 9.996px";
   font-size: 0.75rem;
 }
 
@@ -71,7 +71,7 @@ figcaption {
 }
 
 ._major-third::after {
-  content: " 12.8px";
+  content: " 9.6px";
   font-size: 0.75rem;
 }
 
@@ -80,7 +80,7 @@ figcaption {
 }
 
 ._perfect-fourth::after {
-  content: " 12px";
+  content: " 9px";
   font-size: 0.75rem;
 }
 
@@ -89,7 +89,7 @@ figcaption {
 }
 
 ._augmented-fourth::after {
-  content: " 11.312px";
+  content: " 8.484px";
   font-size: 0.75rem;
 }
 
@@ -98,7 +98,7 @@ figcaption {
 }
 
 ._perfect-fifth::after {
-  content: " 10.672px";
+  content: " 8.004px";
   font-size: 0.75rem;
 }
 
@@ -107,7 +107,7 @@ figcaption {
 }
 
 ._minor-sixth::after {
-  content: " 10px";
+  content: " 7.5px";
   font-size: 0.75rem;
 }
 
@@ -116,7 +116,7 @@ figcaption {
 }
 
 ._golden::after {
-  content: " 9.888px";
+  content: " 7.416px";
   font-size: 0.75rem;
 }
 
@@ -125,7 +125,7 @@ figcaption {
 }
 
 ._major-sixth::after {
-  content: " 9.232px";
+  content: " 6.924px";
   font-size: 0.75rem;
 }
 
@@ -134,7 +134,7 @@ figcaption {
 }
 
 ._minor-seventh::after {
-  content: " 8.992px";
+  content: " 6.744px";
   font-size: 0.75rem;
 }
 
@@ -143,7 +143,7 @@ figcaption {
 }
 
 ._major-seventh::after {
-  content: " 8.528px";
+  content: " 6.396px";
   font-size: 0.75rem;
 }
 
@@ -152,7 +152,7 @@ figcaption {
 }
 
 ._octave::after {
-  content: " 8px";
+  content: " 6px";
   font-size: 0.75rem;
 }
 
@@ -161,7 +161,7 @@ figcaption {
 }
 
 ._major-ninth::after {
-  content: " 7.104px";
+  content: " 5.328px";
   font-size: 0.75rem;
 }
 
@@ -170,7 +170,7 @@ figcaption {
 }
 
 ._major-tenth::after {
-  content: " 6px";
+  content: " 4.5px";
   font-size: 0.75rem;
 }
 
@@ -179,7 +179,7 @@ figcaption {
 }
 
 ._major-eleventh::after {
-  content: " 5.648px";
+  content: " 4.236px";
   font-size: 0.75rem;
 }
 
@@ -188,7 +188,7 @@ figcaption {
 }
 
 ._major-twelve::after {
-  content: " 5.328px";
+  content: " 3.996px";
   font-size: 0.75rem;
 }
 
@@ -197,7 +197,7 @@ figcaption {
 }
 
 ._double-octave::after {
-  content: " 4px";
+  content: " 3px";
   font-size: 0.75rem;
 }
 
@@ -206,7 +206,7 @@ figcaption {
 }
 
 .unison::after {
-  content: " 16px";
+  content: " 12px";
   font-size: 0.75rem;
 }
 
@@ -215,7 +215,7 @@ figcaption {
 }
 
 .minor-second::after {
-  content: " 17.072px";
+  content: " 12.804px";
   font-size: 0.75rem;
 }
 
@@ -224,7 +224,7 @@ figcaption {
 }
 
 .major-second::after {
-  content: " 18px";
+  content: " 13.5px";
   font-size: 0.75rem;
 }
 
@@ -233,7 +233,7 @@ figcaption {
 }
 
 .minor-third::after {
-  content: " 19.2px";
+  content: " 14.4px";
   font-size: 0.75rem;
 }
 
@@ -242,7 +242,7 @@ figcaption {
 }
 
 .major-third::after {
-  content: " 20px";
+  content: " 15px";
   font-size: 0.75rem;
 }
 
@@ -251,7 +251,7 @@ figcaption {
 }
 
 .perfect-fourth::after {
-  content: " 21.328px";
+  content: " 15.996px";
   font-size: 0.75rem;
 }
 
@@ -260,7 +260,7 @@ figcaption {
 }
 
 .augmented-fourth::after {
-  content: " 22.624px";
+  content: " 16.968px";
   font-size: 0.75rem;
 }
 
@@ -269,7 +269,7 @@ figcaption {
 }
 
 .perfect-fifth::after {
-  content: " 24px";
+  content: " 18px";
   font-size: 0.75rem;
 }
 
@@ -278,7 +278,7 @@ figcaption {
 }
 
 .minor-sixth::after {
-  content: " 25.6px";
+  content: " 19.2px";
   font-size: 0.75rem;
 }
 
@@ -287,7 +287,7 @@ figcaption {
 }
 
 .golden::after {
-  content: " 25.888px";
+  content: " 19.416px";
   font-size: 0.75rem;
 }
 
@@ -296,7 +296,7 @@ figcaption {
 }
 
 .major-sixth::after {
-  content: " 27.712px";
+  content: " 20.784px";
   font-size: 0.75rem;
 }
 
@@ -305,7 +305,7 @@ figcaption {
 }
 
 .minor-seventh::after {
-  content: " 28.448px";
+  content: " 21.336px";
   font-size: 0.75rem;
 }
 
@@ -314,7 +314,7 @@ figcaption {
 }
 
 .major-seventh::after {
-  content: " 30px";
+  content: " 22.5px";
   font-size: 0.75rem;
 }
 
@@ -323,7 +323,7 @@ figcaption {
 }
 
 .octave::after {
-  content: " 32px";
+  content: " 24px";
   font-size: 0.75rem;
 }
 
@@ -332,7 +332,7 @@ figcaption {
 }
 
 .major-ninth::after {
-  content: " 36px";
+  content: " 27px";
   font-size: 0.75rem;
 }
 
@@ -341,7 +341,7 @@ figcaption {
 }
 
 .major-tenth::after {
-  content: " 42.672px";
+  content: " 32.004px";
   font-size: 0.75rem;
 }
 
@@ -350,7 +350,7 @@ figcaption {
 }
 
 .major-eleventh::after {
-  content: " 45.328px";
+  content: " 33.996px";
   font-size: 0.75rem;
 }
 
@@ -359,7 +359,7 @@ figcaption {
 }
 
 .major-twelve::after {
-  content: " 48px";
+  content: " 36px";
   font-size: 0.75rem;
 }
 
@@ -368,7 +368,7 @@ figcaption {
 }
 
 .double-octave::after {
-  content: " 64px";
+  content: " 48px";
   font-size: 0.75rem;
 }
 
@@ -377,7 +377,7 @@ figcaption {
 }
 
 .third-octave::after {
-  content: " 96px";
+  content: " 72px";
   font-size: 0.75rem;
 }
 
@@ -386,7 +386,7 @@ figcaption {
 }
 
 .fourth-octave::after {
-  content: " 128px";
+  content: " 96px";
   font-size: 0.75rem;
 }
 
@@ -3003,7 +3003,7 @@ template {
 }
 html {
   font-family: "Barlow", sans-serif;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 1.414;
   font-weight: 400;
 }
@@ -3076,7 +3076,7 @@ section {
 
 html, :root {
   font-family: "Barlow", sans-serif;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 1.41549;
   text-align: left;
 }
@@ -3088,6 +3088,10 @@ article:first-of-type {
 p {
   font-size: 1rem;
   hyphens: auto;
+}
+
+h2 {
+  font-size: 3rem;
 }
 
 .sr-only {
