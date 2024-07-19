@@ -3076,7 +3076,7 @@ section {
 
 html, :root {
   font-family: "Barlow", sans-serif;
-  font-size: 22px;
+  font-size: 16px;
   line-height: 1.41549;
   text-align: left;
 }
@@ -3788,6 +3788,88 @@ fieldset:not(:has(legend)) {
 .parallax .teaser-10 {
   background-image: url("./../figures/52-1280x853.jpg");
   min-height: 50vh;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .parallax .teaser-1 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-2 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-3 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-4 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-5 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-6 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-7 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-8 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-9 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-10 {
+    animation: parallax 2s infinite;
+  }
+}
+@keyframes parallax {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parallax .teaser-1 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-2 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-3 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-4 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-5 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-6 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-7 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-8 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-9 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-10 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
 }
 
 #combobox {

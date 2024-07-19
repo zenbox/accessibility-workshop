@@ -1,7 +1,7 @@
 
 html, :root {
-    font-family: $font-family-sans-serif;
-    font-size: 22px; // Basis für 1rem // clamp(16px, 3vw, 24px);
+    font-family: $font-family-sans-serif ;
+    font-size: 16px; // Basis für 1rem // clamp(16px, 3vw, 24px);
     line-height:1.415490;
     text-align: left;
 }
