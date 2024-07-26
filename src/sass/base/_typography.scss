@@ -16,6 +16,16 @@ p {
     // column-width: toRem(25); // 50 bis 75 Zeichen
 }
 
+/*
+    Je größer der Bildschirm, desto die Schrift
+    Copy:
+    22px Desktop (4K 2560px!)
+    18px Tablet
+    15px Smartphone (auflösungsabhängig)
+
+*/
+
+
 h2{font-size: 3rem;}
 
 // @media (resolution: 96dpi) {
