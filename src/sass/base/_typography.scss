@@ -1,7 +1,7 @@
 
 html, :root {
     font-family: $font-family-sans-serif ;
-    font-size: 12px; // Basis für 1rem // clamp(16px, 3vw, 24px);
+    font-size: 18px; // Basis für 1rem // clamp(16px, 3vw, 24px);
     line-height:1.415490;
     text-align: left;
 }
@@ -13,7 +13,7 @@ article:first-of-type {
 p {
     font-size: toRem(1);
     hyphens: auto;
-    // column-width: toRem(25); // 50 bis 75 Zeichen
+//    column-width: toRem(25); // 50 bis 75 Zeichen
 }
 
 /*

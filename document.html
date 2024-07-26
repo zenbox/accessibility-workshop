@@ -6,89 +6,89 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0"
         />
-        <title>Dokument</title>
+        <title>Ein barrierefreies Dokument - Firmenname</title>
         <link
             rel="stylesheet"
             href="assets/css/style.css"
         />
     </head>
     <body>
-        <header></header>
-        <nav></nav>
-        <main>
-            <h1>
-                Überschrift der ersten Ordnung entspricht einer
-                Dokumenten-Überschrift
-            </h1>
+        <div role="firlefanz">
+            logo
+            <nav>
+                <ul class="nav nav-column">
+                    <li><a href="#">Seite 1</a></li>
+                    <li><a href="#">Seite 2</a></li>
+                    <li><a href="#">Seite 3</a></li>
+                </ul>
+            </nav>
+        </div>
 
-            <form action="">
-                <fieldset>
-                    <legend>Anmeldung</legend>
-                    <h2>Alle weiteren Überschriften sind Inhalte-bezogen</h2>
+        <div role="main">
+            <h1>Ein barrierefreies Dokument der <abbr  title="National Aeronautic Space Agency" class="versal">Nasa</abbr></h1>
 
-                    <fieldset
-                        id="b-14"
-                        aria-describedby="b-14-desc"
-                    >
-                        <legend>b-14</legend>
-                        <p
-                            tabindex="0"
-                            id="b-14-desc"
-                        >
-                            Fragestellung Lorem ipsum dolor sit amet
-                            consectetur, adipisicing elit. Voluptatem unde
-                            maxime amet!
-                        </p>
-                        <label
-                            ><input
-                                disabled
-                                type="radio"
-                                name=""
-                            /><a href="#">Ja</a></label
-                        >
-                        <label
-                            ><input
-                                type="radio"
-                                name=""
-                            />Nein</label
-                        >
+            <article>
+                <h2>Formular-Komponente</h2>
+                <form action="" aria-live="assertive">
+
+
+
+                    <fieldset>
+                        <legend>Suche über alle Seiten</legend>
+
+                        <label for="search">Sucheingabe</label>
+                        <input
+                            type="search"
+                            name=""
+                            id="search"
+                        />
+
+                        <button tabindex="-1" type="submit">Suche starten</button>
                     </fieldset>
+                </form>
+            </article>
 
-                    <hr />
-                    <label
-                        class="visually-"
-                        for="name"
-                        >Eingabe des Namens</label
-                    >
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        aria-describedby="name-desc"
+            <article tabindex="1" aria-label="Abbildungen" aria-describedby="article-headline-1">
+                <h2 id="article-headline-1">Abbildungen</h2>
+
+                <figure>
+                    <img
+                        src="https://picsum.photos/id/64/200"
+                        alt="Foto eines Mädchen mit Sonnenbrille."
+                        title="Mädchen mit cooler Sonnenbrille und Blumenstrauß."
                     />
-                    <p id="name-desc">
-                        Geben Sie hier Ihren vollständigen Namen ein: Beachten
-                        Sie bitte, dass la la la firlefanz ...
-                    </p>
-
-                    <hr />
-
-                    <label for="email">E-Mail</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
+                    <img
+                        src="https://picsum.photos/id/65/200"
+                        alt="Foto eines Mädchen im Abendlicht."
                     />
+                    <img
+                        src="https://picsum.photos/id/66/200"
+                        alt="Foto: Berg Tal Landschaft ..."
+                    />
+                    <figcaption class="visually-hidden">
+                        Mädchen mit cooler Sonnenbrille und Blumenstrauß.
+                    </figcaption>
+                </figure>
+            </article>
 
-<label for="">Kalender</label>
-<input type="date" name="" id="">
+            <article lang="es">
+                <header>
+                    <h2>Überschrift des Artikels</h2>
+                    <p class="teaser">Lorem ipsum dolor sit amet.</p>
+                </header>
 
-                    <button>anmelden</button>
-                </fieldset>
-            </form>
-        </main>
-        <footer></footer>
+                <p>
+                    <span>Nicht semantischer Inhalt</span>Lorem ipsum dolor sit
+                    amet, consectetur adipisicing elit. Ab id culpa corporis.
+                </p>
+                <h3>Unter-Überschrift</h3>
+            </article>
+        </div>
+        <footer>
+            <address>
+                &copy; <time datetime="2024">2024</time> Firmenname,
+                <a href="mailto:">Michael</a>
+            </address>
+        </footer>
     </body>
 </html>

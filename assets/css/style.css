@@ -3076,7 +3076,7 @@ section {
 
 html, :root {
   font-family: "Barlow", sans-serif;
-  font-size: 12px;
+  font-size: 18px;
   line-height: 1.41549;
   text-align: left;
 }
@@ -3613,6 +3613,14 @@ label:not(:has([type=radio]), :has([type=checkbox]))::after {
 
 fieldset:not(:has(legend)) {
   border: 2px dotted red;
+}
+
+.nav-column {
+  flex-direction: column;
+  line-height: 1.5;
+}
+.nav-column li {
+  padding-block: 0rem;
 }
 
 .parallax .section {
