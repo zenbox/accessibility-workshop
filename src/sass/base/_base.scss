@@ -129,10 +129,12 @@ samp {
 }
 
 nav {
+    width: 100%;
     ol,
     ul {
         display: flex;
         flex-direction: row;
+        justify-content: flex-start;
         list-style-type: none;
         margin: 0;
         padding: 0;
