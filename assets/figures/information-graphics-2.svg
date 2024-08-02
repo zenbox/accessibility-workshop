@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="100%" height="100%" viewBox="0.079 -0.107 285.03 284.655" version="1.1" style="fill-rule:evenodd;clip-rule:evenodd;" xmlns="http://www.w3.org/2000/svg">
+  <defs/>
+  <path d="M 140.501 85.579 L 140.501 2.444 C 64.02 2.444 2.019 64.445 2.019 140.926 C 2.019 192.764 30.97 240.261 77.045 264.014 L 115.139 190.121 C 87.97 176.114 77.299 142.734 91.306 115.565 C 100.8 97.15 119.783 85.579 140.501 85.579" style="fill:rgb(65,65,65);fill-rule:nonzero;stroke:white;stroke-width:4px;"/>
+  <path d="M 134.099 304.533 L 217.233 304.533 C 217.233 250.317 185.595 201.088 136.279 178.565 L 101.743 254.187 C 121.454 263.189 134.099 282.864 134.099 304.533" style="fill: rgb(161, 189, 230); fill-rule: nonzero; stroke: white; stroke-width: 4px; transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(-0.458227, 0.888835, -0.888835, -0.458227, -0.000029, -0.000009)"/>
+  <path d="M 174.715 184.433 L 226.105 249.781 C 286.223 202.503 296.633 115.441 249.355 55.323 C 223.099 21.936 182.975 2.445 140.501 2.445 L 140.501 85.579 C 171.069 85.579 195.849 110.359 195.849 140.927 C 195.849 157.903 188.058 173.939 174.715 184.433" style="fill:rgb(41,108,204);fill-rule:nonzero;stroke:white;stroke-width:4px;"/>
+  <text x="27.237" y="126.139" style="font-family: Barlow-Regular, Barlow; font-size: 19px; fill: white; white-space: pre;">Nein</text>
+  <text x="141.238" y="264.95" style="font-family: Barlow-Bold, Barlow; font-weight: 700; font-size: 23px; fill: white; white-space: pre;">6</text>
+  <text x="35.426" y="154.391" style="font-family: Barlow-Bold, Barlow; font-weight: 700; font-size: 23px; fill: white; white-space: pre;">14</text>
+  <text x="223.412" y="144.393" style="font-family: Barlow-Bold, Barlow; font-weight: 700; font-size: 23px; fill: white; white-space: pre;">13</text>
+  <text x="130.187" y="138.739" style="font-family: Barlow-Bold, Barlow; font-weight: 700; font-size: 19px; white-space: pre;">33</text>
+  <text x="101.708" y="159.637" style="font-family: Barlow-Regular, Barlow; font-size: 16.998px; white-space: pre;">Antw<tspan x="139.341 148.605 155.03 160.962" y="159.637 159.637 159.637 159.637" style="font-size: 17px; word-spacing: 0px;">orte</tspan>n</text>
+  <text x="221.696" y="117.29" style="font-family: Barlow-Regular, Barlow; font-size: 19px; fill: white; white-space: pre;">Ja</text>
+  <text x="107.743" y="242.707" style="font-family: Barlow-Regular, Barlow; font-size: 18.998px; fill: white; white-space: pre;">Man<tspan x="141.141" y="242.707" style="font-size: 19px; word-spacing: 0px;">c</tspan>hmal</text>
+</svg>
