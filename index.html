@@ -15,6 +15,42 @@
     <body>
         <h1>Semantik für Barrierefreiheit</h1>
 
+          <article>
+
+            <h2>Nicht-semantische Elemente</h2>
+            <p>Nicht-semantische Elemente werden für konstruktive Container verwendet (<code>&lt;div>, &lt;span></code>). Sie tragen oft Ids und CSS-Klassen. Generischer HTML-Aufbau verwendet sie, um die Kontruktion von Komponenten zu vereinfachen oder zu verallgemeinern. <code>&lt;i></code> verwende ich zum Beipiel gerne für CSS-Icons. Sie fügen der semantischen Struktur nichts hinzu.</p>
+            <p><code>&lt;div></code>Division<code>&lt;/div></code></p>
+            <p><code>&lt;span></code>Span<code>&lt;/span></code></p>
+            <p><code>&lt;b></code>Fett-Auszeichnung<code>&lt;/b></code></p>
+            <p><code>&lt;i></code>Kursiv-Auszeichnung<code>&lt;/i></code></p>
+            <p><code>&lt;u></code>Unterstrich<code>&lt;/u></code></p>
+            <p><code>&lt;s></code>Durchgestrichen<code>&lt;/s></code></p>
+        </article>
+
+        <article>
+            <h2>Dokumentenstruktur</h2>
+            <p>Mit diesen Elementen wird der allgemeine oder übergeordnete Seitenaufbau umgesetzt. Sie schaffen Bereiche für die verschiedenen Inhalte und werden zum Beispiel auch von Screenreadern (meist) statistisch ausgewertet. <code>&lt;main></code> sowie <code>&lt;header></code>, <code>&lt;footer</code> im <code>&lt;body></code> markieren oft die wesentlichen Seitenbereiche.</p>
+            <p><code>&lt;body></code>Seitenbereich des Dokuments<code>&lt;/body></code></p>
+            <p><code>&lt;header></code>Kopfbereich des Dokuments oder eines Abschnitts<code>&lt;/header></code></p>
+            <p><code>&lt;footer></code>Fußbereich des Dokuments oder eines Abschnitts<code>&lt;/footer></code></p>
+            <p><code>&lt;nav></code>Navigation<code>&lt;/nav></code></p>
+            <p><code>&lt;main></code>Hauptinhalt<code>&lt;/main></code></p>
+            <p><code>&lt;article></code>Artikel<code>&lt;/article></code></p>
+            <p><code>&lt;section></code>Abschnitt<code>&lt;/section></code></p>
+            <p><code>&lt;aside></code>Nebeninhalt<code>&lt;/aside></code></p>
+            <p><code>&lt;figure></code>Abbildung<code>&lt;/figure></code></p>
+            <p><code>&lt;figcaption></code>Bildunterschrift<code>&lt;/figcaption></code></p>
+            <p><code>&lt;details></code>Details<code>&lt;/details></code></p>
+            <p><code>&lt;summary></code>Zusammenfassung<code>&lt;/summary></code></p>
+            <p><code>&lt;dialog></code>Dialog<code>&lt;/dialog></code></p>
+            <p><code>&lt;template></code>Vorlage<code>&lt;/template></code></p>
+            <p><code>&lt;script></code>Skript<code>&lt;/script></code></p>
+            <p><code>&lt;noscript></code>Alternativtext<code>&lt;/noscript></code></p>
+            <p><code>&lt;style></code>Stil<code>&lt;/style></code></p>
+            <p><code>&lt;link></code>Verweis<code>&lt;/link></code></p>
+            <p><code>&lt;meta></code>Metadaten<code>&lt;/meta></code></p>
+        </article>
+
         <article>
             <h2>Struktur von Text und Inhalten</h2>
 
@@ -64,38 +100,7 @@
             <p><code>&lt;a></code>Hyperlink<code>&lt;/a></code></p>
         </article>
 
-        <article>
-            <h2>Nicht-semantische Elemente</h2>
-            <p><code>&lt;div></code>Division<code>&lt;/div></code></p>
-            <p><code>&lt;span></code>Span<code>&lt;/span></code></p>
-            <p><code>&lt;b></code>Fett-Auszeichnung<code>&lt;/b></code></p>
-            <p><code>&lt;i></code>Kursiv-Auszeichnung<code>&lt;/i></code></p>
-            <p><code>&lt;u></code>Unterstrich<code>&lt;/u></code></p>
-            <p><code>&lt;s></code>Durchgestrichen<code>&lt;/s></code></p>
-        </article>
-
-        <article>
-            <h2>Dokumentenstruktur</h2>
-            <p><code>&lt;body></code>Seitenbereich des Dokuments<code>&lt;/body></code></p>
-            <p><code>&lt;header></code>Kopfbereich des Dokuments oder eines Abschnitts<code>&lt;/header></code></p>
-            <p><code>&lt;footer></code>Fußbereich des Dokuments oder eines Abschnitts<code>&lt;/footer></code></p>
-            <p><code>&lt;nav></code>Navigation<code>&lt;/nav></code></p>
-            <p><code>&lt;main></code>Hauptinhalt<code>&lt;/main></code></p>
-            <p><code>&lt;article></code>Artikel<code>&lt;/article></code></p>
-            <p><code>&lt;section></code>Abschnitt<code>&lt;/section></code></p>
-            <p><code>&lt;aside></code>Nebeninhalt<code>&lt;/aside></code></p>
-            <p><code>&lt;figure></code>Abbildung<code>&lt;/figure></code></p>
-            <p><code>&lt;figcaption></code>Bildunterschrift<code>&lt;/figcaption></code></p>
-            <p><code>&lt;details></code>Details<code>&lt;/details></code></p>
-            <p><code>&lt;summary></code>Zusammenfassung<code>&lt;/summary></code></p>
-            <p><code>&lt;dialog></code>Dialog<code>&lt;/dialog></code></p>
-            <p><code>&lt;template></code>Vorlage<code>&lt;/template></code></p>
-            <p><code>&lt;script></code>Skript<code>&lt;/script></code></p>
-            <p><code>&lt;noscript></code>Alternativtext<code>&lt;/noscript></code></p>
-            <p><code>&lt;style></code>Stil<code>&lt;/style></code></p>
-            <p><code>&lt;link></code>Verweis<code>&lt;/link></code></p>
-            <p><code>&lt;meta></code>Metadaten<code>&lt;/meta></code></p>
-        </article>
+      
             
         <article>
             <h2>Struktur in Formularen</h2>

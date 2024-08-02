@@ -3070,13 +3070,12 @@ body > nav:nth-child(2) + * {
 }
 
 section {
-  border: 1px dotted tomato;
   margin-block: 1rem;
 }
 
 html, :root {
   font-family: "Barlow", sans-serif;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 1.41549;
   text-align: left;
 }
@@ -3098,8 +3097,12 @@ p {
     15px Smartphone (auflösungsabhängig)
 
 */
+h1 {
+  font-size: 1.8rem;
+}
+
 h2 {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .sr-only {
@@ -5331,6 +5334,9 @@ button.off {
 .developer [tabindex] {
   outline: 2px dotted hsla(0, 0%, 0%, 0.85);
   outline-offset: 4px;
+}
+.developer section {
+  border: 1px dotted tomato;
 }
 
 .developer [aria-activedescendant],
