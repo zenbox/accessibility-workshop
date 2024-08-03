@@ -144,18 +144,35 @@
     font-style: normal;
     font-weight: 400;
 }
+// Playfair Display font family
+@font-face {
+    font-family: "Playfair Display";
+    src: url(../fonts/PlayfairDisplay/PlayfairDisplay-Regular.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Playfair Display";
+    src: url(../fonts/PlayfairDisplay/PlayfairDisplay-Italic.ttf) format("ttf");
+    font-style: italic;
+    font-weight: 400;
+}
+
 // Font variables
 $font-family-sans-serif: "Barlow", sans-serif;
-$font-family-serif: "Playground", serif;
+$font-family-serif: "Playfair Display", serif;
 $font-family-monospace: "Noto Sans Mono", monospace;
-$font-size: $font-size;
+$font-family-dyslexic: "Atkinson Hyperlegible", sans-serif;
+$font-size: toPx($s); // The base size from the harmonic-rythmn, i.e. 22
 $line-height: $augmented-fourth;
 
-// - - - - - - - - - -
-html, :root {
-    font-family: $font-family-sans-serif ;
-    font-size: 12px; // Basis für 1rem // clamp(16px, 3vw, 24px);
-    line-height:1.415490;
+// Font styles
+html,
+:root {
+    font-family: $font-family-sans-serif;
+    font-size: $font-size; // Basis für 1rem
+    // font-size: clamp(16px, 3vw, 24px); // for a fluid font size
+    line-height: $line-height;
     text-align: left;
 }
 
@@ -164,23 +181,40 @@ article:first-of-type {
 }
 
 p {
-    font-size: toRem(1);
     hyphens: auto;
-//    column-width: toRem(25); // 50 bis 75 Zeichen
 }
 
-/*
-    Je größer der Bildschirm, desto die Schrift
-    Copy:
-    22px Desktop (4K 2560px!)
-    18px Tablet
-    15px Smartphone (auflösungsabhängig)
+.multicolumn-40-60 {
+    column-width: toRem(18);
+}
 
-*/
+._10 {
+    background: var(--dark);
+    color: var(--on-dark);
+}
 
+// THE FONT FAMILES
+.monospace {
+    font-family: $font-family-monospace;
+}
+.dyslexic {
+    font-family: $font-family-dyslexic;
+}
+.serif {
+    font-family: $font-family-serif;
+}
+.sans-serif {
+    font-family: $font-family-sans-serif;
+}
 
-h1{font-size: 1.8rem;}
-h2{font-size: 2rem;}
+// SETTING THE RIGHT FONT SIZE
+// Je größer der Bildschirm, desto größer die Schrift!
+// Voraussetzung ist, das die mobilen Geräte hochauflösende Display haben.
+//
+// Copy:
+//       22px Desktop (4K 2560px!)
+//       18px Tablet
+//       15px Smartphone (auflösungsabhängig)
 
 // @media (resolution: 96dpi) {
 //     html, :root {
@@ -200,3 +234,27 @@ h2{font-size: 2rem;}
 //     }
 
 // }
+
+$font-sizes: (
+    body: 1,
+    p: $unison,
+    h1: $double-octave,
+    h2: $major-tenth,
+    h3: $minor-seventh,
+    h4: $perfect-fifth,
+    h5: $major-third,
+    h6: $unison,
+    small: $_major-third,
+    figcaption: $-major-third,
+    big: $minor-seventh,
+);
+
+@each $name, $size in $font-sizes {
+    #{$name} {
+        font-size: toRem($size);
+    }
+    // #{$name}::after {
+    //     content: " #{$size} rem";
+    //     font-size: toRem($_perfect-fourth);
+    // }
+}

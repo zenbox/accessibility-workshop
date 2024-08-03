@@ -1,50 +1,10 @@
 @charset "UTF-8";
-body {
-  font-size: 1rem;
-}
-
-small {
-  font-size: 0.8rem;
-}
-
-p {
-  font-size: 1rem;
-}
-
-h1 {
-  font-size: 4rem;
-}
-
-h2 {
-  font-size: 2.667rem;
-}
-
-h3 {
-  font-size: 1.778rem;
-}
-
-h4 {
-  font-size: 1.5rem;
-}
-
-h5 {
-  font-size: 1.25rem;
-}
-
-h6 {
-  font-size: 1rem;
-}
-
-figcaption {
-  font-size: 0.8rem;
-}
-
 ._minor-second {
   font-size: 0.938rem;
 }
 
 ._minor-second::after {
-  content: " 11.256px";
+  content: " 20.636px";
   font-size: 0.75rem;
 }
 
@@ -53,7 +13,7 @@ figcaption {
 }
 
 ._major-second::after {
-  content: " 10.668px";
+  content: " 19.558px";
   font-size: 0.75rem;
 }
 
@@ -62,7 +22,7 @@ figcaption {
 }
 
 ._minor-third::after {
-  content: " 9.996px";
+  content: " 18.326px";
   font-size: 0.75rem;
 }
 
@@ -71,7 +31,7 @@ figcaption {
 }
 
 ._major-third::after {
-  content: " 9.6px";
+  content: " 17.6px";
   font-size: 0.75rem;
 }
 
@@ -80,7 +40,7 @@ figcaption {
 }
 
 ._perfect-fourth::after {
-  content: " 9px";
+  content: " 16.5px";
   font-size: 0.75rem;
 }
 
@@ -89,7 +49,7 @@ figcaption {
 }
 
 ._augmented-fourth::after {
-  content: " 8.484px";
+  content: " 15.554px";
   font-size: 0.75rem;
 }
 
@@ -98,7 +58,7 @@ figcaption {
 }
 
 ._perfect-fifth::after {
-  content: " 8.004px";
+  content: " 14.674px";
   font-size: 0.75rem;
 }
 
@@ -107,7 +67,7 @@ figcaption {
 }
 
 ._minor-sixth::after {
-  content: " 7.5px";
+  content: " 13.75px";
   font-size: 0.75rem;
 }
 
@@ -116,7 +76,7 @@ figcaption {
 }
 
 ._golden::after {
-  content: " 7.416px";
+  content: " 13.596px";
   font-size: 0.75rem;
 }
 
@@ -125,7 +85,7 @@ figcaption {
 }
 
 ._major-sixth::after {
-  content: " 6.924px";
+  content: " 12.694px";
   font-size: 0.75rem;
 }
 
@@ -134,7 +94,7 @@ figcaption {
 }
 
 ._minor-seventh::after {
-  content: " 6.744px";
+  content: " 12.364px";
   font-size: 0.75rem;
 }
 
@@ -143,7 +103,7 @@ figcaption {
 }
 
 ._major-seventh::after {
-  content: " 6.396px";
+  content: " 11.726px";
   font-size: 0.75rem;
 }
 
@@ -152,7 +112,7 @@ figcaption {
 }
 
 ._octave::after {
-  content: " 6px";
+  content: " 11px";
   font-size: 0.75rem;
 }
 
@@ -161,7 +121,7 @@ figcaption {
 }
 
 ._major-ninth::after {
-  content: " 5.328px";
+  content: " 9.768px";
   font-size: 0.75rem;
 }
 
@@ -170,7 +130,7 @@ figcaption {
 }
 
 ._major-tenth::after {
-  content: " 4.5px";
+  content: " 8.25px";
   font-size: 0.75rem;
 }
 
@@ -179,7 +139,7 @@ figcaption {
 }
 
 ._major-eleventh::after {
-  content: " 4.236px";
+  content: " 7.766px";
   font-size: 0.75rem;
 }
 
@@ -188,7 +148,7 @@ figcaption {
 }
 
 ._major-twelve::after {
-  content: " 3.996px";
+  content: " 7.326px";
   font-size: 0.75rem;
 }
 
@@ -197,7 +157,7 @@ figcaption {
 }
 
 ._double-octave::after {
-  content: " 3px";
+  content: " 5.5px";
   font-size: 0.75rem;
 }
 
@@ -206,7 +166,7 @@ figcaption {
 }
 
 .unison::after {
-  content: " 12px";
+  content: " 22px";
   font-size: 0.75rem;
 }
 
@@ -215,7 +175,7 @@ figcaption {
 }
 
 .minor-second::after {
-  content: " 12.804px";
+  content: " 23.474px";
   font-size: 0.75rem;
 }
 
@@ -224,7 +184,7 @@ figcaption {
 }
 
 .major-second::after {
-  content: " 13.5px";
+  content: " 24.75px";
   font-size: 0.75rem;
 }
 
@@ -233,7 +193,7 @@ figcaption {
 }
 
 .minor-third::after {
-  content: " 14.4px";
+  content: " 26.4px";
   font-size: 0.75rem;
 }
 
@@ -242,7 +202,7 @@ figcaption {
 }
 
 .major-third::after {
-  content: " 15px";
+  content: " 27.5px";
   font-size: 0.75rem;
 }
 
@@ -251,7 +211,7 @@ figcaption {
 }
 
 .perfect-fourth::after {
-  content: " 15.996px";
+  content: " 29.326px";
   font-size: 0.75rem;
 }
 
@@ -260,7 +220,7 @@ figcaption {
 }
 
 .augmented-fourth::after {
-  content: " 16.968px";
+  content: " 31.108px";
   font-size: 0.75rem;
 }
 
@@ -269,7 +229,7 @@ figcaption {
 }
 
 .perfect-fifth::after {
-  content: " 18px";
+  content: " 33px";
   font-size: 0.75rem;
 }
 
@@ -278,7 +238,7 @@ figcaption {
 }
 
 .minor-sixth::after {
-  content: " 19.2px";
+  content: " 35.2px";
   font-size: 0.75rem;
 }
 
@@ -287,7 +247,7 @@ figcaption {
 }
 
 .golden::after {
-  content: " 19.416px";
+  content: " 35.596px";
   font-size: 0.75rem;
 }
 
@@ -296,7 +256,7 @@ figcaption {
 }
 
 .major-sixth::after {
-  content: " 20.784px";
+  content: " 38.104px";
   font-size: 0.75rem;
 }
 
@@ -305,7 +265,7 @@ figcaption {
 }
 
 .minor-seventh::after {
-  content: " 21.336px";
+  content: " 39.116px";
   font-size: 0.75rem;
 }
 
@@ -314,7 +274,7 @@ figcaption {
 }
 
 .major-seventh::after {
-  content: " 22.5px";
+  content: " 41.25px";
   font-size: 0.75rem;
 }
 
@@ -323,7 +283,7 @@ figcaption {
 }
 
 .octave::after {
-  content: " 24px";
+  content: " 44px";
   font-size: 0.75rem;
 }
 
@@ -332,7 +292,7 @@ figcaption {
 }
 
 .major-ninth::after {
-  content: " 27px";
+  content: " 49.5px";
   font-size: 0.75rem;
 }
 
@@ -341,7 +301,7 @@ figcaption {
 }
 
 .major-tenth::after {
-  content: " 32.004px";
+  content: " 58.674px";
   font-size: 0.75rem;
 }
 
@@ -350,7 +310,7 @@ figcaption {
 }
 
 .major-eleventh::after {
-  content: " 33.996px";
+  content: " 62.326px";
   font-size: 0.75rem;
 }
 
@@ -359,7 +319,7 @@ figcaption {
 }
 
 .major-twelve::after {
-  content: " 36px";
+  content: " 66px";
   font-size: 0.75rem;
 }
 
@@ -368,7 +328,7 @@ figcaption {
 }
 
 .double-octave::after {
-  content: " 48px";
+  content: " 88px";
   font-size: 0.75rem;
 }
 
@@ -377,7 +337,7 @@ figcaption {
 }
 
 .third-octave::after {
-  content: " 72px";
+  content: " 132px";
   font-size: 0.75rem;
 }
 
@@ -386,7 +346,7 @@ figcaption {
 }
 
 .fourth-octave::after {
-  content: " 96px";
+  content: " 176px";
   font-size: 0.75rem;
 }
 
@@ -528,10 +488,23 @@ figcaption {
   font-style: normal;
   font-weight: 400;
 }
-html, :root {
+@font-face {
+  font-family: "Playfair Display";
+  src: url(../fonts/PlayfairDisplay/PlayfairDisplay-Regular.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Playfair Display";
+  src: url(../fonts/PlayfairDisplay/PlayfairDisplay-Italic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 400;
+}
+html,
+:root {
   font-family: "Barlow", sans-serif;
-  font-size: 12px;
-  line-height: 1.41549;
+  font-size: 22px;
+  line-height: 1.414;
   text-align: left;
 }
 
@@ -540,28 +513,79 @@ article:first-of-type {
 }
 
 p {
-  font-size: 1rem;
   hyphens: auto;
 }
 
-/*
-    Je größer der Bildschirm, desto die Schrift
-    Copy:
-    22px Desktop (4K 2560px!)
-    18px Tablet
-    15px Smartphone (auflösungsabhängig)
+.multicolumn-40-60 {
+  column-width: 18rem;
+}
 
-*/
+._10 {
+  background: var(--dark);
+  color: var(--on-dark);
+}
+
+.monospace {
+  font-family: "Noto Sans Mono", monospace;
+}
+
+.dyslexic {
+  font-family: "Atkinson Hyperlegible", sans-serif;
+}
+
+.serif {
+  font-family: "Playfair Display", serif;
+}
+
+.sans-serif {
+  font-family: "Barlow", sans-serif;
+}
+
+body {
+  font-size: 1rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
 h1 {
-  font-size: 1.8rem;
+  font-size: 4rem;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 2.667rem;
+}
+
+h3 {
+  font-size: 1.778rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+small {
+  font-size: 0.8rem;
+}
+
+figcaption {
+  font-size: 0.8rem;
+}
+
+big {
+  font-size: 1.778rem;
 }
 
 :root {
-  --accred: hsl(360, 84%, 64%);
   --primary: hsla(300, 93%, 12%, 1);
   --on-primary: hsla(300, 93%, 85%, 1);
   --secondary: hsla(120, 94%, 33%, 1);
@@ -582,6 +606,8 @@ h2 {
   --on-bright: hsla(0, 0%, 15%, 1);
   --dark: hsla(0, 0%, 0%, 1);
   --on-dark: hsla(0, 0%, 85%, 1);
+  --accred: hsl(360, 84%, 64%);
+  --on-accred: var(--bright);
   --shadow: hsla(0, 0%, 0%, 0.5);
   --fontSize: 16px;
   --default: 1rem;
@@ -3066,7 +3092,7 @@ template {
 
 html {
   font-family: "Barlow", sans-serif;
-  font-size: 12px;
+  font-size: 22px;
   line-height: 1.414;
   font-weight: 400;
 }
@@ -3197,10 +3223,6 @@ svg [tabindex] {
 
 .invisible {
   display: none !important;
-}
-
-time {
-  display: block;
 }
 
 @keyframes focus-animation {

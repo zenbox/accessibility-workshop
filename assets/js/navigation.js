@@ -7,10 +7,10 @@ function createNavigation() {
 
     const navigation = [
         { file: "index.html", text: "Semantik" },
+        { file: "typography.html", text: "Typografie" },
         { file: "color-and-contrast.html", text: "Farbe und Kontrast" },
         { file: "keyboard-controls.html", text: "Tastatur-Steuerung" },
-        { file: "typography.html", text: "Schrift und Satz" },
-        { file: "form.html", text: "Formular" },
+        // { file: "form.html", text: "Formular" },
         { file: "navigation.html", text: "Navigation" },
         { file: "non-text-content.html", text: "Bild und Grafik" },
         { file: "parallax.html", text: "Bewegung" },

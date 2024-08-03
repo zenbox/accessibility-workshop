@@ -26,7 +26,58 @@
     </head>
     <body>
         <header><h1>Typografie</h1></header>
+        <p>
+            Die wichtigsten typografischen HTML-Elemente und deren Anwendung.
+            Mit wenigen HTML Tags kann ein typografisches System umgesetzt
+            werden. Die Datei <code>src/typography.scss</code> zeigt meine
+            Umsetzung.
+        </p>
+        <p>
+            Alle verwendeten Schriftfamilien stehen über den Fontserver von
+            Google frei zur Verfügung. (<a href="https://fonts.google.com/">https://fonts.google.com/</a>).
+        </p>
         <main>
+            <article>
+                <h2>Die Schriftfamilien</h2>
+                <p class="sans-serif">
+                    Serifenlose Schrift wird hier als <i lang="en">copy</i> für
+                    den gesamten Text verwendet. Serifenlose Schriften eignen
+                    sich aufgrund ihrer gleichmäßigen Strichstärke gut zur
+                    Darstellung auf Bildschirmen, deren Pixel am besten
+                    gleichmäßige gerade Linien abbilden können. Die Barlow, die
+                    ich hier verwende, ist eine der besten Schriften für
+                    Bildschirme, die ich kenne.
+                </p>
+                <p class="serif">
+                    <big
+                        >Die Serifenschrift taucht in meinen Entwürfen nur
+                        gelegentlich auf. Ich verwende sie gerne für größere
+                        Formate wie Überschriften.</big
+                    >
+                    Serifenschriften lassen sich auf hochauflösenden
+                    Bildschirmen (Retina- oder 4K-Displays) git einsetzen. Eine
+                    geeignete Darstellungsgröße variiert je nach Auflösung,
+                    Schriftgröße und Schriftart. Ich verwende die Playfair
+                    Display.
+                </p>
+                <p class="monospace">
+                    Die Schreibmaschinenschrift wird üblicherweise für
+                    Quelltexte oder Tasten-Angaben verwendet. Sie ist aber auch
+                    für viele andere Gestaltungsideen gut. Die immer gleich
+                    breiten Buchstaben sind ursprünglich der Mechanik einer
+                    Schreibmaschine geschuldet. Seit ich die Schriftfamilie Noto
+                    entdeckt habe, gehört deren Mono Sans zu meinen Favoriten.
+                </p>
+                <p class="dyslexic">
+                    Die Schrift zur Unterstützung von Dylexie. Hier die
+                    <i>Atkinson Hyperlegible</i>. Sie wurde entwickelt, um
+                    Menschen mit Dylexie das Erkennen der einzelnen Buchstaben
+                    zu erleichtern. Zeichen mit sonst ähnlichem Aussehen haben
+                    hier eine unterscheidbare Form, zum Beispiel
+                    <big>g</big> und <big>q</big> oder <big>0</big> (Null) und
+                    das große <big>O</big>.
+                </p>
+            </article>
             <article>
                 <h2>Die typografische Organisation der HTML Elemente</h2>
                 <p>
@@ -41,7 +92,7 @@
                     betrachtet werden, um eine konsistente und harmonische
                     Gestaltung zu erreichen.
                 </p>
-                <h2>2 Textabsätze <code>&lt;p></code></h2>
+                <h2>Zwei Textabsätze mit <code>&lt;p></code></h2>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -58,7 +109,7 @@
                     Architecto laudantium id ratione. Modi, animi sequi!
                 </p>
                 <p>
-                    Kleine Schrift <code>&lt;small></code>:
+                    Kleine Schrift mit <code>&lt;small></code>:
                     <small
                         >Lorem ipsum dolor sit amet consectetur adipisicing
                         elit.</small
@@ -67,7 +118,7 @@
             </article>
 
             <article>
-                <h2>Code <code>&lt;code>&lt;pre></code></h2>
+                <h2>Codezeilen mit <code>&lt;code>&lt;pre></code></h2>
                 <pre><code>10 REM My first code
 20 PRINT "Hello, World!"
 30 GOTO 40
@@ -86,7 +137,7 @@
                         border: 1px solid hsla(0, 0%, 0%, 0.9);
                     }
                 </style>
-                <h2>Keyboard <code>&lt;kbd></code></h2>
+                <h2>Keyboard mit <code>&lt;kbd></code></h2>
                 <p><kbd>F11</kbd> <kbd>F12</kbd> <kbd>Strg + A</kbd></p>
                 <p>
                     <kbd class="_key">F11</kbd> <kbd class="_key">F12</kbd>
@@ -96,7 +147,7 @@
 
             <article>
                 <h2>
-                    Listen <code>&lt;ul></code>, <code>&lt;ol></code>,
+                    Listen mit <code>&lt;ul></code>, <code>&lt;ol></code>,
                     <code>&lt;dl></code>
                 </h2>
                 <ol>
@@ -125,34 +176,32 @@
 
             <article>
                 <h2>
-                    Abbildungen <code>&lt;figure></code>, <code>&lt;img></code>,
+                    Abbildungen mit <code>&lt;figure></code>,
+                    <code>&lt;img></code>,
                     <code>&lt;figcaption></code>
                 </h2>
                 <figure>
                     <img
-                        src="assets/figures/400.jpg"
+                        src="assets/figures/12-400x200.jpg"
                         alt="Ein Platzhalterbild"
                     />
-                    <figcaption>Ein Platzhalterbild</figcaption>
+                    <figcaption>
+                        Die Möglichkeit einer semantisch ausgeweisenen
+                        Bildbeschreibung mit <code>&lt;figcaption></code> ist
+                        zum Beipiel für Screenreader oder Suchmaschinen
+                        sinnvoll.
+                    </figcaption>
                 </figure>
             </article>
 
             <article>
-                <style>
-                    ._10 {
-                        background: hsla(0, 100%, 50%, 0.5);
-                    }
-                </style>
                 <h2>
-                    Mehrspaltiger Text im Blocksatz (40 bis 70 Zeichen)
-                    <code>&lt;p></code>
+                    Mehrspaltiger Text im Blocksatz mit circa 40 bis 60 Zeichen
+                    pro Spalte - <code>&lt;p></code> und
+                    <code>column-width: 18rem;</code>
                 </h2>
                 <p
-                    style="
-                        text-align: justify;
-                        column-width: 20rem;
-                        column-gap: 2rem;
-                    "
+                    class="multicolumn-40-60"
                     id="loremipsum"
                 ></p>
                 <script>

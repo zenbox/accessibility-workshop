@@ -1,7 +1,6 @@
 // Colors
 // CSS Variable
 :root {
-    --accred: hsl(360, 84%, 64%);
     --primary: hsla(300, 93%, 12%, 1);
     --on-primary: hsla(300, 93%, 85%, 1);
     --secondary: hsla(120, 94%, 33%, 1);
@@ -24,6 +23,9 @@
     --on-bright: hsla(0, 0%, 15%, 1);
     --dark: hsla(0, 0%, 0%, 1);
     --on-dark: hsla(0, 0%, 85%, 1);
+
+    --accred: hsl(360, 84%, 64%);
+    --on-accred: var(--bright);
 
     --shadow: hsla(0, 0%, 0%, 0.5);
 

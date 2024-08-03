@@ -1,6 +1,4 @@
-$s: 12;
-$font-size: toPx($s);
-
+$s:22; // base font size as 22px
 $unison: 1; // Unison 1:1
 
 // Bigger
@@ -84,30 +82,7 @@ $rhytmn: (
     third-octave: $third-octave,
     fourth-octave: $fourth-octave,
 );
-$font-sizes: (
-    body: 1,
-    small: $_major-third,
-    p: $unison,
-    h1: $double-octave,
-    h2: $major-tenth,
-    h3: $minor-seventh,
-    h4: $perfect-fifth,
-    h5: $major-third,
-    h6: $unison,
-    figcaption: $-major-third,
-);
 
-
-
-@each $name, $size in $font-sizes {
-    #{$name} {
-        font-size: toRem($size);
-    }
-    // #{$name}::after {
-    //     content: " #{$size} rem";
-    //     font-size: toRem($_perfect-fourth);
-    // }
-}
 
 @each $name, $size in $rhytmn {
     .#{$name} {
