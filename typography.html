@@ -11,7 +11,6 @@
             rel="stylesheet"
             href="assets/css/style.css"
         />
-        
     </head>
     <body>
         <header>
@@ -34,13 +33,13 @@
             <article>
                 <h2>Die Schriftfamilien</h2>
                 <p class="sans-serif">
-                    Als <em>serifenlose Schrift</em> setze ich hier Barlow für den
-                    Mengentext ein. Serifenlose Schriften eignen sich aufgrund
-                    ihrer gleichmäßigen Strichstärke gut zur Darstellung auf
-                    Bildschirmen, deren Pixel am besten gleichmäßige gerade
-                    Linien abbilden können. Die Barlow, die ich hier verwende,
-                    ist eine der besten Schriften für Bildschirme, die ich
-                    kenne.
+                    Als <em>serifenlose Schrift</em> setze ich hier Barlow für
+                    den Mengentext ein. Serifenlose Schriften eignen sich
+                    aufgrund ihrer gleichmäßigen Strichstärke gut zur
+                    Darstellung auf Bildschirmen, deren Pixel am besten
+                    gleichmäßige gerade Linien abbilden können. Die Barlow, die
+                    ich hier verwende, ist eine der besten Schriften für
+                    Bildschirme, die ich kenne.
                 </p>
                 <p class="serif">
                     <big
@@ -72,6 +71,39 @@
                     <big>g</big> und <big>q</big> oder <big>0</big> (Null) und
                     das große <big>O</big>.
                 </p>
+            </article>
+            <article>
+                <h2>Grundlegende Styles für den Text</h2>
+                <p>
+                    Neben der Schriftfamilie sind die Schriftgröße und der
+                    Zeilenabstand die wichtigsten Größen.
+                </p>
+                <pre><code>
+html {
+    font-family : Barlow, sans-serif;
+    font-size   : 22px; /* rem-Basis */
+    line-height : 1.5;
+    font-weight : 400;
+}
+                </code></pre>
+                <p>
+                    Das im Codebeispiel verwendete
+                    <code>&lt;html></code>-Element legt die Schrift für das
+                    gesamte Dokument fest. Alle anderen elemente erben davon.
+                    Das ist besonders beider Schriftgröße relevant. Für die
+                    Überschriften kann jetzt zum Beispiel mit Root-EM
+                    (<code>rem</code>) gearbeitet werden.
+                </p>
+                <pre><code>
+h1 {
+    font-size   : 3rem; /* 3 x 22px */
+    font-weight : 700;
+}
+h2 {
+    font-size   : 2rem; /* 2 x 22px */
+    font-weight : 700;
+}
+                </code></pre>
             </article>
             <article>
                 <h2>Die typografische Organisation der HTML Elemente</h2>
