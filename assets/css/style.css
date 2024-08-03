@@ -2037,7 +2037,7 @@ input {
 }
 
 input[type=search i] {
-  -webkit-appearance: searchfield;
+  appearance: searchfield;
   box-sizing: border-box;
 }
 
@@ -2053,7 +2053,7 @@ input[type=search i]::-webkit-textfield-decoration-container {
 }
 
 input::-webkit-clear-button {
-  -webkit-appearance: searchfield-cancel-button;
+  appearance: button;
   display: inline-block;
   flex: none;
   -webkit-user-modify: read-only !important;
@@ -2068,7 +2068,7 @@ input:enabled:read-write:-webkit-any(:focus, :hover)::-webkit-clear-button {
 }
 
 input[type=search i]::-webkit-search-cancel-button {
-  -webkit-appearance: searchfield-cancel-button;
+  appearance: button;
   display: block;
   flex: none;
   -webkit-user-modify: read-only !important;
@@ -2084,7 +2084,7 @@ input[type=search i]:enabled:read-write:-webkit-any(:focus,
 }
 
 input[type=search i]::-webkit-search-decoration {
-  -webkit-appearance: searchfield-decoration;
+  appearance: searchfield-decoration;
   display: block;
   flex: none;
   -webkit-user-modify: read-only !important;
@@ -2093,7 +2093,7 @@ input[type=search i]::-webkit-search-decoration {
 }
 
 input[type=search i]::-webkit-search-results-decoration {
-  -webkit-appearance: searchfield-results-decoration;
+  appearance: searchfield-results-decoration;
   display: block;
   flex: none;
   -webkit-user-modify: read-only !important;
@@ -2102,7 +2102,7 @@ input[type=search i]::-webkit-search-results-decoration {
 }
 
 input::-webkit-inner-spin-button {
-  -webkit-appearance: inner-spin-button;
+  appearance: inner-spin-button;
   display: inline-block;
   cursor: default;
   flex: none;
@@ -2193,13 +2193,13 @@ input[type=checkbox i] {
 input[type=button i],
 input[type=submit i],
 input[type=reset i] {
-  -webkit-appearance: push-button;
-  -webkit-user-select: none;
+  appearance: push-button;
+  user-select: none;
   white-space: pre;
 }
 
 input[type=file i]::-webkit-file-upload-button {
-  -webkit-appearance: push-button;
+  appearance: push-button;
   -webkit-user-modify: read-only !important;
   white-space: nowrap;
   margin: 0;
@@ -2222,7 +2222,7 @@ button {
 }
 
 input[type=range i] {
-  -webkit-appearance: slider-horizontal;
+  appearance: slider-horizontal;
   padding: initial;
   border: initial;
   margin: 2px;
@@ -2303,17 +2303,17 @@ param {
 }
 
 input[type=checkbox i] {
-  -webkit-appearance: checkbox;
+  appearance: checkbox;
   box-sizing: border-box;
 }
 
 input[type=radio i] {
-  -webkit-appearance: radio;
+  appearance: radio;
   box-sizing: border-box;
 }
 
 input[type=color i] {
-  -webkit-appearance: square-button;
+  appearance: button;
   width: 44px;
   height: 23px;
   background-color: ButtonFace;
