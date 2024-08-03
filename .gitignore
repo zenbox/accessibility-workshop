@@ -1,11 +1,4 @@
 
-.*.*
-
-.vscode/
-.vscode/ftp-sync.json
-.vscode/launch.json
-.vscode/settings.json
-
 # Logs
 logs
 *.log
@@ -133,3 +126,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+.*.*
+
+.vscode
+.vscode
+.vscode/ftp-sync.json
+.vscode/launch.json
+.vscode/settings.json
