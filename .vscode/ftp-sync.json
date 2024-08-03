@@ -1,8 +1,7 @@
 {
     "remotePath": "/web/accessibility-workshop/",
     "host": "michaelreichart.de",
-    "username": "mreichart_04",
-    "password": "#N3gyv3nKarf1olt!",
+
     "port": 21,
     "secure": false,
     "protocol": "ftp",

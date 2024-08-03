@@ -1,5 +1,10 @@
+
 .*.*
+
 .vscode/
+.vscode/ftp-sync.json
+.vscode/launch.json
+.vscode/settings.json
 
 # Logs
 logs
