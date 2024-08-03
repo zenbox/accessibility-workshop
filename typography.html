@@ -11,18 +11,7 @@
             rel="stylesheet"
             href="assets/css/style.css"
         />
-        <style>
-            body {
-                margin-inline: 20vw;
-            }
-            p {
-                /* column-count: 1; */
-            }
-            article {
-                border-bottom: 1px dotted hsla(0, 0%, 0%, 0.5);
-                padding-block: 2rem;
-            }
-        </style>
+        
     </head>
     <body>
         <header>
@@ -31,11 +20,12 @@
                 Die wichtigsten typografischen HTML-Elemente und deren
                 Anwendung. Mit wenigen HTML Tags kann ein typografisches System
                 umgesetzt werden. Die Datei
-                <code>src/typography.scss</code> zeigt meine Umsetzung.
+                <code>src/sass/typography.scss</code> zeigt meine Umsetzung.
             </p>
             <p>
-                Alle verwendeten Schriftfamilien stehen über den Fontserver von
-                Google frei zur Verfügung. (<a href="https://fonts.google.com/"
+                Alle verwendeten Schriftfamilien stehen über den Schriftenserver
+                von Google frei zur Verfügung. (<a
+                    href="https://fonts.google.com/"
                     >https://fonts.google.com/</a
                 >).
             </p>
@@ -44,7 +34,7 @@
             <article>
                 <h2>Die Schriftfamilien</h2>
                 <p class="sans-serif">
-                    Als serifenlose Schrift setze ich hier Barlow für den
+                    Als <em>serifenlose Schrift</em> setze ich hier Barlow für den
                     Mengentext ein. Serifenlose Schriften eignen sich aufgrund
                     ihrer gleichmäßigen Strichstärke gut zur Darstellung auf
                     Bildschirmen, deren Pixel am besten gleichmäßige gerade
@@ -54,19 +44,19 @@
                 </p>
                 <p class="serif">
                     <big
-                        >Die Serifenschrift taucht in meinen Entwürfen nur
+                        ><em>Serifenschrift</em> taucht in meinen Entwürfen nur
                         gelegentlich auf. Ich verwende sie gerne für größere
                         Formate wie Überschriften.</big
                     >
                     Serifenschriften lassen sich auf hochauflösenden
                     Bildschirmen (Retina- oder 4K-Displays) gut einsetzen. Eine
                     geeignete Darstellungsgröße variiert je nach Auflösung,
-                    Schriftgröße und Schriftart. Ich verwende die Playfair
-                    Display. Ich mag deren Nähe zur Bodoni und die schmal
-                    laufende Geometrie.
+                    Schriftgröße und Schriftart. Ich verwende hier die Playfair
+                    Display. Ich mag deren Nähe zu einer klassischen Bodoni und
+                    die schmal laufende Geometrie.
                 </p>
                 <p class="monospace">
-                    Die Schreibmaschinenschrift wird üblicherweise für
+                    Die <em>Schreibmaschinenschrift</em> wird üblicherweise für
                     Quelltexte oder Tasten-Angaben verwendet. Sie ist aber auch
                     für viele andere Gestaltungsideen gut. Die immer gleich
                     breiten Buchstaben sind ursprünglich der Mechanik einer
@@ -74,7 +64,7 @@
                     entdeckt habe, gehört deren Mono Sans zu meinen Favoriten.
                 </p>
                 <p class="dyslexic">
-                    Die Schrift zur Unterstützung von Dylexie. Hier die
+                    Die <em>Schrift zur Unterstützung von Dylexie</em>. Hier die
                     <i>Atkinson Hyperlegible</i>. Sie wurde entwickelt, um
                     Menschen mit Dylexie das Erkennen der einzelnen Buchstaben
                     zu erleichtern. Zeichen mit sonst ähnlichem Aussehen haben
