@@ -14,13 +14,13 @@
     </head>
     <body>
         <header>
-            <section>
-                <h1 tabindex="0">Tastatur-Steuerung</h1>
-            </section>
+            <p class="brand">accessibility</p>
+            <h1 tabindex="0">Tastatur-Steuerung</h1>
         </header>
 
         <main>
-            <section>
+            <article>
+                <h2>Breadcrumb - Navigation</h2>
                 <nav
                     id="breadcrumbs"
                     tabindex="0"
@@ -43,9 +43,10 @@
                         <li>/ <a href="">Link 3</a></li>
                     </ul>
                 </nav>
-            </section>
+            </article>
 
-            <section aria-live="assertive">
+            <article aria-live="assertive">
+                <h2>Telefonnummer</h2>
                 <address>
                     <p>
                         <span class="icon icon-tel">Telefonnummer:</span>
@@ -56,9 +57,10 @@
                         >
                     </p>
                 </address>
-            </section>
+            </article>
 
-            <section>
+            <article>
+                <h2>Tabellen</h2>
                 <table
                     tabindex="1"
                     id="data-table"
@@ -101,15 +103,7 @@
                     </tfoot>
                 </table>
                 <p>Next Sibling Paragraph</p>
-            </section>
-
-            <section>
-                <h2>Weiterer Inhalt</h2>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Accusamus amet quis maiores.
-                </p>
-            </section>
+            </article>
         </main>
 
         <footer>

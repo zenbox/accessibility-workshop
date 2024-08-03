@@ -500,6 +500,16 @@
   font-style: italic;
   font-weight: 400;
 }
+.brand {
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  font-size: 0.667rem;
+  font-weight: 700;
+  line-height: 1.414;
+  text-transform: lowercase;
+  letter-spacing: 0.1em;
+  color: var(--accred);
+}
+
 html,
 :root {
   font-family: "Barlow", sans-serif;

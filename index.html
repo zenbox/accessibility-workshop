@@ -12,138 +12,264 @@
             href="assets/css/style.css"
         />
     </head>
+
     <body>
-        <h1>Semantik für Barrierefreiheit</h1>
+        <header>
+            <p class="brand">accessibility</p>
+            <h1>Semantik für Barrierefreiheit</h1>
+        </header>
 
-          <article>
-
-            <h2>Nicht-semantische Elemente</h2>
-            <p>Nicht-semantische Elemente werden für konstruktive Container verwendet (<code>&lt;div>, &lt;span></code>). Sie tragen oft Ids und CSS-Klassen. Generischer HTML-Aufbau verwendet sie, um die Kontruktion von Komponenten zu vereinfachen oder zu verallgemeinern. <code>&lt;i></code> verwende ich zum Beipiel gerne für CSS-Icons. Sie fügen der semantischen Struktur nichts hinzu.</p>
-            <p><code>&lt;div></code>Division<code>&lt;/div></code></p>
-            <p><code>&lt;span></code>Span<code>&lt;/span></code></p>
-            <p><code>&lt;b></code>Fett-Auszeichnung<code>&lt;/b></code></p>
-            <p><code>&lt;i></code>Kursiv-Auszeichnung<code>&lt;/i></code></p>
-            <p><code>&lt;u></code>Unterstrich<code>&lt;/u></code></p>
-            <p><code>&lt;s></code>Durchgestrichen<code>&lt;/s></code></p>
-        </article>
-
-        <article>
-            <h2>Dokumentenstruktur</h2>
-            <p>Mit diesen Elementen wird der allgemeine oder übergeordnete Seitenaufbau umgesetzt. Sie schaffen Bereiche für die verschiedenen Inhalte und werden zum Beispiel auch von Screenreadern (meist) statistisch ausgewertet. <code>&lt;main></code> sowie <code>&lt;header></code>, <code>&lt;footer</code> im <code>&lt;body></code> markieren oft die wesentlichen Seitenbereiche.</p>
-            <p><code>&lt;body></code>Seitenbereich des Dokuments<code>&lt;/body></code></p>
-            <p><code>&lt;header></code>Kopfbereich des Dokuments oder eines Abschnitts<code>&lt;/header></code></p>
-            <p><code>&lt;footer></code>Fußbereich des Dokuments oder eines Abschnitts<code>&lt;/footer></code></p>
-            <p><code>&lt;nav></code>Navigation<code>&lt;/nav></code></p>
-            <p><code>&lt;main></code>Hauptinhalt<code>&lt;/main></code></p>
-            <p><code>&lt;article></code>Artikel<code>&lt;/article></code></p>
-            <p><code>&lt;section></code>Abschnitt<code>&lt;/section></code></p>
-            <p><code>&lt;aside></code>Nebeninhalt<code>&lt;/aside></code></p>
-            <p><code>&lt;figure></code>Abbildung<code>&lt;/figure></code></p>
-            <p><code>&lt;figcaption></code>Bildunterschrift<code>&lt;/figcaption></code></p>
-            <p><code>&lt;details></code>Details<code>&lt;/details></code></p>
-            <p><code>&lt;summary></code>Zusammenfassung<code>&lt;/summary></code></p>
-            <p><code>&lt;dialog></code>Dialog<code>&lt;/dialog></code></p>
-            <p><code>&lt;template></code>Vorlage<code>&lt;/template></code></p>
-            <p><code>&lt;script></code>Skript<code>&lt;/script></code></p>
-            <p><code>&lt;noscript></code>Alternativtext<code>&lt;/noscript></code></p>
-            <p><code>&lt;style></code>Stil<code>&lt;/style></code></p>
-            <p><code>&lt;link></code>Verweis<code>&lt;/link></code></p>
-            <p><code>&lt;meta></code>Metadaten<code>&lt;/meta></code></p>
-        </article>
-
-        <article>
-            <h2>Struktur von Text und Inhalten</h2>
-
-            <h3>Block-Semantik</h3>
-            <p>
-                <code>&lt;h1></code>Überschrift 1<code>&lt;/h1></code> bis
-                <code>&lt;h6></code>Überschrift 6<code>&lt;/h6></code>
-            </p>
-            <p><code>&lt;p></code>Textabsatz<code>&lt;p></code></p>
-            <p>
-                <code>&lt;address></code>Kontaktinformationen<code
-                    >&lt;/address></code>
-            </p>
-            <p>
-                <code>&lt;pre></code>Vorformatierter Text<code>&lt;/pre></code>
-            </p>
-            <p>
-                <code>&lt;blockquote></code>Zitat<code>&lt;/blockquote></code>
-            </p>
-
-            <h3>Inline-Semantik</h3>
-            <p><code>&lt;em></code>Betonung<code>&lt;/em></code></p>
-            <p>
-                <code>&lt;strong></code>Wichtiger Text<code>&lt;/strong></code>
-            </p>
-            <p><code>&lt;mark></code>Markierter Text<code>&lt;/mark></code></p>
-            <p><code>&lt;small></code>Kleiner Text<code>&lt;/small></code></p>
-            <p>
-                <code>&lt;sub></code>Untergestellter Text<code>&lt;/sub></code>
-            </p>
-            <p>
-                <code>&lt;sup></code>Obergestellter Text<code>&lt;/sup></code>
-            </p>
-            <p>
-                <code>&lt;del></code>Gelöschter Text Text<code>&lt;/del></code>
-            </p>
-            <p><code>&lt;ins></code>Eingefügter Text<code>&lt;/ins></code></p>
-            <p><code>&lt;abbr></code>Abkürzung<code>&lt;/abbr></code></p>
-            <p><code>&lt;code></code>Code<code>&lt;/code></code></p>
-            <p><code>&lt;dfn></code>Definition<code>&lt;/dfn></code></p>
-            <p><code>&lt;time></code>Zeitangabe<code>&lt;/time></code></p>
-            <p><code>&lt;var></code>Variablen<code>&lt;/var></code></p>
-            <p><code>&lt;kbd></code>Tastatur<code>&lt;/kbd></code></p>
-            <p><code>&lt;samp></code>Beispiel<code>&lt;/samp></code></p>
-            <p><code>&lt;cite></code>Zitat<code>&lt;/cite></code></p>
-            <p><code>&lt;q></code>Kurzes Zitat<code>&lt;/q></code></p>
-            <p><code>&lt;a></code>Hyperlink<code>&lt;/a></code></p>
-        </article>
-
-      
-            
-        <article>
-            <h2>Struktur in Formularen</h2>
-        <p><code>&lt;form></code>Formular<code>&lt;/form></code></p>
-        <p><code>&lt;fieldset></code>Formularfeld<code>&lt;/fieldset></code></p>
-        <p><code>&lt;legend></code>Legende<code>&lt;/legend></code></p>
-        <p><code>&lt;label></code>Bezeichnung<code>&lt;/label></code></p>
-        <p><code>&lt;input></code>Eingabefeld<code>&lt;/input></code></p>
-        <p><code>&lt;button></code>Schaltfläche<code>&lt;/button></code></p>
-        <p><code>&lt;select></code>Auswahlfeld<code>&lt;/select></code></p>
-        <p><code>&lt;optgroup></code>Gruppe<code>&lt;/optgroup></code></p>
-        <p><code>&lt;option></code>Option<code>&lt;/option></code></p>
-        <p><code>&lt;textarea></code>Textfeld<code>&lt;/textarea></code></p>
-        <p><code>&lt;output></code>Ausgabe<code>&lt;/output></code></p>
-        <p><code>&lt;progress></code>Fortschrittsbalken<code>&lt;/progress></code></p>
-        <p><code>&lt;meter></code>Messgerät<code>&lt;/meter></code></p>
-        <p><code>&lt;datalist></code>Datenliste<code>&lt;/datalist></code></p>
-        <p><code>&lt;keygen></code>Schlüsselgenerator<article>&lt;/keygen></article></p>
+        <main>
+            <article>
+                <h2>Nicht-semantische Elemente</h2>
+                <p>
+                    Nicht-semantische Elemente werden für konstruktive Container
+                    verwendet (<code>&lt;div>, &lt;span></code>). Sie tragen oft
+                    Ids und CSS-Klassen. Generischer HTML-Aufbau verwendet sie,
+                    um die Kontruktion von Komponenten zu vereinfachen oder zu
+                    verallgemeinern. <code>&lt;i></code> verwende ich zum
+                    Beipiel gerne für CSS-Icons. Sie fügen der semantischen
+                    Struktur nichts hinzu.
+                </p>
+                <p><code>&lt;div></code>Division<code>&lt;/div></code></p>
+                <p><code>&lt;span></code>Span<code>&lt;/span></code></p>
+                <p><code>&lt;b></code>Fett-Auszeichnung<code>&lt;/b></code></p>
+                <p>
+                    <code>&lt;i></code>Kursiv-Auszeichnung<code>&lt;/i></code>
+                </p>
+                <p><code>&lt;u></code>Unterstrich<code>&lt;/u></code></p>
+                <p><code>&lt;s></code>Durchgestrichen<code>&lt;/s></code></p>
             </article>
 
-        <article>
-            <h2>Struktur in Medien, Bild und Ton</h2>
-        <p><code>&lt;figure></code>Abbildung<code>&lt;/figure></code></p>
-                        <p><code>&lt;figcaption></code>Bildunterschrift<code>&lt;/figcaption></code></p>
+            <article>
+                <h2>Dokumentenstruktur</h2>
+                <p>
+                    Mit diesen Elementen wird der allgemeine oder übergeordnete
+                    Seitenaufbau umgesetzt. Sie schaffen Bereiche für die
+                    verschiedenen Inhalte und werden zum Beispiel auch von
+                    Screenreadern (meist) statistisch ausgewertet.
+                    <code>&lt;main></code> sowie <code>&lt;header></code>,
+                    <code>&lt;footer</code> im <code>&lt;body></code> markieren
+                    oft die wesentlichen Seitenbereiche.
+                </p>
+                <p>
+                    <code>&lt;body></code>Seitenbereich des Dokuments<code
+                        >&lt;/body></code
+                    >
+                </p>
+                <p>
+                    <code>&lt;header></code>Kopfbereich des Dokuments oder eines
+                    Abschnitts<code>&lt;/header></code>
+                </p>
+                <p>
+                    <code>&lt;footer></code>Fußbereich des Dokuments oder eines
+                    Abschnitts<code>&lt;/footer></code>
+                </p>
+                <p><code>&lt;nav></code>Navigation<code>&lt;/nav></code></p>
+                <p><code>&lt;main></code>Hauptinhalt<code>&lt;/main></code></p>
+                <p>
+                    <code>&lt;article></code>Artikel<code>&lt;/article></code>
+                </p>
+                <p>
+                    <code>&lt;section></code>Abschnitt<code>&lt;/section></code>
+                </p>
+                <p>
+                    <code>&lt;aside></code>Nebeninhalt<code>&lt;/aside></code>
+                </p>
+                <p>
+                    <code>&lt;figure></code>Abbildung<code>&lt;/figure></code>
+                </p>
+                <p>
+                    <code>&lt;figcaption></code>Bildunterschrift<code
+                        >&lt;/figcaption></code
+                    >
+                </p>
+                <p>
+                    <code>&lt;details></code>Details<code>&lt;/details></code>
+                </p>
+                <p>
+                    <code>&lt;summary></code>Zusammenfassung<code
+                        >&lt;/summary></code
+                    >
+                </p>
+                <p><code>&lt;dialog></code>Dialog<code>&lt;/dialog></code></p>
+                <p>
+                    <code>&lt;template></code>Vorlage<code>&lt;/template></code>
+                </p>
+                <p><code>&lt;script></code>Skript<code>&lt;/script></code></p>
+                <p>
+                    <code>&lt;noscript></code>Alternativtext<code
+                        >&lt;/noscript></code
+                    >
+                </p>
+                <p><code>&lt;style></code>Stil<code>&lt;/style></code></p>
+                <p><code>&lt;link></code>Verweis<code>&lt;/link></code></p>
+                <p><code>&lt;meta></code>Metadaten<code>&lt;/meta></code></p>
+            </article>
+
+            <article>
+                <h2>Struktur von Text und Inhalten</h2>
+
+                <h3>Block-Semantik</h3>
+                <p>
+                    <code>&lt;h1></code>Überschrift 1<code>&lt;/h1></code> bis
+                    <code>&lt;h6></code>Überschrift 6<code>&lt;/h6></code>
+                </p>
+                <p><code>&lt;p></code>Textabsatz<code>&lt;p></code></p>
+                <p>
+                    <code>&lt;address></code>Kontaktinformationen<code
+                        >&lt;/address></code
+                    >
+                </p>
+                <p>
+                    <code>&lt;pre></code>Vorformatierter Text<code
+                        >&lt;/pre></code
+                    >
+                </p>
+                <p>
+                    <code>&lt;blockquote></code>Zitat<code
+                        >&lt;/blockquote></code
+                    >
+                </p>
+
+                <h3>Inline-Semantik</h3>
+                <p><code>&lt;em></code>Betonung<code>&lt;/em></code></p>
+                <p>
+                    <code>&lt;strong></code>Wichtiger Text<code
+                        >&lt;/strong></code
+                    >
+                </p>
+                <p>
+                    <code>&lt;mark></code>Markierter Text<code>&lt;/mark></code>
+                </p>
+                <p>
+                    <code>&lt;small></code>Kleiner Text<code>&lt;/small></code>
+                </p>
+                <p>
+                    <code>&lt;sub></code>Untergestellter Text<code
+                        >&lt;/sub></code
+                    >
+                </p>
+                <p>
+                    <code>&lt;sup></code>Obergestellter Text<code
+                        >&lt;/sup></code
+                    >
+                </p>
+                <p>
+                    <code>&lt;del></code>Gelöschter Text Text<code
+                        >&lt;/del></code
+                    >
+                </p>
+                <p>
+                    <code>&lt;ins></code>Eingefügter Text<code>&lt;/ins></code>
+                </p>
+                <p><code>&lt;abbr></code>Abkürzung<code>&lt;/abbr></code></p>
+                <p><code>&lt;code></code>Code<code>&lt;/code></code></p>
+                <p><code>&lt;dfn></code>Definition<code>&lt;/dfn></code></p>
+                <p><code>&lt;time></code>Zeitangabe<code>&lt;/time></code></p>
+                <p><code>&lt;var></code>Variablen<code>&lt;/var></code></p>
+                <p><code>&lt;kbd></code>Tastatur<code>&lt;/kbd></code></p>
+                <p><code>&lt;samp></code>Beispiel<code>&lt;/samp></code></p>
+                <p><code>&lt;cite></code>Zitat<code>&lt;/cite></code></p>
+                <p><code>&lt;q></code>Kurzes Zitat<code>&lt;/q></code></p>
+                <p><code>&lt;a></code>Hyperlink<code>&lt;/a></code></p>
+            </article>
+
+            <article>
+                <h2>Struktur in Formularen</h2>
+                <p><code>&lt;form></code>Formular<code>&lt;/form></code></p>
+                <p>
+                    <code>&lt;fieldset></code>Formularfeld<code
+                        >&lt;/fieldset></code
+                    >
+                </p>
+                <p><code>&lt;legend></code>Legende<code>&lt;/legend></code></p>
+                <p>
+                    <code>&lt;label></code>Bezeichnung<code>&lt;/label></code>
+                </p>
+                <p>
+                    <code>&lt;input></code>Eingabefeld<code>&lt;/input></code>
+                </p>
+                <p>
+                    <code>&lt;button></code>Schaltfläche<code
+                        >&lt;/button></code
+                    >
+                </p>
+                <p>
+                    <code>&lt;select></code>Auswahlfeld<code>&lt;/select></code>
+                </p>
+                <p>
+                    <code>&lt;optgroup></code>Gruppe<code>&lt;/optgroup></code>
+                </p>
+                <p><code>&lt;option></code>Option<code>&lt;/option></code></p>
+                <p>
+                    <code>&lt;textarea></code>Textfeld<code
+                        >&lt;/textarea></code
+                    >
+                </p>
+                <p><code>&lt;output></code>Ausgabe<code>&lt;/output></code></p>
+
+                <p>
+                    <code>&lt;progress></code>Fortschrittsbalken<code
+                        >&lt;/progress></code
+                    >
+                </p>
+                <p><code>&lt;meter></code>Messgerät<code>&lt;/meter></code></p>
+                <p>
+                    <code>&lt;datalist></code>Datenliste<code
+                        >&lt;/datalist></code
+                    >
+                </p>
+                <p>
+                    <code>&lt;keygen></code>Schlüsselgenerator<code
+                        >&lt;/keygen>zz</code
+                    >
+                </p>
+            </article>
+
+            <article>
+                <h2>Struktur in Medien, Bild und Ton</h2>
+                <p>
+                    <code>&lt;figure></code>Abbildung<code>&lt;/figure></code>
+                </p>
+                <p>
+                    <code>&lt;figcaption></code>Bildunterschrift<code
+                        >&lt;/figcaption></code
+                    >
+                </p>
                 <p><code>&lt;img></code>Bild<code>&lt;/img></code></p>
                 <p><code>&lt;map></code>Verweis<code>&lt;/map></code></p>
                 <p><code>&lt;area></code>Bereich<code>&lt;/area></code></p>
                 <p><code>&lt;canvas></code>Leinwand<code>&lt;/canvas></code></p>
-                <p><code>&lt;svg></code>Skalierbare Vektorgrafik<code>&lt;/svg></code></p>
+                <p>
+                    <code>&lt;svg></code>Skalierbare Vektorgrafik<code
+                        >&lt;/svg></code
+                    >
+                </p>
                 <p><code>&lt;object></code>Objekt<code>&lt;/object></code></p>
                 <p><code>&lt;param></code>Parameter<code>&lt;/param></code></p>
-                <p><code>&lt;iframe></code>Inline-Frame<code>&lt;/iframe></code></p>
-                <p><code>&lt;embed></code>Eingebettetes Element<code>&lt;/embed></code></p>
+                <p>
+                    <code>&lt;iframe></code>Inline-Frame<code
+                        >&lt;/iframe></code
+                    >
+                </p>
+                <p>
+                    <code>&lt;embed></code>Eingebettetes Element<code
+                        >&lt;/embed></code
+                    >
+                </p>
                 <p><code>&lt;video></code>Video<code>&lt;/video></code></p>
                 <p><code>&lt;audio></code>Audio<code>&lt;/audio></code></p>
                 <p><code>&lt;source></code>Quelle<code>&lt;/source></code></p>
                 <p><code>&lt;track></code>Spur<code>&lt;/track></code></p>
                 <p><code>&lt;picture></code>Bild<code>&lt;/picture></code></p>
-                <p><code>&lt;source></code>Quelle<code>&lt;/source></code></p>
-        </article>
+            </article>
+        </main>
+
         <footer>
             <address>&copy; <time datetime="2024">2024</time> Michael</address>
         </footer>
+
         <script src="assets/js/navigation.js"></script>
     </body>
 </html>

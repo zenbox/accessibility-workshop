@@ -166,6 +166,16 @@ $font-family-dyslexic: "Atkinson Hyperlegible", sans-serif;
 $font-size: toPx($s); // The base size from the harmonic-rythmn, i.e. 22
 $line-height: $augmented-fourth;
 
+.brand {
+    font-family: $font-family-dyslexic;
+    font-size: toRem($_perfect-fifth);
+    font-weight: 700;
+    line-height: $line-height;
+    text-transform: lowercase;
+    letter-spacing: 0.1em;
+    color: var(--accred);
+}
+
 // Font styles
 html,
 :root {
