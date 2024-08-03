@@ -390,7 +390,178 @@ figcaption {
   font-size: 0.75rem;
 }
 
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Thin.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 100;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-ExtraLight.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Light.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Regular.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Medium.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-SemiBold.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Bold.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-ExtraBold.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 800;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Black.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 900;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-Thin.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 100;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-ExtraLight.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-LightItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-RegularItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-MediumItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-SemiBoldItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-BoldItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-ExtraBoldItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 800;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url(../fonts/Barlow/Barlow-BlackItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 900;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url(../fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Regular.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url(../fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Italic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url(../fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Bold.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url(../fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-BoldItalic.ttf) format("ttf");
+  font-style: italic;
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Noto Sans Mono";
+  src: url(../fonts/Noto_Sans_Mono/NotoSansMono-VariableFont_wdthwght.ttf) format("ttf");
+  font-style: normal;
+  font-weight: 400;
+}
+html, :root {
+  font-family: "Barlow", sans-serif;
+  font-size: 12px;
+  line-height: 1.41549;
+  text-align: left;
+}
+
+article:first-of-type {
+  margin-block-start: 5rem;
+}
+
+p {
+  font-size: 1rem;
+  hyphens: auto;
+}
+
+/*
+    Je größer der Bildschirm, desto die Schrift
+    Copy:
+    22px Desktop (4K 2560px!)
+    18px Tablet
+    15px Smartphone (auflösungsabhängig)
+
+*/
+h1 {
+  font-size: 1.8rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
 :root {
+  --accred: hsl(360, 84%, 64%);
   --primary: hsla(300, 93%, 12%, 1);
   --on-primary: hsla(300, 93%, 85%, 1);
   --secondary: hsla(120, 94%, 33%, 1);
@@ -2893,114 +3064,6 @@ template {
   display: none;
 }
 
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-Thin.ttf) format("ttf");
-  font-style: normal;
-  font-weight: 100;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-ExtraLight.ttf) format("ttf");
-  font-style: normal;
-  font-weight: 200;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-Light.ttf) format("ttf");
-  font-style: normal;
-  font-weight: 300;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-Regular.ttf) format("ttf");
-  font-style: normal;
-  font-weight: 400;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-Medium.ttf) format("ttf");
-  font-style: normal;
-  font-weight: 500;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-SemiBold.ttf) format("ttf");
-  font-style: normal;
-  font-weight: 600;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-Bold.ttf) format("ttf");
-  font-style: normal;
-  font-weight: 700;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-ExtraBold.ttf) format("ttf");
-  font-style: normal;
-  font-weight: 800;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-Black.ttf) format("ttf");
-  font-style: normal;
-  font-weight: 900;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-Thin.ttf) format("ttf");
-  font-style: normal;
-  font-weight: 100;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-ExtraLight.ttf) format("ttf");
-  font-style: normal;
-  font-weight: 200;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-LightItalic.ttf) format("ttf");
-  font-style: italic;
-  font-weight: 300;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-RegularItalic.ttf) format("ttf");
-  font-style: italic;
-  font-weight: 400;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-MediumItalic.ttf) format("ttf");
-  font-style: italic;
-  font-weight: 500;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-SemiBoldItalic.ttf) format("ttf");
-  font-style: italic;
-  font-weight: 600;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-BoldItalic.ttf) format("ttf");
-  font-style: italic;
-  font-weight: 700;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-ExtraBoldItalic.ttf) format("ttf");
-  font-style: italic;
-  font-weight: 800;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url(../fonts/Barlow/Barlow-BlackItalic.ttf) format("ttf");
-  font-style: italic;
-  font-weight: 900;
-}
 html {
   font-family: "Barlow", sans-serif;
   font-size: 12px;
@@ -3021,7 +3084,7 @@ tt,
 code,
 kbd,
 samp {
-  font-family: "Menlo", monospace;
+  font-family: "Noto Sans Mono", monospace;
 }
 
 nav {
@@ -3079,38 +3142,6 @@ body > nav:nth-child(2) + * {
 
 section {
   margin-block: 1rem;
-}
-
-html, :root {
-  font-family: "Barlow", sans-serif;
-  font-size: 12px;
-  line-height: 1.41549;
-  text-align: left;
-}
-
-article:first-of-type {
-  margin-block-start: 5rem;
-}
-
-p {
-  font-size: 1rem;
-  hyphens: auto;
-}
-
-/*
-    Je größer der Bildschirm, desto die Schrift
-    Copy:
-    22px Desktop (4K 2560px!)
-    18px Tablet
-    15px Smartphone (auflösungsabhängig)
-
-*/
-h1 {
-  font-size: 1.8rem;
-}
-
-h2 {
-  font-size: 2rem;
 }
 
 .sr-only {

@@ -1,4 +1,157 @@
+// Barlow font family
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-Thin.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 100;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-ExtraLight.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 200;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-Light.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-Regular.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-Medium.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 500;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-SemiBold.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 600;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-Bold.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 700;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-ExtraBold.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 800;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-Black.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 900;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-Thin.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 100;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-ExtraLight.ttf) format("ttf");
+    font-style: normal;
+    font-weight: 200;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-LightItalic.ttf) format("ttf");
+    font-style: italic;
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-RegularItalic.ttf) format("ttf");
+    font-style: italic;
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-MediumItalic.ttf) format("ttf");
+    font-style: italic;
+    font-weight: 500;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-SemiBoldItalic.ttf) format("ttf");
+    font-style: italic;
+    font-weight: 600;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-BoldItalic.ttf) format("ttf");
+    font-style: italic;
+    font-weight: 700;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-ExtraBoldItalic.ttf) format("ttf");
+    font-style: italic;
+    font-weight: 800;
+}
+@font-face {
+    font-family: "Barlow";
+    src: url(../fonts/Barlow/Barlow-BlackItalic.ttf) format("ttf");
+    font-style: italic;
+    font-weight: 900;
+}
+// Atkinson Hyperlegible font family
+@font-face {
+    font-family: "Atkinson Hyperlegible";
+    src: url(../fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Regular.ttf)
+        format("ttf");
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Atkinson Hyperlegible";
+    src: url(../fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Italic.ttf)
+        format("ttf");
+    font-style: italic;
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Atkinson Hyperlegible";
+    src: url(../fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Bold.ttf)
+        format("ttf");
+    font-style: normal;
+    font-weight: 700;
+}
+@font-face {
+    font-family: "Atkinson Hyperlegible";
+    src: url(../fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-BoldItalic.ttf)
+        format("ttf");
+    font-style: italic;
+    font-weight: 700;
+}
+// Noto Sans Monospace
+@font-face {
+    font-family: "Noto Sans Mono";
+    src: url(../fonts/Noto_Sans_Mono/NotoSansMono-VariableFont_wdthwght.ttf)
+        format("ttf");
+    font-style: normal;
+    font-weight: 400;
+}
+// Font variables
+$font-family-sans-serif: "Barlow", sans-serif;
+$font-family-serif: "Playground", serif;
+$font-family-monospace: "Noto Sans Mono", monospace;
+$font-size: $font-size;
+$line-height: $augmented-fourth;
 
+// - - - - - - - - - -
 html, :root {
     font-family: $font-family-sans-serif ;
     font-size: 12px; // Basis für 1rem // clamp(16px, 3vw, 24px);
