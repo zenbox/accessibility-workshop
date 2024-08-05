@@ -4,3 +4,7 @@ samp:has(pre) {
     background-color: var(--dark) !important;
     color: var(--on-dark);
 }
+
+article{
+    margin-block-start: toRem($double-octave);
+}

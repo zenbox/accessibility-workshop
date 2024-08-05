@@ -5584,6 +5584,10 @@ samp:has(pre) {
   color: var(--on-dark);
 }
 
+article {
+  margin-block-start: 4rem;
+}
+
 button.on {
   width: 1rem;
   height: 1rem;

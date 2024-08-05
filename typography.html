@@ -79,14 +79,14 @@
                     Neben der Schriftfamilie sind die Schriftgröße und der
                     Zeilenabstand die wichtigsten Größen.
                 </p>
-                <pre><code>
-html {
+                <samp>
+                    <pre><code>html {
     font-family : Barlow, sans-serif;
     font-size   : 22px; /* rem-Basis */
     line-height : 1.5;
     font-weight : 400;
-}
-                </code></pre>
+}</code></pre>
+                </samp>
                 <p>
                     Das im Codebeispiel verwendete
                     <code>&lt;html></code>-Element legt die Schrift für das
@@ -95,16 +95,16 @@ html {
                     Überschriften kann jetzt zum Beispiel mit Root-EM
                     (<code>rem</code>) gearbeitet werden.
                 </p>
-                <pre><code>
-h1 {
+                <samp>
+                    <pre><code>h1 {
     font-size   : 3rem; /* 3 x 22px */
     font-weight : 700;
 }
 h2 {
     font-size   : 2rem; /* 2 x 22px */
     font-weight : 700;
-}
-                </code></pre>
+}</code></pre>
+                </samp>
             </article>
             <article>
                 <h2>Die typografische Organisation der HTML Elemente</h2>
@@ -275,10 +275,16 @@ h2 {
                     <code>&lt;rt></code>
                 </h2>
                 <p>
-                    <ruby>
-                        漢 <rp>(</rp><rt>kan</rt><rp>)</rp> 字 <rp>(</rp
-                        ><rt>ji</rt><rp>)</rp>
-                    </ruby>
+                    <big
+                        ><big
+                            ><big
+                                ><ruby>
+                                    漢 <rp>(</rp><rt>kan</rt><rp>)</rp> 字
+                                    <rp>(</rp><rt>ji</rt><rp>)</rp>
+                                </ruby></big
+                            >
+                        </big>
+                    </big>
                 </p>
             </article>
 
