@@ -28,9 +28,47 @@
     --on-accred: var(--bright);
 
     --shadow: hsla(0, 0%, 0%, 0.5);
+    --disabled: var(--neutral);
 
     --fontSize: 16px;
     --default: 1rem;
     --big: 2rem;
     --small: 0.75rem;
+}
+
+// schreibe eine Map mit Klassen für alle Farben
+$colors : (
+    primary: var(--primary),
+    on-primary: var(--on-primary),
+    secondary: var(--secondary),
+    on-secondary: var(--on-secondary),
+    tertiary: var(--tertiary),
+    on-tertiary: var(--on-tertiary),
+    neutral: var(--neutral),
+    on-neutral: var(--on-neutral),
+    error: var(--error),
+    on-error: var(--on-error),
+    warning: var(--warning),
+    on-warning: var(--on-warning),
+    info: var(--info),
+    on-info: var(--on-info),
+    success: var(--success),
+    on-success: var(--on-success),
+    bright: var(--bright),
+    on-bright: var(--on-bright),
+    dark: var(--dark),
+    on-dark: var(--on-dark),
+    accred: var(--accred),
+    on-accred: var(--on-accred),
+    shadow: var(--shadow),
+    disabled: var(--disabled)
+);
+
+@each $key, $value in $colors {
+    .bg-#{$key} {
+        background-color: $value;
+    }
+    .text-#{$key} {
+        color: $value;
+    }
 }

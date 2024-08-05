@@ -17,6 +17,18 @@
         <header>
             <p class="brand">accessibility</p>
             <h1>Semantik für Barrierefreiheit</h1>
+            <p>
+                Semantik bezeichnet die Bedeutung und den Inhalt von Wörtern,
+                Sätzen oder Symbolen in einer bestimmten Sprache. Sie ist ein
+                Teilgebiet der Sprachwissenschaft.
+            </p>
+            <p>
+                In HTML-Dokumenten ist Semantik wichtig, weil sie den Inhalt mit
+                Hilfe der HTML-Tags klar strukturiert und für Mensch und
+                Maschine verständlich macht. Das fördert die Zugänglichkeit,
+                Suchmaschinenoptimierung und die korrekte Darstellung auf
+                verschiedenen Geräten.
+            </p>
         </header>
 
         <main>
@@ -39,6 +51,16 @@
                 </p>
                 <p><code>&lt;u></code>Unterstrich<code>&lt;/u></code></p>
                 <p><code>&lt;s></code>Durchgestrichen<code>&lt;/s></code></p>
+
+                <h3>Beispiel für nicht-semantische Strukturen</h3>
+                <pre><code>
+&lt;div> (als Container)
+  <span class="text-disabled">&lt;label ...>
+  &lt;input ...></span>
+&lt;/div>
+
+&lt;span class="icon">&lt;/span> (als Träger eines Icons über CSS)
+                </code></pre>                
             </article>
 
             <article>
@@ -105,6 +127,20 @@
                 <p><code>&lt;style></code>Stil<code>&lt;/style></code></p>
                 <p><code>&lt;link></code>Verweis<code>&lt;/link></code></p>
                 <p><code>&lt;meta></code>Metadaten<code>&lt;/meta></code></p>
+
+                <h3>Beispiel für eine Seitenstruktur</h3>
+                <pre><code>
+&lt;html>
+  &lt;head>
+    &lt;title> ... &lt;/title>
+    &lt;meta ...>
+  &lt;body>
+    &lt;header> ... &lt;/header>
+    &lt;nav> ... &lt;/nav>
+    &lt;main> ... &lt;/main>
+    &lt;footer> ... &lt;/footer>
+
+                </code></pre>
             </article>
 
             <article>

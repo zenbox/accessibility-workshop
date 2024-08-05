@@ -619,10 +619,203 @@ big {
   --accred: hsl(360, 84%, 64%);
   --on-accred: var(--bright);
   --shadow: hsla(0, 0%, 0%, 0.5);
+  --disabled: var(--neutral);
   --fontSize: 16px;
   --default: 1rem;
   --big: 2rem;
   --small: 0.75rem;
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.bg-on-primary {
+  background-color: var(--on-primary);
+}
+
+.text-on-primary {
+  color: var(--on-primary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.bg-on-secondary {
+  background-color: var(--on-secondary);
+}
+
+.text-on-secondary {
+  color: var(--on-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--tertiary);
+}
+
+.text-tertiary {
+  color: var(--tertiary);
+}
+
+.bg-on-tertiary {
+  background-color: var(--on-tertiary);
+}
+
+.text-on-tertiary {
+  color: var(--on-tertiary);
+}
+
+.bg-neutral {
+  background-color: var(--neutral);
+}
+
+.text-neutral {
+  color: var(--neutral);
+}
+
+.bg-on-neutral {
+  background-color: var(--on-neutral);
+}
+
+.text-on-neutral {
+  color: var(--on-neutral);
+}
+
+.bg-error {
+  background-color: var(--error);
+}
+
+.text-error {
+  color: var(--error);
+}
+
+.bg-on-error {
+  background-color: var(--on-error);
+}
+
+.text-on-error {
+  color: var(--on-error);
+}
+
+.bg-warning {
+  background-color: var(--warning);
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+.bg-on-warning {
+  background-color: var(--on-warning);
+}
+
+.text-on-warning {
+  color: var(--on-warning);
+}
+
+.bg-info {
+  background-color: var(--info);
+}
+
+.text-info {
+  color: var(--info);
+}
+
+.bg-on-info {
+  background-color: var(--on-info);
+}
+
+.text-on-info {
+  color: var(--on-info);
+}
+
+.bg-success {
+  background-color: var(--success);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.bg-on-success {
+  background-color: var(--on-success);
+}
+
+.text-on-success {
+  color: var(--on-success);
+}
+
+.bg-bright {
+  background-color: var(--bright);
+}
+
+.text-bright {
+  color: var(--bright);
+}
+
+.bg-on-bright {
+  background-color: var(--on-bright);
+}
+
+.text-on-bright {
+  color: var(--on-bright);
+}
+
+.bg-dark {
+  background-color: var(--dark);
+}
+
+.text-dark {
+  color: var(--dark);
+}
+
+.bg-on-dark {
+  background-color: var(--on-dark);
+}
+
+.text-on-dark {
+  color: var(--on-dark);
+}
+
+.bg-accred {
+  background-color: var(--accred);
+}
+
+.text-accred {
+  color: var(--accred);
+}
+
+.bg-on-accred {
+  background-color: var(--on-accred);
+}
+
+.text-on-accred {
+  color: var(--on-accred);
+}
+
+.bg-shadow {
+  background-color: var(--shadow);
+}
+
+.text-shadow {
+  color: var(--shadow);
+}
+
+.bg-disabled {
+  background-color: var(--disabled);
+}
+
+.text-disabled {
+  color: var(--disabled);
 }
 
 /* This Source Code Form is subject to the terms of the Mozilla Public
