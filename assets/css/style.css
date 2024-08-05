@@ -620,10 +620,6 @@ big {
   --on-accred: var(--bright);
   --shadow: hsla(0, 0%, 0%, 0.5);
   --disabled: var(--neutral);
-  --fontSize: 16px;
-  --default: 1rem;
-  --big: 2rem;
-  --small: 0.75rem;
 }
 
 .bg-primary {
@@ -816,6 +812,12 @@ big {
 
 .text-disabled {
   color: var(--disabled);
+}
+
+:root {
+  --default: 1rem;
+  --big: 2rem;
+  --small: 0.75rem;
 }
 
 /* This Source Code Form is subject to the terms of the Mozilla Public
@@ -5573,6 +5575,13 @@ html.neutral {
 .color.bright {
   background-color: var(--bright);
   color: var(--on-bright);
+}
+
+samp:has(pre) {
+  display: block;
+  padding: var(--default);
+  background-color: var(--dark) !important;
+  color: var(--on-dark);
 }
 
 button.on {

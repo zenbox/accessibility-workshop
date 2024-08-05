@@ -1,0 +1,6 @@
+samp:has(pre) {
+    display: block;
+    padding: var(--default);
+    background-color: var(--dark) !important;
+    color: var(--on-dark);
+}

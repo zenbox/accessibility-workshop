@@ -29,11 +29,6 @@
 
     --shadow: hsla(0, 0%, 0%, 0.5);
     --disabled: var(--neutral);
-
-    --fontSize: 16px;
-    --default: 1rem;
-    --big: 2rem;
-    --small: 0.75rem;
 }
 
 // schreibe eine Map mit Klassen für alle Farben
@@ -72,3 +67,7 @@ $colors : (
         color: $value;
     }
 }
+
+:root{    --default: 1rem;
+    --big: 2rem;
+    --small: 0.75rem;}
