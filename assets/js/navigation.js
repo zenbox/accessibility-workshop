@@ -8,7 +8,7 @@ function createNavigation() {
     const navigation = [
         { file: "index.html", text: "Semantik" },
         { file: "typography.html", text: "Typografie" },
-        { file: "color-and-contrast.html", text: "Farbe und Kontrast" },
+        { file: "contrast.html", text: "Kontrast" },
         { file: "keyboard-controls.html", text: "Tastatur-Steuerung" },
         // { file: "form.html", text: "Formular" },
         { file: "navigation.html", text: "Navigation" },
