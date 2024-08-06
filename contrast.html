@@ -16,103 +16,275 @@
         <header>
             <p class="brand">accessibility</p>
             <h1>Kontrast</h1>
-            <p>Kontrast bezieht sich auf den Unterschied in Helligkeit oder Farbe zwischen zwei visuellen Elementen.  Kontrast ist wichtig, weil er dazu beiträgt, dass Objekte oder Text deutlich erkennbar und unterscheidbar sind. Ein höherer Kontrast macht es leichter, Formen, Farben und Text zu erkennen, während ein niedriger Kontrast dazu führen kann, dass Inhalte verschwimmen oder schwer zu sehen sind. </p><p>In Design und Typografie ist ausreichender Kontrast besonders wichtig, um sicherzustellen, dass Informationen für alle Nutzer, einschließlich Menschen mit Sehbehinderungen, gut lesbar und zugänglich sind.</p>
+            <p>
+                Kontrast bezieht sich auf den Unterschied in Helligkeit oder
+                Farbe zwischen zwei visuellen Elementen. Kontrast ist wichtig,
+                weil er dazu beiträgt, dass Objekte oder Text deutlich erkennbar
+                und unterscheidbar sind. Ein höherer Kontrast macht es leichter,
+                Formen, Farben und Text zu erkennen, während ein niedriger
+                Kontrast dazu führen kann, dass Inhalte verschwimmen oder schwer
+                zu sehen sind.
+            </p>
+            <p>
+                In Design und Typografie ist ausreichender Kontrast besonders
+                wichtig, um sicherzustellen, dass Informationen für alle Nutzer,
+                einschließlich Menschen mit Sehbehinderungen, gut lesbar und
+                zugänglich sind.
+            </p>
         </header>
         <main>
-            <article class="color-and-contrast-container">
-                <div class="box green-1">
-                    <h2>headline</h2>
-                    <h2 class="not-bold">not bold</h2>
-                    <p>copy</p>
-                    <p><strong>bold</strong></p>
-                </div>
-
-                <div class="box green-2">
-                    <h2>headline</h2>
-                    <h2 class="not-bold">not bold</h2>
-                    <p>copy</p>
-                    <p><strong>bold</strong></p>
-                </div>
-
-                <div class="box blue-yellow-1">
-                    <h2>headline</h2>
-                    <h2 class="not-bold">not bold</h2>
-                    <p>copy</p>
-                    <p><strong>bold</strong></p>
-                </div>
-
-                <div class="box blue-yellow-2">
-                    <h2>headline</h2>
-                    <h2 class="not-bold">not bold</h2>
-                    <p>copy</p>
-                    <p><strong>bold</strong></p>
-                </div>
-
-                <div class="box image">
-                    <h2>headline</h2>
-                    <h2 class="not-bold">not bold</h2>
-                    <p>copy</p>
-                    <p><strong>bold</strong></p>
-                </div>
-
-                <div class="box gradient">
-                    <h2>headline</h2>
-                    <h2 class="not-bold">not bold</h2>
-                    <p>copy</p>
-                    <p><strong>bold</strong></p>
-                </div>
-            </article>
             <article>
-                <h1>Lorem Headline 1 ipsum</h1>
+                <h2>Automatisiertes Testen von Kontrasten</h2>
                 <p>
-                    Lorem Copy ipsum dolor sit amet consectetur, adipisicing
-                    elit. Impedit adipisci, rerum officia earum ullam atque
-                    dicta alias veritatis perferendis laudantium eos nihil
-                    dolorem? Maiores corrupti harum non. Expedita magnam aperiam
-                    inventore nesciunt.
+                    Es gibt viele Tools, die den Kontrast von Texten und
+                    Elementen auf einer Webseite überprüfen können. Sie helfen
+                    für einen schnellen Überblick, haben aber auch Schwächen.
+                    Zum Beispiel werden Farbverläufe oder Hintergrundbilder
+                    nicht erfasst. Hier sind einige Beispiele für Chrome
+                    Extensions:
                 </p>
-                <p>
-                    <small
-                        >Lorem Konsultationsext ipsum dolor sit amet,
-                        consectetur adipisicing elit. Pariatur eveniet numquam
-                        ipsa rerum. Eaque, animi qui. Saepe, minus.</small
-                    >
-                </p>
+                <ul>
+                    <li>
+                        <a
+                            href="https://chromewebstore.google.com/detail/colour-contrast-checker/nmmjeclfkgjdomacpcflgdkgpphpmnfe"
+                            >Colour Contrast Checker</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="https://chromewebstore.google.com/detail/wcag-color-contrast-check/plnahcmalebffmaghcpcmpaciebdhgdf"
+                            >WCAG Color contrast Checker</a
+                        >
+                    </li>
+                </ul>
+
+                <div class="color-and-contrast-container">
+                    <div class="box green-1">
+                        <h2>headline</h2>
+                        <h2 class="not-bold">not bold</h2>
+                        <p>copy</p>
+                        <p><strong>bold</strong></p>
+                        <p class="figcaption">
+                            <small>Michelson-Kontrast 3:1</small>
+                        </p>
+                    </div>
+
+                    <div class="box green-2">
+                        <h2>headline</h2>
+                        <h2 class="not-bold">not bold</h2>
+                        <p>copy</p>
+                        <p><strong>bold</strong></p>
+                        <p class="figcaption">
+                            <small>Michelson-Kontrast 3:1</small>
+                        </p>
+                    </div>
+
+                    <div class="box blue-yellow-1">
+                        <h2>headline</h2>
+                        <h2 class="not-bold">not bold</h2>
+                        <p>copy</p>
+                        <p><strong>bold</strong></p>
+                        <p class="figcaption">
+                            <small>Michelson-Kontrast 2:1</small>
+                        </p>
+                    </div>
+
+                    <div class="box blue-yellow-2">
+                        <h2>headline</h2>
+                        <h2 class="not-bold">not bold</h2>
+                        <p>copy</p>
+                        <p><strong>bold</strong></p>
+                        <p class="figcaption">
+                            <small>Michelson-Kontrast 2:1</small>
+                        </p>
+                    </div>
+
+                    <div class="box image">
+                        <h2>headline</h2>
+                        <h2 class="not-bold">not bold</h2>
+                        <p>copy</p>
+                        <p><strong>bold</strong></p>
+                        <p class="figcaption">
+                            <small>Der Kontrast ist nicht messbar.</small>
+                        </p>
+                    </div>
+
+                    <div class="box gradient">
+                        <h2>headline</h2>
+                        <h2 class="not-bold">not bold</h2>
+                        <p>copy</p>
+                        <p><strong>bold</strong></p>
+                        <p class="figcaption">
+                            <small>Der Kontrast ist nicht messbar.</small>
+                        </p>
+                    </div>
+                </div>
             </article>
+
             <article>
                 <h2>Regeln für Kontrast</h2>
 
-                <h3>Kontraste von Texten (Level AA)</h3>
+                <h3>Kontraste von Texten</h3>
 
                 <p>
                     Text (Überschriften, Fließtexte, Text auf Buttons etc.)
                     müssen zum Hintergrund einen Mindestkontrast von 4,5:1
-                    haben. Das gilt für Texte, die kleiner als 24px sind. Texte,
-                    die größer sind, dürfen einen Kontrast von 3:1 haben. Wir
-                    würden aber empfehlen, nie unter 4,5:1 zu gehen.
+                    haben. Das gilt für Texte, die kleiner als 18pt (24px) sind.
+                    Texte, die größer sind, dürfen einen Kontrast von 3:1 haben.
                 </p>
 
-                <p>
-                    <a
-                        href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-3-kontraste-von-texten-ausreichend"
-                        >Zum Prüfschritt Kontraste von Texten</a
+                <figure aria-hidden="true">
+                    <div
+                        style="
+                            border: 2px solid #000000;
+                            background-color: white;
+                            color: hsl(0, 0%, 0%);
+                            padding: 0.5rem;
+                            margin-block-end: 0.5rem;
+                        "
                     >
-                </p>
+                        Luminanz 0: Text mit ausreichend Kontrast (21 : 1)
+                    </div>
+                    <div
+                        style="
+                            border: 2px solid black;
+                            background-color: white;
+                            color: hsl(0, 0%, 46%);
+                            padding: 0.5rem;
+                            margin-block-end: 0.5rem;
+                        "
+                    >
+                        Luminanz 46%: Text mit ausreichend Kontrast (4,5 : 1)
+                    </div>
+                    <div
+                        style="
+                            border: 2px solid black;
+                            background-color: white;
+                            color: hsl(0, 0%, 58%);
+                            padding: 0.5rem;
+                            margin-block-end: 0.5rem;
+                        "
+                    >
+                        <b>Luminanz 58%: fetter Text</b>
+                        <big>und grosser Text</big>
+                        <b>mit ausreichend Kontrast (3 : 1)</b>
+                    </div>
+                    <div
+                        style="
+                            border: 2px solid black;
+                            background-color: white;
+                            color: hsl(0, 0%, 83%);
+                            padding: 0.5rem;
+                            margin-block-end: 0.5rem;
+                        "
+                    >
+                        Luminanz 83%: Text mit zu wenig Kontrast (1,5 : 1)
+                    </div>
+                </figure>
 
                 <h3>Kontraste von Texten in Grafiken</h3>
 
                 <p>
                     Text in oder auf Bildern müssen die Kontrastanforderungen
-                    von 4,5:1 erfüllen. (Außer der Text ist groß genug, siehe
-                    oben)
+                    von 4,5:1 erfüllen. Ab einer Schriftgröße von 18pt (24px)
+                    darf der Kontrast 3:1 betragen.
+                </p>
+                <p>
+                    Da der Hintergrund in Bildern nicht immer vorhersehbar ist,
+                    kann eine Textkontur oder eine Fläche den Kontrast
+                    unterstützen. Die Messung des Kontrasts ist ebenfalls
+                    schwierig.
                 </p>
 
-                <p>
-                    <a
-                        href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-3-kontraste-von-texten-ausreichend"
-                        >Zum Prüfschritt Kontraste von Texten</a
+                <figure aria-hidden="true">
+                    <div
+                        class="box image"
+                        style="display: inline-block; color: white"
                     >
-                </p>
+                        <h2>headline</h2>
+                        <h2 class="not-bold">not bold</h2>
+                        <p>copy</p>
+                        <p><strong>bold</strong></p>
+                        <p class="figcaption"><small>weißer Text</small></p>
+                    </div>
+                    <div
+                        class="box image"
+                        style="display: inline-block; color: black"
+                    >
+                        <h2>headline</h2>
+                        <h2 class="not-bold">not bold</h2>
+                        <p>copy</p>
+                        <p><strong>bold</strong></p>
+                        <p class="figcaption"><small>schwarzer Text</small></p>
+                    </div>
+                    <div
+                        class="box image"
+                        style="
+                            display: inline-block;
+                            color: white;
+                            -webkit-text-stroke: 1px #000;
+                        "
+                    >
+                        <h2>headline</h2>
+                        <h2 class="not-bold">not bold</h2>
+                        <p>copy</p>
+                        <p><strong>bold</strong></p>
+                        <p class="figcaption">
+                            <small>weißer Text mit Outline</small>
+                        </p>
+                    </div>
+                    <div
+                        class="box image"
+                        style="
+                            display: inline-block;
+                            color: black;
+                            text-shadow: 0px 0px 3px #fff;
+                        "
+                    >
+                        <h2>headline</h2>
+                        <h2 class="not-bold">not bold</h2>
+                        <p>copy</p>
+                        <p><strong>bold</strong></p>
+                        <p class="figcaption">
+                            <small>Text mit weissem Schatten</small>
+                        </p>
+                    </div>
+                    <div
+                        class="box image"
+                        style="display: inline-block; color: white"
+                    >
+                        <h2 style="background: #0004">headline</h2>
+                        <h2
+                            style="background: #0004"
+                            class="not-bold"
+                        >
+                            not bold
+                        </h2>
+                        <p style="background: #0004">copy</p>
+                        <p style="background: #0004"><strong>bold</strong></p>
+                        <p class="figcaption"><small>Text mit Fläche</small></p>
+                    </div>
+                    <div
+                        class="box image"
+                        style="display: inline-block; color: black"
+                    >
+                        <h2 style="background: #fff4">headline</h2>
+                        <h2
+                            style="background: #fff4"
+                            class="not-bold"
+                        >
+                            not bold
+                        </h2>
+                        <p style="background: #fff4">copy</p>
+                        <p style="background: #fff4"><strong>bold</strong></p>
+                        <p class="figcaption"><small>Text mit Fläche</small></p>
+                    </div>
+                    <figcaption>
+                        Verschiedene Kontraste von Text auf Grafik: Schwarz und
+                        Weiss auf Bild, Text mit Outline, Text mit Schatten,
+                        Text mit Fläche.
+                    </figcaption>
+                </figure>
 
                 <h3>Kontraste von Elementen in Infografiken</h3>
 
@@ -123,29 +295,11 @@
                     von 3:1 haben.
                 </p>
 
-                <p>
-                    <a
-                        href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-11-kontraste-von-grafiken-und-grafischen-bedienelementen-ausreichend"
-                    >
-                        Zum Prüfschritt Kontraste von Grafiken und grafischen
-                        Bedienelementen.
-                    </a>
-                </p>
-
                 <h3>Kontraste von Bedienelementen</h3>
 
                 <p>
                     Bedienelemente (Buttons, klickbare Icons, Inputfelder)
                     müssen einen Kontrast von 3:1 zum Hintergrund haben.
-                </p>
-
-                <p>
-                    <a
-                        href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-11-kontraste-von-grafiken-und-grafischen-bedienelementen-ausreichend"
-                    >
-                        Zum Prüfschritt Kontraste von Grafiken und grafischen
-                        Bedienelementen.
-                    </a>
                 </p>
 
                 <h3>Kontraste von Bedienelementen mit Text</h3>
@@ -156,19 +310,65 @@
                     muss es das Bedienelement selbst nicht tun.
                 </p>
 
-                <p>
-                    Wir würden trotzdem empfehlen, den Kontrast des
-                    Bedienelements von 3:1 immer einzuhalten.
-                </p>
-
-                <p>
-                    <a
-                        href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-11-kontraste-von-grafiken-und-grafischen-bedienelementen-ausreichend"
+                <figure aria-hidden="true">
+                    <div
+                        style="
+                            border: 2px solid #000000;
+                            background-color: white;
+                            color: hsl(0, 0%, 0%);
+                            padding: 0.5rem;
+                            margin-block-end: 0.5rem;
+                        "
                     >
-                        Zum Prüfschritt Kontraste von Grafiken und grafischen
-                        Bedienelementen.
-                    </a>
-                </p>
+                        <button>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                style="width: 24px; height: 24px"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    fill="#898989"
+                                    d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"
+                                />
+                            </svg>
+                        </button>
+                        <span class="figcaption">
+                            <small
+                                >Bedienelement nur Icon, ohne Text: Kontrast
+                                3:1.</small
+                            >
+                        </span>
+                    </div>
+                    <div
+                        style="
+                            border: 2px solid black;
+                            background-color: white;
+                            color: hsl(0, 0%, 46%);
+                            padding: 0.5rem;
+                            margin-block-end: 0.5rem;
+                        "
+                    >
+                        <button>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                style="width: 24px; height: 24px"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    fill="lightgrey"
+                                    d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"
+                                />
+                            </svg>
+                            Suchen
+                        </button>
+                        <span class="figcaption">
+                            <small
+                                >Bedienelement mit Icon und Text: Text mit
+                                4,5:1.</small
+                            >
+                        </span>
+                    </div>
+                </figure>
 
                 <h3>Kontraste von Links</h3>
 
@@ -178,63 +378,51 @@
                     etc.)
                 </p>
 
-                <p>
-                    <a
-                        href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-3-kontraste-von-texten-ausreichend"
-                        >Zum Prüfschritt Kontraste von Texten</a
-                    >
-                </p>
-
                 <h3>Kontraste von Links in Texten</h3>
 
                 <p>
                     Links, die sich in Texten (Fließtexten, Labels etc.)
                     befinden, müssen einen Mindestkontrast von 3:1 zu den
-                    anderen Texten drumherum aufweisen. (wenn der Link nur durch
+                    anderen Texten drumherum aufweisen, wenn der Link nur durch
                     Farbe gekennzeichnet ist.
                 </p>
 
                 <p>
-                    <a
-                        href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-1-ohne-farben-nutzbar"
-                        >Zum Prüfschritt Ohne Farbe nutzbar</a
-                    >
+                    Ein unterstrichener Link erfüllt die
+                    Mehr-als-ein-Merkmal-Forderung und benötigt keinen
+                    zusätzlichen Kontrast.
                 </p>
 
                 <h3>Kontraste von Fokusrahmen</h3>
 
                 <p>
                     Der Kontrast von Fokusrahmen um Bedienelemente muss
-                    mindestens 3:1 zu seinem Hintergrund haben. Ab besten ist
-                    ein doppelter Fokusrahmen mit schwarzer und weißer Linien.
-                    Siehe Artikel von Sara Soueidan (englisch).
+                    mindestens 3:1 zu seinem Hintergrund haben.
+                </p>
+
+                <p>
+                    Um dem Problem wechselnder Hintergundfarben zu begegnen, ist
+                    ein doppelter Fokusrahmen mit dunkler und heller Linienfarbe
+                    eine gute Lösung.
                 </p>
 
                 <p>
                     <a
-                        href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-11-kontraste-von-grafiken-und-grafischen-bedienelementen-ausreichend"
-                    >
-                        Zum Prüfschritt Kontraste von Grafiken und grafischen
-                        Bedienelementen.
+                        href="https://www.sarasoueidan.com/blog/focus-indicators/"
+                        >Sara Soueidan: A guide to designing accessible,
+                        WCAG-conformant focus indicators
                     </a>
                 </p>
 
                 <h3>Kontraste von disabled oder inaktiven Elemente</h3>
 
                 <p>
-                    Bedienelemente (Buttons, Icons etc.), die (gerade) nicht
-                    klickbar sind, müssen keine Kotrastanforderungen erfüllen.
-                    Wir würden es dennoch empfehlen, sich an den Mindestkontrast
-                    von 3:1 zu halten!
-                </p>
-
-                <p>
-                    <a
-                        href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-11-kontraste-von-grafiken-und-grafischen-bedienelementen-ausreichend"
-                    >
-                        Zum Prüfschritt Kontraste von Grafiken und grafischen
-                        Bedienelementen.
-                    </a>
+                    Bedienelemente (Buttons, Icons etc.), die nicht klickbar
+                    sind, müssen keine Kontrastanforderungen erfüllen. Wenn ein
+                    inaktives Element für das Verständnis des Kontextes wichtig
+                    ist, so ist ein Mindestkontrast von 3:1 empfehlenswert. Das
+                    ist zum Beipiel der Fall, wenn ein Button deaktiviert ist,
+                    weil ein Pflichtfeld noch nicht ausgefüllt wurde.
                 </p>
 
                 <h3>Kontraste von Logos</h3>
@@ -245,14 +433,29 @@
                     genutzt (z. B. um zur Startseite zu verlinken).
                 </p>
 
-                <p>
-                    <a
-                        href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-11-kontraste-von-grafiken-und-grafischen-bedienelementen-ausreichend"
-                    >
-                        Zum Prüfschritt Kontraste von Grafiken und grafischen
-                        Bedienelementen.
-                    </a>
-                </p>
+                <h2>Relevante Prüfschritte</h2>
+                <ul>
+                    <li>
+                        <a
+                            href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-3-kontraste-von-texten-ausreichend"
+                            >Prüfschritt Kontraste von Texten</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-11-kontraste-von-grafiken-und-grafischen-bedienelementen-ausreichend"
+                        >
+                            Prüfschritt Kontraste von Grafiken und grafischen
+                            Bedienelementen.
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-1-ohne-farben-nutzbar"
+                            >Prüfschritt Ohne Farbe nutzbar</a
+                        >
+                    </li>
+                </ul>
             </article>
         </main>
         <footer>

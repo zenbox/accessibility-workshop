@@ -5588,6 +5588,22 @@ article {
   margin-block-start: 4rem;
 }
 
+a::before {
+  content: ">>";
+  margin-right: 0.25rem;
+}
+
+.figcaption {
+  color: black;
+  background: none;
+  font-size: 0.8rem !important;
+  text-align: left;
+  transform: translateX(-1rem) translateY(2rem);
+  text-shadow: none;
+  -webkit-text-stroke: 0;
+  font-weight: 400;
+}
+
 button.on {
   width: 1rem;
   height: 1rem;

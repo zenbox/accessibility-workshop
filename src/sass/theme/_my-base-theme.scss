@@ -5,6 +5,22 @@ samp:has(pre) {
     color: var(--on-dark);
 }
 
-article{
+article {
     margin-block-start: toRem($double-octave);
+}
+
+a::before {
+    content: ">>";
+    margin-right: 0.25rem;
+}
+
+.figcaption {
+    color: black;
+    background: none;
+    font-size: 0.8rem !important;
+    text-align: left;
+    transform: translateX(-1rem) translateY(2rem);
+    text-shadow: none;
+    -webkit-text-stroke: 0;
+    font-weight: 400;
 }
