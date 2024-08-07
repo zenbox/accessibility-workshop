@@ -1,5 +1,5 @@
-.sr-only { 
-   word-wrap: normal;
+.sr-only {
+    word-wrap: normal;
     position: absolute;
 
     left: -20000px;
@@ -238,4 +238,81 @@ td {
     overflow: visible;
     clip-path: auto;
     text-decoration: none;
+}
+
+// - - - - - - - - - -
+// PREFERS QUERIES
+// - - - - - - - - - -
+
+.prefers-reduced-motion {
+    @media (prefers-reduced-motion: no-preference) {
+        display: block;
+        color: lightgrey !important;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        display: block;
+    }
+}
+.prefers-contrast {
+    @media (prefers-contrast: no-preference) {
+        display: block;
+        color: lightgrey !important
+    }
+    @media (prefers-contrast: less) {
+        display: block;
+    }
+    @media (prefers-contrast: more) {
+        display: block;
+    }
+    @media (prefers-contrast: custom) {
+        display: block;
+    }
+}
+.prefers-color-scheme {
+    @media (prefers-color-scheme: dark) {
+        background-color: black;
+        color: white;
+    }
+
+    @media (prefers-color-scheme: light) {
+        background-color: light;
+        color: dark;
+    }
+}
+.forced-color {
+    @media (forced-color: none) {
+        display: block;
+        color: lightgrey !important
+    }
+    @media (forced-color: active) {
+        display: block;
+    }
+}
+.prefers-reduced-data {
+    @media (prefers-reduced-data: no-preference) {
+        display: block;
+        color: lightgrey !important
+    }
+    @media (prefers-reduced-data: reduce) {
+        display: block;
+    }
+}
+.prefers-reduced-transparency {
+    @media (prefers-reduced-transparency: no-preference) {
+        display: block;
+        color: lightgrey !important
+    }
+    @media (prefers-reduced-transparency: reduce) {
+        display: block;
+    }
+}
+
+.inverted-color {
+    @media (inverted-color: none) {
+        display: block;
+        color: lightgrey !important
+    }
+    @media (inverted-color: inverted) {
+        display: block;
+    }
 }

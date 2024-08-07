@@ -13,7 +13,7 @@ function createNavigation() {
         // { file: "form.html", text: "Formular" },
         { file: "navigation.html", text: "Navigation" },
         { file: "non-text-content.html", text: "Bild und Grafik" },
-        { file: "parallax.html", text: "Bewegung" },
+        { file: "user-settings.html", text: "Benutzereinstellungen" },
         { file: "pattern.html", text: "Pattern" },
     ]
 

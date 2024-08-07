@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Benutzer-Einstellungen</title>
+        <link
+            rel="stylesheet"
+            href="assets/css/style.css"
+        />
+    </head>
+    <body>
+        <header>
+            <h1>Einstellungen des Benutzers berücksichtigen</h1>
+            <p>
+                Der Benutzer kann, zum Beipiel über die Bedienungshilfen seines
+                Betriebssystems verschiedene Einstellungen vorgegeben haben. Die
+                Webseite sollte darauf reagieren oder sie mindestens nicht
+                blockieren.
+            </p>
+
+            <p>
+                Viele Einstellungen aus dem Betriebssystem können über
+                <code>@media</code>-Queries abgefragt werden.
+                <a href="https://drafts.csswg.org/mediaqueries-5/"
+                    >Zum aktuellen Entwurf 5 der Mediaqueries</a
+                >.
+            </p>
+        </header>
+
+        <article>
+            <h2>CSS Einstellungen</h2>
+            <h2 class="prefers-reduced-motion">prefers-reduced-motion</h2>
+        </article>
+        <article>
+            <h2 class="prefers-contrast">prefers-contrast</h2>
+        </article>
+        <article>
+            <h2 class="prefers-color-scheme">prefers-color-scheme</h2>
+        </article>
+        <article>
+            <h2 class="forced-color">forced-color</h2>
+            <p>
+                Das Medienmerkmal <code>forced-color</code> ermittelt, ob der
+                Browser feste Farben erzwingt. Werte sind <code>none</code> und
+                <code>active</code>.
+            </p>
+
+            <samp>
+                <code>
+                    <pre>
+.button {
+  border: 0;
+  padding: 10px;
+  box-shadow: -2px -2px 5px gray, 2px 2px 5px gray;
+}
+
+@media (forced-colors: active) {
+  .button {
+    /* Use a border instead, since box-shadow is forced to 'none' in forced-colors mode */
+    border: 2px ButtonText solid;
+  }
+}</pre
+                    >
+                </code></samp
+            >
+
+            <p>
+                Falls dies so eingestellt ist, werden für folgende Eigenschaften
+                Systemfarben verwendet:
+            </p>
+            <p>
+                color, background-color, text-decoration-color,
+                text-emphasis-color, border-color, outline-color,
+                column-rule-color, -webkit-tap-highlight-color, SVG fill, SVG
+                stroke
+            </p>
+
+            <p>Folgende Eigenschaften erhalten fest eingestellte Werte:</p>
+
+            <ul>
+                <li>box-shadow: 'none'</li>
+                <li>text-shadow: 'none'</li>
+                <li>background-image: 'none', außer bei festen URL-Angaben</li>
+                <li>color-scheme: 'light dark'</li>
+                <li>scrollbar-color: 'auto'</li>
+            </ul>
+            <p>Unter Windows kann <code>forced-color</code> über die Display-einstellungen aktiviert werden (Auf MacOS hab ich nichts gefunden). <code>forced-color</code> kann in Chrome und Edge über <kbd>Entwicklertools</kbd> - <kbd>Weitere Tools</kbd> - <kbd>Rendering</kbd> aufgerufen und eingestellt werden.</p>
+
+            <p><a href="https://polypane.app/blog/forced-colors-explained-a-practical-guide/">Forced colors explained: A practical guide</a></p>
+        </article>
+        <article>
+            <h2 class="prefers-reduced-data">prefers-reduced-data</h2>
+        </article>
+        <article>
+            <h2 class="prefers-reduced-transparency">
+                prefers-reduced-transparency
+            </h2>
+        </article>
+        <article>
+            <h2 class="inverted-color">inverted-color</h2>
+        </article>
+
+        <!-- <article>
+    <h2>Die Bedienerhilfen von MacOS</h2>
+    <p>Die Bedienungshilfen von MacOS können über die Systemeinstellungen aufgerufen werden. Hier können verschiedene Einstellungen vorgenommen werden, die auch von Webseiten berücksichtigt werden können.</p>
+    <ul>
+        <li>Sehen <ul>
+            <li>Farben umkehren</li>
+            <li>Modus mit umgekehrten Farben</li>
+            <li>Bewegung reduzieren</li>
+            <li>Flackerndes Licht dimmen</li>
+            <li>Kontrast erhöhen</li>
+            <li>Transparenz reduzieren</li>
+            <li>Ohne Farben differenzieren</li>
+            <li>Animierte Bilder automatisch wiedergeben</li>
+            <li>Fenstertitelsymbole anzeigen</li>
+            <li>Tastenformen der Symbolleiste anzeigen</li>
+            <li>Displaykontrast (über Schieberegler einstellbar)</li>
+            <li>Text
+                <ul>
+                    <li>Textgröße</li>
+                    <li>Größe der Menüleiste</li>
+                    <li>Horizontalen Text bevorzugen</li>
+                </ul>
+                <li>Zeiger <ul>
+                    <li>Zeigergröße</li>
+                    <li>Zeigerrandfarbe</li>
+                    <li>Zeigerfüllfarbe</li>
+                </ul></li>
+            </li>
+            <li>Farbfilter <ul>
+                <li>Farbfilter</li>
+                <li>Filtertyp</li>
+                <li>Intensität</li>
+            </ul></li>
+        </ul></li>
+    </ul>
+</article> -->
+
+        <div class="parallax">
+            <section class="teaser-1 section">
+                <h1 tabindex="0">eins</h1>
+                <p>zwei</p>
+                <p>drei</p>
+                <p>vier</p>
+            </section>
+
+            <section
+                class="teaser-2 section"
+                section
+            >
+                <h2 tabindex="0">eins</h2>
+                <p>zwei</p>
+                <p>drei</p>
+                <p>vier</p>
+            </section>
+
+            <section class="teaser-3 section">
+                <h2 tabindex="0">eins</h2>
+                <p>zwei</p>
+                <p>drei</p>
+                <p>vier</p>
+            </section>
+
+            <!-- <section class="teaser-4 section">
+            <h2 tabindex="0">eins</h2>
+            <p>zwei</p>
+            <p>drei</p>
+            <p>vier</p>
+        </section>
+
+        <section class="teaser-5 section">
+            <h2 tabindex="0">eins</h2>
+            <p>zwei</p>
+            <p>drei</p>
+            <p>vier</p>
+        </section>
+
+        <section class="teaser-6 section">
+            <h2 tabindex="0">eins</h2>
+            <p>zwei</p>
+            <p>drei</p>
+            <p>vier</p>
+        </section>
+
+        <section class="teaser-7 section">
+            <h2 tabindex="0">eins</h2>
+            <p>zwei</p>
+            <p>drei</p>
+            <p>vier</p>
+        </section>
+
+        <section class="teaser-8 section">
+            <h2 tabindex="0">eins</h2>
+            <p>zwei</p>
+            <p>drei</p>
+            <p>vier</p>
+        </section>
+
+        <section class="teaser-9 section">
+            <h2 tabindex="0">eins</h2>
+            <p>zwei</p>
+            <p>drei</p>
+            <p>vier</p>
+        </section>
+
+        <section class="teaser-10 section">
+            <h2 tabindex="0">eins</h2>
+            <p>zwei</p>
+            <p>drei</p>
+            <p>vier</p>
+        </section> -->
+        </div>
+
+        <!-- <script src="assets/js/parallax.js"></script> -->
+        <script src="assets/js/navigation.js"></script>
+    </body>
+</html>

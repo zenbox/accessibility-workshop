@@ -3568,6 +3568,101 @@ td {
   text-decoration: none;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .prefers-reduced-motion {
+    display: block;
+    color: lightgrey !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prefers-reduced-motion {
+    display: block;
+  }
+}
+
+@media (prefers-contrast: no-preference) {
+  .prefers-contrast {
+    display: block;
+    color: lightgrey !important;
+  }
+}
+@media (prefers-contrast: less) {
+  .prefers-contrast {
+    display: block;
+  }
+}
+@media (prefers-contrast: more) {
+  .prefers-contrast {
+    display: block;
+  }
+}
+@media (prefers-contrast: custom) {
+  .prefers-contrast {
+    display: block;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .prefers-color-scheme {
+    background-color: black;
+    color: white;
+  }
+}
+@media (prefers-color-scheme: light) {
+  .prefers-color-scheme {
+    background-color: light;
+    color: dark;
+  }
+}
+
+@media (forced-color: none) {
+  .forced-color {
+    display: block;
+    color: lightgrey !important;
+  }
+}
+@media (forced-color: active) {
+  .forced-color {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-data: no-preference) {
+  .prefers-reduced-data {
+    display: block;
+    color: lightgrey !important;
+  }
+}
+@media (prefers-reduced-data: reduce) {
+  .prefers-reduced-data {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-transparency: no-preference) {
+  .prefers-reduced-transparency {
+    display: block;
+    color: lightgrey !important;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .prefers-reduced-transparency {
+    display: block;
+  }
+}
+
+@media (inverted-color: none) {
+  .inverted-color {
+    display: block;
+    color: lightgrey !important;
+  }
+}
+@media (inverted-color: inverted) {
+  .inverted-color {
+    display: block;
+  }
+}
+
 nav.breadcrumb {
   padding: 0.8em 1em;
   border: 1px solid hsl(0, 0%, 90%);
@@ -5577,6 +5672,11 @@ html.neutral {
   color: var(--on-bright);
 }
 
+body {
+  margin: 0 auto;
+  max-width: 40rem;
+}
+
 samp:has(pre) {
   display: block;
   padding: var(--default);
@@ -5587,10 +5687,14 @@ samp:has(pre) {
 article {
   margin-block-start: 4rem;
 }
+article h3 {
+  margin-block-start: 4rem;
+}
 
 a::before {
   content: ">>";
   margin-right: 0.25rem;
+  text-decoration: none;
 }
 
 .figcaption {
