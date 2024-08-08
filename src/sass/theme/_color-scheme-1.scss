@@ -26,6 +26,14 @@ html {
             }
         }
 
+        pre {
+                 filter: invert(1);
+            > * {
+                filter: invert(1);
+            }
+        }
+
+
         a:link {
             color: var(--link-color);
             filter: invert(1);

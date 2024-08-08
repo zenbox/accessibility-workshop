@@ -5754,6 +5754,12 @@ html.dark samp {
 html.dark samp > * {
   filter: invert(1);
 }
+html.dark pre {
+  filter: invert(1);
+}
+html.dark pre > * {
+  filter: invert(1);
+}
 html.dark a:link {
   color: var(--link-color);
   filter: invert(1);
