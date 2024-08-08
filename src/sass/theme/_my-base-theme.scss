@@ -40,7 +40,6 @@ body {
             white-space: nowrap;
         }
     }
-
 }
 
 main {
@@ -52,6 +51,12 @@ samp:has(pre) {
     padding: var(--default);
     background-color: var(--sample);
     color: var(--on-sample);
+}
+samp:not(:has(pre)) {
+    display: block;
+    padding: var(--default);
+    font-family: $font-family-dyslexic;
+    background-color: var(--sample);
 }
 
 article {

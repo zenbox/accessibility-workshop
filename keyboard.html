@@ -44,6 +44,7 @@
                 </nav>
             </article>
 
+            <!-- - - - - - - - - - - -->
             <article aria-live="assertive">
                 <h2>Telefonnummer</h2>
                 <address>
@@ -57,7 +58,7 @@
                     </p>
                 </address>
             </article>
-
+            <!-- - - - - - - - - - --->
             <article>
                 <h2>Tabellen</h2>
 
@@ -72,473 +73,1114 @@
                     wechselt beim rauf- und runterscrollen. (Eine
                     Ausschnitts-Beschreibung fehlt allerdings).
                 </p>
+
                 <h4 id="grid3Label">Stadt, Land, Fluss</h4>
-                <button
-                    type="button"
-                    id="toggle_column_btn"
-                    name="toggle_columns"
-                >
-                    Verstecke Land und Name
-                </button>
-                <div
-                    id="table-example"
-                    class="table-wrap"
-                >
-                    <table
-                        id="ex3-grid"
-                        role="grid"
-                        aria-labelledby="grid3Label"
-                        aria-rowcount="16"
-                        aria-colcount="6"
-                        data-per-page="5"
-                        class="data"
+
+                <samp>
+                    <button
+                        type="button"
+                        id="toggle_column_btn"
+                        name="toggle_columns"
                     >
-                        <tbody>
-                            <tr data-fixed="true">
-                                <th>Stadt</th>
-                                <th>Land</th>
-                                <th>Fluss</th>
-                                <th>Name</th>
-                                <th>Pflanze</th>
-                                <th>Tier</th>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Amsterdam</td>
-                                <td tabindex="-1">Afghanistan</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Amazonas</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Anna</td>
-                                <td tabindex="-1">Apfelbaum</td>
-                                <td tabindex="-1">Adler</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Berlin</td>
-                                <td tabindex="-1">Belgien</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Brahmaputra</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Bernd</td>
-                                <td tabindex="-1">Basilikum</td>
-                                <td tabindex="-1">Biber</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Chicago</td>
-                                <td tabindex="-1">China</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Colorado</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Christina</td>
-                                <td tabindex="-1">Chrysantheme</td>
-                                <td tabindex="-1">Chamäleon</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Dublin</td>
-                                <td tabindex="-1">Deutschland</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Donau</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Dieter</td>
-                                <td tabindex="-1">Dattel</td>
-                                <td tabindex="-1">Delphin</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Erfurt</td>
-                                <td tabindex="-1">Ecuador</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Elbe</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Eva</td>
-                                <td tabindex="-1">Erdbeere</td>
-                                <td tabindex="-1">Elefant</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Florenz</td>
-                                <td tabindex="-1">Finnland</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Fulda</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Frank</td>
-                                <td tabindex="-1">Flieder</td>
-                                <td tabindex="-1">Forelle</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Glasgow</td>
-                                <td tabindex="-1">Guatemala</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Garonne</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Gitta</td>
-                                <td tabindex="-1">Grünkohl</td>
-                                <td tabindex="-1">Gans</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Hamburg</td>
-                                <td tabindex="-1">Haiti</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Havel</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Hans</td>
-                                <td tabindex="-1">Heidelbeere</td>
-                                <td tabindex="-1">Hamster</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Innsbruck</td>
-                                <td tabindex="-1">Indien</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Isar</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Iris</td>
-                                <td tabindex="-1">Iris</td>
-                                <td tabindex="-1">Igel</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Johannesburg</td>
-                                <td tabindex="-1">Japan</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Jangtsekiang</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Jens</td>
-                                <td tabindex="-1">Johannisbeere</td>
-                                <td tabindex="-1">Junikäfer</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Köln</td>
-                                <td tabindex="-1">Kanada</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Kongo</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Kirsten</td>
-                                <td tabindex="-1">Kaktus</td>
-                                <td tabindex="-1">Kolibri</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">London</td>
-                                <td tabindex="-1">Libyen</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Leine</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Leon</td>
-                                <td tabindex="-1">Lilie</td>
-                                <td tabindex="-1">Leopard</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Mailand</td>
-                                <td tabindex="-1">Mexiko</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Mississippi</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Melanie</td>
-                                <td tabindex="-1">Maiglöckchen</td>
-                                <td tabindex="-1">Möwe</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">New York</td>
-                                <td tabindex="-1">Nigeria</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Neckar</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Norbert</td>
-                                <td tabindex="-1">Nektarine</td>
-                                <td tabindex="-1">Nashorn</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Osaka</td>
-                                <td tabindex="-1">Österreich</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Orinoco</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Olga</td>
-                                <td tabindex="-1">Orchidee</td>
-                                <td tabindex="-1">Ochse</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Paris</td>
-                                <td tabindex="-1">Peru</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Po</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Peter</td>
-                                <td tabindex="-1">Pfingstrose</td>
-                                <td tabindex="-1">Pinguin</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Quickborn</td>
-                                <td tabindex="-1">Quatar</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Quilca</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Quentin</td>
-                                <td tabindex="-1">Quitte</td>
-                                <td tabindex="-1">Qualle</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Rom</td>
-                                <td tabindex="-1">Russland</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Rhein</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Renate</td>
-                                <td tabindex="-1">Rose</td>
-                                <td tabindex="-1">Rabe</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Stockholm</td>
-                                <td tabindex="-1">Schweden</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Sambesi</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Stefan</td>
-                                <td tabindex="-1">Sonnenblume</td>
-                                <td tabindex="-1">Schnecke</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Tokio</td>
-                                <td tabindex="-1">Türkei</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Tiber</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Tanja</td>
-                                <td tabindex="-1">Tulpe</td>
-                                <td tabindex="-1">Tiger</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Ulm</td>
-                                <td tabindex="-1">Ungarn</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Ural</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Ursula</td>
-                                <td tabindex="-1">Ulme</td>
-                                <td tabindex="-1">Uhu</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Venedig</td>
-                                <td tabindex="-1">Venezuela</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Volta</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Vera</td>
-                                <td tabindex="-1">Veilchen</td>
-                                <td tabindex="-1">Vogel</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Wien</td>
-                                <td tabindex="-1">Wales</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Weser</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Werner</td>
-                                <td tabindex="-1">Weide</td>
-                                <td tabindex="-1">Wal</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Xanten</td>
-                                <td tabindex="-1">XXizang</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Xingu</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Xaver</td>
-                                <td tabindex="-1">Xanthium</td>
-                                <td tabindex="-1">Xenopus</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Yokohama</td>
-                                <td tabindex="-1">Yemen</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Yukon</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Yvonne</td>
-                                <td tabindex="-1">Ysop</td>
-                                <td tabindex="-1">Yak</td>
-                            </tr>
-                            <tr>
-                                <td tabindex="-1">Zürich</td>
-                                <td tabindex="-1">Zypern</td>
-                                <td>
-                                    <a
-                                        tabindex="-1"
-                                        href="#"
-                                        >Zambezi</a
-                                    >
-                                </td>
-                                <td tabindex="-1">Zacharias</td>
-                                <td tabindex="-1">Zypresse</td>
-                                <td tabindex="-1">Zebra</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        Verstecke Land und Name
+                    </button>
+
+                    <div
+                        id="table-example"
+                        class="table-wrap"
+                    >
+                        <table
+                            id="ex3-grid"
+                            role="grid"
+                            aria-labelledby="grid3Label"
+                            aria-rowcount="16"
+                            aria-colcount="6"
+                            data-per-page="5"
+                            class="data"
+                        >
+                            <tbody>
+                                <tr data-fixed="true">
+                                    <th>Stadt</th>
+                                    <th>Land</th>
+                                    <th>Fluss</th>
+                                    <th>Name</th>
+                                    <th>Pflanze</th>
+                                    <th>Tier</th>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Amsterdam</td>
+                                    <td tabindex="-1">Afghanistan</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Amazonas</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Anna</td>
+                                    <td tabindex="-1">Apfelbaum</td>
+                                    <td tabindex="-1">Adler</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Berlin</td>
+                                    <td tabindex="-1">Belgien</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Brahmaputra</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Bernd</td>
+                                    <td tabindex="-1">Basilikum</td>
+                                    <td tabindex="-1">Biber</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Chicago</td>
+                                    <td tabindex="-1">China</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Colorado</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Christina</td>
+                                    <td tabindex="-1">Chrysantheme</td>
+                                    <td tabindex="-1">Chamäleon</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Dublin</td>
+                                    <td tabindex="-1">Deutschland</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Donau</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Dieter</td>
+                                    <td tabindex="-1">Dattel</td>
+                                    <td tabindex="-1">Delphin</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Erfurt</td>
+                                    <td tabindex="-1">Ecuador</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Elbe</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Eva</td>
+                                    <td tabindex="-1">Erdbeere</td>
+                                    <td tabindex="-1">Elefant</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Florenz</td>
+                                    <td tabindex="-1">Finnland</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Fulda</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Frank</td>
+                                    <td tabindex="-1">Flieder</td>
+                                    <td tabindex="-1">Forelle</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Glasgow</td>
+                                    <td tabindex="-1">Guatemala</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Garonne</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Gitta</td>
+                                    <td tabindex="-1">Grünkohl</td>
+                                    <td tabindex="-1">Gans</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Hamburg</td>
+                                    <td tabindex="-1">Haiti</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Havel</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Hans</td>
+                                    <td tabindex="-1">Heidelbeere</td>
+                                    <td tabindex="-1">Hamster</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Innsbruck</td>
+                                    <td tabindex="-1">Indien</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Isar</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Iris</td>
+                                    <td tabindex="-1">Iris</td>
+                                    <td tabindex="-1">Igel</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Johannesburg</td>
+                                    <td tabindex="-1">Japan</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Jangtsekiang</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Jens</td>
+                                    <td tabindex="-1">Johannisbeere</td>
+                                    <td tabindex="-1">Junikäfer</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Köln</td>
+                                    <td tabindex="-1">Kanada</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Kongo</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Kirsten</td>
+                                    <td tabindex="-1">Kaktus</td>
+                                    <td tabindex="-1">Kolibri</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">London</td>
+                                    <td tabindex="-1">Libyen</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Leine</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Leon</td>
+                                    <td tabindex="-1">Lilie</td>
+                                    <td tabindex="-1">Leopard</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Mailand</td>
+                                    <td tabindex="-1">Mexiko</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Mississippi</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Melanie</td>
+                                    <td tabindex="-1">Maiglöckchen</td>
+                                    <td tabindex="-1">Möwe</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">New York</td>
+                                    <td tabindex="-1">Nigeria</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Neckar</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Norbert</td>
+                                    <td tabindex="-1">Nektarine</td>
+                                    <td tabindex="-1">Nashorn</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Osaka</td>
+                                    <td tabindex="-1">Österreich</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Orinoco</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Olga</td>
+                                    <td tabindex="-1">Orchidee</td>
+                                    <td tabindex="-1">Ochse</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Paris</td>
+                                    <td tabindex="-1">Peru</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Po</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Peter</td>
+                                    <td tabindex="-1">Pfingstrose</td>
+                                    <td tabindex="-1">Pinguin</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Quickborn</td>
+                                    <td tabindex="-1">Quatar</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Quilca</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Quentin</td>
+                                    <td tabindex="-1">Quitte</td>
+                                    <td tabindex="-1">Qualle</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Rom</td>
+                                    <td tabindex="-1">Russland</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Rhein</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Renate</td>
+                                    <td tabindex="-1">Rose</td>
+                                    <td tabindex="-1">Rabe</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Stockholm</td>
+                                    <td tabindex="-1">Schweden</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Sambesi</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Stefan</td>
+                                    <td tabindex="-1">Sonnenblume</td>
+                                    <td tabindex="-1">Schnecke</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Tokio</td>
+                                    <td tabindex="-1">Türkei</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Tiber</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Tanja</td>
+                                    <td tabindex="-1">Tulpe</td>
+                                    <td tabindex="-1">Tiger</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Ulm</td>
+                                    <td tabindex="-1">Ungarn</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Ural</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Ursula</td>
+                                    <td tabindex="-1">Ulme</td>
+                                    <td tabindex="-1">Uhu</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Venedig</td>
+                                    <td tabindex="-1">Venezuela</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Volta</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Vera</td>
+                                    <td tabindex="-1">Veilchen</td>
+                                    <td tabindex="-1">Vogel</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Wien</td>
+                                    <td tabindex="-1">Wales</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Weser</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Werner</td>
+                                    <td tabindex="-1">Weide</td>
+                                    <td tabindex="-1">Wal</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Xanten</td>
+                                    <td tabindex="-1">XXizang</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Xingu</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Xaver</td>
+                                    <td tabindex="-1">Xanthium</td>
+                                    <td tabindex="-1">Xenopus</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Yokohama</td>
+                                    <td tabindex="-1">Yemen</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Yukon</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Yvonne</td>
+                                    <td tabindex="-1">Ysop</td>
+                                    <td tabindex="-1">Yak</td>
+                                </tr>
+                                <tr>
+                                    <td tabindex="-1">Zürich</td>
+                                    <td tabindex="-1">Zypern</td>
+                                    <td>
+                                        <a
+                                            tabindex="-1"
+                                            href="#"
+                                            >Zambezi</a
+                                        >
+                                    </td>
+                                    <td tabindex="-1">Zacharias</td>
+                                    <td tabindex="-1">Zypresse</td>
+                                    <td tabindex="-1">Zebra</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </samp>
+
                 <h4>Die Tastatursteuerung</h4>
                 <dl>
                     <dt><kbd>Right Arrow</kbd></dt>
                     <dd>
-                        Verschiebt den Fokus eine Zelle nach rechts. Wenn der
-                        Fokus auf der äußersten rechten Zelle in der Zeile
-                        liegt, verschiebt sich der Fokus nicht.
+                        <p>Verschiebt den Fokus eine Zelle nach rechts.</p>
+                        <p>Verschiebt den Fokus eine Zelle nach rechts.</p>
+                        <p>
+                            Wenn der Fokus auf der äußersten rechten Zelle in
+                            der Zeile liegt, verschiebt sich der Fokus nicht.
+                        </p>
+                        <p>Verschiebt den Fokus eine Zelle nach rechts.</p>
                     </dd>
 
                     <dt><kbd>Left Arrow</kbd></dt>
                     <dd>
-                        Verschiebt den Fokus eine Zelle nach links. Wenn der
-                        Fokus auf der äußersten linken Zelle in der Zeile liegt,
-                        verschiebt sich der Fokus nicht.
+                        <p>Verschiebt den Fokus eine Zelle nach links.</p>
+                        <p>
+                            Wenn der Fokus auf der äußersten linken Zelle in der
+                            Zeile liegt, verschiebt sich der Fokus nicht.
+                        </p>
                     </dd>
 
                     <dt><kbd>Down Arrow</kbd></dt>
                     <dd>
-                        Verschiebt den Fokus eine Zelle nach unten. Wenn der
-                        Fokus auf der untersten Zelle in der Spalte liegt, wird
-                        der Fokus nicht verschoben.
+                        <p>Verschiebt den Fokus eine Zelle nach unten.</p>
+                        <p>
+                            Wenn der Fokus auf der untersten Zelle in der Spalte
+                            liegt, wird der Fokus nicht verschoben.
+                        </p>
                     </dd>
 
                     <dt><kbd>Up Arrow</kbd></dt>
                     <dd>
-                        Verschiebt den Fokus eine Zelle nach oben. Wenn der
-                        Fokus auf der obersten Zelle in der Spalte liegt,
-                        verschiebt sich der Fokus nicht.
+                        <p>Verschiebt den Fokus eine Zelle nach oben.</p>
+                        <p>
+                            Wenn der Fokus auf der obersten Zelle in der Spalte
+                            liegt, verschiebt sich der Fokus nicht.
+                        </p>
                     </dd>
 
                     <dt><kbd>Page Down</kbd></dt>
                     <dd>
-                        In Beispiel 3 wird der Fokus fünf Zeilen nach unten
-                        verschoben, wobei ein Bildlauf durchgeführt wird, sodass
-                        die unterste Zeile im aktuell sichtbaren Zeilensatz zur
-                        ersten sichtbaren Zeile wird. Wenn der Fokus in der
-                        letzten Zeile liegt, verschiebt sich der Fokus nicht.
+                        <p>
+                            In Beispiel 3 wird der Fokus fünf Zeilen nach unten
+                            verschoben, wobei ein Bildlauf durchgeführt wird,
+                            sodass die unterste Zeile im aktuell sichtbaren
+                            Zeilensatz zur ersten sichtbaren Zeile wird.
+                        </p>
+                        <p>
+                            Wenn der Fokus in der letzten Zeile liegt,
+                            verschiebt sich der Fokus nicht.
+                        </p>
                     </dd>
 
                     <dt><kbd>Page Up</kbd></dt>
                     <dd>
-                        In Beispiel 3 wird der Fokus 5 Zeilen nach oben
-                        verschoben, wobei so gescrollt wird, dass die oberste
-                        Zeile im aktuell sichtbaren Zeilensatz die letzte
-                        sichtbare Zeile wird. Wenn der Fokus in der ersten Zeile
-                        des Rasters liegt, verschiebt sich der Fokus nicht.
+                        <p>
+                            In Beispiel 3 wird der Fokus 5 Zeilen nach oben
+                            verschoben, wobei so gescrollt wird, dass die
+                            oberste Zeile im aktuell sichtbaren Zeilensatz die
+                            letzte sichtbare Zeile wird.
+                        </p>
+                        <p>
+                            Wenn der Fokus in der ersten Zeile des Rasters
+                            liegt, verschiebt sich der Fokus nicht.
+                        </p>
                     </dd>
 
                     <dt><kbd>Home</kbd></dt>
                     <dd>
-                        <kbd>Home</kbd> verschiebt den Fokus auf die erste Zelle
-                        in der Zeile, die den Fokus enthält.
+                        <p>
+                            verschiebt den Fokus auf die erste Zelle in der
+                            Zeile, die den Fokus enthält.
+                        </p>
                     </dd>
 
                     <dt><kbd>End</kbd></dt>
                     <dd>
-                        verschiebt den Fokus auf die letzte Zelle in der Zeile,
-                        die den Fokus enthält.
+                        <p>
+                            verschiebt den Fokus auf die letzte Zelle in der
+                            Zeile, die den Fokus enthält.
+                        </p>
                     </dd>
 
                     <dt><kbd>Control + Home</kbd></dt>
                     <dd>
-                        verschiebt den Fokus auf die erste Zelle in der ersten
-                        Zeile.
+                        <p>
+                            verschiebt den Fokus auf die erste Zelle in der
+                            ersten Zeile.
+                        </p>
                     </dd>
 
                     <dt><kbd>Control + End</kbd></dt>
                     <dd>
-                        verschiebt den Fokus auf die letzte Zelle in der letzten
-                        Zeile.
+                        <p>
+                            verschiebt den Fokus auf die letzte Zelle in der
+                            letzten Zeile.
+                        </p>
+                        <p>
+                            verschiebt den Fokus auf die letzte Zelle in der
+                            letzten Zeile.
+                        </p>
+                    </dd>
+                </dl>
+            </article>
+
+            <!-- - - - - - - - - - --->
+            <article>
+                <h2>Menüleiste mit Untermenü</h2>
+                <samp>
+                    <div
+                        id="menubar"
+                        class="page"
+                    >
+                        <header role="banner">
+                            <div class="title">Mythical University</div>
+                            <div class="tagline">
+                                Using a Menubar for navigation links
+                            </div>
+                        </header>
+                        <nav aria-label="Mythical University">
+                            <ul
+                                class="menubar-navigation"
+                                role="menubar"
+                                aria-label="Mythical University"
+                            >
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        href="#home"
+                                    >
+                                        Home
+                                    </a>
+                                </li>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        href="#about"
+                                    >
+                                        About
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="down"
+                                            width="12"
+                                            height="9"
+                                            viewBox="0 0 12 9"
+                                        >
+                                            <polygon
+                                                points="1 0, 11 0, 6 8"
+                                            ></polygon>
+                                        </svg>
+                                    </a>
+                                    <ul
+                                        role="menu"
+                                        aria-label="About"
+                                    >
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#overview"
+                                                >Overview</a
+                                            >
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#administration"
+                                                >Administration</a
+                                            >
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                                href="#facts"
+                                            >
+                                                Facts
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    class="right"
+                                                    width="9"
+                                                    height="12"
+                                                    viewBox="0 0 9 12"
+                                                >
+                                                    <polygon
+                                                        points="0 1, 0 11, 8 6"
+                                                    ></polygon>
+                                                </svg>
+                                            </a>
+                                            <ul
+                                                role="menu"
+                                                aria-label="Facts"
+                                            >
+                                                <li role="none">
+                                                    <a
+                                                        role="menuitem"
+                                                        href="#history"
+                                                        >History</a
+                                                    >
+                                                </li>
+                                                <li role="none">
+                                                    <a
+                                                        role="menuitem"
+                                                        href="#current-statistics"
+                                                        >Current Statistics</a
+                                                    >
+                                                </li>
+                                                <li role="none">
+                                                    <a
+                                                        role="menuitem"
+                                                        href="#awards"
+                                                        >Awards</a
+                                                    >
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                                href="#campus-tours"
+                                            >
+                                                Campus Tours
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    class="right"
+                                                    width="9"
+                                                    height="12"
+                                                    viewBox="0 0 9 12"
+                                                >
+                                                    <polygon
+                                                        points="0 1, 0 11, 8 6"
+                                                    ></polygon>
+                                                </svg>
+                                            </a>
+                                            <ul
+                                                role="menu"
+                                                aria-label="Campus Tours"
+                                            >
+                                                <li role="none">
+                                                    <a
+                                                        role="menuitem"
+                                                        href="#for-prospective-students"
+                                                        >For prospective
+                                                        students</a
+                                                    >
+                                                </li>
+                                                <li role="none">
+                                                    <a
+                                                        role="menuitem"
+                                                        href="#for-alumni"
+                                                        >For alumni</a
+                                                    >
+                                                </li>
+                                                <li role="none">
+                                                    <a
+                                                        role="menuitem"
+                                                        href="#for-visitors"
+                                                        >For visitors</a
+                                                    >
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        href="#admissions"
+                                    >
+                                        Admissions
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="down"
+                                            width="12"
+                                            height="9"
+                                            viewBox="0 0 12 9"
+                                        >
+                                            <polygon
+                                                points="1 0, 11 0, 6 8"
+                                            ></polygon>
+                                        </svg>
+                                    </a>
+                                    <ul
+                                        role="menu"
+                                        aria-label="Admissions"
+                                    >
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#apply"
+                                                >Apply</a
+                                            >
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                                href="#tuition"
+                                            >
+                                                Tuition
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    class="right"
+                                                    width="9"
+                                                    height="12"
+                                                    viewBox="0 0 9 12"
+                                                >
+                                                    <polygon
+                                                        points="0 1, 0 11, 8 6"
+                                                    ></polygon>
+                                                </svg>
+                                            </a>
+                                            <ul
+                                                role="menu"
+                                                aria-label="Tuition"
+                                            >
+                                                <li role="none">
+                                                    <a
+                                                        role="menuitem"
+                                                        href="#undergraduate"
+                                                        >Undergraduate</a
+                                                    >
+                                                </li>
+                                                <li role="none">
+                                                    <a
+                                                        role="menuitem"
+                                                        href="#graduate"
+                                                        >Graduate</a
+                                                    >
+                                                </li>
+                                                <li role="none">
+                                                    <a
+                                                        role="menuitem"
+                                                        href="#professional-schools"
+                                                        >Professional Schools</a
+                                                    >
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#sign-up"
+                                                >Sign Up</a
+                                            >
+                                        </li>
+                                        <li role="separator"></li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#visit"
+                                                >Visit</a
+                                            >
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#photo-tour"
+                                                >Photo Tour</a
+                                            >
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#connect"
+                                                >Connect</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        href="#academics"
+                                    >
+                                        Academics
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="down"
+                                            width="12"
+                                            height="9"
+                                            viewBox="0 0 12 9"
+                                        >
+                                            <polygon
+                                                points="1 0, 11 0, 6 8"
+                                            ></polygon>
+                                        </svg>
+                                    </a>
+                                    <ul
+                                        role="menu"
+                                        id="sub-menu-academics"
+                                        aria-label="Academics"
+                                    >
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#colleges-and-schools"
+                                                >Colleges &amp; Schools</a
+                                            >
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#programs-of-study"
+                                                >Programs of Study</a
+                                            >
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#honors-programs"
+                                                >Honors Programs</a
+                                            >
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#online-courses"
+                                                >Online Courses</a
+                                            >
+                                        </li>
+                                        <li role="separator"></li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#course-explorer"
+                                                >Course Explorer</a
+                                            >
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#register-for-class"
+                                                >Register for Class</a
+                                            >
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#academic-calendar"
+                                                >Academic Calendar</a
+                                            >
+                                        </li>
+                                        <li role="none">
+                                            <a
+                                                role="menuitem"
+                                                href="#tanscripts"
+                                                >Transcripts</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        <div class="main">
+                            <section aria-labelledby="id-page-title">
+                                <h1
+                                    id="id-page-title"
+                                    class="page_title"
+                                >
+                                    Mythical University
+                                </h1>
+                                <div class="content">
+                                    <p></p>
+                                </div>
+                            </section>
+                        </div>
+
+                        <footer role="contentinfo">
+                            Mythical University footer information
+                        </footer>
+                    </div>
+                </samp>
+                <h4>Die Tastatursteuerung der Menüleiste</h4>
+
+                <dl>
+                    <dt>
+                        <kbd>Space</kbd>
+                        <kbd> Enter </kbd>
+                    </dt>
+                    <dd>
+                        <p>
+                            Wenn es sich bei dem Element um ein übergeordnetes
+                            Menüelement handelt, wird das Untermenü geöffnet und
+                            der Fokus auf das erste Element im Untermenü
+                            verschoben.
+                        </p>
+
+                        <p>
+                            Andernfalls wird das Menüelement aktiviert, das
+                            neuen Inhalt lädt und den Fokus auf die Überschrift
+                            setzt, die den Inhalt betitelt.
+                        </p>
+                    </dd>
+
+                    <dt><kbd> Right Arrow </kbd></dt>
+                    <dd>
+                        <p>
+                            Verschiebt den Fokus auf das nächste Element in der
+                            Menüleiste.
+                        </p>
+
+                        <p>
+                            Wenn der Fokus auf dem letzten Element liegt, wird
+                            der Fokus auf das erste Element verschoben.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>Left Arrow</kbd></dt>
+                    <dd>
+                        <p>
+                            Verschiebt den Fokus auf das vorherige Element in
+                            der Menüleiste.
+                        </p>
+
+                        <p>
+                            Wenn der Fokus auf dem ersten Element liegt, wird
+                            der Fokus auf das letzte Element verschoben.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>Down Arrow</kbd></dt>
+                    <dd>
+                        <p>
+                            Öffnet das Untermenü und verschiebt den Fokus auf
+                            das erste Element im Untermenü.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>Up Arrow</kbd></dt>
+                    <dd>
+                        <p>
+                            Öffnet das Untermenü und verschiebt den Fokus zum
+                            letzten Element im Untermenü.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>Home</kbd></dt>
+                    <dd>
+                        <p>
+                            Verschiebt den Fokus auf das erste Element in der
+                            Menüleiste.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>End</kbd></dt>
+                    <dd>
+                        <p>
+                            Verschiebt den Fokus auf das letzte Element in der
+                            Menüleiste.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>Character</kbd></dt>
+                    <dd>
+                        <p>
+                            Verschiebt den Fokus auf das nächste Element in der
+                            Menüleiste, dessen Name mit dem eingegebenen Zeichen
+                            beginnt.
+                        </p>
+
+                        <p>
+                            Wenn der Name keines der Elemente mit dem
+                            eingegebenen Zeichen beginnt, wird der Fokus nicht
+                            verschoben.
+                        </p>
+                    </dd>
+                </dl>
+
+                <h4>Die Tastatursteuerung der Untermenüs</h4>
+                <dl>
+                    <dt><kbd>Space</kbd> <kbd>Enter</kbd></dt>
+                    <dd>
+                        <p>
+                            Wenn es sich bei dem Element um ein übergeordnetes
+                            Menüelement handelt, wird das Untermenü geöffnet und
+                            der Fokus auf das erste Element im Untermenü
+                            verschoben.
+                        </p>
+                        <p>
+                            Andernfalls wird das Menüelement aktiviert, das
+                            neuen Inhalt lädt und den Fokus auf die Überschrift
+                            setzt, die den Inhalt betitelt.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>Escape</kbd></dt>
+                    <dd>
+                        <p>Schließt das Untermenü.</p>
+                        <p>
+                            Verschiebt den Fokus auf das übergeordnete
+                            Menüleistenelement.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>Right Arrow</kbd></dt>
+                    <dd>
+                        <p>
+                            Wenn der Fokus auf einem Element mit einem Untermenü
+                            liegt, wird das Untermenü geöffnet und der Fokus auf
+                            das erste Element gesetzt.
+                        </p>
+                        <p>
+                            Wenn der Fokus auf einem Element liegt, das kein
+                            Untermenü hat:
+                        </p>
+                        <ul>
+                            <li>Schließt das Untermenü.</li>
+                            <li>
+                                Verschiebt den Fokus zum nächsten Element in der
+                                Menüleiste.
+                            </li>
+                            <li>
+                                Öffnet das Untermenü des neu fokussierten
+                                Menüleistenelements und behält den Fokus auf dem
+                                übergeordneten Menüleistenelement.
+                            </li>
+                        </ul>
+                    </dd>
+
+                    <dt><kbd>Left Arrow</kbd></dt>
+                    <dd>
+                        <p>
+                            Schließt das Untermenü und verschiebt den Fokus zum
+                            übergeordneten Menüelement.
+                        </p>
+                        <p>
+                            Wenn sich das übergeordnete Menüelement in der
+                            Menüleiste befindet, gilt außerdem:
+                        </p>
+                        <ul>
+                            <li>
+                                verschiebt den Fokus zum vorherigen Element in
+                                der Menüleiste.
+                            </li>
+                            <li>
+                                Öffnet das Untermenü des neu fokussierten
+                                Menüleistenelements und behält den Fokus auf dem
+                                übergeordneten Menüleistenelement.
+                            </li>
+                        </ul>
+                    </dd>
+
+                    <dt><kbd>Down Arrow</kbd></dt>
+                    <dd>
+                        <p>
+                            Verschiebt den Fokus auf das nächste Element im
+                            Untermenü.
+                        </p>
+                        <p>
+                            Wenn der Fokus auf dem letzten Element liegt, wird
+                            der Fokus auf das erste Element verschoben.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>Up Arrow</kbd></dt>
+                    <dd>
+                        <p>
+                            Verschiebt den Fokus zum vorherigen Element im
+                            Untermenü.
+                        </p>
+                        <p>
+                            Wenn der Fokus auf dem ersten Element liegt, wird
+                            der Fokus auf das letzte Element verschoben.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>Home</kbd></dt>
+                    <dd>
+                        <p>
+                            Verschiebt den Fokus auf das erste Element im
+                            Untermenü.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>End</kbd></dt>
+                    <dd>
+                        <p>
+                            Verschiebt den Fokus auf das letzte Element im
+                            Untermenü.
+                        </p>
+                    </dd>
+
+                    <dt><kbd>Character</kbd></dt>
+                    <dd>
+                        <p>
+                            erschiebt den Fokus auf das nächste Element, dessen
+                            Name mit dem eingegebenen Zeichen beginnt.
+                        </p>
+                        <p>
+                            Wenn der Name keines der Elemente mit dem
+                            eingegebenen Zeichen beginnt, wird der Fokus nicht
+                            verschoben.
+                        </p>
                     </dd>
                 </dl>
             </article>
@@ -547,5 +1189,6 @@
         <script src="assets/js/scaffold.js"></script>
         <!-- <script src="assets/js/keyboard-controls.js"></script> -->
         <script src="assets/js/table-example.js"></script>
+        <script src="assets/js/menubar.js"></script>
     </body>
 </html>
