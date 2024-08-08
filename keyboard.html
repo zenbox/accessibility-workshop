@@ -15,51 +15,126 @@
     <body>
         <header>
             <h1 tabindex="0">Tastatur-Steuerung</h1>
+            <p>
+                Tastatursteuerungen sind gemäß den Web Content Accessibility
+                Guidelines (WCAG) insbesondere hilfreich für:
+            </p>
+
+            <ul>
+                <li>
+                    Menschen mit motorischen Beeinträchtigungen: Diese Nutzer
+                    haben möglicherweise Schwierigkeiten, eine Maus präzise zu
+                    bewegen, und sind daher auf die Tastatur angewiesen, um auf
+                    Webseiten zu navigieren.
+                </li>
+                <li>
+                    Sehbehinderte oder blinde Menschen: Diese Nutzer verwenden
+                    häufig Screenreader und andere assistive Technologien, die
+                    hauptsächlich über die Tastatur gesteuert werden. Eine
+                    vollständig per Tastatur steuerbare Webseite ermöglicht es
+                    ihnen, Inhalte zu erfassen und zu navigieren. Screenreader
+                    bringen selbst eine Tastatursteuerung mit, diese darf durch
+                    die Webseite nicht beeinträchtigt werden.
+                </li>
+                <li>
+                    Menschen ohne Zugang zu einer Maus: Dies schließt Nutzer
+                    ein, die temporär oder situativ keine Maus verwenden können,
+                    wie etwa bei bestimmten Geräten oder in bestimmten
+                    Umgebungen.
+                </li>
+            </ul>
         </header>
 
         <main>
             <article>
                 <h2>Breadcrumbs - Navigation</h2>
-                <p>Eine Breadcrumbs-Navigation, die aus Links aufgebaut ist, benötigt keine zusätzliche Tastaursteuerung. <kbd>Tab</kbd> und <kbd>Enter</kbd> sind browserseitig vorhanden.</p>
+                <p>
+                    Eine Breadcrumbs-Navigation, die aus Links aufgebaut ist,
+                    benötigt keine zusätzliche Tastatursteuerung.
+                    <kbd>Tab</kbd> und <kbd>Enter</kbd> sind browserseitig
+                    vorhanden.
+                </p>
                 <samp>
-                <nav
-                    id="breadcrumbs"
-                    tabindex="0"
-                    aria-label="Du bist jetzt in der Brotkrümel-Navigation."
-                    aria-labelledby="breadcrumbs-description"
-                >
-                    <p
-                        id="breadcrumbs-description"
-                        class="sr-only visually-hidden"
+                    <nav
+                        id="breadcrumbs"
+                        tabindex="0"
+                        aria-label="Du bist jetzt in der Brotkrümel-Navigation."
+                        aria-labelledby="breadcrumbs-description"
                     >
-                        Im Grunde ist das eine Brotkrümel-Navigation. Das
-                        bedeutet, dass du dich in einer Navigation befindest,
-                        die dir den Weg durch die Seite zeigt. Du kannst mit der
-                        Tab-Taste durch die Links navigieren und mit der
-                        Enter-Taste die Links öffnen.
-                    </p>
-                    <ul>
-                        <li><a href="">Link 1</a></li>
-                        <li>&nbsp;/ <a href="">Link 2</a></li>
-                        <li>&nbsp;/ <a href="">Link 3</a></li>
-                    </ul>
-                </nav>
+                        <p
+                            id="breadcrumbs-description"
+                            class="sr-only visually-hidden"
+                        >
+                            Im Grunde ist das eine Brotkrümel-Navigation. Das
+                            bedeutet, dass du dich in einer Navigation
+                            befindest, die dir den Weg durch die Seite zeigt. Du
+                            kannst mit der Tab-Taste durch die Links navigieren
+                            und mit der Enter-Taste die Links öffnen.
+                        </p>
+                        <ul>
+                            <li><a href="">Link 1</a></li>
+                            <li>&nbsp;/ <a href="">Link 2</a></li>
+                            <li>&nbsp;/ <a href="">Link 3</a></li>
+                        </ul>
+                    </nav>
                 </samp>
             </article>
 
             <!-- - - - - - - - - - - -->
-            <article aria-live="assertive">
+            <article>
                 <h2>Telefonnummer</h2>
-                <address>
-                    <p>
-                        <span class="icon icon-tel">Telefonnummer:</span>
-                        <a
-                            href="tel:+49 221123457890"
-                            aria-label="Telefonnummer des Kontakts: +49 221 12 34 57 89-0"
-                            >+49 221 12 34 57 89-0</a
-                        >
-                    </p>
-                </address>
+                <p>
+                    Telefonnummern können als Link mit hinterlegter Nummer
+                    gebaut werden. Eine zusätzliche Tastatursteuerung ist nicht
+                    notwendig. Ggf. ist ein erklärender Text hilfreich, der die
+                    Funktion "Anrufen" der <kbd>Enter</kbd>-Taste beschreibt.
+                </p>
+                <samp
+                    ><address>
+                        <p>
+                            <i>
+                                <svg
+                                    width="32"
+                                    viewBox="76.107 153.17 181.223 176.658"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M 130.618 227.42 C 129.448 231.034 128.816 234.89 128.816 238.893 C 128.816 259.452 145.482 276.118 166.041 276.118 C 186.6 276.118 203.266 259.452 203.266 238.893 C 203.266 234.89 202.634 231.034 201.464 227.42 L 208.763 227.42 C 211.468 232.914 216.261 237.194 222.107 239.225 L 222.107 290.695 L 109.709 290.695 L 109.709 239.225 C 115.555 237.194 120.348 232.914 123.053 227.42 Z"
+                                        style="
+                                            stroke: rgb(255, 255, 255);
+                                            stroke-width: 2px;
+                                        "
+                                    />
+                                    <path
+                                        d="M 78.582 207.671 C 78.582 194.729 89.074 184.237 102.016 184.237 C 108.688 184.237 114.709 187.026 118.977 191.501 L 212.839 191.501 C 217.107 187.026 223.128 184.237 229.8 184.237 C 242.742 184.237 253.234 194.729 253.234 207.671 C 253.234 213.194 251.323 218.27 248.127 222.276 L 211.473 222.276 C 208.907 219.06 207.169 215.154 206.584 210.88 L 125.232 210.88 C 124.647 215.154 122.91 219.06 120.343 222.276 L 83.689 222.276 C 80.493 218.27 78.582 213.194 78.582 207.671 Z"
+                                        style="
+                                            stroke: rgb(255, 255, 255);
+                                            stroke-width: 2px;
+                                        "
+                                    />
+                                    <ellipse
+                                        style="
+                                            stroke: rgb(255, 255, 255);
+                                            stroke-width: 2px;
+                                        "
+                                        cx="166.676"
+                                        cy="241.2"
+                                        rx="26.874"
+                                        ry="26.874"
+                                    />
+                                </svg>
+                                <span class="visually-hidden"
+                                    >Telefonnummer:</span
+                                ></i
+                            >
+                            <a
+                                href="tel:+49 221123457890"
+                                aria-label="Telefonnummer des Kontakpitoliskuj: +49 221 12 34 57 89-0^"
+                                >+49 221 12 34 57 89-0</a
+                            >
+                        </p>
+                    </address></samp
+                >
             </article>
             <!-- - - - - - - - - - --->
             <article>
@@ -85,7 +160,7 @@
                         id="toggle_column_btn"
                         name="toggle_columns"
                     >
-                        Verstecke Land und Name
+                        Blende Land und Name aus
                     </button>
 
                     <div
@@ -1186,6 +1261,183 @@
                         </p>
                     </dd>
                 </dl>
+            </article>
+
+            <article>
+                <h2>
+                    Tastatursteuerung für Tabellen der verschiedenen
+                    Screenreader
+                </h2>
+
+                <figure>
+                    <table>
+                        <caption>
+                            NVDA
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th><strong>Befehl</strong></th>
+                                <th><strong>Tasten-Kombination</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Tabelle auf der
+                                    Seite
+                                </td>
+                                <td>t / Shift + t</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Zelle in einer Zeile
+                                </td>
+                                <td>Ctrl + Alt + Pfeil nach rechts/links</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Zelle in einer
+                                    Spalte
+                                </td>
+                                <td>Ctrl + Alt + Pfeil nach unten/oben</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </figure>
+
+                <figure>
+                    <table>
+                        <caption>
+                            JAWS
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th><strong>Befehl</strong></th>
+                                <th><strong>Tasten-Kombination</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Tabelle auf der
+                                    Seite
+                                </td>
+                                <td>t / Shift + t</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Zelle in einer Zeile
+                                </td>
+                                <td>Ctrl + Alt + Pfeil nach rechts/links</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Zelle in einer
+                                    Spalte
+                                </td>
+                                <td>Ctrl + Alt + Pfeil nach unten/oben</td>
+                            </tr>
+                            <tr>
+                                <td>Alle Tabellen listen</td>
+                                <td>JAWS + Ctrl + T</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </figure>
+
+                <figure>
+                    <table>
+                        <caption>
+                            Narrator
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th><strong>Befehl</strong></th>
+                                <th><strong>Tasten-Kombination</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Tabelle auf der
+                                    Seite
+                                </td>
+                                <td>t / Shift + t (nur im Scan-Modus)</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Zelle in einer Zeile
+                                </td>
+                                <td>Ctrl + Alt + Pfeil nach rechts/links</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Zelle in einer
+                                    Spalte
+                                </td>
+                                <td>Ctrl + Alt + Pfeil nach unten/oben</td>
+                            </tr>
+                            <tr>
+                                <td>Alle Tabellen listen</td>
+                                <td>
+                                    Aufruf über <strong>Views</strong> (s. o.)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </figure>
+
+                <figure>
+                    <table>
+                        <caption>
+                            VoiceOver
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th><strong>Befehl</strong></th>
+                                <th><strong>Tasten-Kombination</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Tabelle auf der
+                                    Seite
+                                </td>
+                                <td>VO + Command + t</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Zelle in einer Zeile
+                                </td>
+                                <td>VO + Pfeil nach rechts/links</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Zur nächsten/vorherigen Zelle in einer
+                                    Spalte
+                                </td>
+                                <td>VO + Pfeil nach unten/oben</td>
+                            </tr>
+                            <tr>
+                                <td>Alle Tabellen auflisten</td>
+                                <td
+                                    style="
+                                        border-right-width: 0px;
+                                        padding: 10px;
+                                        vertical-align: top;
+                                    "
+                                >
+                                    VO + u (Aufruf Rotor-Inhalte) und Navigation
+                                    mit Pfeil nach rechts/links zu
+                                    <strong>Tabellen </strong>(dann Auswahl mit
+                                    Pfeiltasten nach oben/unten und Bestätigung
+                                    mit Enter)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </figure>
             </article>
         </main>
 

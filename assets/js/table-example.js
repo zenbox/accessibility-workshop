@@ -927,9 +927,9 @@ window.addEventListener("load", function () {
             ex3Grid.toggleColumn(4, toggledOn)
 
             if (toggledOn) {
-                toggleButton.innerText = "Hide Type and Category"
+                toggleButton.innerText = "Blende Land und Name aus"
             } else {
-                toggleButton.innerText = "Show Type and Category"
+                toggleButton.innerText = "Blende Land und Name ein"
             }
         })
     }
