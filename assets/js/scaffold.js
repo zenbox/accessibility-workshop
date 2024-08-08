@@ -9,6 +9,7 @@ function createNavigation() {
         { file: "index.html", text: "Semantik" },
         { file: "typography.html", text: "Typografie" },
         { file: "contrast.html", text: "Kontrast" },
+        { file: "color.html", text: "Farbe" },
         { file: "keyboard.html", text: "Tastatur" },
         // { file: "form.html", text: "Formular" },
         { file: "navigation.html", text: "Navigation" },
@@ -139,7 +140,7 @@ function createFooter() {
     a.textContent = "Impressum und Kontakt"
     nav.appendChild(a)
 
-    footer.id="footer"
+    footer.id = "footer"
     footer.appendChild(address)
     footer.appendChild(nav)
     document.body.appendChild(footer)
@@ -155,7 +156,6 @@ function createBrand() {
 
     document.querySelector("header").prepend(brand)
 }
-
 
 // - - - - - - - - - -
 // Aufruf
