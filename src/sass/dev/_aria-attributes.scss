@@ -1,7 +1,63 @@
 $aria-attribute-background-color: hsla(200, 100%, 25%, 0.85);
 $aria-attribute-color: hsla(200, 100%, 100%, 0.85);
+$semantic-element-background-color: hsla(39, 100%, 35%, 0.85);
+$semantic-element-color: hsla(39, 93%, 88%, 0.85);
 
 .developer {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    article,
+    figure,
+    samp {
+        outline: 3px dotted $semantic-element-background-color;
+        outline-offset: 1px;
+        &::before {
+            z-index: 10;
+            margin-top: -0.2rem;
+            margin-right: -0.5rem;
+            display: block;
+            position: absolute;
+            right: 1rem;
+            padding: 0.2rem;
+            font-size: 0.8rem;
+            color: $semantic-element-color;
+            background: $semantic-element-background-color;
+        }
+    }
+    h1::before {
+        content: "H1";
+    }
+    h2::before {
+        content: "H2";
+    }
+    h3::before {
+        content: "H3";
+    }
+    h4::before {
+        content: "H4";
+    }
+    h5::before {
+        content: "H5";
+    }
+    h6::before {
+        content: "H6";
+    }
+    article::before {
+        content: "ARTICLE";
+    }
+
+    figure::before {
+        content: "FIGURE";
+    }
+
+samp::before {
+        content: "SAMPLE";
+    }
+
     [aria-activedescendant],
     [aria-atomic],
     [aria-autocomplete],

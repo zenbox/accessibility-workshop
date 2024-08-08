@@ -5860,7 +5860,7 @@ h2 {
   background-repeat: no-repeat;
   background-position: center;
   border: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%235f6368'%3E%3Cpath d='M160-120q-33 0-56.5-23.5T80-200v-560q0-33 23.5-56.5T160-840h560q33 0 56.5 23.5T800-760v80h80v80h-80v80h80v80h-80v80h80v80h-80v80q0 33-23.5 56.5T720-120H160Zm0-80h560v-560H160v560Zm80-80h200v-160H240v160Zm240-280h160v-120H480v120Zm-240 80h200v-200H240v200Zm240 200h160v-240H480v240ZM160-760v560-560Z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%235f6368'%3E%3Cpath d='M320-240 80-480l240-240 57 57-184 184 183 183-56 56Zm320 0-57-57 184-184-183-183 56-56 240 240-240 240Z'/%3E%3C/svg%3E");
 }
 
 .btn-developer.off {
@@ -5870,10 +5870,10 @@ h2 {
   background-repeat: no-repeat;
   background-position: center;
   border: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%235f6368'%3E%3Cpath d='M819-28 27-820l57-57L876-85l-57 57ZM233-840h487q33 0 56.5 23.5T800-760v80h80v80h-80v80h80v80h-80v80h80v80h-87l-73-73v-407H313l-80-80Zm207 207-47-47h47v47Zm73 73-33-33v-87h160v120H513Zm127 126-86-86h86v86Zm-233-6Zm110-118ZM240-280v-160h200v160H240ZM128-833l73 73h-41v560h560v-41l80 80q-14 20-35 30.5T720-120H160q-33 0-56.5-23.5T80-200v-560q0-25 13.5-44.5T128-833Zm352 352 160 160v41H480v-201ZM281-680l159 159v41H240v-200h41Z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%235f6368'%3E%3Cpath d='M791-55 280-566l-87 87 183 183-56 56L80-480l143-143L55-791l57-57 736 736-57 57Zm-54-282-57-57 87-87-183-183 56-56 240 240-143 143Z'/%3E%3C/svg%3E");
 }
 
-.btn-dark-mode.off {
+.btn-dark-mode.on {
   width: 1rem;
   height: 1rem;
   background-size: contain;
@@ -5883,7 +5883,7 @@ h2 {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%235f6368'%3E%3Cpath d='M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z'/%3E%3C/svg%3E");
 }
 
-.btn-dark-mode.on {
+.btn-dark-mode.off {
   width: 1rem;
   height: 1rem;
   background-size: contain;
@@ -5901,6 +5901,65 @@ h2 {
   border: 1px dotted tomato;
 }
 
+.developer h1,
+.developer h2,
+.developer h3,
+.developer h4,
+.developer h5,
+.developer h6,
+.developer article,
+.developer figure,
+.developer samp {
+  outline: 3px dotted hsla(39, 100%, 35%, 0.85);
+  outline-offset: 1px;
+}
+.developer h1::before,
+.developer h2::before,
+.developer h3::before,
+.developer h4::before,
+.developer h5::before,
+.developer h6::before,
+.developer article::before,
+.developer figure::before,
+.developer samp::before {
+  z-index: 10;
+  margin-top: -0.2rem;
+  margin-right: -0.5rem;
+  display: block;
+  position: absolute;
+  right: 1rem;
+  padding: 0.2rem;
+  font-size: 0.8rem;
+  color: hsla(39, 93%, 88%, 0.85);
+  background: hsla(39, 100%, 35%, 0.85);
+}
+.developer h1::before {
+  content: "H1";
+}
+.developer h2::before {
+  content: "H2";
+}
+.developer h3::before {
+  content: "H3";
+}
+.developer h4::before {
+  content: "H4";
+}
+.developer h5::before {
+  content: "H5";
+}
+.developer h6::before {
+  content: "H6";
+}
+.developer article::before {
+  content: "ARTICLE";
+}
+.developer figure::before {
+  content: "FIGURE";
+}
+.developer samp::before {
+  content: "SAMPLE";
+}
 .developer [aria-activedescendant],
 .developer [aria-atomic],
 .developer [aria-autocomplete],
