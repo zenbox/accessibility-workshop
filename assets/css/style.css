@@ -5732,9 +5732,27 @@ html {
   background-color: var(--bright);
   color: var(--dark);
 }
+html a:link {
+  color: var(--link-color);
+}
+html a:visited {
+  color: var(--link-visited);
+}
+html a:hover {
+  color: var(--link-hover);
+}
+html a:active {
+  color: var(--link-active);
+}
 html.dark {
   background-color: var(--dark);
   color: var(--on-dark);
+}
+html.dark samp {
+  filter: invert(1);
+}
+html.dark samp > * {
+  filter: invert(1);
 }
 html.dark a:link {
   color: var(--link-color);
@@ -5849,6 +5867,11 @@ body > footer a:active {
 }
 body > footer > address {
   white-space: nowrap;
+}
+body > footer > nav {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
 
 main {

@@ -6,13 +6,13 @@ function createNavigation() {
     const ol = document.createElement("ol")
 
     const navigation = [
-        { file: "index.html", text: "Semantik" },
+        { file: "semantic.html", text: "Semantik" },
         { file: "typography.html", text: "Typografie" },
         { file: "contrast.html", text: "Kontrast" },
         { file: "color.html", text: "Farbe" },
         { file: "keyboard.html", text: "Tastatur" },
         // { file: "form.html", text: "Formular" },
-        { file: "navigation.html", text: "Navigation" },
+        // { file: "navigation.html", text: "Navigation" },
         { file: "non-text-content.html", text: "Bild und Grafik" },
         { file: "user-settings.html", text: "Benutzereinstellungen" },
         // { file: "pattern.html", text: "Pattern" },
@@ -178,7 +178,8 @@ function createFooter() {
     const address = document.createElement("address")
     const time = document.createElement("time")
     const nav = document.createElement("nav")
-    const a = document.createElement("a")
+    const a1 = document.createElement("a")
+    const a2 = document.createElement("a")
 
     time.dateTime = new Date().getFullYear()
     time.textContent = `2003 - ${time.dateTime}`
@@ -186,9 +187,13 @@ function createFooter() {
     address.appendChild(time)
     address.append(" Michael Reichart")
 
-    a.href = "imprint.html"
-    a.textContent = "Impressum und Kontakt"
-    nav.appendChild(a)
+    a1.href = "index.html"
+    a1.textContent = "Startseite    "
+    nav.appendChild(a1)
+
+    a2.href = "imprint.html"
+    a2.textContent = "Impressum    "
+    nav.appendChild(a2)
 
     footer.id = "footer"
     footer.appendChild(address)

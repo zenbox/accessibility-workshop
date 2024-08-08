@@ -39,6 +39,11 @@ body {
         > address {
             white-space: nowrap;
         }
+        > nav {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+        }
     }
 }
 

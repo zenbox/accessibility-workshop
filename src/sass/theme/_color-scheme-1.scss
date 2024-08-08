@@ -2,9 +2,29 @@ html {
     background-color: var(--bright);
     color: var(--dark);
 
+    a:link {
+        color: var(--link-color);
+    }
+    a:visited {
+        color: var(--link-visited);
+    }
+    a:hover {
+        color: var(--link-hover);
+    }
+    a:active {
+        color: var(--link-active);
+    }
+
     &.dark {
         background-color: var(--dark);
         color: var(--on-dark);
+
+        samp {
+                 filter: invert(1);
+            > * {
+                filter: invert(1);
+            }
+        }
 
         a:link {
             color: var(--link-color);
