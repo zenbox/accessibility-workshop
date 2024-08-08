@@ -85,15 +85,19 @@ function createSkipLinks() {
 
 function createDeveloperButton() {
     const developerButton = document.createElement("button")
+    developerButton.classList.add("btn-developer")
+    developerButton.title = "Entwicklermodus anschalten"
     let developerButtonState
 
     if (localStorage.getItem("developer") === "on") {
         developerButtonState = true
         document.body.classList.add("developer")
         developerButton.classList.add("on")
+            developerButton.title = "Entwicklermodus ausschalten"
     } else {
         developerButtonState = false
         developerButton.classList.add("off")
+        developerButton.title = "Entwicklermodus anschalten"
     }
 
     developerButton.tabIndex = -1
@@ -105,11 +109,13 @@ function createDeveloperButton() {
             developerButton.classList.remove("off")
             developerButton.classList.add("on")
             localStorage.setItem("developer", "on")
+                 developerButton.title = "Entwicklermodus ausschalten"
         } else {
             document.body.classList.remove("developer")
             developerButton.classList.remove("on")
             developerButton.classList.add("off")
             localStorage.setItem("developer", "off")
+            developerButton.title = "Entwicklermodus anschalten"
         }
     })
     document
@@ -118,6 +124,50 @@ function createDeveloperButton() {
     document
         .querySelector("#main-navigation ol li:first-child")
         .prepend(developerButton)
+}
+
+function createDarkModeButton() {
+
+    const darkModeButton = document.createElement("button")
+    darkModeButton.title = "Dark Mode anschalten"
+    darkModeButton.classList.add("btn-dark-mode")
+    let darkModeButtonState
+
+    const html = document.querySelector("html")
+
+    if (localStorage.getItem("darkMode") === "on") {
+        darkModeButtonState = true
+        html.classList.add("dark")
+        darkModeButton.classList.add("on")
+darkModeButton.title = "Dark Mode ausschalten"
+    }
+    else {
+        darkModeButtonState = false
+        darkModeButton.classList.add("off")
+        darkModeButton.title = "Dark Mode anschalten"
+    }
+
+    darkModeButton.tabIndex = -1
+
+    darkModeButton.addEventListener("click", () => {
+        darkModeButtonState = !darkModeButtonState
+        if (darkModeButtonState) {
+            html.classList.add("dark")
+            darkModeButton.classList.remove("off")
+            darkModeButton.classList.add("on")
+            localStorage.setItem("darkMode", "on")
+            darkModeButton.title = "Dark Mode ausschalten"
+        } else {
+            html.classList.remove("dark")
+            darkModeButton.classList.remove("on")
+            darkModeButton.classList.add("off")
+            localStorage.setItem("darkMode", "off")
+            darkModeButton.title = "Dark Mode anschalten"
+        }
+    }
+    )
+    document.querySelector("#main-navigation ol").prepend(document.createElement("li"))
+    document.querySelector("#main-navigation ol li:first-child").prepend(darkModeButton)
 }
 
 // - - - - - - - - - - -
@@ -157,12 +207,12 @@ function createBrand() {
     document.querySelector("header").prepend(brand)
 }
 
-// - - - - - - - - - -
-// Aufruf
+// AUFRUF
 // - - - - - - - - - -
 document.addEventListener("DOMContentLoaded", () => {
     createNavigation()
     createDeveloperButton()
+    createDarkModeButton()
     createBrand()
     createFooter()
     createSkipLinks()

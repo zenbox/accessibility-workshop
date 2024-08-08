@@ -243,7 +243,6 @@ td {
 // - - - - - - - - - -
 // PREFERS QUERIES
 // - - - - - - - - - -
-
 .prefers-reduced-motion {
     @media (prefers-reduced-motion: no-preference) {
         display: block;
@@ -306,7 +305,6 @@ td {
         display: block;
     }
 }
-
 .inverted-color {
     @media (inverted-color: none) {
         display: block;
