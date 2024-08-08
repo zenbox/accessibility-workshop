@@ -515,6 +515,7 @@ html,
   font-family: "Barlow", sans-serif;
   font-size: 22px;
   line-height: 1.414;
+  font-weight: 400;
   text-align: left;
 }
 
@@ -612,8 +613,12 @@ big {
   --on-info: hsla(210, 100%, 15%, 1);
   --success: hsla(110, 100%, 50%, 1);
   --on-success: hsla(110, 100%, 15%, 1);
+  --sample: rgb(232, 232, 232);
+  --on-sample: hsla(0, 0%, 15%, 1);
   --bright: hsla(0, 0%, 100%, 1);
   --on-bright: hsla(0, 0%, 15%, 1);
+  --medium: rgb(175, 175, 175);
+  --on-medium: hsla(0, 0%, 15%, 1);
   --dark: hsla(0, 0%, 0%, 1);
   --on-dark: hsla(0, 0%, 85%, 1);
   --accred: hsl(360, 84%, 64%);
@@ -3835,14 +3840,14 @@ nav.breadcrumb [aria-current=page] {
   background: transparent;
 }
 
-.color-and-contrast-container {
+.contrast-container {
   --lightgreen: #a5c35a;
   --darkgreen: #255234;
   --yellow: #fdbd00;
   --blue: #1190eb;
 }
 
-.color-and-contrast-container {
+.contrast-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin: 0;
@@ -3865,14 +3870,14 @@ nav.breadcrumb [aria-current=page] {
 .box h2 {
   margin: 0;
   padding: 0;
-  font-size: 2rem;
+  font-size: 2em;
   line-height: 1;
 }
 
 .box p {
   margin: 0;
   padding: 0;
-  font-size: 1.5rem;
+  font-size: 1.5em;
   line-height: 1;
 }
 
@@ -5676,12 +5681,49 @@ body {
   margin: 0 auto;
   max-width: 40rem;
 }
+body > header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+body > footer {
+  transition: opacity 0.5s;
+  position: fixed;
+  bottom: 0;
+  opacity: 0;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 0.5rem;
+  background-color: var(--accred);
+  color: var(--on-accred);
+  font-size: 0.8em;
+}
+body > footer:active, body > footer:hover {
+  opacity: 1;
+}
+body > footer a:link,
+body > footer a:visited,
+body > footer a:hover,
+body > footer a:active {
+  color: var(--on-accred);
+}
+body > footer > address {
+  white-space: nowrap;
+}
+
+main {
+  width: 100%;
+}
 
 samp:has(pre) {
   display: block;
   padding: var(--default);
-  background-color: var(--dark) !important;
-  color: var(--on-dark);
+  background-color: var(--sample);
+  color: var(--on-sample);
 }
 
 article {
@@ -5700,11 +5742,19 @@ a::before {
 .figcaption {
   color: black;
   background: none;
-  font-size: 0.8rem !important;
+  font-size: 0.8em !important;
   text-align: left;
-  transform: translateX(-1rem) translateY(2rem);
+  transform: translateX(-1em) translateY(1em);
   text-shadow: none;
   -webkit-text-stroke: 0;
+  font-weight: 400;
+}
+
+h1 {
+  font-weight: 300;
+}
+
+h2 {
   font-weight: 400;
 }
 

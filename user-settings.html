@@ -19,12 +19,30 @@
                 Der Benutzer kann, zum Beipiel über die Bedienungshilfen seines
                 Betriebssystems verschiedene Einstellungen vorgegeben haben. Die
                 Webseite sollte darauf reagieren oder sie mindestens nicht
-                blockieren.
+                blockieren. Die Einstellungen können über
+                <code>mediaqueries</code> angesprochen werden.
+            </p>
+
+            <ul>
+                <li>prefers-reduced-motion</li>
+                <li>prefers-contrast</li>
+                <li>prefers-color-scheme</li>
+                <li>forced-colors</li>
+                <li>prefers-reduced-data</li>
+                <li>prefers-reduced-transparency</li>
+                <li>inverted-colors</li>
+            </ul>
+
+            <p>
+                Unter Windows und MacOS können die Anzeigeeinstellungen über die
+                Bedieungshilfen eingstellt werden, es gibt allerdngs
+                Unterschiede zwischen den Betriebsysteme. Viele Einstellungen
+                wie zum Beispiel <code>forced-color</code> können in Chrome und
+                Edge über <kbd>Entwicklertools</kbd> -
+                <kbd>Weitere Tools</kbd> - <kbd>Rendering</kbd> emuliert werden.
             </p>
 
             <p>
-                Viele Einstellungen aus dem Betriebssystem können über
-                <code>@media</code>-Queries abgefragt werden.
                 <a href="https://drafts.csswg.org/mediaqueries-5/"
                     >Zum aktuellen Entwurf 5 der Mediaqueries</a
                 >.
@@ -32,15 +50,122 @@
         </header>
 
         <article>
-            <h2>CSS Einstellungen</h2>
             <h2 class="prefers-reduced-motion">prefers-reduced-motion</h2>
+            <p>
+                Das Merkmal <code>prefers-reduced-motion</code> (bevorzugt
+                weniger Bewegung) erkennt, ob der Nutzer eine Seite mit allen
+                Animationen und Bewegungen sehen oder eine ruhigere Darstellung
+                wünscht. Das kann zum Beispiel bei Menschen mit Vestibulärer
+                Migräne oder Epilepsie der Fall sein.
+            </p>
+
+            <p>
+                Der Benutzer kann diese Präferenz über eine Einstellung im
+                Betriebssystem oder im User-Agent angeben.
+            </p>
+
+            <ul>
+                <li>
+                    unter Windows 10: <kbd>Einstellungen</kbd> →
+                    <kbd>Erleichterte Bedienung</kbd> → <kbd>Anzeige</kbd> →
+                    <kbd>Animationen in Windows anzeigen</kbd>
+                </li>
+                <li>
+                    in Android: <kbd>Einstellungen</kbd> →
+                    <kbd>Bedienungshilfen</kbd> →
+                    <kbd>Animationen entfernen</kbd>
+                </li>
+                <li>
+                    Apple iPad: <kbd>Einstellungen</kbd> →
+                    <kbd>Bedienungshilfen</kbd> →
+                    <kbd>Bewegung</kbd>
+                </li>
+                <li>
+                    Apple: <kbd>Systemeinstellungen</kbd> →
+                    <kbd>Bedienungshilfen</kbd> → <kbd>Anzeige</kbd> →
+                    <kbd>Bewegung reduzieren</kbd>
+                </li>
+                <li>
+                    In Firefox <kbd>about:config:</kbd> Füge eine
+                    Binär-Präferenz ("Number") namens
+                    <code>ui.prefersReducedMotion</code> hinzu und setze deren
+                    Wert auf 1. Änderung an dieser Präferenz werden sofort
+                    übernommen. Als abgefragten Wert kannst du eines der
+                    Schlüsselwörter <code>reduce</code> oder
+                    <code>no-preference</code> verwenden.
+                </li>
+            </ul>
+
+            <samp>
+                <pre><code>@media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            scroll-behavior: auto !important;
+            animation-duration: .01s !important;
+            transition-duration: .01s !important;
+        }
+    }</code></pre>
+            </samp>
+
+            <p>
+                Dieses Beispiel von der Webseite heise.de setzt das
+                <code>scroll-behavior</code> auf <code>auto</code>, damit ein
+                Scrollen unterbunden wird. Animationen und Transitionen erhalten
+                eine Dauer von 0.01s - sie werden dadurch nicht mehr sichtbar,
+                sind aber noch vorhanden für den Fall dass ein JavaScript auf
+                dieses Event zurückgreift.
+            </p>
         </article>
+
         <article>
             <h2 class="prefers-contrast">prefers-contrast</h2>
+            <p>
+                Das Medienmerkmal prefers-contrast wird verwendet, um zu
+                erkennen, ob der Benutzer angefordert hat, dass der Webinhalt
+                mit einem höheren (oder niedrigeren) Kontrast dargestellt wird.
+                Das kann zum Beispiel bei Menschen mit Sehschwäche oder
+                Farbenblindheit der Fall sein.
+            </p>
+
+            <p>Die abfragbaren Wert sind:</p>
+
+            <ul>
+                <li>no-preference - keine Voreinstellung</li>
+                <li>less - der Benutzer wünscht geringeren Kontrast</li>
+                <li>more - der Benutzer wünscht stärkeren Kontrast</li>
+                <li>
+                    custom - der Benutzer hat ein bestimmtes Farbschema
+                    ausgewählt, das sich aber nicht als geringerer oder
+                    stärkerer Kontrast ausdrücken lässt.
+                </li>
+            </ul>
+
+            <samp>
+                <code>
+                    <pre>
+@media (prefers-contrast: no-preference) {
+          html {
+            background-color: #eee;
+          	color: #333;
+          }
+        }
+        
+        @media (prefers-contrast: more) {
+          html {
+            background-color: white;
+          	color: #000;
+          }
+        }</pre
+                    >
+                </code>
+            </samp>
         </article>
+
         <article>
             <h2 class="prefers-color-scheme">prefers-color-scheme</h2>
         </article>
+
         <article>
             <h2 class="forced-color">forced-color</h2>
             <p>
@@ -88,9 +213,13 @@
                 <li>color-scheme: 'light dark'</li>
                 <li>scrollbar-color: 'auto'</li>
             </ul>
-            <p>Unter Windows kann <code>forced-color</code> über die Display-einstellungen aktiviert werden (Auf MacOS hab ich nichts gefunden). <code>forced-color</code> kann in Chrome und Edge über <kbd>Entwicklertools</kbd> - <kbd>Weitere Tools</kbd> - <kbd>Rendering</kbd> aufgerufen und eingestellt werden.</p>
 
-            <p><a href="https://polypane.app/blog/forced-colors-explained-a-practical-guide/">Forced colors explained: A practical guide</a></p>
+            <p>
+                <a
+                    href="https://polypane.app/blog/forced-colors-explained-a-practical-guide/"
+                    >Forced colors explained: A practical guide</a
+                >
+            </p>
         </article>
         <article>
             <h2 class="prefers-reduced-data">prefers-reduced-data</h2>
@@ -217,6 +346,6 @@
         </div>
 
         <!-- <script src="assets/js/parallax.js"></script> -->
-        <script src="assets/js/navigation.js"></script>
+        <script src="assets/js/scaffold.js"></script>
     </body>
 </html>

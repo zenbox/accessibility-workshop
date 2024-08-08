@@ -9,12 +9,12 @@ function createNavigation() {
         { file: "index.html", text: "Semantik" },
         { file: "typography.html", text: "Typografie" },
         { file: "contrast.html", text: "Kontrast" },
-        { file: "keyboard-controls.html", text: "Tastatur-Steuerung" },
+        { file: "keyboard.html", text: "Tastatur" },
         // { file: "form.html", text: "Formular" },
         { file: "navigation.html", text: "Navigation" },
         { file: "non-text-content.html", text: "Bild und Grafik" },
         { file: "user-settings.html", text: "Benutzereinstellungen" },
-        { file: "pattern.html", text: "Pattern" },
+        // { file: "pattern.html", text: "Pattern" },
     ]
 
     nav.id = "main-navigation"
@@ -111,16 +111,61 @@ function createDeveloperButton() {
             localStorage.setItem("developer", "off")
         }
     })
-    document.querySelector("#main-navigation ol").prepend(document.createElement("li"))
-    document.querySelector("#main-navigation ol li:first-child").prepend(developerButton)
+    document
+        .querySelector("#main-navigation ol")
+        .prepend(document.createElement("li"))
+    document
+        .querySelector("#main-navigation ol li:first-child")
+        .prepend(developerButton)
 }
+
+// - - - - - - - - - - -
+// FOOTER
+// - - - - - - - - - - -
+function createFooter() {
+    const footer = document.createElement("footer")
+    const address = document.createElement("address")
+    const time = document.createElement("time")
+    const nav = document.createElement("nav")
+    const a = document.createElement("a")
+
+    time.dateTime = new Date().getFullYear()
+    time.textContent = `2003 - ${time.dateTime}`
+    address.innerHTML = " "
+    address.appendChild(time)
+    address.append(" Michael Reichart")
+
+    a.href = "imprint.html"
+    a.textContent = "Impressum und Kontakt"
+    nav.appendChild(a)
+
+    footer.id="footer"
+    footer.appendChild(address)
+    footer.appendChild(nav)
+    document.body.appendChild(footer)
+}
+
+// - - - - - - - - - -
+// BRAND IN HEADER
+// - - - - - - - - - -
+function createBrand() {
+    const brand = document.createElement("p")
+    brand.classList.add("brand")
+    brand.textContent = "accessibility workshop"
+
+    document.querySelector("header").prepend(brand)
+}
+
+
 // - - - - - - - - - -
 // Aufruf
 // - - - - - - - - - -
 document.addEventListener("DOMContentLoaded", () => {
     createNavigation()
-    createSkipLinks()
     createDeveloperButton()
+    createBrand()
+    createFooter()
+    createSkipLinks()
 
     document.querySelector("html").setAttribute("lang", "de")
 })

@@ -1,12 +1,57 @@
 body {
     margin: 0 auto;
     max-width: 40rem;
+
+    > header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    > footer {
+        transition: opacity 0.5s;
+        &:active,
+        &:hover {
+            opacity: 1;
+        }
+        position: fixed;
+        bottom: 0;
+        opacity: 0;
+
+        width: 100vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding: 0.5rem;
+        background-color: var(--accred);
+        color: var(--on-accred);
+        font-size: 0.8em;
+
+        a:link,
+        a:visited,
+        a:hover,
+        a:active {
+            color: var(--on-accred);
+        }
+
+        > address {
+            white-space: nowrap;
+        }
+    }
+
 }
+
+main {
+    width: 100%;
+}
+
 samp:has(pre) {
     display: block;
     padding: var(--default);
-    background-color: var(--dark) !important;
-    color: var(--on-dark);
+    background-color: var(--sample);
+    color: var(--on-sample);
 }
 
 article {
@@ -26,10 +71,17 @@ a::before {
 .figcaption {
     color: black;
     background: none;
-    font-size: 0.8rem !important;
+    font-size: 0.8em !important;
     text-align: left;
-    transform: translateX(-1rem) translateY(2rem);
+    transform: translateX(-1em) translateY(1em);
     text-shadow: none;
     -webkit-text-stroke: 0;
+    font-weight: 400;
+}
+
+h1 {
+    font-weight: 300;
+}
+h2 {
     font-weight: 400;
 }

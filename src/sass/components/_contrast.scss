@@ -1,11 +1,11 @@
-.color-and-contrast-container {
+.contrast-container {
     --lightgreen: #a5c35a;
     --darkgreen: #255234;
     --yellow: #fdbd00;
     --blue: #1190eb;
 }
 
-.color-and-contrast-container {
+.contrast-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin: 0;
@@ -27,13 +27,13 @@
 .box h2 {
     margin: 0;
     padding: 0;
-    font-size: 2rem;
+    font-size: 2em;
     line-height: 1;
 }
 .box p {
     margin: 0;
     padding: 0;
-    font-size: 1.5rem;
+    font-size: 1.5em;
     line-height: 1;
 }
 .green-1 {

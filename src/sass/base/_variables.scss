@@ -18,9 +18,13 @@
     --on-info: hsla(210, 100%, 15%, 1);
     --success: hsla(110, 100%, 50%, 1);
     --on-success: hsla(110, 100%, 15%, 1);
+    --sample: rgb(232, 232, 232);
+    --on-sample: hsla(0, 0%, 15%, 1);
 
     --bright: hsla(0, 0%, 100%, 1);
     --on-bright: hsla(0, 0%, 15%, 1);
+    --medium: rgb(175, 175, 175);
+    --on-medium: hsla(0, 0%, 15%, 1);
     --dark: hsla(0, 0%, 0%, 1);
     --on-dark: hsla(0, 0%, 85%, 1);
 
@@ -32,7 +36,7 @@
 }
 
 // schreibe eine Map mit Klassen für alle Farben
-$colors : (
+$colors: (
     primary: var(--primary),
     on-primary: var(--on-primary),
     secondary: var(--secondary),
@@ -56,7 +60,7 @@ $colors : (
     accred: var(--accred),
     on-accred: var(--on-accred),
     shadow: var(--shadow),
-    disabled: var(--disabled)
+    disabled: var(--disabled),
 );
 
 @each $key, $value in $colors {
@@ -68,6 +72,8 @@ $colors : (
     }
 }
 
-:root{    --default: 1rem;
+:root {
+    --default: 1rem;
     --big: 2rem;
-    --small: 0.75rem;}
+    --small: 0.75rem;
+}

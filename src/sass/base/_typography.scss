@@ -165,6 +165,7 @@ $font-family-monospace: "Noto Sans Mono", monospace;
 $font-family-dyslexic: "Atkinson Hyperlegible", sans-serif;
 $font-size: toPx($s); // The base size from the harmonic-rythmn, i.e. 22
 $line-height: $augmented-fourth;
+$font-weight: 400;
 
 .brand {
     font-family: $font-family-dyslexic;
@@ -183,6 +184,7 @@ html,
     font-size: $font-size; // Basis für 1rem
     // font-size: clamp(16px, 3vw, 24px); // for a fluid font size
     line-height: $line-height;
+    font-weight: $font-weight;
     text-align: left;
 }
 
