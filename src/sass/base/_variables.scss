@@ -35,6 +35,11 @@
     --on-accred: var(--bright);
 
     --shadow: hsla(0, 0%, 0%, 0.5);
+
+    --link-color: blue;
+    --link-hover: red;
+    --link-visited: purple;
+    --link-active: green;
 }
 
 // schreibe eine Map mit Klassen für alle Farben

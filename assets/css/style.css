@@ -626,6 +626,10 @@ big {
   --accred: hsl(360, 84%, 64%);
   --on-accred: var(--bright);
   --shadow: hsla(0, 0%, 0%, 0.5);
+  --link-color: blue;
+  --link-hover: red;
+  --link-visited: purple;
+  --link-active: green;
 }
 
 .bg-primary {
@@ -5708,9 +5712,29 @@ html.dark {
   background-color: var(--dark);
   color: var(--on-dark);
 }
+html.dark a:link {
+  color: var(--link-color);
+  filter: invert(1);
+}
+html.dark a:visited {
+  color: var(--link-visited);
+}
+html.dark a:hover {
+  color: var(--link-hover);
+  filter: invert(1);
+}
+html.dark a:active {
+  color: var(--link-active);
+  filter: invert(1);
+}
+html.dark body > nav:nth-child(2) {
+  background: hsla(0, 0%, 15%, 0.85);
+  color: var(--on-dark);
+}
 html.bright {
   background-color: var(--bright);
   color: var(--on-bright);
+  filter: invert(1);
 }
 html.neutral {
   background-color: var(--neutral);

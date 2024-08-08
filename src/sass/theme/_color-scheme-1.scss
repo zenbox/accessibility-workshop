@@ -5,10 +5,31 @@ html {
     &.dark {
         background-color: var(--dark);
         color: var(--on-dark);
+
+        a:link {
+            color: var(--link-color);
+            filter: invert(1);
+        }
+        a:visited {
+            color: var(--link-visited);
+        }
+        a:hover {
+            color: var(--link-hover);
+            filter: invert(1);
+        }
+        a:active {
+            color: var(--link-active);
+            filter: invert(1);
+        }
+        body > nav:nth-child(2) {
+            background: hsla(0, 0%, 15%, 0.85);
+            color: var(--on-dark);
+        }
     }
     &.bright {
         background-color: var(--bright);
         color: var(--on-bright);
+        filter: invert(1);
     }
     &.neutral {
         background-color: var(--neutral);
