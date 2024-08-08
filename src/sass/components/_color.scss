@@ -5,8 +5,12 @@
         align-items: center;
         flex-wrap: wrap;
 
+        .box {
+            width: 8rem;
+            height: 5rem;
+            font-size: 12px;
+        }
     }
-
 }
 
 .error {
@@ -81,4 +85,5 @@
 .sample {
     background-color: var(--sample);
     color: var(--on-sample);
+    border: 1px solid var(--on-sample) !important;
 }

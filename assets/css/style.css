@@ -3847,6 +3847,11 @@ nav.breadcrumb [aria-current=page] {
   align-items: center;
   flex-wrap: wrap;
 }
+.color-container .box {
+  width: 8rem;
+  height: 5rem;
+  font-size: 12px;
+}
 
 .error {
   background-color: var(--error);
@@ -3920,6 +3925,7 @@ nav.breadcrumb [aria-current=page] {
 .sample {
   background-color: var(--sample);
   color: var(--on-sample);
+  border: 1px solid var(--on-sample) !important;
 }
 
 .contrast-container {
