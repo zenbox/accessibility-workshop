@@ -3673,6 +3673,16 @@ td {
   }
 }
 
+body {
+  counter-reset: step; /* Coutner mit dem Namen "step" wird auf 0 gesetzt */
+}
+
+h2:before {
+  counter-increment: step;
+  content: counter(step) " ";
+  font-size: 5rem;
+}
+
 nav.breadcrumb {
   padding: 0.8em 1em;
   border: 1px solid hsl(0, 0%, 90%);
