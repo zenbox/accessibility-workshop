@@ -617,6 +617,8 @@ big {
   --on-sample: hsla(0, 0%, 15%, 1);
   --bright: hsla(0, 0%, 100%, 1);
   --on-bright: hsla(0, 0%, 15%, 1);
+  --medium-bright: rgb(237, 237, 237);
+  --on-medium-bright: hsla(0, 0%, 15%, 1);
   --medium: rgb(175, 175, 175);
   --on-medium: hsla(0, 0%, 15%, 1);
   --dark: hsla(0, 0%, 0%, 1);
@@ -3349,38 +3351,6 @@ body {
   justify-content: center;
 }
 
-body > nav:nth-child(2) {
-  display: block;
-  position: fixed;
-  left: 0 !important;
-  top: 0 !important;
-  font-size: 0.75rem !important;
-  z-index: 1000;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-  background: hsla(0, 0%, 100%, 0.85);
-}
-body > nav:nth-child(2) li {
-  transition-property: color, background;
-  transition-duration: 300ms;
-  transition-timing-function: ease-in-out;
-  transition-delay: 0s;
-  padding: 0.5rem;
-}
-body > nav:nth-child(2) a:link,
-body > nav:nth-child(2) a:visited {
-  color: black;
-  text-decoration: none;
-}
-body > nav:nth-child(2) li:has(a:hover) {
-  background: black;
-}
-body > nav:nth-child(2) li:has(a:hover) a {
-  color: white;
-}
-body > nav:nth-child(2) + * {
-  margin-top: 5rem;
-}
-
 section {
   margin-block: 1rem;
 }
@@ -4084,6 +4054,50 @@ label:not(:has([type=radio]), :has([type=checkbox]))::after {
 
 fieldset:not(:has(legend)) {
   border: 2px dotted red;
+}
+
+body > nav[id=main-navigation] {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  position: fixed;
+  left: 0;
+  top: 0;
+  font-size: 0.75rem !important;
+  z-index: 1000;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  background: var(--medium-bright);
+}
+body > nav[id=main-navigation] ul, body > nav[id=main-navigation] ol {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+body > nav[id=main-navigation] li {
+  transition-property: color, background;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
+  padding: 0.5rem;
+}
+body > nav[id=main-navigation] a:link,
+body > nav[id=main-navigation] a:visited {
+  color: var(--dark);
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+body > nav[id=main-navigation] li:has(a:hover) {
+  background: var(--dark);
+}
+body > nav[id=main-navigation] li:has(a:hover) a {
+  color: var(--bright);
+}
+body > nav[id=main-navigation] + * {
+  margin-top: 5rem;
 }
 
 #menubar {

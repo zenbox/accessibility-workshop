@@ -1,9 +1,9 @@
 // Du bist JS-Entwickler. Schreibe eine Funktion, die aus allen Einträgen in einem JSON-Objekt eine Navigation erstellt. Das Objekt enthäkt den Dateiname und einen Linkttext pro Eintrag. Die Navigation soll als `ol`-Element in einer `nav`-Gruppe im `footer`der Seite integriert werden. Das Skript muss als Client-Skript im Browser laufen.
 
 // Funktion
-function createNavigation() {
+function createMainNavigation() {
     const nav = document.createElement("nav")
-    const ol = document.createElement("ol")
+    const ul = document.createElement("ul")
 
     const navigation = [
         { file: "semantic.html", text: "Semantik" },
@@ -28,10 +28,10 @@ function createNavigation() {
         a.textContent = entry.text
 
         li.appendChild(a)
-        ol.appendChild(li)
+        ul.appendChild(li)
     })
 
-    nav.appendChild(ol)
+    nav.appendChild(ul)
     document.body.prepend(nav)
 }
 
@@ -119,10 +119,10 @@ function createDeveloperButton() {
         }
     })
     document
-        .querySelector("#main-navigation ol")
+        .querySelector("#main-navigation ul")
         .prepend(document.createElement("li"))
     document
-        .querySelector("#main-navigation ol li:first-child")
+        .querySelector("#main-navigation ul li:first-child")
         .prepend(developerButton)
 }
 
@@ -166,8 +166,8 @@ darkModeButton.title = "Dark Mode ausschalten"
         }
     }
     )
-    document.querySelector("#main-navigation ol").prepend(document.createElement("li"))
-    document.querySelector("#main-navigation ol li:first-child").prepend(darkModeButton)
+    document.querySelector("#main-navigation ul").prepend(document.createElement("li"))
+    document.querySelector("#main-navigation ul li:first-child").prepend(darkModeButton)
 }
 
 // - - - - - - - - - - -
@@ -215,7 +215,7 @@ function createBrand() {
 // AUFRUF
 // - - - - - - - - - -
 document.addEventListener("DOMContentLoaded", () => {
-    createNavigation()
+    createMainNavigation()
     createDeveloperButton()
     createDarkModeButton()
     createBrand()

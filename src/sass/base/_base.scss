@@ -41,41 +41,7 @@ body {
     justify-content: center;
 }
 
-body > nav:nth-child(2) {
-    display: block;
-    position: fixed;
-    left: 0 !important;
-    top: 0 !important;
-    font-size: toRem($_perfect-fourth) !important;
 
-    z-index: 1000;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-    background: hsla(0, 0%, 100%, 0.85);
-
-    li {
-        transition-property: color, background;
-        transition-duration: 300ms;
-        transition-timing-function: ease-in-out;
-        transition-delay: 0s;
-        padding: toRem(0.5);
-    }
-
-    a:link,
-    a:visited {
-        color: black;
-        text-decoration: none;
-    }
-    li:has(a:hover) {
-        background: black;
-        a {
-            color: white;
-        }
-    }
-
-    + * {
-        margin-top: toRem(5);
-    }
-}
 
 section {
     margin-block: toRem(1);
