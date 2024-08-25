@@ -13,9 +13,10 @@ function createMainNavigation() {
         { file: "keyboard.html", text: "Tastatur" },
         // { file: "form.html", text: "Formular" },
         // { file: "navigation.html", text: "Navigation" },
-        { file: "non-text-content.html", text: "Bild und Grafik" },
+        { file: "non-text-content.html", text: "Nicht-Text" },
         { file: "user-settings.html", text: "Benutzereinstellungen" },
         // { file: "pattern.html", text: "Pattern" },
+        { file: "writing.html", text: "Texten" },
     ]
 
     nav.id = "main-navigation"
