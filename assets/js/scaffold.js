@@ -1,6 +1,3 @@
-// Du bist JS-Entwickler. Schreibe eine Funktion, die aus allen Einträgen in einem JSON-Objekt eine Navigation erstellt. Das Objekt enthäkt den Dateiname und einen Linkttext pro Eintrag. Die Navigation soll als `ol`-Element in einer `nav`-Gruppe im `footer`der Seite integriert werden. Das Skript muss als Client-Skript im Browser laufen.
-
-// Funktion
 function createMainNavigation() {
     const nav = document.createElement("nav")
     const ul = document.createElement("ul")
@@ -94,7 +91,7 @@ function createDeveloperButton() {
         developerButtonState = true
         document.body.classList.add("developer")
         developerButton.classList.add("on")
-            developerButton.title = "Entwicklermodus ausschalten"
+        developerButton.title = "Entwicklermodus ausschalten"
     } else {
         developerButtonState = false
         developerButton.classList.add("off")
@@ -110,7 +107,7 @@ function createDeveloperButton() {
             developerButton.classList.remove("off")
             developerButton.classList.add("on")
             localStorage.setItem("developer", "on")
-                 developerButton.title = "Entwicklermodus ausschalten"
+            developerButton.title = "Entwicklermodus ausschalten"
         } else {
             document.body.classList.remove("developer")
             developerButton.classList.remove("on")
@@ -128,7 +125,6 @@ function createDeveloperButton() {
 }
 
 function createDarkModeButton() {
-
     const darkModeButton = document.createElement("button")
     darkModeButton.title = "Dark Mode anschalten"
     darkModeButton.classList.add("btn-dark-mode")
@@ -140,9 +136,8 @@ function createDarkModeButton() {
         darkModeButtonState = true
         html.classList.add("dark")
         darkModeButton.classList.add("on")
-darkModeButton.title = "Dark Mode ausschalten"
-    }
-    else {
+        darkModeButton.title = "Dark Mode ausschalten"
+    } else {
         darkModeButtonState = false
         darkModeButton.classList.add("off")
         darkModeButton.title = "Dark Mode anschalten"
@@ -165,10 +160,13 @@ darkModeButton.title = "Dark Mode ausschalten"
             localStorage.setItem("darkMode", "off")
             darkModeButton.title = "Dark Mode anschalten"
         }
-    }
-    )
-    document.querySelector("#main-navigation ul").prepend(document.createElement("li"))
-    document.querySelector("#main-navigation ul li:first-child").prepend(darkModeButton)
+    })
+    document
+        .querySelector("#main-navigation ul")
+        .prepend(document.createElement("li"))
+    document
+        .querySelector("#main-navigation ul li:first-child")
+        .prepend(darkModeButton)
 }
 
 // - - - - - - - - - - -
