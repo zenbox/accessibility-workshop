@@ -601,20 +601,18 @@ big {
   --on-primary: rgb(250, 204, 250);
   --secondary: hsla(120, 94%, 33%, 1);
   --on-secondary: rgb(200, 250, 200);
-  --tertiary: hsla(174, 90%, 37%,1);
+  --tertiary: hsla(174, 90%, 37%, 1);
   --on-tertiary: rgb(2, 47, 43);
   --neutral: hsla(0, 0%, 50%, 1);
   --on-neutral: hsla(0, 0%, 85%, 1);
   --error: hsla(0, 100%, 50%, 1);
   --on-error: rgb(251, 202, 202);
   --warning: hsla(50, 100%, 50%, 1);
-  --on-warning: rgb(117, 97, 1);
+  --on-warning: hsl(50, 98%, 23%);
   --info: hsla(210, 100%, 50%, 1);
   --on-info: rgb(164, 208, 251);
   --success: hsla(110, 100%, 50%, 1);
   --on-success: rgb(21, 124, 1);
-  --sample: rgb(232, 232, 232);
-  --on-sample: hsla(0, 0%, 15%, 1);
   --bright: hsla(0, 0%, 100%, 1);
   --on-bright: hsla(0, 0%, 15%, 1);
   --medium-bright: rgb(237, 237, 237);
@@ -627,6 +625,10 @@ big {
   --on-disabled: var(--on-neutral);
   --accred: hsl(360, 84%, 64%);
   --on-accred: var(--bright);
+  --code: hsla(210, 100%, 30%, 1);
+  --sample: hsla(210, 100%, 50%, 0.2);
+  --sample-dark: hsla(30, 100%, 50%, 0.4);
+  --on-sample: var(--dark);
   --shadow: hsla(0, 0%, 0%, 0.5);
   --link-color: blue;
   --link-hover: red;
@@ -830,6 +832,11 @@ big {
   --default: 1rem;
   --big: 2rem;
   --small: 0.75rem;
+}
+
+:root.dark {
+  background-color: var(--dark);
+  color: var(--on-dark);
 }
 
 /* This Source Code Form is subject to the terms of the Mozilla Public
