@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>ARIA</title>
+        <link
+            rel="stylesheet"
+            href="assets/css/style.css"
+        />
+    </head>
+    <body>
+        <header>
+            <h1>ARIA und Landmarks</h1>
+            <p>
+                ARIA steht für <i>Accessible Rich Internet Applications</i> und
+                ist eine Spezifikation des W3C, die es ermöglicht, Webseiten und
+                Webanwendungen für Menschen mit Behinderungen, insbesondere für
+                die Interpretation durch Screenreader zugänglicher zu machen.
+            </p>
+
+            <p>ARIA enthält zwei Hauptkomponenten:</p>
+            <ul>
+                <li>
+                    <strong>Properties</strong>: Attribute, die
+                    Textinformationen hinzufügen oder (wechselnde)) Zustände von
+                    Elementen beschreiben. Eine weitere Gruppe umfasst das
+                    Verhalten bei Änderungen des DOM. Schließlich gibt es noch
+                    Relationen, die Beziehungen zwischen Elementen beschreiben.
+                </li>
+                <li>
+                    <strong>Roles</strong>: Rollen, die Elementen zugewiesen
+                    werden können, um ihre semantische Bedeutung für die
+                    Benutzer zu beschreiben.
+                </li>
+            </ul>
+            <p>
+                Die folgenden Beispiele sind nicht vollständig. Eine
+                vollständige Beschreibung aller ARIA-Attribute gibt es zum
+                Beispiel bei
+                <a href="https://wiki.selfhtml.org/wiki/HTML/Attribute/aria-*"
+                    >SELFHTML</a
+                >.
+            </p>
+        </header>
+
+        <article>
+            <h2>
+                ARIA-Attribute, die Textinformationen für Screenreader
+                hinzufügen
+            </h2>
+            <p>
+                Die folgenden Rollen können Textinformationen für Screenreader
+                hinzufügen:
+            </p>
+            <dl>
+                <dt><code>aria-label</code></dt>
+                <dd>
+                    Ein Label, das den Inhalt eines Elements beschreibt. Es wird
+                    von Screenreadern vorgelesen, wenn das Element fokussiert
+                    ist.
+                </dd>
+                <dt><code>aria-labelledby</code></dt>
+                <dd>
+                    Die ID eines anderen Elements, dessen Inhalt als Label für
+                    das aktuelle Element verwendet wird.
+                </dd>
+                <dt><code>aria-describedby</code></dt>
+                <dd>
+                    Die ID eines anderen Elements, dessen Inhalt als
+                    Beschreibung für das aktuelle Element verwendet wird.
+                </dd>
+            </dl>
+        </article>
+
+        <article>
+            <h2>ARIA-Attribute, die den Zustand von Elementen beschreiben</h2>
+            <p>
+                Die folgenden Rollen können den Zustand von Elementen
+                beschreiben:
+            </p>
+            <dl>
+                <dt><code>aria-disabled</code></dt>
+                <dd>Gibt an, ob ein Element deaktiviert ist.</dd>
+                <dt><code>aria-hidden</code></dt>
+                <dd>Gibt an, ob ein Element für Screenreader sichtbar ist.</dd>
+                <dt><code>aria-checked</code></dt>
+                <dd>Gibt an, ob ein Element ausgewählt ist.</dd>
+                <dt><code>aria-pressed</code></dt>
+                <dd>Gibt an, ob ein Element gedrückt ist.</dd>
+                <dt><code>aria-expanded</code></dt>
+                <dd>Gibt an, ob ein Element erweitert ist.</dd>
+            </dl>
+            <p>und so weiter.</p>
+        </article>
+
+        <article>
+            <h2>
+                ARIA-Attribute, die beobachten, ob es am DOM Veränderungen gibt:
+            </h2>
+            <p>
+                Die folgenden Rollen können beobachten, ob es am DOM
+                Veränderungen gibt:
+            </p>
+            <dl>
+                <dt><code>aria-atomic</code></dt>
+                <dd>
+                    Gibt an, ob ein Element atomar ist, d.h. ob es als Ganzes
+                    gelesen werden soll.
+                </dd>
+                <dt><code>aria-busy</code></dt>
+                <dd>Gibt an, ob ein Element gerade beschäftigt ist.</dd>
+                <dt><code>aria-live</code></dt>
+                <dd>
+                    Gibt an, ob Änderungen an einem Element sofort vorgelesen
+                    werden sollen.
+                </dd>
+                <dt><code>aria-relevant</code></dt>
+                <dd>
+                    Gibt an, welche Art von Änderungen an einem Element
+                    vorgelesen werden sollen.
+                </dd>
+            </dl>
+        </article>
+
+        <article>
+            <h2>ARIA-Attribute, die ein Verhalten von Elementen beschreiben</h2>
+            <p>
+                Die folgenden Rollen können das Verhalten von Elementen
+                beschreiben:
+            </p>
+            <dl>
+                <dt><code>aria-haspopup</code></dt>
+                <dd>Gibt an, ob ein Element ein Popup-Menü enthält.</dd>
+                <dt><code>aria-owns</code></dt>
+                <dd>
+                    Die ID eines anderen Elements, das von diesem Element
+                    besessen wird.
+                </dd>
+                <dt><code>aria-controls</code></dt>
+                <dd>
+                    Die ID eines anderen Elements, das von diesem Element
+                    kontrolliert wird.
+                </dd>
+                <dt><code>aria-flowto</code></dt>
+                <dd>
+                    Die ID eines anderen Elements, das von diesem Element
+                    fokussiert wird.
+                </dd>
+                <dt><code>aria-activedescendant</code></dt>
+                <dd>
+                    Die ID eines anderen Elements, das von diesem Element
+                    aktiviert wird.
+                </dd>
+            </dl>
+            <p>und so weiter.</p>
+        </article>
+
+        <article>
+            <h2><i>Landmarks</i> (<code>roles</code>)</h2>
+            <p>
+                <i>Landmarks</i> sind semantische Rollen, die es Screenreadern
+                ermöglichen, die Struktur einer Webseite zu erkennen. Sie können
+                nicht-semantischen <code>div</code>-Elemente eine semantische
+                Bedeutung geben. Sie können auch die Semantik eines
+                HTML-Elements ändern.
+            </p>
+            <dl>
+                <dt><code>role="banner"</code></dt>
+                <dd>
+                    Ein Bereich, der den Kopf einer Webseite enthält. Er kann
+                    mehrere Elemente enthalten, wie z.B. ein Logo, eine
+                    Überschrift, eine Suchfunktion und eine Navigation.
+                </dd>
+                <dt><code>role="navigation"</code></dt>
+                <dd>
+                    Ein Bereich, der eine Navigation enthält. Er kann mehrere
+                    Elemente enthalten, wie z.B. eine Liste von Links oder eine
+                    Suchfunktion.
+                </dd>
+                <dt><code>role="main"</code></dt>
+                <dd>
+                    Der Hauptinhalt einer Webseite. Er kann mehrere Elemente
+                    enthalten, wie z.B. Artikel, Abschnitte und Nebeninhalte.
+                </dd>
+                <dt><code>role="complementary"</code></dt>
+                <dd>
+                    Ein Bereich, der zusätzliche Informationen enthält, die
+                    nicht zum Hauptinhalt gehören. Er kann mehrere Elemente
+                    enthalten, wie z.B. eine Sidebar, eine Werbung oder
+                    verwandte Links.
+                </dd>
+                <dt><code>role="contentinfo"</code></dt>
+                <dd>
+                    Ein Bereich, der Informationen über die Webseite enthält. Er
+                    kann mehrere Elemente enthalten, wie z.B. ein Impressum,
+                    eine Datenschutzerklärung und eine Kontaktadresse.
+                </dd>
+                <dt><code>role="search"</code></dt>
+                <dd>
+                    Ein Bereich, der eine Suchfunktion enthält. Er kann mehrere
+                    Elemente enthalten, wie z.B. ein Eingabefeld, eine
+                    Schaltfläche und eine Ergebnisliste.
+                </dd>
+                <dt><code>role="form"</code></dt>
+                <dd>
+                    Ein Bereich, der ein Formular enthält. Er kann mehrere
+                    Elemente enthalten, wie z.B. Eingabefelder, Schaltflächen
+                    und Auswahllisten.
+                </dd>
+            </dl>
+            <p>und so weiter.</p>
+        </article>
+
+        <script src="assets/js/scaffold.js"></script>
+    </body>
+</html>

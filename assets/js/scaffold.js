@@ -4,6 +4,7 @@ function createMainNavigation() {
 
     const navigation = [
         { file: "semantic.html", text: "Semantik" },
+        { file: "aria.html", text: "ARIA" },
         { file: "typography.html", text: "Typografie" },
         { file: "contrast.html", text: "Kontrast" },
         { file: "color.html", text: "Farbe" },
@@ -13,7 +14,7 @@ function createMainNavigation() {
         { file: "non-text-content.html", text: "Nicht-Text" },
         { file: "user-settings.html", text: "Benutzereinstellungen" },
         // { file: "pattern.html", text: "Pattern" },
-        { file: "writing.html", text: "Texten" },
+        // { file: "writing.html", text: "Texten" },
     ]
 
     nav.id = "main-navigation"
