@@ -7,9 +7,13 @@
             content="width=device-width, initial-scale=1.0"
         />
         <title>Document</title>
+        <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body>
-        <div class="header" role="banner">
+        <div
+            class="header"
+            role="banner"
+        >
             <div role="navigation">
                 <ul>
                     <li><a href="">link </a></li>
@@ -18,24 +22,64 @@
                 </ul>
             </div>
         </div>
-        
-<div class="component-x">
-            <nav id="breadcrumbs" tabindex="0" aria-label="Brotkrümel-Navigation">
+
+        <div class="component-x">
+            <nav
+                id="breadcrumbs"
+                tabindex="0"
+                aria-label="Brotkrümel-Navigation"
+            >
                 <ol>
                     <li><a href="">home</a></li>
                     <li><a href="">document</a></li>
                     <li><a href="">section</a></li>
                 </ol>
             </nav>
-    
-</div>        <main>
+        </div>
+        <main>
             <h1>Seitentitel</h1>
+
+            <article>
+                <h2>Login-Beispiel</h2>
+
+                <form action="" tabindex="1">
+                    <fieldset>
+                        <legend>Login</legend>
+
+                        <div>
+                            <label for="email">E-Mail</label>
+                            <input
+
+                                aria-describedby="email-description"
+                                type="email"
+                                id="email"
+                                name="email"
+                                required
+                                pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}"
+                            />
+                            <p  id="email-description" class="sr-only visually-hidden" class="info">Du kannst folgende Zeichen in der E-Mail-Angabe verwenden: Alle Buchstaben, alle Ziffern und den Unterstrich</p>
+                        </div>
+                        <div>
+                            <label for="password">Passwort</label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                required
+                            />
+                        </div>
+                        <button type="submit">Login</button>
+                    </fieldset>
+                </form>
+            </article>
         </main>
         <aside></aside>
         <footer><nav></nav></footer>
 
         <style>
-            div.header{background:red;}
+            div.header {
+                background: red;
+            }
             abbr {
                 text-decoration: none;
             }
