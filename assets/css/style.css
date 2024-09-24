@@ -4003,6 +4003,14 @@ nav.breadcrumb [aria-current=page] {
   align-items: center;
   flex-wrap: wrap;
 }
+.color-container .box > ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-block-start: 1.2rem;
+}
 .color-container > * {
   display: flex;
 }
@@ -4018,10 +4026,13 @@ nav.breadcrumb [aria-current=page] {
   border-radius: 1rem;
 }
 .color-container .small-box {
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   font-size: 8px;
   border-radius: 0.3rem;
+  margin-inline-end: 0.25rem;
+  margin-block-end: 0.25rem;
+  padding: 0.25rem;
 }
 
 .error {
