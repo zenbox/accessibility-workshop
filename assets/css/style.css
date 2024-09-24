@@ -597,12 +597,23 @@ big {
 }
 
 :root {
+  --bright: hsla(0, 0%, 100%, 1);
+  --on-bright: hsla(0, 0%, 15%, 1);
+  --medium-bright: rgb(237, 237, 237);
+  --on-medium-bright: hsla(0, 0%, 15%, 1);
+  --medium: rgb(175, 175, 175);
+  --on-medium: hsla(0, 0%, 15%, 1);
+  --dark: hsla(0, 0%, 0%, 1);
+  --on-dark: hsla(0, 0%, 85%, 1);
+  --shadow: hsla(0, 0%, 0%, 0.5);
   --primary: hsla(300, 93%, 12%, 1);
   --on-primary: rgb(250, 204, 250);
   --secondary: hsla(120, 94%, 33%, 1);
   --on-secondary: rgb(200, 250, 200);
   --tertiary: hsla(174, 90%, 37%, 1);
   --on-tertiary: rgb(2, 47, 43);
+  --accred: hsl(360, 84%, 64%);
+  --on-accred: var(--bright);
   --neutral: hsla(0, 0%, 50%, 1);
   --on-neutral: hsla(0, 0%, 85%, 1);
   --error: hsla(0, 100%, 50%, 1);
@@ -613,27 +624,49 @@ big {
   --on-info: rgb(164, 208, 251);
   --success: hsla(110, 100%, 50%, 1);
   --on-success: rgb(21, 124, 1);
-  --bright: hsla(0, 0%, 100%, 1);
-  --on-bright: hsla(0, 0%, 15%, 1);
-  --medium-bright: rgb(237, 237, 237);
-  --on-medium-bright: hsla(0, 0%, 15%, 1);
-  --medium: rgb(175, 175, 175);
-  --on-medium: hsla(0, 0%, 15%, 1);
-  --dark: hsla(0, 0%, 0%, 1);
-  --on-dark: hsla(0, 0%, 85%, 1);
   --disabled: var(--neutral);
   --on-disabled: var(--on-neutral);
-  --accred: hsl(360, 84%, 64%);
-  --on-accred: var(--bright);
-  --code: hsla(210, 100%, 30%, 1);
-  --sample: hsla(210, 100%, 50%, 0.2);
-  --sample-dark: hsla(30, 100%, 50%, 0.4);
-  --on-sample: var(--dark);
-  --shadow: hsla(0, 0%, 0%, 0.5);
   --link-color: blue;
   --link-hover: red;
   --link-visited: purple;
   --link-active: green;
+  --code: hsla(210, 100%, 30%, 1);
+  --on-code: var(--bright);
+  --sample: hsla(210, 100%, 50%, 0.2);
+  --sample-dark: hsla(30, 100%, 50%, 0.4);
+  --on-sample: var(--dark);
+}
+
+.bg-bright {
+  background-color: var(--bright);
+}
+
+.text-bright {
+  color: var(--bright);
+}
+
+.bg-on-bright {
+  background-color: var(--on-bright);
+}
+
+.text-on-bright {
+  color: var(--on-bright);
+}
+
+.bg-dark {
+  background-color: var(--dark);
+}
+
+.text-dark {
+  color: var(--dark);
+}
+
+.bg-on-dark {
+  background-color: var(--on-dark);
+}
+
+.text-on-dark {
+  color: var(--on-dark);
 }
 
 .bg-primary {
@@ -684,6 +717,22 @@ big {
   color: var(--on-tertiary);
 }
 
+.bg-accred {
+  background-color: var(--accred);
+}
+
+.text-accred {
+  color: var(--accred);
+}
+
+.bg-on-accred {
+  background-color: var(--on-accred);
+}
+
+.text-on-accred {
+  color: var(--on-accred);
+}
+
 .bg-neutral {
   background-color: var(--neutral);
 }
@@ -716,20 +765,20 @@ big {
   color: var(--on-error);
 }
 
-.bg-warning {
-  background-color: var(--warning);
+.bg-success {
+  background-color: var(--success);
 }
 
-.text-warning {
-  color: var(--warning);
+.text-success {
+  color: var(--success);
 }
 
-.bg-on-warning {
-  background-color: var(--on-warning);
+.bg-on-success {
+  background-color: var(--on-success);
 }
 
-.text-on-warning {
-  color: var(--on-warning);
+.text-on-success {
+  color: var(--on-success);
 }
 
 .bg-info {
@@ -748,68 +797,36 @@ big {
   color: var(--on-info);
 }
 
-.bg-success {
-  background-color: var(--success);
+.bg-warning {
+  background-color: var(--warning);
 }
 
-.text-success {
-  color: var(--success);
+.text-warning {
+  color: var(--warning);
 }
 
-.bg-on-success {
-  background-color: var(--on-success);
+.bg-on-warning {
+  background-color: var(--on-warning);
 }
 
-.text-on-success {
-  color: var(--on-success);
+.text-on-warning {
+  color: var(--on-warning);
 }
 
-.bg-bright {
-  background-color: var(--bright);
+.bg-disabled {
+  background-color: var(--disabled);
 }
 
-.text-bright {
-  color: var(--bright);
+.text-disabled {
+  color: var(--disabled);
 }
 
-.bg-on-bright {
-  background-color: var(--on-bright);
+.bg-on-disabled {
+  background-color: var(--on-disabled);
 }
 
-.text-on-bright {
-  color: var(--on-bright);
-}
-
-.bg-dark {
-  background-color: var(--dark);
-}
-
-.text-dark {
-  color: var(--dark);
-}
-
-.bg-on-dark {
-  background-color: var(--on-dark);
-}
-
-.text-on-dark {
-  color: var(--on-dark);
-}
-
-.bg-accred {
-  background-color: var(--accred);
-}
-
-.text-accred {
-  color: var(--accred);
-}
-
-.bg-on-accred {
-  background-color: var(--on-accred);
-}
-
-.text-on-accred {
-  color: var(--on-accred);
+.text-on-disabled {
+  color: var(--on-disabled);
 }
 
 .bg-shadow {
@@ -820,12 +837,36 @@ big {
   color: var(--shadow);
 }
 
-.bg-disabled {
-  background-color: var(--disabled);
+.bg-link-color {
+  background-color: var(--link-color);
 }
 
-.text-disabled {
-  color: var(--disabled);
+.text-link-color {
+  color: var(--link-color);
+}
+
+.bg-link-hover {
+  background-color: var(--link-hover);
+}
+
+.text-link-hover {
+  color: var(--link-hover);
+}
+
+.bg-link-visited {
+  background-color: var(--link-visited);
+}
+
+.text-link-visited {
+  color: var(--link-visited);
+}
+
+.bg-link-active {
+  background-color: var(--link-active);
+}
+
+.text-link-active {
+  color: var(--link-active);
 }
 
 :root {
@@ -837,6 +878,130 @@ big {
 :root.dark {
   background-color: var(--dark);
   color: var(--on-dark);
+}
+
+.lighten-100 {
+  filter: brightness(100%);
+}
+
+.lighten-110 {
+  filter: brightness(110%);
+}
+
+.lighten-120 {
+  filter: brightness(120%);
+}
+
+.lighten-130 {
+  filter: brightness(130%);
+}
+
+.lighten-140 {
+  filter: brightness(140%);
+}
+
+.lighten-150 {
+  filter: brightness(150%);
+}
+
+.lighten-160 {
+  filter: brightness(160%);
+}
+
+.lighten-170 {
+  filter: brightness(170%);
+}
+
+.lighten-180 {
+  filter: brightness(180%);
+}
+
+.lighten-190 {
+  filter: brightness(190%);
+}
+
+.lighten-200 {
+  filter: brightness(200%);
+}
+
+.lighten-210 {
+  filter: brightness(210%);
+}
+
+.lighten-220 {
+  filter: brightness(220%);
+}
+
+.lighten-230 {
+  filter: brightness(230%);
+}
+
+.lighten-240 {
+  filter: brightness(240%);
+}
+
+.lighten-250 {
+  filter: brightness(250%);
+}
+
+.lighten-260 {
+  filter: brightness(260%);
+}
+
+.lighten-270 {
+  filter: brightness(270%);
+}
+
+.lighten-280 {
+  filter: brightness(280%);
+}
+
+.lighten-290 {
+  filter: brightness(290%);
+}
+
+.lighten-300 {
+  filter: brightness(300%);
+}
+
+.lighten-310 {
+  filter: brightness(310%);
+}
+
+.lighten-320 {
+  filter: brightness(320%);
+}
+
+.lighten-330 {
+  filter: brightness(330%);
+}
+
+.lighten-340 {
+  filter: brightness(340%);
+}
+
+.lighten-350 {
+  filter: brightness(350%);
+}
+
+.lighten-360 {
+  filter: brightness(360%);
+}
+
+.lighten-370 {
+  filter: brightness(370%);
+}
+
+.lighten-380 {
+  filter: brightness(380%);
+}
+
+.lighten-390 {
+  filter: brightness(390%);
+}
+
+.lighten-400 {
+  filter: brightness(400%);
 }
 
 /* This Source Code Form is subject to the terms of the Mozilla Public
@@ -3838,10 +4003,25 @@ nav.breadcrumb [aria-current=page] {
   align-items: center;
   flex-wrap: wrap;
 }
+.color-container > * {
+  display: flex;
+}
+.color-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 .color-container .box {
-  width: 8rem;
-  height: 5rem;
+  width: 7rem;
+  height: 7rem;
   font-size: 12px;
+  border-radius: 1rem;
+}
+.color-container .small-box {
+  width: 2rem;
+  height: 2rem;
+  font-size: 8px;
+  border-radius: 0.3rem;
 }
 
 .error {
@@ -3917,6 +4097,27 @@ nav.breadcrumb [aria-current=page] {
   background-color: var(--sample);
   color: var(--on-sample);
   border: 1px solid var(--on-sample) !important;
+}
+
+.code {
+  background-color: var(--code);
+  color: var(--on-code);
+}
+
+.link-color {
+  color: var(--link-color);
+}
+
+.link-hover {
+  color: var(--link-hover);
+}
+
+.link-visited {
+  color: var(--link-visited);
+}
+
+.link-active {
+  color: var(--link-active);
 }
 
 .contrast-container {

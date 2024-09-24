@@ -10,6 +10,9 @@ window.onload = () => {
         sliders = [],
         contrastSection = document.createElement("section")
 
+    colors[0] = new Color("#FF0000")
+    colors[1] = new Color("#00FFFF")
+    
     contrastSection.classList.add("contrast")
 
     function contrast(rgb1, rgb2) {

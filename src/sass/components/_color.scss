@@ -1,15 +1,33 @@
 .color {
+
     &-container {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
+        
+> * {
+    display: flex;
+}
+
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
 
         .box {
-            width: 8rem;
-            height: 5rem;
+            width: 7rem;
+            height: 7rem;
             font-size: 12px;
+            border-radius: 1rem;
         }
+
+        .small-box{    width: 2rem;
+            height: 2rem;
+            font-size: 8px;
+            border-radius: 0.3rem;}
     }
 }
 
@@ -86,4 +104,25 @@
     background-color: var(--sample);
     color: var(--on-sample);
     border: 1px solid var(--on-sample) !important;
+}
+
+.code {
+    background-color: var(--code);
+    color: var(--on-code);
+}
+
+.link-color {
+    color: var(--link-color);
+}
+
+.link-hover {
+    color: var(--link-hover);
+}
+
+.link-visited {
+    color: var(--link-visited);
+}
+
+.link-active {
+    color: var(--link-active);
 }
