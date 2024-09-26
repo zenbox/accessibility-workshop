@@ -212,6 +212,13 @@ function createBrand() {
     document.querySelector("header").prepend(brand)
 }
 
+function setTabindizes() {
+    const all = document.querySelectorAll("h1, h2")
+    all.forEach((el) => {
+        el.tabIndex = 0
+    })
+}
+
 // AUFRUF
 // - - - - - - - - - -
 document.addEventListener("DOMContentLoaded", () => {
@@ -221,6 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
     createBrand()
     createFooter()
     createSkipLinks()
+    setTabindizes()
 
     document.querySelector("html").setAttribute("lang", "de")
 })

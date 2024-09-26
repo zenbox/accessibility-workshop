@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+    <!-- KOR -->
     <head>
         <meta charset="UTF-8" />
         <meta
@@ -7,85 +8,49 @@
             content="width=device-width, initial-scale=1.0"
         />
         <title>Document</title>
-        <link rel="stylesheet" href="assets/css/style.css">
+        <link
+            rel="stylesheet"
+            href="assets/css/style.css"
+        />
     </head>
     <body>
-        <div
-            class="header"
-            role="banner"
-        >
-            <div role="navigation">
-                <ul>
-                    <li><a href="">link </a></li>
-                    <li><a href="">link </a></li>
-                    <li><a href="">link </a></li>
-                </ul>
-            </div>
-        </div>
+        <h1>Der Text der darin steht ist Überschrift 1!</h1>
+        <p lang="la">
+            <strong>Ganz brutal wichtig</strong> Lorem ipsum dolor sit amet
+            consectetur adipisicing elit.
+            <cite>Sein oder Nichtsein, das ist die Frage</cite> Aliquid
+            <abbr title="zum Beispiel">z.B.</abbr> reprehenderit, voluptate est
+            iusto nulla saepe architecto. Molestias, fuga. Das ist ein Grundsatz
+            bei der
+            <abbr
+                lang="en"
+                title="National Aeronautics Space Agency"
+                style="text-transform: uppercase"
+                >Nasa</abbr
+            >.
+        </p>
 
-        <div class="component-x">
-            <nav
-                id="breadcrumbs"
-                tabindex="0"
-                aria-label="Brotkrümel-Navigation"
-            >
-                <ol>
-                    <li><a href="">home</a></li>
-                    <li><a href="">document</a></li>
-                    <li><a href="">section</a></li>
-                </ol>
-            </nav>
-        </div>
-        <main>
-            <h1>Seitentitel</h1>
+        <p style="display: none">
+            Das ist nichts für Screenreader oder auch nichts für de visuelle
+            Umsetzung.
+        </p>
 
-            <article>
-                <h2>Login-Beispiel</h2>
+        <p class="sr-only visually-hidden">
+            Das ist nur für Screenreader, aber nicht für die visuelle Ausgabe.
+        </p>
 
-                <form action="" tabindex="1">
-                    <fieldset>
-                        <legend>Login</legend>
+        <p aria-hidden="true">
+            Das ist nur für die visuelle Ausgabe, wir aber von Screenreadern
+            nicht beachtet.
+        </p>
 
-                        <div>
-                            <label for="email">E-Mail</label>
-                            <input
+        <p lang="ko">
+            안녕하세요. 저는 한국어를 배우고 있습니다. 한국어를 잘하고 싶어요.
+        </p>
 
-                                aria-describedby="email-description"
-                                type="email"
-                                id="email"
-                                name="email"
-                                required
-                                pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}"
-                            />
-                            <p  id="email-description" class="sr-only visually-hidden" class="info">Du kannst folgende Zeichen in der E-Mail-Angabe verwenden: Alle Buchstaben, alle Ziffern und den Unterstrich</p>
-                        </div>
-                        <div>
-                            <label for="password">Passwort</label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                required
-                            />
-                        </div>
-                        <button type="submit">Login</button>
-                    </fieldset>
-                </form>
-            </article>
-        </main>
-        <aside></aside>
-        <footer><nav></nav></footer>
-
-        <style>
-            div.header {
-                background: red;
-            }
-            abbr {
-                text-decoration: none;
-            }
-            .uppercase {
-                text-transform: uppercase;
-            }
-        </style>
+        <p lang="hu">
+            Budapesten születtem, de már 10 éve Berlinben élek. Szeretem a német
+            konyhát, de a magyar konyhát is nagyon szeretem.
+        </p>
     </body>
 </html>

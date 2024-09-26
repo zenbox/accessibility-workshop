@@ -1,0 +1,199 @@
+/* CSS-Variablen für Farben */
+:root {
+    --background-color: #f5f5f5;
+    --container-background-color: #fff;
+    --container-border-color: #007bff;
+    --box-shadow-color: rgba(0, 0, 0, 0.1);
+    --font-color: #000;
+    --border-color: #ccc;
+    --cta-color: #007bff;
+    --on-cta-color: #fff;
+    --neutral-color: #d8d8d8;
+    --input-color: #ececec;
+}
+
+/* Allgemeines Layout und Schrift */
+body {
+    font-family: Barlow, Arial, sans-serif;
+    font-size: 14px;
+    color: var(--font-color);
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: var(--container-background-color);
+    border-radius: 8px;
+    box-shadow: 0 00.75rem var(--box-shadow-color);
+    padding: 1.5rem;
+    box-sizing: border-box;
+    border: 2px solid var(--container-border-color);
+}
+
+/* Überschrift */
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-block-end: 0.25rem;
+}
+
+h2 {
+    font-size: 1.1rem;
+    font-weight: normal;
+    text-align: center;
+    margin-top: 0.25rem;
+    margin-block-end: 1rem;
+}
+
+/* Formularfelder */
+label {
+    font-weight: 500;
+    margin-block-end: 5px;
+    display: block;
+    margin-block-start: 1rem;
+    margin-block-end: 0.25rem;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-block-end: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    background-color: var(--input-color);
+}
+
+input[type="radio"] {
+    margin-right: 0.75rem;
+}
+
+/* Zeit- und Alters-Buttons */
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-group {
+    display: flex;
+}
+
+.btn-group button {
+    width: 50%;
+    padding: 0.75rem 1.5rem;
+    margin: 0;
+    border: 1px solid var(--border-color);
+    background-color: var(--neutral-color);
+    cursor: pointer;
+}
+
+.btn-group button:first-child {
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+.btn-group button:last-child {
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.btn-group button:first-child {
+    border: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.btn-group button:last-child {
+    border: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.btn-group button.active {
+    background-color: var(--cta-color);
+    color: var(--on-cta-color);
+}
+
+.btn-group button.inactive {
+    background-color: var(--neutral-color);
+}
+
+/* Rabatt Dropdown */
+select {
+    background-color: var(--input-color);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+}
+
+/* Preis und Buttons */
+.price {
+    font-size: 1.5rem;
+    text-align: right;
+
+    margin-block: 1.5rem;
+    padding-block: 1rem;
+
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+button {
+    display: inline-block;
+    padding: 0.75rem;
+    width: 49%;
+    min-width: 30%;
+    max-width: 50%;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    &.purchase-btn {
+        background-color: var(--cta-color);
+        color: var(--on-cta-color);
+    }
+
+    &.cancel-btn {
+        background-color: var(--neutral-color);
+    }
+}
+
+/* Abstände */
+form {
+    margin-block-end: 1.5rem;
+}
+
+.icon {
+    display: flex;
+    height: 3rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.train {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M160-260v-380q0-97 85-127t195-33l30-60H280v-60h400v60H550l-30 60q119 3 199.5 32.5T800-640v380q0 59-40.5 99.5T660-120l60 60v20h-80l-80-80H400l-80 80h-80v-20l60-60q-59 0-99.5-40.5T160-260Zm500-140H240h480-60ZM480-240q25 0 42.5-17.5T540-300q0-25-17.5-42.5T480-360q-25 0-42.5 17.5T420-300q0 25 17.5 42.5T480-240Zm-2-440h228-450 222ZM240-480h480v-120H240v120Zm60 280h360q26 0 43-17t17-43v-140H240v140q0 26 17 43t43 17Zm178-520q-134 0-172 14.5T256-680h450q-12-14-52-27t-176-13Z"/></svg>');
+}
+
+.checked::after {
+    color: var(--on-cta-color);
+    display: inline-block;
+    height: 1rem;
+    width: 1rem;
+    content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>');
+}
+.location {
+    color: red;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left;
+    height: 1rem;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M480-301q99-80 149.5-154T680-594q0-90-56-148t-144-58q-88 0-144 58t-56 148q0 65 50.5 139T480-301Zm0 101Q339-304 269.5-402T200-594q0-125 78-205.5T480-880q124 0 202 80.5T760-594q0 94-69.5 192T480-200Zm0-320q33 0 56.5-23.5T560-600q0-33-23.5-56.5T480-680q-33 0-56.5 23.5T400-600q0 33 23.5 56.5T480-520ZM200-80v-80h560v80H200Zm280-520Z"/></svg>');
+}

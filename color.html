@@ -75,6 +75,59 @@
                     Aufgabengebiete einteilen:
                 </p>
 
+                <figure>
+                    <h3>Error-Color</h3>
+                    <ol>
+                        <li>Rot</li>
+                        <li>dunkler</li>
+                        <li>heller</li>
+                    </ol>
+
+                    <h4>Protanopie</h4>
+                    <ul>
+                        <li>
+                            <ul>
+                                <li>Rot</li>
+                                <li>dunkler</li>
+                                <li>heller</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h4>Deuteranopie</h4>
+                    <ul>
+                        <li>
+                            <ul>
+                                <li>Grün</li>
+                                <li>dunkler</li>
+                                <li>heller</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h4>Tritanopie</h4>
+                    <ul>
+                        <li>
+                            <ul>
+                                <li>Blau</li>
+                                <li>dunkler</li>
+                                <li>heller</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h4>Achromatopsie</h4>
+                    <ul>
+                        <li>
+                            <ul>
+                                <li>keine Farbe</li>
+                                <li>dunkler</li>
+                                <li>heller</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </figure>
+
                 <h3>Formfaktor</h3>
                 <p>
                     Die Farben des Formfaktors dienen dazu, die Struktur und
@@ -641,11 +694,19 @@
                 </samp>
             </article>
 
+            <style>
+                .invers {
+                    padding-top: 1rem;
+                    padding-right: 1rem;
+                    background: white;
+                    filter: invert(1);
+                }
+            </style>
             <article>
                 <samp class="color-container">
                     <h2>Elemente</h2>
 
-                    <div>
+                    <div id="code">
                         <div class="box code">
                             <p>Code</p>
                             <ul>
@@ -691,7 +752,56 @@
                         </ul>
                     </div>
 
-                    <div>
+                    <div
+                        id="code-invers"
+                        class="invers"
+                    >
+                        <div class="box code">
+                            <p>Code</p>
+                            <ul>
+                                <li class="small-box code lighten-130"></li>
+                                <li class="small-box code lighten-160"></li>
+                            </ul>
+                        </div>
+
+                        <ul class="protanopia">
+                            <li class="small-box code">rotblind</li>
+                            <li class="small-box code lighten-130">rotblind</li>
+                            <li class="small-box code lighten-160">rotblind</li>
+                        </ul>
+
+                        <ul class="deuteranopia">
+                            <li class="small-box code">grünblind</li>
+                            <li class="small-box code lighten-130">
+                                grünblind
+                            </li>
+                            <li class="small-box code lighten-160">
+                                grünblind
+                            </li>
+                        </ul>
+
+                        <ul class="tritanopia">
+                            <li class="small-box code">blau-reduziert</li>
+                            <li class="small-box code lighten-130">
+                                blau-reduziert
+                            </li>
+                            <li class="small-box code lighten-160">
+                                blau-reduziert
+                            </li>
+                        </ul>
+
+                        <ul class="achromatopsia">
+                            <li class="small-box code">keine Farbe</li>
+                            <li class="small-box code lighten-130">
+                                keine Farbe
+                            </li>
+                            <li class="small-box code lighten-160">
+                                keine Farbe
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="sample">
                         <div class="box sample">
                             <p>Beispiel</p>
                             <ul>
