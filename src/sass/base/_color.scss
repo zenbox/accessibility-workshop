@@ -142,3 +142,13 @@ $lightens: (
         filter: brightness($value);
     }
 }
+
+.lighter {
+    opacity: 50%;
+    background: white;
+
+}
+.darker {
+    filter: brightness(75%);
+
+}

@@ -1004,6 +1004,15 @@ big {
   filter: brightness(400%);
 }
 
+.lighter {
+  opacity: 50%;
+  background: white;
+}
+
+.darker {
+  filter: brightness(75%);
+}
+
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -4129,6 +4138,68 @@ nav.breadcrumb [aria-current=page] {
 
 .link-active {
   color: var(--link-active);
+}
+
+.color-card {
+  display: flex;
+  flex-direction: row;
+}
+.color-card > ol {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 6rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 0.25rem;
+  justify-content: center;
+}
+.color-card > ol > li {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.color-card > ol > li:first-child {
+  grid-column: span 2;
+  border: 1px solid black;
+  height: 6rem;
+}
+.color-card > ol > li:not(:first-child) {
+  grid-column: span 1;
+  height: 3rem;
+}
+.color-card > ol > li:first-child {
+  grid-column: span 2;
+}
+.color-card > ol > li:not(:first-child) {
+  grid-column: span 1;
+}
+.color-card > h4 {
+  display: none;
+}
+.color-card > ul,
+.color-card > ul ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  width: 4rem;
+  gap: 0.25rem;
+}
+.color-card > ul > li:first-child,
+.color-card > ul ul > li:first-child {
+  grid-column: span 2;
+  grid-row: span 1;
+  height: 4rem;
+}
+.color-card > ul > li:not(:first-child),
+.color-card > ul ul > li:not(:first-child) {
+  grid-column: span 1;
+  grid-row: span 1;
+  height: 2rem;
 }
 
 .contrast-container {

@@ -1,1 +1,77 @@
-.color-card {}
+.color-card {
+    display: flex;
+    flex-direction: row;
+
+    > ol {
+        // Reset
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        // Layout
+        width: 6rem;
+        display: grid;
+        grid-template-columns: repeat(
+            2,
+            1fr
+        ); // repeat(auto-fill, minmax(200px, 1fr));
+        grid-auto-rows: 1fr;
+        gap: 0.25rem;
+        justify-content: center;
+
+        > li {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        // Farbfeld
+        > li:first-child {
+            grid-column: span 2;
+            border: 1px solid black;
+            height: 6rem;
+        }
+        // Farb-Abstufungen
+        > li:not(:first-child) {
+            grid-column: span 1;
+            height: 3rem;
+        }
+
+        // Farbfeld
+        > li:first-child {
+            grid-column: span 2;
+        }
+        // Farb-Abstufungen
+        > li:not(:first-child) {
+            grid-column: span 1;
+        }
+    }
+    > h4 {
+        display: none;
+    }
+    > ul,
+    > ul ul {
+        // Reset
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        // Layout
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 1fr;
+        width: 4rem;
+        gap: 0.25rem;
+
+        >li:first-child{
+            grid-column: span 2;
+            grid-row: span 1;
+            height: 4rem;
+        }
+        >li:not(:first-child){
+            grid-column: span 1;
+            grid-row: span 1;
+            height: 2rem;
+        }
+    }
+}

@@ -14,43 +14,75 @@
         />
     </head>
     <body>
-        <h1>Der Text der darin steht ist Überschrift 1!</h1>
-        <p lang="la">
-            <strong>Ganz brutal wichtig</strong> Lorem ipsum dolor sit amet
-            consectetur adipisicing elit.
-            <cite>Sein oder Nichtsein, das ist die Frage</cite> Aliquid
-            <abbr title="zum Beispiel">z.B.</abbr> reprehenderit, voluptate est
-            iusto nulla saepe architecto. Molestias, fuga. Das ist ein Grundsatz
-            bei der
-            <abbr
-                lang="en"
-                title="National Aeronautics Space Agency"
-                style="text-transform: uppercase"
-                >Nasa</abbr
-            >.
-        </p>
+        <header>
+            <div role="navigation">
+                <ul>
+                    <li><a href="">1</a></li>
+                    <li><a href="">2</a></li>
+                    <li><a href="">3</a></li>
+                </ul>
+            </div>
+        </header>
 
-        <p style="display: none">
-            Das ist nichts für Screenreader oder auch nichts für de visuelle
-            Umsetzung.
-        </p>
+        <nav>
+            <h3>Hauptnavigation</h3>
+            <ul>
+                <li><a href="">page 1</a></li>
+                <li><a href="">page 2</a></li>
+                <li><a href="">page 3</a></li>
+                <li><a href="">page 4</a></li>
+                <li><a href="">page 5</a></li>
+            </ul>
+        </nav>
 
-        <p class="sr-only visually-hidden">
-            Das ist nur für Screenreader, aber nicht für die visuelle Ausgabe.
-        </p>
+        <main>
+            <h1>Dokumentenüberschrift</h1>
+           <article>
+            <h2>Überschrift für den folgenden Content</h2>
+                <p lang="la">
+                    <strong>Ganz brutal wichtig</strong> Lorem ipsum dolor sit amet
+                    consectetur adipisicing elit.
+                    <cite>Sein oder Nichtsein, das ist die Frage</cite> Aliquid
+                    <abbr title="zum Beispiel">z.B.</abbr> reprehenderit, voluptate
+                    est iusto nulla saepe architecto. Molestias, fuga. Das ist ein
+                    Grundsatz bei der
+                    <abbr
+                        lang="en"
+                        title="National Aeronautics Space Agency"
+                        style="text-transform: uppercase"
+                        >Nasa</abbr
+                    >.
+                </p>
+    
+                <p style="display: none">
+                    Das ist nichts für Screenreader oder auch nichts für de visuelle
+                    Umsetzung.
+                </p>
+    
+                <p class="sr-only visually-hidden">
+                    Das ist nur für Screenreader, aber nicht für die visuelle
+                    Ausgabe.
+                </p>
+    
+                <p aria-hidden="true">
+                    Das ist nur für die visuelle Ausgabe, wir aber von Screenreadern
+                    nicht beachtet.
+                </p>
+    
+                <p lang="ko">
+                    안녕하세요. 저는 한국어를 배우고 있습니다. 한국어를 잘하고
+                    싶어요.
+                </p>
+    
+                <p lang="hu">
+                    Budapesten születtem, de már 10 éve Berlinben élek. Szeretem a
+                    német konyhát, de a magyar konyhát is nagyon szeretem.
+                </p>
+            </article>
+        </main>
 
-        <p aria-hidden="true">
-            Das ist nur für die visuelle Ausgabe, wir aber von Screenreadern
-            nicht beachtet.
-        </p>
+        <footer><address>&copy; Michael</address></footer>
 
-        <p lang="ko">
-            안녕하세요. 저는 한국어를 배우고 있습니다. 한국어를 잘하고 싶어요.
-        </p>
-
-        <p lang="hu">
-            Budapesten születtem, de már 10 éve Berlinben élek. Szeretem a német
-            konyhát, de a magyar konyhát is nagyon szeretem.
-        </p>
+        <script src="assets/js/scaffold.js"></script>
     </body>
 </html>
