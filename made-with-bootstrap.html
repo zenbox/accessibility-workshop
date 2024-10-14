@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Web Accessibility Guidelines</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+        />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            html {
+                font-family: Barlow;
+            }
+            /* Autonummerierung für h2 */
+            article {
+                counter-increment: h2-counter 1;
+            }
+            h2::before {
+                content: counter(h2-counter) " ";
+
+                font-size: 2.5rem;
+                color: #007bff;
+                margin-right: 0.5rem;
+            }
+
+            /* Sidebar */
+            #sidebar {
+                position: fixed;
+                top: 56px;
+                bottom: 0;
+                left: 0;
+                z-index: 900;
+                padding: 48px 0 0;
+                overflow-x: hidden;
+                overflow-y: auto;
+                background-color: #f8f9fa;
+            }
+
+            /* Scrollspy Styling */
+            .scrollspy-example {
+                position: relative;
+                height: 100vh;
+                overflow-y: scroll;
+            }
+
+            /* Fixed Footer */
+            .fixed-footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                background-color: #343a40;
+                color: white;
+                text-align: center;
+                padding: 10px;
+                transition: height 0.3s ease;
+                height: 20px;
+                overflow: hidden;
+            }
+
+            .fixed-footer:hover {
+                height: 100px;
+            }
+
+            /* Skiplink Styles */
+            .skip-link {
+                position: absolute;
+                top: -40px;
+                left: 0;
+                background: #007bff;
+                color: white;
+                padding: 8px;
+                z-index: 1100;
+            }
+
+            .skip-link:focus {
+                top: 0;
+            }
+            .active {
+                background-color: #0065ca;
+                color: white;
+            }
+            #navbar {
+                position: absolute;
+                width: 100vw;
+
+                z-index: 1000;
+            }
+            .content {
+                position: relative;
+                top: 56px;
+            }
+        </style>
+    </head>
+
+    <body
+        data-bs-spy="scroll"
+        data-bs-target="#sidebar"
+        data-bs-offset="0"
+        tabindex="0"
+    >
+        <!-- Skip Links -->
+        <a
+            href="#content"
+            class="skip-link"
+            >Zum Inhalt springen</a
+        >
+        <a
+            href="#navbar"
+            class="skip-link"
+            >Zur Navigation springen</a
+        >
+        <a
+            href="#sidebar"
+            class="skip-link"
+            >Zur Sidebar springen</a
+        >
+        <a
+            href="#footer"
+            class="skip-link"
+            >Zum Footer springen</a
+        >
+
+        <!-- Navbar -->
+        <header
+            id="navbar"
+            class="container-fluid navbar navbar-expand-lg navbar-dark bg-dark"
+        >
+            <a
+                class="navbar-brand"
+                href="#"
+                >Accessibility</a
+            >
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <nav
+                class="collapse navbar-collapse"
+                id="navbarNav"
+            >
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown1"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            Wahrnehmung
+                        </a>
+                        <ul
+                            class="dropdown-menu"
+                            aria-labelledby="navbarDropdown1"
+                        >
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    >Kontrast</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    >Farben</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown2"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            Bedienung
+                        </a>
+                        <ul
+                            class="dropdown-menu"
+                            aria-labelledby="navbarDropdown2"
+                        >
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    >Navigation</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    >Tastaturbedienung</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown3"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            Verständnis
+                        </a>
+                        <ul
+                            class="dropdown-menu"
+                            aria-labelledby="navbarDropdown3"
+                        >
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    >Lesbarkeit</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    >Struktur</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown4"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            Robust
+                        </a>
+                        <ul
+                            class="dropdown-menu"
+                            aria-labelledby="navbarDropdown4"
+                        >
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    >Kompatibilität</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    >Fehlerbehandlung</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Sidebar -->
+        <aside
+            id="sidebar"
+            class="col-md-2 d-none d-md-block"
+        >
+            <nav class="navbar navbar-light">
+                <ul class="nav flex-column">
+                    <li>
+                        <a
+                            class="nav-link"
+                            href="#artikel1"
+                            >Artikel 1</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="nav-link"
+                            href="#artikel2"
+                            >Artikel 2</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="nav-link"
+                            href="#artikel3"
+                            >Artikel 3</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="nav-link"
+                            href="#artikel4"
+                            >Artikel 4</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="nav-link"
+                            href="#artikel5"
+                            >Artikel 5</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main
+            id="content"
+            data-bs-spy="scroll"
+            data-bs-target="#navbar-example2"
+            data-bs-root-margin="0px 0px -40%"
+            data-bs-smooth-scroll="true"
+            class="container scrollspy-example bg-body-tertiary p-3 rounded-2"
+            tabindex="0"
+        >
+            <section class="row">
+                <div class="col-md-10 offset-md-2">
+                    <article id="artikel1">
+                        <h2>Artikel 1</h2>
+                        <h3>Unterabschnitt 1.1</h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Integer nec odio. Lorem ipsum dolor sit amet
+                            consectetur adipisicing elit. Quia omnis porro quod
+                            ipsam dolores id molestias minima eligendi mollitia
+                            inventore! Iste necessitatibus veritatis cumque fuga
+                            aliquid adipisci, atque iusto. Quisquam beatae
+                            delectus, eius animi debitis corporis totam at.
+                            Temporibus et officiis molestiae delectus veritatis.
+                            Fuga ipsum vel iusto impedit veniam laboriosam, et
+                            commodi suscipit cupiditate recusandae nobis
+                            ratione. Soluta fugiat itaque expedita iure dolores
+                            amet maxime provident magnam sapiente libero placeat
+                            doloribus odit, esse modi veritatis nisi numquam,
+                            assumenda ratione!
+                        </p>
+                        <h3>Unterabschnitt 1.2</h3>
+                        <p>
+                            Praesent libero. Sed cursus ante dapibus diam. Sed
+                            nisi. Lorem ipsum dolor sit, amet consectetur
+                            adipisicing elit. Omnis, dignissimos. Eos voluptatem
+                            enim, omnis sit totam iste deleniti incidunt
+                            ratione, cupiditate dolore sunt optio explicabo amet
+                            aperiam iusto maiores et culpa hic? Soluta magni
+                            reprehenderit sint sit iusto est animi, quia ex.
+                            Sit, maxime amet cum quasi recusandae ullam possimus
+                            id quae? Temporibus, molestiae! Atque reprehenderit
+                            beatae mollitia quam aspernatur nihil autem ducimus?
+                            Sit soluta saepe, laboriosam rerum corrupti in
+                            placeat vero perspiciatis voluptates veritatis et
+                            aperiam earum optio quibusdam!
+                        </p>
+                    </article>
+                    <article id="artikel2">
+                        <h2>Artikel 2</h2>
+                        <h3>Unterabschnitt 2.1</h3>
+                        <p>
+                            Nulla quis sem at nibh elementum imperdiet. Duis
+                            sagittis ipsum. Lorem ipsum dolor sit amet
+                            consectetur, adipisicing elit. Dicta corporis
+                            molestiae assumenda cumque illo ducimus eum
+                            voluptatum vero? Eos quos laboriosam autem
+                            consectetur porro unde itaque, corporis veniam nulla
+                            adipisci illo doloribus repellendus tempore mollitia
+                            sed quisquam officiis non alias nam, quae cum. Ea
+                            sed odio quaerat? Sit perspiciatis maxime fuga
+                            mollitia iusto esse quis unde molestiae eligendi
+                            deleniti quaerat cum non nesciunt sapiente iure,
+                            eius accusamus modi dolorem exercitationem, corrupti
+                            ipsa. Ea tempora laborum soluta ipsa quas officia
+                            assumenda.
+                        </p>
+                        <h3>Unterabschnitt 2.2</h3>
+                        <p>
+                            Praesent mauris. Fusce nec tellus sed augue semper
+                            porta. Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Ex reprehenderit, nisi sit
+                            provident impedit nemo vitae ullam deserunt,
+                            doloremque iusto nobis autem ab dolor? Nobis maiores
+                            ea distinctio accusamus consequuntur ipsum explicabo
+                            voluptates atque! Sunt, odit commodi. Maiores
+                            adipisci ullam dolore hic totam laboriosam facilis
+                            magni perferendis velit nostrum nulla, numquam
+                            impedit quaerat est sed excepturi labore quidem
+                            veniam ipsam eos beatae asperiores accusantium ea.
+                            Officia repellat impedit, recusandae illo neque
+                            eaque nobis magni, tenetur saepe quia maxime. Earum,
+                            dolor!
+                        </p>
+                    </article>
+                    <article id="artikel3">
+                        <h2>Artikel 3</h2>
+                        <figure>
+                            <img
+                                src="example.svg"
+                                alt="Beispiel SVG"
+                                class="img-fluid"
+                            />
+                            <figcaption>Beispiel SVG-Beschreibung</figcaption>
+                        </figure>
+                        <h3>Unterabschnitt 3.1</h3>
+                        <p>
+                            Curabitur sodales ligula in libero. Sed dignissim
+                            lacinia nunc. Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Animi autem sit dolore qui
+                            molestiae corrupti enim magnam eius. Repellendus
+                            animi molestias itaque. Ipsum tempora dolore
+                            temporibus quae. Blanditiis, vero voluptates
+                            mollitia necessitatibus explicabo saepe officiis
+                            soluta aspernatur. Esse sapiente tempore facere
+                            maxime! Repellat nihil animi illum nam! Iusto
+                            consectetur eligendi, voluptatum maxime illum
+                            perspiciatis maiores cumque accusantium eos fugit
+                            laborum tempore non minus corrupti facere commodi
+                            nostrum totam quidem deserunt. Nostrum sint
+                            provident ipsam culpa porro magni a reiciendis
+                            dignissimos.
+                        </p>
+                        <h3>Unterabschnitt 3.2</h3>
+                        <p>
+                            Curabitur tortor. Pellentesque nibh. Aenean quam.
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Nostrum molestias voluptates iusto minus
+                            laborum a saepe dicta esse ipsum eius quam voluptate
+                            deleniti, quas excepturi expedita. Doloremque
+                            repellendus provident error aperiam dolore dolorem
+                            ipsa voluptatem. Delectus quos cupiditate optio
+                            fugiat omnis? Earum veniam magnam minima officia
+                            asperiores exercitationem fugit? Sit in quasi
+                            quisquam, ipsam dolores sunt alias minima? Neque
+                            dignissimos ducimus cupiditate sint aperiam odio
+                            nisi iure rem itaque, totam esse impedit perferendis
+                            voluptas necessitatibus vitae? Accusantium molestias
+                            officiis asperiores!
+                        </p>
+                    </article>
+                    <article id="artikel4">
+                        <h2>Artikel 4</h2>
+                        <h3>Unterabschnitt 4.1</h3>
+                        <p>In scelerisque sem at dolor. Maecenas mattis.</p>
+                        <h3>Unterabschnitt 4.2</h3>
+                        <p>
+                            Sed convallis tristique sem. Proin ut ligula vel
+                            nunc egestas porttitor. Lorem ipsum dolor sit amet
+                            consectetur adipisicing elit. Iusto nesciunt
+                            expedita reprehenderit, deleniti unde architecto,
+                            hic distinctio voluptate similique ipsam ut ullam
+                            quibusdam ipsum consequuntur ad tempora obcaecati
+                            repellendus? Sequi, placeat quo. Praesentium vero
+                            perspiciatis velit suscipit facilis? Culpa natus
+                            vitae, nisi ratione facilis minima illo magnam
+                            provident eligendi saepe tempore, soluta, neque vero
+                            veniam. Atque eius culpa cum provident? Enim ab
+                            tempore perspiciatis magnam non. Ad eos quo rem
+                            minima, nam maiores quaerat facilis rerum nemo,
+                            architecto quia quis?
+                        </p>
+                    </article>
+                    <article id="artikel5">
+                        <h2>Artikel 5</h2>
+                        <h3>Unterabschnitt 5.1</h3>
+                        <p>
+                            Vivamus sagittis lacus vel augue laoreet rutrum
+                            faucibus dolor auctor. Lorem, ipsum dolor sit amet
+                            consectetur adipisicing elit. Quasi maxime expedita
+                            necessitatibus. Veritatis quas sunt nisi nemo a
+                            error magnam quaerat odio, vel amet iusto dicta
+                            alias molestias ipsa. Facere sunt et iste sequi
+                            placeat fuga aliquam, eaque laudantium voluptatum
+                            repellendus tenetur deleniti, quae nemo quo!
+                            Assumenda nam rerum distinctio dolorum mollitia,
+                            eius doloribus voluptates quam, minima suscipit
+                            explicabo modi! Nobis blanditiis esse omnis
+                            asperiores eaque nihil libero perspiciatis! Atque
+                            harum aperiam quidem blanditiis reiciendis, dolorum
+                            magni. Impedit, voluptates debitis?
+                        </p>
+                        <h3>Unterabschnitt 5.2</h3>
+                        <p>
+                            Nullam id dolor id nibh ultricies vehicula ut id
+                            elit. Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Delectus quos placeat ducimus
+                            tenetur optio? Laboriosam, voluptas repellendus
+                            explicabo quidem maxime optio vel inventore iusto
+                            omnis porro voluptatem. Maiores consequuntur odio
+                            optio vero nihil molestias facilis voluptas ab
+                            quibusdam minus tempore a, dolorum consectetur
+                            accusantium asperiores odit officia neque. Quia,
+                            quisquam aspernatur dolor necessitatibus sit
+                            reprehenderit blanditiis fugiat at iusto
+                            consequuntur ipsum itaque voluptatum labore eum
+                            incidunt voluptas rerum voluptatibus enim officia,
+                            iste corrupti deleniti iure veniam. Quasi nobis
+                            sequi consequatur.
+                        </p>
+                    </article>
+                </div>
+            </section>
+        </main>
+        <footer
+            id="footer"
+            class="fixed-footer"
+        >
+            <p>&copy; 2021 Web Accessibility Guidelines</p>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

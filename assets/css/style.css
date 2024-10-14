@@ -4289,26 +4289,6 @@ nav.breadcrumb [aria-current=page] {
   font-weight: 400;
 }
 
-html {
-  background: hsla(0, 0%, 0%, 0.85);
-  color: hsla(0, 0%, 100%, 0.85);
-}
-
-.ephemeride .svg-line {
-  stroke: black;
-  stroke-width: 2;
-  fill: none;
-}
-.ephemeride .svg-text {
-  font-size: 1em;
-  text-anchor: middle;
-  fill: black;
-}
-.ephemeride svg-sign {
-  fill: black;
-  stroke: none;
-}
-
 a.icon {
   color: var(--on-primary);
   background-color: var(--primary);
