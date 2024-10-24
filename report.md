@@ -20,6 +20,17 @@ Begründung der ausgewählten Seiten:
 
 Die Seiten haben ein breites Spektrum an Inhalten und Funktionen, die für die Nutzer:innen relevant sind. Die Startseite ist die wichtigste Seite, Lotterie wird von einer großen Anzahl Benutzer aus allen Bevölkerungsschichten genutzt.
 
+## Was wird geprüft?
+
+| Schritt | Nr.   | Prüfschritt                                 | Seiten   | Status          |
+| ------- | ----- | ------------------------------------------- | -------- | --------------- |
+| 1       | 5.2   | Aktivierung von Barrierefreiheitsfunktionen | generell | anwendbar       |
+| 2       | 5.3   | Biometrie                                   |          | nicht anwendbar |
+| 3       | 5.4   | ...                                         | ...      | ...             |
+| ...     | ...   | ...                                         | ...      | ...             |
+| 20      | 7.1.1 | Wiedergabe von Untertiteln                  | 3,5      | anwendbar       |
+| ...     | ...   | ...                                         | ...      | ...             |
+
 ## Prüfergebnisse
 
 Die Prüfung erfolgte auf Basis der Prüfschritte des BITV-Tests. Die Prüfung wurde manuell durchgeführt. Die Prüfung erfolgte am 01.06.2021.
@@ -33,10 +44,13 @@ Die Prüfung erfolgte auf Basis der Prüfschritte des BITV-Tests. Die Prüfung w
 
 ## BITV-konform
 
-| Nr.   | Prüfschritt     | Seiten |
-| ----- | --------------- | ------ |
-| 1.1.1 | Alternativtexte | 1      |
-| ...   | ...             | ...    |
+| Nr.   | Prüfschritt            | Seiten |
+| ----- | ---------------------- | ------ |
+| 1.1.1 | Alternativtexte        | 1      |
+| ...   | ...                    | ...    |
+| 2.1.1 | Ohne Maus nutzbar      | 1      |
+| ...   | ...                    | ...    |
+| 2.4.1 | Bereiche überspringbar | 1      |
 
 ## Nicht anwendbar
 
