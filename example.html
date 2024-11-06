@@ -9,25 +9,230 @@
         <title>Document</title>
     </head>
     <body>
-        <nav>
-            <ul>
-                <li><a href="#">link 1</a></li>
-                <li><a href="#">link 2</a></li>
-                <li><a href="#">link 3</a></li>
-            </ul>
-        </nav>
+        <header>Seitenkopf-Bereich</header>
 
-        <h1>Headline and some content</h1>
+        <div>
+            <!-- - - - -->
+            <nav>
+                <ul>
+                    <li><a href="#">link 1</a></li>
+                    <li><a href="#">link 2</a></li>
+                    <li><a href="#">link 3</a></li>
+                </ul>
+            </nav>
+            <!-- - - - -->
+        </div>
 
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-            neque aliquid nobis necessitatibus assumenda? Enim perferendis
-            accusantium explicabo.
-        </p>
+        <main>
+            <h1>Headline and some content</h1>
 
-        <p lang="en">An english sentence: one. two. three.</p>
-        <p lang="de">Ein deutscher Satz: eins. zwei. drei.</p>
-        <p lang="hu">Egy magyar mondat: egy. kettő. három.</p>
-        <p lang="kr">한국어 문장: 일. 이. 삼.</p>
+            <article>
+                <header>
+                    <time>12. Dezember 2024</time>
+                    <address>Autor: Michael</address>
+                </header>
+
+                <aside>Marginaler Inhalt</aside>
+
+                <h2>Artikelüberschrift</h2>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quisquam neque aliquid nobis necessitatibus assumenda? Enim
+                    perferendis accusantium explicabo.
+                </p>
+
+                <p lang="en">An english sentence: one. two. three.</p>
+                <p lang="de">Ein deutscher Satz: eins. zwei. drei.</p>
+                <p lang="hu">Egy magyar mondat: egy. kettő. három.</p>
+                <p lang="kr">한국어 문장: 일. 이. 삼.</p>
+
+                <footer>Artikelfuß</footer>
+            </article>
+        </main>
+
+        <footer>
+            <address>&copy; <time datetime="2024">2024</time> Michael</address>
+            <nav>
+                <ul>
+                    <li><a href="">link to 1</a></li>
+                    <li><a href="">link to 2</a></li>
+                    <li><a href="">link to 3</a></li>
+                    <li><a href="">link to 4</a></li>
+                    <li><a href="">link to 5</a></li>
+                    <li><a href="">link to 6</a></li>
+                    <li><a href="">link to 7</a></li>
+                    <li><a href="">link to 8</a></li>
+                    <li><a href="">link to 9</a></li>
+                    <li><a href="">link to 10</a></li>
+                    <li><a href="">link to 11</a></li>
+                    <li><a href="">link to 12</a></li>
+                </ul>
+            </nav>
+        </footer>
+        <!-- - - - - - - - - - - -->
+        <span>
+            <!-- Dynamisch generierte Stories -->
+            <div class="story">
+                <h3>Standard-Story</h3>
+                <div id="standard-story"></div>
+
+                <h3>Screenreader-Story</h3>
+                <div id="screenreader-story"></div>
+
+                <h3>Story in Leichter Sprache</h3>
+                <div id="leichtesprache-story"></div>
+            </div>
+            <script>
+                function generateStories() {
+                    const standardStory = []
+                    const screenreaderStory = []
+                    const leichteSpracheStory = []
+
+                    // Normaltext-Story mit Überschriften, legend, label, Hinweise, ohne visibility-hidden
+                    document
+                        .querySelectorAll(
+                            "h2, legend, label, .message.default-language:not(.visibility-hidden)"
+                        )
+                        .forEach((element) => {
+                            const text = element.innerText
+                            standardStory.push(`N: ${text}`)
+                        })
+
+                    // Screenreader-Story generieren mit Strukturinformationen
+                    const legend = document.querySelector("legend")
+                    if (legend) {
+                        screenreaderStory.push(
+                            `SR: ${legend.innerText} [Abschnitt]`
+                        )
+                    }
+                    document
+                        .querySelectorAll(
+                            "[aria-labelledby], [aria-describedby], [aria-live]"
+                        )
+                        .forEach((element) => {
+                            const ariaLabelledby =
+                                element.getAttribute("aria-labelledby")
+                            const ariaDescribedby =
+                                element.getAttribute("aria-describedby")
+                            const ariaLive = element.getAttribute("aria-live")
+
+                            // aria-labelledby
+                            if (ariaLabelledby) {
+                                const labelElement =
+                                    document.getElementById(ariaLabelledby)
+                                if (labelElement) {
+                                    let structureInfo =
+                                        element.tagName === "INPUT"
+                                            ? " [Eingabefeld]"
+                                            : ""
+                                    screenreaderStory.push(
+                                        `SR: ${labelElement.innerText}${structureInfo}`
+                                    )
+                                }
+                            }
+
+                            // aria-describedby
+                            if (ariaDescribedby) {
+                                const descriptionElement =
+                                    document.getElementById(ariaDescribedby)
+                                if (descriptionElement) {
+                                    let structureInfo =
+                                        element.tagName === "INPUT"
+                                            ? " [Eingabefeld]"
+                                            : ""
+                                    screenreaderStory.push(
+                                        `SR: ${descriptionElement.innerText}${structureInfo}`
+                                    )
+                                }
+                            }
+
+                            // aria-live
+                            if (ariaLive && element.innerText.trim() !== "") {
+                                screenreaderStory.push(
+                                    `SR: ${element.innerText}`
+                                )
+                            }
+                        })
+
+                    // Hinzufügen von Strukturinformationen für andere Elemente
+                    document.querySelectorAll("button").forEach((button) => {
+                        screenreaderStory.push(
+                            `SR: ${button.innerText}  [Schaltfläche]`
+                        )
+                    })
+
+                    // Leichte Sprache Story aus Elementen mit Überschriften, legend, label, Hinweise, ohne visibility-hidden
+                    document
+                        .querySelectorAll(
+                            "h2, legend, label, .message.leichte-sprache:not(.visibility-hidden)"
+                        )
+                        .forEach((element) => {
+                            const text = element.innerText
+                            leichteSpracheStory.push(`LS: ${text}`)
+                        })
+
+                    // Story-Elemente dynamisch einfügen
+                    document.getElementById("standard-story").innerHTML =
+                        standardStory.map((text) => `<p>${text}</p>`).join("")
+                    document.getElementById("screenreader-story").innerHTML =
+                        screenreaderStory
+                            .map((text) => `<p>${text}</p>`)
+                            .join("")
+                    document.getElementById("leichtesprache-story").innerHTML =
+                        leichteSpracheStory
+                            .map((text) => `<p>${text}</p>`)
+                            .join("")
+                }
+
+                // Stories generieren beim Laden der Seite
+                document.addEventListener("DOMContentLoaded", generateStories)
+            </script>
+            <style>
+                .default-language {
+                    color: hsla(210, 50%, 70%, 0.85);
+                }
+                .screenreader-only {
+                    color: hsla(310, 50%, 70%, 0.85);
+                }
+                .leichte-sprache {
+                    color: hsla(80, 50%, 70%, 0.85);
+                }
+
+                .default-language::before {
+                    content: "N: ";
+                }
+                .screenreader-only::before {
+                    content: "SR: ";
+                }
+                .leichte-sprache::before {
+                    content: "LS: ";
+                }
+
+                .story {
+                    display: none;
+                    margin-top: 30px;
+                    max-width: 600px;
+                    color: #ffffff;
+                    font-size: 1em;
+                    background-color: #2c2c2c;
+                    padding: 15px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+                }
+
+                .story h2 {
+                    font-size: 1.3em;
+                    color: #ffffff;
+                }
+
+                .story p {
+                    margin: 10px 0;
+                }
+
+                .visibility-hidden {
+                    /*visibility: hidden;*/
+                }
+            </style>
+        </span>
     </body>
 </html>
