@@ -7,6 +7,11 @@
             content="width=device-width, initial-scale=1.0"
         />
         <title>Document</title>
+        <!-- Material Icons -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
     </head>
     <body>
         <header>Seitenkopf-Bereich</header>
@@ -15,9 +20,27 @@
             <!-- - - - -->
             <nav>
                 <ul>
-                    <li><a href="#">link 1</a></li>
-                    <li><a href="#">link 2</a></li>
-                    <li><a href="#">link 3</a></li>
+                    <li>
+                        <a
+                            tabindex="-1"
+                            href="#"
+                            >link 1</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            tabindex="-1"
+                            href="#"
+                            >link 2</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            tabindex="-1"
+                            href="#"
+                            >link 3</a
+                        >
+                    </li>
                 </ul>
             </nav>
             <!-- - - - -->
@@ -27,6 +50,120 @@
             <h1>Headline and some content</h1>
 
             <article>
+                <h2>Login-Formular Beispiel</h2>
+
+                <form>
+                    <fieldset>
+                        <legend>Benutzeranmeldung</legend>
+
+                        <div
+                            aria-live="assertive"
+                            class="input-group"
+                        >
+                            <label for="login-email">E-Mail - Adresse</label>
+                            <input
+                                type="email"
+                                id="login-email"
+                                name="email"
+                                required
+                                placeholder="z.B. mail@example.com"
+                                autocomplete="off"
+                                aria-describedby="email-hinweis-sr"
+                            />
+                            <p
+                                id="email-hinweis"
+                                class="message default-language"
+                                aria-hidden="true"
+                            >
+                                <span
+                                    class="material-icons"
+                                    aria-hidden="true"
+                                    >error_outline</span
+                                >
+                                Bitte geben Sie Ihre E-Mail-Adresse ein.
+                            </p>
+                            <p
+                                id="email-hinweis-sr"
+                                class="visibility-hidden sr-only screenreader-only"
+                            >
+                                Bitte geben Sie Ihre E-Mail-Adresse ein.
+                            </p>
+                            <p class="message error default-language">
+                                <span
+                                    class="material-icons"
+                                    aria-hidden="true"
+                                    >error_outline</span
+                                >
+                                Fehlerhinweis: Du hast noch keine E-Mail
+                                angegeben. Die E-Mail ist ein Pflichtangabe.
+                            </p>
+                            <p class="message info default-language">
+                                <span
+                                    class="material-icons"
+                                    aria-hidden="true"
+                                    >error_outline</span
+                                >
+                                Fehlerbeseitigung: Bitte trage deine
+                                E-Mailadresse ein.
+                            </p>
+                            <p class="message success default-language">
+                                <span
+                                    class="material-icons"
+                                    aria-hidden="true"
+                                    >error_outline</span
+                                >
+                                Erfolgshinweis: E-Mail wurde erfolgreich
+                                eingetragen.
+                            </p>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="login-password">Passwort</label>
+                            <input
+                                type="password"
+                                id="login-password"
+                                name="password"
+                                required
+                                placeholder="Passwort"
+                                autocomplete="off"
+                                aria-describedby="password-hinweis-sr"
+                            />
+                            <p
+                                id="password-hinweis"
+                                class="message default-language"
+                                aria-hidden="true"
+                            >
+                                <span
+                                    class="material-icons"
+                                    aria-hidden="true"
+                                    >error_outline</span
+                                >Bitte geben Sie Ihr Passwort ein.
+                            </p>
+                            <p
+                                id="password-hinweis-sr"
+                                class="visibility-hidden sr-only screenreader-only"
+                            >
+                                Bitte geben Sie Ihr Passwort ein.
+                            </p>
+                        </div>
+
+                        <div class="input-group">
+                            <input
+                                type="checkbox"
+                                name="store"
+                                id="login-store"
+                            />
+                            <label for="login-store"
+                                >Anmeldedaten speichern</label
+                            >
+                        </div>
+                    </fieldset>
+
+                    <button type="submit">Anmelden</button>
+                </form>
+            </article>
+            <hr />
+            <article>
                 <header>
                     <time>12. Dezember 2024</time>
                     <address>Autor: Michael</address>
@@ -34,7 +171,43 @@
 
                 <aside>Marginaler Inhalt</aside>
 
-                <h2>Artikelüberschrift</h2>
+                <h2 tabindex="2">Artikelüberschrift</h2>
+
+                <table
+                    tabindex="1"
+                    border="1"
+                >
+                    <thead>
+                        <tr>
+                            <th>One</th>
+                            <th>Two</th>
+                            <th>Three</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>content 1</td>
+                            <td>content 2</td>
+                            <td>content 3</td>
+                        </tr>
+                        <tr>
+                            <td>content 1</td>
+                            <td>content 2</td>
+                            <td>content 3</td>
+                        </tr>
+                        <tr>
+                            <td>content 1</td>
+                            <td>content 2</td>
+                            <td>content 3</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Fußzeile</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Quisquam neque aliquid nobis necessitatibus assumenda? Enim
@@ -56,7 +229,7 @@
                 <ul>
                     <li><a href="">link to 1</a></li>
                     <li><a href="">link to 2</a></li>
-                    <li><a href="">link to 3</a></li>
+                    <!-- <li><a href="">link to 3</a></li>
                     <li><a href="">link to 4</a></li>
                     <li><a href="">link to 5</a></li>
                     <li><a href="">link to 6</a></li>
@@ -65,7 +238,7 @@
                     <li><a href="">link to 9</a></li>
                     <li><a href="">link to 10</a></li>
                     <li><a href="">link to 11</a></li>
-                    <li><a href="">link to 12</a></li>
+                    <li><a href="">link to 12</a></li> -->
                 </ul>
             </nav>
         </footer>
@@ -209,7 +382,6 @@
                 }
 
                 .story {
-                    display: none;
                     margin-top: 30px;
                     max-width: 600px;
                     color: #ffffff;
@@ -230,7 +402,17 @@
                 }
 
                 .visibility-hidden {
-                    /*visibility: hidden;*/
+                    text-decoration: line-through;
+                    text-decoration-color: lightgrey;
+                }
+                .error {
+                    color: hsla(0, 90%, 50%, 0.85);
+                }
+                .info {
+                    color: hsla(210, 90%, 50%, 0.85);
+                }
+                .success {
+                    color: hsla(120, 70%, 50%, 0.85);
                 }
             </style>
         </span>

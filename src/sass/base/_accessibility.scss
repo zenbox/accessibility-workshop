@@ -1,4 +1,4 @@
-.sr-only {
+.sr-only, .visually-hidden {
     word-wrap: normal;
     position: absolute;
 
@@ -86,6 +86,12 @@ svg [tabindex] {
     // outline: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+    *:focus {
+        animation-duration: 0.001s;
+    }
+}
+
 .mouseenter {
     background: hsla(210, 50%, 50%, 0.125);
 }
@@ -95,6 +101,7 @@ svg [tabindex] {
 .blurred-vision {
     filter: blur(2px);
 }
+
 .achromatopsia {
     filter: url('data:image/svg+xml,\
       <svg xmlns="http://www.w3.org/2000/svg">\
