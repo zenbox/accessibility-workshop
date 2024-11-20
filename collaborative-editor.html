@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kollaborative Bearbeitung</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #user-list { margin: 10px 0; }
+        #editor { width: 100%; height: 200px; margin-top: 10px; }
+        #output { border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
+        .user-flag { position: absolute; padding: 5px; font-size: 12px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<h1>Kollaborative Markdown-Bearbeitung</h1>
+<div>
+    <label for="username">Benutzername:</label>
+    <input type="text" id="username">
+    <button onclick="join()">Beitreten</button>
+</div>
+<div id="user-list"></div>
+
+<textarea id="editor" placeholder="Schreibe hier in Markdown..."></textarea>
+<div id="output"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+    const socket = new WebSocket('ws://localhost:8080');
+    let username = '';
+    let color = '';
+
+    function join() {
+        username = document.getElementById('username').value;
+        if (username) {
+            socket.send(JSON.stringify({ type: 'join', username }));
+            document.getElementById('username').disabled = true;
+        }
+    }
+
+    document.getElementById('editor').addEventListener('input', () => {
+        const content = document.getElementById('editor').value;
+        socket.send(JSON.stringify({ type: 'edit', content, username }));
+    });
+
+    document.addEventListener('mousemove', (event) => {
+        socket.send(JSON.stringify({ type: 'mousemove', x: event.pageX, y: event.pageY, username }));
+    });
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        if (data.type === 'user-list') {
+            const userList = document.getElementById('user-list');
+            userList.innerHTML = '';
+            data.users.forEach(user => {
+                const userDiv = document.createElement('div');
+                userDiv.style.color = user.color;
+                userDiv.textContent = user.username;
+                userList.appendChild(userDiv);
+            });
+        }
+
+        if (data.type === 'edit') {
+            document.getElementById('output').innerHTML = marked.parse(data.content);
+        }
+
+        if (data.type === 'mousemove') {
+            let flag = document.getElementById(data.username);
+            if (!flag) {
+                flag = document.createElement('div');
+                flag.id = data.username;
+                flag.classList.add('user-flag');
+                flag.style.backgroundColor = data.color;
+                document.body.appendChild(flag);
+            }
+            flag.textContent = data.username;
+            flag.style.left = `${data.x}px`;
+            flag.style.top = `${data.y}px`;
+        }
+    };
+</script>
+
+</body>
+</html>

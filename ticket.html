@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <title>Fahrschein kaufen</title>
+    </head>
+    <body>
+        <form action="">
+            <fieldset>
+                <legend>Fahrschein kaufen</legend>
+
+                <label for="ziel">Wo möchtest Du hinfahren?</label>
+                <input
+                    type="text"
+                    name="ziel"
+                    id="ziel"
+                    placeholder="z.B. Bahnhof..."
+                    aria-describedby="ziel-info"
+                />
+                <p class="info" aria-hidden="true" id="ziel-info">
+                    <i class="material-icons">info</i>Wähle die passende Haltestelle aus der Liste aus oder gib sie ein.
+                </p>
+
+                <label for="startpunk">Startpunkt Deiner Fahrt</label>
+                <input
+                    type="text"
+                    name="startpunkt"
+                    id="abfahrt"
+                />
+                <p class="info">
+                    <i class="material-icons">info</i>Bitte gib den Startpunkt
+                    Deiner Fahrt ein. Wähle die passende Haltestelle aus.
+                </p>
+
+                <label for="datum">Datum deiner Fahrt</label>
+                <input
+                    type="date"
+                    name="datum"
+                    id="datum"
+                />
+
+                <label for="uhrzeit">Uhrzeit deiner Fahrt</label>
+                <input
+                    type="time"
+                    name="uhrzeit"
+                    id="uhrzeit"
+                />
+
+                <fieldset>
+                    <input
+                        type="number"
+                        name="erwachsen"
+                        id="erwachsen"
+                    />
+                    <label for="erwachsen">Erwachsener</label>
+
+                    <input
+                        type="number"
+                        name="kind"
+                        id="kind"
+                    />
+                    <label for="kind">Kind</label>
+
+                    <p class="error"><i class="material-icons">error</i>Du musst mindestens 1 Person angeben. Bitte gebe an, ob du ein Ticket für einen Erwachsenen oder ein Kind kaufen möchtest.</p>
+                </fieldset>
+                <label>
+                    <input
+                        type="checkbox"
+                        name="Ermäßigung"
+                        id="ermäßigung"
+                    />Ermäßigter Fahrer</label
+                >
+
+                <output><i>Preis</i><i>2,80€</i></output>
+                <button type="cancel">Abbrechen</button>
+                <button type="submit">Ok</button>
+            </fieldset>
+        </form>
+        <p class="success">
+            <i class="material-icons">check</i> Das hast du gut gemacht.
+        </p>
+        <p class="info">
+            <i class="material-icons">info</i> Das ist eine Information.
+        </p>
+        <p class="warning">
+            <i class="material-icons">warning</i> Das ist wichtiger Hinweis.
+        </p>
+        <p class="error">
+            <i class="material-icons">error</i> Das ist ein Fehler.
+        </p>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                font-family: Barlow, sans-serif;
+            }
+            body {
+                margin-inline: 25vw;
+                margin-block: 25vh;
+            }
+            input:not([type="checkbox"]):not([type="number"]) {
+                width: 100%;
+                padding-block: 0.5rem;
+            }
+            button {
+                width: 49.5%;
+            }
+            fieldset,
+            output::before,
+            output::after,
+            label:before,
+            label::after {
+                content: "";
+                display: block;
+                margin-block-start: 0.5rem;
+            }
+            fieldset fieldset label::after,
+            fieldset fieldset label::before {
+                content: "";
+                display: inline-block;
+            }
+            fieldset fieldset label::after {
+                margin-inline-end: 2rem;
+            }
+            output {
+                display: flex;
+                justify-content: space-between;
+                margin-block: 1rem;
+                padding-block: 1rem;
+                border-top: 1px solid black;
+                border-bottom: 1px solid black;
+            }
+            [type="number"] {
+                width: 2rem;
+            }
+            .error {
+                color: red;
+            }
+            .info {
+                color: blue;
+            }
+            .warning {
+                color: orange;
+            }
+            .success {
+                color: green;
+            }
+        </style>
+    </body>
+</html>

@@ -1,0 +1,56 @@
+.toggle-panel {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.toggle-panel .toggle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.toggle-panel .toggle input {
+  display: none;
+}
+.toggle-panel .toggle .slider {
+  position: relative;
+  cursor: pointer;
+  padding-left: 3rem;
+}
+.toggle-panel .toggle .slider::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 2.5rem;
+  height: 1.5rem;
+  background: #ccc;
+  border-radius: 1rem;
+  transition: 0.3s;
+}
+
+.ticket-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+.ticket-form .form-group {
+  margin-bottom: 1.5rem;
+}
+.ticket-form .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.ticket-form .form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.ticket-form .form-group .help {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
