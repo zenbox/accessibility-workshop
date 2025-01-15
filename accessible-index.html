@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Document</title>
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+    <body>
+
+        <header>header</header>
+
+<a role="button" href="#" style="border: 1px solid black;">klick mich</a>
+
+
+<div role="banner">header</div>
+
+        <form aria-live="assertive">
+            <fieldset>
+                <legend>Login</legend>
+
+                <label for="email">E-Mail</label>
+                <input
+                aria-describedby="email-hint"
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    placeholder="ihre-email@domain.de">
+                <p id="email-hint" class="visually-hidden">Die Emailadresse muss angegeben werden, und entält ein @ Zeichen.</p>
+
+                <label for="password">Passwort</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    placeholder="Passwort">
+
+                <button type="submit">Login</button>
+
+            </fieldset>
+        </form>
+
+
+        <h1>Überschrift lalala</h1>
+        <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam
+            veniam aperiam officia!
+        </p>
+
+        <figure>
+        <img
+            src="https://picsum.photos/id/63/800/480"
+            alt="Foto: Lecker Milchkaffe am frühen Morgen. Die Tasse steht malerisch auf einem roten Tisch."
+            aria-describedby="image-description"
+            title="Kaffeetasse auf rotem Tisch, von oben fotografiert."
+        />
+        <figcaption class="sr-only visually-hidden" id="image-description">
+            Lecker Milchkaffe am frühen Morgen. Die Tasse steht malerisch auf
+            einem roten Tisch.
+        </figcaption>
+</figure>
+        <img
+            src="figures/icons/icon.svg"
+            alt=""
+            title="Icon: Ein kleines, blaues Quadrat mit einem weißen Kreuz in der Mitte."
+        />
+
+        <main>
+            <li>
+            <svg aria-labelledby="icon-label"  aria-label="Icon für den Warenkorb" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M5.5,21C4.72,21 4.04,20.55 3.71,19.9V19.9L1.1,10.44L1,10A1,1 0 0,1 2,9H6.58L11.18,2.43C11.36,2.17 11.66,2 12,2C12.34,2 12.65,2.17 12.83,2.44L17.42,9H22A1,1 0 0,1 23,10L22.96,10.29L20.29,19.9C19.96,20.55 19.28,21 18.5,21H5.5M12,4.74L9,9H15L12,4.74M12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17A2,2 0 0,0 14,15A2,2 0 0,0 12,13Z" />
+</svg>
+<span class="visually-hidden" id="icon-label">Icon für den Warenkorb</span>
+</li>
+            <h2>Vier gute Gründe für einen Wechsel zu uns</h2>
+            <ul>
+                <li>
+                    <img
+                        src="https://web.cdn.rheinenergie.com/cms/media/pictures/content_icons_1/icon-oekostrom.svg"
+                        alt=""
+                    />
+                    <h3>>Klimaschutz</h3>
+                    <p>Unser Ökostrom ist zertifiziert und 100 % grün.</p>
+                </li>
+            </ul>
+        </main>
+    </body>
+</html>
