@@ -8,9 +8,13 @@
     --on-medium-bright: hsla(0, 0%, 15%, 1);
     --medium: rgb(175, 175, 175);
     --on-medium: hsla(0, 0%, 15%, 1);
-    --dark: hsla(0, 0%, 0%, 1);
+    --dark: hsla(0, 0%, 15%, 1);
     --on-dark: hsla(0, 0%, 85%, 1);
     --shadow: hsla(0, 0%, 0%, 0.5);
+
+    --dark-high-contrast: hsla(0, 0%, 0%, 1);
+    --on-dark-hight-contrast: hsla(0, 0%, 100%, 1);
+
 
     // Identity
     --primary: hsla(300, 93%, 12%, 1);
@@ -92,7 +96,7 @@ $colors: (
     }
 }
 
-:root {
+:root, :root.light {
     --default: 1rem;
     --big: 2rem;
     --small: 0.75rem;
@@ -102,6 +106,12 @@ $colors: (
     background-color: var(--dark);
     color: var(--on-dark);
 }
+
+:root.high-contrast {
+    background-color: var(--dark-high-contrast);
+    color: var(--on-dark-hight-contrast);
+}
+
 
 $lightens: (
     100: 100%,

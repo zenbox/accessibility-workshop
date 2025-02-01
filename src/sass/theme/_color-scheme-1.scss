@@ -20,19 +20,18 @@ html {
         color: var(--on-dark);
 
         samp {
-                 filter: invert(1);
+            filter: invert(1);
             > * {
                 filter: invert(1);
             }
         }
 
         pre {
-                 filter: invert(1);
+            filter: invert(1);
             > * {
                 filter: invert(1);
             }
         }
-
 
         a:link {
             color: var(--link-color);
@@ -54,11 +53,60 @@ html {
             color: var(--on-dark);
         }
     }
+
     &.bright {
         background-color: var(--bright);
         color: var(--on-bright);
         filter: invert(1);
     }
+
+    &.neutral {
+        background-color: var(--neutral);
+        color: var(--on-neutral);
+    }
+
+    &.high-contrast {
+        background-color: var(--dark-high-contrast);
+        color: var(--on-dark-high-contrast);
+
+        samp {
+            background-color: var(--dark-high-contrast);
+            color: var(--on-dark-high-contrast);
+        }
+
+        pre {
+            background-color: var(--dark-high-contrast);
+            color: var(--on-dark-high-contrast);
+        }
+
+        a:link {
+            background-color: var(--dark-high-contrast);
+            color: var(--on-dark-high-contrast);
+        }
+        a:visited {
+            background-color: var(--dark-high-contrast);
+            color: var(--on-dark-high-contrast);
+        }
+        a:hover {
+            background-color: var(--dark-high-contrast);
+            color: var(--on-dark-high-contrast);
+        }
+        a:active {
+            background-color: var(--dark-high-contrast);
+            color: var(--on-dark-high-contrast);
+        }
+        body > nav:nth-child(2) {
+            background: hsla(0, 0%, 15%, 0.85);
+            color: var(--on-dark);
+        }
+    }
+
+    &.bright {
+        background-color: var(--bright);
+        color: var(--on-bright);
+        filter: invert(1);
+    }
+
     &.neutral {
         background-color: var(--neutral);
         color: var(--on-neutral);

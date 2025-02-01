@@ -285,6 +285,84 @@ function createDarkModeButton() {
     document.querySelector("#main-navigation ul").prepend(li)
 }
 
+function createThemeModeButton() {
+    const themeButton = document.createElement("button")
+    themeButton.classList.add("btn-theme-mode")
+    let currentMode = "light" // Mögliche Werte: "light", "dark", "high-contrast"
+
+    const html = document.querySelector("html")
+
+    // Tooltip erstellen
+    const tooltip = new Tooltip({
+        className: "theme-mode-tooltip",
+        maxWidth: "250px",
+        additionalStyles: {
+            transition: "opacity 0.2s ease-in-out",
+        },
+    })
+
+    // Hilfsfunktionen für State Management
+    function updateButtonState(mode) {
+        // Alle Klassen entfernen
+        themeButton.classList.remove("light", "dark", "high-contrast")
+        html.classList.remove("light", "dark", "high-contrast")
+
+        // Neue Klasse hinzufügen
+        themeButton.classList.add(mode)
+        html.classList.add(mode)
+
+        // Button Titel aktualisieren
+        const titles = {
+            "light": "Dark Mode aktivieren",
+            "dark": "High Contrast Mode aktivieren",
+            "high-contrast": "Light Mode aktivieren",
+        }
+        themeButton.title = titles[mode]
+
+        // Mode im localStorage speichern
+        localStorage.setItem("themeMode", mode)
+
+        // Aktuellen Modus aktualisieren
+        currentMode = mode
+    }
+
+    // Tooltip Text Funktion
+    const getTooltipText = () => {
+        const tooltips = {
+            "light":
+                "Dunkles Farbschema aktivieren für bessere Lesbarkeit bei wenig Umgebungslicht",
+            "dark": "Hochkontrast-Modus aktivieren für maximale Lesbarkeit und Barrierefreiheit",
+            "high-contrast": "Zurück zum hellen Standarddesign wechseln",
+        }
+        return tooltips[currentMode]
+    }
+
+    // Initialen Zustand setzen
+    const savedMode = localStorage.getItem("themeMode")
+    if (savedMode && ["light", "dark", "high-contrast"].includes(savedMode)) {
+        updateButtonState(savedMode)
+    } else {
+        updateButtonState("light")
+    }
+
+    themeButton.tabIndex = -1
+
+    // Tooltip an Button anhängen
+    tooltip.attachTo(themeButton, getTooltipText)
+
+    // Click Handler
+    themeButton.addEventListener("click", () => {
+        const modeSequence = ["light", "dark", "high-contrast"]
+        const currentIndex = modeSequence.indexOf(currentMode)
+        const nextMode = modeSequence[(currentIndex + 1) % modeSequence.length]
+        updateButtonState(nextMode)
+    })
+
+    const li = document.createElement("li")
+    li.appendChild(themeButton)
+    document.querySelector("#main-navigation ul").prepend(li)
+}
+
 // - - - - - - - - - - -
 // FOOTER
 // - - - - - - - - - - -
@@ -339,7 +417,8 @@ function setTabindizes() {
 document.addEventListener("DOMContentLoaded", () => {
     createMainNavigation()
     createDeveloperButton()
-    createDarkModeButton()
+    // createDarkModeButton()
+    createThemeModeButton()
     createBrand()
     createFooter()
     createSkipLinks()
