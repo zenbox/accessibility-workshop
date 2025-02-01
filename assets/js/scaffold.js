@@ -1,3 +1,89 @@
+class Tooltip {
+    constructor(options = {}) {
+        this.offset = options.offset || 10
+        this.className = options.className || "custom-tooltip"
+        this.style = {
+            position: "absolute",
+            background: options.background || "rgba(0, 0, 0, 0.8)",
+            color: options.color || "white",
+            padding: options.padding || "10px",
+            borderRadius: options.borderRadius || "4px",
+            fontSize: options.fontSize || "14px",
+            maxWidth: options.maxWidth || "250px",
+            zIndex: options.zIndex || 1000,
+            pointerEvents: "none",
+            ...options.additionalStyles,
+        }
+
+        this.createElement()
+    }
+
+    createElement() {
+        this.element = document.createElement("div")
+        this.element.classList.add(this.className)
+        this.element.style.display = "none"
+
+        // Styles anwenden
+        Object.entries(this.style).forEach(([property, value]) => {
+            this.element.style[property] = value
+        })
+
+        document.body.appendChild(this.element)
+    }
+
+    updatePosition(event) {
+        this.element.style.left = `${event.pageX + this.offset}px`
+        this.element.style.top = `${event.pageY + this.offset}px`
+    }
+
+    setText(text) {
+        this.element.textContent = text
+    }
+
+    show() {
+        this.element.style.display = "block"
+    }
+
+    hide() {
+        this.element.style.display = "none"
+    }
+
+    attachTo(target, text) {
+        if (typeof text === "function") {
+            this.getTextContent = text
+        } else {
+            this.getTextContent = () => text
+        }
+
+        const handleMouseOver = () => {
+            this.setText(this.getTextContent())
+            this.show()
+            document.addEventListener(
+                "mousemove",
+                this.updatePosition.bind(this)
+            )
+        }
+
+        const handleMouseOut = () => {
+            this.hide()
+            document.removeEventListener(
+                "mousemove",
+                this.updatePosition.bind(this)
+            )
+        }
+
+        target.addEventListener("mouseover", handleMouseOver)
+        target.addEventListener("mouseout", handleMouseOut)
+
+        // Return cleanup function
+        return () => {
+            target.removeEventListener("mouseover", handleMouseOver)
+            target.removeEventListener("mouseout", handleMouseOut)
+            this.element.remove()
+        }
+    }
+}
+
 function createMainNavigation() {
     const nav = document.createElement("nav")
     const ul = document.createElement("ul")
@@ -88,6 +174,18 @@ function createDeveloperButton() {
     developerButton.title = "Entwicklermodus anschalten"
     let developerButtonState
 
+    // Tooltip erstellen
+    const tooltip = new Tooltip({
+        className: "developer-tooltip",
+        maxWidth: "300px",
+    })
+
+    // Tooltip Text Funktion
+    const getTooltipText = () =>
+        developerButtonState
+            ? "Im Entwicklermodus werden  Elemente aus dem HTML angezeigt, die für Barrierefreiheit relevant sind."
+            : "Aktivieren Sie den Entwicklermodus um HTML-Elemente zu sehen, die für Barrierefreiheit relevant sind."
+
     if (localStorage.getItem("developer") === "on") {
         developerButtonState = true
         document.body.classList.add("developer")
@@ -100,6 +198,9 @@ function createDeveloperButton() {
     }
 
     developerButton.tabIndex = -1
+
+    // Tooltip an Button anhängen
+    tooltip.attachTo(developerButton, getTooltipText)
 
     developerButton.addEventListener("click", () => {
         developerButtonState = !developerButtonState
@@ -117,12 +218,10 @@ function createDeveloperButton() {
             developerButton.title = "Entwicklermodus anschalten"
         }
     })
-    document
-        .querySelector("#main-navigation ul")
-        .prepend(document.createElement("li"))
-    document
-        .querySelector("#main-navigation ul li:first-child")
-        .prepend(developerButton)
+
+    const li = document.createElement("li")
+    li.appendChild(developerButton)
+    document.querySelector("#main-navigation ul").prepend(li)
 }
 
 function createDarkModeButton() {
@@ -132,6 +231,21 @@ function createDarkModeButton() {
     let darkModeButtonState
 
     const html = document.querySelector("html")
+
+    // Tooltip erstellen
+    const tooltip = new Tooltip({
+        className: "dark-mode-tooltip",
+        maxWidth: "250px",
+        additionalStyles: {
+            transition: "opacity 0.2s ease-in-out",
+        },
+    })
+
+    // Tooltip Text Funktion
+    const getTooltipText = () =>
+        darkModeButtonState
+            ? "Dunkles Farbschema deaktivieren und zum hellen Design zurückkehren"
+            : "Dunkles Farbschema aktivieren für bessere Lesbarkeit bei wenig Umgebungslicht"
 
     if (localStorage.getItem("darkMode") === "on") {
         darkModeButtonState = true
@@ -145,6 +259,9 @@ function createDarkModeButton() {
     }
 
     darkModeButton.tabIndex = -1
+
+    // Tooltip an Button anhängen
+    tooltip.attachTo(darkModeButton, getTooltipText)
 
     darkModeButton.addEventListener("click", () => {
         darkModeButtonState = !darkModeButtonState
@@ -162,12 +279,10 @@ function createDarkModeButton() {
             darkModeButton.title = "Dark Mode anschalten"
         }
     })
-    document
-        .querySelector("#main-navigation ul")
-        .prepend(document.createElement("li"))
-    document
-        .querySelector("#main-navigation ul li:first-child")
-        .prepend(darkModeButton)
+
+    const li = document.createElement("li")
+    li.appendChild(darkModeButton)
+    document.querySelector("#main-navigation ul").prepend(li)
 }
 
 // - - - - - - - - - - -
