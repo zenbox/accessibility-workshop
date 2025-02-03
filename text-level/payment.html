@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Payment</title>
+    <link
+      rel="stylesheet"
+      href="style.css"
+    />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="text-level.html">Sprachlevel</a></li>
+        <li><a href="payment.html">Bezahlen</a></li>
+        <li><a href="ticket.html">Fahrkarte</a></li>
+      </ul>
+    </nav>
+
+    <h1>Sprach-Level Beispiele</h1>
+    <div class="payment-container">
+      <form
+        id="paymentForm"
+        novalidate
+      >
+        <fieldset>
+          <legend>
+            <span data-language-level="easy">Mit Kredit-Karte bezahlen</span>
+            <span data-language-level="simple">Kreditkarte</span>
+            <span data-language-level="default">Kreditkartenzahlung</span>
+            <span data-language-level="expert">Kartenbasierte Zahlungstransaktion mittels Kreditkarte</span>
+          </legend>
+          <p
+            class="message info"
+            data-message-type="info"
+          >
+            <span data-language-level="easy"
+              >Hier können Sie mit Ihrer Kredit-Karte bezahlen. Eine Kredit-Karte ist wie eine Bank-Karte. Sie sehen die Nummern auf der Vorder-Seite.</span
+            >
+            <span data-language-level="simple">Bezahlen Sie mit Ihrer Kreditkarte. Geben Sie einfach Ihre Kartendaten ein und bestätigen Sie die Zahlung.</span>
+            <span data-language-level="default"
+              >Für eine sichere Bezahlung mit Ihrer Kreditkarte erfassen Sie bitte die erforderlichen Kartendaten und führen Sie die 3D-Secure Verifizierung
+              durch.</span
+            >
+            <span data-language-level="expert"
+              >Zur Durchführung einer kartenbasierten Zahlungstransaktion mittels eines durch ein lizenziertes Kreditkarteninstitut ausgestellten
+              Zahlungsmittels initiieren Sie bitte den PCI-DSS-konformen Authentifizierungsprozess durch Eingabe der entsprechenden Kartenreferenzdaten nebst
+              nachgelagerter Zwei-Faktor-Authentifizierung gemäß PSD2-Richtlinie.</span
+            >
+          </p>
+
+          <!-- Kreditkartennummer-Feld -->
+          <!-- * * * * * * * * * -->
+          <div class="form-group">
+            <label for="cardNumber">
+              <span data-language-level="easy">Die Nummer auf Ihrer Kredit-Karte</span>
+              <span data-language-level="simple">Nummer Ihrer Kreditkarte</span>
+              <span data-language-level="default">Kreditkartennummer</span>
+              <span data-language-level="expert">16-stellige alphanumerische Primäridentifikationsnummer des Zahlungsmittels</span>
+            </label>
+
+            <input
+              type="text"
+              id="cardNumber"
+              name="cardNumber"
+              aria-describedby="cardNumberinfo"
+              maxlength="16"
+              required
+            />
+
+            <p
+              class="message info"
+              data-message-type="info"
+              id="cardNumberinfo"
+            >
+              <span data-language-level="easy">Schauen Sie auf Ihre Kredit-Karte. Dort steht eine lange Nummer. Tippen Sie diese Nummer hier ein.</span>
+              <span data-language-level="simple">Geben Sie die Nummer ein, die vorne auf Ihrer Kreditkarte steht.</span>
+              <span data-language-level="default">Bitte geben Sie Ihre Kreditkartennummer ein.</span>
+              <span data-language-level="expert"
+                >Zur Fortsetzung des Zahlungsprozesses erfassen Sie hier bitte die auf dem Zahlungsinstrument aufgebrachte 16-stellige
+                Primäridentifikationsnummer.</span
+              >
+            </p>
+
+            <p data-message-type="warning">
+              <span data-language-level="easy"
+                >Sie müssen noch mehr Zahlen eingeben. Eine Kredit·karten·nummer hat immer 16 Zahlen. Sie haben erst [X] Zahlen eingegeben. Bitte geben Sie die
+                Zahlen ohne Leer·zeichen ein.</span
+              >
+              <span data-language-level="simple"
+                >Die Nummer ist noch nicht vollständig. Bitte geben Sie alle 16 Ziffern Ihrer Kreditkarte ohne Leerzeichen ein. Sie haben bisher [X] Ziffern
+                eingegeben.</span
+              >
+              <span data-language-level="default"
+                >Bitte vervollständigen Sie die Kartennummer. Erforderlich sind 16 Ziffern, aktuell eingegeben: [X]. Bitte keine Leerzeichen oder Trennzeichen
+                verwenden.</span
+              >
+              <span data-language-level="expert"
+                >Validierung der Primary Account Number (PAN) noch nicht abgeschlossen: [X]/16 numerische Charaktere erfasst. Die Eingabe muss eine Länge von
+                exakt 16 Ziffern aufweisen und darf keine Separatoren enthalten. Fortlaufende Validierung gemäß Luhn-Algorithmus ausstehend.</span
+              >
+            </p>
+
+            <p
+              class="message error"
+              data-message-type="error"
+            >
+              <span data-language-level="easy"
+                >Diese Nummer ist falsch. Eine Kredit·Karten·Nummer hat immer 16 Zahlen. Schauen Sie noch einmal auf Ihre Karte. Geben Sie alle Zahlen ein.
+                Machen Sie keine Leer·zeichen zwischen den Zahlen.</span
+              >
+              <span data-language-level="simple"
+                >Die Kartennummer ist nicht korrekt. Bitte prüfen Sie, ob Sie alle 16 Ziffern ohne Leerzeichen eingegeben haben. Die Nummer finden Sie auf der
+                Vorderseite Ihrer Karte.</span
+              >
+              <span data-language-level="default"
+                >Ungültige Kartennummer. Bitte geben Sie eine gültige 16-stellige Kreditkartennummer ohne Leerzeichen ein.</span
+              >
+              <span data-language-level="expert"
+                >Validierungsfehler: Die eingegebene Kartenidentifikationsnummer entspricht nicht dem Luhn-Algorithmus bzw. der spezifizierten Länge von 16
+                numerischen Charakteren. Bitte verifizieren Sie die Eingabe der Primary Account Number (PAN) ohne Separatoren.</span
+              >
+            </p>
+
+            <p
+              class="message success"
+              data-message-type="success"
+            >
+              <span data-language-level="easy">Gut! Die Nummer ist richtig. Sie können jetzt weiter·machen.</span>
+              <span data-language-level="simple">Die Kartennummer ist korrekt. Bitte füllen Sie die weiteren Felder aus.</span>
+              <span data-language-level="default">Kartennummer erfolgreich validiert. Bitte fahren Sie mit den restlichen Eingaben fort.</span>
+              <span data-language-level="expert"
+                >Kartenvalidierung erfolgreich: Die Primary Account Number (PAN) entspricht den definierten Prüfalgorithmen und wurde erfolgreich verifiziert.
+                Fortfahren mit der Erfassung der weiteren Kartenreferenzdaten.</span
+              >
+            </p>
+          </div>
+          <!-- * * * * * * * * * -->
+
+          <!-- Ablaufdatum-Feld -->
+          <div class="form-group">
+            <label for="expiryDate">
+              <span data-language-level="easy">Ablauf·Datum: Bis wann gilt deine Karte? (MM/JJ)</span>
+              <span data-language-level="simple">Gültig bis (MM/JJ)</span>
+              <span data-language-level="default">Ablaufdatum (MM/JJ)</span>
+              <span data-language-level="expert">Expirationsdatum (MM/JJ)</span>
+            </label>
+
+            <input
+              type="text"
+              id="expiryDate"
+              name="expiryDate"
+              aria-describedby="expiryDateInfo"
+              maxlength="5"
+              required
+            />
+
+            <p
+              id="expiryDateInfo"
+              class="message info"
+              data-message-type="info"
+            >
+              <span data-language-level="easy"
+                >Bis wann ist Ihre Kredit-Karte gültig? Sie finden das Datum auf der Karte. Zuerst kommt der Monat. Dann das Jahr. Zum Beispiel: 05/25</span
+              >
+              <span data-labugage-level="simple">Gültig bis (Monat/Jahr) Beispiel: 05/25</span>
+              <span data-labugage-level="default">Ablaufdatum (MM/JJ)</span>
+              <span data-labugage-level="expert">Expirationsdatum des Zahlungsinstruments (Monats-/Jahresnotation gemäß ISO 8601)</span>
+            </p>
+
+            <p data-message-type="warning">
+              <span data-language-level="easy"
+                >So sieht ein richtiges Datum aus: 05/25<br />
+
+                Zuerst kommt der Monat: von 01 bis 12<br />
+                Dann kommt ein Schräg·strich: / <br />
+                Dann kommt das Jahr: zum Beispiel 25<br />
+                Sie haben bisher eingegeben: [X]</span
+              >
+              <span data-language-level="simple"
+                >Bitte geben Sie das Datum wie folgt ein:<br />
+
+                Den Monat als Zahl (01-12)<br />
+                Einen Schrägstrich (/)<br />
+                Die letzten zwei Ziffern des Jahres<br />
+                Beispiel: 05/25</span
+              >
+              <span data-language-level="default"
+                >Bitte geben Sie das Ablaufdatum im Format MM/JJ ein. Der Monat muss zwischen 01 und 12 liegen, gefolgt von einem Schrägstrich und dem
+                zweistelligen Jahr. Ihre aktuelle Eingabe: [X]</span
+              >
+              <span data-language-level="expert"
+                >Erwartetes Eingabeformat des Expirationsdatums: MM/JJ gemäß ISO-Notation. Monatsspezifikation limitiert auf Wertebereich 01-12, Jahresangabe
+                als zweistelliger numerischer Suffix. Separierung mittels Forward-Slash erforderlich. Aktueller Eingabestatus: [X]</span
+              >
+            </p>
+
+            <p data-message-type="warning">
+              <span data-language-level="easy">Der Monat ist zu groß. Geben Sie eine Zahl von 01 bis 12 ein.</span>
+              <span data-language-level="simple">Der Monat muss zwischen 01 und 12 liegen.</span>
+              <span data-language-level="default">Ungültiger Monat. Bitte geben Sie einen Monat zwischen 01 und 12 ein.</span>
+              <span data-language-level="expert">Monatsspezifikation außerhalb des validen Wertebereichs von 01-12.</span>
+            </p>
+
+            <p data-message-type="warning">
+              <span data-language-level="easy">Die Karte ist schon abgelaufen. Prüfen Sie das Datum auf Ihrer Karte.</span>
+              <span data-language-level="simple">Dieses Datum liegt in der Vergangenheit. Die Karte wäre bereits abgelaufen.</span>
+              <span data-language-level="default">Das eingegebene Ablaufdatum liegt in der Vergangenheit.</span>
+              <span data-language-level="expert"
+                >Das spezifizierte Expirationsdatum indiziert eine bereits terminierte Gültigkeitsperiode des Zahlungsinstruments.</span
+              >
+            </p>
+
+            <p data-message-type="warning">
+              <span data-language-level="easy">Bitte machen Sie einen Schräg·strich zwischen Monat und Jahr: /</span>
+              <span data-language-level="simple">Bitte setzen Sie einen Schrägstrich (/) zwischen Monat und Jahr.</span>
+              <span data-language-level="default">Bitte trennen Sie Monat und Jahr durch einen Schrägstrich (/).</span>
+              <span data-language-level="expert">Separationszeichen (Forward-Slash) zwischen Monats- und Jahresnotation erforderlich.</span>
+            </p>
+
+            <p data-message-type="warning">
+              <span data-language-level="easy">Das sieht nicht richtig aus. Schauen Sie auf das Beispiel: 05/25</span>
+              <span data-language-level="simple">Falsches Format. Bitte verwenden Sie das Format MM/JJ wie im Beispiel: 05/25</span>
+              <span data-language-level="default">Ungültiges Datumsformat. Bitte verwenden Sie das Format MM/JJ.</span>
+              <span data-language-level="expert">Formatvalidierung negativ. Erforderlich: Numerische Monats-/Jahresnotation gemäß Spezifikation MM/JJ.</span>
+            </p>
+
+            <p
+              class="message error"
+              data-message-type="error"
+            >
+              <span data-language-level="easy"
+                >Das Datum ist falsch. Schauen Sie auf Ihre Karte. Geben Sie zuerst den Monat ein: 01 bis 12. Dann kommt ein Schräg·strich. Dann geben Sie das
+                Jahr ein: zum Beispiel 25. Also so: 05/25.</span
+              >
+              <span data-language-level="simple"
+                >Das Datum ist nicht richtig. Geben Sie erst den Monat (01-12) und dann das Jahr (z.B. 25) ein. Benutzen Sie einen Schrägstrich zwischen Monat
+                und Jahr. Beispiel: 05/25.</span
+              >
+              <span data-language-level="defaultButton"
+                >Ungültiges Ablaufdatum. Bitte geben Sie das Datum im Format MM/JJ ein (z.B. 05/25). Der Monat muss zwischen 01 und 12 liegen.</span
+              >
+              <span data-language-level="expert"
+                >Validierungsfehler: Das eingegebene Expirationsdatum entspricht nicht dem geforderten Format MM/JJ bzw. liegt außerhalb des validen
+                Datumsbereichs. Die Monatsspezifikation muss zwischen 01 und 12 liegen, gefolgt von einem Forward-Slash als Separator und einer zweistelligen
+                Jahresangabe.</span
+              >
+            </p>
+
+            <p
+              class="message success"
+              data-message-type="success"
+            >
+              <span data-language-level="easy">Gut! Das Datum ist richtig eingegeben. Ihre Karte ist noch gültig. Sie können weiter·machen.</span>
+              <span data-language-level="simple">Das Datum ist korrekt eingegeben und Ihre Karte ist noch gültig. Bitte fahren Sie fort.</span>
+              <span data-language-level="default">Ablaufdatum erfolgreich validiert. Die Karte ist zum aktuellen Zeitpunkt gültig.</span>
+              <span data-language-level="expert"
+                >Validierung des Expirationsdatums erfolgreich abgeschlossen. Das Zahlungsinstrument befindet sich innerhalb des spezifizierten
+                Gültigkeitszeitraums. Fortfahren mit weiterer Dateneingabe möglich.</span
+              >
+            </p>
+          </div>
+
+          <!-- CVV-Feld -->
+          <div class="form-group">
+            <label for="cvv">
+              <span data-language-level="easy">Die 3 Zahlen auf der Rück-Seite Ihrer Kredit-Karte</span>
+              <span data-language-level="simple">Sicherheitscode (3 Zahlen auf der Rückseite)</span>
+              <span data-language-level="default">CVV-Code (Card Verification Value)</span>
+              <span data-language-level="expert"
+                >Dreistelliger Card Verification Value (CVV2) gemäß PCI-DSS-Spezifikation zur Authentifizierung des physischen Kartenbesitzes</span
+              >
+            </label>
+            <input
+              type="number"
+              id="cvv"
+              name="cvv"
+              aria-describedby="cvvInfo"
+              maxlength="3"
+              required
+            />
+
+            <p
+              id="cvvInfo"
+              class="message info"
+              data-message-type="info"
+            >
+              <span data-language-level="easy"
+                >Drehen Sie Ihre Kredit-Karte um. Auf der Rück-Seite sehen Sie 3 Zahlen. Diese Zahlen stehen in einem weißen Feld. Geben Sie diese 3 Zahlen hier
+                ein.</span
+              >
+              <span data-language-level="simple"
+                >Geben Sie die drei Zahlen von der Rückseite Ihrer Kreditkarte ein. Sie finden diese im weißen Unterschriftsfeld.</span
+              >
+              <span data-language-level="default"
+                >Bitte geben Sie den dreistelligen Sicherheitscode (CVV) von der Rückseite Ihrer Kreditkarte ein. Dieser befindet sich im
+                Unterschriftsfeld.</span
+              >
+              <span data-language-level="expert"
+                >Zur Verifizierung des physischen Kartenbesitzes erfassen Sie bitte den dreistelligen Card Verification Value (CVV2), welcher sich auf dem
+                dorsalen Bereich des Zahlungsinstruments im Unterschriftspanel posterior der kartenspezifischen Authentifizierungsnummer befindet.</span
+              >
+            </p>
+
+            <p data-message-type="warning">
+              <span data-language-level="easy"
+                >Die Nummer muss genau 3 Zahlen haben. Sie haben [X] Zahlen eingegeben.<br />
+
+                Die Zahlen stehen auf der Rück·seite<br />
+                Sie stehen im weißen Feld<br />
+                Geben Sie nur die letzten 3 Zahlen ein"</span
+              >
+              <span data-language-level="simple"
+                >Der Sicherheitscode besteht aus 3 Ziffern. Sie finden ihn auf der Rückseite im Unterschriftsfeld. Sie haben [X] Ziffern eingegeben.</span
+              >
+              <span data-language-level="default"
+                >Bitte geben Sie den dreistelligen Sicherheitscode (CVV) von der Rückseite Ihrer Karte ein. Aktuelle Eingabe: [X]/3 Ziffern.</span
+              >
+              <span data-language-level="expert"
+                >Card Verification Value (CVV2) Eingabe: [X]/3 numerische Charaktere erfasst. Validierung der dreistelligen Securisierungssequenz aus dem
+                dorsalen Unterschriftspanel des Zahlungsinstruments ausstehend.</span
+              >
+            </p>
+
+            <p data-message-type="warning">
+              <span data-language-level="easy">Bitte nur Zahlen eingeben. Keine Buchstaben.</span>
+              <span data-language-level="simple">Der Sicherheitscode besteht nur aus Zahlen. Keine Buchstaben erlaubt.</span>
+              <span data-language-level="default">Bitte geben Sie ausschließlich Ziffern ein.</span>
+              <span data-language-level="expert">Nicht-numerische Charaktere in der CVV2-Sequenz detektiert. Ausschließlich Dezimalziffern zulässig.</span>
+            </p>
+
+            <p data-message-type="warning">
+              <span data-language-level="easy">Stopp! Das sind zu viele Zahlen. Nur 3 Zahlen eingeben.</span>
+              <span data-language-level="simple">Zu viele Ziffern. Der Sicherheitscode hat genau 3 Ziffern.</span>
+              <span data-language-level="default">Die Eingabe überschreitet die maximal zulässige Länge von 3 Ziffern.</span>
+              <span data-language-level="expert">Numerische Übersequenz detektiert. CVV2 limitiert auf exakt 3 Dezimalziffern.</span>
+            </p>
+
+            <p data-message-type="warning">
+              <span data-language-level="easy">Bitte keine Punkte oder andere Zeichen eingeben. Nur Zahlen sind erlaubt.</span>
+              <span data-language-level="simple">Keine Sonderzeichen erlaubt. Bitte nur Ziffern eingeben.</span>
+              <span data-language-level="default">Unzulässige Sonderzeichen. Der CVV-Code besteht ausschließlich aus Ziffern.</span>
+              <span data-language-level="expert"
+                >Nicht-konforme Symbolsequenz detektiert. CVV2-Spezifikation erlaubt ausschließlich numerische Charaktere.</span
+              >
+            </p>
+
+            <p data-message-type="warning">
+              <span data-language-level="easy">Drehen Sie Ihre Karte um. Suchen Sie die 3 Zahlen im weißen Feld.</span>
+              <span data-language-level="simple">Geben Sie die 3 Ziffern von der Rückseite Ihrer Karte ein.</span>
+              <span data-language-level="default">Bitte geben Sie den dreistelligen Sicherheitscode ein.</span>
+              <span data-language-level="expert">Eingabe der dreistelligen CVV2-Sequenz zur Kartenverifizierung erforderlich.</span>
+            </p>
+
+            <p
+              class="message error"
+              data-message-type="error"
+            >
+              <span data-language-level="easy">Sie haben zu wenig Zahlen eingegeben. Es müssen genau 3 Zahlen sein.</span>
+              <span data-language-level="simple">Bitte geben Sie alle 3 Ziffern des Sicherheitscodes ein.</span>
+              <span data-language-level="default">Der Sicherheitscode muss aus 3 Ziffern bestehen.</span>
+              <span data-language-level="expert">Numerische Untergrenze des CVV2 nicht erreicht. Erforderlich sind exakt 3 Ziffern.</span>
+            </p>
+
+            <p
+              class="message success"
+              data-message-type="sucess"
+            >
+              <span data-language-level="easy">Bitte geben Sie nur Zahlen ein. Keine Buchstaben oder andere Zeichen.</span>
+              <span data-language-level="simple">Der Sicherheitscode besteht nur aus Zahlen. Bitte keine Buchstaben oder Sonderzeichen eingeben.</span>
+              <span data-language-level="default">Der Sicherheitscode darf nur Ziffern enthalten.</span>
+              <span data-language-level="expert"
+                >Validierungsfehler: Der CVV2 akzeptiert ausschließlich numerische Charaktere. Alpha-numerische oder Sonderzeichen sind nicht
+                spezifikationskonform.</span
+              >
+            </p>
+          </div>
+
+          <!-- * * * * * * * * * * -->
+          <!-- Hinweis, Fehlermeldung und Erfolgsmeldung -->
+          <p
+            id="paymentInfo"
+            class="message warning"
+            data-message-type="warning"
+          >
+            <span data-language-level="easy">Keine Sorge: Ihre Daten sind sicher. Niemand kann sie lesen. Wir passen gut auf Ihre Daten auf.</span>
+            <span data-language-level="simple">Ihre Daten sind bei uns sicher. Wir schützen sie, damit niemand anders sie sehen kann.</span>
+            <span data-language-level="default">Hinweis: Ihre Daten sind sicher und werden verschlüsselt übertragen.</span>
+            <span data-language-level="expert"
+              >Sämtliche Transaktionsdaten werden mittels state-of-the-art TLS 1.3 Verschlüsselungstechnologie und AES-256-Bit-Codierung unter strikter
+              Einhaltung der PCI-DSS-Compliance-Richtlinien über gesicherte Server-Infrastrukturen transferiert und verarbeitet.</span
+            >
+          </p>
+
+          <!-- * * * * * * * * * * -->
+          <p
+            id="paymentError"
+            data-message-type="error"
+            class="message error"
+            aria-live="polite"
+          >
+            <span data-language-level="easy">
+              Die Zahlung hat nicht geklappt. Bitte versuchen Sie es noch einmal. Oder rufen Sie uns an. Wir helfen Ihnen.
+            </span>
+            <span data-language-level="simple">Die Bezahlung hat nicht funktioniert. Bitte versuchen Sie es erneut.</span>
+            <span data-language-level="default">Zahlung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben und versuchen Sie es erneut.</span>
+            <span data-language-level="expert"
+              >Transaktionsabbruch aufgrund einer nicht erfolgreichen Verifizierung der Zahlungsdaten. Eine erneute Initiierung des Zahlungsprozesses unter
+              Validierung sämtlicher Eingabeparameter wird empfohlen.</span
+            >
+          </p>
+          <!-- * * * * * * * * * * -->
+
+          <!-- * * * * * * * * * * -->
+          <p
+            id="paymentSuccess"
+            class="message success"
+            data-message-type="success"
+          >
+            <span data-language-level="easy">Alles hat geklappt! Die Zahlung ist fertig. Sie bekommen bald eine E-Mail von uns.</span>
+            <span data-language-level="simple">Danke für Ihre Bestellung! Die Bezahlung war erfolgreich.</span>
+            <span data-language-level="default">Zahlung erfolgreich! Eine Bestätigung wurde an Ihre E-Mail-Adresse gesendet.</span>
+            <span data-language-level="expert"
+              >Transaktionsprozess erfolgreich abgeschlossen. Die Zahlungsautorisierung wurde vom Acquirer positiv verifiziert und eine systemseitige
+              Bestätigungsnotifikation wurde an die hinterlegte E-Mail-Adresse dispatcht.</span
+            >
+          </p>
+          <!-- * * * * * * * * * * -->
+        </fieldset>
+        <!-- Zahlung-Button -->
+        <button
+          type="submit"
+          class="submit-button"
+        >
+          <span data-language-level="easy">Jetzt bezahlen</span>
+          <span data-language-level="simple">Bezahlen</span>
+          <span data-language-level="default">Zahlung durchführen</span>
+          <span data-language-level="expert">Zahlungstransaktion initiieren</span>
+        </button>
+      </form>
+    </div>
+    <script src="controls.js"></script>
+  </body>
+</html>

@@ -1,0 +1,224 @@
+/* import Material Icons */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+* {
+  box-sizing: border-box;
+}
+html {
+  font-family: Barlow;
+  background: hsla(0, 0%, 0%, 0.85);
+  color: hsla(0, 0%, 100%, 0.85);
+}
+
+.info,
+[data-message-type="info"] {
+  color: hsl(200, 90%, 70%);
+}
+.error,
+[data-message-type="error"] {
+  color: hsl(0, 100%, 50%);
+}
+.warning,
+[data-message-type="warning"] {
+  color: hsl(45, 100%, 50%);
+}
+.success,
+[data-message-type="success"] {
+  color: hsl(120, 100%, 40%);
+}
+
+[data-message-type]::before {
+  font-family: "Material Icons";
+  font-size: 1.5rem;
+}
+[data-message-type="success"]::before {
+  content: "check ";
+}
+[data-message-type="error"]::before {
+  content: "error ";
+}
+[data-message-type="warning"]::before {
+  content: "warning ";
+}
+[data-message-type="info"]::before {
+  content: "info ";
+}
+[data-language-level="easy"]::after {
+  content: " [0]";
+  font-size: 1rem;
+  font-weight: normal;
+  opacity: 0.25;
+}
+[data-language-level="simple"]::after {
+  content: " [1]";
+  font-size: 1rem;
+  font-weight: normal;
+  opacity: 0.25;
+}
+[data-language-level="default"]::after {
+  content: " [2]";
+  font-size: 1rem;
+  font-weight: normal;
+  opacity: 0.25;
+  border: 1px dotted white;
+}
+[data-language-level="expert"]::after {
+  content: " [3]";
+  font-size: 1rem;
+  font-weight: normal;
+  opacity: 0.25;
+}
+/* - - - - - - - - - - */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-align: left;
+  font-weight: 300;
+}
+form,
+article {
+  max-width: 40rem;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid hsla(0, 0%, 100%, 0.5);
+  background: hsla(0, 0%, 100%, 0.1);
+}
+form{
+  max-width: 30rem;
+}
+label {
+  font-weight: 600;
+}
+label::before {
+  margin-block-start: 2rem;
+  color: white;
+}
+label::before,
+label::after {
+  content: "";
+  display: block;
+}
+input {
+  display: block;
+
+  line-height: 1.5;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  width: 100%;
+  border: 1px solid hsla(0, 0%, 100%, 0.5);
+  background: hsla(0, 0%, 100%, 0.1);
+  color: hsla(0, 0%, 100%, 0.85);
+}
+
+form button {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  border: 1px solid hsla(0, 0%, 100%, 0.5);
+  background: hsla(0, 0%, 100%, 0.1);
+  color: hsla(0, 0%, 100%, 0.85);
+  cursor: pointer;
+}
+
+a[href] {
+  color: lightgrey !important;
+}
+
+body {
+  font-family: Barlow, sans-serif;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #333;
+  color: white;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 0.75rem;
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  font-family: monospace;
+}
+
+input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.date-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-group {
+  display: flex;
+  justify-content: space-between;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+  padding: 1rem 0;
+  margin: 2rem 0;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+}
+
+button {
+  flex: 1;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  padding: 1rem;
+  font-family: monospace;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+select {
+  appearance: none;
+  padding-right: 2rem;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+}
+
+.discount-group {
+  display: none;
+}
+
+#ermassigung:checked ~ .discount-group {
+  display: block;
+}
+
+input:focus,
+select:focus,
+button:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.error {
+  color: #ff4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: none;
+}
+
+input:invalid + .error {
+  display: block;
+}

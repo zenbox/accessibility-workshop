@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "title": "Markdown Beispiel",
+        "content": "# Markdown Beispiel\n\nDies ist ein **Beispiel** für _Markdown_ Formatierung.\n\n## Listen\n\n- Punkt 1\n- Punkt 2\n  - Unterpunkt 2.1\n  - Unterpunkt 2.2\n\nlorem ipsum\n\n## Code\n\n```javascript\nconsole.log(\"hallo Welt\");\n```\n\n| One | Two |\n| --- | --- |\n\n~~Strikethrough~~\n            \n- [ ] Todo\n- [x] Done\n",
+        "css": "#output {\n    background: lightcoral;\n    color:black;\n    font-family:Barlow, sans-serif;\n    }\n",
+        "last_modified": "2024-11-17T20:25:05.774Z"
+    },
+    {
+        "id": 2,
+        "title": "HTML Beispiel",
+        "content": "<!DOCTYPE html>\n<div class=\"example\">\n  <h1>HTML Beispiel\n  </h1>\n  <p>Dies ist ein<strong>HTML</strong>Beispiel mit<em>eigenen</em>Styles.\n  </p>\n  <div class=\"box\">Styled Box\n  </div>\n</div>\n",
+        "css": "#output {\n    background: lightcoral;\n    color:black;\n    font-family:Barlow, sans-serif;\n    }\n",
+        "last_modified": "2024-11-17T20:25:33.958Z"
+    },
+    {
+      "id" : 3,
+      "title" : "Language Levels",
+      "content" : "# Hauptüberschrift {data-language-level=\"default\"}\n\n### Einfache Version {data-language-level=\"easy\"}\n\nDies ist die einfache Version des Textes.\n\n### Standard Version {data-language-level=\"default\"}\n\nDies ist die Standard-Version des Textes.\n\n### Experten Version {data-language-level=\"expert\"}\n\nDies ist die Experten-Version des Textes.",
+        "css" : "",
+        "last_modified" : "2024-11-17T20:25:33"
+    }
+]

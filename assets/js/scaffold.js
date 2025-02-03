@@ -101,6 +101,7 @@ function createMainNavigation() {
         { file: "user-settings.html", text: "Benutzereinstellungen" },
         // { file: "pattern.html", text: "Pattern" },
         // { file: "writing.html", text: "Texten" },
+        { file: "text-level/index.html", text: "Text-Level" },
     ]
 
     nav.id = "main-navigation"

@@ -1,0 +1,279 @@
+5 Allgemeine Anforderungen
+5.2 Aktivierung von Barrierefreiheitsfunktionen
+5.3 Biometrie
+5.4 Erhaltung von Barrierefreiheitsinformationen bei Konvertierung
+5.5.1 Möglichkeiten der Bedienung
+5.5.2 Unterscheidbarkeit der bedienbaren Elemente
+5.6.1 Taktiler oder auditiver Status
+5.6.2 Visueller Status
+5.7 Tastenwiederholung
+5.8 Annahme eines zweifachen Tastenanschlags
+5.9 Gleichzeitige Benutzerhandlungen
+
+6 Anforderungen an Technologien mit Zwei-Wege-Sprachkommunikation
+6.1 Audio-Bandbreite für Sprache
+6.2.1.1 RTT-Kommunikation
+6.2.1.2 Gleichzeitige Verwendung von Sprache und Text
+6.2.2.1 Visuell unterscheidbare Darstellung
+6.2.2.2 Programmatisch bestimmbare Sende- und Empfangsrichtung
+6.2.2.3 Sprecheridentifizierung
+6.2.2.4 Anzeige von Audioaktivität in Echtzeit
+6.2.3 Interoperabilität
+6.2.4 Reaktionsgeschwindigkeit von RTT
+6.3 Anrufer-Identifizierung
+6.4 Alternativen zu sprachbasierten Diensten
+6.5.2 Auflösung bei Videotelefonie
+6.5.3 Bildwiederholfrequenz bei Videotelefonie
+6.5.4 Synchronisation von Audio und Video bei Videotelefonie
+6.5.5 Visuelle Anzeige von Audio-Aktivität
+6.5.6 Sprecheridentifizierung bei Gebärdensprachen-Kommunikation
+
+7 Videofähigkeiten
+7.1.1 Wiedergabe von Untertiteln
+7.1.2 Synchronisation der Untertitel
+7.1.3 Erhaltung von Untertiteln
+7.1.4 Anpassungen für Untertitel
+7.1.5 Gesprochene Untertitel
+7.2.1 Wiedergabe der Audiodeskription
+7.2.2 Synchronisation der Audiodeskription
+7.2.3 Erhaltung der Audiodeskription
+7.3 Bedienelemente für Untertitel und Audiodeskription
+
+11.1 Wahrnehmbarkeit
+11.1.1.1 Nicht-Text-Inhalt
+11.1.1.1a Alternativtexte für informative Grafiken
+11.1.1.1b Alternativtexte für dekorative Grafiken
+11.1.1.1c Alternativen für CAPTCHAs
+11.1.2.1 Alternativen für aufgezeichnetes Audio und Videos ohne Ton
+11.1.2.2 Untertitel für aufgezeichnete Videos
+11.1.2.3 Audiodeskription oder Medienalternative für aufgezeichnete Videos
+11.1.2.4 Untertitel für Live-Videos
+11.1.2.5 Audiodeskription für aufgezeichnete Videos
+11.1.3.1 Info und Beziehungen
+11.1.3.1a Strukturelemente für Überschriften
+11.1.3.1b Strukturelemente für Listen, Auflistungen und Aufzählungen
+11.1.3.1c Strukturelemente für weitere Objekte
+11.1.3.2 Sinnvolle Reihenfolge
+11.1.3.3 Sensorische Eigenschaften
+11.1.3.4 Ausrichtung
+11.1.3.5 Eingabezweck bestimmen
+11.1.4.1 Verwendung von Farbe
+11.1.4.2 Audio-Steuerelement
+11.1.4.3 Kontrast von Texten
+11.1.4.4 Textgröße ändern
+11.1.4.5 Schriftgrafiken
+11.1.4.10 Automatischer Umbruch (Reflow)
+11.1.4.11 Nicht-Text-Kontrast
+11.1.4.12 Textabstand
+11.1.4.13 Eingeblendete Inhalte (Hover oder Fokus)
+
+11.2 Bedienbarkeit
+11.2.1.1 Fokusbasierte Bedienung
+11.2.1.1a Mit externer Tastatur bedienbar
+11.2.1.1b Mit assistiven Technologien bedienbar
+11.2.1.2 Keine Tastaturfalle
+11.2.1.4 Tastaturkürzel
+11.2.2.1 Zeitvorgaben anpassbar
+11.2.2.2 Bewegte Inhalte abschaltbar
+11.2.3.1 Verzicht auf Flackern
+11.2.4.3 Sinnvolle Reihenfolge bei Bedienung mit externer Tastatur
+11.2.4.4 Aussagekräftige Beschriftungen von Links
+11.2.4.6 Überschriften und Beschriftungen
+11.2.4.7 Fokus sichtbar
+11.2.4.11 Fokus nicht verdeckt (Minimum)
+11.2.5.1 Alternativen für komplexe Gesten
+11.2.5.2 Abbrechen oder Widerrufen einer Touch-Geste
+11.2.5.3 Sichtbare Beschriftung als Teil der programmatischen Beschriftung
+11.2.5.4 Steuerung durch Bewegung
+11.2.5.7 Ziehbewegungen
+11.2.5.8 Zielgröße (Minimum)
+
+11.3 Verständlichkeit
+11.3.1.1 Sprache der Software
+11.3.2.1 Kontextänderung bei Fokus
+11.3.2.2 Kontextänderung bei Eingabe
+11.3.2.6 Konsistente Hilfe
+11.3.3.1 Fehlererkennung
+11.3.3.2 Beschriftungen oder Anweisungen bei Formularfeldern
+11.3.3.3 Fehlerkorrektur
+11.3.3.4 Fehlervermeidung
+11.3.3.7 Redundanter Eintrag
+11.3.3.8 Zugängliche Authentifizierung (Minimum)
+11.3.3.8a Zugänglicher Anmeldeprozess
+11.3.3.8b Zugängliche Zwei-Faktor-Authentifizierung
+11.3.3.8c Zugängliche CAPTCHAs in Anmeldeprozessen
+
+11.4 Robustheit
+11.4.1.1 Syntaxanalyse
+11.4.1.2 Name, Rolle, Wert
+11.4.1.3 Statusmeldungen
+
+11.5 Interoperabilität mit assistiven Technologien
+11.5.2.3 Verwendung von Barrierefreiheitsdiensten
+11.5.2.5 Objektinformationen
+11.5.2.6 Datentabellen
+11.5.2.7 Werte
+11.5.2.8 Label-Beziehungen
+11.5.2.9 Eltern-Kind-Beziehungen
+11.5.2.10 Text
+11.5.2.10a Nicht bearbeitbarer Text
+11.5.2.10b Bearbeitbarer Text
+11.5.2.11 Übersicht verfügbarer Aktionen
+11.5.2.12 Ausführung verfügbarer Aktionen
+11.5.2.13 Nachverfolgung des Fokus und der Auswahlattribute
+11.5.2.14 Änderung des Fokus und der Auswahlattribute
+11.5.2.15 Änderungsbenachrichtigung
+11.5.2.16 Änderungen von Zuständen und Eigenschaften
+11.5.2.17 Änderungen von Werten und Text
+
+11.6 Dokumentierte Nutzung
+11.6.2 Keine Unterbrechung der Barrierefreiheitsfunktionen
+
+11.7 Benutzerpräferenzen
+
+11.8 Autorenwerkzeuge
+11.8.1 Inhaltstechnologie
+11.8.2 Erstellung barrierefreier Inhalte
+11.8.3 Erhaltung von Barrierefreiheit bei Umwandlungen
+11.8.4 Reparaturunterstützung
+11.8.5 Vorlagen
+
+12.1 Dokumentation und unterstützende Dienste
+12.1.1 Dokumentation von Barrierefreiheit und Kompatibilität
+12.1.2 Barrierefreie Dokumentation
+12.2.2 Informationen zu Barrierefreiheits- und Kompatibilitätsfunktionen
+12.2.3 Effektive Kommunikation
+12.2.4 Barrierefreie Dokumentation durch den Produktsupport
+
+9.1.1 Wahrnehmbarkeit (Web)
+9.1.1.1 Nicht-Text-Inhalte
+9.1.1.1a Alternativtexte für Bedienelemente
+9.1.1.1b Alternativtexte für Grafiken und Objekte
+9.1.1.1c Leere alt-Attribute für Layoutgrafiken
+9.1.1.1d Alternativen für CAPTCHAs
+
+9.1.2 Zeitbasierte Medien (Web)
+9.1.2.1 Alternativen für Audiodateien und stumme Videos (aufgezeichnet)
+9.1.2.2 Untertitel für Videos (aufgezeichnet)
+9.1.2.3 Audiodeskription oder Volltext-Alternative für Videos
+9.1.2.4 Videos (live) mit Untertiteln
+9.1.2.5 Audiodeskription für Videos (aufgezeichnet)
+
+9.1.3 Anpassbar (Web)
+9.1.3.1 Info und Beziehungen
+9.1.3.1a HTML-Strukturelemente für Überschriften
+9.1.3.1b HTML-Strukturelemente für Listen
+9.1.3.1c HTML-Strukturelemente für Zitate
+9.1.3.1d Inhalt gegliedert
+9.1.3.1e Datentabellen richtig aufgebaut
+9.1.3.1f Zuordnung von Tabellenzellen
+9.1.3.1g Kein Strukturmarkup für Layouttabellen
+9.1.3.1h Beschriftung von Formularelementen programmatisch ermittelbar
+
+9.1.3.2 Sinnvolle Reihenfolge (Web)
+9.1.3.3 Sensorische Merkmale
+9.1.3.4 Keine Beschränkung der Bildschirmausrichtung
+9.1.3.5 Eingabezweck bestimmen
+
+9.1.4 Unterscheidbar (Web)
+9.1.4.1 Nutzung von Farbe
+9.1.4.2 Ton abschaltbar
+9.1.4.3 Kontraste von Texten
+9.1.4.4 Textgröße ändern
+9.1.4.5 Schriftgrafiken
+9.1.4.10 Umbruch der Inhalte
+9.1.4.11 Nicht-Text Kontrast
+9.1.4.12 Textabstand anpassbar
+9.1.4.13 Eingeblendete Inhalte
+
+9.2 Bedienbarkeit (Web)
+9.2.1 Tastaturbedienbar
+9.2.1.1 Ohne Maus nutzbar
+9.2.1.2 Keine Tastaturfalle
+9.2.1.4 Tastatur-Kurzbefehle abschaltbar oder anpassbar
+
+9.2.2 Ausreichend Zeit (Web)
+9.2.2.1 Zeitbegrenzungen anpassbar
+9.2.2.2 Bewegte Inhalte abschaltbar
+
+9.2.3 Anfälle
+9.2.3.1 Verzicht auf Flackern
+
+9.2.4 Navigierbar (Web)
+9.2.4.1 Bereiche überspringbar
+9.2.4.2 Sinnvolle Dokumenttitel
+9.2.4.3 Schlüssige Reihenfolge bei der Tastaturbedienung
+9.2.4.4 Aussagekräftige Linktexte
+9.2.4.5 Alternative Zugangswege
+9.2.4.6 Aussagekräftige Überschriften und Beschriftungen
+9.2.4.7 Aktuelle Position des Fokus deutlich
+
+9.2.5 Eingabemodalitäten (Web)
+9.2.5.1 Zeigergesten (Alternativen für komplexe Zeiger-Gesten)
+9.2.5.2 Zeigerabbruch
+9.2.5.3 Sichtbare Beschriftung Teil des zugänglichen Namens
+9.2.5.4 Alternativen für Bewegungsaktivierung
+
+9.3 Verständlichkeit (Web)
+9.3.1 Lesbar
+9.3.1.1 Hauptsprache angegeben
+9.3.1.2 Anderssprachige Wörter und Abschnitte ausgezeichnet
+
+9.3.2 Vorhersehbar (Web)
+9.3.2.1 Keine Kontextänderung bei Fokus
+9.3.2.2 Keine Kontextänderung bei Eingabe
+9.3.2.3 Konsistente Navigation
+9.3.2.4 Konsistente Bezeichnung
+
+9.3.3 Eingabeunterstützung (Web)
+9.3.3.1 Fehlererkennung
+9.3.3.2 Verständliche Beschriftungen oder Anweisungen
+9.3.3.3 Fehlerbehebung
+9.3.3.4 Fehlervermeidung (rechtlich, finanziell, Daten)
+
+9.4 Robustheit (Web)
+9.4.1.1 Korrekte Syntax
+9.4.1.2 Name, Rolle, Wert verfügbar
+9.4.1.3 Statusmeldungen programmatisch verfügbar
+
+5 Interoperabilität mit assistiven Technologien (Web)
+5.1 Assistenztechnologien (geschlossene Funktionalität)
+5.2.1 Plattformunterstützung von Barrierefreiheitsdiensten für Software mit einer Benutzungsschnittstelle
+5.2.2 Plattformunterstützung von Barrierefreiheitsdiensten für Assistenztechnologien
+5.2.3 Verwendung von Barrierefreiheitsdiensten
+5.2.4 Assistenztechnologie
+5.2.5 Objektinformationen
+5.2.6 Zeile, Spalte und Kopfzeilen
+5.2.7 Werte
+5.2.8 Label-Beziehungen
+5.2.9 Eltern-Kind-Beziehungen
+5.2.10 Text
+5.2.11 Liste der verfügbaren Handlungen
+5.2.12 Ausführung verfügbarer Handlungen
+5.2.13 Verfolgung von Fokus- und Auswahlattributen
+5.2.14 Änderung der Fokus- und Auswahlattribute
+5.2.15 Änderungsbenachrichtigung
+5.2.16 Änderungen von Zuständen und Eigenschaften
+5.2.17 Änderungen von Werten und Text
+
+6 Dokumentierte Nutzung (Web)
+6.1 Benutzersteuerung der Barrierefreiheitsfunktionen
+6.2 Keine Unterbrechung der Barrierefreiheitsfunktionen
+
+7 Benutzerpräferenzen (Web)
+7. Benutzerpräferenzen
+
+8 Autorenwerkzeuge (Web)
+8.1 Inhaltstechnologie
+8.2 Erstellung barrierefreier Inhalte
+8.3 Aufbewahrung von Informationen zur Barrierefreiheit bei Transformationen
+8.4 Reparaturhilfe
+8.5 Vorlagen
+
+9 Dokumentation und unterstützende Dienste (Web)
+9.1.1 Barrierefreiheits- und Kompatibilitätsfunktionen
+9.1.2 Barrierefreie Produktdokumentation
+9.2.2 Informationen zu Barrierefreiheits- und Kompatibilitätsfunktionen
+9.2.3 Effektive Kommunikation
+9.2.4 Barrierefreie Dokumentation (Unterstützungsdienst)
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"  
+        />
+        <title>Lokaler Markdown/HTML Editor</title>
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <link
+            href="css/main.css"
+            rel="stylesheet"
+        />
+        <script
+            src="https://unpkg.com/prettier@2.8.8/esm/standalone.mjs"
+            type="module"
+        ></script>
+        <script
+            src="https://unpkg.com/prettier@2.8.8/esm/parser-html.mjs"
+            type="module"
+        ></script>
+        <script
+            src="https://unpkg.com/prettier@2.8.8/esm/parser-postcss.mjs"
+            type="module"
+        ></script>
+        <script
+            src="https://unpkg.com/prettier@2.8.8/esm/parser-markdown.mjs"
+            type="module"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script
+            src="js/main.js"
+            type="module"
+        ></script>
+    </head>
+    <body>
+        <div class="theme-controls">
+            <button
+                id="theme-toggle"
+                class="theme-button"
+                title="Theme wechseln"
+            >
+                <i class="material-icons">dark_mode</i>
+            </button>
+            <button
+                id="contrast-toggle"
+                class="theme-button"
+                title="Kontrast wechseln"
+            >
+                <i class="material-icons">contrast</i>
+            </button>
+        </div>
+
+        <h1
+            id="editor-title"
+            class="page-title"
+        >
+            Markdown/HTML Editor
+        </h1>
+
+        <div class="document-controls">
+            <button
+                id="new-doc-btn"
+                class="icon-button"
+            >
+                <i class="material-icons">note_add</i>
+                <span>Neu</span>
+            </button>
+
+            <div class="document-list-container">
+                <div
+                    id="list-toggle"
+                    class="document-list-header"
+                >
+                    <span id="current-document-title"
+                        >Dokument auswählen...</span
+                    >
+                    <i class="material-icons">expand_more</i>
+                </div>
+                <div
+                    id="document-list"
+                    class="document-list collapsed"
+                ></div>
+            </div>
+
+            <button
+                id="save-doc-btn"
+                class="icon-button"
+            >
+                <i class="material-icons">save</i>
+                <span>Speichern</span>
+            </button>
+        </div>
+
+        <div class="editor-container">
+            <div class="editor-panel">
+                <h3>Editor</h3>
+                <textarea
+                    id="editor"
+                    spellcheck="false"
+                    placeholder="Markdown oder HTML eingeben..."
+                ></textarea>
+            </div>
+
+            <div
+                id="editor-resizer"
+                class="editor-resizer"
+            >
+                <div class="resizer-handle"></div>
+            </div>
+
+            <div class="preview-panel">
+                <h3>Vorschau</h3>
+                <div id="output"></div>
+            </div>
+        </div>
+
+        <div class="css-editor-panel collapsed">
+            <div
+                id="css-editor-toggle"
+                class="css-editor-header"
+            >
+                <h3>CSS Editor</h3>
+                <i class="material-icons">expand_less</i>
+            </div>
+            <div class="css-editor-content">
+                <textarea
+                    id="css-editor"
+                    spellcheck="false"
+                    placeholder="CSS eingeben..."
+                ></textarea>
+            </div>
+        </div>
+
+        <div
+            id="save-dialog"
+            class="modal"
+            style="display: none"
+        >
+            <div class="modal-content">
+                <h3>Dokument speichern</h3>
+                <input
+                    type="text"
+                    id="doc-title"
+                    placeholder="Dokumenttitel eingeben"
+                />
+                <div class="modal-actions">
+                    <button id="save-cancel-btn">Abbrechen</button>
+                    <button id="save-confirm-btn">Speichern</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

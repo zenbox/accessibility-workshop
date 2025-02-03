@@ -1,0 +1,41 @@
+/* Theme Varianten */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --border-color: #404040;
+    --header-bg: #2a2a2a;
+    --button-bg: #4a90e2;
+    --button-text: white;
+    --editor-bg: #1d1d1d;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    color-scheme: dark;
+}
+
+[data-contrast="high"] {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --border-color: #ffffff;
+    --header-bg: #000000;
+    --button-bg: #000000;
+    --button-text: #ffffff;
+    --editor-bg: #000000;
+    --shadow-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-contrast="high"][data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --border-color: #000000;
+    --header-bg: #ffffff;
+    --button-bg: #ffffff;
+    --button-text: #000000;
+    --editor-bg: #ffffff;
+}
+
+/* High Contrast Anpassungen */
+[data-contrast="high"] button,
+[data-contrast="high"] .icon-button,
+[data-contrast="high"] input,
+[data-contrast="high"] .document-list-header {
+    border-width: 2px;
+}

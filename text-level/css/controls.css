@@ -1,0 +1,71 @@
+/* Theme Controls */
+.theme-controls {
+    position: fixed;
+    top: var(--spacing-base);
+    right: var(--spacing-base);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: var(--header-bg);
+    padding: 8px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px var(--shadow-color);
+    z-index: 1000;
+}
+
+.theme-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 5px;
+    border-radius: var(--border-radius);
+}
+
+.theme-button:hover {
+    background: var(--border-color);
+}
+
+.theme-button i {
+    font-size: 24px;
+}
+
+/* Document Controls */
+.document-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: fixed;
+    top: var(--spacing-base);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--header-bg);
+    padding: 8px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px var(--shadow-color);
+    z-index: 1000;
+}
+
+/* Icon Buttons */
+.icon-button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.icon-button:hover {
+    background: var(--header-bg);
+}
+
+.icon-button i {
+    font-size: 20px;
+}

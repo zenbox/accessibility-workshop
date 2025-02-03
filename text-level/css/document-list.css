@@ -1,0 +1,116 @@
+/* Document List Container */
+.document-list-container {
+    position: relative;
+    min-width: 200px;
+}
+
+.document-list-header {
+    padding: 8px 12px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.document-list-header:hover {
+    background: var(--header-bg);
+}
+
+#current-document-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.document-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    z-index: 1001;
+}
+
+.document-list.collapsed {
+    display: none;
+}
+
+/* Document Items */
+.document-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.document-item:last-child {
+    border-bottom: none;
+}
+
+.document-item:hover {
+    background: var(--header-bg);
+}
+
+.document-item.active {
+    background: var(--button-bg);
+    color: var(--button-text);
+}
+
+.doc-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.doc-title {
+    flex: 1;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.doc-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.9em;
+}
+
+.doc-date {
+    font-size: 0.8em;
+    opacity: 0.7;
+}
+
+/* Delete Button */
+.delete-doc-btn {
+    padding: 4px;
+    border: none;
+    background: none;
+    color: var(--text-color);
+    opacity: 0.6;
+    cursor: pointer;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.delete-doc-btn:not([disabled]):hover {
+    opacity: 1;
+    color: #ff4444;
+}
+
+.delete-doc-btn i {
+    font-size: 20px;
+}

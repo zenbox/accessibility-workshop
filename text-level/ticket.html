@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Fahrkartenauswahl</title>
+    <link
+      rel="stylesheet"
+      href="style.css"
+    />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="text-level.html">Sprachlevel</a></li>
+        <li><a href="payment.html">Bezahlen</a></li>
+        <li><a href="ticket.html">Fahrkarte</a></li>
+      </ul>
+    </nav>
+
+    <h1>Fahrkartenauswahl</h1>
+
+    <form id="ticketForm">
+      <fieldset>
+        <legend>
+          <span data-language-level="easy">Mit der Bahn fahren</span>
+          <span data-language-level="simple">Fahrkarte kaufen</span>
+          <span data-language-level="default">Fahrscheinerwerb</span>
+          <span data-language-level="expert">Personenbeförderungsticket-Akquisition</span>
+        </legend>
+
+        <div class="form-group">
+          <label for="destination">
+            <span data-language-level="easy">Wo möchten Sie hin·fahren?</span>
+            <span data-language-level="simple">Wohin möchten Sie fahren?</span>
+            <span data-language-level="default">Fahrziel</span>
+            <span data-language-level="expert">Destinationslokalität</span>
+          </label>
+          <input
+            type="text"
+            id="destination"
+            required
+          />
+
+          <p data-message-type="info">
+            <span data-language-level="easy">Schreiben Sie den Namen von der Stadt oder dem Bahnhof auf.</span>
+            <span data-language-level="simple">Geben Sie Ihren Zielort ein.</span>
+            <span data-language-level="default">Bitte geben Sie Ihren Zielbahnhof ein.</span>
+            <span data-language-level="expert">Spezifizieren Sie die Zielstation Ihrer Reiseroute.</span>
+          </p>
+
+          <p data-message-type="warning">
+            <span data-language-level="easy">Diesen Ort kennen wir nicht. Haben Sie sich verschrieben?</span>
+            <span data-language-level="simple">Dieser Ort wurde nicht gefunden.</span>
+            <span data-language-level="default">Ungültige Zielangabe.</span>
+            <span data-language-level="expert">Destinationslokalität nicht im Stationsverzeichnis verifizierbar.</span>
+          </p>
+
+          <p data-message-type="error">
+            <span data-language-level="easy">Bitte schreiben Sie einen Ort auf.</span>
+            <span data-language-level="simple">Bitte geben Sie einen Zielort ein.</span>
+            <span data-language-level="default">Zieleingabe erforderlich.</span>
+            <span data-language-level="expert">Destinationsspezifikation obligatorisch.</span>
+          </p>
+
+          <p data-message-type="success">
+            <span data-language-level="easy">Prima. Das ist ein bekanntes Fahrziel.</span>
+            <span data-language-level="simple">Das Ziel ist bekannt und liegt in Reichweite.</span>
+            <span data-language-level="default">Die Zieleingabe ist korrekt.</span>
+            <span data-language-level="expert">Die Destination ist bekannt, das Beförderungsentgelt wird angezeigt.</span>
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="travelDate">
+            <span data-language-level="easy">Wann möchten Sie los·fahren?</span>
+            <span data-language-level="simple">Wann möchten Sie fahren?</span>
+            <span data-language-level="default">Reisedatum</span>
+            <span data-language-level="expert">Temporal-Spezifikation der Reise</span>
+          </label>
+          <input
+            type="date"
+            id="travelDate"
+            required
+          />
+
+          <p data-message-type="info">
+            <span data-language-level="easy">Wählen Sie den Tag aus, an dem Sie fahren möchten.</span>
+            <span data-language-level="simple">Wählen Sie Ihr Reisedatum.</span>
+            <span data-language-level="default">Bitte wählen Sie das gewünschte Reisedatum.</span>
+            <span data-language-level="expert">Selektieren Sie das präferierte Reisedatum.</span>
+          </p>
+
+          <p data-message-type="error">
+            <span data-language-level="easy"
+              >Das klappt nicht: • Der Tag muss in der Zukunft sein • Der Tag darf nicht mehr als 6 Monate weg sein • Wählen Sie einen anderen Tag</span
+            >
+            <span data-language-level="simple"
+              >Ungültiges Datum: • Das Datum muss in der Zukunft liegen • Maximal 6 Monate im Voraus buchbar • Bitte wählen Sie ein anderes Datum</span
+            >
+            <span data-language-level="default"
+              >Datum nicht verfügbar: • Reisedatum muss in der Zukunft liegen • Buchung maximal 180 Tage im Voraus möglich • Bitte wählen Sie ein gültiges
+              Reisedatum</span
+            >
+            <span data-language-level="expert"
+              >Temporale Validierungsanomalie: • Reisezeitpunkt außerhalb der Validitätsperiode • Buchungsvorlauf auf 180 Tage limitiert • Alternative
+              Terminselektion erforderlich</span
+            >
+          </p>
+
+          <p data-message-type="warning">
+            <span data-language-level="easy">Achtung: An diesem Tag fahren wenige Züge. Es gibt nur noch [X] freie Plätze.</span>
+            <span data-language-level="simple">Hinweis: Eingeschränkter Fahrplan und begrenzte Plätze ([X] verfügbar).</span>
+            <span data-language-level="default">Eingeschränkte Verfügbarkeit: [X] Restplätze für das gewählte Datum.</span>
+            <span data-language-level="expert">Kapazitätslimitierung detektiert: [X] verbleibende Kontingente für spezifizierten Reisetermin.</span>
+          </p>
+
+          <p data-message-type="success">
+            <span data-language-level="easy">Prima! An diesem Tag fahren viele Züge. Sie haben eine große Auswahl.</span>
+            <span data-language-level="simple">Datum bestätigt. Gute Verbindungsauswahl verfügbar.</span>
+            <span data-language-level="default">Datum validiert. Optimale Verbindungsverfügbarkeit.</span>
+            <span data-language-level="expert"
+              >Temporalvalidierung erfolgreich. Multiple Transportoptionen innerhalb der gewählten Reiseperiode verfügbar.</span
+            >
+          </p>
+        </div>
+
+        <div class="form-group">
+          <p data-message-type="success">
+            <span data-language-level="easy">Alles richtig! Sie können jetzt weiter·machen.</span>
+            <span data-language-level="simple">Ihre Eingaben sind vollständig.</span>
+            <span data-language-level="default">Eingaben erfolgreich validiert.</span>
+            <span data-language-level="expert">Validierung der Eingabeparameter erfolgreich konkludiert.</span>
+          </p>
+        </div>
+
+        <button type="submit">
+          <span data-language-level="easy">Weiter zur Bezahlung</span>
+          <span data-language-level="simple">Ticket kaufen</span>
+          <span data-language-level="default">Buchung abschließen</span>
+          <span data-language-level="expert">Transaktionsprozess initiieren</span>
+        </button>
+      </fieldset>
+    </form>
+    <script>
+      function handleSubmit(event) {
+        event.preventDefault()
+        const formData = new FormData(event.target)
+        console.log(Object.fromEntries(formData))
+        // Hier können die Daten weiterverarbeitet werden
+      }
+
+      document.getElementById("ermassigung").addEventListener("change", function () {
+        const discountSelect = document.getElementById("discountType")
+        discountSelect.required = this.checked
+      })
+
+      // Simple Preisberechnung (Beispiel)
+      function updatePrice() {
+        let basePrice = 2.8
+        const ticketType = document.querySelector('input[name="ticketType"]:checked')?.value
+        const hasDiscount = document.getElementById("ermassigung").checked
+
+        if (ticketType === "kind") basePrice *= 0.5
+        if (hasDiscount) basePrice *= 0.7
+
+        document.getElementById("preis").textContent = basePrice.toFixed(2) + " €"
+      }
+
+      document.querySelectorAll("input, select").forEach((input) => {
+        input.addEventListener("change", updatePrice)
+      })
+    </script>
+    <script src="controls.js"></script>
+  </body>
+</html>
