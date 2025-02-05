@@ -84,6 +84,7 @@ article {
   padding: 1rem;
   border: 1px solid hsla(0, 0%, 100%, 0.5);
   background: hsla(0, 0%, 100%, 0.1);
+  line-height: 1.45;
 }
 form{
   max-width: 30rem;

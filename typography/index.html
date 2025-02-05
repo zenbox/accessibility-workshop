@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Schrifttest-Tool</title>
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                margin: 0;
+                padding: 20px;
+                font-family: system-ui, -apple-system, sans-serif;
+            }
+
+            #content {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            #text-container {
+                margin-top: 1rem;
+                background: white;
+                height: calc(100vh - 9rem);
+                transition: all 0.3s ease;
+                position: relative; /* Für absolute Positionierung der Zeilennummern */
+            }
+
+            @media (orientation: portrait) {
+                #text-container {
+                    height: calc(100vh - 13rem);
+                }
+            }
+
+            #settings-panel {
+                background: #f5f5f5;
+                padding: 20px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                display: none;
+            }
+
+            .settings-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+                gap: 10px;
+            }
+
+            .settings-row label {
+                min-width: 120px;
+            }
+
+            .settings-row input[type="range"] {
+                flex: 1;
+            }
+
+            .settings-row select {
+                flex: 1;
+                padding: 5px;
+            }
+
+            .settings-row .value {
+                min-width: 60px;
+                text-align: right;
+            }
+
+            #settings-toggle {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 24px;
+                color: #999;
+                padding: 10px;
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 100;
+                transition: color 0.3s ease;
+            }
+
+            #settings-toggle:hover {
+                color: #666;
+            }
+
+            #char-count {
+                color: #666;
+                font-size: 14px;
+                margin-top: 10px;
+            }
+
+            #font-family {
+                font-size: 14px;
+            }
+
+            #font-family optgroup {
+                font-size: 14px;
+            }
+
+            textarea {
+                width: 100%;
+                height: 100%;
+                padding: 20px 40px 20px 20px; /* Extra Padding rechts für Zeilennummern */
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                resize: none;
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                letter-spacing: inherit;
+                font-weight: inherit;
+                box-sizing: border-box;
+            }
+
+            /* Zeilennummern */
+            #line-numbers {
+                position: absolute;
+                top: 20px;
+                right: 5px;
+                font-size: inherit;
+                line-height: inherit;
+                font-family: monospace;
+                color: #999;
+                pointer-events: none;
+                text-align: right;
+                width: 30px;
+            }
+
+            .line-number {
+                display: block;
+                height: 1.5em; /* Entspricht line-height: 1.5 */
+                font-size: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="content">
+            <button id="settings-toggle">
+                <i class="far fa-cog"></i>
+            </button>
+
+            <div id="settings-panel">
+                <div class="settings-row">
+                    <label for="font-family">Schriftart:</label>
+                    <select id="font-family">
+                        <optgroup label="System Schriften">
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="Times New Roman, serif">
+                                Times New Roman
+                            </option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                            <option value="Helvetica, sans-serif">
+                                Helvetica
+                            </option>
+                            <option value="system-ui, sans-serif">
+                                System
+                            </option>
+                        </optgroup>
+                        <optgroup label="Google Fonts">
+                            <!-- Wird dynamisch gefüllt -->
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="settings-row">
+                    <label for="font-size">Schriftgröße:</label>
+                    <input
+                        type="range"
+                        id="font-size"
+                        min="12"
+                        max="72"
+                        value="16"
+                    />
+                    <span class="value">16px</span>
+                </div>
+
+                <div class="settings-row">
+                    <label for="letter-spacing">Laufweite:</label>
+                    <input
+                        type="range"
+                        id="letter-spacing"
+                        min="-2"
+                        max="10"
+                        value="0"
+                        step="0.1"
+                    />
+                    <span class="value">0px</span>
+                </div>
+
+                <div class="settings-row">
+                    <label for="font-weight">Gewicht:</label>
+                    <input
+                        type="range"
+                        id="font-weight"
+                        min="100"
+                        max="900"
+                        value="400"
+                        step="100"
+                    />
+                    <span class="value">400</span>
+                </div>
+
+                <div class="settings-row">
+                    <label for="line-height">Zeilenabstand:</label>
+                    <input
+                        type="range"
+                        id="line-height"
+                        min="1"
+                        max="3"
+                        value="1.5"
+                        step="0.1"
+                    />
+                    <span class="value">1.5</span>
+                </div>
+
+                <div class="settings-row">
+                    <label for="max-width">Absatzbreite:</label>
+                    <input
+                        type="range"
+                        id="max-width"
+                        min="200"
+                        max="1200"
+                        value="800"
+                    />
+                    <span class="value">800px</span>
+                </div>
+            </div>
+
+            <div id="text-container">
+                <div id="line-numbers"></div>
+                <textarea id="sample-text">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</textarea
+                >
+            </div>
+
+            <div id="char-count"></div>
+        </div>
+
+        <script>
+            // Konfigurierbare Schriftenliste
+            const fontsList = {
+                "serif": [
+                    { name: "Merriweather", weights: [300, 400, 700, 900] },
+                    {
+                        name: "Playfair Display",
+                        weights: [400, 500, 600, 700, 800, 900],
+                    },
+                    { name: "Lora", weights: [400, 500, 600, 700] },
+                    {
+                        name: "Source Serif Pro",
+                        weights: [200, 300, 400, 600, 700, 900],
+                    },
+                    { name: "Crimson Text", weights: [400, 600, 700] },
+                ],
+                "sans-serif": [
+                    {
+                        name: "Open Sans",
+                        weights: [300, 400, 500, 600, 700, 800],
+                    },
+                    { name: "Roboto", weights: [100, 300, 400, 500, 700, 900] },
+                    {
+                        name: "Inter",
+                        weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+                    },
+                    {
+                        name: "Source Sans Pro",
+                        weights: [200, 300, 400, 600, 700, 900],
+                    },
+                    {
+                        name: "Work Sans",
+                        weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+                    },
+                    {
+                        name: "Barlow",
+                        weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+                    },
+                ],
+                "display": [
+                    {
+                        name: "Montserrat",
+                        weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+                    },
+                    { name: "Oswald", weights: [200, 300, 400, 500, 600, 700] },
+                    { name: "Quicksand", weights: [300, 400, 500, 600, 700] },
+                ],
+                "monospace": [
+                    {
+                        name: "Source Code Pro",
+                        weights: [200, 300, 400, 500, 600, 700, 800, 900],
+                    },
+                    { name: "Fira Code", weights: [300, 400, 500, 600, 700] },
+                    {
+                        name: "JetBrains Mono",
+                        weights: [100, 200, 300, 400, 500, 600, 700, 800],
+                    },
+                ],
+            }
+
+            const settingsToggle = document.getElementById("settings-toggle")
+            const settingsPanel = document.getElementById("settings-panel")
+            const textContainer = document.getElementById("text-container")
+            const sampleText = document.getElementById("sample-text")
+            const charCount = document.getElementById("char-count")
+            const fontFamily = document.getElementById("font-family")
+
+            // Steuerelemente
+            const fontSize = document.getElementById("font-size")
+            const letterSpacing = document.getElementById("letter-spacing")
+            const fontWeight = document.getElementById("font-weight")
+            const lineHeight = document.getElementById("line-height")
+            const maxWidth = document.getElementById("max-width")
+
+            // Google Fonts API
+            function loadGoogleFonts() {
+                const fontFamilies = []
+
+                Object.entries(fontsList).forEach(([category, fonts]) => {
+                    const optgroup = document.createElement("optgroup")
+                    optgroup.label =
+                        category.charAt(0).toUpperCase() + category.slice(1)
+
+                    fonts.forEach((font) => {
+                        const option = document.createElement("option")
+                        option.value = `${font.name}, ${category}`
+                        option.textContent = font.name
+                        option.style.fontFamily = font.name
+                        optgroup.appendChild(option)
+
+                        const weights = font.weights.join(";")
+                        fontFamilies.push(
+                            `family=${font.name.replace(
+                                /\s+/g,
+                                "+"
+                            )}:wght@${weights}`
+                        )
+                    })
+
+                    fontFamily.appendChild(optgroup)
+                })
+
+                const link = document.createElement("link")
+                link.href = `https://fonts.googleapis.com/css2?${fontFamilies.join(
+                    "&"
+                )}&display=swap`
+                link.rel = "stylesheet"
+                document.head.appendChild(link)
+            }
+
+            // Funktion zum Speichern der Einstellungen
+            function saveSettings() {
+                const settings = {
+                    fontFamily: fontFamily.value,
+                    fontSize: fontSize.value,
+                    letterSpacing: letterSpacing.value,
+                    fontWeight: fontWeight.value,
+                    lineHeight: lineHeight.value,
+                    maxWidth: maxWidth.value,
+                    settingsPanelVisible:
+                        settingsPanel.style.display === "block",
+                    text: sampleText.value,
+                }
+                localStorage.setItem("typeSettings", JSON.stringify(settings))
+            }
+
+            // Funktion zum Laden der Einstellungen
+            function loadSettings() {
+                const savedSettings = localStorage.getItem("typeSettings")
+                if (savedSettings) {
+                    const settings = JSON.parse(savedSettings)
+
+                    // Stelle die Werte wieder her
+                    fontFamily.value = settings.fontFamily || fontFamily.value
+                    fontSize.value = settings.fontSize || fontSize.value
+                    letterSpacing.value =
+                        settings.letterSpacing || letterSpacing.value
+                    fontWeight.value = settings.fontWeight || fontWeight.value
+                    lineHeight.value = settings.lineHeight || lineHeight.value
+                    maxWidth.value = settings.maxWidth || maxWidth.value
+                    sampleText.value = settings.text || sampleText.value
+
+                    // Aktualisiere die Anzeige der Werte
+                    ;[
+                        fontFamily,
+                        fontSize,
+                        letterSpacing,
+                        fontWeight,
+                        lineHeight,
+                        maxWidth,
+                    ].forEach((input) => {
+                        updateValueDisplay(input)
+                    })
+
+                    // Stelle Panel-Status wieder her
+                    settingsPanel.style.display = settings.settingsPanelVisible
+                        ? "block"
+                        : "none"
+                    settingsToggle.style.transform =
+                        settings.settingsPanelVisible
+                            ? "rotate(180deg)"
+                            : "rotate(0deg)"
+                }
+            }
+
+            // Funktion zum Aktualisieren der Zeilennummern
+            function updateLineNumbers() {
+                const lineNumbersContainer =
+                    document.getElementById("line-numbers")
+                lineNumbersContainer.innerHTML = ""
+
+                const computedStyle = window.getComputedStyle(sampleText)
+                const lineHeight = parseFloat(computedStyle.lineHeight)
+                const visibleHeight =
+                    sampleText.clientHeight -
+                    (parseFloat(computedStyle.paddingTop) +
+                        parseFloat(computedStyle.paddingBottom))
+                const maxLines = Math.floor(visibleHeight / lineHeight)
+
+                for (let i = 1; i <= maxLines; i++) {
+                    const lineNumber = document.createElement("span")
+                    lineNumber.className = "line-number"
+                    lineNumber.textContent = i
+                    lineNumbersContainer.appendChild(lineNumber)
+                }
+            }
+
+            // Funktion zum Aktualisieren der Anzeige der Einstellungswerte
+            function updateValueDisplay(input) {
+                if (input.type === "range") {
+                    const valueSpan =
+                        input.parentElement.querySelector(".value")
+                    let unit = "px"
+                    if (
+                        input.id === "line-height" ||
+                        input.id === "font-weight"
+                    )
+                        unit = ""
+                    if (input.id === "letter-spacing") unit = "px"
+                    valueSpan.textContent = input.value + unit
+                }
+            }
+
+            // Funktion zum Aktualisieren des Textstils
+            function updateTextStyle() {
+                sampleText.style.fontFamily = fontFamily.value
+                sampleText.style.fontSize = `${fontSize.value}px`
+                sampleText.style.letterSpacing = `${letterSpacing.value}px`
+                sampleText.style.fontWeight = fontWeight.value
+                sampleText.style.lineHeight = lineHeight.value
+                sampleText.style.maxWidth = `${maxWidth.value}px`
+
+                // Erstelle ein unsichtbares Messelement
+                const measurer = document.createElement("div")
+                measurer.style.cssText = `
+            position: absolute;
+                visibility: hidden;
+                white-space: pre-wrap;
+                width: ${maxWidth.value}px;
+                font-family: ${fontFamily.value};
+                font-size: ${fontSize.value}px;
+                letter-spacing: ${letterSpacing.value}px;
+                font-weight: ${fontWeight.value};
+                line-height: ${lineHeight.value};
+                padding: ${window.getComputedStyle(sampleText).padding};
+            `
+
+                measurer.textContent = sampleText.value.trim()
+                document.body.appendChild(measurer)
+
+                // Berechne tatsächliche Höhe ohne Padding
+                const style = window.getComputedStyle(measurer)
+                const totalHeight =
+                    measurer.offsetHeight -
+                    parseFloat(style.paddingTop) -
+                    parseFloat(style.paddingBottom)
+                const computedLineHeight = parseFloat(style.lineHeight)
+                const numberOfLines = Math.round(
+                    totalHeight / computedLineHeight
+                )
+
+                // Berechne Zeichen (ohne Leerzeilen)
+                const totalChars = sampleText.value
+                    .replace(/\n/g, " ")
+                    .trim().length
+                const avgCharsPerLine = Math.round(totalChars / numberOfLines)
+
+                document.body.removeChild(measurer)
+
+                const xHeightRatio = measureTypeMetrics()
+
+                charCount.textContent = `${avgCharsPerLine} Zeichen pro Zeile (${numberOfLines} Zeilen) | x-Höhe: ${xHeightRatio}%`
+
+                // Aktualisiere die Zeilennummern
+                updateLineNumbers()
+                measureTypeMetrics()
+            }
+
+            // Funktion zum Messen der Schriftmetriken
+            // Funktion zum Messen der Schriftmetriken
+            function measureTypeMetrics() {
+                const canvas = document.createElement("canvas")
+                const ctx = canvas.getContext("2d")
+                ctx.font = `${fontWeight.value} ${fontSize.value}px ${fontFamily.value}`
+
+                // Messe x-Höhe
+                const metricsX = ctx.measureText("x")
+                const xHeight =
+                    metricsX.actualBoundingBoxAscent +
+                    metricsX.actualBoundingBoxDescent
+
+                // Berechne Verhältnis
+                const ratio = (xHeight / parseFloat(fontSize.value)) * 100
+
+                return Math.round(ratio)
+            }
+
+            // Event Listener für alle Einstellungen
+            ;[
+                fontFamily,
+                fontSize,
+                letterSpacing,
+                fontWeight,
+                lineHeight,
+                maxWidth,
+            ].forEach((input) => {
+                input.addEventListener("input", () => {
+                    updateValueDisplay(input)
+                    updateTextStyle()
+                    saveSettings()
+                })
+            })
+
+            // Settings Panel Toggle
+            settingsToggle.addEventListener("click", () => {
+                const isVisible = settingsPanel.style.display === "block"
+                settingsPanel.style.display = isVisible ? "none" : "block"
+                settingsToggle.style.transform = isVisible
+                    ? "rotate(0deg)"
+                    : "rotate(180deg)"
+                saveSettings()
+            })
+
+            // Event Listener für Textänderungen
+            sampleText.addEventListener("input", () => {
+                updateTextStyle()
+                saveSettings()
+            })
+
+            // Event Listener für Fenstergrößenänderungen
+            window.addEventListener("resize", updateLineNumbers)
+
+            // Initialisierung
+            loadGoogleFonts()
+            // Warte kurz, bis die Schriften geladen sind
+            setTimeout(() => {
+                loadSettings()
+                updateTextStyle()
+            }, 100)
+        </script>
+    </body>
+</html>

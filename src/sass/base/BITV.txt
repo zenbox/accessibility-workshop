@@ -1,0 +1,44 @@
+<img
+    src="./media/75665EOZ/infas-logo_w.svg"
+    width="32"
+    height="20"
+    alt="infas - Institut für angewandte Sozialwissenschaft GmbH"
+    title="infas - Institut für angewandte Sozialwissenschaft GmbH"
+    id="logo-klein"
+/>
+
+<a href=""
+    ><img
+        src=""
+        alt="Infas Logo, Link zur Homepage"
+    />
+    <span class="visually-hidden">Infas Logo</span>
+</a>
+
+<div
+    id="page"
+>
+    <div
+        class="menu"
+    >
+        <button
+            class="btn"
+            type="button"
+            id="modal_open"
+            accesskey="9"
+            aria-describedby="help"
+        >
+            Hinweise zur Tastaturbedienung
+        </button>
+        <img
+            src="./media/75665EOZ/infas-logo_w.svg"
+            width="32"
+            height="20"
+            alt="infas - Institut für angewandte Sozialwissenschaft GmbH"
+            title="infas - Institut für angewandte Sozialwissenschaft GmbH"
+            id="logo-klein"
+          
+        />
+        <p class="visually-hidden" id="help">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro magni consequatur velit hic eius suscipit architecto, odio incidunt.</p>
+    </div>
+</div>
