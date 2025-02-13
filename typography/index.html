@@ -16,6 +16,7 @@
                 margin: 0;
                 padding: 20px;
                 font-family: system-ui, -apple-system, sans-serif;
+                background: #424242;
             }
 
             #content {
@@ -29,6 +30,7 @@
                 height: calc(100vh - 9rem);
                 transition: all 0.3s ease;
                 position: relative; /* Für absolute Positionierung der Zeilennummern */
+                outline: solid white 4px;
             }
 
             @media (orientation: portrait) {
@@ -43,6 +45,7 @@
                 border-radius: 8px;
                 margin-bottom: 20px;
                 display: none;
+                outline: 4px solid #f5f5f5;
             }
 
             .settings-row {
@@ -53,7 +56,7 @@
             }
 
             .settings-row label {
-                min-width: 120px;
+                min-width: 100px;
             }
 
             .settings-row input[type="range"] {
@@ -88,8 +91,14 @@
                 color: #666;
             }
 
+            #metrics {
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+            }
+
             #char-count {
-                color: #666;
+                color: #fff;
                 font-size: 14px;
                 margin-top: 10px;
             }
@@ -106,8 +115,8 @@
                 width: 100%;
                 height: 100%;
                 padding: 20px 40px 20px 20px; /* Extra Padding rechts für Zeilennummern */
-                border: 1px solid #ddd;
-                border-radius: 4px;
+                border: 0;
+                border-radius: 0;
                 resize: none;
                 font-family: inherit;
                 font-size: inherit;
@@ -115,6 +124,8 @@
                 letter-spacing: inherit;
                 font-weight: inherit;
                 box-sizing: border-box;
+
+                hyphens: auto;
             }
 
             /* Zeilennummern */
@@ -125,7 +136,7 @@
                 font-size: inherit;
                 line-height: inherit;
                 font-family: monospace;
-                color: #999;
+                color: #ccc;
                 pointer-events: none;
                 text-align: right;
                 width: 30px;
@@ -232,16 +243,25 @@
                 </div>
             </div>
 
+            <div id="metrics">
+                <div id="char-count"></div>
+                <canvas
+                    id="metrics-canvas"
+                    style="margin-left: 20px; background: #424242; border: 0"
+                ></canvas>
+            </div>
+
             <div id="text-container">
                 <div id="line-numbers"></div>
-                <textarea id="sample-text">
+                <textarea
+                    spellcheck="false"
+                    id="sample-text"
+                >
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</textarea
                 >
             </div>
-
-            <div id="char-count"></div>
         </div>
 
         <script>
@@ -409,28 +429,6 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
                 }
             }
 
-            // Funktion zum Aktualisieren der Zeilennummern
-            function updateLineNumbers() {
-                const lineNumbersContainer =
-                    document.getElementById("line-numbers")
-                lineNumbersContainer.innerHTML = ""
-
-                const computedStyle = window.getComputedStyle(sampleText)
-                const lineHeight = parseFloat(computedStyle.lineHeight)
-                const visibleHeight =
-                    sampleText.clientHeight -
-                    (parseFloat(computedStyle.paddingTop) +
-                        parseFloat(computedStyle.paddingBottom))
-                const maxLines = Math.floor(visibleHeight / lineHeight)
-
-                for (let i = 1; i <= maxLines; i++) {
-                    const lineNumber = document.createElement("span")
-                    lineNumber.className = "line-number"
-                    lineNumber.textContent = i
-                    lineNumbersContainer.appendChild(lineNumber)
-                }
-            }
-
             // Funktion zum Aktualisieren der Anzeige der Einstellungswerte
             function updateValueDisplay(input) {
                 if (input.type === "range") {
@@ -449,6 +447,7 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
 
             // Funktion zum Aktualisieren des Textstils
             function updateTextStyle() {
+                // Grundlegende Stile setzen
                 sampleText.style.fontFamily = fontFamily.value
                 sampleText.style.fontSize = `${fontSize.value}px`
                 sampleText.style.letterSpacing = `${letterSpacing.value}px`
@@ -456,20 +455,41 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
                 sampleText.style.lineHeight = lineHeight.value
                 sampleText.style.maxWidth = `${maxWidth.value}px`
 
-                // Erstelle ein unsichtbares Messelement
+                // Zeilenanzahl und Zeichen pro Zeile berechnen
+                const metrics = calculateTextMetrics(sampleText)
+
+                charCount.textContent = `~ ${metrics.avgCharsPerLine} Zeichen pro Zeile | x-Höhe: ${metrics.xHeightRatio}%`
+
+                const xHeightRatio = measureTypeMetrics()
+
+                // Zeilennummern aktualisieren
+                // updateLineNumbers(metrics.lineCount);
+            }
+
+            // Funktion zum Aktualisieren des Textstils
+            function updateTextStyle() {
+                // Textstil aktualisieren
+                sampleText.style.fontFamily = fontFamily.value
+                sampleText.style.fontSize = `${fontSize.value}px`
+                sampleText.style.letterSpacing = `${letterSpacing.value}px`
+                sampleText.style.fontWeight = fontWeight.value
+                sampleText.style.lineHeight = lineHeight.value
+                sampleText.style.maxWidth = `${maxWidth.value}px`
+
+                // Messelement für Zeilen/Zeichen-Berechnung
                 const measurer = document.createElement("div")
                 measurer.style.cssText = `
-            position: absolute;
-                visibility: hidden;
-                white-space: pre-wrap;
-                width: ${maxWidth.value}px;
-                font-family: ${fontFamily.value};
-                font-size: ${fontSize.value}px;
-                letter-spacing: ${letterSpacing.value}px;
-                font-weight: ${fontWeight.value};
-                line-height: ${lineHeight.value};
-                padding: ${window.getComputedStyle(sampleText).padding};
-            `
+        position: absolute;
+        visibility: hidden;
+        white-space: pre-wrap;
+        width: ${maxWidth.value}px;
+        font-family: ${fontFamily.value};
+        font-size: ${fontSize.value}px;
+        letter-spacing: ${letterSpacing.value}px;
+        font-weight: ${fontWeight.value};
+        line-height: ${lineHeight.value};
+        padding: ${window.getComputedStyle(sampleText).padding};
+    `
 
                 measurer.textContent = sampleText.value.trim()
                 document.body.appendChild(measurer)
@@ -491,35 +511,225 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
                     .trim().length
                 const avgCharsPerLine = Math.round(totalChars / numberOfLines)
 
+                // Messelement entfernen
                 document.body.removeChild(measurer)
 
+                // Metriken messen und anzeigen
                 const xHeightRatio = measureTypeMetrics()
-
                 charCount.textContent = `${avgCharsPerLine} Zeichen pro Zeile (${numberOfLines} Zeilen) | x-Höhe: ${xHeightRatio}%`
 
-                // Aktualisiere die Zeilennummern
-                updateLineNumbers()
-                measureTypeMetrics()
+                // updateLineNumbers();
             }
 
-            // Funktion zum Messen der Schriftmetriken
-            // Funktion zum Messen der Schriftmetriken
-            function measureTypeMetrics() {
+            function getTextMetrics() {
+                // Erstelle ein Messelement mit exakt der gleichen Breite wie das Textarea
+                const mirror = document.createElement("div")
+                mirror.style.cssText = `
+        position: absolute;
+        top: -9999px;
+        width: ${sampleText.clientWidth - 40}px; /* Berücksichtige Padding */
+        font-family: ${getComputedStyle(sampleText).fontFamily};
+        font-size: ${getComputedStyle(sampleText).fontSize};
+        line-height: ${getComputedStyle(sampleText).lineHeight};
+        letter-spacing: ${getComputedStyle(sampleText).letterSpacing};
+        font-weight: ${getComputedStyle(sampleText).fontWeight};
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        visibility: hidden;
+    `
+
+                // Füge das Element zum DOM hinzu
+                document.body.appendChild(mirror)
+
+                // Fülle mit dem aktuellen Text
+                mirror.textContent = sampleText.value
+
+                // Berechne die tatsächliche Höhe und die Zeilenhöhe
+                const actualHeight = mirror.offsetHeight
+                const lineHeightValue = parseFloat(
+                    getComputedStyle(mirror).lineHeight
+                )
+
+                // Berechne die Gesamtzahl der Zeilen
+                const totalLines = Math.round(actualHeight / lineHeightValue)
+
+                // Berechne durchschnittliche Zeichen pro Zeile
+                // Ignoriere Leerzeilen bei der Berechnung
+                const textContent = sampleText.value
+                    .split("\n")
+                    .filter((line) => line.trim().length > 0)
+                    .join(" ")
+                const totalChars = textContent.length
+                const charsPerLine = Math.round(totalChars / totalLines)
+
+                // Entferne das Messelement
+                document.body.removeChild(mirror)
+
+                // Berechne x-Höhe
                 const canvas = document.createElement("canvas")
                 const ctx = canvas.getContext("2d")
-                ctx.font = `${fontWeight.value} ${fontSize.value}px ${fontFamily.value}`
+                const computedStyle = getComputedStyle(sampleText)
+                ctx.font = `${computedStyle.fontWeight} ${computedStyle.fontSize} ${computedStyle.fontFamily}`
+                const metrics = ctx.measureText("x")
+                const xHeight = Math.round(
+                    ((metrics.actualBoundingBoxAscent +
+                        metrics.actualBoundingBoxDescent) /
+                        parseFloat(computedStyle.fontSize)) *
+                        100
+                )
 
-                // Messe x-Höhe
+                return {
+                    totalLines,
+                    charsPerLine,
+                    xHeight,
+                }
+            }
+
+            /*
+// JavaScript Funktion zum Aktualisieren der Zeilennummern
+function updateLineNumbers(count) {
+    const lineNumbersContainer = document.getElementById('line-numbers');
+    lineNumbersContainer.innerHTML = '';
+    
+    // Übernehme line-height vom Textarea
+    const computedStyle = window.getComputedStyle(sampleText);
+    lineNumbersContainer.style.lineHeight = computedStyle.lineHeight;
+    
+    console.log(lineNumbersContainer.style.lineHeight);
+    
+    
+    // Erstelle die Zeilennummern
+    for (let i = 1; i <= count; i++) {
+        const lineNumber = document.createElement('span');
+        lineNumber.className = 'line-number';
+        lineNumber.innerHTML = i + "<br>";
+        lineNumbersContainer.appendChild(lineNumber);
+    }
+    
+}
+*/
+
+            // Funktion zum Messen der x-Höhe
+            function measureXHeight(element) {
+                const canvas = document.createElement("canvas")
+                const ctx = canvas.getContext("2d")
+                const computedStyle = getComputedStyle(element)
+
+                ctx.font = `${computedStyle.fontWeight} ${computedStyle.fontSize} ${computedStyle.fontFamily}`
+
                 const metricsX = ctx.measureText("x")
                 const xHeight =
                     metricsX.actualBoundingBoxAscent +
                     metricsX.actualBoundingBoxDescent
+                const fontSize = parseFloat(computedStyle.fontSize)
 
-                // Berechne Verhältnis
-                const ratio = (xHeight / parseFloat(fontSize.value)) * 100
-
-                return Math.round(ratio)
+                return Math.round((xHeight / fontSize) * 100)
             }
+
+            // Funktion zum Messen der Schriftmetriken
+function measureTypeMetrics() {
+    const canvas = document.getElementById("metrics-canvas");
+    const size = parseInt(fontSize.value);
+    const computedLineHeight = parseFloat(lineHeight.value); // Wert aus dem line-height Input
+
+    // Feste Canvas-Größe
+    canvas.width = 400;  
+    canvas.height = 400;
+
+    const ctx = canvas.getContext("2d");
+    
+    // Text-Stil setzen
+    ctx.font = `${fontWeight.value} ${size}px ${fontFamily.value}`;
+    console.log("Using font:", ctx.font);
+
+    // Hintergrund
+    ctx.fillStyle = "#424242";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Schriftname oben links
+    ctx.fillStyle = "#fff";
+    ctx.font = "16px sans-serif";
+    ctx.fillText(`${fontFamily.value} ${fontWeight.value}`, 20, 30);
+
+    // Baseline position
+    const baselineY = 250;
+
+    // Test-Text
+    const testText = "ÀMxg";
+
+    // Schrift-Loading prüfen
+    if (document.fonts) {
+        document.fonts.ready.then(() => {
+            // Text zeichnen
+            ctx.font = `${fontWeight.value} ${size}px ${fontFamily.value}`;
+            ctx.fillStyle = "#fff";
+            ctx.fillText(testText, 120, baselineY);
+
+            // Metriken messen
+            const metricsA = ctx.measureText("À");
+            const metricsM = ctx.measureText("M");
+            const metricsX = ctx.measureText("x");
+            const metricsG = ctx.measureText("g");
+
+            // Höhen berechnen
+            const accentHeight = metricsA.actualBoundingBoxAscent; // Korrigiert: Akzenthöhe von À
+            const versalHeight = metricsM.actualBoundingBoxAscent;
+            const xHeight = metricsX.actualBoundingBoxAscent;
+            const descent = metricsG.actualBoundingBoxDescent;
+            
+            // Line-Height aus dem Input-Wert berechnen
+            const lineHeight = size * computedLineHeight;
+            const lineHeightTop = baselineY - lineHeight;
+            
+            // Obere Grundlinie
+            const upperBaseline = baselineY - lineHeight;
+
+            // Linieneinstellungen
+            ctx.setLineDash([2, 2]);
+            ctx.lineWidth = 1;
+
+            // Funktion zum Zeichnen einer Metrik-Linie mit Beschriftung
+            function drawMetricLine(x, y, color, label, value) {
+                ctx.strokeStyle = color;
+                ctx.beginPath();
+                ctx.moveTo(100, y);
+                ctx.lineTo(canvas.width - 145, y);
+                ctx.stroke();
+                
+                // Beschriftung
+                ctx.setLineDash([]); 
+                ctx.fillStyle = color;
+                ctx.font = `10px monospace`;
+                const percentage = Math.round((value/size) * 100);
+                ctx.fillText(`${label} (${percentage}%)`, canvas.width - x, y + 5);
+            }
+
+            // Line-Height - gelb
+            drawMetricLine(140, lineHeightTop, "#ff0", "Line-height", lineHeight);
+
+            // Obere Grundlinie - grau
+          //  drawMetricLine(380, upperBaseline, "#eee", "Upper baseline", lineHeight);
+
+            // Akzenthöhe - violett
+            drawMetricLine(140, baselineY - accentHeight, "#f0f", "Accent height", accentHeight);
+
+            // Versalhöhe - blau
+            drawMetricLine(140, baselineY - versalHeight, "#0cf", "Cap height", versalHeight);
+
+            // x-Höhe - rot
+            drawMetricLine(140, baselineY - xHeight, "#f33", "x-height", xHeight);
+
+            // Grundlinie - grau
+            drawMetricLine(380, baselineY, "#eee", "Baseline", 0);
+
+            // Unterlänge - grün
+            drawMetricLine(140, baselineY + descent, "#0c0", "Descent", descent);
+
+            return Math.round((xHeight / size) * 100);
+        });
+    }
+}
+
 
             // Event Listener für alle Einstellungen
             ;[
@@ -553,8 +763,10 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
                 saveSettings()
             })
 
-            // Event Listener für Fenstergrößenänderungen
-            window.addEventListener("resize", updateLineNumbers)
+            /*
+        // Event Listener für Fenstergrößenänderungen
+        window.addEventListener('resize', updateLineNumbers);
+*/
 
             // Initialisierung
             loadGoogleFonts()

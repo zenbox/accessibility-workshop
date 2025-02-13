@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Schriftmessung</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 20px;
+                font-family: system-ui;
+                background: #424242;
+                color: #fff;
+            }
+
+            #content {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            select {
+                font-size: 16px;
+                padding: 8px;
+                margin-bottom: 20px;
+                width: 100%;
+                max-width: 400px;
+            }
+
+            #metrics-canvas {
+                background: white;
+                margin-top: 10px;
+                width: 100%;
+                height: auto;
+            }
+
+            .controls {
+                margin-bottom: 20px;
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            input[type="range"] {
+                width: 200px;
+            }
+
+            #x-height-ratio {
+                font-family: monospace;
+                font-size: 14px;
+                color: #00aa00;
+                margin-left: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="content">
+            <div class="controls">
+                <select id="font-family">
+                    <optgroup label="System Schriften">
+                        <option value="Verdana, sans-serif">Verdana</option>
+                        <option value="Arial, sans-serif">Arial</option>
+                        <option value="Times New Roman, serif">
+                            Times New Roman
+                        </option>
+                        <option value="Georgia, serif">Georgia</option>
+                        <option value="Helvetica, sans-serif">Helvetica</option>
+                        <option value="system-ui">System</option>
+                    </optgroup>
+                </select>
+
+                <label>
+                    Größe: <span id="size-value">100</span>px
+                    <input
+                        type="range"
+                        id="font-size"
+                        min="50"
+                        max="200"
+                        value="100"
+                    />
+                </label>
+
+                <span id="x-height-ratio"></span>
+            </div>
+
+            <canvas id="metrics-canvas"></canvas>
+
+            <div
+                id="metrics-table"
+                style="
+                    margin-top: 20px;
+                    background: white;
+                    color: black;
+                    padding: 20px;
+                "
+            ></div>
+        </div>
+
+        <script>
+            // Google Fonts Konfiguration
+            const fontsList = {
+                "serif": [
+                    { name: "Merriweather", weights: [400] },
+                    { name: "Playfair Display", weights: [400] },
+                    { name: "Lora", weights: [400] },
+                    { name: "Source Serif Pro", weights: [400] },
+                    { name: "IBM Plex Serif", weights: [400] },
+                ],
+                "sans-serif": [
+                    { name: "Barlow", weights: [400] },
+                    { name: "Open Sans", weights: [400] },
+                    { name: "Roboto", weights: [400] },
+                    { name: "Inter", weights: [400] },
+                    { name: "Source Sans Pro", weights: [400] },
+                    { name: "IBM Plex Sans", weights: [400] },
+                ],
+                "monospace": [
+                    { name: "Source Code Pro", weights: [400] },
+                    { name: "Fira Code", weights: [400] },
+                    { name: "IBM Plex Mono", weights: [400] },
+                    { name: "JetBrains Mono", weights: [400] },
+                ],
+            }
+
+            function loadGoogleFonts() {
+                const fontFamilies = []
+                const fontSelect = document.getElementById("font-family")
+
+                Object.entries(fontsList).forEach(([category, fonts]) => {
+                    const optgroup = document.createElement("optgroup")
+                    optgroup.label =
+                        category.charAt(0).toUpperCase() + category.slice(1)
+
+                    fonts.forEach((font) => {
+                        const option = document.createElement("option")
+                        option.value = `${font.name}, ${category}`
+                        option.textContent = font.name
+                        option.style.fontFamily = font.name
+                        optgroup.appendChild(option)
+
+                        const weights = font.weights.join(";")
+                        fontFamilies.push(
+                            `family=${font.name.replace(
+                                /\s+/g,
+                                "+"
+                            )}:wght@${weights}`
+                        )
+                    })
+
+                    fontSelect.appendChild(optgroup)
+                })
+
+                const link = document.createElement("link")
+                link.href = `https://fonts.googleapis.com/css2?${fontFamilies.join(
+                    "&"
+                )}&display=swap`
+                link.rel = "stylesheet"
+                document.head.appendChild(link)
+            }
+
+            const canvas = document.getElementById("metrics-canvas")
+            const ctx = canvas.getContext("2d")
+            const fontFamily = document.getElementById("font-family")
+            const fontSize = document.getElementById("font-size")
+            const sizeValue = document.getElementById("size-value")
+            const xHeightRatio = document.getElementById("x-height-ratio")
+
+            function drawGrid(width, height) {
+                // Raster zeichnen
+                ctx.strokeStyle = "#f0f0f0"
+                ctx.lineWidth = 0.5
+
+                // Vertikale Linien
+                for (let x = 0; x < width; x += 5) {
+                    ctx.beginPath()
+                    ctx.moveTo(x, 0)
+                    ctx.lineTo(x, height)
+                    if (x % 50 === 0) {
+                        ctx.strokeStyle = "#ccc"
+                        ctx.lineWidth = 1
+                    } else {
+                        ctx.strokeStyle = "#f0f0f0"
+                        ctx.lineWidth = 0.5
+                    }
+                    ctx.stroke()
+                }
+
+                // Horizontale Linien
+                for (let y = 0; y < height; y += 5) {
+                    ctx.beginPath()
+                    ctx.moveTo(0, y)
+                    ctx.lineTo(width, y)
+                    if (y % 50 === 0) {
+                        ctx.strokeStyle = "#ccc"
+                        ctx.lineWidth = 1
+                    } else {
+                        ctx.strokeStyle = "#f0f0f0"
+                        ctx.lineWidth = 0.5
+                    }
+                    ctx.stroke()
+                }
+            }
+            // ***********
+
+            function measureFont() {
+                const size = parseInt(fontSize.value)
+                sizeValue.textContent = size
+
+                const canvasWidth = 800
+                const canvasHeight = 400
+                canvas.width = canvasWidth
+                canvas.height = canvasHeight
+
+                ctx.fillStyle = "#ffffff"
+                ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+                drawGrid(canvasWidth, canvasHeight)
+
+                const baselineY = canvasHeight / 2
+                ctx.font = `${size}px ${fontFamily.value}`
+                ctx.textBaseline = "alphabetic"
+
+                // Spezifische Messungen für verschiedene Zeichen
+                const mAll = ctx.measureText("ÅHxpg") // Alles
+                const mCap = ctx.measureText("H") // Versalhöhe
+                const mAcc = ctx.measureText("Å") // Akzentbuchstabe
+                const mAsc = ctx.measureText("h") // Oberlänge
+                const mX = ctx.measureText("x") // x-Höhe
+                const mDesc = ctx.measureText("p") // Unterlänge
+
+                // Metriken messen
+                const metrics = {
+                    accent: ctx.measureText("Å"),
+                    versal: ctx.measureText("M"),
+                    xHeight: ctx.measureText("x"),
+                    descent: ctx.measureText("g"),
+                }
+
+                // Berechnete Metriken (4 Dezimalstellen)
+                const canvasMetrics = {
+                    fontSize: size,
+                    xHeight: Number(
+                        (
+                            metrics.xHeight.actualBoundingBoxAscent +
+                            metrics.xHeight.actualBoundingBoxDescent
+                        ).toFixed(4)
+                    ),
+                    capHeight: Number(
+                        metrics.versal.actualBoundingBoxAscent.toFixed(4)
+                    ),
+                    ascender: Number(
+                        metrics.accent.actualBoundingBoxAscent.toFixed(4)
+                    ),
+                    descender: Number(
+                        metrics.descent.actualBoundingBoxDescent.toFixed(4)
+                    ),
+                }
+
+                // Text zentriert zeichnen
+                const textX = (canvasWidth - mAll.width) / 2
+                ctx.fillStyle = "#000000"
+                ctx.fillText("ÅHhxpg", textX, baselineY)
+
+                // Box für font-size visualisieren (1em)
+                ctx.strokeStyle = "#0000FF22"
+                ctx.lineWidth = 1
+                ctx.strokeRect(
+                    textX - 10,
+                    baselineY - size,
+                    mAll.width + 20,
+                    size
+                )
+
+                // Metriken visualisieren
+                const metricLines = [
+                    {
+                        y: baselineY - canvasMetrics.ascender,
+                        color: "#FF0000",
+                        label: "Ascender",
+                        value: canvasMetrics.ascender,
+                        side: "left",
+                    },
+                    {
+                        y: baselineY - canvasMetrics.capHeight,
+                        color: "#0000FF",
+                        label: "Versalhöhe",
+                        value: canvasMetrics.capHeight,
+                        side: "left",
+                    },
+                    {
+                        y: baselineY - canvasMetrics.xHeight,
+                        color: "#00AA00",
+                        label: "x-Höhe",
+                        value: canvasMetrics.xHeight,
+                        side: "left",
+                    },
+                    {
+                        y: baselineY,
+                        color: "#000000",
+                        label: "Baseline",
+                        value: 0,
+                        side: "right",
+                    },
+                    {
+                        y: baselineY - size,
+                        color: "#0000FF",
+                        label: "font-size (1em)",
+                        value: size,
+                        side: "left",
+                    },
+                    {
+                        y: baselineY + canvasMetrics.descender,
+                        color: "#AA00AA",
+                        label: "Unterlänge",
+                        value: canvasMetrics.descender,
+                        side: "right",
+                    },
+                ]
+
+                // Hilfslinien zeichnen
+                function drawMetricLine(metric) {
+                    ctx.strokeStyle = metric.color
+                    ctx.fillStyle = metric.color
+                    ctx.setLineDash([4, 4])
+                    ctx.beginPath()
+                    ctx.moveTo(0, metric.y)
+                    ctx.lineTo(canvasWidth - 200, metric.y)
+                    ctx.stroke()
+
+                    ctx.setLineDash([])
+                    ctx.font = "14px monospace"
+                    const textX =
+                        metric.side === "left" ? 10 : canvasWidth - 190
+                    const label = `${metric.label}: ${metric.value.toFixed(
+                        4
+                    )}px`
+                    ctx.fillText(label, textX, metric.y - 4)
+                }
+
+                metricLines.forEach(drawMetricLine)
+
+                // Verhältnisse zur font-size berechnen
+                const ratios = {
+                    accHeight: ((metrics.accHeight / size) * 100).toFixed(2),
+                    capHeight: ((metrics.capHeight / size) * 100).toFixed(2),
+                    ascHeight: ((metrics.ascHeight / size) * 100).toFixed(2),
+                    xHeight: ((metrics.xHeight / size) * 100).toFixed(2),
+                    fontTotal: (
+                        ((metrics.fontAscent + metrics.fontDescent) / size) *
+                        100
+                    ).toFixed(2),
+                }
+
+                xHeightRatio.textContent =
+                    `Verhältnisse zur font-size: ` +
+                    `Akzent: ${ratios.accHeight}% | ` +
+                    `Versal: ${ratios.capHeight}% | ` +
+                    `Oberlänge: ${ratios.ascHeight}% | ` +
+                    `x-Höhe: ${ratios.xHeight}% | ` +
+                    `Gesamt: ${ratios.fontTotal}%`
+
+                return canvasMetrics
+            }
+
+            // ***********
+
+            async function loadFontMetrics(fontFamily, fontSize) {
+                const metricsTable = document.getElementById("metrics-table")
+                try {
+                    const response = await fetch(
+                        `http://localhost:3000/api/font-metrics?fontName=${encodeURIComponent(
+                            fontFamily
+                        )}&fontSize=${fontSize}`
+                    )
+                    const data = await response.json()
+
+                    if (data.error) {
+                        throw new Error(data.error)
+                    }
+
+                    // Tabelle mit den Metriken erstellen
+                    let html = `
+            <h3>Font Metriken für ${data.fontName} @ ${data.fontSize}px</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Metrik</th>
+                    <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Font Units</th>
+                    <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Pixel</th>
+                    <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">% von UPM</th>
+                    <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Quelle</th>
+                </tr>`
+
+                    // Hauptmetriken
+                    const mainMetrics = [
+                        {
+                            key: "unitsPerEm",
+                            label: "Units per Em",
+                            source: "head table",
+                        },
+                        {
+                            key: "xHeight",
+                            label: "x-Höhe",
+                            source: "OS/2 table (sxHeight)",
+                        },
+                        {
+                            key: "capHeight",
+                            label: "Versalhöhe",
+                            source: "OS/2 table (sCapHeight)",
+                        },
+                        {
+                            key: "ascender",
+                            label: "Oberlänge",
+                            source: "OS/2 table (sTypoAscender)",
+                        },
+                        {
+                            key: "descender",
+                            label: "Unterlänge",
+                            source: "OS/2 table (sTypoDescender)",
+                        },
+                    ]
+
+                    // OS/2 spezifische Metriken
+                    const os2Metrics = [
+                        {
+                            key: "typoAscender",
+                            label: "Typografische Oberlänge",
+                            source: "OS/2 table",
+                        },
+                        {
+                            key: "typoDescender",
+                            label: "Typografische Unterlänge",
+                            source: "OS/2 table",
+                        },
+                        {
+                            key: "typoLineGap",
+                            label: "Typografischer Zeilenabstand",
+                            source: "OS/2 table",
+                        },
+                        {
+                            key: "winAscent",
+                            label: "Windows Oberlänge",
+                            source: "OS/2 table",
+                        },
+                        {
+                            key: "winDescent",
+                            label: "Windows Unterlänge",
+                            source: "OS/2 table",
+                        },
+                    ]
+
+                    // hhea spezifische Metriken
+                    const hheaMetrics = [
+                        {
+                            key: "hheaAscender",
+                            label: "hhea Oberlänge",
+                            source: "hhea table",
+                        },
+                        {
+                            key: "hheaDescender",
+                            label: "hhea Unterlänge",
+                            source: "hhea table",
+                        },
+                        {
+                            key: "hheaLineGap",
+                            label: "hhea Zeilenabstand",
+                            source: "hhea table",
+                        },
+                    ]
+
+                    // Funktion zum Erstellen einer Tabellenzeile
+                    function createRow(metric) {
+                        const units = data.metrics[metric.key]
+                        const pixels = data.pixelMetrics[metric.key]
+                        const ratio = (
+                            (units / data.metrics.unitsPerEm) *
+                            100
+                        ).toFixed(2)
+
+                        return `
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${metric.label}</td>
+                    <td style="text-align: right; padding: 8px; border: 1px solid #ddd;">${units}</td>
+                    <td style="text-align: right; padding: 8px; border: 1px solid #ddd;">${pixels}px</td>
+                    <td style="text-align: right; padding: 8px; border: 1px solid #ddd;">${ratio}%</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${metric.source}</td>
+                </tr>`
+                    }
+
+                    // Hauptmetriken
+                    html += `<tr><td colspan="5" style="padding: 8px; background: #f5f5f5;"><strong>Hauptmetriken</strong></td></tr>`
+                    mainMetrics.forEach((metric) => {
+                        html += createRow(metric)
+                    })
+
+                    // OS/2 Metriken
+                    html += `<tr><td colspan="5" style="padding: 8px; background: #f5f5f5;"><strong>OS/2 Metriken</strong></td></tr>`
+                    os2Metrics.forEach((metric) => {
+                        html += createRow(metric)
+                    })
+
+                    // hhea Metriken
+                    html += `<tr><td colspan="5" style="padding: 8px; background: #f5f5f5;"><strong>hhea Metriken</strong></td></tr>`
+                    hheaMetrics.forEach((metric) => {
+                        html += createRow(metric)
+                    })
+
+                    html += `</table>`
+
+                    // Font Info
+                    if (data.metrics.fontInfo) {
+                        html += `
+                <h3 style="margin-top: 20px;">Font Information</h3>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Eigenschaft</th>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Wert</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Familie</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${data.metrics.fontInfo.familyName}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Stil</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${data.metrics.fontInfo.styleName}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Designer</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${data.metrics.fontInfo.designer}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Version</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${data.metrics.fontInfo.version}</td>
+                    </tr>
+                </table>`
+                    }
+
+                    metricsTable.innerHTML = html
+                } catch (error) {
+                    metricsTable.innerHTML = `
+            <div style="padding: 20px; color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;">
+                Fehler beim Laden der Font-Metriken: ${error.message}
+            </div>`
+                }
+            }
+
+            // ***********
+
+            // updateMetricsDisplay() anpassen:
+            async function updateMetricsDisplay(fontFamily, fontSize) {
+                const metricsTable = document.getElementById("metrics-table")
+                try {
+                    // Canvas Metriken holen
+                    const canvasMetrics = measureFont()
+
+                    // OpenType Metriken vom Server holen
+                    const response = await fetch(
+                        `http://localhost:3000/api/font-metrics?fontName=${encodeURIComponent(
+                            fontFamily
+                        )}&fontSize=${fontSize}`
+                    )
+                    const data = await response.json()
+
+                    if (data.error) {
+                        throw new Error(data.error)
+                    }
+
+                    let html = `
+            <h3>Font Metriken für ${data.fontFamily}</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                <tr style="background: #f5f5f5;">
+                    <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Metrik</th>
+                    <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">OpenType</th>
+                    <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Canvas</th>
+                    <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Differenz</th>
+                </tr>`
+
+                    // Wichtige Metriken vergleichen
+                    const metricsToCompare = [
+                        { key: "xHeight", label: "x-Höhe" },
+                        { key: "capHeight", label: "Versalhöhe" },
+                        { key: "ascender", label: "Oberlänge" },
+                        { key: "descender", label: "Unterlänge" },
+                    ]
+
+                    metricsToCompare.forEach((metric) => {
+                        const opentype = data.pixelMetrics[metric.key]
+                        const canvas = canvasMetrics[metric.key]
+                        const diff = (opentype - canvas).toFixed(4)
+                        const diffClass =
+                            Math.abs(diff) > 1 ? "significant-diff" : ""
+
+                        html += `
+                <tr class="${diffClass}">
+                    <td style="padding: 8px; border: 1px solid #ddd;">${
+                        metric.label
+                    }</td>
+                    <td style="text-align: right; padding: 8px; border: 1px solid #ddd;">${opentype}px</td>
+                    <td style="text-align: right; padding: 8px; border: 1px solid #ddd;">${canvas}px</td>
+                    <td style="text-align: right; padding: 8px; border: 1px solid #ddd; ${
+                        Math.abs(diff) > 1 ? "color: red;" : ""
+                    }">${diff}px</td>
+                </tr>`
+                    })
+
+                    html += `</table>
+        
+        <h4>Weitere OpenType Metriken</h4>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr style="background: #f5f5f5;">
+                <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Metrik</th>
+                <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Font Units</th>
+                <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Pixel</th>
+                <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">% von UPM</th>
+            </tr>`
+
+                    // Additional metrics
+                    const additionalMetrics = [
+                        {
+                            key: "typoAscender",
+                            label: "Typografische Oberlänge",
+                        },
+                        {
+                            key: "typoDescender",
+                            label: "Typografische Unterlänge",
+                        },
+                        {
+                            key: "typoLineGap",
+                            label: "Typografischer Zeilenabstand",
+                        },
+                        { key: "winAscent", label: "Windows Oberlänge" },
+                        { key: "winDescent", label: "Windows Unterlänge" },
+                    ]
+
+                    additionalMetrics.forEach((metric) => {
+                        const units = data.metrics[metric.key]
+                        const pixels = data.pixelMetrics[metric.key]
+                        const ratio = (
+                            (units / data.metrics.unitsPerEm) *
+                            100
+                        ).toFixed(2)
+
+                        html += `
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${metric.label}</td>
+                    <td style="text-align: right; padding: 8px; border: 1px solid #ddd;">${units}</td>
+                    <td style="text-align: right; padding: 8px; border: 1px solid #ddd;">${pixels}px</td>
+                    <td style="text-align: right; padding: 8px; border: 1px solid #ddd;">${ratio}%</td>
+                </tr>`
+                    })
+
+                    html += `</table>`
+
+                    metricsTable.innerHTML = html
+                } catch (error) {
+                    metricsTable.innerHTML = `
+            <div style="padding: 20px; color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;">
+                Fehler beim Laden der Font-Metriken: ${error.message}
+            </div>`
+                }
+            }
+            // ***********
+
+            // Speichern der Einstellungen
+            function saveSettings() {
+                const settings = {
+                    fontSize: fontSize.value,
+                    fontFamily: fontFamily.value,
+                }
+                localStorage.setItem(
+                    "fontMetricsSettings",
+                    JSON.stringify(settings)
+                )
+            }
+
+            // Laden der Einstellungen
+            function loadSettings() {
+                const saved = localStorage.getItem("fontMetricsSettings")
+                if (saved) {
+                    const settings = JSON.parse(saved)
+                    fontSize.value = settings.fontSize
+                    fontFamily.value = settings.fontFamily
+                    sizeValue.textContent = settings.fontSize
+                } else {
+                    // Standardwerte setzen
+                    fontSize.value = 100
+                    sizeValue.textContent = "100"
+                }
+            }
+
+            function resetToDefault() {
+                fontSize.value = 100
+                sizeValue.textContent = "100"
+                measureFont()
+                saveSettings()
+            }
+
+            // Event Listener
+            ;[fontFamily, fontSize].forEach((input) => {
+                input.addEventListener("input", () => {
+                    measureFont()
+                    saveSettings()
+                })
+            })
+
+            // Event Listener im Font-Tool erweitern
+            fontFamily.addEventListener("change", () => {
+                measureFont()
+                saveSettings()
+                loadFontMetrics(fontFamily.value, parseInt(fontSize.value))
+            })
+            ;[(fontFamily, fontSize)].forEach((input) => {
+                input.addEventListener("input", () => {
+                    measureFont()
+                    saveSettings()
+                    updateMetricsDisplay(
+                        fontFamily.value,
+                        parseInt(fontSize.value)
+                    )
+                })
+            })
+
+            // Doppelklick auf die Größenanzeige
+            sizeValue.parentElement.addEventListener("dblclick", resetToDefault)
+
+            // Style für den Reset-Cursor
+            sizeValue.parentElement.style.cursor = "pointer"
+
+            // Initialisierung
+            loadGoogleFonts()
+            // Warte auf das Laden der Fonts und stelle dann die gespeicherten Einstellungen wieder her
+            document.fonts.ready.then(() => {
+                loadSettings()
+                setTimeout(measureFont, 100)
+            })
+        </script>
+    </body>
+</html>
