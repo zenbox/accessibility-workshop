@@ -3843,7 +3843,8 @@ body {
 h2:before {
   counter-increment: step;
   content: counter(step) " ";
-  font-size: 5rem;
+  font-size: 3rem;
+  opacity: 0.5;
 }
 
 nav.breadcrumb {
