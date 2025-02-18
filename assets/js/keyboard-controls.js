@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(message)
 
     const table = document.getElementById("data-table")
-    const cells = table.querySelectorAll("table, td, th")
+    const cells = table.querySelectorAll("table,  td,  th")
     const cellsPerRow = table.querySelectorAll("tr:first-child th").length
     let currentCellIndex = 0
 

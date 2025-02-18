@@ -95,6 +95,7 @@ function createMainNavigation() {
         { file: "contrast.html", text: "Kontrast" },
         { file: "color.html", text: "Farbe" },
         { file: "keyboard.html", text: "Tastatur" },
+        { file: "screenreader-examples.html", text: "Screenreader" },
         // { file: "form.html", text: "Formular" },
         // { file: "navigation.html", text: "Navigation" },
         { file: "non-text-content.html", text: "Nicht-Text" },

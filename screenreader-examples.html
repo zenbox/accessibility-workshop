@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="de-ch">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Beispiele für Screenreader-Verhalten</title>
+        <link
+            rel="stylesheet"
+            href="assets/css/style.css"
+        />
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            fieldset {
+                width: 18rem;
+                border-radius: 0.5rem;
+                padding: 2rem;
+            }
+            legend {
+                font-weight: 600;
+                padding-inline: 1rem;
+            }
+            label,
+            input,
+            button {
+                display: block;
+                width: 100% !important;
+                width: 10rem;
+            }
+            input {
+                border: 1px solid grey;
+                line-height: 1.5;
+                padding: 0.25rem;
+            }
+            label,
+            button {
+                margin-block-start: 1rem;
+            }
+            .small {
+                font-size: 0.75rem;
+                color: grey;
+            }
+            hr {
+                margin-block: 2rem;
+                width: 100%;
+                border: 1px solid lightgrey;
+            }
+        </style>
+
+        <style>
+            .container {
+                display: flex;
+                gap: 2rem;
+                margin-bottom: 2rem;
+                padding: 1rem;
+            }
+
+            .container:focus-within {
+                outline: 2px solid #4a90e2;
+                border-radius: 4px;
+            }
+
+            .draggable {
+                padding: 1rem;
+                border: 2px solid #333;
+                cursor: move;
+                margin: 0.5rem;
+                user-select: none;
+                background: white;
+            }
+
+            .draggable:focus,
+            .drop-target:focus {
+                outline: 3px solid #4a90e2;
+                outline-offset: 2px;
+            }
+
+            .draggable[aria-selected="true"] {
+                background: #e0e0e0;
+                border-color: #4a90e2;
+            }
+
+            .drop-target {
+                width: 100px;
+                height: 100px;
+                border: 3px solid #333;
+                margin: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+
+            .red-target {
+                background-color: rgba(255, 0, 0, 0.2);
+                border-color: red;
+            }
+
+            .green-target {
+                background-color: rgba(0, 255, 0, 0.2);
+                border-color: green;
+            }
+
+            .blue-target {
+                background-color: rgba(0, 0, 255, 0.2);
+                border-color: blue;
+            }
+
+            .correct {
+                background-color: rgba(0, 255, 0, 0.3);
+            }
+
+            .wrong {
+                background-color: rgba(255, 0, 0, 0.3);
+            }
+
+            .dropped-item {
+                position: absolute;
+                padding: 0.5rem;
+                background: white;
+                border: 2px solid #333;
+                pointer-events: none;
+            }
+
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                border: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+            <h2>ARIA Verhalten</h2>
+            <form
+                action=""
+                aria-live="polite"
+                aria-busy="false"
+            >
+                <fieldset>
+                    <legend>Login</legend>
+                    <p
+                        aria-hidden="true"
+                        class="small"
+                    >
+                        Das Formular ist ein Beispiel für ein
+                        <code>aria-live="polite"</code>. Da das in VoiceOver
+                        nicht funktioniert, kann man es mit Chrome Vox
+                        Screenreader testen.
+                    </p>
+                    <label for="username">Benutzername:</label>
+                    <input
+                        type="text"
+                        id="username"
+                        autocomplete="off"
+                    />
+                    <p
+                        id="username_description"
+                        class="visually-hidden"
+                    ></p>
+                    <label for="password">Passwort:</label
+                    ><input
+                        type="password"
+                        id="password"
+                        autocomplete="off"
+                    />
+                    <p
+                        id="password_description"
+                        class="visually-hidden"
+                    ></p>
+                    <button>Anmelden</button>
+                </fieldset>
+            </form>
+        </article>
+        <hr />
+        <article>
+            <h2>Fremdsprachen</h2>
+            <p class="small">
+                Screenreader sind wie unterschiedliche Browser auch, jeder hat
+                so seine Fähgkeiten oder auch nicht. Dazu kommt, dass sich
+                Screenreader über die Einstellungen sehr weitegefächert
+                konfigurieren lassen. Jeder Benutzer wird sich ihn so
+                eingestellt haben, wie er mächte. Insofern sind keine
+                Vorhersagen für ein Verhalten möglich. Man hält sich also an die
+                Standards des semantischen HTMLs und der ARIA-Fähigkeiten.
+            </p>
+            <p>
+                <abbr
+                    tabindex="0"
+                    lang="en"
+                    title="National Aeronautic Space Agency"
+                    style="
+                        text-transform: uppercase;
+                        padding: 0.5rem;
+                        border: 1px solid black;
+                    "
+                    aria-label="NASA"
+                >
+                    NASA
+                </abbr>
+            </p>
+            <p
+                aria-hidden="true"
+                class="small"
+                style="margin-top: -0.5rem"
+            >
+                Deutsprachiges Kürzel mit englischsprachiger Bedeutung
+            </p>
+            <p
+                tabindex="0"
+                lang="ko"
+                data-talk="an-nyeong-ha-se-yo"
+                aria-label="안녕하세요"
+                style="padding: 0.5rem; border: 1px solid black"
+            >
+                안녕하세요
+            </p>
+            <p
+                aria-hidden="true"
+                class="small"
+                style="margin-top: -0.5rem"
+            >
+                Koreanischer Text
+            </p>
+            <p
+                tabindex="0"
+                lang="hu"
+                data-talk="an-nyeong-ha-se-yo"
+                aria-label="Jó napot kívanók"
+                style="padding: 0.5rem; border: 1px solid black"
+            >
+                Jó napot kívanók
+            </p>
+            <p
+                aria-hidden="true"
+                class="small"
+                style="margin-top: -0.5rem"
+            >
+                Ungarischer Text
+            </p>
+            <p
+                tabindex="0"
+                lang="en"
+                data-talk="hällo wörld"
+                aria-label="Hello world"
+                style="padding: 0.5rem; border: 1px solid black"
+            >
+                Hello world.
+            </p>
+            <p
+                aria-hidden="true"
+                class="small"
+                style="margin-top: -0.5rem"
+            >
+                Englischer Text
+            </p>
+        </article>
+        <hr />
+        <article>
+            <h2>Drag 'n Drop</h2>
+            <dl>
+                <dt><strong>Tastaturbedienung</strong></dt>
+                <dd>
+                    <p>Drag and Drop kann mit der Tastatur bedient werden.</p>
+
+                    <p>
+                        Wörter und Ablageflächen können als Komponenten über die
+                        Tab-Taste erreicht werden. Die Auswahl der Wörter und
+                        der Ablagefläche funktioniert dann über die Pfeiltasten,
+                        die Bestätigung durch die Space-Taste.
+                    </p>
+                    <p>
+                        Wenn ein Wort in der Ablagefläche durch die Space-Taste
+                        abgelegt wurde, könnte vielleicht mit der Pfeiltaste das
+                        nächste Wort ausgewählt werden.
+                    </p>
+                </dd>
+                <dt><strong>Screenreader</strong></dt>
+                <dd>
+                    <p>
+                        Grundsätzlich macht es die Sprachausgabe möglich, dass
+                        das Drag and Drop auch von blinden Benutzern bedient
+                        werden kann. Jedes Feld oder jedes Ziel muss eine
+                        vorlesefähigen Namen haben.
+                    </p>
+                    <p>
+                        Im Beipiel ist es schwierig, dass ein Feld nicht
+                        vorliest, dass bereits etwas drin liegt. Auch die Ablage
+                        im falschen Feld berücksichtigt das nicht. Es ist also
+                        weitere Programmierung notwendig.
+                    </p>
+                </dd>
+            </dl>
+            <div
+                class="container"
+                id="draggableContainer"
+                role="group"
+                aria-label="Auswählbare Farben"
+                tabindex="0"
+            >
+                <div
+                    class="draggable"
+                    role="option"
+                    tabindex="-1"
+                    data-color="rot"
+                    aria-selected="false"
+                >
+                    Rot
+                </div>
+                <div
+                    class="draggable"
+                    role="option"
+                    tabindex="-1"
+                    data-color="grün"
+                    aria-selected="false"
+                >
+                    Grün
+                </div>
+                <div
+                    class="draggable"
+                    role="option"
+                    tabindex="-1"
+                    data-color="blau"
+                    aria-selected="false"
+                >
+                    Blau
+                </div>
+            </div>
+
+            <div
+                class="container"
+                id="targetContainer"
+                role="group"
+                aria-label="Zielfelder für Farben"
+                tabindex="0"
+            >
+                <div
+                    class="drop-target red-target"
+                    role="button"
+                    tabindex="-1"
+                    aria-label="Rotes Zielfeld"
+                    data-expects="rot"
+                ></div>
+                <div
+                    class="drop-target green-target"
+                    role="button"
+                    tabindex="-1"
+                    aria-label="Grünes Zielfeld"
+                    data-expects="grün"
+                ></div>
+                <div
+                    class="drop-target blue-target"
+                    role="button"
+                    tabindex="-1"
+                    aria-label="Blaues Zielfeld"
+                    data-expects="blau"
+                ></div>
+            </div>
+
+            <div
+                id="liveRegion"
+                class="sr-only"
+                aria-live="polite"
+            ></div>
+        </article>
+        <script src="assets/js/scaffold.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const username = document.querySelector("#username")
+                const usernameDescription = document.querySelector(
+                    "#username_description"
+                )
+                // bei Focus des Feldes "username" soll der zusätzlicher Absatz "username_description" eingeblendet werden.
+                username.addEventListener("focus", () => {
+                    usernameDescription.classList.remove("visually-hidden")
+                    usernameDescription.classList.add("visually-visible")
+                    usernameDescription.innerText =
+                        "Bitte geben Sie Ihren Benutzernamen ein."
+                })
+                username.addEventListener("blur", () => {
+                    usernameDescription.classList.remove("visually-visible")
+                    usernameDescription.classList.add("visually-hidden")
+                    usernameDescription.innerText = ""
+                })
+
+                const password = document.querySelector("#password")
+                const passwordDescription = document.querySelector(
+                    "#password_description"
+                )
+                password.addEventListener("focus", () => {
+                    passwordDescription.classList.remove("visually-hidden")
+                    passwordDescription.classList.add("visually-visible")
+                    passwordDescription.innerText =
+                        "Bitte geben Sie Ihr Passwort ein."
+                })
+                password.addEventListener("blur", () => {
+                    passwordDescription.classList.remove("visually-visible")
+                    passwordDescription.classList.add("visually-hidden")
+                    passwordDescription.innerText = ""
+                })
+            })
+        </script>
+
+        <script>
+            // Ursprünglicher Drag & Drop Code
+            const draggables = document.querySelectorAll(".draggable")
+            const dropTargets = document.querySelectorAll(".drop-target")
+            const draggableContainer =
+                document.getElementById("draggableContainer")
+
+            // Drag & Drop Events...
+            draggables.forEach((draggable) => {
+                draggable.addEventListener("dragstart", (e) => {
+                    e.dataTransfer.setData(
+                        "text/plain",
+                        draggable.dataset.color
+                    )
+                    e.dataTransfer.setData("text/html", draggable.outerHTML)
+                    setTimeout(() => {
+                        draggable.style.opacity = "0.4"
+                    }, 0)
+                })
+
+                draggable.addEventListener("dragend", () => {
+                    draggable.style.opacity = "1"
+                })
+            })
+
+            dropTargets.forEach((target) => {
+                target.addEventListener("dragover", (e) => {
+                    e.preventDefault()
+                })
+
+                target.addEventListener("dragenter", (e) => {
+                    e.preventDefault()
+                    target.style.transform = "scale(1.1)"
+                })
+
+                target.addEventListener("dragleave", () => {
+                    target.style.transform = "scale(1)"
+                })
+
+                target.addEventListener("drop", handleDrop)
+            })
+
+            // Funktion zum Ablegen eines Elements
+            function handleDrop(e) {
+                e.preventDefault()
+                const target = e.currentTarget
+                target.style.transform = "scale(1)"
+
+                const droppedColor =
+                    e.dataTransfer?.getData("text/plain") ||
+                    selectedDraggable?.dataset.color
+                const expectedColor = target.dataset.expects
+
+                // Entferne vorherige Elemente im Target
+                const previousDropped = target.querySelector(".dropped-item")
+                if (previousDropped) {
+                    previousDropped.remove()
+                }
+
+                if (droppedColor === expectedColor) {
+                    target.classList.add("correct")
+                    target.classList.remove("wrong")
+
+                    // Erstelle ein neues Element im Target
+                    const droppedItem = document.createElement("div")
+                    droppedItem.className = "dropped-item"
+                    droppedItem.textContent = droppedColor.toUpperCase()
+                    target.appendChild(droppedItem)
+
+                    // Entferne das Original aus dem Container
+                    const originalElement = draggableContainer.querySelector(
+                        `[data-color="${droppedColor}"]`
+                    )
+                    if (originalElement) {
+                        originalElement.remove()
+                    }
+
+                    announceToScreenReader(
+                        `${droppedColor} wurde erfolgreich im ${target.getAttribute(
+                            "aria-label"
+                        )} abgelegt`
+                    )
+                } else {
+                    target.classList.add("wrong")
+                    target.classList.remove("correct")
+                    setTimeout(() => {
+                        target.classList.remove("wrong")
+                    }, 800)
+                    announceToScreenReader(
+                        `${droppedColor} passt nicht in das ${target.getAttribute(
+                            "aria-label"
+                        )}`
+                    )
+                }
+            }
+        </script>
+
+        <script>
+            // Tastatursteuerung
+            let selectedDraggable = null
+            const liveRegion = document.getElementById("liveRegion")
+
+            function announceToScreenReader(message) {
+                liveRegion.textContent = message
+            }
+
+            // Keyboard Navigation für die Draggables
+            draggableContainer.addEventListener("keydown", (e) => {
+                const draggables = Array.from(
+                    document.querySelectorAll(".draggable")
+                )
+                const currentIndex = draggables.indexOf(selectedDraggable)
+
+                switch (e.key) {
+                    case "ArrowLeft":
+                    case "ArrowRight":
+                        e.preventDefault()
+                        // Deselektiere das aktuelle Element
+                        if (selectedDraggable) {
+                            selectedDraggable.setAttribute(
+                                "aria-selected",
+                                "false"
+                            )
+                        }
+
+                        // Berechne den neuen Index
+                        let newIndex
+                        if (e.key === "ArrowLeft") {
+                            newIndex =
+                                currentIndex > 0
+                                    ? currentIndex - 1
+                                    : draggables.length - 1
+                        } else {
+                            newIndex =
+                                currentIndex < draggables.length - 1
+                                    ? currentIndex + 1
+                                    : 0
+                        }
+
+                        // Selektiere das neue Element
+                        selectedDraggable = draggables[newIndex]
+                        selectedDraggable.setAttribute("aria-selected", "true")
+                        selectedDraggable.focus()
+                        announceToScreenReader(
+                            `${selectedDraggable.textContent} ausgewählt`
+                        )
+                        break
+
+                    case " ":
+                        e.preventDefault()
+                        if (selectedDraggable) {
+                            announceToScreenReader(
+                                `${selectedDraggable.textContent} zum Ablegen bereit. Verwenden Sie Tab um zu den Zielfeldern zu gelangen.`
+                            )
+                        }
+                        break
+                }
+            })
+
+            // Keyboard Navigation für die Targets
+            const targetContainer = document.getElementById("targetContainer")
+            let selectedTarget = null
+
+            targetContainer.addEventListener("keydown", (e) => {
+                const targets = Array.from(
+                    document.querySelectorAll(".drop-target")
+                )
+                const currentIndex = targets.indexOf(selectedTarget)
+
+                switch (e.key) {
+                    case "ArrowLeft":
+                    case "ArrowRight":
+                        e.preventDefault()
+                        // Berechne den neuen Index
+                        let newIndex
+                        if (e.key === "ArrowLeft") {
+                            newIndex =
+                                currentIndex > 0
+                                    ? currentIndex - 1
+                                    : targets.length - 1
+                        } else {
+                            newIndex =
+                                currentIndex < targets.length - 1
+                                    ? currentIndex + 1
+                                    : 0
+                        }
+
+                        // Selektiere das neue Target
+                        selectedTarget = targets[newIndex]
+                        selectedTarget.focus()
+                        announceToScreenReader(
+                            selectedTarget.getAttribute("aria-label")
+                        )
+                        break
+
+                    case " ":
+                        e.preventDefault()
+                        if (selectedTarget && selectedDraggable) {
+                            // Simuliere Drop-Event
+                            handleDrop({
+                                preventDefault: () => {},
+                                currentTarget: selectedTarget,
+                            })
+                            selectedDraggable = null
+                        }
+                        break
+                }
+            })
+
+            // Initialisierung der Fokus-Verwaltung
+            draggableContainer.addEventListener("focus", () => {
+                if (!selectedDraggable) {
+                    selectedDraggable = document.querySelector(".draggable")
+                    selectedDraggable.setAttribute("aria-selected", "true")
+                    announceToScreenReader(
+                        "Farbenauswahl. Benutzen Sie die Pfeiltasten links und rechts zur Navigation und Leertaste zum Auswählen."
+                    )
+                }
+            })
+
+            targetContainer.addEventListener("focus", () => {
+                if (!selectedTarget) {
+                    selectedTarget = document.querySelector(".drop-target")
+                    selectedTarget.focus()
+                    announceToScreenReader(
+                        "Zielfelder. Benutzen Sie die Pfeiltasten links und rechts zur Navigation und Leertaste zum Ablegen."
+                    )
+                }
+            })
+        </script>
+    </body>
+</html>
