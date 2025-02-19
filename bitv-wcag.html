@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <title>BITV Prüfsektionen</title>
+        <style>
+            :root {
+                font-family: Barlow, sans-serif;
+                font-size: 16px;
+                line-height: 1.5;
+            }
+            body {
+                margin: 20px;
+                background-color: #f0f0f0;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .card {
+                aspect-ratio: 1;
+                padding: 1rem;
+                border-radius: 0.1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-weight: 400;
+                box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+                transition: transform 0.2s;
+                cursor: pointer;
+            }
+
+            .card:hover {
+                transform: scale(1.05);
+            }
+
+            /* Modal Styles */
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+            }
+
+            .modal-content {
+                position: relative;
+                background-color: #fff;
+                margin: 2rem auto;
+                padding: 2rem;
+                width: 90%;
+                max-width: 800px;
+                max-height: 80vh;
+                overflow-y: auto;
+                border-radius: 0.25rem;
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+            }
+
+            .close-button {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                font-size: 1.5rem;
+                cursor: pointer;
+                background: none;
+                border: none;
+                padding: 0.5rem;
+            }
+
+            .close-button:hover {
+                color: #666;
+            }
+
+            /* Prüfschritte Styles */
+            .pruefschritte {
+                margin-top: 1.5rem;
+            }
+
+            .pruefschritt {
+                margin-bottom: 1.5rem;
+                padding: 1rem;
+                background-color: #f8f8f8;
+                border-radius: 0.25rem;
+                border-left: 4px solid #666;
+            }
+
+            .pruefschritt h3 {
+                margin: 0 0 1rem 0;
+                color: #333;
+            }
+
+            .section-content {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+
+            .content-section {
+                background: white;
+                padding: 1rem;
+                border-radius: 0.25rem;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .content-section h4 {
+                margin: 0 0 0.5rem 0;
+                color: #444;
+            }
+
+            /* Generierte Farbklassen */
+            .card-1 {
+                background-color: hsl(0, 70%, 50%);
+                color: #fff;
+            }
+            .card-2 {
+                background-color: hsl(18.94736842105263, 70%, 50%);
+                color: #fff;
+            }
+            .card-3 {
+                background-color: hsl(37.89473684210526, 70%, 50%);
+                color: #fff;
+            }
+            .card-4 {
+                background-color: hsl(56.84210526315789, 70%, 50%);
+                color: #000;
+            }
+            .card-5 {
+                background-color: hsl(75.78947368421052, 70%, 50%);
+                color: #000;
+            }
+            .card-6 {
+                background-color: hsl(94.73684210526315, 70%, 50%);
+                color: #000;
+            }
+            .card-7 {
+                background-color: hsl(113.68421052631578, 70%, 50%);
+                color: #000;
+            }
+            .card-8 {
+                background-color: hsl(132.6315789473684, 70%, 50%);
+                color: #000;
+            }
+            .card-9 {
+                background-color: hsl(151.57894736842104, 70%, 50%);
+                color: #000;
+            }
+            .card-10 {
+                background-color: hsl(170.52631578947367, 70%, 50%);
+                color: #000;
+            }
+            .card-11 {
+                background-color: hsl(189.4736842105263, 70%, 50%);
+                color: #fff;
+            }
+            .card-12 {
+                background-color: hsl(208.42105263157893, 70%, 50%);
+                color: #fff;
+            }
+            .card-13 {
+                background-color: hsl(227.36842105263156, 70%, 50%);
+                color: #fff;
+            }
+            .card-14 {
+                background-color: hsl(246.3157894736842, 70%, 50%);
+                color: #fff;
+            }
+            .card-15 {
+                background-color: hsl(265.2631578947368, 70%, 50%);
+                color: #fff;
+            }
+            .card-16 {
+                background-color: hsl(284.2105263157895, 70%, 50%);
+                color: #fff;
+            }
+            .card-17 {
+                background-color: hsl(303.1578947368421, 70%, 50%);
+                color: #fff;
+            }
+            .card-18 {
+                background-color: hsl(322.1052631578947, 70%, 50%);
+                color: #fff;
+            }
+            .card-19 {
+                background-color: hsl(341.05263157894734, 70%, 50%);
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>BITV Prüfsektionen</h1>
+
+        <div class="grid">
+            <div
+                class="card card-1"
+                data-section="5"
+            >
+                5 Allgemeine Anforderungen
+            </div>
+            <div
+                class="card card-2"
+                data-section="6"
+            >
+                6 Zwei-Wege-Sprachkommunikation
+            </div>
+            <div
+                class="card card-3"
+                data-section="7"
+            >
+                7 Videofähigkeiten
+            </div>
+            <div
+                class="card card-4"
+                data-section="9.1.1"
+            >
+                9.1.1 Textalternativen
+            </div>
+            <div
+                class="card card-5"
+                data-section="9.1.2"
+            >
+                9.1.2 Zeitbasierte Medien
+            </div>
+            <div
+                class="card card-6"
+                data-section="9.1.3"
+            >
+                9.1.3 Anpassbar
+            </div>
+            <div
+                class="card card-7"
+                data-section="9.1.4"
+            >
+                9.1.4 Unterscheidbar
+            </div>
+            <div
+                class="card card-8"
+                data-section="9.2.1"
+            >
+                9.2.1 Tastaturbedienbar
+            </div>
+            <div
+                class="card card-9"
+                data-section="9.2.2"
+            >
+                9.2.2 Ausreichend Zeit
+            </div>
+            <div
+                class="card card-10"
+                data-section="9.2.3"
+            >
+                9.2.3 Anfälle
+            </div>
+            <div
+                class="card card-11"
+                data-section="9.2.4"
+            >
+                9.2.4 Navigierbar
+            </div>
+            <div
+                class="card card-12"
+                data-section="9.2.5"
+            >
+                9.2.5 Eingabemodalitäten
+            </div>
+            <div
+                class="card card-13"
+                data-section="9.3.1"
+            >
+                9.3.1 Lesbar
+            </div>
+            <div
+                class="card card-14"
+                data-section="9.3.2"
+            >
+                9.3.2 Vorhersehbar
+            </div>
+            <div
+                class="card card-15"
+                data-section="9.3.3"
+            >
+                9.3.3 Eingabeunterstützung
+            </div>
+            <div
+                class="card card-16"
+                data-section="9.4.1"
+            >
+                9.4.1 Kompatibel
+            </div>
+            <div
+                class="card card-17"
+                data-section="11.7"
+            >
+                11.7 Benutzerpräferenzen
+            </div>
+            <div
+                class="card card-18"
+                data-section="11.8"
+            >
+                11.8 Autorenwerkzeuge
+            </div>
+            <div
+                class="card card-19"
+                data-section="12"
+            >
+                12 Dokumentation und Support
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div
+            id="sectionModal"
+            class="modal"
+            role="dialog"
+            aria-labelledby="modalTitle"
+        >
+            <div class="modal-content">
+                <button
+                    class="close-button"
+                    aria-label="Schließen"
+                >
+                    &times;
+                </button>
+                <h2 id="modalTitle"></h2>
+                <div id="modalContent"></div>
+            </div>
+        </div>
+
+        <script>
+            // Prüfschritte Datenstruktur
+            const pruefschritte = {
+                "9.1.1": {
+                    title: "9.1.1 Textalternativen",
+                    subsections: [
+                        {
+                            id: "9.1.1.1a",
+                            title: "Alternativtexte für Bedienelemente",
+                            content: {
+                                "Was wird geprüft?":
+                                    "Die Bereitstellung von Textalternativen für Bedienelemente.",
+                                "Warum wird das geprüft?":
+                                    "Bedienelemente müssen auch für Screenreader-Nutzer verständlich sein.",
+                                "Wie wird geprüft?":
+                                    "Überprüfung der alt-Attribute und ARIA-Labels.",
+                                "Quellen": "WCAG 2.1, EN 301 549",
+                                "Einordnung des Prüfschritts": "Stufe A",
+                            },
+                        },
+                        {
+                            id: "9.1.1.1b",
+                            title: "Ultraalternativem",
+                            content: {
+                                "Was wird geprüft?":
+                                    "Die Bereitstellung von Textalternativen für Bedienelemente.",
+                                "Warum wird das geprüft?":
+                                    "Bedienelemente müssen auch für Screenreader-Nutzer verständlich sein.",
+                                "Wie wird geprüft?":
+                                    "Überprüfung der alt-Attribute und ARIA-Labels.",
+                                "Quellen": "WCAG 2.1, EN 301 549",
+                                "Einordnung des Prüfschritts": "Stufe A",
+                            },
+                        },
+                        // Weitere Unterabschnitte...
+                    ],
+                },
+                // Weitere Sektionen...
+            }
+
+            // Modal Funktionalität
+            const modal = document.getElementById("sectionModal")
+            const modalTitle = document.getElementById("modalTitle")
+            const modalContent = document.getElementById("modalContent")
+            const closeButton = document.querySelector(".close-button")
+
+            function renderPruefschritte(section) {
+                const data = pruefschritte[section]
+                if (!data)
+                    return `<p>Keine Prüfschritte verfügbar für Sektion ${section}</p>`
+
+                const subsectionsHtml = data.subsections
+                    .map(
+                        (subsection) => `
+                    <div class="pruefschritt">
+                        <h3>${subsection.title}</h3>
+                        <div class="section-content">
+                            ${Object.entries(subsection.content)
+                                .map(
+                                    ([key, value]) => `
+                                <div class="content-section">
+                                    <h4>${key}</h4>
+                                    <p>${value}</p>
+                                </div>
+                            `
+                                )
+                                .join("")}
+                        </div>
+                    </div>
+                `
+                    )
+                    .join("")
+
+                return `
+                    <div class="pruefschritte">
+                        ${subsectionsHtml}
+                    </div>
+                `
+            }
+
+            // Event Listener für Karten
+            document.querySelectorAll(".card").forEach((card) => {
+                card.addEventListener("click", () => {
+                    const section = card.dataset.section
+                    modalTitle.textContent = card.textContent
+                    modalContent.innerHTML = renderPruefschritte(section)
+                    modal.style.display = "block"
+                })
+            })
+
+            // Schließen-Button
+            closeButton.addEventListener("click", () => {
+                modal.style.display = "none"
+            })
+
+            // Schließen bei Klick außerhalb des Modals
+            window.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                    modal.style.display = "none"
+                }
+            })
+
+            // Schließen mit Escape-Taste
+            window.addEventListener("keydown", (event) => {
+                if (event.key === "Escape" && modal.style.display === "block") {
+                    modal.style.display = "none"
+                }
+            })
+        </script>
+    </body>
+</html>
