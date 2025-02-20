@@ -139,258 +139,280 @@
         </style>
     </head>
     <body>
-        <article>
-            <h2>ARIA Verhalten</h2>
-            <form
-                action=""
-                aria-live="polite"
-                aria-busy="false"
-            >
-                <fieldset>
-                    <legend>Login</legend>
-                    <p
-                        aria-hidden="true"
-                        class="small"
-                    >
-                        Das Formular ist ein Beispiel für ein
-                        <code>aria-live="polite"</code>. Da das in VoiceOver
-                        nicht funktioniert, kann man es mit Chrome Vox
-                        Screenreader testen.
-                    </p>
-                    <label for="username">Benutzername:</label>
-                    <input
-                        type="text"
-                        id="username"
-                        autocomplete="off"
-                    />
-                    <p
-                        id="username_description"
-                        class="visually-hidden"
-                    ></p>
-                    <label for="password">Passwort:</label
-                    ><input
-                        type="password"
-                        id="password"
-                        autocomplete="off"
-                    />
-                    <p
-                        id="password_description"
-                        class="visually-hidden"
-                    ></p>
-                    <button>Anmelden</button>
-                </fieldset>
-            </form>
-        </article>
-        <hr />
-        <article>
-            <h2>Fremdsprachen</h2>
-            <p class="small">
-                Screenreader sind wie unterschiedliche Browser auch, jeder hat
-                so seine Fähgkeiten oder auch nicht. Dazu kommt, dass sich
-                Screenreader über die Einstellungen sehr weitegefächert
-                konfigurieren lassen. Jeder Benutzer wird sich ihn so
-                eingestellt haben, wie er mächte. Insofern sind keine
-                Vorhersagen für ein Verhalten möglich. Man hält sich also an die
-                Standards des semantischen HTMLs und der ARIA-Fähigkeiten.
+        <header>
+            <h1>Screenreader Techniken</h1>
+            <p>
+                Der Screenreader muss neben der Tastatursteuerung, von der er
+                übrigens das meiste selbst mitbringt, auch alle textbasierten
+                Informationen korrekt vorlesen. Dazu gehören auch die
+                ARIA-Attribute, die dem Screenreader zusätzliche Informationen
+                geben, wenn das, was HTML beinhaltet, nicht ausreicht.
             </p>
             <p>
-                <abbr
+                Auf dieser Seite sind Beispiele für Screenreader-Verhalten. Es
+                wird gezeigt, wie eine DOM-Veränderung vorgelesen wird, wie
+                Abkürzungen und fremde Sprachen funktionieren und wie eine Drag
+                and Drop Tastatur-Bedienung funktioniert und vorgelesen wird .
+            </p>
+        </header>
+        <main>
+            <article>
+                <h2>ARIA Verhalten</h2>
+                <form
+                    action=""
+                    aria-live="polite"
+                    aria-busy="false"
+                >
+                    <fieldset>
+                        <legend>Login</legend>
+                        <p
+                            aria-hidden="true"
+                            class="small"
+                        >
+                            Das Formular ist ein Beispiel für ein
+                            <code>aria-live="polite"</code>. Da das in VoiceOver
+                            nicht funktioniert, kann man es mit Chrome Vox
+                            Screenreader testen.
+                        </p>
+                        <label for="username">Benutzername:</label>
+                        <input
+                            type="text"
+                            id="username"
+                            autocomplete="off"
+                        />
+                        <p
+                            id="username_description"
+                            class="visually-hidden"
+                        ></p>
+                        <label for="password">Passwort:</label
+                        ><input
+                            type="password"
+                            id="password"
+                            autocomplete="off"
+                        />
+                        <p
+                            id="password_description"
+                            class="visually-hidden"
+                        ></p>
+                        <button>Anmelden</button>
+                    </fieldset>
+                </form>
+            </article>
+            <hr />
+            <article>
+                <h2>Fremdsprachen</h2>
+                <p class="small">
+                    Screenreader sind wie unterschiedliche Browser auch, jeder
+                    hat so seine Fähgkeiten oder auch nicht. Dazu kommt, dass
+                    sich Screenreader über die Einstellungen sehr weitegefächert
+                    konfigurieren lassen. Jeder Benutzer wird sich ihn so
+                    eingestellt haben, wie er mächte. Insofern sind keine
+                    Vorhersagen für ein Verhalten möglich. Man hält sich also an
+                    die Standards des semantischen HTMLs und der
+                    ARIA-Fähigkeiten.
+                </p>
+                <p>
+                    <abbr
+                        tabindex="0"
+                        lang="en"
+                        title="National Aeronautic Space Agency"
+                        style="
+                            text-transform: uppercase;
+                            padding: 0.5rem;
+                            border: 1px solid black;
+                        "
+                        aria-label="NASA"
+                    >
+                        NASA
+                    </abbr>
+                </p>
+                <p
+                    aria-hidden="true"
+                    class="small"
+                    style="margin-top: -0.5rem"
+                >
+                    Deutsprachiges Kürzel mit englischsprachiger Bedeutung
+                </p>
+                <p
+                    tabindex="0"
+                    lang="ko"
+                    data-talk="an-nyeong-ha-se-yo"
+                    aria-label="안녕하세요"
+                    style="padding: 0.5rem; border: 1px solid black"
+                >
+                    안녕하세요
+                </p>
+                <p
+                    aria-hidden="true"
+                    class="small"
+                    style="margin-top: -0.5rem"
+                >
+                    Koreanischer Text
+                </p>
+                <p
+                    tabindex="0"
+                    lang="hu"
+                    data-talk="an-nyeong-ha-se-yo"
+                    aria-label="Jó napot kívanók"
+                    style="padding: 0.5rem; border: 1px solid black"
+                >
+                    Jó napot kívanók
+                </p>
+                <p
+                    aria-hidden="true"
+                    class="small"
+                    style="margin-top: -0.5rem"
+                >
+                    Ungarischer Text
+                </p>
+                <p
                     tabindex="0"
                     lang="en"
-                    title="National Aeronautic Space Agency"
-                    style="
-                        text-transform: uppercase;
-                        padding: 0.5rem;
-                        border: 1px solid black;
-                    "
-                    aria-label="NASA"
+                    data-talk="hällo wörld"
+                    aria-label="Hello world"
+                    style="padding: 0.5rem; border: 1px solid black"
                 >
-                    NASA
-                </abbr>
-            </p>
-            <p
-                aria-hidden="true"
-                class="small"
-                style="margin-top: -0.5rem"
-            >
-                Deutsprachiges Kürzel mit englischsprachiger Bedeutung
-            </p>
-            <p
-                tabindex="0"
-                lang="ko"
-                data-talk="an-nyeong-ha-se-yo"
-                aria-label="안녕하세요"
-                style="padding: 0.5rem; border: 1px solid black"
-            >
-                안녕하세요
-            </p>
-            <p
-                aria-hidden="true"
-                class="small"
-                style="margin-top: -0.5rem"
-            >
-                Koreanischer Text
-            </p>
-            <p
-                tabindex="0"
-                lang="hu"
-                data-talk="an-nyeong-ha-se-yo"
-                aria-label="Jó napot kívanók"
-                style="padding: 0.5rem; border: 1px solid black"
-            >
-                Jó napot kívanók
-            </p>
-            <p
-                aria-hidden="true"
-                class="small"
-                style="margin-top: -0.5rem"
-            >
-                Ungarischer Text
-            </p>
-            <p
-                tabindex="0"
-                lang="en"
-                data-talk="hällo wörld"
-                aria-label="Hello world"
-                style="padding: 0.5rem; border: 1px solid black"
-            >
-                Hello world.
-            </p>
-            <p
-                aria-hidden="true"
-                class="small"
-                style="margin-top: -0.5rem"
-            >
-                Englischer Text
-            </p>
-            <p
-                tabindex="0"
-                lang="en"
-                data-talk="Kann schi"
-                aria-label="Ruby Annotation"
-                style="padding: 0.5rem; border: 1px solid black"
-            >
-                <ruby>
-                    漢 <rp>(</rp><rt>Kan</rt><rp>)</rp> 字 <rp>(</rp><rt>ji</rt
-                    ><rp>)</rp>
-                </ruby>
-            </p>
-            <p
-                aria-hidden="true"
-                class="small"
-                style="margin-top: -0.5rem"
-            >
-                Ruby Annotation
-            </p>
-        </article>
-        <hr />
-        <article>
-            <h2>Drag 'n Drop</h2>
-            <dl>
-                <dt><strong>Tastaturbedienung</strong></dt>
-                <dd>
-                    <p>Drag and Drop kann mit der Tastatur bedient werden.</p>
+                    Hello world.
+                </p>
+                <p
+                    aria-hidden="true"
+                    class="small"
+                    style="margin-top: -0.5rem"
+                >
+                    Englischer Text
+                </p>
+                <p
+                    tabindex="0"
+                    lang="en"
+                    data-talk="Kann schi"
+                    aria-label="Ruby Annotation"
+                    style="padding: 0.5rem; border: 1px solid black"
+                >
+                    <ruby>
+                        漢 <rp>(</rp><rt>Kan</rt><rp>)</rp> 字 <rp>(</rp
+                        ><rt>ji</rt><rp>)</rp>
+                    </ruby>
+                </p>
+                <p
+                    aria-hidden="true"
+                    class="small"
+                    style="margin-top: -0.5rem"
+                >
+                    Ruby Annotation
+                </p>
+            </article>
+            <hr />
+            <article>
+                <h2>Drag 'n Drop</h2>
+                <dl>
+                    <dt><strong>Tastaturbedienung</strong></dt>
+                    <dd>
+                        <p>
+                            Drag and Drop kann mit der Tastatur bedient werden.
+                        </p>
 
-                    <p>
-                        Wörter und Ablageflächen können als Komponenten über die
-                        Tab-Taste erreicht werden. Die Auswahl der Wörter und
-                        der Ablagefläche funktioniert dann über die Pfeiltasten,
-                        die Bestätigung durch die Space-Taste.
-                    </p>
-                    <p>
-                        Wenn ein Wort in der Ablagefläche durch die Space-Taste
-                        abgelegt wurde, könnte vielleicht mit der Pfeiltaste das
-                        nächste Wort ausgewählt werden.
-                    </p>
-                </dd>
-                <dt><strong>Screenreader</strong></dt>
-                <dd>
-                    <p>
-                        Grundsätzlich macht es die Sprachausgabe möglich, dass
-                        das Drag and Drop auch von blinden Benutzern bedient
-                        werden kann. Jedes Feld oder jedes Ziel muss eine
-                        vorlesefähigen Namen haben.
-                    </p>
-                    <p>
-                        Im Beipiel ist es schwierig, dass ein Feld nicht
-                        vorliest, dass bereits etwas drin liegt. Auch die Ablage
-                        im falschen Feld berücksichtigt das nicht. Es ist also
-                        weitere Programmierung notwendig.
-                    </p>
-                </dd>
-            </dl>
-            <div
-                class="container"
-                id="draggableContainer"
-                role="group"
-                aria-label="Auswählbare Farben"
-                tabindex="0"
-            >
+                        <p>
+                            Wörter und Ablageflächen können als Komponenten über
+                            die Tab-Taste erreicht werden. Die Auswahl der
+                            Wörter und der Ablagefläche funktioniert dann über
+                            die Pfeiltasten, die Bestätigung durch die
+                            Space-Taste.
+                        </p>
+                        <p>
+                            Wenn ein Wort in der Ablagefläche durch die
+                            Space-Taste abgelegt wurde, könnte vielleicht mit
+                            der Pfeiltaste das nächste Wort ausgewählt werden.
+                        </p>
+                    </dd>
+                    <dt><strong>Screenreader</strong></dt>
+                    <dd>
+                        <p>
+                            Grundsätzlich macht es die Sprachausgabe möglich,
+                            dass das Drag and Drop auch von blinden Benutzern
+                            bedient werden kann. Jedes Feld oder jedes Ziel muss
+                            eine vorlesefähigen Namen haben.
+                        </p>
+                        <p>
+                            Im Beipiel ist es schwierig, dass ein Feld nicht
+                            vorliest, dass bereits etwas drin liegt. Auch die
+                            Ablage im falschen Feld berücksichtigt das nicht. Es
+                            ist also weitere Programmierung notwendig.
+                        </p>
+                    </dd>
+                </dl>
                 <div
-                    class="draggable"
-                    role="option"
-                    tabindex="-1"
-                    data-color="rot"
-                    aria-selected="false"
+                    class="container"
+                    id="draggableContainer"
+                    role="group"
+                    aria-label="Auswählbare Farben"
+                    tabindex="0"
                 >
-                    Rot
+                    <div
+                        class="draggable"
+                        role="option"
+                        tabindex="-1"
+                        data-color="rot"
+                        aria-selected="false"
+                    >
+                        Rot
+                    </div>
+                    <div
+                        class="draggable"
+                        role="option"
+                        tabindex="-1"
+                        data-color="grün"
+                        aria-selected="false"
+                    >
+                        Grün
+                    </div>
+                    <div
+                        class="draggable"
+                        role="option"
+                        tabindex="-1"
+                        data-color="blau"
+                        aria-selected="false"
+                    >
+                        Blau
+                    </div>
                 </div>
-                <div
-                    class="draggable"
-                    role="option"
-                    tabindex="-1"
-                    data-color="grün"
-                    aria-selected="false"
-                >
-                    Grün
-                </div>
-                <div
-                    class="draggable"
-                    role="option"
-                    tabindex="-1"
-                    data-color="blau"
-                    aria-selected="false"
-                >
-                    Blau
-                </div>
-            </div>
 
-            <div
-                class="container"
-                id="targetContainer"
-                role="group"
-                aria-label="Zielfelder für Farben"
-                tabindex="0"
-            >
                 <div
-                    class="drop-target red-target"
-                    role="button"
-                    tabindex="-1"
-                    aria-label="Rotes Zielfeld"
-                    data-expects="rot"
-                ></div>
-                <div
-                    class="drop-target green-target"
-                    role="button"
-                    tabindex="-1"
-                    aria-label="Grünes Zielfeld"
-                    data-expects="grün"
-                ></div>
-                <div
-                    class="drop-target blue-target"
-                    role="button"
-                    tabindex="-1"
-                    aria-label="Blaues Zielfeld"
-                    data-expects="blau"
-                ></div>
-            </div>
+                    class="container"
+                    id="targetContainer"
+                    role="group"
+                    aria-label="Zielfelder für Farben"
+                    tabindex="0"
+                >
+                    <div
+                        class="drop-target red-target"
+                        role="button"
+                        tabindex="-1"
+                        aria-label="Rotes Zielfeld"
+                        data-expects="rot"
+                    ></div>
+                    <div
+                        class="drop-target green-target"
+                        role="button"
+                        tabindex="-1"
+                        aria-label="Grünes Zielfeld"
+                        data-expects="grün"
+                    ></div>
+                    <div
+                        class="drop-target blue-target"
+                        role="button"
+                        tabindex="-1"
+                        aria-label="Blaues Zielfeld"
+                        data-expects="blau"
+                    ></div>
+                </div>
 
-            <div
-                id="liveRegion"
-                class="sr-only"
-                aria-live="polite"
-            ></div>
-        </article>
+                <div
+                    id="liveRegion"
+                    class="sr-only"
+                    aria-live="polite"
+                ></div>
+            </article>
+        </main>
         <script src="assets/js/scaffold.js"></script>
 
         <script>
