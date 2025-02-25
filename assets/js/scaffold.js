@@ -89,20 +89,35 @@ function createMainNavigation() {
     const ul = document.createElement("ul")
 
     const navigation = [
-        { file: "semantic.html", text: "Semantik" },
+        {
+            file: "treemap/bitv20/index.html",
+            text: "Kriterien",
+        },
+        {
+            file: "semantic.html",
+            text: "Semantik",
+        },
         { file: "aria.html", text: "ARIA" },
         { file: "typography.html", text: "Typografie" },
         { file: "contrast.html", text: "Kontrast" },
         { file: "color.html", text: "Farbe" },
         { file: "keyboard.html", text: "Tastatur" },
-        { file: "screenreader-examples.html", text: "Screenreader" },
-        // { file: "form.html", text: "Formular" },
-        // { file: "navigation.html", text: "Navigation" },
-        { file: "non-text-content.html", text: "Nicht-Text" },
-        { file: "user-settings.html", text: "Benutzereinstellungen" },
-        // { file: "pattern.html", text: "Pattern" },
-        // { file: "writing.html", text: "Texten" },
-        { file: "text-level/index.html", text: "Text-Level" },
+        {
+            file: "screenreader-examples.html",
+            text: "Screenreader",
+        },
+        {
+            file: "non-text-content.html",
+            text: "Nicht-Text",
+        },
+        {
+            file: "user-settings.html",
+            text: "Benutzereinstellungen",
+        },
+        {
+            file: "text-level/index.html",
+            text: "Text-Level",
+        },
     ]
 
     nav.id = "main-navigation"
