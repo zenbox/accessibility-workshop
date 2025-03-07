@@ -34,21 +34,38 @@
             <h2>Eine Gruppe von mehreren Fotos</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
             <figure>
-                <img
-                    style="max-width: 25vw"
-                    src="https://picsum.photos/id/67/200"
-                    alt="Schwarz-Weiss-Foto: Blick ins Tal bei schlecht Wetter."
-                />
-                <img
-                    style="max-width: 25vw"
-                    src="https://picsum.photos/id/68/200"
-                    alt="Schwarz-Weiss-Foto: Eine Bahnline führt durch eine endlose Lanschaft.."
-                />
-                <img
-                    style="max-width: 25vw"
-                    src="https://picsum.photos/id/69/200"
-                    alt="Foto: Bahnlinie führt geradeaus durch einen Wald."
-                />
+                <ol>
+                    <li>
+                        <img
+                            tabindex="0"
+                            aria-describedby="descId"
+                            style="max-width: 25vw"
+                            src="https://picsum.photos/id/67/200"
+                            alt="Schwarz-Weiss-Foto: Blick ins Tal bei schlecht Wetter."
+                        />
+                        <p
+                            id="descId"
+                            class="sr-only visually-hidden"
+                        >
+                            Beschreibung für das Bild hier ....
+                        </p>
+                    </li>
+
+                    <li>
+                        <img
+                            style="max-width: 25vw"
+                            src="https://picsum.photos/id/68/200"
+                            alt="Schwarz-Weiss-Foto: Eine Bahnline führt durch eine endlose Lanschaft.."
+                        />
+                    </li>
+                    <li>
+                        <img
+                            style="max-width: 25vw"
+                            src="https://picsum.photos/id/69/200"
+                            alt="Foto: Bahnlinie führt geradeaus durch einen Wald."
+                        />
+                    </li>
+                </ol>
                 <figcaption class="sr-only">
                     Quelle: <a href="https://picsum.photos/">Picsum</a>
                 </figcaption>

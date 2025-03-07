@@ -369,6 +369,7 @@
                         tabindex="-1"
                         data-color="rot"
                         aria-selected="false"
+                        draggable="true"
                     >
                         Rot
                     </div>
@@ -378,6 +379,7 @@
                         tabindex="-1"
                         data-color="grün"
                         aria-selected="false"
+                        draggable="true"
                     >
                         Grün
                     </div>
@@ -387,6 +389,7 @@
                         tabindex="-1"
                         data-color="blau"
                         aria-selected="false"
+                        draggable="true"
                     >
                         Blau
                     </div>
@@ -427,6 +430,107 @@
                     class="sr-only"
                     aria-live="polite"
                 ></div>
+            </article>
+
+            <article>
+                <h2>VoiceOver als Entwickler testen</h2>
+                <ul>
+                    <li>
+                        VoiceOver ist der Screenreader von macOS und kann mit
+                        Command + F5 aktiviert und deaktiviert werden.
+                    </li>
+                    <li>
+                        Die VoiceOver-Sondertaste (VO) ist standardmäßig Control
+                        + Option oder die Feststelltaste (Caps Lock).
+                    </li>
+                    <li>
+                        Die Navigation erfolgt mit VO + Pfeiltasten, um sich
+                        durch Elemente zu bewegen.
+                    </li>
+                    <li>Mit VO + Leertaste wird eine Aktion ausgeführt.</li>
+                    <li>
+                        Der Rotor kann mit VO + U geöffnet werden, um schneller
+                        durch Elemente wie Überschriften oder Links zu springen.
+                    </li>
+                    <li>Gruppen-Navigation:</li>
+                    <ul>
+                        <li>
+                            VO + Shift + Pfeil nach unten zum Interagieren mit
+                            einer Gruppe.
+                        </li>
+                        <li>
+                            VO + Shift + Pfeil nach oben zum Verlassen der
+                            Gruppe.
+                        </li>
+                    </ul>
+                    <li>Text lesen:</li>
+                    <ul>
+                        <li>VO + A liest den gesamten Text.</li>
+                        <li>
+                            VO + W liest ein Wort, VO + S einen Satz, VO + P
+                            einen Absatz.
+                        </li>
+                    </ul>
+                    <li>
+                        Tastaturhilfe: VO + K zeigt an, welche Tasten gedrückt
+                        werden.
+                    </li>
+                    <li>
+                        VoiceOver-Hilfemenü: VO + H öffnet das Hilfemenü, VO + H
+                        + H zeigt alle Befehle.
+                    </li>
+                    <li>
+                        Bildschirm abdunkeln (Screen Curtain): VO + Fn +
+                        Umschalt + F11.
+                    </li>
+                    <li>
+                        Schnelle Navigation per Pfeiltasten: VO + Umschalt + I.
+                    </li>
+                    <li>Menü “Mitteilungen” öffnen: VO + N.</li>
+                </ul>
+
+                <p>
+                    Barrierefreiheit ist wichtig, um Webseiten für alle Nutzer
+                    zugänglich zu machen. Entwickler sollten daher regelmäßig
+                    testen, wie Inhalte mit einem Screenreader wahrgenommen
+                    werden. VoiceOver ist auf jedem Mac vorinstalliert und kann
+                    direkt genutzt werden.
+                </p>
+
+                <p>Erste Schritte</p>
+                <ol>
+                    <li>VoiceOver aktivieren: Command + F5 drücken.</li>
+                    <li>
+                        VoiceOver-Einführung: VO + Fn + Command + F8, um eine
+                        interaktive Einführung zu starten.
+                    </li>
+                    <li>Grundlegende Navigation:</li>
+                    <ul>
+                        Mit VO + Pfeiltasten durch Elemente bewegen. VO +
+                        Leertaste, um ein Element zu aktivieren. VO + A, um eine
+                        Seite vorlesen zu lassen.
+                    </ul>
+                </ol>
+
+                <p>Wichtige Testmethoden</p>
+                <ul>
+                    <li>
+                        Tab-Reihenfolge prüfen: Mit Tab durch interaktive
+                        Elemente springen.
+                    </li>
+                    <li>
+                        Überschriftenstruktur testen: VO + U öffnet den Rotor,
+                        dann mit den Pfeiltasten durch Überschriften navigieren.
+                    </li>
+                    <li>
+                        Formularfelder prüfen: Sicherstellen, dass Labels
+                        korrekt vorgelesen werden.
+                    </li>
+                    <li>
+                        ARIA-Attribute testen: Dynamische Inhalte müssen korrekt
+                        erkannt werden.
+                    </li>
+                </ul>
             </article>
         </main>
         <script src="assets/js/scaffold.js"></script>
