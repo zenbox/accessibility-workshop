@@ -50,7 +50,7 @@ const languageButtons = [
     icon: "psychology",
     value: "default",
     title: "Standard",
-    tooltip: "Zeigt nur Texte in Standardsprache an",
+    tooltip: "Zeigt nur Texte in Standard-/Fachsprache an",
   },
   {
     icon: "psychology_alt",
