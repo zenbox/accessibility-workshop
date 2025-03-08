@@ -90,8 +90,8 @@ function createMainNavigation() {
 
     const navigation = [
         {
-            file: "treemap/bitv20/index.html",
-            text: "Kriterien",
+            file: "treemap/v2/index.html",
+            text: "Kriterien (v2)",
         },
         {
             file: "semantic.html",
