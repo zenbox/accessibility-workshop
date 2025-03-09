@@ -1,0 +1,239 @@
+/* Stylesheet für Präferenzeinstellungen */
+
+/* ===== Grundlegende Stile ===== */
+body {
+  color: var(--text-primary);
+  background-color: var(--background);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  margin-top: 0;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+a:active {
+  color: var(--link-active);
+}
+
+/* ===== Präferenz-Schalter ===== */
+.preferences-panel {
+  background-color: var(--surface);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px var(--shadow-light);
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.preferences-title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.preference-group {
+  margin-bottom: 1.5rem;
+}
+
+.preference-group-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.preference-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color var(--transition-speed);
+}
+
+.preference-item:hover {
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
+.preference-label {
+  margin-left: 0.5rem;
+  color: var(--text-primary);
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.preference-description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+  margin-left: 2.2rem;
+}
+
+/* ===== Switch Toggle Stil ===== */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border-color);
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--primary);
+}
+
+input:focus + .slider {
+  box-shadow: var(--focus-ring);
+}
+
+input:checked + .slider:before {
+  transform: translateX(16px);
+}
+
+/* ===== Content-Bereich ===== */
+.content {
+  background-color: var(--surface);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px var(--shadow-light);
+  border: 1px solid var(--border-color);
+}
+
+.content h2 {
+  margin-top: 0;
+}
+
+.example-area {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.color-samples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.color-sample {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 2px 4px var(--shadow-light);
+}
+
+.animation-example {
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary);
+  border-radius: 4px;
+  margin-top: 10px;
+  animation: pulse 2s infinite;
+  animation-play-state: running;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(calc(1 + (0.2 * var(--animation-scale))));
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===== Anpassungen für reduzierte Transparenz ===== */
+.transparency-example {
+  position: relative;
+  height: 100px;
+  margin-top: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.transparency-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(var(--primary-rgb), calc(0.5 * (1 - var(--media-transparency)) + 0.1 * var(--media-transparency)));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  .preferences-panel {
+    padding: 15px;
+  }
+  
+  .color-samples {
+    gap: 5px;
+  }
+  
+  .color-sample {
+    width: 60px;
+    height: 60px;
+    font-size: 0.7rem;
+  }
+}

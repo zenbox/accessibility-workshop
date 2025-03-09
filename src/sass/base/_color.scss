@@ -166,3 +166,274 @@ $lightens: (
     filter: brightness(75%);
 
 }
+
+
+
+
+
+
+
+
+
+/* - - - - - - - - - - */
+
+// Präferenz-Variablen
+// Erweiterte CSS-Variablen für verschiedene Darstellungspräferenzen
+
+:root {
+  // ===== Standard-Theme (Light Mode) =====
+  --background: hsla(0, 0%, 100%, 1);
+  --surface: hsla(0, 0%, 97%, 1);
+  --text-primary: hsla(0, 0%, 15%, 1);
+  --text-secondary: hsla(0, 0%, 40%, 1);
+  --border-color: hsla(0, 0%, 80%, 1);
+  
+  // ===== Primärfarben =====
+  --primary-light: hsla(300, 93%, 25%, 1);
+  --primary: hsla(300, 93%, 12%, 1);
+  --primary-dark: hsla(300, 93%, 8%, 1);
+  --on-primary: rgb(250, 204, 250);
+  
+  // ===== Sekundärfarben =====
+  --secondary-light: hsla(120, 94%, 43%, 1);
+  --secondary: hsla(120, 94%, 33%, 1);
+  --secondary-dark: hsla(120, 94%, 23%, 1);
+  --on-secondary: rgb(200, 250, 200);
+  
+  // ===== Tertiärfarben =====
+  --tertiary-light: hsla(174, 90%, 47%, 1);
+  --tertiary: hsla(174, 90%, 37%, 1);
+  --tertiary-dark: hsla(174, 90%, 27%, 1);
+  --on-tertiary: rgb(2, 47, 43);
+  
+  // ===== Accent und Neutral =====
+  --accent: hsl(360, 84%, 64%);
+  --on-accent: hsla(0, 0%, 100%, 1);
+  --neutral: hsla(0, 0%, 50%, 1);
+  --on-neutral: hsla(0, 0%, 85%, 1);
+  
+  // ===== Semantische Farben =====
+  --error: hsla(0, 100%, 50%, 1);
+  --on-error: rgb(251, 202, 202);
+  --warning: hsla(50, 100%, 50%, 1);
+  --on-warning: hsl(50, 98%, 23%);
+  --info: hsla(210, 100%, 50%, 1);
+  --on-info: rgb(164, 208, 251);
+  --success: hsla(110, 100%, 50%, 1);
+  --on-success: rgb(21, 124, 1);
+  
+  // ===== UI-Elemente =====
+  --shadow-light: hsla(0, 0%, 0%, 0.1);
+  --shadow: hsla(0, 0%, 0%, 0.25);
+  --shadow-heavy: hsla(0, 0%, 0%, 0.5);
+  
+  --outline-color: hsla(210, 100%, 50%, 0.8);
+  --focus-ring: 0 0 0 2px var(--outline-color);
+  
+  // ===== Transition und Animation =====
+  --transition-speed: 0.2s;
+  --transition-speed-slow: 0.5s;
+  --animation-scale: 1;
+  
+  // ===== Media-Handling =====
+  --media-data-usage: 100%;
+  --media-transparency: 1;
+  
+  // ===== Links =====
+  --link-color: hsla(210, 100%, 50%, 1);
+  --link-visited: hsla(270, 70%, 40%, 1);
+  --link-hover: hsla(0, 100%, 50%, 1);
+  --link-active: hsla(120, 100%, 30%, 1);
+}
+
+// ===== Dark Mode =====
+html.dark-mode {
+  --background: hsla(0, 0%, 12%, 1);
+  --surface: hsla(0, 0%, 18%, 1);
+  --text-primary: hsla(0, 0%, 95%, 1);
+  --text-secondary: hsla(0, 0%, 75%, 1);
+  --border-color: hsla(0, 0%, 40%, 1);
+  
+  --primary-light: hsla(300, 70%, 40%, 1);
+  --primary: hsla(300, 70%, 30%, 1);
+  --primary-dark: hsla(300, 70%, 20%, 1);
+  --on-primary: rgb(250, 204, 250);
+  
+  --secondary-light: hsla(120, 60%, 50%, 1);
+  --secondary: hsla(120, 60%, 40%, 1);
+  --secondary-dark: hsla(120, 60%, 30%, 1);
+  --on-secondary: rgb(200, 250, 200);
+  
+  --tertiary-light: hsla(174, 70%, 50%, 1);
+  --tertiary: hsla(174, 70%, 40%, 1);
+  --tertiary-dark: hsla(174, 70%, 30%, 1);
+  --on-tertiary: rgb(2, 47, 43);
+  
+  --shadow-light: hsla(0, 0%, 0%, 0.2);
+  --shadow: hsla(0, 0%, 0%, 0.4);
+  --shadow-heavy: hsla(0, 0%, 0%, 0.7);
+  
+  --outline-color: hsla(210, 100%, 70%, 0.8);
+  
+  --link-color: hsla(210, 100%, 70%, 1);
+  --link-visited: hsla(270, 70%, 60%, 1);
+  --link-hover: hsla(0, 100%, 70%, 1);
+  --link-active: hsla(120, 100%, 50%, 1);
+}
+
+// ===== High Contrast Mode =====
+html.high-contrast-mode {
+  --background: #000000;
+  --surface: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --border-color: #ffffff;
+  
+  --primary: #ffffff;
+  --primary-light: #ffffff;
+  --primary-dark: #ffffff;
+  --on-primary: #000000;
+  
+  --secondary: #ffffff;
+  --secondary-light: #ffffff;
+  --secondary-dark: #ffffff;
+  --on-secondary: #000000;
+  
+  --tertiary: #ffffff;
+  --tertiary-light: #ffffff;
+  --tertiary-dark: #ffffff;
+  --on-tertiary: #000000;
+  
+  --accent: #ffffff;
+  --on-accent: #000000;
+  
+  --error: #ffffff;
+  --on-error: #000000;
+  --warning: #ffffff;
+  --on-warning: #000000;
+  --info: #ffffff;
+  --on-info: #000000;
+  --success: #ffffff;
+  --on-success: #000000;
+  
+  --outline-color: #ffffff;
+  --focus-ring: 0 0 0 3px #ffffff, 0 0 0 5px #000000;
+  
+  --link-color: #ffff00;
+  --link-visited: #ffff00;
+  --link-hover: #ffff00;
+  --link-active: #ffff00;
+}
+
+// ===== Inverted Colors Mode =====
+html.inverted-colors-mode {
+  filter: invert(100%) hue-rotate(180deg);
+  
+  // Bilder zurück-invertieren, damit sie normal aussehen
+  img, video, canvas {
+    filter: invert(100%) hue-rotate(180deg);
+  }
+}
+
+// ===== Reduced Motion =====
+html.reduced-motion {
+  --transition-speed: 0.001s; // Fast keine Transition
+  --transition-speed-slow: 0.001s;
+  --animation-scale: 0;
+  
+  *, *::before, *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ===== Reduced Data =====
+html.reduced-data {
+  --media-data-usage: 10%; // Drastisch reduzieren
+  
+  img, video {
+    filter: blur(1px) brightness(0.9);
+    max-width: 50vw;
+    max-height: 50vh;
+  }
+}
+
+// ===== Reduced Transparency =====
+html.reduced-transparency {
+  --media-transparency: 0;
+  
+  *, *::before, *::after {
+    opacity: 1 !important;
+    backdrop-filter: none !important;
+  }
+  
+  // Undurchsichtige Hintergründe für Elemente mit Transparenz
+  [class*="transparent"], 
+  [class*="opacity"],
+  [style*="opacity"],
+  [style*="rgba"] {
+    background-color: var(--surface) !important;
+    box-shadow: none !important;
+  }
+}
+
+// ===== Forced Colors (für Windows High Contrast Mode) =====
+html.forced-colors {
+  forced-color-adjust: none; /* Explizit die System-Farben verwenden */
+  
+  --background: Canvas;
+  --text-primary: CanvasText;
+  --border-color: CanvasText;
+  
+  --primary: Highlight;
+  --on-primary: HighlightText;
+  
+  --link-color: LinkText;
+  --link-visited: VisitedText;
+  
+  --outline-color: Focus;
+  --focus-ring: 0 0 0 2px Focus;
+  
+  // Bei Forced Colors nutzen wir die System-Farben
+  button, input, select, textarea {
+    border-color: ButtonText;
+    color: ButtonText;
+    background-color: ButtonFace;
+  }
+  
+  a:link {
+    color: LinkText;
+  }
+  
+  a:visited {
+    color: VisitedText;
+  }
+  
+  :focus {
+    outline: 2px solid Focus;
+  }
+}
+
+// Utility-Klassen für die Hintergrundfarben und Textfarben
+.bg-primary { background-color: var(--primary); color: var(--on-primary); }
+.bg-secondary { background-color: var(--secondary); color: var(--on-secondary); }
+.bg-tertiary { background-color: var(--tertiary); color: var(--on-tertiary); }
+.bg-accent { background-color: var(--accent); color: var(--on-accent); }
+.bg-surface { background-color: var(--surface); color: var(--text-primary); }
+.bg-error { background-color: var(--error); color: var(--on-error); }
+.bg-warning { background-color: var(--warning); color: var(--on-warning); }
+.bg-info { background-color: var(--info); color: var(--on-info); }
+.bg-success { background-color: var(--success); color: var(--on-success); }
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-primary-color { color: var(--primary); }
+.text-secondary-color { color: var(--secondary); }
+.text-tertiary { color: var(--tertiary); }
+.text-accent { color: var(--accent); }
+.text-error { color: var(--error); }
+.text-warning { color: var(--warning); }
+.text-info { color: var(--info); }
+.text-success { color: var(--success); }

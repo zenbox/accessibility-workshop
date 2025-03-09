@@ -185,6 +185,38 @@ function createSkipLinks() {
     document.body.prepend(skipLinks)
 }
 
+function createAccessibilitySettingsButton() {
+    const accessibilityButton = document.createElement("button")
+    accessibilityButton.classList.add("btn-accessibility-settings")
+    accessibilityButton.title = "Barrierefreiheitseinstellungen"
+    let accessibilityButtonState
+
+    const html = document.querySelector("html")
+
+    // Tooltip erstellen
+    const tooltip = new Tooltip({
+        className: "accessibility-settings-tooltip",
+        maxWidth: "250px",
+        additionalStyles: {
+            transition: "opacity 0.2s ease-in-out",
+        },
+    })
+
+    // Tooltip Text Funktion
+    const getTooltipText = "Zu den Barrierefreiheitseinstellungen"
+
+    // Tooltip an Button anhängen
+    tooltip.attachTo(accessibilityButton, getTooltipText)
+
+    accessibilityButton.addEventListener("click", () => {
+        window.location.href = "user-settings.html"
+    })
+
+    const li = document.createElement("li")
+    li.appendChild(accessibilityButton)
+    document.querySelector("#main-navigation ul").prepend(li)
+}
+
 function createDeveloperButton() {
     const developerButton = document.createElement("button")
     developerButton.classList.add("btn-developer")
@@ -433,6 +465,7 @@ function setTabindizes() {
 // - - - - - - - - - -
 document.addEventListener("DOMContentLoaded", () => {
     createMainNavigation()
+    createAccessibilitySettingsButton()
     createDeveloperButton()
     // createDarkModeButton()
     createThemeModeButton()

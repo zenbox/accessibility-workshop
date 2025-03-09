@@ -50,6 +50,262 @@
         </header>
 
         <article>
+            <style>
+                :root {
+                    /* Grundfarben */
+                    --background: hsla(0, 0%, 100%, 1);
+                    --surface: hsla(0, 0%, 97%, 1);
+                    --text-primary: hsla(0, 0%, 15%, 1);
+                    --text-secondary: hsla(0, 0%, 40%, 1);
+                    --border-color: hsla(0, 0%, 80%, 1);
+
+                    /* Primärfarbe mit RGB-Variante für Transparenz */
+                    --primary: hsla(300, 93%, 12%, 1);
+                    --primary-rgb: 31, 2, 31;
+                    --on-primary: rgb(250, 204, 250);
+
+                    /* Weitere Farben */
+                    --secondary: hsla(120, 94%, 33%, 1);
+                    --on-secondary: rgb(200, 250, 200);
+                    --tertiary: hsla(174, 90%, 37%, 1);
+                    --on-tertiary: rgb(2, 47, 43);
+
+                    /* UI-Elemente */
+                    --shadow-light: hsla(0, 0%, 0%, 0.1);
+                    --shadow: hsla(0, 0%, 0%, 0.25);
+
+                    /* Transition und Animation */
+                    --transition-speed: 0.2s;
+                    --animation-scale: 1;
+
+                    /* Media-Handling */
+                    --media-transparency: 1;
+
+                    /* Links */
+                    --link-color: hsla(210, 100%, 50%, 1);
+                    --link-visited: hsla(270, 70%, 40%, 1);
+                    --link-hover: hsla(0, 100%, 50%, 1);
+                    --link-active: hsla(120, 100%, 30%, 1);
+                }
+            </style>
+            <div class="container">
+                <div class="preferences-panel">
+                    <h2 class="preferences-title">Darstellungspräferenzen</h2>
+
+                    <div class="preference-group">
+                        <h3 class="preference-group-title">Farbe & Kontrast</h3>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-darkMode"
+                                />
+                                <span class="slider"></span>
+                            </label>
+                            <label
+                                class="preference-label"
+                                for="toggle-darkMode"
+                                >Dunkler Modus</label
+                            >
+                            <div class="preference-description">
+                                Zeigt Inhalte mit dunklem Hintergrund und hellem
+                                Text an.
+                            </div>
+                        </div>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-highContrast"
+                                />
+                                <span class="slider"></span>
+                            </label>
+                            <label
+                                class="preference-label"
+                                for="toggle-highContrast"
+                                >Hoher Kontrast</label
+                            >
+                            <div class="preference-description">
+                                Maximiert den Kontrast für bessere Lesbarkeit.
+                            </div>
+                        </div>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-invertedColors"
+                                />
+                                <span class="slider"></span>
+                            </label>
+                            <label
+                                class="preference-label"
+                                for="toggle-invertedColors"
+                                >Farben invertieren</label
+                            >
+                            <div class="preference-description">
+                                Kehrt alle Farben um.
+                            </div>
+                        </div>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-forcedColors"
+                                />
+                                <span class="slider"></span>
+                            </label>
+                            <label
+                                class="preference-label"
+                                for="toggle-forcedColors"
+                                >Erzwungene Farben</label
+                            >
+                            <div class="preference-description">
+                                Verwendet Systemfarben für maximale
+                                Kompatibilität.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preference-group">
+                        <h3 class="preference-group-title">
+                            Bewegung & Animation
+                        </h3>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-reducedMotion"
+                                />
+                                <span class="slider"></span>
+                            </label>
+                            <label
+                                class="preference-label"
+                                for="toggle-reducedMotion"
+                                >Reduzierte Bewegung</label
+                            >
+                            <div class="preference-description">
+                                Minimiert oder entfernt Animationen und
+                                Bewegungen.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preference-group">
+                        <h3 class="preference-group-title">Leistung & Daten</h3>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-reducedData"
+                                />
+                                <span class="slider"></span>
+                            </label>
+                            <label
+                                class="preference-label"
+                                for="toggle-reducedData"
+                                >Reduzierte Datennutzung</label
+                            >
+                            <div class="preference-description">
+                                Optimiert die Inhalte für geringeren
+                                Datenverbrauch.
+                            </div>
+                        </div>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-reducedTransparency"
+                                />
+                                <span class="slider"></span>
+                            </label>
+                            <label
+                                class="preference-label"
+                                for="toggle-reducedTransparency"
+                                >Reduzierte Transparenz</label
+                            >
+                            <div class="preference-description">
+                                Entfernt Transparenzeffekte für bessere
+                                Lesbarkeit und Performance.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preference-actions">
+                        <button
+                            id="reset-preferences"
+                            class="button"
+                        >
+                            Einstellungen zurücksetzen
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <h2>Vorschau der Einstellungen</h2>
+                    <p>
+                        Diese Seite zeigt, wie sich Ihre Präferenzeinstellungen
+                        auf die Darstellung auswirken.
+                    </p>
+
+                    <!-- Beispiele für verschiedene Darstellungen -->
+                    <div class="example-area">
+                        <h3>Farbbeispiele</h3>
+                        <div class="color-samples">
+                            <div class="color-sample bg-primary">Primär</div>
+                            <div class="color-sample bg-secondary">
+                                Sekundär
+                            </div>
+                            <div class="color-sample bg-tertiary">Tertiär</div>
+                            <div class="color-sample bg-info">Info</div>
+                            <div class="color-sample bg-warning">Warnung</div>
+                            <div class="color-sample bg-error">Fehler</div>
+                        </div>
+
+                        <h3>Linkbeispiele</h3>
+                        <p>
+                            Hier sind verschiedene
+                            <a href="#">unbesuchte Links</a> und
+                            <a
+                                href="#"
+                                style="color: var(--link-visited)"
+                                >besuchte Links</a
+                            >. Links können auch
+                            <a
+                                href="#"
+                                style="color: var(--link-hover)"
+                                >hervorgehoben</a
+                            >
+                            sein oder
+                            <a
+                                href="#"
+                                style="color: var(--link-active)"
+                                >aktiv</a
+                            >
+                            dargestellt werden.
+                        </p>
+
+                        <h3>Animationsbeispiel</h3>
+                        <div class="animation-example"></div>
+
+                        <h3>Transparenzbeispiel</h3>
+                        <div class="transparency-example">
+                            <div class="transparency-overlay">
+                                Text über Hintergrund
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article>
             <h2 class="prefers-reduced-motion">prefers-reduced-motion</h2>
             <p>
                 Das Merkmal <code>prefers-reduced-motion</code> (bevorzugt
@@ -188,9 +444,9 @@
             </samp>
         </article>
 
-        <article>
+        <!-- <article>
             <h2 class="prefers-color-scheme">prefers-color-scheme</h2>
-        </article>
+        </article> -->
 
         <article>
             <h2 class="forced-color">forced-color</h2>
@@ -247,17 +503,17 @@
                 >
             </p>
         </article>
-        <article>
+        <!-- <article>
             <h2 class="prefers-reduced-data">prefers-reduced-data</h2>
-        </article>
-        <article>
+        </article> -->
+        <!-- <article>
             <h2 class="prefers-reduced-transparency">
                 prefers-reduced-transparency
             </h2>
-        </article>
-        <article>
+        </article> -->
+        <!-- <article>
             <h2 class="inverted-color">inverted-color</h2>
-        </article>
+        </article> -->
 
         <!-- <article>
     <h2>Die Bedienerhilfen von MacOS</h2>
@@ -298,5 +554,6 @@
 
         <!-- <script src="assets/js/parallax.js"></script> -->
         <script src="assets/js/scaffold.js"></script>
+        <script src="assets/js/preference-manager.js"></script>
     </body>
 </html>

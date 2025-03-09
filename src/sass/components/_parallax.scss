@@ -87,11 +87,11 @@
             min-height: 50vh;
         }
     }
-// default motion
+    // default motion
     @media (prefers-reduced-motion: no-preference) {
         @for $i from 1 through 10 {
             .teaser-#{$i} {
-                animation: parallax 2s  infinite;
+                animation: parallax 2s infinite;
             }
         }
     }
@@ -105,18 +105,22 @@
         }
     }
 
-// reduced motion
+    // reduced motion
     @media (prefers-reduced-motion: reduce) {
-
-       @for $i from 1 through 10 {
-        .teaser-#{$i} {
-       animation: parallax 10s  infinite;
-            background-attachment: scroll;
-
+        @for $i from 1 through 10 {
+            .teaser-#{$i} {
+                animation: parallax 10s infinite;
+                background-attachment: scroll;
+            }
         }
     }
+}
+
+:root.reduced-motion {
+    @for $i from 1 through 10 {
+        .teaser-#{$i} {
+            animation: parallax 10s infinite;
+            background-attachment: scroll;
+        }
     }
-
-
-
 }
