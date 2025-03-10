@@ -103,7 +103,7 @@ function createMainNavigation() {
         { file: "color.html", text: "Farbe" },
         { file: "keyboard.html", text: "Tastatur" },
         {
-            file: "screenreader-examples.html",
+            file: "screenreader-simulation/",
             text: "Screenreader",
         },
         {
