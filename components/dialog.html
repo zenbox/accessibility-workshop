@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Dialog Example</title>
+        <style>
+            :root {
+                --bodyBackground: hsla(0, 0%, 0%, 0.85);
+                --textColor: hsla(0, 0%, 85%, 0.85);
+                --borderColor: hsla(0, 0%, 40%, 0.85);
+                --buttonColor: hsla(0, 0%, 20%, 0.85);
+                --onButtonColor: hsla(0, 0%, 80%, 0.85);
+                --borderColorFocus: hsla(0, 85%, 40%, 0.85);
+                --primary: hsla(240, 85%, 50%, 0.85);
+                --secondary: hsla(240, 15%, 50%, 0.85);
+
+                font-family: Barlow, sans-serif;
+                font-size: 18px;
+                line-height: 1.48;
+            }
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+
+                background: var(--bodyBackground);
+                color: var(--textColor);
+            }
+            button {
+                border-width: 2px;
+                border-style: solid;
+                border-color: var(--borderColor);
+                border-radius: 4rem;
+
+                padding-block: calc(18px - 0.5rem);
+                padding-inline: 1rem;
+
+                background: var(--buttonColor);
+                color: var(--onButtonColor);
+            }
+            dialog {
+                border-width: 2px;
+                border-style: solid;
+                border-color: var(--borderColor);
+                border-radius: 0.25rem;
+            }
+            dialog::backdrop {
+                background-color: hsla(0, 50%, 50%, 0.5);
+            }
+
+            :focus {
+                border-width: 2px;
+                border-style: solid;
+                border-color: var(--borderColorFocus);
+            }
+            .primary {
+                background: var(--primary);
+            }
+            .secondary {
+                background: var(--secondary);
+            }
+            hr {
+                border: 0;
+            }
+            form > label::after,
+            form > hr::after {
+                content: "";
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <a href="../">zurück zu den Erläuterungen</a>
+
+        <a href="elsewhere">go to elsewhere ...</a>
+
+        <button id="openDialogNonModal">Open Non-Modal Dialog</button>
+
+        <dialog id="myDialog">
+            <p>This is a simple dialog box.</p>
+            <button id="closeDialog">Close</button>
+        </dialog>
+
+        <script>
+            const dialog = document.getElementById("myDialog")
+            const openDialogNonModalButton =
+                document.getElementById("openDialogNonModal")
+            const closeDialogButton = document.getElementById("closeDialog")
+            openDialogNonModalButton.addEventListener("click", () => {
+                dialog.show()
+            })
+
+            closeDialogButton.addEventListener("click", () => {
+                dialog.close()
+            })
+        </script>
+
+        <button id="openBackdropDialog">Open Backdrop Dialog</button>
+
+        <dialog id="backdropDialog">
+            <p>This dialog has a backdrop.</p>
+            <button id="closeBackdropDialog">Close</button>
+        </dialog>
+
+        <script>
+            const backdropDialog = document.getElementById("backdropDialog")
+            const openBackdropDialogButton =
+                document.getElementById("openBackdropDialog")
+            const closeBackdropDialogButton = document.getElementById(
+                "closeBackdropDialog"
+            )
+
+            openBackdropDialogButton.addEventListener("click", () => {
+                backdropDialog.showModal()
+            })
+
+            closeBackdropDialogButton.addEventListener("click", () => {
+                backdropDialog.close()
+            })
+        </script>
+
+        <button id="openFormDialog">Open Form Dialog</button>
+
+        <dialog id="formDialog">
+            <form method="dialog">
+                <label for="name">Name:</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                />
+                <hr />
+                <button
+                    type="submit"
+                    class="primary"
+                >
+                    Submit
+                </button>
+                <button
+                    type="button"
+                    class="secondary"
+                    id="cancelFormDialog"
+                >
+                    Cancel
+                </button>
+            </form>
+        </dialog>
+
+        <script>
+            const formDialog = document.getElementById("formDialog")
+            const openFormDialogButton =
+                document.getElementById("openFormDialog")
+            const cancelFormDialogButton =
+                document.getElementById("cancelFormDialog")
+
+            openFormDialogButton.addEventListener("click", () => {
+                formDialog.showModal()
+            })
+
+            cancelFormDialogButton.addEventListener("click", () => {
+                formDialog.close()
+            })
+        </script>
+    </body>
+</html>

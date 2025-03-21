@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barrierefreies Akkordeon</title>
+
+    
+    <style>
+        :root {
+            --focus-color: #2563eb;
+            --border-color: #cdcdcd;
+            --hover-color: #f3f4f6;
+            --active-color: #cdcdcd;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .accordion {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        ul.accordion {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        
+        .accordion-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            margin: 0;
+        }
+
+        .accordion-button {
+            background-color: transparent;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            display: flex;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 16px;
+            position: relative;
+            text-align: left;
+            width: 100%;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .accordion-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .accordion-button[aria-expanded="true"] {
+            background-color: var(--active-color);
+        }
+
+        .accordion-button:focus {
+            outline: 2px solid var(--focus-color);
+            outline-offset: -2px;
+            z-index: 1;
+        }
+
+        .accordion-button::after {
+            content: '+';
+            margin-left: auto;
+            font-size: 1.5rem;
+            line-height: 1;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .accordion-button[aria-expanded="true"]::after {
+            content: '-';
+        }
+
+        .accordion-panel {
+            padding: 0 16px 16px;
+            display: none;
+        }
+
+        .accordion-panel[aria-hidden="false"] {
+            display: block;
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            padding: 8px;
+            width: 100%;
+            max-width: 300px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        input:focus {
+            outline: 2px solid var(--focus-color);
+            outline-offset: -1px;
+        }
+
+        button {
+            background-color: var(--focus-color);
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 8px 16px;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        button:focus {
+            outline: 2px solid var(--focus-color);
+            outline-offset: 2px;
+        }
+
+        /* Link styles */
+        .link-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .link-list li {
+            margin-bottom: 8px;
+        }
+
+        .link-list a {
+            color: var(--focus-color);
+            display: inline-block;
+            padding: 4px 0;
+            text-decoration: none;
+        }
+
+        .link-list a:hover {
+            text-decoration: underline;
+        }
+
+        .link-list a:focus {
+            outline: 2px solid var(--focus-color);
+            outline-offset: 2px;
+        }
+
+        .external-link::after {
+            content: " ↗";
+        }
+        samp i {
+          display: inline-block;
+          margin-inline-start: 0.25rem;
+          font-style: normal;
+          color:hsla(0, 85%,47.5%,1);
+        }
+        .sample {
+          background: #eee;
+          padding:1rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="../">zurück zu den Erläuterungen</a>
+    
+    <h1>Barrierefreies Akkordeon Beispiel</h1>
+    
+    <p>Beispiel für eine semantische Akkordeon-Komponente mit ARIA-Attributen und Landmarks zu Verbesserung des Accessibility-Tree, Tastatur-Steuerung nach W3-Standard, verschiedene Inhalte.</p>
+    
+    <div class="sample">
+    <section aria-labelledby="accordion-heading" class="accordion-container">
+        <h2 id="accordion-heading">Akkordeon mit 3 Sektionen</h2>
+        
+        <ul class="accordion" id="myAccordion" role="tablist">
+            <!-- Sektion 1: Links -->
+            <li class="accordion-item" role="none">
+                <h3 class="accordion-header" id="accordion-header-1">
+                    <button class="accordion-button" 
+                            id="accordion-button-1"
+                            aria-expanded="false" 
+                            aria-controls="accordion-panel-1"
+                            type="button"
+                            role="tab"
+                            aria-setsize="3"
+                            aria-posinset="1">
+                        Externe Links
+                    </button>
+                </h3>
+                <my-section-component role="section">
+                <section class="accordion-panel" 
+                       id="accordion-panel-1" 
+                       role="tabpanel" 
+                       aria-labelledby="accordion-header-1" 
+                       aria-hidden="true">
+                    <h4>Empfohlene Webseiten</h4>
+                    <ul class="link-list">
+                        <li>
+                            <a href="https://www.w3.org/WAI/" 
+                               class="external-link" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                W3C Web Accessibility Initiative (WAI)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.a11yproject.com/" 
+                               class="external-link" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                The A11Y Project
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.digitale-barrierefreiheit.de/" 
+                               class="external-link" 
+                               target="_blank" 
+                               rel="noopener noreferrer">
+                                Portal für digitale Barrierefreiheit
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+            </li>
+
+            <!-- Sektion 2: Formular -->
+            <li class="accordion-item" role="presentation">
+                <h3 class="accordion-header" id="accordion-header-2">
+                    <button class="accordion-button" 
+                            id="accordion-button-2"
+                            aria-expanded="false" 
+                            aria-controls="accordion-panel-2"
+                            type="button"
+                            role="tab"
+                            aria-setsize="3"
+                            aria-posinset="2">
+                        Formular
+                    </button>
+                </h3>
+                <section class="accordion-panel" 
+                       id="accordion-panel-2" 
+                       role="tabpanel" 
+                       aria-labelledby="accordion-header-2" 
+                       aria-hidden="true">
+                    <h4>Kontaktformular</h4>
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit">Absenden</button>
+                        </div>
+                    </form>
+                </section>
+            </li>
+
+            <!-- Sektion 3: Text mit Überschrift und Absätzen -->
+            <li class="accordion-item" role="presentation">
+                <h3 class="accordion-header" id="accordion-header-3">
+                    <button class="accordion-button" 
+                            id="accordion-button-3"
+                            aria-expanded="false" 
+                            aria-controls="accordion-panel-3"
+                            type="button"
+                            role="tab"
+                            aria-setsize="3"
+                            aria-posinset="3">
+                        Informationstext
+                    </button>
+                </h3>
+                <section class="accordion-panel" 
+                       id="accordion-panel-3" 
+                       role="tabpanel" 
+                       aria-labelledby="accordion-header-3" 
+                       aria-hidden="true">
+                    <h4>Über digitale Barrierefreiheit</h4>
+                    <p>Barrierefreiheit im Internet bedeutet, dass Webseiten, Apps und elektronische Dokumente so gestaltet sind, dass sie von allen Menschen unabhängig von ihren Fähigkeiten oder Beeinträchtigungen genutzt werden können.</p>
+                    <p>Barrierefreie Inhalte berücksichtigen verschiedene Aspekte wie:</p>
+                    <ul>
+                        <li>Wahrnehmbarkeit: Inhalte müssen für alle Sinne zugänglich sein</li>
+                        <li>Bedienbarkeit: Navigation und Interaktion muss mit verschiedenen Eingabemethoden möglich sein</li>
+                        <li>Verständlichkeit: Information und Benutzeroberfläche müssen verständlich sein</li>
+                        <li>Robustheit: Inhalte müssen mit verschiedenen Browsern und Hilfsmitteln funktionieren</li>
+                    </ul>
+                </section>
+            </li>
+        </ul>
+    </section>
+    </div>
+    
+    <h2>Erläuterungen</h2>
+    <h3>Semantischer Aufbau</h3>
+    <p>Semantik verbessert die Maschinen-Verwertbarkeit und informiert den Accessibility-Tree.</p>
+        <samp>
+    <pre><code>
+<b>section</b>.accordion-container<i>[aria-labelledby=accordion-heading]</i>
+    <b>h2</b>#accordion-heading
+    <b>ul</b>#myAccordion<i>[role=tablist]</i><i>[aria-label="Akkordeon mit 3 Abschnitten"]</i>
+        <b>li</b>.accordion-item</i[role=presentation]</i>
+            <b>h3</b>.accordion-header#accordion-header-1
+                <b>button</b>.accordion-button#accordion-button-1<i>[role=tab]</i><i>[aria-expanded=false]</i><i>[aria-controls=accordion-panel-1]</i><i>[aria-setsize=3]</i><i>[aria-posinset=1]</i>
+            <b>section</b>.accordion-panel#accordion-panel-1<i>[role=tabpanel]</i><i>[aria-labelledby=accordion-header-1]</i><i>[aria-hidden=true]</i>
+                <b>h4</b>{Empfohlene Webseiten}
+                Link list content
+        <b>li</b>.accordion-item<i>[role=presentation]</i>
+            <b>h3</b>.accordion-header#accordion-header-2
+                <b>button</b>.accordion-button#accordion-button-2<i>[role=tab]</i><i>[aria-expanded=false]</i><i>[aria-controls=accordion-panel-2]</i><i>[aria-setsize=3]</i><i>[aria-posinset=2]</i>
+            <b>section</b>.accordion-panel#accordion-panel-2<i>[role=tabpanel]</i><i>[aria-labelledby=accordion-header-2]</i><i>[aria-hidden=true]</i>
+                <b>h4</b>{Kontaktformular}
+                Form content
+        <b>li</b>.accordion-item<i>[role=presentation]</i>
+            <b>h3</b>.accordion-header#accordion-header-3
+                <b>button</b>.accordion-button#accordion-button-3<i>[role=tab]</i><i>[aria-expanded=false]</i><i>[aria-controls=accordion-panel-3]</i><i>[aria-setsize=3]</i><i>[aria-posinset=3]</i>
+            <b>section</b>.accordion-panel#accordion-panel-3<i>[role=tabpanel]</i><i>[aria-labelledby=accordion-header-3]</i><i>[aria-hidden=true]</i>
+                <b>h4</b>{Über digitale Barrierefreiheit}
+                Text content
+    </code></pre>
+    </samp>
+    
+    <h2>Alternativen</h2>
+    <ul>
+      <li>Aufbau mit <code>&lt;detail></code> und <code>&lt;summary></code></li>
+      <li>Refactoring mit <code>&lt;div></code> und <code>role=tablist</code> und <code>role=tabitem</code>. Hier wird lediglich der Accessibility-Tree verbessert, aber nicht die eigentliche Semantik.</li>
+    </ul>
+    
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --border-color: #e5e7eb;
+            --background-color: #f9fafb;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+        
+        h2 {
+            color: #1e40af;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        h3 {
+            color: #1e40af;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.25rem;
+        }
+        
+        dl {
+            background-color: var(--background-color);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        dt {
+            font-weight: bold;
+            margin-top: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        dt:first-child {
+            margin-top: 0;
+        }
+        
+        dt kbd {
+            display: inline-block;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            padding: 0.25rem 0.5rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+        
+        dt .plus {
+            margin: 0 0.5rem;
+            font-weight: normal;
+            color: #6b7280;
+        }
+        
+        dd {
+            margin-left: 0;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+        }
+        
+        .note {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .note h3 {
+            margin-top: 0;
+            font-size: 1rem;
+            color: #1e40af;
+        }
+        
+        .note ul {
+            margin-bottom: 0;
+        }
+    </style>
+    
+    <h2>Tastatursteuerung des Akkordeons</h2>
+    
+    <section>
+        <h3>Allgemeine Navigation</h3>
+        <dl>
+            <dt><kbd>Tab</kbd></dt>
+            <dd>Navigiert zum Akkordeon und zwischen den aktiven Elementen (Überschriften, Links, Formularfelder)</dd>
+            
+            <dt><kbd>Shift</kbd> <span class="plus">+</span> <kbd>Tab</kbd></dt>
+            <dd>Rückwärts-Navigation zwischen den aktiven Elementen</dd>
+            
+            <dt><kbd>Escape</kbd> / <kbd>ESC</kbd></dt>
+            <dd>Verlässt das Akkordeon und setzt den Fokus außerhalb der Komponente</dd>
+        </dl>
+    </section>
+    
+    <section>
+        <h3>Navigation innerhalb des Akkordeons</h3>
+        <dl>
+            <dt><kbd>↓</kbd> oder <kbd>Pfeil nach unten</kbd></dt>
+            <dd>Bewegt den Fokus zum nächsten Akkordeon-Header</dd>
+            
+            <dt><kbd>↑</kbd> oder <kbd>Pfeil nach oben</kbd></dt>
+            <dd>Bewegt den Fokus zum vorherigen Akkordeon-Header</dd>
+            
+            <dt><kbd>Home</kbd></dt>
+            <dd>Springt zum ersten Akkordeon-Header</dd>
+            
+            <dt><kbd>End</kbd></dt>
+            <dd>Springt zum letzten Akkordeon-Header</dd>
+        </dl>
+    </section>
+    
+    <section>
+        <h3>Steuerung der Akkordeon-Panels</h3>
+        <dl>
+            <dt><kbd>Enter</kbd></dt>
+            <dd>Öffnet oder schließt das fokussierte Panel</dd>
+            
+            <dt><kbd>Leertaste</kbd> / <kbd>Space</kbd></dt>
+            <dd>Öffnet oder schließt das fokussierte Panel</dd>
+        </dl>
+    </section>
+    
+    <section>
+        <h3>Navigation innerhalb eines geöffneten Panels</h3>
+        <dl>
+            <dt>Nach dem Öffnen:</dt>
+            <dd>Der Fokus bleibt auf dem Header</dd>
+            
+            <dt><kbd>Tab</kbd></dt>
+            <dd>Navigiert zu den interaktiven Elementen innerhalb des geöffneten Panels</dd>
+            
+            <dt><kbd>Shift</kbd> <span class="plus">+</span> <kbd>Tab</kbd></dt>
+            <dd>Navigiert rückwärts zu den interaktiven Elementen oder zurück zum Header</dd>
+        </dl>
+    </section>
+    
+    <section>
+        <h3>Besonderheiten bei externen Links</h3>
+        <dl>
+            <dt><kbd>Tab</kbd></dt>
+            <dd>Navigiert zwischen den Links</dd>
+            
+            <dt><kbd>Enter</kbd></dt>
+            <dd>Aktiviert den fokussierten Link (öffnet in neuem Tab)</dd>
+        </dl>
+    </section>
+    
+    <section>
+        <h3>Besonderheiten im Formular</h3>
+        <dl>
+            <dt><kbd>Tab</kbd></dt>
+            <dd>Wechselt zwischen Eingabefeld und Button</dd>
+            
+            <dt><kbd>Enter</kbd> (auf dem Button)</dt>
+            <dd>Sendet das Formular ab</dd>
+        </dl>
+    </section>
+    
+    <div class="note">
+        <h4>Zugänglichkeitshinweise</h4>
+        <ul>
+            <li>Alle interaktiven Elemente zeigen einen sichtbaren Fokusrahmen</li>
+            <li>Screenreader kündigen den Status (geöffnet/geschlossen) und die Position (z.B. "Element 2 von 3") an</li>
+            <li>Alle Steuerungselemente sind mit aussagekräftigen Labels versehen, die von Screenreadern vorgelesen werden</li>
+        </ul>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordion = document.getElementById('myAccordion');
+            const accordionButtons = accordion.querySelectorAll('.accordion-button');
+            
+            // Initialisierung
+            accordionButtons.forEach(button => {
+                const panelId = button.getAttribute('aria-controls');
+                const panel = document.getElementById(panelId);
+                
+                button.addEventListener('click', function() {
+                    const expanded = this.getAttribute('aria-expanded') === 'true';
+                    
+                    // Alle Panels schließen
+                    accordionButtons.forEach(btn => {
+                        const btnPanelId = btn.getAttribute('aria-controls');
+                        const btnPanel = document.getElementById(btnPanelId);
+                        
+                        btn.setAttribute('aria-expanded', 'false');
+                        btnPanel.setAttribute('aria-hidden', 'true');
+                    });
+                    
+                    // Angeklicktes Panel öffnen, wenn es geschlossen war
+                    if (!expanded) {
+                        this.setAttribute('aria-expanded', 'true');
+                        panel.setAttribute('aria-hidden', 'false');
+                    }
+                });
+            });
+            
+            // Tastaturnavigation
+            accordion.addEventListener('keydown', function(event) {
+                const target = event.target;
+                
+                // Nur für Accordion-Buttons
+                if (!target.classList.contains('accordion-button')) {
+                    return;
+                }
+                
+                const buttons = Array.from(accordionButtons);
+                const currentIndex = buttons.indexOf(target);
+                
+                switch (event.key) {
+                    case 'ArrowDown':
+                        event.preventDefault();
+                        if (currentIndex < buttons.length - 1) {
+                            buttons[currentIndex + 1].focus();
+                        }
+                        break;
+                    case 'ArrowUp':
+                        event.preventDefault();
+                        if (currentIndex > 0) {
+                            buttons[currentIndex - 1].focus();
+                        }
+                        break;
+                    case 'Home':
+                        event.preventDefault();
+                        buttons[0].focus();
+                        break;
+                    case 'End':
+                        event.preventDefault();
+                        buttons[buttons.length - 1].focus();
+                        break;
+                    case ' ':
+                    case 'Enter':
+                        event.preventDefault();
+                        target.click();
+                        break;
+                    case 'Escape':
+                        event.preventDefault();
+                        // Fokus auf den nächsten interaktiven Inhalt außerhalb des Akkordeons setzen
+                        document.querySelector('body').focus();
+                        break;
+                }
+            });
+            
+            // Touch-Unterstützung ist bereits durch den Click-Event-Handler abgedeckt
+        });
+    </script>
+</body>
+</html>

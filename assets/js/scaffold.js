@@ -118,6 +118,10 @@ function createMainNavigation() {
             file: "text-level/index.html",
             text: "Text-Level",
         },
+        {
+            file: "components/accordion.html",
+            text: "Komponenten",
+        },
     ]
 
     nav.id = "main-navigation"
