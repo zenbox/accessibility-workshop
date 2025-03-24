@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Barrierefreies Login</title>
+        <style>
+            html {
+                font-size: 16px;
+            }
+            body {
+                font-size: 1rem;
+                background-color: hsl(0, 0%, 100%);
+                color: hsl(0, 0%, 0%);
+                font-family: Arial, sans-serif;
+                padding: 3.125rem;
+            }
+            form {
+                max-width: 50%;
+                background: hsl(0, 0%, 100%);
+                padding: 1.25rem;
+                border-radius: 0.625rem;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            fieldset {
+                border: none;
+            }
+            label {
+                font-weight: bold;
+                display: block;
+                margin-bottom: 0.3125rem;
+            }
+            input {
+                width: 97%;
+                padding: 0.625rem;
+                font-size: 1.1rem;
+                margin-bottom: 0.625rem;
+                border: 1px solid hsl(0, 0%, 60%);
+                border-radius: 0.3125rem;
+            }
+            *:focus {
+                border: 4px solid red !important;
+                outline: 4px solid hsl(228, 98%, 45%) !important;
+                outline-offset: 1px;
+            }
+            .message {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+                display: none;
+            }
+            .error {
+                color: hsl(0, 100%, 45%);
+            }
+            .success {
+                color: hsl(120, 100%, 25%);
+            }
+            .buttons {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 0.625rem;
+                gap: 2rem;
+            }
+            button {
+                font-size: 1.1rem;
+                border: none;
+                cursor: pointer;
+                border-radius: 0.3125rem;
+                height: 3.125rem;
+                width: 100%;
+                align-items: center;
+            }
+            button[type="submit"] {
+                background-color: hsl(115, 100%, 20%);
+                color: hsl(0, 0%, 100%);
+            }
+            button[type="reset"] {
+                background-color: hsl(0, 0%, 100%);
+                color: hsl(0, 97%, 45%);
+                border: 2px solid hsl(0, 0%, 0%);
+            }
+
+            dialog {
+                width: 90%;
+                max-width: 400px;
+                padding: 1.5rem;
+                border: none;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                text-align: center;
+            }
+
+            .dialog-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dialog-buttons {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 1rem;
+                width: 100%;
+            }
+
+            .dialog-buttons button {
+                flex: 1;
+                padding: 0.75rem;
+                font-size: 1rem;
+                cursor: pointer;
+                border: none;
+                border-radius: 0.5rem;
+                margin: 0 0.5rem;
+            }
+
+            #confirmReset {
+                color: hsl(120, 100%, 25%);
+                border: 2px solid hsl(120, 100%, 25%);
+            }
+
+            #cancelReset {
+                color: hsl(0, 100%, 45%);
+                border: 2px solid hsl(0, 100%, 45%);
+            }
+
+            .login-dialog .dialog-buttons #cancelReset {
+                display: none;
+            }
+
+            .login-dialog .dialog-buttons #confirmReset {
+                content: "OK"; /* Change text dynamically */
+            }
+
+            .reset-dialog .dialog-buttons {
+                display: flex;
+            }
+        </style>
+    </head>
+    <body>
+        <form
+            id="loginForm"
+            aria-labelledby="formTitle"
+            novalidate
+            aria-live="polite"
+            aria-relevant="additions"
+        >
+            <h1
+                tabindex="0"
+                aria-describedby="emailMessage"
+                id="formTitle"
+            >
+                Login
+            </h1>
+
+            <fieldset>
+                <legend>Login</legend>
+
+                <fieldset>
+                    <label for="email">E-Mail-Adresse</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        aria-label="Doppeltes Label??"
+                        aria-labelledby="emailError"
+                        aria-describedby="emailMessage"
+                        required
+                        placeholder="E-Mail"
+                        data-1p-ignore
+                        autocomplete="off"
+                    />
+
+                    <style>
+                        .visibility-hidden {
+                            display: block;
+                            position: absolute;
+                            top: -10000px;
+                        }
+                    </style>
+
+                    <p
+                        class="visibility-hidden"
+                        id="emailMessage"
+                    >
+                        ℹ️ Lorem Email Message ipsum dolor sit amet consectetur.
+                    </p>
+
+                    <p
+                        id="emailError"
+                        class="message error"
+                        role="alert"
+                    >
+                        ❌ Bitte geben Sie eine gültige E-Mail-Adresse ein.
+                    </p>
+
+                    <p
+                        id="emailSuccess"
+                        class="message success"
+                    >
+                        ✅ E-Mail sieht gut aus!
+                    </p>
+                </fieldset>
+
+                <fieldset>
+                    <label for="password">Passwort</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        aria-describedby="passwordMessage"
+                        required
+                        placeholder="Passwort"
+                        data-1p-ignore
+                    />
+                    <p
+                        id="passwordError"
+                        class="message error"
+                        role="alert"
+                    >
+                        ❌ Das Passwort muss mindestens 6 Zeichen lang sein.
+                    </p>
+                    <p
+                        id="passwordSuccess"
+                        class="message success"
+                    >
+                        ✅ Passwort ist gültig.
+                    </p>
+                </fieldset>
+
+                <fieldset class="buttons">
+                    <button type="reset">Abbrechen</button>
+                    <button
+                        type="submit"
+                        value="Anmelden"
+                    >
+                        Login
+                    </button>
+                </fieldset>
+
+                <dialog
+                    id="resetDialog"
+                    aria-labelledby="resetDialogTitle"
+                >
+                    <div class="dialog-content">
+                        <h2 id="resetDialogTitle">Sind Sie sicher?</h2>
+                        <p>
+                            Möchten Sie das Formular wirklich zurücksetzen?
+                            Diese Aktion kann nicht rückgängig gemacht werden.
+                        </p>
+                        <div class="dialog-buttons">
+                            <button id="confirmReset">✅ YES RESET</button>
+                            <button id="cancelReset">❌ CANCEL</button>
+                        </div>
+                    </div>
+                </dialog>
+            </fieldset>
+        </form>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const loginForm = document.getElementById("loginForm")
+                const email = document.getElementById("email")
+                const password = document.getElementById("password")
+
+                const resetDialog = document.getElementById("resetDialog")
+                const resetDialogTitle =
+                    document.getElementById("resetDialogTitle")
+                const confirmResetBtn = document.getElementById("confirmReset")
+                const cancelResetBtn = document.getElementById("cancelReset")
+
+                let isResetting = false
+
+                loginForm.addEventListener("submit", function (event) {
+                    if (!validateForm()) {
+                        event.preventDefault()
+                        return
+                    }
+
+                    event.preventDefault()
+
+                    resetDialogTitle.textContent = "Erfolg!"
+                    resetDialog.querySelector("p").textContent =
+                        "🎉 Du hast dich erfolgreich eingeloggt!" // ✅ Fix text update
+
+                    confirmResetBtn.textContent = "Danke! Gerne geschehen!"
+                    confirmResetBtn.classList.remove("reset-button")
+                    confirmResetBtn.classList.add("success-button")
+
+                    resetDialog.classList.add("login-dialog")
+                    resetDialog.classList.remove("reset-dialog")
+                    resetDialog.showModal()
+                })
+
+                loginForm.addEventListener("reset", function (event) {
+                    if (!isResetting) {
+                        event.preventDefault()
+
+                        resetDialogTitle.textContent = "Sind Sie sicher?"
+                        resetDialog.querySelector("p").textContent =
+                            "Möchten Sie das Formular wirklich zurücksetzen? Diese Aktion kann nicht rückgängig gemacht werden." // ✅ Fix text update
+
+                        confirmResetBtn.textContent = "✅ YES RESET"
+                        confirmResetBtn.classList.remove("success-button")
+                        confirmResetBtn.classList.add("reset-button")
+
+                        resetDialog.classList.add("reset-dialog")
+                        resetDialog.classList.remove("login-dialog")
+                        resetDialog.showModal()
+                    }
+                })
+
+                confirmResetBtn.addEventListener("click", function () {
+                    if (resetDialog.classList.contains("reset-dialog")) {
+                        resetDialog.close()
+                        isResetting = true
+                        loginForm.reset()
+                        resetValidationMessages()
+                        isResetting = false
+                    } else {
+                        resetDialog.close()
+                    }
+                })
+
+                cancelResetBtn.addEventListener("click", function (event) {
+                    event.preventDefault()
+                    resetDialog.close()
+                })
+
+                function validateField(input) {
+                    const error = document.getElementById(input.id + "Error")
+                    const success = document.getElementById(
+                        input.id + "Success"
+                    )
+
+                    if (input.id === "email") {
+                        if (
+                            !input.value.includes("@") ||
+                            input.value.length < 5
+                        ) {
+                            showError(input, error, success)
+                        } else {
+                            showSuccess(input, error, success)
+                        }
+                    }
+
+                    if (input.id === "password") {
+                        if (input.value.length < 6) {
+                            showError(input, error, success)
+                        } else {
+                            showSuccess(input, error, success)
+                        }
+                    }
+                }
+
+                function validateForm() {
+                    validateField(email)
+                    validateField(password)
+                    return (
+                        email.getAttribute("aria-invalid") === "false" &&
+                        password.getAttribute("aria-invalid") === "false"
+                    )
+                }
+
+                function showError(input, error, success) {
+                    error.style.display = "block"
+                    success.style.display = "none"
+                    input.setAttribute("aria-invalid", "true")
+                }
+
+                function showSuccess(input, error, success) {
+                    error.style.display = "none"
+                    success.style.display = "block"
+                    input.setAttribute("aria-invalid", "false")
+                }
+
+                function resetValidationMessages() {
+                    ;["email", "password"].forEach((field) => {
+                        document.getElementById(field + "Error").style.display =
+                            "none"
+                        document.getElementById(
+                            field + "Success"
+                        ).style.display = "none"
+                        document
+                            .getElementById(field)
+                            .setAttribute("aria-invalid", "false")
+                    })
+                }
+
+                // ✅ Move to the next input after validation
+                function moveToNextInput(currentInput) {
+                    const inputs = Array.from(
+                        document.querySelectorAll("input, button")
+                    )
+                    const index = inputs.indexOf(currentInput)
+
+                    if (index !== -1 && index < inputs.length - 1) {
+                        inputs[index + 1].focus()
+                    }
+                }
+
+                // ✅ Validate on "Enter" and move to the next input
+                document.querySelectorAll("input").forEach((input) => {
+                    input.addEventListener("keydown", function (event) {
+                        if (event.key === "Enter") {
+                            event.preventDefault()
+                            validateField(input)
+                            moveToNextInput(input)
+                        }
+                    })
+                })
+
+                // ✅ Allow arrow key navigation for buttons
+                const buttons = Array.from(
+                    document.querySelectorAll(".buttons button")
+                )
+
+                buttons.forEach((button, index) => {
+                    button.addEventListener("keydown", function (event) {
+                        if (event.key === "ArrowRight") {
+                            event.preventDefault()
+                            buttons[(index + 1) % buttons.length].focus()
+                        } else if (event.key === "ArrowLeft") {
+                            event.preventDefault()
+                            buttons[
+                                (index - 1 + buttons.length) % buttons.length
+                            ].focus()
+                        }
+                    })
+                })
+            })
+        </script>
+    </body>
+</html>
