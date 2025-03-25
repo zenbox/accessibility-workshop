@@ -1,0 +1,33 @@
+/* 
+ * table.css
+ * Stile für Tabellen
+ */
+
+.shortcuts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--spacing-lg) 0;
+}
+
+.shortcuts-table th,
+.shortcuts-table td {
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+}
+
+.shortcuts-table th {
+    background-color: #f2f2f2;
+}
+
+.shortcuts-table th[colspan] {
+    background-color: #e0e0e0;
+    text-align: center;
+    font-weight: bold;
+    padding: var(--spacing-md);
+}
+
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: var(--spacing-lg);
+}

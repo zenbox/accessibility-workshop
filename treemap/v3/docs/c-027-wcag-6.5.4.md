@@ -1,0 +1,62 @@
+# Prüfschritt 6.5.4 Synchronität bei Videotelefonie
+
+Webanwendungen mit Videotelefonie müssen sicherstellen, dass die Zeitdifferenz zwischen Audio und Video **nicht mehr als 100 Millisekunden** beträgt.
+
+Eine Verzögerung zwischen Bild und Ton kann die Verständlichkeit erheblich beeinträchtigen, insbesondere für gehörlose Menschen, Menschen mit Hörbehinderungen und Personen mit kognitiven Einschränkungen.
+
+Mögliche Prüfmethoden:
+
+-   Testanruf zwischen zwei Geräten zur visuellen Einschätzung der Lippensynchronität.
+-   Mehrere Wiederholungen des Tests zur Überprüfung der Konsistenz.
+-   Stabile Internetverbindung sicherstellen, um externe Latenzen zu minimieren.
+
+Untersuchungen zeigen, dass es besonders problematisch ist, wenn das Video dem Audio hinterherhinkt. Eine präzise Synchronität sorgt für eine barrierefreie und verständliche Kommunikation.
+
+_BITV-Originaltext:_
+
+## Was wird geprüft?
+
+Wenn das Webangebot Videotelefonie unterstützt, soll die Zeitdifferenz zwischen Audio und Video nicht mehr als 100 Millisekunden betragen.
+
+## Warum wird das geprüft?
+
+Die Verständlichkeit von Videotelefonie ist allgemein schlechter, wenn Bild und Ton nicht zeitgleich übertragen werden. Gestik und Mimik der Sprechenden passen dann nicht mehr zur gehörten Sprache. Menschen mit kognitiven Einschränkungen, gehörlosen Menschen und Menschen mit eingeschränktem Hörvermögen fällt es vermutlich schwerer, mittels nicht synchroner Videotelefonie zu kommunizieren. Um dem Gesprochenen besser zu folgen, ist es hilfreich, zeitgleich zum Ton die Lippen der sprechenden Person zu sehen. Die Voraussetzung dafür ist, dass Bild und Ton gleichzeitig übertragen werden. Empirische Untersuchungen dazu sind uns allerdings nicht bekannt, und Hinweise darauf willkommen.
+
+## Wie wird geprüft?
+
+### 1\. Anwendbarkeit des Prüfschritts
+
+Der Prüfschritt ist anwendbar, wenn das Webangebot Videotelefonie mit Sprachübertragung unterstützt.
+
+### 2\. Prüfung
+
+Die Zeitdifferenz zwischen Audio und Video bei der Übertragung von Videotelefonie soll nicht mehr als 100 Millisekunden betragen, deutlich wahrnehmbare Differenzen sind also zu vermeiden.
+
+Die zeitgleiche Übertragung von Ton und Bild (bzw. eine Asynchronität, das bedeutet Bild und Ton werden nicht gleichzeitig übertragen) kann mit einem Testvideoanruf geprüft werden. Dafür muss das Webangebot auf zwei verschiedenen Testgeräten im Browser laufen.
+
+1.  Webangebot auf zwei Geräten im Browser aufrufen
+2.  Videotelefonieverbindung zwischen beiden Angeboten herstellen
+3.  Synchronität zwischen Sprache und Video prüfen (Lippensynchronität). Ist eine Zeitdifferenz deutlich wahrnehmbar?
+
+Um ein belastbares Ergebnis zu erzielen, sollte die Testübertragung wiederholt werden.
+
+#### Hinweise
+
+-   Untersuchungen zeigen, dass die Verständlichkeit deutlich mehr leidet, wenn das Video dem Audio hinterherhängt, als umgekehrt. Diese Tatsache kann bei der Bewertung entsprechend berücksichtigt und angemerkt werden.
+-   Um Latenzen der Netzwerk-Infrastruktur zu minimieren, sollten beide Geräte über eine stabile Internetverbindung mit ausreichend Bandbreite verbunden sein.
+
+Für Hinweise zu diesem Prüfschritt, z. B. für die genaue Messung der Zeitdifferenz, können Sie auf GitHub [ein Issue anlegen](https://github.com/BIK-BITV/BIK-Web-Test/issues).
+
+## Quellen
+
+-   Zurzeit keine Quellen.
+
+## Einordnung des Prüfschritts
+
+### Einordnung des Prüfschritts nach EN 301 549 V3.2.1
+
+#### 6.5.4 Synchronization between audio and video
+
+> Where ICT that provides two-way voice communication includes real-time video functionality, the ICT shall ensure a maximum time difference of 100 ms between the speech and video presented to the user.
+>
+> NOTE: Recent research shows that, if audio leads the video, the intelligibility suffers much more than the reverse.

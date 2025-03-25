@@ -1,0 +1,65 @@
+# Prüfschritt 6.4 Alternativen zu sprachbasierten Diensten
+
+Wenn eine Webanwendung Echtzeit-Sprachkommunikation mit Voicemail oder interaktiven Sprachdialogsystemen (z. B. sprachgesteuerte Hotlines) anbietet, müssen alle Funktionen auch ohne Hören oder Sprechen nutzbar sein.
+
+Menschen, die nicht hören oder sprechen können, dürfen nicht von wichtigen Informationen oder Funktionen ausgeschlossen werden.
+
+Mögliche technische Lösungen:
+
+-   **Barrierefreie Alternativen**, z. B. Menüs oder Formulare statt Sprachnavigation.
+-   **Textbasierte Ausgabe** aller relevanten Informationen.
+-   **Alternative Identifikationsverfahren**, wenn ein Video-Ident-System genutzt wird.
+
+Beispiele für notwendige Alternativen:
+
+-   Statt einer telefonischen Guthabenabfrage bei einem Mobilfunkanbieter muss das Guthaben auch in Textform auf der Webseite verfügbar sein.
+-   Bei einem sprachgesteuerten Menü einer Hotline muss eine textbasierte Auswahlmöglichkeit angeboten werden.
+
+Eine barrierefreie Alternative zu Sprachdiensten stellt sicher, dass alle Nutzenden unabhängig von ihrer Hör- oder Sprechfähigkeit gleichberechtigt auf Informationen und Funktionen zugreifen können.
+
+_BITV-Originaltext:_
+
+## Was wird geprüft?
+
+Wenn ein Webangebot Echtzeit-Sprachkommunikation mit Voicemail-Funktion bietet oder interaktive Sprachdialogsysteme einsetzt (z.B. sprachgesteueerte Menüführung), sollen etwaige Aufgaben auch ohne die Fähigkeit zum Hören und Sprechen durchführbar sein.
+
+## Warum wird das geprüft?
+
+Gehörlose und schwerhörige Menschen und Menschen mit Einschränkungen beim Sprechen können sprachbasierte Dienste nicht nutzen. Deshalb muss eine zugängliche Alternative bereitstehen, in der der Zugang zu Informationen und deren Ausgabe auch ohne Sprechen und Hören möglich ist.
+
+## Wie wird geprüft?
+
+### 1\. Anwendbarkeit des Prüfschritts
+
+Der Prüfschritt ist anwendbar, wenn das Webangebot Echtzeit-Sprachkommunikation mit Voicemail-Funktion oder interaktive Sprachdialogsysteme (z.B. sprachgesteuerte Menüführung bei einer Hotline) einsezt.
+
+### 2\. Prüfung
+
+Wenn Informationen über Echtzeit-Sprachkommunikation bereitgestellt werden, prüfen, ob diese auch ohne Sprach- und Hör-Fähigkeit zugänglich ist. Dies beinhaltet:
+
+-   eine alternative Zugangsmöglichkeit, z.B. über barrierefreie Menüs oder Formulare
+-   eine alternative barrierefreie Ausgabe der Information, etwa als sichtbarer programmatisch ermittelbarer Text
+
+### 3\. Hinweise
+
+Ein Beispiel für einen Dienst, der Sprach und Hörfähigkeiten voraussetzt, ist z.B. das Video-Ident-Verfahren. Dieses wird u. a. bei Online-Banken für die Identifizierung genutzt. Mit einem Videoanruf werden dabei Personalausweis etc. auf Echtheit geprüft. Hier muss eine Alternative geboten werden, die das Hören und Sprechen nicht erfordert.
+
+Ein anderes Beispiel ist telefonische Ansage des Guthabens bei einem Prepaid-Mobilfunkvertrag. Hier müsste der Anbieter das aktuelle Guthaben in Textform auf der Seite bereitstellen.
+
+Für Hinweise zu diesem Prüfschritt können Sie auf GitHub [ein Issue anlegen](https://github.com/BIK-BITV/BIK-Web-Test/issues).
+
+## Quellen
+
+-   [Human Factors (HF); Real-Time Text (RTT) in Multiparty Conference Calling / ETSI TR 103 708 V1.1.1 (2022-08)](https://labs.etsi.org/rep/HF/en301549/uploads/272bede3724c5c99efe777f778201f70/tr_103708v010101p.pdf)
+
+## Einordnung des Prüfschritts
+
+### Einordnung des Prüfschritts nach EN 301 549 V3.2.1
+
+#### 6.4 Alternatives to voice-based services
+
+> Where ICT provides real-time voice-based communication and also provides voice mail, auto-attendant, or interactive voice response facilities, the ICT shall offer users a means to access the information and carry out the tasks provided by the ICT without the use of hearing or speech.
+>
+> NOTE 1: Tasks that involve both operating the interface and perceiving the information would require that both the interface and information be accessible without use of speech or hearing.
+>
+> NOTE 2: Solutions capable of handling audio, RTT and video media could satisfy the above requirement.

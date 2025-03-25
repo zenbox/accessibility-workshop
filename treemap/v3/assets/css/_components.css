@@ -1,0 +1,418 @@
+/* ==============================
+   @version v3
+   components.css
+   - Buttons
+   - Modal-Dialoge
+   - Benachrichtigungen
+   - Icons
+   ============================== */
+
+/* ==============================
+   1. Buttons
+   ============================== */
+/* Allgemeiner Button-Stil */
+.ui-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.ui-button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--box-shadow-hover);
+}
+
+.ui-button:active {
+    transform: translateY(1px);
+}
+
+.ui-button:focus {
+    outline: var(--focus-outline-width) solid var(--primary-focus-color);
+    outline-offset: var(--focus-outline-offset);
+}
+
+/* Button-Typen */
+.ui-button-standard {
+    background-color: var(--gray-200);
+    color: var(--gray-800);
+    border-color: var(--gray-300);
+}
+
+.ui-button-standard:hover {
+    background-color: var(--gray-300);
+}
+
+.ui-button-primary {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.ui-button-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.ui-button-secondary {
+    background-color: var(--secondary);
+    color: white;
+    border-color: var(--secondary);
+}
+
+.ui-button-secondary:hover {
+    background-color: #5a6268;
+}
+
+.ui-button-success {
+    background-color: var(--success);
+    color: white;
+    border-color: var(--success);
+}
+
+.ui-button-success:hover {
+    background-color: #218838;
+}
+
+.ui-button-danger {
+    background-color: var(--danger);
+    color: white;
+    border-color: var(--danger);
+}
+
+.ui-button-danger:hover {
+    background-color: #c82333;
+}
+
+/* Button-Größen */
+.ui-button-small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.ui-button-medium {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+}
+
+.ui-button-large {
+    padding: 0.75rem 1.25rem;
+    font-size: 1.125rem;
+}
+
+/* Icon-Button */
+.ui-button-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui-button-icon.ui-button-small {
+    width: 28px;
+    height: 28px;
+}
+
+.ui-button-icon.ui-button-large {
+    width: 48px;
+    height: 48px;
+}
+
+/* Action-Button (Runder Button mit Icon) */
+.action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.action-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.action-button:focus {
+    outline: 2px solid var(--primary-focus-color);
+    outline-offset: 2px;
+}
+
+.action-button .material-icons {
+    font-size: 20px;
+}
+
+/* ==============================
+   2. Modal-Dialoge
+   ============================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-index-modal);
+    overflow-y: auto;
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: modalFade 0.3s ease-in-out;
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    color: black;
+    margin: 2rem auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-speed) ease;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    background: rgba(0, 0, 0, 0.2);
+    outline: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.modal-title {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--gray-300);
+}
+
+.modal-body {
+    margin-bottom: 1.5rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-300);
+}
+
+.modal-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modal-btn.primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.modal-btn.primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.modal-btn.secondary {
+    background-color: var(--gray-200);
+    color: var(--gray-800);
+}
+
+.modal-btn.secondary:hover {
+    background-color: var(--gray-300);
+}
+
+@keyframes modalFade {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==============================
+   3. Benachrichtigungen
+   ============================== */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 4px;
+    background-color: var(--gray-800);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: var(--z-index-notification);
+    transform: translateX(110%);
+    transition: transform 0.3s ease-in-out;
+    max-width: 300px;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.info {
+    background-color: var(--info);
+}
+
+.notification.success {
+    background-color: var(--success);
+}
+
+.notification.warning {
+    background-color: var(--warning);
+    color: var(--gray-900);
+}
+
+.notification.error {
+    background-color: var(--danger);
+}
+
+/* ==============================
+   4. Icons
+   ============================== */
+.material-icons {
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+}
+
+.icon-small {
+    font-size: 18px;
+}
+
+.icon-medium {
+    font-size: 24px;
+}
+
+.icon-large {
+    font-size: 36px;
+}
+
+/* ==============================
+   5. Listen und Badges
+   ============================== */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 10px;
+    background-color: var(--gray-500);
+    color: white;
+}
+
+.badge-primary {
+    background-color: var(--primary);
+}
+
+.badge-secondary {
+    background-color: var(--secondary);
+}
+
+.badge-success {
+    background-color: var(--success);
+}
+
+.badge-danger {
+    background-color: var(--danger);
+}
+
+.badge-warning {
+    background-color: var(--warning);
+    color: var(--gray-900);
+}
+
+.badge-info {
+    background-color: var(--info);
+}
+
+.list-group {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    border-radius: var(--border-radius);
+}
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 0.75rem 1.25rem;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+
+.list-group-item:last-child {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+
+.list-group-item + .list-group-item {
+    border-top-width: 0;
+}
+
+.list-group-item-action {
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.list-group-item-action:hover {
+    background-color: var(--gray-100);
+}

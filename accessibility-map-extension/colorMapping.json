@@ -1,0 +1,85 @@
+{
+    "Struktur": {
+        "selectors": "header, [role=banner], aside, [role=complementary], nav, [role=navigation], main, [role=main], footer, [role=contentinfo]",
+        "color": "hsla(180, 100%, 50%, 0.85)",
+        "type": "mixed",
+        "enabled": false,
+        "showElement": true
+    },
+    "1. Ebene": {
+        "selectors": "body > *",
+        "color": "hsla(180, 100%, 50%, 0.85)",
+        "type": "element",
+        "enabled": false
+    },
+    "Sektionen": {
+        "selectors": "body, article, section, nav, aside, h1, h2, h3, h4, h5, h6, hgroup, header, footer, address",
+        "color": "hsla(30, 100%, 50%, 0.85)",
+        "type": "element",
+        "enabled": false
+    },
+    "Semantische Inhaltsgruppen": {
+        "selectors": "p, hr, pre, blockquote, ol, ul, menu, li, dl, dt, dd, figure, figcaption, main,search",
+        "color": "hsla(300, 100%, 50%, 0.85)",
+        "type": "element",
+        "enabled": false
+    },
+    "Semantische Textauszeichnungen": {
+        "selectors": "a, em, strong, small, cite, q, dfn, abbr, ruby, rt, rb, data, time, code, var, samp, kbd, sub, sup, mark, bdi, bdo",
+        "color": "hsla(190, 50%, 60%, 0.85)",
+        "type": "element",
+        "enabled": true,
+        "showElement": true,
+        "lines": {
+            "start": ["[title]"],
+            "end": "[id]"
+        }
+    },
+    "Nicht-semantische Elemente": {
+        "selectors": "div:not([role]), span:not([role]), s:not([role]), b:not([role]), i:not([role]), u:not([role])",
+        "color": "hsla(0, 100%, 50%, 0.85)",
+        "type": "mixed",
+        "enabled": false
+    },
+    "roleElements": {
+        "selectors": "[role]",
+        "color": "hsla(0, 100%, 50%, 0.85)",
+        "type": "attribute",
+        "enabled": false
+    },
+    "ariaElements": {
+        "selectors": "[aria-label], [aria-live], [aria-describedby], [aria-labelledby]",
+        "color": "hsla(0, 100%, 70%, 0.85)",
+        "type": "attribute",
+        "enabled": false
+    },
+    "altElements": {
+        "selectors": "[alt]",
+        "color": "hsla(0, 100%, 30%, 0.85)",
+        "type": "attribute",
+        "enabled": false
+    },
+    "tabSequence": {
+        "selectors": "a[href], button, input, textarea, select, [tabindex]:not([tabindex=\"-1\"])",
+        "color": "hsla(120, 100%, 30%, 0.85)",
+        "type": "element",
+        "enabled": false
+    },
+    "idConnected": {
+        "selectors": "[aria-labelledby], [aria-describedby], [for]",
+        "color": "hsla(0, 100%, 70%, 0.85)",
+        "type": "attribute",
+        "enabled": false,
+        "lines": {
+            "start": ["[aria-labelledby]", "[aria-describedby]", "[for]"],
+            "[end]": "id"
+        }
+    },
+    "Contrasts": {
+        "selectors": "",
+        "color": "",
+        "type": "contrast",
+        "enabled": false,
+        "showElement": false
+    }
+}

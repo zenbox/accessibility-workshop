@@ -1,0 +1,68 @@
+# Prüfschritt 7.1.5 Gesprochene Untertitel
+
+Webanwendungen mit Videos in einer **fremdsprachigen Tonspur** müssen sicherstellen, dass Untertitel in der Hauptsprache der Webseite auch **akustisch wiedergegeben** werden können.
+
+Diese Funktion ist wichtig für blinde oder sehbehinderte Menschen, die den Originalton nicht verstehen können.
+
+Mögliche technische Lösungen:
+
+-   **Zusätzliche Tonspur**, die die Untertitel in der Hauptsprache wiedergibt.
+-   **Automatische Sprachausgabe** der Untertitel durch Text-to-Speech-Technologie.
+
+Prüfung erfolgt durch Überprüfung, ob eine alternative **gesprochene Untertitel-Funktion** vorhanden ist.
+
+Wenn fremdsprachige Videos Untertitel in der Hauptsprache bieten, diese aber nicht akustisch ausgegeben werden können, ist dieser Prüfschritt nicht erfüllt.
+
+_BITV-Originaltext:_
+
+## Was wird geprüft?
+
+Wenn das Webangebot Videos mit einem Originalton enthält, der nicht der Hauptsprache des Webangebots entspricht, sollen zuschaltbare bzw. programmatisch ermittelbare Untertitel, die in der Hauptsprache der Seite angeboten werden, als akustische Ausgabe zugänglich sein, z.B. über eine eigene Tonspur, die den Untertiteln entspricht, oder über eine generierte Sprachausgabe der Untertitel. Nicht programmatisch ermittelbar sind Untertitel, die "fest eingebrannt" (open captions), also Teil der Bildinformation, sind.
+
+## Warum wird das geprüft?
+
+Für Menschen, die den fremdsprachigen Originalton eines Videos nicht verstehen, ist eine Übersetzung in Untertiteln in der eigenen Sprache wichtig. Diese Untertitel sollen auch für blinde oder seheingeschränkte Menschen als akustische Ausgabe zugänglich sein.
+
+## Wie wird geprüft?
+
+### 1\. Anwendbarkeit des Prüfschritts
+
+Der Prüfschritt ist anwendbar:
+
+-   wenn der Original-Ton des Videos fremdsprachig ist (d.h. er entspricht nicht der Hauptsprache des Webauftritts)
+-   und Untertitel in der Hauptsprache des Webauftritts bereitgestellt werden
+-   und wenn es keine Version des Videos mit einer Tonspur in der Hauptsprache des Webauftritts gibt.
+
+### 2\. Prüfung
+
+1.  Webangebot öffnen.
+2.  Prüfen, ob der Originalton des Videos von der Hauptsprache des Webangebots abweicht.
+3.  Prüfen, ob für Videos mit fremdsprachiger Tonspur Untertitel in der Hauptsprache des Webangebots angeboten werden.
+4.  Prüfen, ob sich eine alternative Tonspur in der Hauptsprache des Angebots oder eine generierte Sprachausgabe der Untertitel aktivieren lässt.
+
+### 3\. Hinweise
+
+-   Gängige Video-Player verfügen derzeit meist nicht über die Möglichkeit einer einschaltbaren Sprachausgabe der Untertitel.
+-   Für blinde oder sehbehinderte Menschen, die den fremdsprachigen Originalton eines Videos nicht verstehen, sollen Untertitel in der Hauptsprache der Webseite als akustische Ausgabe zugänglich sein. Ist der Original-Ton des Videos bereits in der Hauptsprache, so gelten Untertitel in anderen Sprachen als zusätzliche Informationen und sind daher nicht von der Anforderung betroffen.
+
+Hinweise zu diesem Prüfschritt können Sie auf GitHub [in einem Issue anlegen](https://github.com/BIK-BITV/BIK-Web-Test/issues).
+
+### 4\. Bewertung
+
+#### Nicht erfüllt:
+
+-   Bei Videos mit fremdsprachiger Tonspur und zuschaltbaren Untertiteln in der Hauptsprache sind die Untertitel nicht als akustische Ausgabe zugänglich.
+
+## Quellen
+
+-   Empfehlungen für die Audio-Darstellung von Text in Videos, einschließlich Untertitel und andere Texte im Bild (ITU Version, Englisch, kostenlos) [ITU T.701.25 : Guidance on the audio presentation of text in videos, including captions, subtitles and other on-screen text (itu.int)](https://www.itu.int/rec/T-REC-T.701.25-202203-I/en)
+
+## Einordnung des Prüfschritts
+
+### Einordnung des Prüfschritts nach EN 301 549 v.3.2.1
+
+#### 7.1.5 Spoken subtitles
+
+> Where ICT displays video with synchronized audio, it shall have a mode of operation to provide a spoken output of the available captions, except where the content of the displayed captions is not programmatically determinable.
+>
+> NOTE 1: Being able to manage speech output range for spoken subtitles independently from general ICT speech is preferable for most users. That is possible when the audio file with spoken subtitle is delivered in a separate audio track and mixed in the end users device.

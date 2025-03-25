@@ -1,0 +1,99 @@
+# Prüfschritt 9.1.4.10 Inhalte brechen um
+
+-   Inhalte auf Webseiten müssen sich an schmale Bildschirme anpassen, ohne dass man zur Seite scrollen muss.
+-   Texte und Bedienelemente sollen auch bei starker Vergrößerung noch sichtbar und nutzbar sein.
+-   Navigationen und Menüs dürfen sich verändern, solange alle Funktionen erhalten bleiben.
+-   Ausnahmen gelten für Inhalte, die eine feste Breite brauchen, wie Tabellen, Landkarten oder Diagramme.
+
+_BITV-Originaltext:_
+
+## Was wird geprüft?
+
+Seiten-Inhalte sollen bei einer Browserfensterbreite von 320 CSS-Pixeln (bzw. bei einer Browserfensterbreite von 1280 CSS-Pixeln und 400% Zoomvergrößerung) so umbrechen, dass alle Informationen und Funktionen verfügbar sind, ohne dass Nutzer horizontal scrollen müssen.
+
+Es wird dabei nicht verlangt, dass alle Inhalte in gleicher Weise in der responsiven Ansicht verfügbar sind. So sind die sichtbaren Navigationsmenüs einer Standard-Ansicht auf dem Desktop häufig nach dem Hereinzoomen (oder bei Nutzung des Angebots auf einem Smartphone-Bildschirm) nur über eine Ausklappnavigation zugänglich. Inhalte können auch in Ausklappbereichen oder über Links auf andere Seiten oder Ansichten verfügbar sein.
+
+Ausnahmen gelten für Inhalte, für deren Nutzung ein zweidimensionales Layout erforderlich ist, z. B. Bilder, Landkarten, Diagramme, Videos, Spiele, Präsentationen, Datentabellen und Anwendungs-Schnittstellen, in denen die Bearbeitung von Inhalten die permanente Verfügbarkeit von Werkzeugleisten erfordert.
+
+_Hinweis_: Dieser Prüfschritt beschränkt sich auf Inhalte, deren primäre Schreibrichtung waagerecht ist, wie bei der für die meisten westlichen Sprachen benutzten lateinischen Schrift. Die zugrunde liegende WCAG-Anforderung gilt in ähnlicher Weise für Inhalte mit vertikaler Schreibrichtung.
+
+## Warum wird das geprüft?
+
+Sehbehinderte Nutzer vergrößern häufig Seiten-Inhalte über die Zoomfunktion, die in gängigen Desktop-Browsern vorhanden ist. Über eine responsive Gestaltung mittels CSS media queries sollen Webseiten die Nutzung mit starkem Zoom durch eine dynamische Anpassung des Seiten-Umbruchs unterstützen.
+
+Responsive Seiten-Layouts ordnen die Inhaltsblöcke neu an. Mehrspaltige Inhalte werden dabei meist so umbrochen, dass sie bei starkem Zoom einspaltig untereinander angeordnet sind. Bei Fließtexten entstehen auch neue Zeilenumbrüche mit kürzeren Zeilen.
+
+Der Vorteil: Nutzer müssen beim Lesen nur in eine Richtung scrollen (bei westlichen Sprachen: vertikal). Wenn Zeilen bei Zoomvergrößerung nicht umgebrochen werden, sind Nutzer dagegen gezwungen, beim Lesen jeder Zeile horizontal hin- und her zu scrollen, was die Aufnahme der Inhalte sehr stark beeinträchtigt und verlangsamt.
+
+## Wie wird geprüft?
+
+### 1\. Anwendbarkeit des Prüfschritts
+
+Der Prüfschritt ist für Webinhalte anwendbar, wenn deren Ausgangsbasis für Zugänglichkeit die üblichen Desktop-Browser mit eingebauter Zoomfunktion einschließt. Er ist nicht anwendbar bei der Nutzung von Browsern mobiler Betriebssysteme, deren eingebaute Zoomvergrößerung (etwa über eine Spreizgeste) in der Regel keine Vergrößerung mit Inhaltsumbruch bieten.
+
+### 2\. Prüfung
+
+#### 2.1 Prüfung mit 320px Viewport-Breite
+
+Die Prüfung bezieht sich auf Web-Inhalte mit horizontal verlaufender Schrift.
+
+1.  Seite im [Chrome Browser](https://www.bitvtest.de/bitv_test/das_testverfahren_im_detail/werkzeugliste.html#chrome) öffnen.
+2.  Die _Developer Tools_ rechts angedockt öffnen (über Funktionstaste F12, über die Tastenkombination Strg + Umschalttaste + I, oder über _Menü Einstellungen > Weitere Tools > Entwicklertools_) und die vertikale Abgrenzung zwischen Seiten- und Tool-Bereich ziehen, bis oben rechts im Seiten-Bereich _320px x (Viewporthöhe)_ angezeigt wird (wird rechts ein Scrollbalken angezeigt, 14px dazuzählen, also _334px x Viewporthöhe_ einstellen).
+3.  Seite neu laden.
+4.  Feststellen, ob Seiten-Inhalte so umbrechen, dass eine Nutzung ohne horizontales Scrollen möglich ist und keine Inhalte und Funktionen verloren gehen.
+
+#### 2.2 Alternative Prüfung mit 1280px Viewport-Breite
+
+1.  In einem Browser, der Zoomvergrößerung um 400% unterstützt (z. B. Chrome) das Browserfenster auf eine Breite von 1280 CSS-Pixeln und eine Höhe von 1024 CSS-Pixeln einstellen. Hierzu lässt sich die _Resize_\-Funktion der _Web Developer Toolbar_ nutzen.
+2.  Die Standard-Einstellung von 100% Zoomvergrößerung und 100% Textvergrößerung sicherstellen.
+3.  Auf 400% zoomen
+4.  Die Seite neu laden
+5.  Feststellen, ob Inhalte so umbrechen, dass eine Nutzung ohne horizontales Scrollen möglich ist und keine Inhalte und Funktionen verloren gehen.
+
+### 3\. Hinweise
+
+-   Inhalte und Funktionen müssen in der Umbruch-Ansicht nicht in der gleichen Weise angeboten werden. Sie können etwa auch in einem Ausklappbereich oder über einen direkten Link erreichbar sein.
+-   Bei der alternativen Prüfung mit 1280px Viewport-Breite und 400% Zoom soll nicht negativ bewertet werden, wenn fest positionierte Inhalte (etwa Ausklappmenüs) aufgrund der sehr geringen verfügbaren Höhe des Browser-Fensters nicht voll erreichbar sind. Geprüft wird allein, ob Inhalte erfolgreich in eine Ansicht umbrechen, die nicht horizontal gescrollt werden braucht. Zur Prüfung des Verlusts von Informationen und Funktionalität ist die Prüfung bei 320px Viewport-Breite ausschlaggebend.
+-   Ausnahmen für die Anforderung, dass horizontales Scrollen nicht erforderlich ist, sind Inhalte, deren Nutzung ein zweidimensionales Layout voraussetzen, etwa Datentabellen, Bilder, Diagramme, Videos, Spiele oder Benutzerschnittstellen mit Werkzeugleisten.
+-   Optionen in geöffneten `select`\-Elementen, die nicht in den Viewport passen, gelten nicht als Fehler im Sinne dieses Prüfschritts.
+-   Im Prüfschritt wird nicht geprüft, ob die Zoomvergrößerung auf 400% Textinhalte tatsächlich auf 400% oder einen geringeren Wert vergrößert. Dies ist Gegenstand von Prüfschritt 9.1.4.4 "Text auf 200% vergrößerbar".
+-   Für Unternehmen, die Bestandssysteme verwenden oder ihre Layoutmethoden aus irgendeinem Grund nicht aktualisieren können, kann eine alternative, konforme Version eine mobile Website mit einem festen, 320px breiten Layout sein. Der Benutzer sollte in der Lage sein, diese Version von der Standardwebsite aus zu finden.
+
+### 4\. Bewertung
+
+#### Prüfschritt erfüllt
+
+-   Inhalte und Funktionen sind bei einer Browserfenster-Breite von 1280px nach Zoom auf 400% (oder bei ungezoomter Ansicht bei einer Browserfenster-Breite von 320px) ohne horizontales Scrollen vollständig erreichbar.
+
+## Einordnung des Prüfschritts
+
+### Abgrenzung von anderen Prüfschritten
+
+In diesem Prüfschritt geht es darum, ob Inhalte beim Reinzoomen oder in schmalen Viewports ohne Verlust von Information in eine einspaltige Ansicht umbrechen. Die Vergrößerbarkeit von Schrift wird dagegen in Prüfschritt 9.1.4.4 "Text auf 200% vergrößerbar" bewertet.
+
+### Einordnung des Prüfschritts nach WCAG 2.1
+
+#### Guideline
+
+-   [Guideline 1.4 Distinguishable: Make it easier for users to see and hear content including separating foreground from background](https://www.w3.org/TR/WCAG21/#distinguishable)
+
+#### Success criterion
+
+-   [1.4.10 Reflow](https://www.w3.org/TR/WCAG21/#reflow) (Level AA)
+
+#### Sufficient Techniques
+
+-   [C32: Using media queries and grid CSS to reflow columns](https://www.w3.org/WAI/WCAG21/Techniques/css/C32.html)
+-   [C31: Using CSS Flexbox to reflow content](https://www.w3.org/WAI/WCAG21/Techniques/css/C31.html)
+-   [C33: Allowing for Reflow with Long URLs and Strings of Text](https://www.w3.org/WAI/WCAG21/Techniques/css/C33.html)
+-   [C38: Using CSS width, max-width and flexbox to fit labels and inputs](https://www.w3.org/WAI/WCAG21/Techniques/css/C38.html)
+-   [SCR34: Calculating size and position in a way that scales with text size](https://www.w3.org/WAI/WCAG21/Techniques/client-side-script/SCR34.html)
+-   [G206: Providing options within the content to switch to a layout that does not require the user to scroll horizontally to read a line of text](https://www.w3.org/WAI/WCAG21/Techniques/general/G206.html)
+
+#### Failures
+
+-   [F102: Failure of Success Criterion 1.4.10 due to content disappearing and not being available when content has reflowed](https://www.w3.org/WAI/WCAG21/Techniques/failures/F102)
+
+## Quellen
+
+-   [Understanding Reflow](https://www.w3.org/WAI/WCAG21/Understanding/reflow.html) (zur Zeit nur auf Englisch verfügbar)

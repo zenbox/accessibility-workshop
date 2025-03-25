@@ -1,0 +1,73 @@
+/* 
+ * responsive.css
+ * Medienabfragen für verschiedene Bildschirmgrößen
+ */
+
+/* Tablets und kleinere Desktop-Ansichten */
+@media (max-width: 992px) {
+    body {
+        padding: var(--spacing-sm);
+    }
+
+    #sr-overlay {
+        width: 350px;
+        height: 250px;
+    }
+
+    .language-examples {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+/* Mobile Ansichten */
+@media (max-width: 768px) {
+    body {
+        padding: var(--spacing-xs);
+    }
+
+    #sr-overlay {
+        width: 90%;
+        height: 250px;
+        right: 5%;
+        left: 5%;
+    }
+
+    #sr-controls {
+        flex-wrap: wrap;
+    }
+
+    #virtual-keyboard {
+        width: 95%;
+        bottom: 10px;
+    }
+
+    .key-btn {
+        padding: 10px 8px;
+        font-size: var(--font-size-sm);
+    }
+
+    .shortcuts-table {
+        font-size: var(--font-size-sm);
+    }
+
+    .shortcuts-table th,
+    .shortcuts-table td {
+        padding: 6px 8px;
+    }
+}
+
+/* Sehr kleine Bildschirme */
+@media (max-width: 480px) {
+    #sr-overlay {
+        width: 95%;
+        height: 200px;
+    }
+
+    #sr-title {
+        font-size: var(--font-size-sm);
+    }
+
+    .language-examples {
+        grid-template-columns: 1fr;
+    }
+}

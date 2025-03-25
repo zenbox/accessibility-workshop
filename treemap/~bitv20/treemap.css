@@ -1,0 +1,766 @@
+:root {
+    font-family: Barlow, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+body {
+    margin: 0;
+    padding: 2rem;
+    min-width: min-content;
+    background-color: hsla(0, 0%, 0%, 0.85);
+    color: white;
+    overflow-x: auto;
+    counter-reset: pruefschritt;
+}
+.tree-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    padding: 1rem;
+    min-width: min-content;
+    position: relative;
+}
+.section-card {
+    border-radius: 0;
+    margin-top: 0;
+    border-top: none;
+}
+
+.section-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 180px;
+    hyphens: auto;
+    margin-bottom: 20px;
+}
+.section-column:focus-within .category-card {
+    box-shadow: 0 0 0 2px #4d90fe;
+}
+.category-card {
+    background-color: #333;
+    color: white;
+    border-radius: 8px 8px 0 0;
+    min-height: 45px !important;
+    margin-bottom: 0;
+    text-align: center;
+    font-weight: bold;
+    padding: 12px;
+    width: 100%;
+    font-size: 1.1em;
+    border-bottom: 2px solid #555;
+}
+.category-card {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    min-height: 180px;
+    border-radius: 0.1rem;
+    text-align: center;
+    font-weight: 500;
+    box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+.card {
+    font-weight: 400;
+    font-size: 1.5rem;
+}
+.card:has(.AAA) {
+    filter: saturate(0.15);
+}
+.card:has(.AAA):hover {
+    filter: saturate(0.8);
+}
+
+.pruefschritt-card {
+    font-weight: 500;
+    font-size: 1rem;
+    justify-content: flex-start;
+}
+.pruefschritt-card.is-bitv::before {
+    counter-increment: pruefschritt;
+    content: counter(pruefschritt);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -170px;
+    margin-top: -2rem;
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    background: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+
+.pruefschritt-card:hover {
+    transform: scale(1.05);
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+.modal-content {
+    counter-reset: step;
+    position: relative;
+    background-color: hsla(0, 0%, 100%, 0.95);
+    color: black;
+    margin: 2rem auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+
+    h2::before {
+        counter-increment: step;
+    }
+}
+.close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+}
+
+.wcag-id,
+.bitv-id {
+    font-size: 0.8rem;
+    opacity: 0.5;
+}
+.A,
+.AA,
+.AAA {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    margin-left: -0px;
+    margin-top: -1.9rem;
+    font-size: 0.8rem;
+
+    color: #fff;
+
+    border: 2px solid white;
+    border-radius: 50%;
+    padding: 0.25rem 0.25rem;
+}
+.A {
+    background-color: hsl(181, 100%, 29%);
+}
+.AA {
+    background-color: hsl(59, 100%, 29%);
+}
+.AAA {
+    background-color: hsl(33, 100%, 29%);
+}
+
+/* Generierte Farbklassen */
+.section-1 {
+    background-color: hsl(0, 100%, 75%);
+    color: #fff;
+}
+.section-2 {
+    background-color: hsl(18, 100%, 75%);
+    color: #fff;
+}
+.section-3 {
+    background-color: hsl(36, 100%, 75%);
+    color: #000;
+}
+.section-4 {
+    background-color: hsl(54, 100%, 75%);
+    color: #000;
+}
+.section-5 {
+    background-color: hsl(72, 100%, 75%);
+    color: #000;
+}
+.section-6 {
+    background-color: hsl(90, 100%, 75%);
+    color: #000;
+}
+.section-7 {
+    background-color: hsl(108, 100%, 75%);
+    color: #000;
+}
+.section-8 {
+    background-color: hsl(126, 100%, 75%);
+    color: #000;
+}
+.section-9 {
+    background-color: hsl(144, 100%, 75%);
+    color: #000;
+}
+.section-10 {
+    background-color: hsl(162, 100%, 75%);
+    color: #000;
+}
+.section-11 {
+    background-color: hsl(180, 100%, 75%);
+    color: #000;
+}
+.section-12 {
+    background-color: hsl(198, 100%, 75%);
+    color: #000;
+}
+.section-13 {
+    background-color: hsl(216, 100%, 75%);
+    color: #000;
+}
+.section-14 {
+    background-color: hsl(234, 100%, 75%);
+    color: #fff;
+}
+.section-15 {
+    background-color: hsl(252, 100%, 75%);
+    color: #fff;
+}
+.section-16 {
+    background-color: hsl(267, 88%, 74%);
+    color: #fff;
+}
+.section-17 {
+    background-color: hsl(283, 89%, 75%);
+    color: #fff;
+}
+.section-18 {
+    background-color: hsl(302, 76%, 73%);
+    color: #fff;
+}
+.section-19 {
+    background-color: hsl(324, 100%, 75%);
+    color: #fff;
+}
+.section-20 {
+    background-color: hsl(2, 100%, 74%);
+    color: #fff;
+}
+
+.tooltip {
+    padding-top: 1rem;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+    pointer-events: none;
+    text-align: left;
+}
+
+/* Container for cards needs relative positioning */
+.section-column {
+    position: relative; /* For tooltip positioning context */
+}
+
+/* Improve focus visibility for better accessibility */
+.card:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+/* Improve hover state */
+.pruefschritt-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+}
+
+/* Smooth transitions */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Modal improvements */
+.modal-content {
+    animation: modalFade 0.3s ease-in-out;
+}
+
+@keyframes modalFade {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .tree-container {
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+
+    .section-column {
+        min-width: 150px;
+    }
+
+    .card {
+        padding: 0.75rem;
+        min-height: 120px;
+    }
+
+    .tooltip {
+        /* For mobile, position below the card instead of to the right */
+        left: 0;
+        top: 100%;
+        transform: none;
+        margin-top: 0.5rem;
+        max-width: 100%;
+    }
+}
+
+/*********************/
+/* Focus styles for sections */
+.section-column:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+}
+
+.section-focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+/* Focus styles for cards */
+.card-focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+}
+
+/* Smooth transitions */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, outline 0.2s ease;
+}
+
+/* Ensure tooltips are visible over cards */
+.tooltip {
+    z-index: 1000;
+    pointer-events: none;
+    font-weight: 400;
+}
+
+/* Keyboard navigation styles */
+.section-column:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+}
+
+.section-focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.card-focus {
+    position: relative;
+    outline: 2px solid white !important;
+    outline-offset: 2px;
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+/* Tooltip styles */
+
+/* Ensure cards can position tooltips */
+.card {
+    position: relative;
+}
+
+.has-information::after {
+    content: "(i)";
+    font-size: 1rem;
+    opacity: 0.5;
+}
+
+/* Filter Styles */
+.filter-bar {
+    margin: 1rem 0 2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    min-width: 300px;
+}
+
+.search-container .material-icons {
+    margin-right: 0.5rem;
+    opacity: 0.7;
+}
+
+#searchInput {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+}
+
+#searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.filter-btn[aria-pressed="true"] {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: white;
+}
+
+.filter-btn[data-level="A"] {
+    border-color: #009193;
+}
+
+.filter-btn[data-level="AA"] {
+    border-color: #929000;
+}
+
+.filter-btn[data-level="AAA"] {
+    border-color: #945200;
+}
+
+.filter-btn[aria-pressed="true"][data-level="A"] {
+    background: rgba(0, 145, 147, 0.6);
+}
+
+.filter-btn[aria-pressed="true"][data-level="AA"] {
+    background: rgba(146, 144, 0, 0.6);
+}
+
+.filter-btn[aria-pressed="true"][data-level="AAA"] {
+    background: rgba(148, 82, 0, 0.6);
+}
+
+.active-filters {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Für gefilterte Cards */
+.card.filtered {
+    display: none;
+}
+
+.collections-container {
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    overflow: hidden;
+}
+
+.collections-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    cursor: pointer;
+}
+
+.collections-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0.25rem;
+}
+
+.collections-content {
+    padding: 1rem;
+    max-height: 1000px; /* Anfangszustand ausgeklappt */
+    transition: max-height 0.3s ease-in-out;
+}
+
+.new-collection-container {
+    margin-bottom: 1rem;
+}
+
+.collection-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.collection-form input {
+    flex-grow: 1;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.collection-form button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.collections-list-container {
+    margin-bottom: 1.5rem;
+}
+
+.collections-list-container h3 {
+    margin-top: 0;
+    font-size: 1rem;
+}
+
+.collections-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.collection-item {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.collection-item:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.collection-item.active {
+    background: rgba(255, 255, 255, 0.35);
+    font-weight: bold;
+}
+
+.collection-item .material-icons {
+    font-size: 1rem;
+}
+
+.active-collection-container {
+    min-height: 50px;
+}
+
+.active-collection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.active-collection-header h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.deselect-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0.25rem;
+    opacity: 0.7;
+}
+
+.deselect-button:hover {
+    opacity: 1;
+}
+
+.active-collection-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.collection-card {
+    position: relative;
+    width: 180px;
+    min-height: 100px;
+    padding: 1rem;
+    border-radius: 0.1rem;
+    box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+}
+
+.collection-card .remove-button {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.collection-card .remove-button:hover {
+    opacity: 1;
+}
+
+/* Stil für den Add-Button auf Prüfschritt-Karten */
+.pruefschritt-card {
+    position: relative;
+}
+
+.add-to-collection-button {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.pruefschritt-card:hover .add-to-collection-button {
+    opacity: 0.7;
+}
+
+.pruefschritt-card:hover .add-to-collection-button:hover {
+    opacity: 1;
+}
+
+/* Stil für die sichtbaren Add-Buttons bei aktiver Sammlung */
+.collecting-active .add-to-collection-button {
+    opacity: 0.7;
+}
+
+.profession-markers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+}
+
+/* Stil für einen einzelnen Marker */
+.profession-marker {
+    width: 16px;
+    height: 16px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.25);
+    outline-width: 1px;
+    outline-style: solid;
+    outline-color: rgba(255, 255, 255, 0.25);
+    border-radius: 0;
+    display: inline-block;
+}
+
+/* Farben für die verschiedenen Kategorien */
+.profession-marker.requirements {
+    background-color: hsl(41, 100%, 74%);
+}
+
+.profession-marker.design {
+    background-color: hsl(35, 100%, 50%);
+}
+
+.profession-marker.entwicklung {
+    background-color: hsl(9, 100%, 50%);
+}
+
+.profession-marker.testen {
+    background-color: hsl(205, 100%, 50%);
+}
+
+.profession-marker.release {
+    background-color: hsl(154, 100%, 28%);
+}
+
+.profession-marker.wartung {
+    background-color: hsl(268, 69%, 34%);
+}
+
+.profession-marker.content {
+    background-color: hsl(205, 82%, 78%);
+}
+
+.profession-marker.ux-writer {
+    background-color: hsl(204, 43%, 65%);
+}
+
+.profession-marker.redaktion {
+    background-color: hsl(204, 43%, 65%);
+}
+
+.profession-marker.corporate-text {
+    background-color: hsl(205, 78%, 77%);
+}
+
+/* Positionierung anpassen für Karten, die Berufsgruppen-Marker enthalten */
+.pruefschritt-card {
+    position: relative;
+    padding-bottom: 20px; /* Platz für die Marker schaffen */
+}

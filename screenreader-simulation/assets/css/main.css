@@ -1,0 +1,15 @@
+/* 
+ * main.css
+ * Zentraler Import aller CSS-Dateien
+ */
+
+/* Import aller Module */
+@import "variables.css";
+@import "base.css";
+@import "focus.css";
+@import "sr-overlay.css";
+@import "forms.css";
+@import "virtual-keyboard.css";
+@import "table.css";
+@import "language.css";
+@import "responsive.css";

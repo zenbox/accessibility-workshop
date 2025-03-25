@@ -1,0 +1,62 @@
+/* 
+ * focus.css
+ * Stile für die Fokushervorhebung und Screenreader-Navigation
+ */
+
+/* Hauptfokus-Stil */
+.sr-focus {
+    outline: 3px solid var(--focus-color) !important;
+    box-shadow: var(--focus-shadow) !important;
+    animation: pulse 2s infinite;
+    position: relative;
+    z-index: 100;
+}
+
+/* Pulsierender Fokus-Effekt */
+@keyframes pulse {
+    0% {
+        outline-color: var(--focus-color);
+        outline-offset: 0px;
+    }
+    50% {
+        outline-color: var(--primary-color-light);
+        outline-offset: 3px;
+    }
+    100% {
+        outline-color: var(--focus-color);
+        outline-offset: 0px;
+    }
+}
+
+/* Skiplinks für die Navigation */
+.skiplinks {
+    position: absolute;
+    top: -40px; /* Außerhalb des sichtbaren Bereichs */
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+    text-align: center;
+    transition: top var(--transition-normal);
+}
+
+.skiplink {
+    background: var(--primary-color);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 var(--spacing-xs);
+    box-shadow: var(--shadow-normal);
+}
+
+.skiplink:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+/* Wenn ein Skiplink fokussiert wird, zeigen wir den Container an */
+.skiplinks:focus-within {
+    top: 0;
+}

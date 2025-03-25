@@ -1,0 +1,92 @@
+/* 
+ * base.css
+ * Grundlegende Stile für die gesamte Anwendung
+ */
+
+body {
+    font-family: var(--font-family-base);
+    line-height: var(--line-height-base);
+    padding: var(--spacing-md);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Typografie */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Standard-Formularelemente */
+button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    margin: var(--spacing-xs) 0;
+    transition: background-color var(--transition-normal);
+}
+
+button:hover {
+    background-color: var(--primary-color-dark);
+}
+
+input,
+select,
+textarea {
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    margin: var(--spacing-xs) 0;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid var(--focus-color);
+    outline-offset: 2px;
+}
+
+input:invalid,
+select:invalid,
+textarea:invalid {
+    border-color: var(--error-color);
+}
+
+/* Allgemeine Info-Panel */
+.info-panel {
+    background-color: var(--light-bg);
+    border-left: 4px solid var(--primary-color);
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+/* Demo-Inhalt-Container */
+.demo-content {
+    margin-top: var(--spacing-xl);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+}

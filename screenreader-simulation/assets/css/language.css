@@ -1,0 +1,50 @@
+/* 
+ * language.css
+ * Stile für Sprachbeispiele und mehrsprachigen Inhalt
+ */
+
+.language-examples {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.language-example {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+    background-color: #f9f9f9;
+}
+
+.language-example h3 {
+    margin-top: 0;
+    font-size: var(--font-size-lg);
+    border-bottom: 1px solid #eee;
+    padding-bottom: var(--spacing-sm);
+}
+
+.language-example h3 small {
+    font-weight: normal;
+    font-size: var(--font-size-sm);
+    color: var(--info-color);
+}
+
+/* Sprachspezifische Hintergrundfarben */
+[lang="en"] {
+    background-color: var(--lang-en-bg);
+    border-radius: var(--border-radius-sm);
+    padding: 0 3px;
+}
+
+[lang="fr"] {
+    background-color: var(--lang-fr-bg);
+    border-radius: var(--border-radius-sm);
+    padding: 0 3px;
+}
+
+[lang="es"] {
+    background-color: var(--lang-es-bg);
+    border-radius: var(--border-radius-sm);
+    padding: 0 3px;
+}

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+    <!-- Head und Style bleiben unverändert -->
+    <head>
+        <title>Split Flap Display</title>
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                margin: 0;
+                background: #1a1a1a;
+                font-family: monospace;
+                gap: 20px;
+                transition: background-color 1s ease;
+            }
+
+            body.timer-done {
+                background-color: #2d5a27;
+            }
+
+            .display {
+                display: flex;
+                gap: 10px;
+                padding: 20px;
+                background: #222;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .split-flap {
+                width: 100px;
+                height: 150px;
+                perspective: 400px;
+                cursor: pointer;
+                background: #333;
+                border-radius: 5px;
+                position: relative;
+            }
+
+            .flap {
+                width: 100%;
+                height: 50%;
+                position: relative;
+                transform-style: preserve-3d;
+                transform-origin: bottom;
+            }
+
+            .flap.animating {
+                animation: flip 0.25s linear;
+                animation-fill-mode: forwards;
+            }
+
+            .face {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                overflow: hidden;
+                background: linear-gradient(180deg, #444 0%, #3a3a3a 100%);
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+            }
+
+            .character {
+                position: absolute;
+                width: 100%;
+                height: 200%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 60px;
+                color: white;
+                font-family: monospace;
+                font-weight: bold;
+            }
+
+            .front .character {
+                top: 0;
+                clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+            }
+
+            .back {
+                transform: rotateX(180deg);
+                background: linear-gradient(0deg, #3a3a3a 0%, #333 100%);
+            }
+
+            .back .character {
+                top: -100%;
+                clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+            }
+
+            .base {
+                width: 100%;
+                height: 50%;
+                position: absolute;
+                bottom: 0;
+                background: linear-gradient(180deg, #3a3a3a 0%, #333 100%);
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+                overflow: hidden;
+            }
+
+            .base .character {
+                height: 200%;
+                top: -100%;
+                clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+            }
+
+            .next-top {
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 50%;
+                background: linear-gradient(180deg, #444 0%, #3a3a3a 100%);
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                overflow: hidden;
+                z-index: 1;
+            }
+
+            .next-top .character {
+                clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+            }
+
+            .divider {
+                position: absolute;
+                width: 100%;
+                height: 2px;
+                background: rgba(0, 0, 0, 0.5);
+                top: 50%;
+                z-index: 10;
+            }
+
+            @keyframes flip {
+                0% {
+                    transform: rotateX(0deg);
+                    z-index: 3;
+                }
+                50% {
+                    transform: rotateX(90deg);
+                    z-index: 3;
+                }
+                100% {
+                    transform: rotateX(180deg);
+                    z-index: 3;
+                }
+            }
+
+            .controls {
+                display: flex;
+                gap: 10px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+                background: #444;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+
+            button:hover {
+                background: #555;
+            }
+
+            button:disabled {
+                background: #333;
+                cursor: not-allowed;
+            }
+        </style>
+    </head>
+    <body>
+        <div
+            class="display"
+            id="displayContainer"
+        ></div>
+
+        <div class="controls">
+            <button onclick="showTime()">Uhrzeit</button>
+            <button onclick="startTimer(3600)">1 Std</button>
+            <button onclick="startTimer(900)">15 Min</button>
+            <button onclick="startTimer(600)">10 Min</button>
+            <button onclick="startTimer(300)">5 Min</button>
+            <!--
+        <button onclick="startTimer(60)">1 Min Timer</button>
+        <button onclick="showText(' WEITER ')">WEITER</button>
+        <button onclick="showText('PAUSE  ')">PAUSE</button>
+        --></div>
+
+        <script>
+            const characters = [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                ":",
+                "A",
+                "B",
+                "C",
+                "D",
+                "E",
+                "F",
+                "G",
+                "H",
+                "I",
+                "J",
+                "K",
+                "L",
+                "M",
+                "N",
+                "O",
+                "P",
+                "Q",
+                "R",
+                "S",
+                "T",
+                "U",
+                "V",
+                "W",
+                "X",
+                "Y",
+                "Z",
+                "!",
+                "?",
+                " ",
+            ]
+
+            const numbers = [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                ":",
+                " ",
+            ]
+
+            class SplitFlap {
+                constructor(container) {
+                    this.currentChar = characters[0]
+                    this.element = this.createElements()
+                    container.appendChild(this.element)
+                    this.initializeElements()
+                }
+
+                createElements() {
+                    const div = document.createElement("div")
+                    div.className = "split-flap"
+                    div.innerHTML = `
+                    <div class="divider"></div>
+                    <div class="next-top">
+                        <div class="character">${this.currentChar}</div>
+                    </div>
+                    <div class="flap">
+                        <div class="face front">
+                            <div class="character">${this.currentChar}</div>
+                        </div>
+                        <div class="face back">
+                            <div class="character">${this.currentChar}</div>
+                        </div>
+                    </div>
+                    <div class="base">
+                        <div class="character">${this.currentChar}</div>
+                    </div>
+                `
+                    return div
+                }
+
+                initializeElements() {
+                    this.flap = this.element.querySelector(".flap")
+                    this.frontChar =
+                        this.element.querySelector(".front .character")
+                    this.backChar =
+                        this.element.querySelector(".back .character")
+                    this.baseChar =
+                        this.element.querySelector(".base .character")
+                    this.nextTopChar = this.element.querySelector(
+                        ".next-top .character"
+                    )
+                }
+
+                async flipTo(targetChar, useNumbers = false, reverse = false) {
+                    if (this.currentChar === targetChar) return
+
+                    const charSet = useNumbers ? numbers : characters
+
+                    let currentIndex = charSet.indexOf(this.currentChar)
+                    const targetIndex = charSet.indexOf(targetChar)
+
+                    if (currentIndex === -1 || targetIndex === -1) {
+                        currentIndex = characters.indexOf(this.currentChar)
+                        const targetIndex = characters.indexOf(targetChar)
+                        if (currentIndex === -1 || targetIndex === -1) return
+                    }
+
+                    const flipNext = async () => {
+                        if (reverse) {
+                            currentIndex =
+                                (currentIndex - 1 + charSet.length) %
+                                charSet.length
+                        } else {
+                            currentIndex = (currentIndex + 1) % charSet.length
+                        }
+                        const nextChar = charSet[currentIndex]
+
+                        this.nextTopChar.textContent = nextChar
+                        this.backChar.textContent = nextChar
+
+                        this.flap.classList.add("animating")
+
+                        await new Promise((resolve) => {
+                            setTimeout(() => {
+                                this.flap.classList.remove("animating")
+                                this.frontChar.textContent = nextChar
+                                this.baseChar.textContent = nextChar
+                                this.currentChar = nextChar
+                                resolve()
+                            }, 150)
+                        })
+
+                        await new Promise((resolve) => setTimeout(resolve, 50))
+                    }
+
+                    while (charSet[currentIndex] !== targetChar) {
+                        await flipNext()
+                    }
+                }
+            }
+
+            const displayContainer = document.getElementById("displayContainer")
+            const flaps = Array.from(
+                { length: 8 },
+                () => new SplitFlap(displayContainer)
+            )
+
+            let currentMode = "time"
+            let timerInterval
+
+            function setDisplay(text, mode, reverse = false) {
+                const useNumbers = mode === "time" || mode === "timer"
+                const chars = text.padEnd(8, " ").split("")
+
+                flaps.forEach((flap, i) => {
+                    setTimeout(() => {
+                        flap.flipTo(chars[i], useNumbers, reverse)
+                    }, i * 200)
+                })
+            }
+
+            function resetBackground() {
+                document.body.style.backgroundColor = "#1a1a1a"
+                document.body.classList.remove("timer-done")
+            }
+
+            function showTimerDone() {
+                document.body.style.backgroundColor = "#2d5a27"
+                document.body.classList.add("timer-done")
+            }
+
+            function showTime() {
+                if (timerInterval) {
+                    clearInterval(timerInterval)
+                    timerInterval = null
+                }
+
+                resetBackground()
+                currentMode = "time"
+                const now = new Date()
+                const hours = String(now.getHours()).padStart(2, "0")
+                const minutes = String(now.getMinutes()).padStart(2, "0")
+                const seconds = String(now.getSeconds()).padStart(2, "0")
+                setDisplay(`${hours}:${minutes}:${seconds}`, currentMode, false)
+            }
+
+            function startTimer(duration) {
+                if (timerInterval) {
+                    clearInterval(timerInterval)
+                }
+
+                resetBackground()
+                currentMode = "timer"
+                let timeLeft = duration // Sekunden
+
+                function updateTimer() {
+                    if (timeLeft < 0) {
+                        clearInterval(timerInterval)
+                        showTimerDone()
+                        return
+                    }
+
+                    let displayText = ""
+                    if (duration === 3600) {
+                        // 1 Stunde Timer - Format HH:MM:SS
+                        const hours = String(
+                            Math.floor(timeLeft / 3600)
+                        ).padStart(2, "0")
+                        const minutes = String(
+                            Math.floor((timeLeft % 3600) / 60)
+                        ).padStart(2, "0")
+                        const seconds = String(timeLeft % 60).padStart(2, "0")
+                        displayText = `${hours}:${minutes}:${seconds}`
+                    } else if (duration === 900) {
+                        // 15 Minuten Timer
+                        const minutes = String(
+                            Math.floor(timeLeft / 60)
+                        ).padStart(2, "0")
+                        const seconds = String(timeLeft % 60).padStart(2, "0")
+                        displayText = `00:${minutes}:${seconds}`
+                    } else if (duration === 600) {
+                        // 1 Minuten Timer
+                        const minutes = String(
+                            Math.floor(timeLeft / 60)
+                        ).padStart(2, "0")
+                        const seconds = String(timeLeft % 60).padStart(2, "0")
+                        displayText = `00:${minutes}:${seconds}`
+                    } else if (duration === 300) {
+                        // 1 Minuten Timer
+                        const minutes = String(
+                            Math.floor(timeLeft / 60)
+                        ).padStart(2, "0")
+                        const seconds = String(timeLeft % 60).padStart(2, "0")
+                        displayText = `00:${minutes}:${seconds}`
+                    }
+
+                    setDisplay(displayText, currentMode, true)
+                    timeLeft--
+                }
+
+                updateTimer()
+                timerInterval = setInterval(updateTimer, 1000)
+            }
+
+            function showText(text) {
+                if (timerInterval) {
+                    clearInterval(timerInterval)
+                    timerInterval = null
+                }
+
+                resetBackground()
+                currentMode = "text"
+                setDisplay(text, currentMode, false)
+            }
+
+            setInterval(() => {
+                if (currentMode === "time") {
+                    showTime()
+                }
+            }, 1000)
+
+            showTime()
+        </script>
+    </body>
+</html>

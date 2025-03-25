@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Screenreader-Simulation</title>
+
+        <!-- <link
+            rel="stylesheet"
+            href="../../assets/css/style.css"
+        /> -->
+        <link
+            rel="stylesheet"
+            href="assets/css/main.css"
+        />
+    </head>
+    <body>
+        <a href="../">zurück zu den Erläuterungen</a>
+
+        <!-- Skiplinks für Barrierefreiheit -->
+        <!-- <div class="skiplinks">
+            <a
+                href="#main-content"
+                class="skiplink"
+                >Zum Hauptinhalt springen</a
+            >
+            <a
+                href="#intro"
+                class="skiplink"
+                >Einführungstext</a
+            >
+            <a
+                href="#foreign-languages"
+                class="skiplink"
+                >fremde Sprachen</a
+            >
+            <a
+                href="#section2"
+                class="skiplink"
+                >Formular-Beispiel</a
+            >
+            <a
+                href="#section3"
+                class="skiplink"
+                >Kleine Tabelle mit Daten
+            </a>
+            <a
+                href="#screenreader-shortcuts"
+                class="skiplink"
+                >Zur Tabelle mit den Screenreader-Shortcuts</a
+            >
+        </div> -->
+
+        <!-- Alte Modus-Buttons werden entfernt, da sie jetzt im Overlay sind -->
+        <!-- <div class="mode-switch">
+            <button id="switch-nvda" class="mode-btn">NVDA Modus</button>
+            <button id="switch-jaws" class="mode-btn">JAWS Modus</button>
+            <button id="switch-voiceover" class="mode-btn">VoiceOver Modus</button>
+        </div> -->
+
+        <div class="info-panel">
+            <p>
+                Diese Simulation zeigt, wie ein Screenreader Inhalte vorliest
+                und navigiert. Die Steuerelemente befinden sich im Overlay oben
+                rechts. Verwenden Sie die Tastaturkürzel oder die virtuelle
+                Tastatur, um zu navigieren. Es ist eine Simulation und kann vom
+                Original abweichen.
+            </p>
+        </div>
+
+        <!-- Demo-Inhalte zum Testen -->
+        <div
+            class="demo-content"
+            id="demo-content"
+        >
+            <h1>Screenreader-Simulation</h1>
+            <p>
+                Der Screenreader muss neben der Tastatursteuerung, von der er
+                übrigens das meiste selbst mitbringt, alle textbasierten
+                Informationen korrekt vorlesen. Dazu gehören auch die
+                ARIA-Attribute, die dem Screenreader zusätzliche Informationen
+                geben, wenn das, was HTML beinhaltet, nicht ausreicht.
+            </p>
+            <p>
+                Auf dieser Seite sind Beispiele für Screenreader-Verhalten. Es
+                wird gezeigt, wie eine DOM-Veränderung vorgelesen wird, wie
+                Abkürzungen und fremde Sprachen funktionieren und wie eine Drag
+                and Drop Tastatur-Bedienung funktioniert und vorgelesen wird .
+            </p>
+
+            <header>
+                <h1>Beispiel-Webseite</h1>
+                <nav>
+                    <ul>
+                        <li><a href="#section1">Abschnitt 1</a></li>
+                        <li><a href="#section2">Abschnitt 2</a></li>
+                        <li><a href="#section3">Abschnitt 3</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <main id="main-content">
+                <section id="intro">
+                    <h2>Abschnitt 1: Einführung</h2>
+                    <p>
+                        Willkommen auf unserer Beispiel-Webseite. Hier können
+                        Sie die Funktionsweise eines Screenreaders testen.
+                    </p>
+                    <button>Mehr erfahren</button>
+                </section>
+
+                <section id="language-demo">
+                    <h2>Mehrsprachige Beispiele</h2>
+                    <p>
+                        Nachfolgend sehen Sie einige Beispiele für die
+                        Spracherkennung des Screenreaders:
+                    </p>
+
+                    <div class="language-examples">
+                        <div class="language-example">
+                            <h3>Deutschen Text <small>(Standard)</small></h3>
+                            <p>
+                                Dies ist ein deutscher Text, der in der
+                                Standardsprache vorgelesen wird.
+                            </p>
+                        </div>
+
+                        <div class="language-example">
+                            <h3>Englischer Text</h3>
+                            <p lang="en">
+                                This is an English text that will be read using
+                                an English voice if available.
+                            </p>
+                        </div>
+
+                        <div class="language-example">
+                            <h3>Französischer Text</h3>
+                            <p lang="fr">
+                                Ceci est un texte français qui sera lu avec une
+                                voix française si disponible.
+                            </p>
+                        </div>
+
+                        <div class="language-example">
+                            <h3>Spanischer Text</h3>
+                            <p lang="es">
+                                Este es un texto en español que se leerá con una
+                                voz en español si está disponible.
+                            </p>
+                        </div>
+
+                        <div class="language-example">
+                            <h3>Gemischter Text</h3>
+                            <p>
+                                Hier ist ein deutscher Text mit eingebetteten
+                                <span lang="en">English phrases</span> und auch
+                                <span lang="fr">quelques mots français</span>
+                                zur Demonstration der Spracherkennung innerhalb
+                                eines Textes.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="info-panel">
+                        <p>
+                            Hinweis: Die korrekte Aussprache hängt von den
+                            verfügbaren Stimmen im Browser ab. Nicht alle
+                            Browser stellen für alle Sprachen Stimmen bereit.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="foreign-languages">
+                    <h2 tabindex="0">Fremdsprachen</h2>
+                    <p class="small">
+                        Screenreader sind wie unterschiedliche Browser auch,
+                        jeder hat so seine Fähgkeiten oder auch nicht. Dazu
+                        kommt, dass sich Screenreader über die Einstellungen
+                        sehr weitegefächert konfigurieren lassen. Jeder Benutzer
+                        wird sich ihn so eingestellt haben, wie er mächte.
+                        Insofern sind keine Vorhersagen für ein Verhalten
+                        möglich. Man hält sich also an die Standards des
+                        semantischen HTMLs und der ARIA-Fähigkeiten.
+                    </p>
+                    <p
+                        tabindex="0"
+                        style="padding: 0.5rem; border: 1px solid black"
+                    >
+                        Teilnehmer:innen oder TeilnehmerInnen oder
+                        Teilnehmer*Innen?
+                    </p>
+                    <p class="small">
+                        Gender-Schreibweisen: "Teilnehmer:innen" mit Doppelpunkt
+                        wird vom Screenreader mit kleiner Sprechpause
+                        vorgelesen. Ein Binnen-Großbuchstabe, also
+                        "TeilnehmerInnen" enthält je nach Screenreader keine
+                        Sprechpause und hört sich dann an wie "Teilnehmerinnen".
+                        Der Stern wird gelegentlich vorgelesen. Das sollte
+                        vermieden werden.
+                    </p>
+                    <p>
+                        <abbr
+                            tabindex="0"
+                            lang="en"
+                            title="National Aeronautic Space Agency"
+                            style="
+                                text-transform: uppercase;
+                                padding: 0.5rem;
+                                border: 1px solid black;
+                            "
+                            aria-label="NASA"
+                        >
+                            NASA
+                        </abbr>
+                    </p>
+                    <p
+                        aria-hidden="true"
+                        class="small"
+                        style="margin-top: -0.5rem"
+                    >
+                        Deutsprachiges Kürzel mit englischsprachiger Bedeutung
+                    </p>
+                    <p
+                        tabindex="0"
+                        lang="ko"
+                        data-talk="an-nyeong-ha-se-yo"
+                        aria-label="안녕하세요"
+                        style="padding: 0.5rem; border: 1px solid black"
+                    >
+                        안녕하세요
+                    </p>
+                    <p
+                        aria-hidden="true"
+                        class="small"
+                        style="margin-top: -0.5rem"
+                    >
+                        Koreanischer Text
+                    </p>
+                    <p
+                        tabindex="0"
+                        lang="hu"
+                        data-talk="an-nyeong-ha-se-yo"
+                        aria-label="Jó napot kívanók"
+                        style="padding: 0.5rem; border: 1px solid black"
+                    >
+                        Jó napot kívanók
+                    </p>
+                    <p
+                        aria-hidden="true"
+                        class="small"
+                        style="margin-top: -0.5rem"
+                    >
+                        Ungarischer Text
+                    </p>
+                    <p
+                        tabindex="0"
+                        lang="en"
+                        data-talk="hällo wörld"
+                        aria-label="Hello world"
+                        style="padding: 0.5rem; border: 1px solid black"
+                    >
+                        Hello world.
+                    </p>
+                    <p
+                        aria-hidden="true"
+                        class="small"
+                        style="margin-top: -0.5rem"
+                    >
+                        Englischer Text
+                    </p>
+                    <p
+                        tabindex="0"
+                        lang="en"
+                        data-talk="Kann schi"
+                        aria-label="Ruby Annotation"
+                        style="padding: 0.5rem; border: 1px solid black"
+                    >
+                        <ruby>
+                            漢 <rp>(</rp><rt>Kan</rt><rp>)</rp> 字 <rp>(</rp
+                            ><rt>ji</rt><rp>)</rp>
+                        </ruby>
+                    </p>
+                    <p
+                        aria-hidden="true"
+                        class="small"
+                        style="margin-top: -0.5rem"
+                    >
+                        Ruby Annotation (wird von VoiceOver derzeit nicht
+                        vorgelesen, es kann aber auch sein, dass ich nur die
+                        Einstellung dazu nicht gefunden habe.).
+                    </p>
+                </section>
+                <hr />
+
+                <section id="section2">
+                    <h2>Abschnitt 2: Formular</h2>
+
+                    <!-- Feedback-Bereich für ARIA-Live Meldungen -->
+                    <div
+                        id="form-feedback"
+                        class="form-feedback"
+                        aria-live="assertive"
+                        aria-atomic="true"
+                        role="status"
+                    >
+                        <!-- Hier werden dynamische Meldungen angezeigt -->
+                    </div>
+
+                    <form id="feedback-form">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                aria-required="true"
+                                required
+                            />
+                            <span class="hint"
+                                >Mindestens 3 Zeichen eingeben</span
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-Mail:</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                aria-required="true"
+                                required
+                            />
+                            <span class="hint"
+                                >Gültige E-Mail-Adresse eingeben</span
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Kategorie:</label>
+                            <select
+                                id="category"
+                                name="category"
+                                aria-required="true"
+                                required
+                            >
+                                <option value="">Bitte wählen...</option>
+                                <option value="option1">Option 1</option>
+                                <option value="option2">Option 2</option>
+                                <option value="option3">Option 3</option>
+                            </select>
+                        </div>
+
+                        <button type="submit">Absenden</button>
+                    </form>
+                </section>
+
+                <section id="section3">
+                    <h2>Abschnitt 3: Tabelle</h2>
+                    <table>
+                        <caption>
+                            Monatliche Ausgaben
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Kategorie</th>
+                                <th scope="col">Januar</th>
+                                <th scope="col">Februar</th>
+                                <th scope="col">März</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Miete</th>
+                                <td>800 €</td>
+                                <td>800 €</td>
+                                <td>800 €</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Lebensmittel</th>
+                                <td>300 €</td>
+                                <td>280 €</td>
+                                <td>310 €</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Transport</th>
+                                <td>150 €</td>
+                                <td>155 €</td>
+                                <td>140 €</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+
+            <aside>
+                <!-- Einfügen als neue Sektion in das HTML-Dokument -->
+
+                <section id="screenreader-shortcuts">
+                    <h2>Screenreader-Tastenkombinationen</h2>
+
+                    <p>
+                        Die folgende Tabelle enthält die wichtigsten
+                        Tastenkombinationen für die gängigsten Screenreader.
+                        Diese können in der Simulation getestet werden.
+                    </p>
+
+                    <div class="table-responsive">
+                        <table class="shortcuts-table">
+                            <thead>
+                                <tr>
+                                    <th>Funktion</th>
+                                    <th>NVDA (Windows)</th>
+                                    <th>JAWS (Windows)</th>
+                                    <th>VoiceOver (macOS)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Grundlegende Navigation -->
+                                <tr>
+                                    <th colspan="4">Grundlegende Navigation</th>
+                                </tr>
+                                <tr>
+                                    <td>Nächstes Element</td>
+                                    <td>Pfeil runter</td>
+                                    <td>Pfeil runter</td>
+                                    <td>VO + Pfeil rechts</td>
+                                </tr>
+                                <tr>
+                                    <td>Vorheriges Element</td>
+                                    <td>Pfeil hoch</td>
+                                    <td>Pfeil hoch</td>
+                                    <td>VO + Pfeil links</td>
+                                </tr>
+                                <tr>
+                                    <td>Zeichen für Zeichen vorwärts</td>
+                                    <td>Pfeil rechts</td>
+                                    <td>Pfeil rechts</td>
+                                    <td>VO + Umschalt + Pfeil rechts</td>
+                                </tr>
+                                <tr>
+                                    <td>Zeichen für Zeichen rückwärts</td>
+                                    <td>Pfeil links</td>
+                                    <td>Pfeil links</td>
+                                    <td>VO + Umschalt + Pfeil links</td>
+                                </tr>
+                                <tr>
+                                    <td>Wort für Wort vorwärts</td>
+                                    <td>Strg + Pfeil rechts</td>
+                                    <td>Strg + Pfeil rechts</td>
+                                    <td>VO + Befehl + Pfeil rechts</td>
+                                </tr>
+                                <tr>
+                                    <td>Wort für Wort rückwärts</td>
+                                    <td>Strg + Pfeil links</td>
+                                    <td>Strg + Pfeil links</td>
+                                    <td>VO + Befehl + Pfeil links</td>
+                                </tr>
+                                <tr>
+                                    <td>Zum Anfang der Zeile</td>
+                                    <td>Pos1</td>
+                                    <td>Pos1</td>
+                                    <td>
+                                        VO + Befehl + Pfeil links (zum Anfang)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Zum Ende der Zeile</td>
+                                    <td>Ende</td>
+                                    <td>Ende</td>
+                                    <td>
+                                        VO + Befehl + Pfeil rechts (zum Ende)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Kontinuierlich lesen (Alles vorlesen)
+                                    </td>
+                                    <td>NVDA + Pfeil runter</td>
+                                    <td>JAWS + Pfeil runter</td>
+                                    <td>VO + A</td>
+                                </tr>
+                                <tr>
+                                    <td>Vorlesen stoppen</td>
+                                    <td>Strg</td>
+                                    <td>Strg</td>
+                                    <td>Steuerung</td>
+                                </tr>
+
+                                <!-- Strukturelle Navigation -->
+                                <tr>
+                                    <th colspan="4">Strukturelle Navigation</th>
+                                </tr>
+                                <tr>
+                                    <td>Nächste Überschrift</td>
+                                    <td>H</td>
+                                    <td>H</td>
+                                    <td>VO + Befehl + H</td>
+                                </tr>
+                                <tr>
+                                    <td>Vorherige Überschrift</td>
+                                    <td>Umschalt + H</td>
+                                    <td>Umschalt + H</td>
+                                    <td>VO + Befehl + Umschalt + H</td>
+                                </tr>
+                                <tr>
+                                    <td>Überschriftsebene (1-6)</td>
+                                    <td>1-6</td>
+                                    <td>1-6</td>
+                                    <td>VO + Befehl + 1-6</td>
+                                </tr>
+                                <tr>
+                                    <td>Nächster Link</td>
+                                    <td>K oder L</td>
+                                    <td>Tab</td>
+                                    <td>VO + Befehl + L</td>
+                                </tr>
+                                <tr>
+                                    <td>Nächste Liste</td>
+                                    <td>L</td>
+                                    <td>L</td>
+                                    <td>VO + Befemd + X</td>
+                                </tr>
+                                <tr>
+                                    <td>Nächste Tabelle</td>
+                                    <td>T</td>
+                                    <td>T</td>
+                                    <td>VO + Befehl + T</td>
+                                </tr>
+                                <tr>
+                                    <td>Nächstes Formularfeld</td>
+                                    <td>F</td>
+                                    <td>F</td>
+                                    <td>VO + Befehl + J</td>
+                                </tr>
+                                <tr>
+                                    <td>Nächster Button</td>
+                                    <td>B</td>
+                                    <td>B</td>
+                                    <td>VO + Befehl + B</td>
+                                </tr>
+                                <tr>
+                                    <td>Nächste Landmarke/Region</td>
+                                    <td>D</td>
+                                    <td>R</td>
+                                    <td>VO + Befehl + R</td>
+                                </tr>
+
+                                <!-- Interaktion -->
+                                <tr>
+                                    <th colspan="4">Interaktion</th>
+                                </tr>
+                                <tr>
+                                    <td>Element aktivieren (Links, Buttons)</td>
+                                    <td>Enter</td>
+                                    <td>Enter</td>
+                                    <td>VO + Leertaste</td>
+                                </tr>
+                                <tr>
+                                    <td>Formularfeld-Modus aktivieren</td>
+                                    <td>NVDA + Leertaste</td>
+                                    <td>Enter</td>
+                                    <td>VO + Umschalt + Pfeil runter</td>
+                                </tr>
+                                <tr>
+                                    <td>Checkbox/Radio umschalten</td>
+                                    <td>Leertaste</td>
+                                    <td>Leertaste</td>
+                                    <td>VO + Leertaste</td>
+                                </tr>
+                                <tr>
+                                    <td>Listenelemente durchblättern</td>
+                                    <td>Pfeil hoch/runter</td>
+                                    <td>Pfeil hoch/runter</td>
+                                    <td>VO + Pfeil hoch/runter</td>
+                                </tr>
+
+                                <!-- Hilfefunktionen -->
+                                <tr>
+                                    <th colspan="4">Hilfefunktionen</th>
+                                </tr>
+                                <tr>
+                                    <td>Hilfe-Modus</td>
+                                    <td>NVDA + 1</td>
+                                    <td>JAWS + F1</td>
+                                    <td>VO + H</td>
+                                </tr>
+                                <tr>
+                                    <td>Aktuelles Element beschreiben</td>
+                                    <td>NVDA + Tab</td>
+                                    <td>JAWS + Tab</td>
+                                    <td>VO + F3</td>
+                                </tr>
+                                <tr>
+                                    <td>Aktuelle Position vorlesen</td>
+                                    <td>NVDA + Numpad 5</td>
+                                    <td>JAWS + Numpad 5</td>
+                                    <td>VO + P</td>
+                                </tr>
+                                <tr>
+                                    <td>Titel der Seite vorlesen</td>
+                                    <td>NVDA + T</td>
+                                    <td>JAWS + T</td>
+                                    <td>VO + Umschalt + T</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p>
+                        <strong>Hinweis:</strong> VO bei VoiceOver steht für die
+                        VoiceOver-Modifier-Tasten (Standard: Strg + Option).
+                    </p>
+                </section>
+            </aside>
+            <footer>
+                <p>&copy; 2025, Michael Reichart, Screenreader-Simulation</p>
+            </footer>
+        </div>
+
+        <!-- Screenreader simulation overlay -->
+        <div id="sr-overlay">
+            <div id="sr-header">
+                <div id="sr-title">NVDA Simulation</div>
+                <div id="sr-controls">
+                    <button id="sr-clear">Löschen</button>
+                    <button id="sr-help">Hilfe</button>
+                    <!-- Weitere Controls werden per JS hinzugefügt -->
+                </div>
+            </div>
+
+            <div id="sr-output"></div>
+            <div id="sr-shortcuts">
+                <div>Tab: Nächstes Element</div>
+                <div>Shift+Tab: Vorheriges Element</div>
+                <div>Pfeiltasten: Navigieren</div>
+            </div>
+        </div>
+
+        <!-- Virtuelle Tastatur für Touch-Geräte -->
+        <div id="virtual-keyboard">
+            <div class="keyboard-header">
+                <span>Virtuelle Tastatur</span>
+                <button id="toggle-keyboard">Ein/Aus</button>
+            </div>
+            <div class="keyboard-buttons">
+                <div class="keyboard-row">
+                    <button
+                        class="key-btn"
+                        data-key="Tab"
+                    >
+                        Tab
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="Tab"
+                        data-shift="true"
+                    >
+                        Shift+Tab
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="ArrowUp"
+                    >
+                        ↑
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="ArrowDown"
+                    >
+                        ↓
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="ArrowLeft"
+                    >
+                        ←
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="ArrowRight"
+                    >
+                        →
+                    </button>
+                </div>
+                <div class="keyboard-row">
+                    <button
+                        class="key-btn"
+                        data-key="h"
+                    >
+                        H (Überschriften)
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="b"
+                    >
+                        B (Buttons)
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="f"
+                    >
+                        F (Formularfelder)
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="l"
+                    >
+                        L (Links)
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="t"
+                    >
+                        T (Tabellen)
+                    </button>
+                </div>
+                <div class="keyboard-row">
+                    <button
+                        class="key-btn"
+                        data-key=" "
+                    >
+                        Space (Aktivieren)
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="Enter"
+                    >
+                        Enter (Aktivieren)
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="Escape"
+                    >
+                        Escape
+                    </button>
+                    <button
+                        class="key-btn"
+                        data-key="Control"
+                    >
+                        Strg (Stop)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript-Module importieren -->
+        <script
+            src="assets/js/script.js"
+            type="module"
+        ></script>
+    </body>
+</html>

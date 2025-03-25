@@ -1,0 +1,33 @@
+body {
+    width: 300px;
+    padding: 15px;
+    font-family: "Barlow", Arial, sans-serif;
+}
+
+h1 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+p {
+    font-size: 14px;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #3367d6;
+}

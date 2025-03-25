@@ -1,0 +1,169 @@
+/* 
+ * sr-overlay.css
+ * Stile für das Screenreader-Simulations-Overlay
+ */
+
+/* Hauptcontainer des Overlays */
+#sr-overlay {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 400px;
+    height: 300px;
+    background-color: var(--overlay-bg);
+    color: var(--overlay-text);
+    border: 2px solid var(--overlay-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-base);
+    z-index: 9999;
+
+    /* Scrollbar und Größenänderung */
+    resize: both;
+    overflow: auto;
+    box-shadow: var(--shadow-large);
+
+    /* Grenzen für die Größenänderung */
+    min-width: 300px;
+    min-height: 200px;
+    max-width: 80vw;
+    max-height: 80vh;
+}
+
+/* Visueller Indikator für die Resize-Ecke */
+#sr-overlay::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    background: linear-gradient(
+        135deg,
+        transparent 50%,
+        var(--overlay-border) 50%
+    );
+    border-bottom-right-radius: 6px;
+    cursor: nwse-resize;
+    pointer-events: none;
+}
+
+/* Kopfzeile des Overlays */
+#sr-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    cursor: move;
+    position: sticky;
+    top: 0;
+    background-color: var(--overlay-bg);
+    z-index: 1;
+}
+
+#sr-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Steuerelemente im Overlay */
+#sr-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+#sr-controls button {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: var(--border-radius-sm);
+    padding: 2px 5px;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    min-width: 28px;
+}
+
+#sr-controls button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#sr-controls button.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Mode-Selector im Overlay */
+.mode-selector-container {
+    display: flex;
+    align-items: center;
+    margin-right: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+}
+
+.mode-selector {
+    background-color: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: var(--border-radius-sm);
+    padding: 2px;
+    font-size: var(--font-size-sm);
+    margin-left: var(--spacing-xs);
+}
+
+.mode-selector option {
+    background-color: var(--dark-bg);
+    color: white;
+}
+
+/* Ausgabebereich des Overlays */
+#sr-output {
+    margin-bottom: var(--spacing-md);
+    line-height: var(--line-height-base);
+    font-size: var(--font-size-md);
+    padding: var(--spacing-xs);
+}
+
+#sr-output hr {
+    border: 1px dotted hsla(0, 0%, 100%, 0.05);
+    margin-block: 0.125rem;
+}
+
+/* Shortcuts-Bereich im Overlay */
+#sr-shortcuts {
+    border-top: 1px solid var(--border-light);
+    padding-top: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+}
+
+/* Spezielle Buttons */
+#stop-speech,
+#sr-keyboard-toggle,
+#save-settings {
+    font-size: var(--font-size-base);
+}
+
+#save-settings {
+    margin-left: auto;
+}
+
+/* Unterschiedliche Stile für die verschiedenen Modi */
+.mode-nvda #sr-output {
+    border-left: 3px solid var(--nvda-color);
+    padding-left: var(--spacing-md);
+}
+
+.mode-jaws #sr-output {
+    border-left: 3px solid var(--jaws-color);
+    padding-left: var(--spacing-md);
+}
+
+.mode-voiceover #sr-output {
+    border-left: 3px solid var(--voiceover-color);
+    padding-left: var(--spacing-md);
+}

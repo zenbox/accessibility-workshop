@@ -1,0 +1,84 @@
+# Prüfschritt 9.1.4.13 Eingeblendete Inhalte bedienbar
+
+Eingeblendete Inhalte müssen zugänglich bleiben, bis der Nutzer sie schließt, und dürfen nicht unerwartet verschwinden.
+
+-   Eingeblendete Inhalte bleiben sichtbar, wenn der Zeiger darüber bewegt wird
+-   Inhalte können mit der Escape-Taste oder erneutem Aktivieren des auslösenden Elements geschlossen werden
+-   Inhalte schließen sich nicht automatisch nach einer bestimmten Zeit
+-   Prüfung mit Maus-Hover und Tastaturfokus, um sicherzustellen, dass Inhalte sichtbar bleiben und geschlossen werden können
+
+_BITV-Originaltext:_
+
+## Was wird geprüft?
+
+Zusätzliche Inhalte, die angezeigt werden, wenn Elemente den Zeiger- oder Tastaturfokus erhalten, z. B. benutzerdefinierte Tooltips oder Ausklapp-Menüs, sollten drei Anforderungen erfüllen:
+
+-   Wenn zusätzliche Inhalte durch Darüberfahren mit dem Zeiger erscheinen, können Benutzer den Zeiger über diesen Inhalt bewegen, ohne dass er verschwindet.
+-   Es gibt die Möglichkeit, einen eingeblendeten Inhalt zu schließen, ohne den Fokus zu verschieben (z. B. durch Drücken der Escape-Taste oder durch Aktivieren des Elements, dessen Fokussierung den Inhalt einblendet).
+-   Der Inhalt schließt nicht selbsttätig nach einer gewissen Zeitspanne.
+
+Hinweis: Die Anforderung gilt nicht für eingeblendete Inhalte, deren Verhalten durch den Nutzer-Agenten bestimmt wird (etwa native `title`\-Attribute).
+
+## Warum wird das geprüft?
+
+Für sehbehinderte Nutzer, die mit starker Zoomvergrößerung arbeiten, sind zusätzliche Inhalte, die bei Zeiger- oder Tastatur-Fokussierung eingeblendet werden, aus mehreren Gründen problematisch:
+
+-   Inhalte sind wegen des starken Zoomfaktors oft nur teilweise sichtbar. Nutzer müssen in der Lage sein, den Zeiger von dem auslösenden Element über den eingeblendeten Inhalt zu bewegen (was meist den sichtbaren Ausschnitt verschiebt), ohne dass der eingeblendete Inhalt schließt.
+-   Eingeblendete Inhalte verdecken häufig andere Inhalte. Nutzer müssen in der Lage sein, den eingeblendeten Inhalt wieder zu schließen, ohne den Fokus zu bewegen (was passieren würde, wenn etwa nach einem Schließen-Element gesucht werden müsste). Die Escape-Taste oder ein Aktivieren des auslösenden Elements, das zur Zeit den Fokus hat, sollte den eingeblendeten Inhalt schließen.
+-   Sehbehinderte Nutzer brauchen ggf. mehr Zeit, Inhalte zu lesen. Eingeblendete Inhalte sollten deshalb solange zur Verfügung stehen, bis sie vom Nutzer geschlossen werden (etwa über Weiter-Tabben, Wegbewegen des Zeigers von auslösenden Element und eingeblendetem Inhalt, oder explizites Schließen über die Tastatur).
+
+## Wie wird geprüft?
+
+### 1\. Anwendbarkeit des Prüfschritts
+
+Der Prüfschritt ist anwendbar, wenn die Seite zusätzliche Inhalte enthält, die bei Fokussierung mittels Tastatur oder Zeiger eingeblendet werden, etwa Custom-Tooltips oder Ausklapp-Menüs, die bereits bei Fokussierung ausklappen.
+
+### 2\. Prüfung
+
+#### 2.1 Zeiger-Hover-Prüfung
+
+Wenn sich zusätzliche Inhalte sich durch Hinüberbewegen des Zeigers (z. B. Maus-Hover) über ein Element einblenden lassen:
+
+1.  Inhalt durch Hover über dem Element einblenden Abwarten, ob der eingeblendete Inhalt sichtbar bleibt, also nicht nach kurzer Zeit selbsttätig schließt. Ausgenommen sind Fälle, bei denen der eingeblendete Inhalt nicht länger gültig ist.
+2.  Prüfen, ob sich der eingeblendete Inhalt durch die Escape-Taste oder ein Aktivieren des Einblendung auslösenden Elements (Klicken, Tippen) schließen lässt. Ausgenommen sind hier Fälle, bei denen der eingeblendete Inhalt eine Fehlermeldung ist oder keine anderen Inhalte verdeckt oder ersetzt.
+3.  Inhalt erneut über Hover einblenden und den Zeiger über den neu eingeblendeten Inhalt bewegen. Der Inhalt sollte weiter sichtbar sein.
+
+#### 2.2 Tastaturfokus-Prüfung
+
+Wenn sich zusätzliche Inhalte durch die Tastaturfokussierung von Elementen einblenden lassen:
+
+1.  Inhalt durch Tastaturfokussierung des Elements einblenden.
+2.  Prüfen, ob der eingeblendete Inhalt sichtbar bleibt, also nicht nach kurzer Zeit selbsttätig schließt. Ausgenommen sind Fällebei denen der eingeblendete Inhalt nicht länger gültig ist.
+3.  Prüfen, ob sich der eingeblendete Inhalt über die Escape-Taste oder ein Aktivieren des Einblendung auslösenden Elements (Enter) schließen lässt. Ausgenommen sind hier Fälle, bei denen der eingeblendete Inhalt eine Fehlermeldung ist oder keine anderen Inhalte verdeckt oder ersetzt.
+
+### 3\. Hinweise
+
+Bei Inhalten, die durch Tastaturfokussierung von Elementen eingeblendet werden, wird nicht verlangt, dass hier Mauszeiger über die eingeblendeten Inhalte bewegt werden kann, ohne dass diese sich schließen.
+
+Wenn Aktivierung des Elements, dass den Inhalt einblendet, zum Schließen des eingeblendeten Inhalts benutzt wird, soll der Nutzer-Kontext bestehen bleiben (also nicht eine weitere Aktion, die den Kontext ändert, ausgelöst werden, etwa das Aktivieren eines Links).
+
+Wenn Inhalte durch Hover eingeblendet werden, sollten sie in der Regel auch bei Tastaturfokus eingeblendet werden, falls sie nicht alternativ zur Verfügung gestellt werden. Dies wird in Prüfschritt 9.2.1.1 "Ohne Maus nutzbar" geprüft.
+
+## Einordnung des Prüfschritts
+
+### Einordnung des Prüfschritts nach WCAG 2.1
+
+#### Guideline
+
+-   [Guideline 1.4 Distinguishable: Make it easier for users to see and hear content including separating foreground from background](https://www.w3.org/TR/WCAG21/#distinguishable)
+
+#### Success criterion
+
+-   [1.4.13 Content on Hover or Focus](https://www.w3.org/TR/WCAG21/#content-on-hover-or-focus) (Level AA)
+
+#### Sufficient Techniques
+
+-   [SCR39: Making content on focus or hover hoverable, dismissible, and persistent](https://www.w3.org/WAI/WCAG21/Techniques/client-side-script/SCR39)
+
+#### Failures
+
+-   [F95: Failure of Success Criterion 1.4.13 due to content shown on hover not being hoverable](https://www.w3.org/WAI/WCAG21/Techniques/failures/F95)
+
+## Quellen
+
+-   [Understanding Success Criterion 1.4.13: Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus) (zur Zeit nur auf Englisch verfügbar)

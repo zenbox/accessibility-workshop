@@ -1,0 +1,69 @@
+# Prüfschritt 6.2.3 Interoperabilität von Echtzeit-Textkommunikation
+
+Web-Anwendungen, die Echtzeit-Textkommunikation (RTT, Real-Time Text) unterstützen, müssen mit anderen Anwendungen kompatibel sein und anerkannte Standards wie ITU, IETF oder ETSI einhalten.
+
+Wenn verschiedene Anwendungen für Echtzeit-Textkommunikation miteinander kommunizieren, müssen Mechanismen wie die Anzeige von verlorenen oder fehlerhaften Zeichen auf beiden Seiten gleichermaßen funktionieren.
+
+Mögliche Standards zur Unterstützung:
+
+-   ITU-T V.18 für Text-Telefonie im öffentlichen Telefonnetz
+-   IETF RFC 4103 für VoIP über das Session Initiation Protocol (SIP)
+-   ETSI TS 126 114 für VoIP über das IP Multimedia Sub-System (IMS)
+-   Andere veröffentlichte Standards für alternative Kommunikationsmethoden
+
+Wenn proprietäre Mechanismen verwendet werden, kann es sein, dass die Kommunikation mit anderen Systemen nicht funktioniert. Eine standardisierte Interoperabilität stellt sicher, dass Echtzeit-Text zuverlässig zwischen verschiedenen Anwendungen übertragen wird.
+
+_BITV-Originaltext:_
+
+## Was wird geprüft?
+
+Web-Anwendungen, die (meist zusätzlich zur Sprach-Kommunikation) die Echtzeit-Textkommunikation (RTT, Real-Time Text) mit anderen Anwendungen erlauben, sollen Interoperabilität, also die jeweils relevanten technischen ITU-, IETF-, oder ETSI-Standards für Echtzeit Text-Kommunikation unterstützen.
+
+## Warum wird das geprüft?
+
+Wenn Web-Anwendungen, die zusätzlich zur Kommunikation über Sprache außerdem Echtzeit-Text-Kommunikation (RTT) bieten, mit anderen solchen Anwendungen in Austausch treten, sollen die Mechanismen bei der Echtzeit-Text-Kommunikation auf beiden Seiten gleichermaßen funktionieren. Dies betrifft etwa die Anzeige von nicht oder fehlerhaft übertragenen Zeichen. Dies ist sichergestellt, wenn auf beiden Seiten jeweils geltende technische Standards der ITU, der IETF oder von ETSI unterstützt werden. Wenn von der Web-Anwendung stattdessen proprietäre Mechanismen für RTT eingesetzt werden, funktionieren diese ggf. nicht beim Austausch mit anderen Anwendungen, die RTT unterstützen.
+
+## Wie wird geprüft?
+
+### 1\. Anwendbarkeit des Prüfschritts
+
+Der Prüfschritt ist anwendbar, wenn die Web-Anwendung (zusätzlich zur Sprachkommunikation) Echtzeit-Textkommunikation unterstützt und potentiell mit anderer Kommunikations-Software mit solcher Unterstützung kommunizieren kann.
+
+### 2\. Prüfung
+
+Die Dokumentation der Web-Anwendung oder den Anbieter der Web-Anwendung konsultieren. Werden (je nach technischer Umsetzung) die jeweils anwendbaren aktuellen technischen Standards für Echtzeit-Textkommunikation unterstützt?
+
+### 3\. Hinweise
+
+-   Bei Echtzeit-Textkommunkation (RTT, Real-Time Text) erscheint der Text beim Empfänger dynamisch schon während der Eingabe des Senders. RTT ist also nicht das Gleiche wie etwa Chat, wo Nachrichten explizit abgeschickt werden und erst dann beim Empfänger erscheinen.
+-   Bei der Beurteilung der Standards-Unterstützung muss die aktuelle Entwicklung der Standards berücksichtigt werden. Ggf. sind mittlerweile neuere Standards für die Kommunikationsmethode gängig.
+
+EN 301 549 V3.2.1 nennt folgende je nach technischer Umsetzung anwendbare Standards:
+
+-   Die Web-Anwendung kommuniziert über das öffentliche Telefonnetz: Die Empfehlungen ITU-T V.18 \[i.23\] oder dessen Text-Telefonie-Standards in den Anhängen werden für die Echtzeit-Textkommunikation verwendet.
+-   Voice over IP (VoIP) über das Session Initiation Protocol (SIP): Empfehlungen der IETF zu Echtzeit-Textkommunikation RFC 4103 \[i.13\] werden verwendet.
+-   Die Web-Anwendung nutzt Voice over IP (VoIP) über das IP Multimedia Sub-System (IMS): Hier sind die Protokolle ETSI TS 126 114 \[i.10\], ETSI TS 122 173 \[i.11\] und ETSI TS 134 229 \[i.12\] relevant.
+-   Wenn andere Kommunikationsmethoden verwendet werden: Gemeinsame, relevante und veröffentlichte Standards werden unterstützt. Dabei unterstützt der gemeinsame Standard die Anzeige von verlorenen und fehlerhaft übertragenen Zeichen.
+
+## Quellen
+
+-   [Human Factors (HF); Real-Time Text (RTT) in Multiparty Conference Calling / ETSI TR 103 708 V1.1.1 (2022-08)](https://labs.etsi.org/rep/HF/en301549/uploads/272bede3724c5c99efe777f778201f70/tr_103708v010101p.pdf)
+
+## Einordnung des Prüfschritts
+
+### Einordnung des Prüfschritts nach EN 301 549 V3.2.1
+
+#### 6.2.3 Interoperability
+
+> Where ICT with RTT functionality interoperates with other ICT with RTT functionality (as required by clause 6.2.1.1) they shall support the applicable RTT interoperability mechanisms described below:
+>
+> -   (a) ICT interoperating with other ICT directly connected to the Public Switched Telephone Network (PSTN), using Recommendation ITU-T V.18 \[i.23\] or any of its annexes for text telephony signals at the PSTN interface;
+> -   (b) ICT interoperating with other ICT using VOIP with Session Initiation Protocol (SIP) and using RTT that conforms to IETF RFC 4103 \[i.13\]. For ICT interoperating with other ICT using the IP Multimedia Sub-System (IMS) to implement VOIP, the set of protocols specified in ETSI TS 126 114 \[i.10\], ETSI TS 122 173 \[i.11\] and ETSI TS 134 229 \[i.12\] describe how IETF RFC 4103 \[i.13\] would apply;
+> -   (c) ICT interoperating with other ICT using technologies other than a or b, above, using a relevant and applicable common specification for RTT exchange that is published and available for the environments in which they will be operating. This common specification shall include a method for indicating loss or corruption of characters.
+> -   (d) ICT interoperating with other ICT using a standard for RTT that has been introduced for use in any of the above environments, and is supported by all of the other active ICT that support voice and RTT in that environment.
+>
+> NOTE 1: In practice, new standards are introduced as an alternative codec/protocol that is supported alongside the existing common standard and used when all end-to-end components support it while technology development, combined with other reasons including societal development and cost efficiency, may make others become obsolete.
+>
+> NOTE 2: Where multiple technologies are used to provide voice communication, multiple interoperability mechanisms may be needed to ensure that all users are able to use RTT.
+>
+> EXAMPLE: A conferencing system that supports voice communication through an internet connection might provide RTT over an internet connection using a proprietary RTT method (option c). However, regardless of whether the RTT method is proprietary or non-proprietary, if the conferencing system also offers telephony communication it will also need to support options a or b to ensure that RTT is supported over the telephony connection.

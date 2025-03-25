@@ -1,0 +1,93 @@
+# Prüfschritt 9.2.5.1 Alternativen für komplexe Zeiger-Gesten
+
+Für alle Webinhalte, die komplexe Zeiger-Gesten wie Wischen oder Mehrpunkt-Gesten erfordern, müssen alternative einfache Eingabemöglichkeiten vorhanden sein.
+
+-   Komplexe Zeiger-Gesten wie Wischen oder Mehrpunkt-Gesten (z. B. Spreizen zum Zoomen) müssen durch einfache Tippeingaben ersetzbar sein
+-   Alternativen können z. B. Schaltflächen sein, die Slider bewegen oder Menüs einblenden
+-   Inhalte, die zwingend pfadbasierte Eingaben benötigen (z. B. Unterschriften), sind ausgenommen
+-   Gilt nur für durch Webinhalte gesteuerte Gesten, nicht für browser- oder systemseitige Funktionen
+
+_BITV-Originaltext:_
+
+## Was wird geprüft?
+
+Wenn Webinhalte Funktionen implementieren, die über pfadbasierte Zeiger-Gesten (etwa Wischgesten oder Mehrpunktgesten) bedient werden können, gibt es Alternativen für die Aktivierung mittels einer einfachen Zeigereingabe.
+
+'Zeiger' schließt dabei indirekte Eingaben mittels Mauszeiger ebenso wie direkte Eingaben ein, etwa mit dem Finger auf dem Touchscreen oder mit dem Stift auf einem Grafiktablett.
+
+Ausgenommen sind Fälle, in denen die pfadbasierte oder Mehrpunkt-Eingabe essenziell wichtig ist - etwa bei der Handschrifterkennung.
+
+Ziehbewegungen (Dragging Motions) wie in Drag-and-Drop-Aktionen gelten nicht als pfadbasierte Geste im Sinne dieser Anforderung.
+
+Diese Anforderung gilt nur für Zeiger-Gesten, die von Webinhalten interpretiert und verarbeitet werden. Sie betreffen also nicht Gesten für die Bedienung von Nutzeragenten oder Hilfsmitteln, etwa Gesten zur Navigation zwischen Seiten im Browser oder zur Nutzung systemseitiger Screenreader.
+
+Die Anforderung gilt auch nicht für Inhalte, bei denen das Verhalten vom Betriebssystem oder Browser bestimmt wird und nicht von Web-Autoren. Ein Beispiel hierfür sind scrollbare Bereiche, die über CSS `overflow:scroll` definiert sind und für die kein Verhalten bezüglich Zeiger-Gesten über JavaScript festgelegt wurde, und bei denen die Scrollbalken nicht explizit vom Autor versteckt werden.
+
+Beispiele für pfadbasierte Gesten:
+
+-   Wischgeste, etwa zum Bewegen etwa von autor-definierten Slider-Bereichen oder zum Löschen von Inhalten
+-   Ziehen eines autor-definierten Sliders, wenn eine initiale Richtung nötig ist, um das Element zu bewegen
+-   Zeichnen eines Pfads, z. B. ein 'Z' zum Widerrufen
+
+Beispiele für Mehrpunkt-Gesten:
+
+-   Zwei-Finger-Spreizgeste zum Zoomen (sofern dies vom Webinhalt und nicht vom Browser implementiert ist)
+-   "Split tap" (ein Finger hält, der andere tippt)
+-   Streichen mit mehreren Fingern
+
+_Hinweis_: Pfadunabhängige Ziehbewegungen (dragging motions) wie Drag-and-Drop-Eingaben gelten nicht als pfadbasiert im Sinne dieses Prüfschritts, da hier nur Beginn und Endpunkt feststehen und der Pfad dazwischen beliebig ist. Wenn Elemente dem gedrückten Zeiger (Maus-Cursor oder Finger) in jede Richtung folgen und keine initiale Richtung notwendig ist, um die Geste zu vollziehen, ist von einer Ziehbewegung auszugehen.
+
+Abhängig von der Prüfumgebung kann diese Unterscheidung unterschiedlich ausfallen. So ist auf Touchscreens in mobilen Systemumgebungen häufig eine initiale horizontale Richtung zum Bewegen von horizontalen Slidern nötig, da bei vertikaler Bewegung stattdessen die Seite gescrollt wird. In dieser Umgebung würde die Bedienung eines solchen Sliders also als pfadbasiert gelten müssen und deshalb unter diesen Prüfschritt fallen.
+
+## Warum wird das geprüft?
+
+Für Menschen mit Bewegungseinschränkungen ist es oft schwierig und teilweise unmöglich, komplexe Zeiger-Gesten erfolgreich auszuführen. Deshalb sollen solche Gesten, wenn Sie von Web-Inhalten implementiert werden, nicht der einzige Weg sein, eine Funktion auszuführen. Beispiele für komplexe Gesten sind Wischgesten vom Rand her, um Menüs einzublenden, Wischgesten zum Bewegen von autor-definierten Karussells bzw. Slidern, oder Mehrpunktgesten wie die Spreizgeste zum Vergrößern eines Kartenausschnitts.
+
+## Wie wird geprüft?
+
+### 1\. Anwendbarkeit des Prüfschritts
+
+Der Prüfschritt ist anwendbar, wenn Web-Inhalte Eventhandler implementieren, die auf komplexe Gesten (etwa Wischgesten, Mehrpunkt-Gesten) ansprechen. Ausgenommen sind also Inhalte, bei denen das Verhalten vom Betriebssystem oder Browser bestimmt wird und nicht von Web-Autoren.
+
+### 2\. Prüfung
+
+1.  Seite auf einem Smartphone aufrufen.
+2.  Sichtprüfung und Ausprobieren, ob Webinhalte komplexe Gesten implementieren (z. B. auf Karussells, Slidern). Lassen sich Slider oder andere Inhaltselemente durch autor-definierte Wischgesten bewegen? Werden durch Wischgesten vom Rand her Menüs oder andere Webinhalte eingeblendet? Reagieren bestimmte Elemente (etwa Karten) auf die Zwei-Finger-Spreizgeste zum Ändern des Zoomfaktors?
+3.  Prüfen, ob die über komplexe Zeigergesten auslösbare Funktion auch über einfache Zeiger-Gesten wie Tippen, Doppeltippen oder Tippen-und-Halten ausgelöst werden kann, etwa durch Aktivierung von alternativen statischen Elementen (z. B. Tasten, die Slider bewegen, Werte erhöhen oder verringern, oder Menüs einblenden).
+
+### 3\. Hinweise
+
+-   Webinhalte können ggf. Alternativen zur Aktivierung über einfache Zeiger-Gesten nur in bestimmten Systemumgebungen und Benutzeragenten anbieten, nicht aber in anderen. So kann beispielsweise ein Test auf einem mobilen Gerät erforderlich sein, um festzustellen, ob die in einem Desktop-Browser angebotenen Alternativen zur Aktivierung über einfache Zeiger-Gesten auch in mobilen Browsern verfügbar sind.
+-   Ausgenommen sind Funktionen, die von Natur aus und notwendigerweise auf komplexen Pfaden oder Mehrpunktgesten basieren. So wird beispielsweise die Eingabe der eigenen Signatur von Natur aus pfadbasiert sein.
+
+### 4\. Bewertung
+
+#### Prüfschritt erfüllt
+
+-   Für alle autor-definierten komplexen Zeiger-Gesten gibt es alternative Eingabemöglichkeiten über einfache Zeiger-Gesten in den Umgebungen, die in die Prüfung gemäß _Accessibility Baseline_ einbezogen sind.
+
+## Einordnung des Prüfschritts
+
+### Einordnung des Prüfschritts nach WCAG 2.1
+
+#### Guideline
+
+-   [Guideline 2.5 Input Modalities: Make it easier for users to operate functionality through various inputs beyond keyboard](https://www.w3.org/TR/WCAG21/#input-modalities)
+
+#### Success criterion
+
+-   [2.5.1 Pointer Gestures](https://www.w3.org/TR/WCAG21/#pointer-gestures) (Level A)
+
+#### Sufficient Techniques
+
+-   [G215: Providing controls to achieve the same result as path based or multipoint gestures](https://www.w3.org/WAI/WCAG21/Techniques/general/G215)
+-   [G216: Providing single point activation for a control slider](https://www.w3.org/WAI/WCAG21/Techniques/general/G216)
+
+#### Failures
+
+-   [F105: Failure of Success Criterion 2.5.1 due to providing functionality via a path-based gesture without simple pointer alternative](https://www.w3.org/WAI/WCAG21/Techniques/failures/F105)
+
+## Quellen
+
+-   [Understanding Success Criterion 2.5.1: Pointer Gestures](https://www.w3.org/WAI/WCAG21/Understanding/pointer-gestures.html) (zur Zeit nur auf Englisch verfügbar)
+-   [Github-Issue zur Behandlung von scrollbaren Bereichen bezüglich Anforderungen nach 2.5.1 Ponter Gestures unfd 2.5.7 Dragging Movements](https://github.com/w3c/wcag/issues/2684). Das Ergebnis der langen Diskussion war, dass für Slider bzw. scrollbare Bereiche nur Alternativen gefordert werden, wenn das Verhalten über Scripts von Web-Autoren explizit definiert wurde und nicht vom Betriebssystem bzw. Browser gehandhabt wird. [https://github.com/w3c/wcag/issues/2684](https://github.com/w3c/wcag/issues/2684)

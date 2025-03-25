@@ -1,0 +1,283 @@
+/* ==============================
+   @version v3
+   responsive.css
+   - Media Queries für verschiedene Gerätebreiten
+   - Anpassungen für mobile Darstellung
+   ============================== */
+
+/* ==============================
+   1. Breakpoints
+   ============================== */
+/* 
+  Breakpoints:
+  - Small: 576px
+  - Medium: 768px
+  - Large: 992px
+  - Extra Large: 1200px
+*/
+
+/* ==============================
+   2. Base-Anpassungen
+   ============================== */
+@media (max-width: 576px) {
+    body {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* ==============================
+   3. Layout-Anpassungen
+   ============================== */
+@media (max-width: 768px) {
+    .container {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .row {
+        margin-right: -10px;
+        margin-left: -10px;
+    }
+
+    .col {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+}
+
+/* ==============================
+   4. Treemap-Anpassungen
+   ============================== */
+@media (max-width: 768px) {
+    .tree-container {
+        gap: 1rem;
+        padding: 0.5rem;
+        flex-direction: column;
+    }
+
+    .section-column {
+        min-width: 100%;
+    }
+
+    .card {
+        padding: 0.75rem;
+        min-height: 120px;
+    }
+
+    /* Größen für Konformitätslevel anpassen */
+    .A,
+    .AA,
+    .AAA {
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.7rem;
+    }
+
+    /* Prüfschritt-Nummer kleiner machen */
+    .pruefschritt-card.is-bitv::before {
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Tooltip für mobile Ansicht unter der Karte statt daneben */
+@media (max-width: 768px) {
+    .tooltip {
+        left: 0;
+        top: 100%;
+        transform: none;
+        margin-top: 0.5rem;
+        max-width: 100%;
+    }
+
+    .tooltip.visible {
+        transform: scale(1);
+    }
+
+    .tooltip::before {
+        left: 20px;
+        top: -8px;
+        transform: none;
+        border-width: 0 8px 8px 8px;
+        border-color: transparent transparent rgba(0, 0, 0, 0.9) transparent;
+    }
+
+    .tooltip.left-position {
+        right: 0;
+        left: auto;
+    }
+
+    .tooltip.left-position::before {
+        right: 20px;
+        left: auto;
+        border-width: 0 8px 8px 8px;
+        border-color: transparent transparent rgba(0, 0, 0, 0.9) transparent;
+    }
+}
+
+/* ==============================
+   5. Filter-Anpassungen
+   ============================== */
+@media (max-width: 768px) {
+    .filter-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .search-container {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .filter-buttons {
+        flex-wrap: wrap;
+    }
+
+    .filter-options {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .filter-bar {
+        padding: 0.75rem;
+    }
+
+    .standard-filter-btn,
+    .profession-filter-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ==============================
+   6. Theme-Manager-Anpassungen
+   ============================== */
+@media (max-width: 768px) {
+    .themes-panel {
+        width: 90vw;
+        max-height: 90vh;
+        bottom: 80px;
+    }
+
+    .theme-toggle-button {
+        width: 50px;
+        height: 50px;
+    }
+
+    .theme-toggle-button .material-icons {
+        font-size: 24px;
+    }
+
+    .theme-meta {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+
+    .theme-header {
+        padding: 10px 12px;
+    }
+
+    .theme-title {
+        font-size: 0.95rem;
+    }
+
+    .theme-action-icon {
+        padding: 3px;
+    }
+
+    .theme-action-icon .material-icons {
+        font-size: 18px;
+    }
+
+    .panel-section-content {
+        padding: 12px;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .themes-panel {
+        right: 10px;
+        bottom: 70px;
+    }
+
+    .theme-toggle-button {
+        right: 15px;
+        bottom: 15px;
+    }
+
+    .theme-buttons {
+        flex-direction: column;
+    }
+
+    .sort-container {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+}
+
+/* ==============================
+   7. Komponenten-Anpassungen
+   ============================== */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    .notification {
+        max-width: 90%;
+        right: 5%;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-footer {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .modal-btn {
+        width: 100%;
+    }
+}
+
+/* ==============================
+   8. Theme-Selection Popup-Anpassungen
+   ============================== */
+@media (max-width: 768px) {
+    .theme-selection-popup {
+        position: fixed;
+        top: 50% !important;
+        left: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90%;
+        max-width: 350px;
+        z-index: var(--z-index-modal);
+    }
+}

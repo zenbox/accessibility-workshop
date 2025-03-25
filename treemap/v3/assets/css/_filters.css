@@ -1,0 +1,365 @@
+/* ==============================
+   @version v3
+   filters.css
+   - Filter-Leiste
+   - Suchfeld
+   - Filter-Buttons
+   - Filter-Gruppen
+   ============================== */
+
+/* ==============================
+   1. Filter-Leiste
+   ============================== */
+.filter-bar {
+    margin: 1rem 0 2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-count {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.active-filters {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* ==============================
+   2. Suchfeld
+   ============================== */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    min-width: 300px;
+}
+
+.search-container .material-icons {
+    margin-right: 0.5rem;
+    opacity: 0.7;
+}
+
+.search-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#searchInput,
+#themesSearchFilter {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+    padding-left: 2rem;
+}
+
+#searchInput::placeholder,
+#themesSearchFilter::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#searchInput:focus,
+#themesSearchFilter:focus {
+    outline: var(--focus-outline-width) solid white;
+    outline-offset: var(--focus-outline-offset);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.clear-button {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 50%;
+}
+
+.clear-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* ==============================
+   3. Filter-Buttons
+   ============================== */
+/* Filter-Buttons Basisstil */
+.filter-btn,
+.standard-filter-btn,
+.profession-filter-btn {
+    background: none;
+    color: white;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.filter-btn:hover,
+.standard-filter-btn:hover,
+.profession-filter-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.filter-btn:focus,
+.standard-filter-btn:focus,
+.profession-filter-btn:focus,
+.filter-btn:focus-visible,
+.standard-filter-btn:focus-visible,
+.profession-filter-btn:focus-visible {
+    outline: var(--focus-outline-width) solid white;
+    outline-offset: var(--focus-outline-offset);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Spezifische Filter-Button-Stile */
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+}
+
+.filter-btn[aria-pressed="true"] {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: white;
+}
+
+/* Konformitätslevel-Buttons */
+.filter-btn[data-level="A"] {
+    border-color: var(--A);
+}
+
+.filter-btn[data-level="AA"] {
+    border-color: var(--AA);
+}
+
+.filter-btn[data-level="AAA"] {
+    border-color: var(--AAA);
+}
+
+.filter-btn[aria-pressed="true"][data-level="A"] {
+    background: var(--A);
+}
+
+.filter-btn[aria-pressed="true"][data-level="AA"] {
+    background: var(--AA);
+}
+
+.filter-btn[aria-pressed="true"][data-level="AAA"] {
+    background: var(--AAA);
+}
+
+/* Standard-Filter-Buttons */
+.standard-filter-btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-right: 5px;
+}
+
+.standard-filter-btn[aria-pressed="true"] {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: white;
+}
+
+/* ==============================
+   4. Filter-Gruppen
+   ============================== */
+.filter-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group-title {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 8px;
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Berufsgruppen-Filter */
+.profession-filter-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.profession-filter-btn[aria-pressed="true"] {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: white;
+}
+
+/* Berufsgruppen-Farben für Buttons */
+.profession-filter-btn.requirements {
+    border-color: var(--requirements);
+}
+.profession-filter-btn.design {
+    border-color: var(--design);
+}
+.profession-filter-btn.entwicklung {
+    border-color: var(--development);
+}
+.profession-filter-btn.testing {
+    border-color: var(--testing);
+}
+.profession-filter-btn.release {
+    border-color: var(--release);
+}
+.profession-filter-btn.maintenance {
+    border-color: var(--maintenance);
+}
+.profession-filter-btn.content {
+    border-color: var(--content);
+}
+.profession-filter-btn.ux-writer {
+    border-color: var(--uxWriter);
+}
+.profession-filter-btn.redaktion {
+    border-color: var(--redaktion);
+}
+.profession-filter-btn.corporate-text {
+    border-color: var(--corporateText);
+}
+
+.profession-filter-btn[aria-pressed="true"].requirements {
+    background-color: var(--requirements);
+    color: var(--onRequirements);
+}
+.profession-filter-btn[aria-pressed="true"].design {
+    background-color: var(--design);
+    color: var(--onDesign);
+}
+.profession-filter-btn[aria-pressed="true"].entwicklung {
+    background-color: var(--development);
+    color: var(--onDevelopment);
+}
+.profession-filter-btn[aria-pressed="true"].testing {
+    background-color: var(--testing);
+    color: var(--onTesting);
+}
+.profession-filter-btn[aria-pressed="true"].release {
+    background-color: var(--release);
+    color: var(--onRelease);
+}
+.profession-filter-btn[aria-pressed="true"].maintenance {
+    background-color: var(--maintenance);
+    color: var(--onMaintenance);
+}
+.profession-filter-btn[aria-pressed="true"].content {
+    background-color: var(--content);
+    color: var(--onContent);
+}
+.profession-filter-btn[aria-pressed="true"].ux-writer {
+    background-color: var(--uxWriter);
+    color: var(--onUxWriter);
+}
+.profession-filter-btn[aria-pressed="true"].redaktion {
+    background-color: var(--redaktion);
+    color: var(--onRedaktion);
+}
+.profession-filter-btn[aria-pressed="true"].corporate-text {
+    background-color: var(--corporateText);
+    color: var(--onCorporateText);
+}
+
+/* ==============================
+   5. Anzeigeoptionen
+   ============================== */
+.display-options {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toggle-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.toggle-option input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* ==============================
+   6. Sortier-Kontrollen
+   ============================== */
+.sort-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-container label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.filter-select {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filter-select:focus {
+    outline: var(--focus-outline-width) solid var(--primary);
+    border-color: var(--primary);
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
