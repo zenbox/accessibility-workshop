@@ -9,7 +9,6 @@ export class SvgRenderer {
         this.occupiedYPositions = occupiedYPositions
         this.contrastFilterMode = "all" // 'all', 'fails', 'succeeds'
         this.contrastColumnCount = 1 // Anzahl der Spalten für Kontrastanzeige
-        this.occupiedLabelAreas = []
 
         try {
             this.createSVGOverlay()
@@ -97,8 +96,6 @@ export class SvgRenderer {
 
     // Draw all rectangles and lines based on the color mappings
     drawAllRectangles() {
-        this.occupiedLabelAreas = []
-
         this.clearSVG()
         this.adjustSVGSize()
 
@@ -153,88 +150,46 @@ export class SvgRenderer {
                             )
                         }
 
-                        // In SvgRenderer.js, aktualisiere den Block für die Verbindungen
                         if (lines) {
                             const startSelectors = lines.start
                             let foundConnection = false
 
                             startSelectors.forEach((selector) => {
-                                try {
-                                    // Check if it's an attribute selector or element selector
-                                    if (
-                                        selector.startsWith("[") &&
-                                        selector.endsWith("]")
-                                    ) {
-                                        // Attribute selector
-                                        const attrName = selector.slice(1, -1)
-                                        const startAttrValue =
-                                            element.getAttribute(attrName)
-
-                                        if (startAttrValue) {
-                                            // Verbesserte Fehlerbehandlung: Zeige eine ausführlichere Warnung
-                                            console.log(
-                                                `[A11y-Map] Suche Element mit ID: "${startAttrValue}" für ${attrName}`
-                                            )
-
-                                            // Versuche, das Ziel-Element zu finden
-                                            const endElement =
-                                                document.getElementById(
-                                                    startAttrValue
-                                                )
-
-                                            if (endElement) {
-                                                // Füge Debug-Ausgabe hinzu
-                                                console.log(
-                                                    `[A11y-Map] Gefunden! Zeichne Verbindung: ${element.tagName}[${attrName}="${startAttrValue}"] -> #${startAttrValue}`
-                                                )
-
-                                                // Prüfe, ob die Elemente sichtbar sind
-                                                const startRect =
-                                                    element.getBoundingClientRect()
-                                                const endRect =
-                                                    endElement.getBoundingClientRect()
-
-                                                if (
-                                                    startRect.width > 0 &&
-                                                    startRect.height > 0 &&
-                                                    endRect.width > 0 &&
-                                                    endRect.height > 0
-                                                ) {
-                                                    this.drawConnectionLine(
-                                                        element,
-                                                        endElement,
-                                                        color
-                                                    )
-                                                    foundConnection = true
-                                                } else {
-                                                    console.warn(
-                                                        `[A11y-Map] Element mit ID '${startAttrValue}' oder Quellelement hat ungültige Größe:`,
-                                                        {
-                                                            start: [
-                                                                startRect.width,
-                                                                startRect.height,
-                                                            ],
-                                                            end: [
-                                                                endRect.width,
-                                                                endRect.height,
-                                                            ],
-                                                        }
-                                                    )
-                                                }
-                                            } else {
-                                                console.warn(
-                                                    `[A11y-Map] Element mit ID '${startAttrValue}' nicht gefunden`
-                                                )
-                                            }
-                                        }
-                                    } else {
-                                        // Element selector - rest of the code...
-                                    }
-                                } catch (err) {
-                                    console.error(
-                                        `[A11y-Map] Fehler beim Verarbeiten der Verbindung:`,
-                                        err
+                                // Check if it's an attribute selector or element selector
+                                if (
+                                    selector.startsWith("[") &&
+                                    selector.endsWith("]")
+                                ) {
+                                    // Attribute selector
+                                    const startAttrValue = element.getAttribute(
+                                        selector.slice(1, -1)
                                     )
+                                    if (startAttrValue) {
+                                        const endElement =
+                                            document.getElementById(
+                                                startAttrValue
+                                            )
+                                        if (endElement) {
+                                            this.drawConnectionLine(
+                                                element,
+                                                endElement,
+                                                color
+                                            )
+                                            foundConnection = true
+                                        }
+                                    }
+                                } else {
+                                    // Element selector
+                                    const relatedElements =
+                                        document.querySelectorAll(selector)
+                                    relatedElements.forEach((endElement) => {
+                                        this.drawConnectionLine(
+                                            element,
+                                            endElement,
+                                            color
+                                        )
+                                        foundConnection = true
+                                    })
                                 }
                             })
 
@@ -270,7 +225,7 @@ export class SvgRenderer {
         return attributeText.trim() || null
     }
 
-    // Draw contrast indicators for all text elementsIn der AccessibilityMap werden nach verschiednen Punkten, z.B. 1.3.1 Überschriften"
+    // Draw contrast indicators for all text elements
     drawContrastIndicators() {
         // Zurücksetzen der belegten Positionen für alle Spalten
         this.occupiedPositions = Array(this.contrastColumnCount)
@@ -434,43 +389,6 @@ export class SvgRenderer {
         )
     }
 
-    // Allgemeine Farbkonvertierungsfunktion
-    parseColor(color) {
-        // Erstelle ein temporäres Element
-        const tempElement = document.createElement("div")
-        tempElement.style.color = color
-        document.body.appendChild(tempElement)
-
-        // Hole die berechnete Farbe, die immer im rgb/rgba-Format zurückgegeben wird
-        const computedColor = window.getComputedStyle(tempElement).color
-        document.body.removeChild(tempElement)
-
-        // Extrahiere RGB-Werte
-        const rgbMatch = computedColor.match(
-            /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/
-        )
-        if (!rgbMatch) return [0, 0, 0]
-
-        const r = parseInt(rgbMatch[1], 10)
-        const g = parseInt(rgbMatch[2], 10)
-        const b = parseInt(rgbMatch[3], 10)
-
-        return [r, g, b]
-    }
-
-    // Bestimme Textfarbe basierend auf Hintergrundfarbe
-    getContrastColor(backgroundColor) {
-        const rgb = this.parseColor(backgroundColor)
-
-        // YIQ-Formel zur Helligkeitsberechnung
-        const yiq = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000
-
-        // Debug-Ausgabe
-        // console.log("Farbe:", backgroundColor, "RGB:", rgb, "YIQ:", yiq)
-
-        return yiq >= 128 ? "#000" : "#fff"
-    }
-
     // Draw a rectangle around an element with a label
     drawRectangleForElement(element, color, labelText) {
         const rect = element.getBoundingClientRect()
@@ -507,28 +425,18 @@ export class SvgRenderer {
         this.svg.removeChild(tempText)
 
         const labelWidth = textWidth
-        const labelHeight = 20
-
-        // Finde eine freie Position für das Label
-        const freePosition = this.findFreeLabelPosition(
-            documentRightEdge - labelWidth - labelPadding,
-            rect.top + window.scrollY,
-            labelWidth,
-            labelHeight
-        )
-
-        // Speichere die Position in der Liste der belegten Bereiche
-        this.occupiedLabelAreas.push(freePosition)
+        const labelX = documentRightEdge - labelWidth - labelPadding
+        const labelY = rect.top + window.scrollY
 
         // Create background rectangle for the label
         const labelBackground = document.createElementNS(
             "http://www.w3.org/2000/svg",
             "rect"
         )
-        labelBackground.setAttribute("x", freePosition.x)
-        labelBackground.setAttribute("y", freePosition.y)
-        labelBackground.setAttribute("width", freePosition.width)
-        labelBackground.setAttribute("height", freePosition.height)
+        labelBackground.setAttribute("x", labelX)
+        labelBackground.setAttribute("y", labelY)
+        labelBackground.setAttribute("width", labelWidth)
+        labelBackground.setAttribute("height", "20")
         labelBackground.setAttribute("fill", color)
         this.svg.appendChild(labelBackground)
 
@@ -537,37 +445,13 @@ export class SvgRenderer {
             "http://www.w3.org/2000/svg",
             "text"
         )
-        textLabel.setAttribute("x", freePosition.x + freePosition.width - 5)
-        textLabel.setAttribute("y", freePosition.y + 15)
-        textLabel.setAttribute("fill", this.getContrastColor(color))
+        textLabel.setAttribute("x", documentRightEdge - labelPadding - 5)
+        textLabel.setAttribute("y", labelY + 15)
+        textLabel.setAttribute("fill", "white")
         textLabel.setAttribute("font-size", "12")
         textLabel.setAttribute("text-anchor", "end")
         textLabel.textContent = labelText
         this.svg.appendChild(textLabel)
-
-        // Verbindungslinie vom Element zum Label zeichnen
-        const elementCenterX = rect.left + rect.width / 2 + window.scrollX
-        const elementCenterY = rect.top + rect.height / 2 + window.scrollY
-        const labelCenterX = freePosition.x + freePosition.width / 2
-        const labelCenterY = freePosition.y + freePosition.height / 2
-
-        // Zeichne eine feine Verbindungslinie
-        const connectorLine = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "path"
-        )
-
-        // Curved connector line for improved visibility
-        const midX = (elementCenterX + labelCenterX) / 2
-        connectorLine.setAttribute(
-            "d",
-            `M ${elementCenterX},${elementCenterY} Q ${midX},${elementCenterY} ${labelCenterX},${labelCenterY}`
-        )
-        connectorLine.setAttribute("stroke", color)
-        connectorLine.setAttribute("stroke-width", "1")
-        connectorLine.setAttribute("fill", "none")
-        connectorLine.setAttribute("stroke-dasharray", "4,2")
-        this.svg.appendChild(connectorLine)
     }
 
     // Draw a connection line between two elements
@@ -575,70 +459,11 @@ export class SvgRenderer {
         const startRect = startElement.getBoundingClientRect()
         const endRect = endElement.getBoundingClientRect()
 
-        // Verwende eine Mindestgröße, falls die berechnete Größe 0 ist
-        const minSize = 5
-        const effectiveStartWidth = Math.max(startRect.width, minSize)
-        const effectiveStartHeight = Math.max(startRect.height, minSize)
-        const effectiveEndWidth = Math.max(endRect.width, minSize)
-        const effectiveEndHeight = Math.max(endRect.height, minSize)
+        const startX = startRect.right + window.scrollX
+        const startY = startRect.top + startRect.height / 2 + window.scrollY
 
-        // Berechne die Mittelpunkte der Elemente
-        const startX = startRect.left + effectiveStartWidth / 2 + window.scrollX
-        const startY = startRect.top + effectiveStartHeight / 2 + window.scrollY
-        const endX = endRect.left + effectiveEndWidth / 2 + window.scrollX
-        const endY = endRect.top + effectiveEndHeight / 2 + window.scrollY
-
-        // Prüfe, ob die berechneten Koordinaten gültig sind
-        if (isNaN(startX) || isNaN(startY) || isNaN(endX) || isNaN(endY)) {
-            console.warn(
-                "[A11y-Map] Ungültige Koordinaten für Verbindungslinie:",
-                { startX, startY, endX, endY }
-            )
-            return
-        }
-
-        if (
-            startRect.width === 0 ||
-            startRect.height === 0 ||
-            endRect.width === 0 ||
-            endRect.height === 0
-        ) {
-            // Zeichne eine besondere Markierung um das sichtbare Element
-            if (startRect.width > 0 && startRect.height > 0) {
-                this.drawSpecialHighlight(
-                    startElement,
-                    color,
-                    "Verbunden mit verstecktem Element"
-                )
-            } else if (endRect.width > 0 && endRect.height > 0) {
-                this.drawSpecialHighlight(
-                    endElement,
-                    color,
-                    "Verbunden mit verstecktem Element"
-                )
-            }
-            return
-        }
-
-        // Prüfe, ob das Element tatsächlich im sichtbaren Bereich liegt
-        const viewportHeight = window.innerHeight
-        const viewportWidth = window.innerWidth
-        if (
-            startX < 0 ||
-            startX > viewportWidth * 2 ||
-            startY < 0 ||
-            startY > viewportHeight * 2 ||
-            endX < 0 ||
-            endX > viewportWidth * 2 ||
-            endY < 0 ||
-            endY > viewportHeight * 2
-        ) {
-            console.warn(
-                "[A11y-Map] Element außerhalb des sichtbaren Bereichs:",
-                { startX, startY, endX, endY }
-            )
-            return
-        }
+        const endX = endRect.left + window.scrollX
+        const endY = endRect.top + endRect.height / 2 + window.scrollY
 
         const path = document.createElementNS(
             "http://www.w3.org/2000/svg",
@@ -752,110 +577,5 @@ export class SvgRenderer {
         textLabel.setAttribute("paint-order", "stroke fill")
         textLabel.textContent = text
         this.svg.appendChild(textLabel)
-    }
-
-    // Prüft, ob ein Rechteck mit bereits existierenden Rechtecken kollidiert
-    isPositionOccupied(rect) {
-        return this.occupiedLabelAreas.some((occupied) =>
-            this.rectIntersect(rect, occupied)
-        )
-    }
-
-    // Prüft, ob zwei Rechtecke sich überschneiden
-    rectIntersect(a, b) {
-        return (
-            a.x < b.x + b.width &&
-            a.x + a.width > b.x &&
-            a.y < b.y + b.height &&
-            a.y + a.height > b.y
-        )
-    }
-
-    // Finde eine freie Position für das Label-Rechteck
-    findFreeLabelPosition(x, y, width, height) {
-        const padding = 5 // Minimaler Abstand zwischen Rechtecken
-        const rightEdge = window.innerWidth + window.scrollX
-
-        // Ursprünglicher Vorschlag (rechts vom Viewport)
-        let proposedRect = {
-            x: rightEdge - width - padding,
-            y: y,
-            width: width,
-            height: height,
-        }
-
-        // Prüfe, ob diese Position frei ist
-        if (!this.isPositionOccupied(proposedRect)) {
-            return proposedRect
-        }
-
-        // Versuche unterhalb der ursprünglichen Position
-        let offset = height + padding
-        let maxTries = 30 // Begrenzung der Versuche, um endlose Schleifen zu vermeiden
-
-        while (maxTries > 0) {
-            proposedRect = {
-                x: rightEdge - width - padding,
-                y: y + offset,
-                width: width,
-                height: height,
-            }
-
-            if (!this.isPositionOccupied(proposedRect)) {
-                return proposedRect
-            }
-
-            offset += height + padding
-            maxTries--
-        }
-
-        // Wenn unterhalb nicht funktioniert, versuche es mit einer Position darüber
-        offset = -(height + padding)
-        maxTries = 10
-
-        while (maxTries > 0) {
-            proposedRect = {
-                x: rightEdge - width - padding,
-                y: y + offset,
-                width: width,
-                height: height,
-            }
-
-            if (!this.isPositionOccupied(proposedRect)) {
-                return proposedRect
-            }
-
-            offset -= height + padding
-            maxTries--
-        }
-
-        // Wenn vertikal nicht funktioniert, versuche es mit einer Position links davon
-        offset = -(width + padding * 2)
-        maxTries = 5
-
-        while (maxTries > 0) {
-            proposedRect = {
-                x: rightEdge - width - padding + offset,
-                y: y,
-                width: width,
-                height: height,
-            }
-
-            if (!this.isPositionOccupied(proposedRect)) {
-                return proposedRect
-            }
-
-            offset -= width + padding
-            maxTries--
-        }
-
-        // Wenn alles fehlschlägt, gib die ursprüngliche Position zurück
-        // und füge sie trotzdem hinzu (besser Überlappung als gar keine Anzeige)
-        return {
-            x: rightEdge - width - padding,
-            y: y,
-            width: width,
-            height: height,
-        }
     }
 }

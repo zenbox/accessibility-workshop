@@ -114,6 +114,33 @@ export class Ui {
         title.style.fontSize = "14px"
         controlsDiv.appendChild(title)
 
+        // NEU: Statistik-Button am Anfang hinzufügen
+        const statsButtonContainer = document.createElement("div")
+        statsButtonContainer.style.marginBottom = "15px"
+        statsButtonContainer.style.display = "flex"
+        statsButtonContainer.style.justifyContent = "center"
+
+        const statsButton = document.createElement("button")
+        statsButton.textContent = "Statistiken anzeigen"
+        statsButton.style.padding = "5px 10px"
+        statsButton.style.backgroundColor = "#4CAF50"
+        statsButton.style.color = "white"
+        statsButton.style.border = "none"
+        statsButton.style.borderRadius = "4px"
+        statsButton.style.cursor = "pointer"
+        statsButton.style.fontSize = "12px"
+        statsButton.style.width = "100%"
+
+        statsButton.addEventListener("click", () => {
+            // Trigger das StatisticsModule über ein Custom-Event
+            document.dispatchEvent(
+                new CustomEvent("a11y-map-toggle-statistics")
+            )
+        })
+
+        statsButtonContainer.appendChild(statsButton)
+        controlsDiv.appendChild(statsButtonContainer)
+
         // Implement drag functionality
         this.makeDraggable(controlsDiv, dragHandle)
 
@@ -266,6 +293,105 @@ export class Ui {
             })
 
             contrastControlsDiv.appendChild(buttonContainer)
+
+            // ++++++++
+            // // Füge Trennlinie und den Kontrast-Picker-Schalter hinzu
+            // const contrastPickerDiv = document.createElement("div")
+            // contrastPickerDiv.style.borderTop =
+            //     "1px solid rgba(255, 255, 255, 0.3)"
+            // contrastPickerDiv.style.marginTop = "10px"
+            // contrastPickerDiv.style.paddingTop = "10px"
+            // contrastPickerDiv.style.marginBottom = "10px"
+
+            // // Erstelle Kontrast-Picker-Label
+            // const contrastPickerLabel = document.createElement("div")
+            // contrastPickerLabel.textContent = "Kontrast-Tool:"
+            // contrastPickerLabel.style.color = "white"
+            // contrastPickerLabel.style.fontSize = "12px"
+            // contrastPickerLabel.style.marginBottom = "8px"
+            // contrastPickerDiv.appendChild(contrastPickerLabel)
+
+            // // Schalter für Kontrast-Picker
+            // const contrastPickerContainer = document.createElement("div")
+            // contrastPickerContainer.setAttribute(
+            //     "style",
+            //     "margin-bottom:10px; display: flex; align-items: center;"
+            // )
+
+            // // Create the switch
+            // const pickerSwitchInput = document.createElement("input")
+            // pickerSwitchInput.setAttribute("type", "checkbox")
+            // pickerSwitchInput.setAttribute("id", "switch-contrast-picker")
+            // pickerSwitchInput.checked = false
+            // pickerSwitchInput.style.opacity = "0"
+            // pickerSwitchInput.style.width = "0"
+            // pickerSwitchInput.style.height = "0"
+
+            // // Create the label (slider)
+            // const pickerSwitchLabel = document.createElement("label")
+            // pickerSwitchLabel.setAttribute("class", "switch")
+            // pickerSwitchLabel.style.position = "relative"
+            // pickerSwitchLabel.style.display = "inline-block"
+            // pickerSwitchLabel.style.width = "30px"
+            // pickerSwitchLabel.style.height = "17px"
+
+            // const pickerSliderSpan = document.createElement("span")
+            // pickerSliderSpan.style.position = "absolute"
+            // pickerSliderSpan.style.cursor = "pointer"
+            // pickerSliderSpan.style.top = "0"
+            // pickerSliderSpan.style.left = "0"
+            // pickerSliderSpan.style.right = "0"
+            // pickerSliderSpan.style.bottom = "0"
+            // pickerSliderSpan.style.backgroundColor = "#ccc"
+            // pickerSliderSpan.style.transition = "0.4s"
+            // pickerSliderSpan.style.borderRadius = "17px"
+
+            // // Add the slider circle
+            // const pickerSliderCircle = document.createElement("span")
+            // pickerSliderCircle.style.position = "absolute"
+            // pickerSliderCircle.style.content = ""
+            // pickerSliderCircle.style.height = "13px"
+            // pickerSliderCircle.style.width = "13px"
+            // pickerSliderCircle.style.left = "2px"
+            // pickerSliderCircle.style.bottom = "2px"
+            // pickerSliderCircle.style.backgroundColor = "white"
+            // pickerSliderCircle.style.transition = "0.4s"
+            // pickerSliderCircle.style.borderRadius = "50%"
+            // pickerSliderSpan.appendChild(pickerSliderCircle)
+
+            // pickerSwitchLabel.appendChild(pickerSwitchInput)
+            // pickerSwitchLabel.appendChild(pickerSliderSpan)
+
+            // // Create a text label
+            // const pickerTextLabel = document.createElement("span")
+            // pickerTextLabel.style.marginLeft = "10px"
+            // pickerTextLabel.style.color = "white"
+            // pickerTextLabel.style.fontSize = "12px"
+            // pickerTextLabel.textContent = "Kontrast-Prüfung aktivieren"
+
+            // contrastPickerContainer.appendChild(pickerSwitchLabel)
+            // contrastPickerContainer.appendChild(pickerTextLabel)
+            // contrastPickerDiv.appendChild(contrastPickerContainer)
+
+            // // Event listener for the contrast picker switch
+            // pickerSwitchInput.addEventListener("change", () => {
+            //     // Toggle-Zustand des Kontrastpickers
+            //     pickerSliderSpan.style.backgroundColor =
+            //         pickerSwitchInput.checked ? "#2196F3" : "#ccc"
+            //     pickerSliderCircle.style.left = pickerSwitchInput.checked
+            //         ? "14px"
+            //         : "2px"
+
+            //     // Löse Ereignis für Kontrast-Picker aus
+            //     document.dispatchEvent(
+            //         new CustomEvent("a11y-map-toggle-contrast-picker", {
+            //             detail: { active: pickerSwitchInput.checked },
+            //         })
+            //     )
+            // })
+
+            // controlsDiv.appendChild(contrastPickerDiv)
+            // ++++++++
 
             // Erstelle Spaltenauswahl
             const columnLabel = document.createElement("div")

@@ -45,12 +45,6 @@ function injectAccessibilityMap(config) {
 
             // WICHTIG: Warte einen Moment, damit das Skript initialisiert wird
             setTimeout(() => {
-                // Prüfe, ob die Konfiguration gültig ist
-                if (!config.colorMapping) {
-                    error("Received invalid colorMapping configuration", config)
-                    return
-                }
-
                 // Übergebe Konfiguration über ein benutzerdefiniertes Event
                 const configEvent = new CustomEvent("a11y-map-config", {
                     detail: {

@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "Accessibility-Map",
-    "version": "1.1",
-    "description": "Visualizes accessibility features in web pages through an SVG overlay and provides contrast checking",
+    "version": "1.0",
+    "description": "Visualizes accessibility features in web pages through an SVG overlay",
     "permissions": ["activeTab", "scripting", "storage"],
     "host_permissions": ["<all_urls>"],
     "action": {

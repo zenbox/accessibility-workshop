@@ -9,7 +9,6 @@
     let colorMapping = null
     let baseUrl = ""
     let colorContrastPicker = null
-    let statisticsModule = null
 
     // Höre auf das Konfigurations-Event
     document.addEventListener("a11y-map-config", function (event) {
@@ -46,12 +45,10 @@
             )
             const uiModule = await import(baseUrl + "Ui.js")
             const svgRendererModule = await import(baseUrl + "SvgRenderer.js")
+
+            // Neu: Lade das ColorContrastPicker-Modul
             const colorContrastPickerModule = await import(
                 baseUrl + "ColorContrastPicker.js"
-            )
-            // Neu: Lade das StatisticsModule
-            const statisticsModuleScript = await import(
-                baseUrl + "StatisticsModule.js"
             )
 
             console.log(
@@ -72,37 +69,40 @@
                 occupiedYPositions
             )
 
-            // Neu: Initialisiere das StatisticsModule
-            statisticsModule = new statisticsModuleScript.StatisticsModule(
-                colorMapping
-            )
+            // Instanz vorbereiten, aber noch nicht anzeigen
+            colorContrastPicker = null
 
-            // NEU: Erstelle den Kontrast-Picker sofort beim Start
-            colorContrastPicker =
-                new colorContrastPickerModule.ColorContrastPicker()
+            // Höre auf das Toggle-Event für den Contrast Picker
+            document.addEventListener(
+                "a11y-map-toggle-contrast-picker",
+                (e) => {
+                    console.log(
+                        "%c[A11y-Map Injected]",
+                        "color: #4285f4; font-weight: bold;",
+                        "Toggle Contrast Picker:",
+                        e.detail.active
+                    )
+
+                    if (e.detail.active) {
+                        // Aktiviere den Kontrast-Picker
+                        if (!colorContrastPicker) {
+                            colorContrastPicker =
+                                new colorContrastPickerModule.ColorContrastPicker()
+                        }
+                    } else {
+                        // Deaktiviere den Kontrast-Picker
+                        if (colorContrastPicker) {
+                            colorContrastPicker.cleanup()
+                            colorContrastPicker = null
+                        }
+                    }
+                }
+            )
 
             // Initialisiere die Karte
             function updateMap() {
                 renderer.drawAllRectangles()
-
-                // Aktualisiere die Statistiken, wenn sie sichtbar sind
-                if (statisticsModule) {
-                    statisticsModule.update()
-                }
             }
-
-            // Neu: Event-Listener für Statistik-Toggle
-            document.addEventListener("a11y-map-toggle-statistics", (e) => {
-                console.log(
-                    "%c[A11y-Map Injected]",
-                    "color: #4285f4; font-weight: bold;",
-                    "Toggle Statistics Panel"
-                )
-
-                if (statisticsModule) {
-                    statisticsModule.toggle()
-                }
-            })
 
             // Zeichne die Karte
             renderer.drawAllRectangles()
@@ -123,11 +123,6 @@
                     if (colorContrastPicker) {
                         colorContrastPicker.cleanup()
                         colorContrastPicker = null
-                    }
-
-                    // Bereinige auch das Statistikmodul
-                    if (statisticsModule && statisticsModule.isVisible) {
-                        statisticsModule.toggle()
                     }
 
                     console.log(

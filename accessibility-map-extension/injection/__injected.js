@@ -8,8 +8,6 @@
     // Variablen für die Konfiguration
     let colorMapping = null
     let baseUrl = ""
-    let colorContrastPicker = null
-    let statisticsModule = null
 
     // Höre auf das Konfigurations-Event
     document.addEventListener("a11y-map-config", function (event) {
@@ -46,13 +44,6 @@
             )
             const uiModule = await import(baseUrl + "Ui.js")
             const svgRendererModule = await import(baseUrl + "SvgRenderer.js")
-            const colorContrastPickerModule = await import(
-                baseUrl + "ColorContrastPicker.js"
-            )
-            // Neu: Lade das StatisticsModule
-            const statisticsModuleScript = await import(
-                baseUrl + "StatisticsModule.js"
-            )
 
             console.log(
                 "%c[A11y-Map Injected]",
@@ -72,37 +63,10 @@
                 occupiedYPositions
             )
 
-            // Neu: Initialisiere das StatisticsModule
-            statisticsModule = new statisticsModuleScript.StatisticsModule(
-                colorMapping
-            )
-
-            // NEU: Erstelle den Kontrast-Picker sofort beim Start
-            colorContrastPicker =
-                new colorContrastPickerModule.ColorContrastPicker()
-
             // Initialisiere die Karte
             function updateMap() {
                 renderer.drawAllRectangles()
-
-                // Aktualisiere die Statistiken, wenn sie sichtbar sind
-                if (statisticsModule) {
-                    statisticsModule.update()
-                }
             }
-
-            // Neu: Event-Listener für Statistik-Toggle
-            document.addEventListener("a11y-map-toggle-statistics", (e) => {
-                console.log(
-                    "%c[A11y-Map Injected]",
-                    "color: #4285f4; font-weight: bold;",
-                    "Toggle Statistics Panel"
-                )
-
-                if (statisticsModule) {
-                    statisticsModule.toggle()
-                }
-            })
 
             // Zeichne die Karte
             renderer.drawAllRectangles()
@@ -118,18 +82,6 @@
                     window.removeEventListener("resize", updateMap)
                     window.removeEventListener("scroll", updateMap)
                     document.removeEventListener("a11y-map-cleanup", cleanupMap)
-
-                    // Bereinige auch den ColorContrastPicker
-                    if (colorContrastPicker) {
-                        colorContrastPicker.cleanup()
-                        colorContrastPicker = null
-                    }
-
-                    // Bereinige auch das Statistikmodul
-                    if (statisticsModule && statisticsModule.isVisible) {
-                        statisticsModule.toggle()
-                    }
-
                     console.log(
                         "%c[A11y-Map Injected]",
                         "color: #4285f4; font-weight: bold;",

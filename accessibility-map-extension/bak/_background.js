@@ -3,42 +3,6 @@ console.log("Accessibility Map background service worker started")
 
 // Speichern des aktiven Tab-Status
 let activeAccessibilityMap = {}
-let cachedColorMapping = null
-
-// Lade die colorMapping.json Datei
-async function loadColorMapping() {
-    if (cachedColorMapping !== null) {
-        return cachedColorMapping
-    }
-
-    try {
-        // Lade die colorMapping.json aus den Extension-Ressourcen
-        const url = chrome.runtime.getURL("colorMapping.json")
-        const response = await fetch(url)
-
-        if (!response.ok) {
-            throw new Error(
-                `Failed to load colorMapping.json: ${response.status} ${response.statusText}`
-            )
-        }
-
-        cachedColorMapping = await response.json()
-        console.log("Successfully loaded colorMapping.json")
-        return cachedColorMapping
-    } catch (error) {
-        console.error("Error loading colorMapping.json:", error)
-        // Fallback zu einem einfachen Standard-Objekt im Fehlerfall
-        return {
-            Struktur: {
-                selectors: "header, nav, main, footer",
-                color: "hsla(180, 100%, 50%, 0.85)",
-                type: "mixed",
-                enabled: true,
-                showElement: true,
-            },
-        }
-    }
-}
 
 // Verarbeite Nachrichten
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -66,7 +30,54 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
                 try {
                     // Lade die colorMapping.json
-                    const colorMapping = await loadColorMapping()
+                    let colorMapping
+                    try {
+                        // Verwende ein direktes ColorMapping-Objekt statt fetch
+                        colorMapping = {
+                            "Struktur": {
+                                selectors:
+                                    "header, [role=banner], aside, [role=complementary], nav, [role=navigation], main, [role=main], footer, [role=contentinfo]",
+                                color: "hsla(180, 100%, 50%, 0.85)",
+                                type: "mixed",
+                                enabled: true,
+                                showElement: true,
+                            },
+                            "Semantische Textauszeichnungen": {
+                                selectors:
+                                    "a, em, strong, small, cite, q, dfn, abbr, ruby, rt, rb, data, time, code, var, samp, kbd, sub, sup, mark, bdi, bdo",
+                                color: "hsla(190, 50%, 60%, 0.85)",
+                                type: "element",
+                                enabled: true,
+                                showElement: true,
+                                lines: {
+                                    start: ["[title]"],
+                                    end: "[id]",
+                                },
+                            },
+                            "roleElements": {
+                                selectors: "[role]",
+                                color: "hsla(0, 100%, 50%, 0.85)",
+                                type: "attribute",
+                                enabled: false,
+                            },
+                            "ariaElements": {
+                                selectors:
+                                    "[aria-label], [aria-live], [aria-describedby], [aria-labelledby]",
+                                color: "hsla(0, 100%, 70%, 0.85)",
+                                type: "attribute",
+                                enabled: false,
+                            },
+                            "altElements": {
+                                selectors: "[alt]",
+                                color: "hsla(0, 100%, 30%, 0.85)",
+                                type: "attribute",
+                                enabled: false,
+                            },
+                        }
+                    } catch (error) {
+                        console.error("Error loading colorMapping:", error)
+                        return
+                    }
 
                     // WICHTIG: Prüfe ob der Content Script bereits läuft, wenn nicht, injiziere ihn
                     try {
@@ -120,32 +131,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
         // Auch hier keine Antwort notwendig
         return false
-    }
-
-    // Neuer Handler für Testzwecke
-    if (message.action === "testColorMapping") {
-        loadColorMapping()
-            .then((colorMapping) => {
-                console.log("Sending colorMapping for test", !!colorMapping)
-                sendResponse({
-                    success: true,
-                    hasMapping: !!colorMapping,
-                    categoryCount: colorMapping
-                        ? Object.keys(colorMapping).length
-                        : 0,
-                    timestamp: new Date().toISOString(),
-                })
-            })
-            .catch((error) => {
-                console.error("Error in test handler:", error)
-                sendResponse({
-                    success: false,
-                    error: error.message,
-                })
-            })
-
-        // Wichtig: true zurückgeben für asynchrone Antwort
-        return true
     }
 
     // Standardfall: keine asynchrone Antwort erwartet
