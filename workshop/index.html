@@ -1,19 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
     <head>
         <meta charset="UTF-8" />
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
         />
-        <title>Typografie</title>
+        <title>Tastatur und Maus</title>
         <link
             rel="stylesheet"
             href="assets/css/style.css"
         />
+        
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     </head>
     <body>
-        <h1>Headline ipsum dolor sit.</h1>
+        <nav>
+            <ul>
+                <li>
+                    <a aria-label="Suchen-Icon" title="Link zu Hades" href="#" class="fas fa-search fa-1x"></a>
+                </li>
+                <li><a href="#">Link 2</a></li>
+                <li><a href="#">Link 4</a></li>
+                <li><a href="#">Link 5</a></li>
+                <li><a href="#">Link 6</a></li>
+            </ul>
+        </nav>
+
+<div role="alert">Achtung, Achtung, eine wichtige Meldung!!</div>
+
+        <form>
+            <label for="email">E-Mail</label>
+            <input
+                id="email"
+                tabindex="-1"
+                type="email"
+                name="email"
+                autocomplete="off"
+            />
+            <label>Passwort</label>
+            <input
+                type="password"
+                name="password"
+            />
+            <button type="submit">Anmelden</button>
+        </form>
+
+        <h1 tabindex="0">Headline ipsum dolor sit.</h1>
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi sit
             quibusdam quae porro incidunt molestias odit fugiat ratione nihil,
