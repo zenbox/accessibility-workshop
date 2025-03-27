@@ -11,41 +11,97 @@
             rel="stylesheet"
             href="assets/css/style.css"
         />
-        
+
         <link
             rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        />
     </head>
     <body>
         <nav>
             <ul>
                 <li>
-                    <a aria-label="Suchen-Icon" title="Link zu Hades" href="#" class="fas fa-search fa-1x"></a>
+                    <a
+                        aria-label="zur Suche über alle Seiten"
+                        title="Link zur Suchmaschine"
+                        href="#"
+                        class="fas fa-search fa-1x"
+                    ></a>
                 </li>
-                <li><a href="#">Link 2</a></li>
+                <li><a href="http://google.de">zu Google</a></li>
                 <li><a href="#">Link 4</a></li>
                 <li><a href="#">Link 5</a></li>
                 <li><a href="#">Link 6</a></li>
             </ul>
         </nav>
 
-<div role="alert">Achtung, Achtung, eine wichtige Meldung!!</div>
+        <!-- <div role="alert">Achtung, Achtung, eine wichtige Meldung!!</div> -->
 
-        <form>
-            <label for="email">E-Mail</label>
-            <input
-                id="email"
-                tabindex="-1"
-                type="email"
-                name="email"
-                autocomplete="off"
-            />
-            <label>Passwort</label>
-            <input
-                type="password"
-                name="password"
-            />
-            <button type="submit">Anmelden</button>
+        <form
+            aria-live="assertive"
+            novalidate
+        >
+            <fieldset>
+                <legend>Anmeldung</legend>
+                <!-- - - - - - - - - - - -->
+                <label for="email">E-Mail</label>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    autocomplete="off"
+                    aria-describedby="email-input-hint"
+                    required
+                />
+                <p
+                    class="hidden input-hint"
+                    id="email-input-hint"
+                >
+                    Gib hier deine E-Mail-Adresse ein. Achte such auf das @
+                    Zeichen.
+                </p>
+                <p class="hidden error">Du hast einen Fehler gemacht.</p>
+                <p class="hidden error-hint">
+                    Schau mal ob du ein @ Zeichen eingegeben hast. Gehe zurück in
+                    das Feld und füge ein @ Zeichen dazu.
+                </p>
+                <style>
+                    .hidden {
+                        display: none;
+                    }
+                </style>
+                <script>
+                    // Script, um die Fehlermeldung anzuzeigen
+                    const emailInput = document.getElementById("email")
+                    const error = document.querySelector(".error")
+                    const errorHint = document.querySelector(".error-hint")
+
+                    // Bei Fokus Hinweistext einblenden
+                    emailInput.addEventListener("focus", function () {
+                        document
+                            .getElementById("email-input-hint")
+                            .classList.remove("hidden")
+                    })
+                    // Bei Verlassen und keinem Inhalt Hinweistext zur Fehlermeldung einblenden
+                    emailInput.addEventListener("blur", function () {
+                         document
+                            .getElementById("email-input-hint")
+                            .classList.add("hidden")
+                        if (emailInput.value === "" || !emailInput.value.includes("@")) {
+                            error.classList.remove("hidden")
+                            errorHint.classList.remove("hidden")
+                        }
+                    })
+            
+                </script>
+                <!-- - - - - - - - - - - -->
+                <label>Passwort</label>
+                <input
+                    type="password"
+                    name="password"
+                />
+                <button type="submit">Anmelden</button>
+            </fieldset>
         </form>
 
         <h1 tabindex="0">Headline ipsum dolor sit.</h1>
