@@ -1,0 +1,36 @@
+/* Typografie,
+ 200% Zoom und Umbruch 
+ Schrift, Abstände veränderbar!
+ */
+
+:root {
+    font-size: clamp(14px, 1rem, 24px);
+}
+
+body {
+    font-family: Verdana, sans-serif;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+p {
+    font-size: 1.25rem;
+}
+
+/* Geräteabhängig Schriftgrößen umstellen */
+@media (max-width: 576px) {
+    :root {
+        font-size: 16px;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+}
+
+@media (prefers-font-size: 18px) {
+}
