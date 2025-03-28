@@ -17,100 +17,172 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         />
     </head>
-    <body>
-        <nav>
-            <ul>
-                <li>
-                    <a
-                        aria-label="zur Suche über alle Seiten"
-                        title="Link zur Suchmaschine"
-                        href="#"
-                        class="fas fa-search fa-1x"
-                    ></a>
-                </li>
-                <li><a href="http://google.de">zu Google</a></li>
-                <li><a href="#">Link 4</a></li>
-                <li><a href="#">Link 5</a></li>
-                <li><a href="#">Link 6</a></li>
-            </ul>
-        </nav>
+    <body class="container">
+        <header>
+            <div
+                id="logo"
+                class="fas fa-circle fa-4x"
+            ></div>
+            <nav id="main-nav">
+                <ul>
+                    <li>
+                        <a
+                            aria-label="zur Suche über alle Seiten"
+                            title="Link zur Suchmaschine"
+                            href="#"
+                            class="fas fa-search fa-1x"
+                        ></a>
+                    </li>
+                    <li><a href="http://google.de">zu Google</a></li>
+                    <li><a href="#">Link 3</a></li>
+                </ul>
+            </nav>
+        </header>
 
         <!-- <div role="alert">Achtung, Achtung, eine wichtige Meldung!!</div> -->
+        <div class="main-container">
+            <main>
+                <article class="hero">
+                    <h1 tabindex="0">Lorem ipsum dolor sit amet.</h1>
+                </article>
 
-        <form
-            aria-live="assertive"
-            novalidate
-        >
-            <fieldset>
-                <legend>Anmeldung</legend>
-                <!-- - - - - - - - - - - -->
-                <label for="email">E-Mail</label>
-                <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    autocomplete="off"
-                    aria-describedby="email-input-hint"
-                    required
-                />
-                <p
-                    class="hidden input-hint"
-                    id="email-input-hint"
-                >
-                    Gib hier deine E-Mail-Adresse ein. Achte such auf das @
-                    Zeichen.
-                </p>
-                <p class="hidden error">Du hast einen Fehler gemacht.</p>
-                <p class="hidden error-hint">
-                    Schau mal ob du ein @ Zeichen eingegeben hast. Gehe zurück in
-                    das Feld und füge ein @ Zeichen dazu.
-                </p>
-                <style>
-                    .hidden {
-                        display: none;
-                    }
-                </style>
-                <script>
-                    // Script, um die Fehlermeldung anzuzeigen
-                    const emailInput = document.getElementById("email")
-                    const error = document.querySelector(".error")
-                    const errorHint = document.querySelector(".error-hint")
+                <article class="card-container">
+                    <section class="card">
+                        <figure>
+                            <img
+                                src="https://picsum.photos/id/103/300"
+                                alt=""
+                            />
+                        </figure>
+                        <h2 tabindex="0">Headline ipsum dolor sit.</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Animi sit quibusdam quae porro incidunt
+                            molestias odit fugiat ratione nihil, suscipit
+                            accusamus eius labore perferendis.
+                        </p>
+                        <button class="btn">Button</button>
+                    </section>
 
-                    // Bei Fokus Hinweistext einblenden
-                    emailInput.addEventListener("focus", function () {
-                        document
-                            .getElementById("email-input-hint")
-                            .classList.remove("hidden")
-                    })
-                    // Bei Verlassen und keinem Inhalt Hinweistext zur Fehlermeldung einblenden
-                    emailInput.addEventListener("blur", function () {
-                         document
-                            .getElementById("email-input-hint")
-                            .classList.add("hidden")
-                        if (emailInput.value === "" || !emailInput.value.includes("@")) {
-                            error.classList.remove("hidden")
-                            errorHint.classList.remove("hidden")
+                    <section class="card">
+                        <figure>
+                            <img
+                                src="https://picsum.photos/id/94/300"
+                                alt=""
+                            />
+                        </figure>
+                        <h2 tabindex="0">Headline ipsum dolor sit.</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Animi sit quibusdam quae porro incidunt
+                            molestias odit fugiat ratione nihil, suscipit
+                            accusamus eius labore perferendis.
+                        </p>
+                        <button class="btn">Button</button>
+                    </section>
+
+                    <section class="card">
+                        <figure>
+                            <img
+                                src="https://picsum.photos/id/64/300"
+                                alt=""
+                            />
+                        </figure>
+                        <h2 tabindex="0">Headline ipsum dolor sit.</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Animi sit quibusdam quae porro incidunt
+                            molestias odit fugiat ratione nihil, suscipit
+                            accusamus eius labore perferendis.
+                        </p>
+                        <button class="btn">Button</button>
+                    </section>
+                </article>
+
+                <article class="article">
+                    <h2 tabindex="0">Headline ipsum dolor sit.</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Animi sit quibusdam quae porro incidunt molestias odit
+                        fugiat ratione nihil, suscipit accusamus eius labore
+                        perferendis.
+                    </p>
+                </article>
+            </main>
+        </div>
+        <aside>
+            <form
+                aria-live="assertive"
+                novalidate
+            >
+                <fieldset>
+                    <legend>Anmeldung</legend>
+                    <!-- - - - - - - - - - - -->
+                    <label for="email">E-Mail</label>
+                    <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        autocomplete="off"
+                        aria-describedby="email-input-hint"
+                        required
+                    />
+                    <p
+                        class="hidden input-hint"
+                        id="email-input-hint"
+                    >
+                        Gib hier deine E-Mail-Adresse ein. Achte such auf das @
+                        Zeichen.
+                    </p>
+                    <p class="hidden error">Du hast einen Fehler gemacht.</p>
+                    <p class="hidden error-hint">
+                        Schau mal ob du ein @ Zeichen eingegeben hast. Gehe
+                        zurück in das Feld und füge ein @ Zeichen dazu.
+                    </p>
+                    <style>
+                        .hidden {
+                            display: none;
                         }
-                    })
-            
-                </script>
-                <!-- - - - - - - - - - - -->
-                <label>Passwort</label>
-                <input
-                    type="password"
-                    name="password"
-                />
-                <button type="submit">Anmelden</button>
-            </fieldset>
-        </form>
+                    </style>
+                    <script>
+                        // Script, um die Fehlermeldung anzuzeigen
+                        const emailInput = document.getElementById("email")
+                        const error = document.querySelector(".error")
+                        const errorHint = document.querySelector(".error-hint")
 
-        <h1 tabindex="0">Headline ipsum dolor sit.</h1>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi sit
-            quibusdam quae porro incidunt molestias odit fugiat ratione nihil,
-            suscipit accusamus eius labore perferendis.
-        </p>
-
+                        // Bei Fokus Hinweistext einblenden
+                        emailInput.addEventListener("focus", function () {
+                            document
+                                .getElementById("email-input-hint")
+                                .classList.remove("hidden")
+                        })
+                        // Bei Verlassen und keinem Inhalt Hinweistext zur Fehlermeldung einblenden
+                        emailInput.addEventListener("blur", function () {
+                            document
+                                .getElementById("email-input-hint")
+                                .classList.add("hidden")
+                            if (
+                                emailInput.value === "" ||
+                                !emailInput.value.includes("@")
+                            ) {
+                                error.classList.remove("hidden")
+                                errorHint.classList.remove("hidden")
+                            }
+                        })
+                    </script>
+                    <!-- - - - - - - - - - - -->
+                    <label>Passwort</label>
+                    <input
+                        type="password"
+                        name="password"
+                    />
+                    <button type="submit">Anmelden</button>
+                </fieldset>
+            </form>
+        </aside>
+        <footer>
+            <p>&copy; Workshop März 2025</p>
+        </footer>
         <script src="assets/js/font-settings.js"></script>
     </body>
 </html>
