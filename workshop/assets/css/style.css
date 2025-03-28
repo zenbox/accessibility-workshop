@@ -8,9 +8,9 @@
     font-size: clamp(14px, 1rem, 24px);
 
     /* Colors */
-    --primary: #007bff;
+    --primary: hsl(211, 20%, 50%);
     --onPrimary: #ffffff;
-    --secondary: #6c757d;
+    --secondary: hsl(208, 7%, 46%);
     --onSecondary: #ffffff;
 
     --success: #28a745;
@@ -28,7 +28,7 @@
     --dark: #343a40;
 
     --focus: #007bff;
-    --link: #007bff;
+    --link: hsl(212, 20%, 80%);
     --visited: #6f42c1;
     --hover: #0056b3;
     --active: #0056b3;
@@ -38,13 +38,13 @@
    BASE
    - - - - - - - - - - */
 body {
-    font-family: Verdana, sans-serif;
+    font-family: Roboto, sans-serif;
     background-color: var(--background);
     color: var(--text);
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 p {
@@ -158,6 +158,10 @@ nav {
     }
 }
 
+img {
+    filter: saturate(0.5) opacity(0.5);
+}
+
 /* - - - - - - - - - -
    FORM
    - - - - - - - - - - */
@@ -211,11 +215,18 @@ form {
     background-image: url(https://picsum.photos/id/32/800/400);
     background-size: cover;
     color: white;
+    min-height: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: bottom;
 
     h1 {
+
         font-size: 3rem;
         text-align: center;
         margin: 0;
+        color: var(--dark);
     }
 }
 
