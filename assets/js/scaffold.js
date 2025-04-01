@@ -94,6 +94,10 @@ function createMainNavigation() {
             text: "Kriterien (v2)",
         },
         {
+            file: "wcag-test.html",
+            text: "WCAG Test",
+        },
+        {
             file: "semantic.html",
             text: "Semantik",
         },
