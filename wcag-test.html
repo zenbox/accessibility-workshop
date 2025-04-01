@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html
+    lang="de"
+    class="dark"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>WCAG Test Tool</title>
+        <link
+            rel="stylesheet"
+            href="../assets/css/style.css"
+        />
+        <link
+            rel="stylesheet"
+            href="assets/css/wcag-test.css"
+        />
+    </head>
+    <body>
+        <header></header>
+        <div class="container">
+            <h1>WCAG Test Tool</h1>
+
+            <div
+                class="card"
+                style="margin-bottom: 20px"
+            >
+                <div class="button-group">
+                    <button id="save-local-storage">
+                        Im Browser speichern
+                    </button>
+                    <button id="load-local-storage">Aus Browser laden</button>
+                    <button id="export-data">Daten exportieren</button>
+                    <label
+                        for="import-file"
+                        class="button secondary"
+                        style="display: inline-block; cursor: pointer"
+                        >Daten importieren</label
+                    >
+                    <input
+                        type="file"
+                        id="import-file"
+                        accept=".json"
+                        style="display: none"
+                    />
+                </div>
+            </div>
+
+            <wcag-test-app></wcag-test-app>
+        </div>
+        <script src="assets/js/scaffold.js"></script>
+        <script src="assets/js/wcag-test/app.js"></script>
+    </body>
+</html>

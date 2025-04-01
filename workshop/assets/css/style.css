@@ -4,35 +4,34 @@
  */
 
 :root {
-    /* Typography */
-    font-size: clamp(14px, 1rem, 24px);
+  /* Typography */
+  font-size: clamp(14px, 1rem, 24px);
 
-    /* Colors */
-    --primary: hsl(211, 20%, 50%);
-    --onPrimary: #ffffff;
-    --secondary: hsl(208, 7%, 46%);
-    --onSecondary: #ffffff;
+  /* Colors */
+  --onPrimary: hsl(344 25.6% 91.6% /1);
+  --primary: hsl(234 49% 51.6% /1);
+  --onSecondary: hsl(270 42% 9.4% /1);
+  --secondary: hsl(185 46.2% 61.4% /1);
+  --onSuccess: hsl(131 100% 76% /1);
+  --success: #ffffff;
+  --danger: hsl(352 100% 53% /1);
+  --onDanger: #ffffff;
+  --warning: #ffc107;
+  --onWarning: #212529;
+  --info: #17a2b8;
+  --onInfo: #ffffff;
 
-    --success: #28a745;
-    --onSuccess: #ffffff;
-    --danger: #dc3545;
-    --onDanger: #ffffff;
-    --warning: #ffc107;
-    --onWarning: #212529;
-    --info: #17a2b8;
-    --onInfo: #ffffff;
+  --background: #f0f0f0;
+  --text: #212529;
+  --light: #f8f9fa;
+  --dark: #343a40;
 
-    --background: #f0f0f0;
-    --text: #212529;
-    --light: #f8f9fa;
-    --dark: #343a40;
-
-    --focus: #007bff;
-    --link: hsl(212, 20%, 80%);
-    --visited: #6f42c1;
-    --hover: #0056b3;
-    --active: #0056b3;
-    --disabled: #6c757d;
+  --focus: #007bff;
+  --link: hsl(212, 20%, 80%);
+  --visited: hsl(281 100% 77% /1);
+  --hover: #0056b3;
+  --active: hsl(225 95% 63% /1);
+  --disabled: #6c757d;
 }
 /* - - - - - - - - - -
    BASE
@@ -111,7 +110,7 @@ header {
 }
 
 main {
-    flex: 3; /* Verhältnis 3:2 statt prozentuale Basis */
+    flex: 10; /* Verhältnis 3:2 statt prozentuale Basis */
 }
 
 aside {
@@ -159,7 +158,7 @@ nav {
 }
 
 img {
-    filter: saturate(0.5) opacity(0.5);
+    filter: saturate(0.15) opacity(0.85) ;
 }
 
 /* - - - - - - - - - -
@@ -172,9 +171,11 @@ img {
 
 :valid + p.error {
     display: none;
+    background: var(--onSuccess);
 }
 :invalid + p.error {
     display: block;
+    background: var(--danger);
 }
 
 form {
@@ -212,10 +213,11 @@ form {
    HERO
    - - - - - - - - - - */
 .hero {
-    background-image: url(https://picsum.photos/id/32/800/400);
+    background-image: url(https://picsum.photos/id/30/800/400?grayscale);
     background-size: cover;
-    color: white;
-    min-height: 20vh;
+
+    color: var(--light);
+    min-height: 50vh;
     display: flex;
     flex-direction: column;
     justify-content: left;
