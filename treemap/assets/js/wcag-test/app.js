@@ -696,6 +696,7 @@ class TestModel {
         this.pages = []
         this.results = new Map()
         this.observers = []
+        this.reportPreface = "" // Für die Präambel des Berichts
 
         // Versuche, gespeicherte Daten aus dem localStorage zu laden
         this.loadFromLocalStorage()
@@ -711,10 +712,11 @@ class TestModel {
     }
 
     // Setze Grunddaten
-    setBasicData(title, date, mainUrl) {
+    setBasicData(title, date, mainUrl, preface = "") {
         this.title = title
         this.date = date
         this.mainUrl = mainUrl
+        this.reportPreface = preface
         this.notifyObservers()
     }
 
@@ -745,13 +747,16 @@ class TestModel {
     }
 
     // Teste Ergebnisse verwalten
-    setResult(pageId, criteriaId, resultType, comment) {
+    setResult(pageId, criteriaId, resultType, comments) {
         const key = `${pageId}-${criteriaId}`
         this.results.set(key, {
             pageId,
             criteriaId,
             resultType,
-            comment,
+            comments: Array.isArray(comments)
+                ? comments
+                : [comments].filter(Boolean),
+            images: this.results.get(key)?.images || [],
         })
         this.notifyObservers()
     }
@@ -759,6 +764,75 @@ class TestModel {
     getResult(pageId, criteriaId) {
         const key = `${pageId}-${criteriaId}`
         return this.results.get(key) || null
+    }
+
+    // Füge einen neuen Kommentar hinzu
+    addComment(pageId, criteriaId, comment) {
+        if (!comment.trim()) return
+
+        const result = this.getResult(pageId, criteriaId)
+        if (result) {
+            const comments = result.comments || []
+            comments.push(comment)
+
+            this.setResult(pageId, criteriaId, result.resultType, comments)
+        }
+    }
+
+    // Füge ein Bild zu einem Ergebnis hinzu
+    addImage(pageId, criteriaId, imageData, description = "") {
+        const key = `${pageId}-${criteriaId}`
+        const result = this.results.get(key)
+
+        if (!result) return false
+
+        const images = result.images || []
+        const imageId = Date.now().toString()
+
+        images.push({
+            id: imageId,
+            data: imageData,
+            description: description,
+            timestamp: new Date().toISOString(),
+        })
+
+        result.images = images
+        this.results.set(key, result)
+        this.notifyObservers()
+
+        return imageId
+    }
+
+    // Lösche ein Bild
+    deleteImage(pageId, criteriaId, imageId) {
+        const key = `${pageId}-${criteriaId}`
+        const result = this.results.get(key)
+
+        if (!result || !result.images) return false
+
+        result.images = result.images.filter((img) => img.id !== imageId)
+        this.results.set(key, result)
+        this.notifyObservers()
+
+        return true
+    }
+
+    // Aktualisiere Bild-Beschreibung
+    updateImageDescription(pageId, criteriaId, imageId, description) {
+        const key = `${pageId}-${criteriaId}`
+        const result = this.results.get(key)
+
+        if (!result || !result.images) return false
+
+        const image = result.images.find((img) => img.id === imageId)
+        if (image) {
+            image.description = description
+            this.results.set(key, result)
+            this.notifyObservers()
+            return true
+        }
+
+        return false
     }
 
     // Auswertung
@@ -807,6 +881,7 @@ class TestModel {
             title: this.title,
             date: this.date,
             mainUrl: this.mainUrl,
+            reportPreface: this.reportPreface,
             pages: this.pages,
             results: Array.from(this.results.entries()),
         }
@@ -816,9 +891,210 @@ class TestModel {
         this.title = json.title
         this.date = json.date
         this.mainUrl = json.mainUrl
+        this.reportPreface = json.reportPreface || ""
         this.pages = json.pages
         this.results = new Map(json.results)
+
+        // Konvertiere alte Kommentarformat zu neuem Format (Array statt String)
+        for (const [key, value] of this.results.entries()) {
+            if (typeof value.comment === "string" && value.comment.trim()) {
+                value.comments = [value.comment]
+                delete value.comment
+                this.results.set(key, value)
+            } else if (!value.comments) {
+                value.comments = []
+                this.results.set(key, value)
+            }
+        }
+
         this.notifyObservers()
+    }
+
+    // Export als Markdown
+    generateMarkdownReport() {
+        let markdown = `# ${this.title}\n\n`
+        markdown += `**Datum:** ${this.date}\n\n`
+        markdown += `**Website:** ${this.mainUrl}\n\n`
+
+        // Füge die Präambel hinzu, wenn vorhanden
+        if (this.reportPreface) {
+            markdown += `## Präambel\n\n${this.reportPreface}\n\n`
+        }
+
+        // Zusammenfassung
+        const summary = this.getSummary()
+        markdown += `## Zusammenfassung\n\n`
+        markdown += `- **Erfüllt:** ${summary.fulfilled}\n`
+        markdown += `- **Nicht erfüllt:** ${summary.notFulfilled}\n`
+        markdown += `- **Nicht anwendbar:** ${summary.notApplicable}\n`
+        markdown += `- **Gesamtzahl geprüfter Kriterien:** ${summary.total}\n\n`
+
+        // Erfüllungsgrad in Prozent
+        if (summary.total > 0) {
+            const percentage = Math.round(
+                (summary.fulfilled / summary.total) * 100
+            )
+            markdown += `**Erfüllungsgrad:** ${percentage}%\n\n`
+        }
+
+        // Getestete Seiten
+        markdown += `## Getestete Seiten\n\n`
+        for (const page of this.pages) {
+            markdown += `- [${page.title}](${page.url})\n`
+        }
+        markdown += `\n`
+
+        // Tabellarische Übersicht aller Ergebnisse
+        markdown += `## Übersicht der Testergebnisse\n\n`
+
+        for (const page of this.pages) {
+            markdown += `### ${page.title}\n\n`
+
+            // Tabelle für eine kompakte Übersicht
+            markdown += `| Kriterium | Ergebnis | Bemerkungen |\n`
+            markdown += `| --------- | -------- | ----------- |\n`
+
+            for (const criteria of wcagCriteria) {
+                const result = this.getResult(page.id, criteria.id)
+                if (!result) continue
+
+                const resultTypeName =
+                    resultTypes.find((r) => r.id === result.resultType)?.name ||
+                    ""
+
+                // Kommentare zusammenfassen
+                let commentsText = "-"
+                if (result.comments && result.comments.length > 0) {
+                    commentsText = result.comments
+                        .map((c) => c.replace(/\n/g, " "))
+                        .join("; ")
+                }
+
+                markdown += `| **${criteria.id}** ${criteria.name} (${criteria.level}) | ${resultTypeName} | ${commentsText} |\n`
+            }
+
+            markdown += `\n`
+        }
+
+        // Detaillierte Ergebnisse pro Seite
+        markdown += `## Detaillierte Testergebnisse\n\n`
+
+        for (const page of this.pages) {
+            markdown += `### ${page.title}\n\n`
+
+            for (const criteria of wcagCriteria) {
+                const result = this.getResult(page.id, criteria.id)
+                if (!result) continue
+
+                const resultTypeName =
+                    resultTypes.find((r) => r.id === result.resultType)?.name ||
+                    ""
+
+                markdown += `#### ${criteria.id} ${criteria.name} (${criteria.level})\n\n`
+                markdown += `**Ergebnis:** ${resultTypeName}\n\n`
+
+                // Kommentare hinzufügen
+                if (result.comments && result.comments.length > 0) {
+                    markdown += `**Bemerkungen:**\n\n`
+                    for (const comment of result.comments) {
+                        markdown += `- ${comment}\n`
+                    }
+                    markdown += `\n`
+                }
+
+                // Bilder hinzufügen
+                if (result.images && result.images.length > 0) {
+                    markdown += `**Screenshots:**\n\n`
+
+                    for (const image of result.images) {
+                        // Bild als Base64 einbetten mit max-width Angabe
+                        markdown += `<img src="${image.data}" alt="${
+                            image.description || "Screenshot"
+                        }" style="max-width: 100%; height: auto;" />\n\n`
+
+                        // Beschreibung hinzufügen, wenn vorhanden
+                        if (image.description) {
+                            markdown += `*${image.description}*\n\n`
+                        }
+                    }
+                }
+
+                markdown += `---\n\n`
+            }
+        }
+
+        // Nicht erfüllte Kriterien hervorheben
+        if (summary.notFulfilledItems.length > 0) {
+            markdown += `## Zusammenfassung: Nicht erfüllte Kriterien\n\n`
+
+            const notFulfilledByPage = {}
+
+            for (const result of summary.notFulfilledItems) {
+                const page = this.pages.find((p) => p.id === result.pageId)
+                const criteria = wcagCriteria.find(
+                    (c) => c.id === result.criteriaId
+                )
+
+                if (!page || !criteria) continue
+
+                if (!notFulfilledByPage[page.title]) {
+                    notFulfilledByPage[page.title] = []
+                }
+
+                notFulfilledByPage[page.title].push({
+                    criteria,
+                    result,
+                })
+            }
+
+            for (const [pageName, items] of Object.entries(
+                notFulfilledByPage
+            )) {
+                markdown += `### ${pageName}\n\n`
+
+                for (const item of items) {
+                    const resultTypeName =
+                        resultTypes.find((r) => r.id === item.result.resultType)
+                            ?.name || ""
+
+                    markdown += `#### ${item.criteria.id} ${item.criteria.name} (${item.criteria.level})\n\n`
+                    markdown += `**Ergebnis:** ${resultTypeName}\n\n`
+
+                    if (
+                        item.result.comments &&
+                        item.result.comments.length > 0
+                    ) {
+                        markdown += `**Bemerkungen:**\n\n`
+                        for (const comment of item.result.comments) {
+                            markdown += `- ${comment}\n`
+                        }
+                        markdown += `\n`
+                    }
+
+                    // Bilder für nicht erfüllte Kriterien auch hier anzeigen
+                    if (item.result.images && item.result.images.length > 0) {
+                        markdown += `**Screenshots:**\n\n`
+
+                        for (const image of item.result.images) {
+                            // Bild als Base64 einbetten mit max-width Angabe
+                            markdown += `<img src="${image.data}" alt="${
+                                image.description || "Screenshot"
+                            }" style="max-width: 100%; height: auto;" />\n\n`
+
+                            // Beschreibung hinzufügen, wenn vorhanden
+                            if (image.description) {
+                                markdown += `*${image.description}*\n\n`
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        markdown += `---\n\n`
+        markdown += `Der Bericht wurde mit dem <a href="https://www.michaelreichart.de/accessibility-workshop/treemap/wcag-test.html">WCAG Test Tool</a> erstellt. &copy; 2025\n`
+
+        return markdown
     }
 
     // LocalStorage Funktionen
@@ -928,6 +1204,22 @@ class WcagTestApp extends HTMLElement {
                                 this.model.mainUrl
                             }" placeholder="https://example.com">
                         </div>
+                        <div class="form-group">
+                            <label for="report-preface">Bericht-Präambel</label>
+                            <div class="markdown-editor">
+                                <div class="editor-toolbar">
+                                    <button type="button" class="md-btn" data-action="bold" title="Fett">B</button>
+                                    <button type="button" class="md-btn" data-action="italic" title="Kursiv">I</button>
+                                    <button type="button" class="md-btn" data-action="heading" title="Überschrift">H</button>
+                                    <button type="button" class="md-btn" data-action="list" title="Liste">•</button>
+                                    <button type="button" class="md-btn" data-action="link" title="Link">🔗</button>
+                                </div>
+                                <textarea id="report-preface" rows="5" placeholder="Zusätzliche Informationen für den Bericht (unterstützt Markdown-Formatierung)">${
+                                    this.model.reportPreface
+                                }</textarea>
+                                <div class="editor-preview"></div>
+                            </div>
+                        </div>
                         <button id="save-basic-data">Speichern</button>
                     </div>
 
@@ -1010,7 +1302,9 @@ class WcagTestApp extends HTMLElement {
                                     const resultType = result
                                         ? result.resultType
                                         : ""
-                                    const comment = result ? result.comment : ""
+                                    const comments = result
+                                        ? result.comments || []
+                                        : []
                                     const resultClass = resultType
                                         ? resultTypes.find(
                                               (r) => r.id === resultType
@@ -1076,13 +1370,117 @@ class WcagTestApp extends HTMLElement {
                                                         .join("")}
                                                 </select>
                                             </div>
+                                            
                                             <div class="form-group">
-                                                <label>Begründung / Kommentar</label>
-                                                <textarea class="result-comment" data-criteria-id="${
+                                                <label>Bemerkungen</label>
+                                                <div class="comments-container">
+                                                    ${
+                                                        comments.length > 0
+                                                            ? comments
+                                                                  .map(
+                                                                      (
+                                                                          comment,
+                                                                          index
+                                                                      ) => `
+                                                            <div class="comment-entry">
+                                                                <textarea class="comment-text" data-index="${index}" data-criteria-id="${criteria.id}" data-page-id="${this.currentPageId}" rows="3">${comment}</textarea>
+                                                                <button type="button" class="delete-comment" data-index="${index}" data-criteria-id="${criteria.id}" data-page-id="${this.currentPageId}">Löschen</button>
+                                                            </div>
+                                                        `
+                                                                  )
+                                                                  .join("")
+                                                            : '<p class="no-comments">Keine Bemerkungen vorhanden</p>'
+                                                    }
+                                                    
+                                                    <div class="new-comment">
+                                                        <textarea class="new-comment-text" data-criteria-id="${
+                                                            criteria.id
+                                                        }" data-page-id="${
+                                        this.currentPageId
+                                    }" rows="3" placeholder="Neue Bemerkung eingeben..."></textarea>
+                                                        <button type="button" class="add-comment" data-criteria-id="${
+                                                            criteria.id
+                                                        }" data-page-id="${
+                                        this.currentPageId
+                                    }">Hinzufügen</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Screenshots</label>
+                                                <div class="images-container" data-criteria-id="${
                                                     criteria.id
                                                 }" data-page-id="${
                                         this.currentPageId
-                                    }" rows="3">${comment}</textarea>
+                                    }">
+                                                    ${
+                                                        result &&
+                                                        result.images &&
+                                                        result.images.length > 0
+                                                            ? result.images
+                                                                  .map(
+                                                                      (
+                                                                          image,
+                                                                          index
+                                                                      ) => `
+                                                            <div class="image-entry" data-image-id="${
+                                                                image.id
+                                                            }">
+                                                                <div class="image-preview">
+                                                                    <img src="${
+                                                                        image.data
+                                                                    }" alt="${
+                                                                          image.description ||
+                                                                          "Screenshot"
+                                                                      }" />
+                                                                </div>
+                                                                <div class="image-controls">
+                                                                    <input type="text" class="image-description" value="${
+                                                                        image.description ||
+                                                                        ""
+                                                                    }" placeholder="Bildbeschreibung eingeben..." data-image-id="${
+                                                                          image.id
+                                                                      }" data-criteria-id="${
+                                                                          criteria.id
+                                                                      }" data-page-id="${
+                                                                          this
+                                                                              .currentPageId
+                                                                      }">
+                                                                    <button type="button" class="delete-image" data-image-id="${
+                                                                        image.id
+                                                                    }" data-criteria-id="${
+                                                                          criteria.id
+                                                                      }" data-page-id="${
+                                                                          this
+                                                                              .currentPageId
+                                                                      }">Bild löschen</button>
+                                                                </div>
+                                                            </div>
+                                                        `
+                                                                  )
+                                                                  .join("")
+                                                            : '<p class="no-images">Keine Screenshots vorhanden</p>'
+                                                    }
+                                                    
+                                                    <div class="image-upload-controls">
+                                                        <button type="button" class="paste-image-btn" data-criteria-id="${
+                                                            criteria.id
+                                                        }" data-page-id="${
+                                        this.currentPageId
+                                    }">Screenshot aus Zwischenablage einfügen</button>
+                                                        <button type="button" class="upload-image-btn" data-criteria-id="${
+                                                            criteria.id
+                                                        }" data-page-id="${
+                                        this.currentPageId
+                                    }">Bild hochladen</button>
+                                                        <input type="file" class="image-upload-input" style="display: none;" accept="image/*" data-criteria-id="${
+                                                            criteria.id
+                                                        }" data-page-id="${
+                                        this.currentPageId
+                                    }">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1161,6 +1559,11 @@ class WcagTestApp extends HTMLElement {
                             }% erfüllt
                         </div>
 
+                        <div class="export-options" style="margin-top: 24px; display: flex; gap: 12px;">
+                            <button id="export-json-btn" class="secondary">Als JSON exportieren</button>
+                            <button id="export-markdown-btn">Als Markdown exportieren</button>
+                        </div>
+
                         <h3>Detaillierte Ergebnisse</h3>
                         <div class="tabs">
                             <div class="tab active" data-summary-tab="all">Alle</div>
@@ -1208,7 +1611,7 @@ class WcagTestApp extends HTMLElement {
                         <tr>
                             <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Kriterium</th>
                             <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Ergebnis</th>
-                            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Begründung</th>
+                            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Bemerkungen</th>
                             <th style="text-align: center; padding: 8px; border-bottom: 1px solid #ddd;">Info</th>
                         </tr>
                     `
@@ -1221,23 +1624,26 @@ class WcagTestApp extends HTMLElement {
                     (r) => r.id === result.resultType
                 )
 
+                // Kommentare zusammenfassen
+                const commentsHtml =
+                    result.comments && result.comments.length > 0
+                        ? result.comments
+                              .map(
+                                  (comment) =>
+                                      `<div class="comment-item">${comment}</div>`
+                              )
+                              .join("")
+                        : "-"
+
                 html += `
                             <tr>
-                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${
-                                    criterion.id
-                                } ${criterion.name}</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${criterion.id} ${criterion.name}</td>
                                 <td style="padding: 8px; border-bottom: 1px solid #ddd;">
-                                    <span class="result-badge ${
-                                        resultTypeObj.class
-                                    }">${resultTypeObj.name}</span>
+                                    <span class="result-badge ${resultTypeObj.class}">${resultTypeObj.name}</span>
                                 </td>
-                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${
-                                    result.comment || "-"
-                                }</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">${commentsHtml}</td>
                                 <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: center;">
-                                    <button class="criteria-info-button" data-criteria-id="${
-                                        criterion.id
-                                    }" title="Kriterium-Informationen anzeigen">i</button>
+                                    <button class="criteria-info-button" data-criteria-id="${criterion.id}" title="Kriterium-Informationen anzeigen">i</button>
                                 </td>
                             </tr>
                         `
@@ -1262,7 +1668,7 @@ class WcagTestApp extends HTMLElement {
                         <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Seite</th>
                         <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Kriterium</th>
                         <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Ergebnis</th>
-                        <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Begründung</th>
+                        <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;">Bemerkungen</th>
                         <th style="text-align: center; padding: 8px; border-bottom: 1px solid #ddd;">Info</th>
                     </tr>
                 `
@@ -1276,26 +1682,27 @@ class WcagTestApp extends HTMLElement {
                 (r) => r.id === result.resultType
             )
 
+            // Kommentare zusammenfassen
+            const commentsHtml =
+                result.comments && result.comments.length > 0
+                    ? result.comments
+                          .map(
+                              (comment) =>
+                                  `<div class="comment-item">${comment}</div>`
+                          )
+                          .join("")
+                    : "-"
+
             html += `
                         <tr>
-                            <td style="padding: 8px; border-bottom: 1px solid #ddd;">${
-                                page.title
-                            }</td>
-                            <td style="padding: 8px; border-bottom: 1px solid #ddd;">${
-                                criterion.id
-                            } ${criterion.name}</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #ddd;">${page.title}</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #ddd;">${criterion.id} ${criterion.name}</td>
                             <td style="padding: 8px; border-bottom: 1px solid #ddd;">
-                                <span class="result-badge ${
-                                    resultTypeObj.class
-                                }">${resultTypeObj.name}</span>
+                                <span class="result-badge ${resultTypeObj.class}">${resultTypeObj.name}</span>
                             </td>
-                            <td style="padding: 8px; border-bottom: 1px solid #ddd;">${
-                                result.comment || "-"
-                            }</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #ddd;">${commentsHtml}</td>
                             <td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: center;">
-                                <button class="criteria-info-button" data-criteria-id="${
-                                    result.criteriaId
-                                }" title="Kriterium-Informationen anzeigen">i</button>
+                                <button class="criteria-info-button" data-criteria-id="${result.criteriaId}" title="Kriterium-Informationen anzeigen">i</button>
                             </td>
                         </tr>
                     `
@@ -1323,9 +1730,77 @@ class WcagTestApp extends HTMLElement {
                     const title = this.querySelector("#test-title").value
                     const date = this.querySelector("#test-date").value
                     const mainUrl = this.querySelector("#main-url").value
-                    this.model.setBasicData(title, date, mainUrl)
+                    const preface = this.querySelector("#report-preface").value
+                    this.model.setBasicData(title, date, mainUrl, preface)
                 }
             )
+
+            // Markdown-Editor-Toolbar-Buttons
+            this.querySelectorAll(".md-btn").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const textarea = this.querySelector("#report-preface")
+                    const action = btn.dataset.action
+                    const startPos = textarea.selectionStart
+                    const endPos = textarea.selectionEnd
+                    const selectedText = textarea.value.substring(
+                        startPos,
+                        endPos
+                    )
+
+                    let replacement = ""
+
+                    switch (action) {
+                        case "bold":
+                            replacement = `**${selectedText}**`
+                            break
+                        case "italic":
+                            replacement = `*${selectedText}*`
+                            break
+                        case "heading":
+                            replacement = `## ${selectedText}`
+                            break
+                        case "list":
+                            replacement = selectedText
+                                .split("\n")
+                                .map((line) => `- ${line}`)
+                                .join("\n")
+                            break
+                        case "link":
+                            replacement = `[${selectedText}](url)`
+                            break
+                    }
+
+                    textarea.value =
+                        textarea.value.substring(0, startPos) +
+                        replacement +
+                        textarea.value.substring(endPos)
+                    textarea.focus()
+                    textarea.selectionStart = startPos + replacement.length
+                    textarea.selectionEnd = startPos + replacement.length
+
+                    // Preview aktualisieren
+                    const preview = this.querySelector(".editor-preview")
+                    if (preview) {
+                        preview.innerHTML = this.renderMarkdown(textarea.value)
+                    }
+                })
+            })
+
+            // Live-Preview für Markdown
+            const prefaceTextarea = this.querySelector("#report-preface")
+            const preview = this.querySelector(".editor-preview")
+
+            if (prefaceTextarea && preview) {
+                // Initial-Preview
+                preview.innerHTML = this.renderMarkdown(prefaceTextarea.value)
+
+                // Bei Änderungen aktualisieren
+                prefaceTextarea.addEventListener("input", () => {
+                    preview.innerHTML = this.renderMarkdown(
+                        prefaceTextarea.value
+                    )
+                })
+            }
 
             // Seite hinzufügen
             this.querySelector("#add-page")?.addEventListener("click", () => {
@@ -1397,38 +1872,259 @@ class WcagTestApp extends HTMLElement {
                     const pageId = parseInt(select.dataset.pageId)
                     const criteriaId = select.dataset.criteriaId
                     const resultType = select.value
-                    const commentElem = this.querySelector(
-                        `.result-comment[data-criteria-id="${criteriaId}"][data-page-id="${pageId}"]`
-                    )
-                    const comment = commentElem ? commentElem.value : ""
+
+                    // Bestehende Kommentare beibehalten
+                    const result = this.model.getResult(pageId, criteriaId)
+                    const comments =
+                        result && result.comments ? result.comments : []
 
                     this.model.setResult(
                         pageId,
                         criteriaId,
                         resultType,
-                        comment
+                        comments
                     )
                 })
             })
 
-            // Kommentar ändern
-            this.querySelectorAll(".result-comment").forEach((textarea) => {
+            // Vorhandene Kommentare bearbeiten
+            this.querySelectorAll(".comment-text").forEach((textarea) => {
                 textarea.addEventListener("change", () => {
                     const pageId = parseInt(textarea.dataset.pageId)
                     const criteriaId = textarea.dataset.criteriaId
-                    const comment = textarea.value
-                    const selectElem = this.querySelector(
-                        `.result-select[data-criteria-id="${criteriaId}"][data-page-id="${pageId}"]`
-                    )
-                    const resultType = selectElem ? selectElem.value : ""
+                    const index = parseInt(textarea.dataset.index)
+                    const result = this.model.getResult(pageId, criteriaId)
 
-                    if (resultType) {
+                    if (
+                        result &&
+                        result.comments &&
+                        result.comments[index] !== undefined
+                    ) {
+                        // Aktualisiere spezifischen Kommentar
+                        const comments = [...result.comments]
+                        comments[index] = textarea.value
+
                         this.model.setResult(
                             pageId,
                             criteriaId,
-                            resultType,
-                            comment
+                            result.resultType,
+                            comments
                         )
+                    }
+                })
+            })
+
+            // Kommentar löschen
+            this.querySelectorAll(".delete-comment").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const pageId = parseInt(button.dataset.pageId)
+                    const criteriaId = button.dataset.criteriaId
+                    const index = parseInt(button.dataset.index)
+                    const result = this.model.getResult(pageId, criteriaId)
+
+                    if (
+                        result &&
+                        result.comments &&
+                        result.comments[index] !== undefined
+                    ) {
+                        // Entferne spezifischen Kommentar
+                        const comments = result.comments.filter(
+                            (_, i) => i !== index
+                        )
+
+                        this.model.setResult(
+                            pageId,
+                            criteriaId,
+                            result.resultType,
+                            comments
+                        )
+                    }
+                })
+            })
+
+            // Neuen Kommentar hinzufügen
+            this.querySelectorAll(".add-comment").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const pageId = parseInt(button.dataset.pageId)
+                    const criteriaId = button.dataset.criteriaId
+                    const textareaElem = this.querySelector(
+                        `.new-comment-text[data-criteria-id="${criteriaId}"][data-page-id="${pageId}"]`
+                    )
+
+                    if (textareaElem && textareaElem.value.trim()) {
+                        const newComment = textareaElem.value.trim()
+                        const result = this.model.getResult(pageId, criteriaId)
+
+                        if (result) {
+                            // Füge neuen Kommentar hinzu
+                            const comments = result.comments || []
+                            comments.push(newComment)
+
+                            this.model.setResult(
+                                pageId,
+                                criteriaId,
+                                result.resultType,
+                                comments
+                            )
+
+                            // Textfeld leeren
+                            textareaElem.value = ""
+                        } else if (textareaElem.value.trim()) {
+                            // Wenn noch kein Ergebnis vorhanden, Hinweis anzeigen
+                            alert(
+                                "Bitte wählen Sie zuerst ein Ergebnis aus, bevor Sie Bemerkungen hinzufügen."
+                            )
+                        }
+                    }
+                })
+            })
+
+            // Screenshot aus der Zwischenablage einfügen
+            this.querySelectorAll(".paste-image-btn").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const pageId = parseInt(button.dataset.pageId)
+                    const criteriaId = button.dataset.criteriaId
+                    const result = this.model.getResult(pageId, criteriaId)
+
+                    if (!result) {
+                        alert(
+                            "Bitte wählen Sie zuerst ein Ergebnis aus, bevor Sie Screenshots hinzufügen."
+                        )
+                        return
+                    }
+
+                    // Zugriff auf Zwischenablage anfordern
+                    navigator.clipboard
+                        .read()
+                        .then(async (clipboardItems) => {
+                            for (const clipboardItem of clipboardItems) {
+                                // Prüfen, ob ein Bild in der Zwischenablage ist
+                                if (
+                                    clipboardItem.types.includes("image/png") ||
+                                    clipboardItem.types.includes(
+                                        "image/jpeg"
+                                    ) ||
+                                    clipboardItem.types.includes("image/gif")
+                                ) {
+                                    // Bildtyp finden
+                                    const imageType = clipboardItem.types.find(
+                                        (type) =>
+                                            type === "image/png" ||
+                                            type === "image/jpeg" ||
+                                            type === "image/gif"
+                                    )
+
+                                    // Bild aus Zwischenablage holen
+                                    const blob = await clipboardItem.getType(
+                                        imageType
+                                    )
+
+                                    // Bild in Base64 konvertieren
+                                    const reader = new FileReader()
+                                    reader.onload = (e) => {
+                                        const imageData = e.target.result
+
+                                        // Zum Modell hinzufügen
+                                        this.model.addImage(
+                                            pageId,
+                                            criteriaId,
+                                            imageData
+                                        )
+                                        this.render() // Neuzeichnen, um Bild anzuzeigen
+                                    }
+                                    reader.readAsDataURL(blob)
+                                    return
+                                }
+                            }
+
+                            // Kein Bild in der Zwischenablage
+                            alert(
+                                "Kein Bild in der Zwischenablage gefunden. Bitte kopieren Sie zuerst ein Bild."
+                            )
+                        })
+                        .catch((error) => {
+                            console.error(
+                                "Fehler beim Zugriff auf die Zwischenablage:",
+                                error
+                            )
+                            alert(
+                                "Zugriff auf die Zwischenablage nicht möglich. Bitte verwenden Sie die Datei-Upload-Funktion."
+                            )
+                        })
+                })
+            })
+
+            // Bild-Upload Button
+            this.querySelectorAll(".upload-image-btn").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const pageId = parseInt(button.dataset.pageId)
+                    const criteriaId = button.dataset.criteriaId
+                    const fileInput = this.querySelector(
+                        `.image-upload-input[data-criteria-id="${criteriaId}"][data-page-id="${pageId}"]`
+                    )
+
+                    if (fileInput) {
+                        fileInput.click() // Dateiauswahl-Dialog öffnen
+                    }
+                })
+            })
+
+            // Bild-Upload Datei-Input
+            this.querySelectorAll(".image-upload-input").forEach((input) => {
+                input.addEventListener("change", (event) => {
+                    const pageId = parseInt(input.dataset.pageId)
+                    const criteriaId = input.dataset.criteriaId
+                    const file = event.target.files[0]
+                    const result = this.model.getResult(pageId, criteriaId)
+
+                    if (!result) {
+                        alert(
+                            "Bitte wählen Sie zuerst ein Ergebnis aus, bevor Sie Screenshots hinzufügen."
+                        )
+                        return
+                    }
+
+                    if (file && file.type.match("image.*")) {
+                        const reader = new FileReader()
+                        reader.onload = (e) => {
+                            const imageData = e.target.result
+
+                            // Zum Modell hinzufügen
+                            this.model.addImage(pageId, criteriaId, imageData)
+                            this.render() // Neuzeichnen, um Bild anzuzeigen
+                        }
+                        reader.readAsDataURL(file)
+                    }
+                })
+            })
+
+            // Bild-Beschreibung aktualisieren
+            this.querySelectorAll(".image-description").forEach((input) => {
+                input.addEventListener("change", () => {
+                    const pageId = parseInt(input.dataset.pageId)
+                    const criteriaId = input.dataset.criteriaId
+                    const imageId = input.dataset.imageId
+                    const description = input.value.trim()
+
+                    this.model.updateImageDescription(
+                        pageId,
+                        criteriaId,
+                        imageId,
+                        description
+                    )
+                })
+            })
+
+            // Bild löschen
+            this.querySelectorAll(".delete-image").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const pageId = parseInt(button.dataset.pageId)
+                    const criteriaId = button.dataset.criteriaId
+                    const imageId = button.dataset.imageId
+
+                    if (confirm("Möchten Sie dieses Bild wirklich löschen?")) {
+                        this.model.deleteImage(pageId, criteriaId, imageId)
+                        this.render() // Neuzeichnen, um Änderung anzuzeigen
                     }
                 })
             })
@@ -1467,6 +2163,179 @@ class WcagTestApp extends HTMLElement {
                     this.showCriteriaInfoDialog(criteriaId)
                 })
             })
+
+            // Export-Buttons
+            // JSON Export
+            this.querySelector("#export-json-btn")?.addEventListener(
+                "click",
+                () => {
+                    exportData() // Nutze die vorhandene Export-Funktion
+                }
+            )
+
+            // Markdown Export
+            this.querySelector("#export-markdown-btn")?.addEventListener(
+                "click",
+                () => {
+                    const markdown = this.model.generateMarkdownReport()
+                    const filename = `wcag-test-${
+                        this.model.title.replace(/\s+/g, "-") || "export"
+                    }.md`
+
+                    // Blob mit Markdown-Inhalt erstellen
+                    const blob = new Blob([markdown], { type: "text/markdown" })
+                    const url = URL.createObjectURL(blob)
+
+                    // Download als Datei
+                    const a = document.createElement("a")
+                    a.href = url
+                    a.download = filename
+                    document.body.appendChild(a)
+                    a.click()
+                    document.body.removeChild(a)
+
+                    // Für den Browser-Tab: Als Base64 kodieren und mit Dateinamen-Parameter im GitHub-Format öffnen
+                    // Dies öffnet den Inhalt in GitHub oder ähnlichen Diensten, die Markdown korrekt rendern
+                    const b64Content = btoa(
+                        unescape(encodeURIComponent(markdown))
+                    )
+                    const githubViewerUrl = `https://github.com/username/temp/blob/main/${filename}?short_path=0123456#L1`
+
+                    const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <meta http-equiv="refresh" content="0;url=data:text/markdown;base64,${b64Content}">
+                    <title>${filename}</title>
+                    <style>
+                        body {
+                            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+                            line-height: 1.6;
+                            color: #333;
+                            max-width: 900px;
+                            margin: 0 auto;
+                            padding: 20px;
+                        }
+                        pre {
+                            background-color: #f6f8fa;
+                            border-radius: 3px;
+                            padding: 16px;
+                            overflow: auto;
+                        }
+                        code {
+                            background-color: rgba(27,31,35,0.05);
+                            border-radius: 3px;
+                            padding: 0.2em 0.4em;
+                            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+                        }
+                        blockquote {
+                            border-left: 4px solid #ddd;
+                            padding-left: 16px;
+                            margin-left: 0;
+                            color: #666;
+                        }
+                        h1, h2, h3, h4, h5, h6 {
+                            margin-top: 24px;
+                            margin-bottom: 16px;
+                            font-weight: 600;
+                            line-height: 1.25;
+                        }
+                        h1 { border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
+                        h2 { border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
+                        table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin: 16px 0;
+                            display: table;
+                        }
+                        table th, table td {
+                            border: 1px solid #ddd;
+                            padding: 8px 12px;
+                            text-align: left;
+                        }
+                        table th {
+                            background-color: #f6f8fa;
+                        }
+                        
+                        /* Verbesserte Tabellendarstellung */
+                        tbody tr:nth-child(odd) {
+                            background-color: #f8f8f8;
+                        }
+                        tbody tr:hover {
+                            background-color: #f0f0f0;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div id="content">
+                        Wenn keine formatierte Markdown-Ansicht erscheint, kann die heruntergeladene .md-Datei mit einem Markdown-Editor geöffnet werden.
+                    </div>
+                    <script>
+                        // Versuche, Showdown zu laden oder Markdown-Inhalt direkt anzuzeigen
+                        document.addEventListener('DOMContentLoaded', function() {
+                            try {
+                                const markdown = decodeURIComponent(escape(atob('${b64Content}')));
+                                document.getElementById('content').innerText = markdown;
+                                
+                                // Versuche, Showdown zu laden, wenn es verfügbar ist
+                                const script = document.createElement('script');
+                                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js';
+                                script.onload = function() {
+                                    try {
+                                        // Konfiguriere Showdown mit allen möglichen Erweiterungen
+                                        const converter = new showdown.Converter({
+                                            tables: true,                // Tabellen aktivieren  
+                                            tasklists: true,            // Aufgabenlisten aktivieren
+                                            strikethrough: true,        // Durchstreichungen aktivieren
+                                            ghCodeBlocks: true,         // GitHub-Code-Blöcke
+                                            emoji: true,                // Emoji-Unterstützung
+                                            underline: true,            // Unterstreichungen aktivieren
+                                            simplifiedAutoLink: true,   // Automatische Links
+                                            parseImgDimensions: true,   // Bildgrößen parsen
+                                            ghMentions: false,          // GitHub-Erwähnungen deaktivieren
+                                            openLinksInNewWindow: true, // Links in neuem Tab öffnen
+                                            backslashEscapesHTMLTags: true // Backslash-Escapes
+                                        });
+                                        
+                                        // Zusätzliche Optionen
+                                        showdown.setFlavor('github');  // GitHub-Style Markdown
+                                        
+                                        const html = converter.makeHtml(markdown);
+                                        document.getElementById('content').innerHTML = html;
+                                    } catch (e) {
+                                        console.error('Fehler bei der Markdown-Konvertierung:', e);
+                                    }
+                                };
+                                document.head.appendChild(script);
+                            } catch (e) {
+                                console.error('Fehler beim Dekodieren des Markdown-Inhalts:', e);
+                            }
+                        });
+                    </script>
+                </body>
+                </html>`
+
+                    // HTML-Seite mit eingebettetem Markdown und Showdown-Konverter erstellen
+                    const htmlBlob = new Blob([htmlContent], {
+                        type: "text/html",
+                    })
+                    const htmlUrl = URL.createObjectURL(htmlBlob)
+
+                    // In neuem Tab öffnen
+                    window.open(htmlUrl, "_blank")
+
+                    // Nach einer Verzögerung aufräumen
+                    setTimeout(() => {
+                        URL.revokeObjectURL(url)
+                        URL.revokeObjectURL(htmlUrl)
+                    }, 10000)
+
+                    showNotification(
+                        "Markdown-Bericht erfolgreich exportiert und in neuem Tab geöffnet"
+                    )
+                }
+            )
         }
     }
 

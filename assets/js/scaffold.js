@@ -90,9 +90,14 @@ function createMainNavigation() {
 
     const navigation = [
         {
+            file: "index.html",
+            text: "Startseite",
+        },
+        {
             file: "treemap/v2/index.html",
             text: "Kriterien (v2)",
         },
+
         {
             file: "wcag-test.html",
             text: "WCAG Test",

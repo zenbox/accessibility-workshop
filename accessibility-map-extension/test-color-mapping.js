@@ -1,8 +1,8 @@
 /**
- * Test-Skript für die colorMapping-Funktionalität
+ * Test-Skript für die wcag-criteria-test-Funktionalität
  *
  * Dieses Skript kann während der Entwicklung verwendet werden, um:
- * 1. Zu testen, ob die colorMapping.json korrekt geladen wird
+ * 1. Zu testen, ob die wcag-criteria-test.json korrekt geladen wird
  * 2. Die Kommunikation zwischen Background, Content und Injected Script zu testen
  */
 
@@ -85,10 +85,10 @@ function validateColorMapping(mapping) {
 }
 
 /**
- * Prüft, ob die colorMapping.json erfolgreich geladen werden kann
+ * Prüft, ob die wcag-criteria-test.json erfolgreich geladen werden kann
  */
 async function testColorMappingLoading() {
-    testLog("Teste das Laden der colorMapping.json...")
+    testLog("Teste das Laden der wcag-criteria-test.json...")
 
     try {
         // Im Kontext einer Chrome Extension
@@ -97,8 +97,8 @@ async function testColorMappingLoading() {
             chrome.runtime &&
             chrome.runtime.getURL
         ) {
-            const url = chrome.runtime.getURL("colorMapping.json")
-            testLog("Lade colorMapping.json von:", url)
+            const url = chrome.runtime.getURL("wcag-criteria-test.json")
+            testLog("Lade wcag-criteria-test.json von:", url)
 
             const startTime = performance.now()
             const response = await fetch(url)
@@ -106,7 +106,7 @@ async function testColorMappingLoading() {
 
             if (!response.ok) {
                 throw new Error(
-                    `Failed to fetch colorMapping.json: ${response.status}`
+                    `Failed to fetch wcag-criteria-test.json: ${response.status}`
                 )
             }
 
@@ -117,7 +117,7 @@ async function testColorMappingLoading() {
             const isValid = validateColorMapping(data)
 
             testLog(
-                `colorMapping.json geladen in ${(endTime - startTime).toFixed(
+                `wcag-criteria-test.json geladen in ${(endTime - startTime).toFixed(
                     2
                 )}ms`
             )
@@ -136,17 +136,17 @@ async function testColorMappingLoading() {
         // Im Kontext einer Entwicklungsumgebung
         else {
             testLog("Chrome API nicht verfügbar, versuche relative URL")
-            const response = await fetch("./colorMapping.json")
+            const response = await fetch("./wcag-criteria-test.json")
             if (!response.ok) {
                 throw new Error(
-                    `Failed to fetch colorMapping.json: ${response.status}`
+                    `Failed to fetch wcag-criteria-test.json: ${response.status}`
                 )
             }
             const data = await response.json()
             TEST_CONFIG.loadedColorMapping = data
 
             const isValid = validateColorMapping(data)
-            testLog(`colorMapping.json geladen aus relativer URL`)
+            testLog(`wcag-criteria-test.json geladen aus relativer URL`)
             testLog(`Anzahl der Kategorien: ${Object.keys(data).length}`)
             testLog(
                 `Validierung: ${isValid ? "Erfolgreich" : "Fehlgeschlagen"}`
@@ -159,7 +159,7 @@ async function testColorMappingLoading() {
             }
         }
     } catch (err) {
-        testError("Fehler beim Laden der colorMapping.json:", err)
+        testError("Fehler beim Laden der wcag-criteria-test.json:", err)
         return {
             success: false,
             error: err.message,
@@ -253,7 +253,7 @@ async function runAllTests() {
     // Gebe die Gesamtergebnisse aus
     testLog("Test-Ergebnisse:")
     console.table({
-        "Laden der colorMapping.json": results.loadingTest.success
+        "Laden der wcag-criteria-test.json": results.loadingTest.success
             ? "Erfolgreich"
             : "Fehlgeschlagen",
         "Kommunikation": results.communicationTest
@@ -281,7 +281,7 @@ testLog(
     "- window.a11yMapTest.validateColorMapping(mapping): Validiert ein colorMapping-Objekt"
 )
 testLog(
-    "- window.a11yMapTest.testColorMappingLoading(): Testet das Laden der colorMapping.json"
+    "- window.a11yMapTest.testColorMappingLoading(): Testet das Laden der wcag-criteria-test.json"
 )
 testLog(
     "- window.a11yMapTest.testColorMappingCommunication(): Testet die Kommunikation mit dem Content-Script"

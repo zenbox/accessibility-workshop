@@ -10,6 +10,45 @@ export class SvgRenderer {
         this.contrastFilterMode = "all" // 'all', 'fails', 'succeeds'
         this.contrastColumnCount = 1 // Anzahl der Spalten für Kontrastanzeige
         this.occupiedLabelAreas = []
+        
+        this.focusableElements = null
+        this.currentFocusIndex = -1
+        
+        // Speichere Elemente, deren Sichtbarkeitsstatus beobachtet wird
+        this.observedElements = new Map()
+        
+        // Erstelle einen Mutation Observer, um Änderungen an den Displaystilen zu überwachen
+        this.observer = new MutationObserver(mutations => {
+            let needsRedraw = false
+            
+            mutations.forEach(mutation => {
+                if (mutation.type === 'attributes' && 
+                    (mutation.attributeName === 'style' || 
+                     mutation.attributeName === 'class' || 
+                     mutation.attributeName === 'hidden')) {
+                    needsRedraw = true
+                }
+            })
+            
+            if (needsRedraw) {
+                this.drawAllRectangles()
+            }
+        })
+        
+        // Bound event handler methods
+        this._handleFocusIn = (e) => this.handleFocusChange(e.target)
+        this._handleKeydown = (e) => {
+            if (e.key === "Tab") {
+                setTimeout(() => {
+                    this.handleFocusChange(document.activeElement)
+                }, 10)
+            }
+        }
+        this._focusChangeListener = () => {
+            if (this.colorMapping.Fokus && this.colorMapping.Fokus.enabled) {
+                this.drawAllRectangles()
+            }
+        }
 
         try {
             this.createSVGOverlay()
@@ -52,6 +91,25 @@ export class SvgRenderer {
         if (this.svg) {
             this.svg.remove()
         }
+        
+        // Remove event listeners
+        if (this.focusableElements) {
+            document.removeEventListener("focusin", this._handleFocusIn)
+            document.removeEventListener("keydown", this._handleKeydown)
+        }
+        
+        if (this._focusListenerAdded) {
+            document.removeEventListener("focusin", this._focusChangeListener)
+            this._focusListenerAdded = false
+        }
+        
+        // Disconnect MutationObserver
+        if (this.observer) {
+            this.observer.disconnect()
+        }
+        
+        // Clear observed elements
+        this.observedElements.clear()
     }
 
     // Create the SVG overlay
@@ -103,11 +161,26 @@ export class SvgRenderer {
         this.adjustSVGSize()
 
         let tabCounter = 1 // Counter for tab sequence
+        
+        // Prüfe, ob versteckte Elemente angezeigt werden sollen
+        const hiddenToggle = this.colorMapping["Versteckte Elemente"]
+        const showHiddenElements = hiddenToggle && hiddenToggle.enabled
 
         for (const category in this.colorMapping) {
             const { selectors, color, type, enabled, lines, showElement } =
                 this.colorMapping[category]
+            
+            if (category === "Versteckte Elemente") {
+                // Überspringe den Versteckte-Elemente-Schalter selbst
+                continue
+            }
+            
             if (enabled) {
+                if (category === "Fokus") {
+                    // Focus elements will be drawn at the end
+                    continue
+                }
+                
                 if (type === "contrast") {
                     this.drawContrastIndicators()
                     continue
@@ -124,6 +197,14 @@ export class SvgRenderer {
                     const elements =
                         document.querySelectorAll(processedSelectors)
                     elements.forEach((element) => {
+                        // Prüfe, ob das Element versteckt ist
+                        const isHidden = this.isElementHidden(element)
+                        
+                        // Überpringe Element, wenn es versteckt ist und der Versteckte-Elemente-Schalter ausgeschaltet ist
+                        if (isHidden && !showHiddenElements) {
+                            return
+                        }
+                        
                         let labelText = ""
 
                         if (type === "attribute") {
@@ -146,10 +227,14 @@ export class SvgRenderer {
                         }
 
                         if (labelText) {
+                            // Position links für versteckte Elemente, rechts für sichtbare
+                            const position = isHidden ? 'left' : 'right'
+                            
                             this.drawRectangleForElement(
                                 element,
                                 color,
-                                labelText
+                                labelText,
+                                position
                             )
                         }
 
@@ -250,6 +335,11 @@ export class SvgRenderer {
                     )
                 }
             }
+        }
+        
+        // Draw focus elements if enabled (at the end so they appear on top)
+        if (this.colorMapping.Fokus && this.colorMapping.Fokus.enabled) {
+            this.drawFocusableElements()
         }
     }
 
@@ -471,13 +561,93 @@ export class SvgRenderer {
         return yiq >= 128 ? "#000" : "#fff"
     }
 
+    // Überprüft, ob ein Element versteckt ist
+    isElementHidden(element) {
+        const style = window.getComputedStyle(element)
+        
+        // Prüfe auf häufige Gründe für versteckte Elemente
+        if (style.display === 'none') return true
+        if (style.visibility === 'hidden' || style.visibility === 'collapse') return true
+        if (style.opacity === '0') return true
+        if (element.hasAttribute('hidden')) return true
+        
+        // Prüfe auf Elemente mit keiner Höhe oder Breite
+        const rect = element.getBoundingClientRect()
+        if (rect.width === 0 || rect.height === 0) return true
+        
+        // Element scheint sichtbar zu sein
+        return false
+    }
+    
+    // Zeichne alle versteckten Elemente
+    drawHiddenElements(color, position) {
+        try {
+            // Wähle alle Elemente im Dokument außer unserem UI
+            const allElements = document.querySelectorAll(`*:not(#${this.ui.id} *):not(script):not(style):not(head)`)
+            const hiddenElements = []
+            
+            // Filtere versteckte Elemente
+            allElements.forEach(element => {
+                if (this.isElementHidden(element)) {
+                    // Prüfe, ob das Element wirklich ein Teil des Dokuments ist (kein SVG/MathML-Element)
+                    if (element.namespaceURI === 'http://www.w3.org/1999/xhtml') {
+                        hiddenElements.push(element)
+                    }
+                }
+            })
+            
+            console.log(`[A11y-Map] ${hiddenElements.length} versteckte Elemente gefunden`)
+            
+            // Zeichne jedes versteckte Element
+            hiddenElements.forEach(element => {
+                // Verwende die Tag-Bezeichnung und ID/Klasse wenn vorhanden
+                let labelText = element.tagName.toLowerCase()
+                if (element.id) {
+                    labelText += `#${element.id}`
+                } else if (element.className && typeof element.className === 'string' && element.className.trim()) {
+                    // Füge die erste Klasse hinzu, wenn vorhanden
+                    const firstClass = element.className.trim().split(' ')[0]
+                    labelText += `.${firstClass}`
+                }
+                
+                this.drawRectangleForElement(element, color, labelText, position)
+            })
+        } catch (error) {
+            console.error('[A11y-Map] Fehler beim Zeichnen versteckter Elemente:', error)
+        }
+    }
+    
     // Draw a rectangle around an element with a label
-    drawRectangleForElement(element, color, labelText) {
+    drawRectangleForElement(element, color, labelText, position = 'right') {
         const rect = element.getBoundingClientRect()
         const documentRightEdge = window.innerWidth + window.scrollX
+        const documentLeftEdge = window.scrollX
         const labelPadding = 10
+        
+        // Prüfe, ob das Element versteckt ist
+        const isHidden = this.isElementHidden(element)
+        
+        // Speichere den aktuellen Versteckstatus des Elements
+        const elementId = element.getAttribute('id') || element.tagName + '_' + Math.random().toString(36).substr(2, 9)
+        
+        // Beobachte das Element für Änderungen in der Sichtbarkeit
+        if (!this.observedElements.has(element)) {
+            // Füge das Element zum Observer hinzu
+            this.observer.observe(element, {
+                attributes: true, 
+                attributeFilter: ['style', 'class', 'hidden']
+            })
+            
+            // Speichere Element und Status
+            this.observedElements.set(element, isHidden)
+        }
+        
+        // Wenn der Status sich geändert hat, aktualisiere ihn
+        if (this.observedElements.get(element) !== isHidden) {
+            this.observedElements.set(element, isHidden)
+        }
 
-        // Draw the rectangle around the element
+        // Draw the rectangle around the element, mit 50% Deckkraft für versteckte Elemente
         const rectangle = document.createElementNS(
             "http://www.w3.org/2000/svg",
             "rect"
@@ -486,9 +656,16 @@ export class SvgRenderer {
         rectangle.setAttribute("y", rect.top + window.scrollY)
         rectangle.setAttribute("width", rect.width)
         rectangle.setAttribute("height", rect.height)
-        rectangle.setAttribute("stroke", color)
+        rectangle.setAttribute("stroke", isHidden ? color.replace("0.85", "0.5") : color)
         rectangle.setAttribute("stroke-width", "2")
         rectangle.setAttribute("fill", "none")
+        
+        // Markiere versteckte Elemente mit einem transparenten Hintergrund
+        if (isHidden) {
+            rectangle.setAttribute("fill", color.replace("0.85", "0.1"))
+            rectangle.setAttribute("stroke-dasharray", "5,3")
+        }
+        
         this.svg.appendChild(rectangle)
 
         // Measure the text width
@@ -509,18 +686,26 @@ export class SvgRenderer {
         const labelWidth = textWidth
         const labelHeight = 20
 
-        // Finde eine freie Position für das Label
+        // Finde eine freie Position für das Label, abhängig von der Position
+        let startX
+        if (position === 'left') {
+            startX = documentLeftEdge + labelPadding
+        } else { // 'right' ist Standard
+            startX = documentRightEdge - labelWidth - labelPadding
+        }
+        
         const freePosition = this.findFreeLabelPosition(
-            documentRightEdge - labelWidth - labelPadding,
+            startX,
             rect.top + window.scrollY,
             labelWidth,
-            labelHeight
+            labelHeight,
+            position
         )
 
         // Speichere die Position in der Liste der belegten Bereiche
         this.occupiedLabelAreas.push(freePosition)
 
-        // Create background rectangle for the label
+        // Create background rectangle for the label, mit reduzierter Deckkraft für versteckte Elemente
         const labelBackground = document.createElementNS(
             "http://www.w3.org/2000/svg",
             "rect"
@@ -529,7 +714,16 @@ export class SvgRenderer {
         labelBackground.setAttribute("y", freePosition.y)
         labelBackground.setAttribute("width", freePosition.width)
         labelBackground.setAttribute("height", freePosition.height)
-        labelBackground.setAttribute("fill", color)
+        
+        // Anpassen der Farbe für versteckte Elemente
+        if (isHidden) {
+            // Für versteckte Elemente, zeige das Label mit 50% Deckkraft an
+            labelBackground.setAttribute("fill", color.replace("0.85", "0.5"))
+        } else {
+            // Für sichtbare Elemente, normales Label
+            labelBackground.setAttribute("fill", color)
+        }
+        
         this.svg.appendChild(labelBackground)
 
         // Add text to the label
@@ -537,12 +731,27 @@ export class SvgRenderer {
             "http://www.w3.org/2000/svg",
             "text"
         )
-        textLabel.setAttribute("x", freePosition.x + freePosition.width - 5)
-        textLabel.setAttribute("y", freePosition.y + 15)
+        
+        // Passe die Position und Ausrichtung abhängig von der Positionierung (links oder rechts) an
+        if (position === 'left') {
+            textLabel.setAttribute("x", freePosition.x + 5)
+            textLabel.setAttribute("y", freePosition.y + 15)
+            textLabel.setAttribute("text-anchor", "start")
+        } else {
+            textLabel.setAttribute("x", freePosition.x + freePosition.width - 5)
+            textLabel.setAttribute("y", freePosition.y + 15)
+            textLabel.setAttribute("text-anchor", "end")
+        }
+        
         textLabel.setAttribute("fill", this.getContrastColor(color))
         textLabel.setAttribute("font-size", "12")
-        textLabel.setAttribute("text-anchor", "end")
-        textLabel.textContent = labelText
+        
+        // Füge Information über Sichtbarkeit dem Label hinzu
+        if (isHidden) {
+            textLabel.textContent = `${labelText} [versteckt]`
+        } else {
+            textLabel.textContent = labelText
+        }
         this.svg.appendChild(textLabel)
 
         // Verbindungslinie vom Element zum Label zeichnen
@@ -551,7 +760,7 @@ export class SvgRenderer {
         const labelCenterX = freePosition.x + freePosition.width / 2
         const labelCenterY = freePosition.y + freePosition.height / 2
 
-        // Zeichne eine feine Verbindungslinie
+        // Zeichne eine feine Verbindungslinie, mit Anpassung für versteckte Elemente
         const connectorLine = document.createElementNS(
             "http://www.w3.org/2000/svg",
             "path"
@@ -559,11 +768,29 @@ export class SvgRenderer {
 
         // Curved connector line for improved visibility
         const midX = (elementCenterX + labelCenterX) / 2
-        connectorLine.setAttribute(
-            "d",
-            `M ${elementCenterX},${elementCenterY} Q ${midX},${elementCenterY} ${labelCenterX},${labelCenterY}`
-        )
-        connectorLine.setAttribute("stroke", color)
+        
+        // Kurvenrichtung anpassen, je nachdem ob das Label links oder rechts ist
+        if (position === 'left') {
+            // Bei linksstehenden Labels, beginne die Kurve vom Element nach links
+            connectorLine.setAttribute(
+                "d",
+                `M ${elementCenterX},${elementCenterY} Q ${elementCenterX - Math.abs(elementCenterX - labelCenterX)/3},${elementCenterY} ${labelCenterX},${labelCenterY}`
+            )
+        } else {
+            // Bei rechtsstehenden Labels, beginne die Kurve vom Element nach rechts
+            connectorLine.setAttribute(
+                "d",
+                `M ${elementCenterX},${elementCenterY} Q ${elementCenterX + Math.abs(elementCenterX - labelCenterX)/3},${elementCenterY} ${labelCenterX},${labelCenterY}`
+            )
+        }
+        
+        // Verwende reduzierte Deckkraft für versteckte Elemente
+        if (isHidden) {
+            connectorLine.setAttribute("stroke", color.replace("0.85", "0.5"))
+        } else {
+            connectorLine.setAttribute("stroke", color)
+        }
+        
         connectorLine.setAttribute("stroke-width", "1")
         connectorLine.setAttribute("fill", "none")
         connectorLine.setAttribute("stroke-dasharray", "4,2")
@@ -620,22 +847,25 @@ export class SvgRenderer {
             return
         }
 
-        // Prüfe, ob das Element tatsächlich im sichtbaren Bereich liegt
+        // Prüfe, ob das Element innerhalb eines vernünftigen Bereichs liegt
+        // Verwende einen größeren Bereich (5x Viewport) um Off-Screen-Elemente zu berücksichtigen
         const viewportHeight = window.innerHeight
         const viewportWidth = window.innerWidth
+        const maxDistance = Math.max(viewportWidth, viewportHeight) * 5
+        
+        // Prüfe nur auf extreme Ausreißer (z.B. Elemente mit falschen Koordinaten)
         if (
-            startX < 0 ||
-            startX > viewportWidth * 2 ||
-            startY < 0 ||
-            startY > viewportHeight * 2 ||
-            endX < 0 ||
-            endX > viewportWidth * 2 ||
-            endY < 0 ||
-            endY > viewportHeight * 2
+            Math.abs(startX) > maxDistance ||
+            Math.abs(startY) > maxDistance ||
+            Math.abs(endX) > maxDistance ||
+            Math.abs(endY) > maxDistance
         ) {
-            console.warn(
-                "[A11y-Map] Element außerhalb des sichtbaren Bereichs:",
-                { startX, startY, endX, endY }
+            console.debug(
+                "[A11y-Map] Element weit außerhalb des sichtbaren Bereichs - ignoriere Verbindung",
+                {
+                    start: { x: startX, y: startY, element: startElement.tagName },
+                    end: { x: endX, y: endY, element: endElement.tagName }
+                }
             )
             return
         }
@@ -772,13 +1002,14 @@ export class SvgRenderer {
     }
 
     // Finde eine freie Position für das Label-Rechteck
-    findFreeLabelPosition(x, y, width, height) {
+    findFreeLabelPosition(x, y, width, height, position = 'right') {
         const padding = 5 // Minimaler Abstand zwischen Rechtecken
         const rightEdge = window.innerWidth + window.scrollX
+        const leftEdge = window.scrollX
 
-        // Ursprünglicher Vorschlag (rechts vom Viewport)
+        // Ursprünglicher Vorschlag basierend auf der Position (links oder rechts vom Viewport)
         let proposedRect = {
-            x: rightEdge - width - padding,
+            x: position === 'left' ? leftEdge + padding : rightEdge - width - padding,
             y: y,
             width: width,
             height: height,
@@ -795,7 +1026,7 @@ export class SvgRenderer {
 
         while (maxTries > 0) {
             proposedRect = {
-                x: rightEdge - width - padding,
+                x: position === 'left' ? leftEdge + padding : rightEdge - width - padding,
                 y: y + offset,
                 width: width,
                 height: height,
@@ -815,7 +1046,7 @@ export class SvgRenderer {
 
         while (maxTries > 0) {
             proposedRect = {
-                x: rightEdge - width - padding,
+                x: position === 'left' ? leftEdge + padding : rightEdge - width - padding,
                 y: y + offset,
                 width: width,
                 height: height,
@@ -829,13 +1060,15 @@ export class SvgRenderer {
             maxTries--
         }
 
-        // Wenn vertikal nicht funktioniert, versuche es mit einer Position links davon
-        offset = -(width + padding * 2)
+        // Wenn vertikal nicht funktioniert, versuche es mit einer horizontalen Verschiebung
+        offset = (position === 'left') ? (width + padding * 2) : -(width + padding * 2)
         maxTries = 5
 
         while (maxTries > 0) {
             proposedRect = {
-                x: rightEdge - width - padding + offset,
+                x: position === 'left' 
+                    ? leftEdge + padding + offset 
+                    : rightEdge - width - padding + offset,
                 y: y,
                 width: width,
                 height: height,
@@ -845,17 +1078,281 @@ export class SvgRenderer {
                 return proposedRect
             }
 
-            offset -= width + padding
+            offset = position === 'left' ? offset + width + padding : offset - width - padding
             maxTries--
         }
 
         // Wenn alles fehlschlägt, gib die ursprüngliche Position zurück
         // und füge sie trotzdem hinzu (besser Überlappung als gar keine Anzeige)
         return {
-            x: rightEdge - width - padding,
+            x: position === 'left' ? leftEdge + padding : rightEdge - width - padding,
             y: y,
             width: width,
             height: height,
+        }
+    }
+    
+    // Handle focus change on elements
+    handleFocusChange(element) {
+        // Finde den neuen Index
+        if (!this.focusableElements) {
+            this.trackFocusableElements();
+        }
+        
+        this.currentFocusIndex = this.focusableElements.indexOf(element)
+
+        // Zeichne die fokussierbaren Elemente neu, um den aktuellen Fokus zu markieren
+        if (this.colorMapping.Fokus && this.colorMapping.Fokus.enabled) {
+            this.drawFocusableElements()
+        }
+    }
+    
+    // Gather all focusable elements
+    trackFocusableElements() {
+        // Hole alle fokussierbaren Elemente
+        const focusableElements = document.querySelectorAll(
+            'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+        )
+
+        // Speichere fokussierbare Elemente in der Klasse
+        this.focusableElements = Array.from(focusableElements)
+
+        // Speichere den aktuell fokussierten Index
+        this.currentFocusIndex = this.focusableElements.indexOf(
+            document.activeElement
+        )
+
+        // Höre auf Fokus-Änderungen im Dokument
+        document.addEventListener("focusin", this._handleFocusIn)
+
+        // Bei Tab-Navigation den Fokus verfolgen
+        document.addEventListener("keydown", this._handleKeydown)
+    }
+    
+    // Draw all focusable elements and highlight the currently focused one
+    drawFocusableElements() {
+        try {
+            console.log("[A11y-Map Focus] Starte Zeichnen fokussierbarer Elemente")
+
+            // Prüfe, ob versteckte Elemente angezeigt werden sollen
+            const hiddenToggle = this.colorMapping["Versteckte Elemente"]
+            const showHiddenElements = hiddenToggle && hiddenToggle.enabled
+
+            // Selektor für fokussierbare Elemente
+            const selector = 'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+
+            // Direkt die Elemente abfragen
+            const focusableElements = document.querySelectorAll(
+                selector + `:not(#${this.ui.id} *)`
+            )
+            console.log(
+                `[A11y-Map Focus] ${focusableElements.length} fokussierbare Elemente gefunden`
+            )
+
+            // Aktuelles fokussiertes Element
+            const activeElement = document.activeElement
+            console.log(
+                "[A11y-Map Focus] Aktives Element:",
+                activeElement.tagName,
+                activeElement.id ? `#${activeElement.id}` : ""
+            )
+
+            // Farbe aus der Konfiguration holen
+            const focusConfig = this.colorMapping.Fokus
+            const baseColor = focusConfig.color || "hsla(280, 100%, 60%, 0.85)"
+
+            // Jedes fokussierbare Element durchgehen
+            Array.from(focusableElements).forEach((element, index) => {
+                // Prüfe, ob das Element versteckt ist
+                const isHidden = this.isElementHidden(element)
+                
+                // Überpringe Element, wenn es versteckt ist und der Versteckte-Elemente-Schalter ausgeschaltet ist
+                if (isHidden && !showHiddenElements) {
+                    return
+                }
+                
+                const rect = element.getBoundingClientRect()
+
+                // Ignoriere Elemente mit Nullgröße (überschneidet sich mit isElementHidden, aber wir behalten es zur Sicherheit)
+                if (rect.width === 0 || rect.height === 0) return
+
+                const isFocused = element === activeElement
+                const color = isFocused
+                    ? baseColor
+                    : baseColor.replace("0.85", "0.4")
+                const strokeWidth = isFocused ? 3 : 1.5
+
+                // Zeichne Rahmen um das Element
+                const rectangle = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "rect"
+                )
+                rectangle.setAttribute("x", rect.left + window.scrollX)
+                rectangle.setAttribute("y", rect.top + window.scrollY)
+                rectangle.setAttribute("width", rect.width)
+                rectangle.setAttribute("height", rect.height)
+                rectangle.setAttribute("stroke", color)
+                rectangle.setAttribute("stroke-width", strokeWidth)
+                rectangle.setAttribute("fill", "none")
+
+                // Bei fokussiertem Element zusätzlich einen Hintergrund mit niedrigerer Deckkraft
+                if (isFocused) {
+                    rectangle.setAttribute(
+                        "fill",
+                        baseColor.replace("0.85", "0.15")
+                    )
+                    console.log(
+                        `[A11y-Map Focus] Fokussiertes Element gefunden: ${
+                            element.tagName
+                        } an Position ${index + 1}`
+                    )
+                }
+
+                this.svg.appendChild(rectangle)
+
+                // Wenn TabIndex angezeigt werden soll
+                if (focusConfig.showTabIndex) {
+                    // Bestimme den tatsächlichen TabIndex
+                    let tabIndexDisplay = index + 1
+
+                    // Wenn das Element ein explizites tabindex-Attribut hat, verwende dieses
+                    const explicitTabIndex = element.getAttribute("tabindex")
+                    if (
+                        explicitTabIndex !== null &&
+                        explicitTabIndex !== "-1"
+                    ) {
+                        tabIndexDisplay = `${tabIndexDisplay} [${explicitTabIndex}]`
+                    }
+                    
+                    // Füge Versteckt-Hinweis für versteckte Elemente hinzu
+                    if (isHidden) {
+                        tabIndexDisplay += " [versteckt]"
+                    }
+                    
+                    // Bestimme die Position basierend auf Sichtbarkeit
+                    const position = isHidden ? 'left' : 'right'
+                    const documentLeftEdge = window.scrollX
+                    const documentRightEdge = window.innerWidth + window.scrollX
+
+                    // Erstelle ein Label für den TabIndex
+                    const tabIndexLabel = document.createElementNS(
+                        "http://www.w3.org/2000/svg",
+                        "text"
+                    )
+                    
+                    // Positionierung des Labels abhängig davon, ob es versteckt ist oder nicht
+                    let labelX
+                    if (position === 'left') {
+                        // Für versteckte Elemente links positionieren
+                        labelX = documentLeftEdge + 10
+                        tabIndexLabel.setAttribute("text-anchor", "start")
+                    } else {
+                        // Für sichtbare Elemente normal rechts neben dem Element
+                        labelX = rect.left + window.scrollX + 5
+                        tabIndexLabel.setAttribute("text-anchor", "start")
+                    }
+                    
+                    tabIndexLabel.setAttribute("x", labelX)
+                    tabIndexLabel.setAttribute(
+                        "y",
+                        rect.top + window.scrollY + 15
+                    )
+                    tabIndexLabel.setAttribute(
+                        "fill",
+                        isFocused ? baseColor : "#555"
+                    )
+                    tabIndexLabel.setAttribute("font-size", "11px")
+                    tabIndexLabel.setAttribute(
+                        "font-weight",
+                        isFocused ? "bold" : "normal"
+                    )
+                    tabIndexLabel.textContent = `Tab: ${tabIndexDisplay}`
+
+                    // Hintergrundfeld für bessere Lesbarkeit
+                    const textBg = document.createElementNS(
+                        "http://www.w3.org/2000/svg",
+                        "rect"
+                    )
+                    textBg.setAttribute("x", labelX - 2)
+                    textBg.setAttribute("y", rect.top + window.scrollY + 4)
+                    textBg.setAttribute(
+                        "width",
+                        tabIndexLabel.textContent.length * 7
+                    )
+                    textBg.setAttribute("height", 14)
+                    textBg.setAttribute("fill", "rgba(255, 255, 255, 0.85)")
+                    textBg.setAttribute("rx", "2")
+                    textBg.setAttribute("ry", "2")
+
+                    this.svg.appendChild(textBg)
+                    this.svg.appendChild(tabIndexLabel)
+                }
+            })
+
+            // Event-Listener für Fokus-Änderungen
+            if (!this._focusListenerAdded) {
+                document.addEventListener("focusin", this._focusChangeListener)
+                
+                // Marker setzen, dass wir den Listener nur einmal hinzufügen
+                this._focusListenerAdded = true
+            }
+        } catch (error) {
+            console.error(
+                "[A11y-Map Focus] Fehler beim Zeichnen fokussierbarer Elemente:",
+                error
+            )
+        }
+    }
+    
+    // Draw a special highlight around an element with a warning label
+    drawSpecialHighlight(element, color, message) {
+        try {
+            const rect = element.getBoundingClientRect()
+            
+            // Draw a dashed rectangle around the element with thicker stroke
+            const rectangle = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "rect"
+            )
+            rectangle.setAttribute("x", rect.left + window.scrollX)
+            rectangle.setAttribute("y", rect.top + window.scrollY)
+            rectangle.setAttribute("width", rect.width)
+            rectangle.setAttribute("height", rect.height)
+            rectangle.setAttribute("stroke", color)
+            rectangle.setAttribute("stroke-width", "2")
+            rectangle.setAttribute("stroke-dasharray", "5,3")
+            rectangle.setAttribute("fill", "none")
+            this.svg.appendChild(rectangle)
+            
+            // Add a warning label above the element
+            const warningBackground = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "rect"
+            )
+            const labelY = rect.top + window.scrollY - 20 // Position above the element
+            warningBackground.setAttribute("x", rect.left + window.scrollX)
+            warningBackground.setAttribute("y", labelY)
+            warningBackground.setAttribute("width", 200)
+            warningBackground.setAttribute("height", 16)
+            warningBackground.setAttribute("fill", "rgba(255, 200, 0, 0.9)")
+            warningBackground.setAttribute("rx", "3")
+            warningBackground.setAttribute("ry", "3")
+            this.svg.appendChild(warningBackground)
+            
+            // Add warning text
+            const warningText = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "text"
+            )
+            warningText.setAttribute("x", rect.left + window.scrollX + 4)
+            warningText.setAttribute("y", labelY + 12)
+            warningText.setAttribute("fill", "black")
+            warningText.setAttribute("font-size", "10")
+            warningText.setAttribute("font-weight", "bold")
+            warningText.textContent = message || "Warnung: Spezielle Verbindung"
+            this.svg.appendChild(warningText)
+        } catch (error) {
+            console.error("[A11y-Map] Fehler beim Zeichnen der speziellen Hervorhebung:", error)
         }
     }
 }

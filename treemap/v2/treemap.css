@@ -505,9 +505,13 @@ body {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 0.5rem;
     display: flex;
-    gap: 2rem;
+    gap: 2vw;
     align-items: center;
     flex-wrap: wrap;
+
+    & * {
+        font-size: 1.5vh !important;
+    }
 }
 
 /* Suchfeld */

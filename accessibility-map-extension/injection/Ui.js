@@ -144,8 +144,11 @@ export class Ui {
         // Implement drag functionality
         this.makeDraggable(controlsDiv, dragHandle)
 
-        // Add switches for each category
-        for (const category in this.colorMapping) {
+        // Sortiere die Kategorien alphabetisch
+        const sortedCategories = Object.keys(this.colorMapping).sort();
+        
+        // Add switches for each category (in alphabetical order)
+        for (const category of sortedCategories) {
             const switchContainer = document.createElement("div")
             switchContainer.setAttribute(
                 "style",
@@ -223,6 +226,20 @@ export class Ui {
                 // Speichere Einstellungen bei jeder Änderung
                 this.saveSettings()
 
+                // // +++++
+                // if (category === "Fokus") {
+                //     console.log(
+                //         `[A11y-Map UI] Fokus-Status geändert: ${
+                //             switchInput.checked ? "aktiviert" : "deaktiviert"
+                //         }`
+                //     )
+                //     document.dispatchEvent(
+                //         new CustomEvent("a11y-map-focus-toggle", {
+                //             detail: { active: switchInput.checked },
+                //         })
+                //     )
+                // }
+                // // +++++
                 this.onToggle() // Call the callback to redraw
             })
         }

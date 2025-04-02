@@ -10,6 +10,26 @@ export class SvgRenderer {
         this.contrastFilterMode = "all" // 'all', 'fails', 'succeeds'
         this.contrastColumnCount = 1 // Anzahl der Spalten für Kontrastanzeige
 
+        this.focusableElements = null
+        this.currentFocusIndex = -1
+        
+        // Bound event handler methods to prevent memory leaks when removing listeners
+        this._handleFocusIn = this.handleFocusChange.bind(this)
+        this._handleKeydown = (e) => {
+            if (e.key === "Tab") {
+                setTimeout(() => {
+                    this.handleFocusChange(document.activeElement)
+                }, 10)
+            }
+        }
+        
+        // Bound listener for focus changes
+        this._focusChangeListener = () => {
+            if (this.colorMapping.Fokus && this.colorMapping.Fokus.enabled) {
+                this.drawAllRectangles()
+            }
+        }
+
         try {
             this.createSVGOverlay()
 
@@ -50,6 +70,17 @@ export class SvgRenderer {
     cleanup() {
         if (this.svg) {
             this.svg.remove()
+        }
+
+        // Entferne die Fokus-Event-Listener, falls vorhanden
+        if (this.focusableElements) {
+            document.removeEventListener("focusin", this._handleFocusIn)
+            document.removeEventListener("keydown", this._handleKeydown)
+        }
+
+        if (this._focusListenerAdded) {
+            document.removeEventListener("focusin", this._focusChangeListener)
+            this._focusListenerAdded = false
         }
     }
 
@@ -101,9 +132,19 @@ export class SvgRenderer {
 
         let tabCounter = 1 // Counter for tab sequence
 
+        // Prüfe, ob versteckte Elemente angezeigt werden sollen
+        const hiddenToggle = this.colorMapping["Versteckte Elemente"]
+        const showHiddenElements = hiddenToggle && hiddenToggle.enabled
+
         for (const category in this.colorMapping) {
             const { selectors, color, type, enabled, lines, showElement } =
                 this.colorMapping[category]
+                
+            if (category === "Versteckte Elemente") {
+                // Überspringe den Versteckte-Elemente-Schalter selbst
+                continue
+            }
+                
             if (enabled) {
                 if (type === "contrast") {
                     this.drawContrastIndicators()
@@ -206,6 +247,25 @@ export class SvgRenderer {
                 }
             }
         }
+
+        if (this.colorMapping.Fokus && this.colorMapping.Fokus.enabled) {
+            this.drawFocusableElements()
+        }
+
+        // +++++
+        console.log(
+            "[A11y-Map] Prüfe Fokus-Zustand:",
+            this.colorMapping.Fokus
+                ? "Fokus-Eintrag existiert"
+                : "Kein Fokus-Eintrag",
+            this.colorMapping.Fokus?.enabled ? "aktiviert" : "deaktiviert"
+        )
+
+        if (this.colorMapping.Fokus && this.colorMapping.Fokus.enabled) {
+            console.log("[A11y-Map] Rufe drawFocusableElements() auf")
+            this.drawFocusableElements()
+        }
+        // +++++
     }
 
     // Get attribute text for an element
@@ -389,10 +449,30 @@ export class SvgRenderer {
         )
     }
 
+    // Überprüft, ob ein Element versteckt ist
+    isElementHidden(element) {
+        const style = window.getComputedStyle(element)
+        
+        // Prüfe auf häufige Gründe für versteckte Elemente
+        if (style.display === 'none') return true
+        if (style.visibility === 'hidden' || style.visibility === 'collapse') return true
+        if (style.opacity === '0') return true
+        if (element.hasAttribute('hidden')) return true
+        if (element.getAttribute('aria-hidden') === 'true') return true
+        
+        // Prüfe auf Elemente mit keiner Höhe oder Breite
+        const rect = element.getBoundingClientRect()
+        if (rect.width === 0 || rect.height === 0) return true
+        
+        // Element scheint sichtbar zu sein
+        return false
+    }
+
     // Draw a rectangle around an element with a label
-    drawRectangleForElement(element, color, labelText) {
+    drawRectangleForElement(element, color, labelText, position = 'right') {
         const rect = element.getBoundingClientRect()
         const documentRightEdge = window.innerWidth + window.scrollX
+        const documentLeftEdge = window.scrollX
         const labelPadding = 10
 
         // Draw the rectangle around the element
@@ -577,5 +657,182 @@ export class SvgRenderer {
         textLabel.setAttribute("paint-order", "stroke fill")
         textLabel.textContent = text
         this.svg.appendChild(textLabel)
+    }
+
+    trackFocusableElements() {
+        // Hole alle fokussierbaren Elemente
+        const focusableElements = document.querySelectorAll(
+            'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+        )
+
+        // Speichere fokussierbare Elemente in der Klasse
+        this.focusableElements = Array.from(focusableElements)
+
+        // Speichere den aktuell fokussierten Index
+        this.currentFocusIndex = this.focusableElements.indexOf(
+            document.activeElement
+        )
+
+        // Höre auf Fokus-Änderungen im Dokument
+        document.addEventListener("focusin", this._handleFocusIn)
+
+        // Bei Tab-Navigation den Fokus verfolgen
+        document.addEventListener("keydown", this._handleKeydown)
+    }
+
+    handleFocusChange(element) {
+        // Finde den neuen Index
+        this.currentFocusIndex = this.focusableElements.indexOf(element)
+
+        // Zeichne die fokussierbaren Elemente neu, um den aktuellen Fokus zu markieren
+        if (this.colorMapping.Fokus && this.colorMapping.Fokus.enabled) {
+            this.drawFocusableElements()
+        }
+    }
+
+    // Fügen Sie diese Methode zur SvgRenderer-Klasse in SvgRenderer.js hinzu:
+    drawFocusableElements() {
+        try {
+            console.log(
+                "[A11y-Map Focus] Starte Zeichnen fokussierbarer Elemente"
+            )
+
+            // Selektor für fokussierbare Elemente
+            const selector =
+                'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+
+            // Direkt die Elemente abfragen
+            const focusableElements = document.querySelectorAll(
+                selector + `:not(#${this.ui.id} *)`
+            )
+            console.log(
+                `[A11y-Map Focus] ${focusableElements.length} fokussierbare Elemente gefunden`
+            )
+
+            // Aktuelles fokussiertes Element
+            const activeElement = document.activeElement
+            console.log(
+                "[A11y-Map Focus] Aktives Element:",
+                activeElement.tagName,
+                activeElement.id ? `#${activeElement.id}` : ""
+            )
+
+            // Farbe aus der Konfiguration holen
+            const focusConfig = this.colorMapping.Fokus
+            const baseColor = focusConfig.color || "hsla(280, 100%, 60%, 0.85)"
+
+            // Jedes fokussierbare Element durchgehen
+            Array.from(focusableElements).forEach((element, index) => {
+                const rect = element.getBoundingClientRect()
+
+                // Ignoriere nicht sichtbare Elemente
+                if (rect.width === 0 || rect.height === 0) return
+
+                const isFocused = element === activeElement
+                const color = isFocused
+                    ? baseColor
+                    : baseColor.replace("0.85", "0.4")
+                const strokeWidth = isFocused ? 3 : 1.5
+
+                // Zeichne Rahmen um das Element
+                const rectangle = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "rect"
+                )
+                rectangle.setAttribute("x", rect.left + window.scrollX)
+                rectangle.setAttribute("y", rect.top + window.scrollY)
+                rectangle.setAttribute("width", rect.width)
+                rectangle.setAttribute("height", rect.height)
+                rectangle.setAttribute("stroke", color)
+                rectangle.setAttribute("stroke-width", strokeWidth)
+                rectangle.setAttribute("fill", "none")
+
+                // Bei fokussiertem Element zusätzlich einen Hintergrund mit niedrigerer Deckkraft
+                if (isFocused) {
+                    rectangle.setAttribute(
+                        "fill",
+                        baseColor.replace("0.85", "0.15")
+                    )
+                    console.log(
+                        `[A11y-Map Focus] Fokussiertes Element gefunden: ${
+                            element.tagName
+                        } an Position ${index + 1}`
+                    )
+                }
+
+                this.svg.appendChild(rectangle)
+
+                // Wenn TabIndex angezeigt werden soll
+                if (focusConfig.showTabIndex) {
+                    // Bestimme den tatsächlichen TabIndex
+                    let tabIndexDisplay = index + 1
+
+                    // Wenn das Element ein explizites tabindex-Attribut hat, verwende dieses
+                    const explicitTabIndex = element.getAttribute("tabindex")
+                    if (
+                        explicitTabIndex !== null &&
+                        explicitTabIndex !== "-1"
+                    ) {
+                        tabIndexDisplay = `${tabIndexDisplay} [${explicitTabIndex}]`
+                    }
+
+                    // Erstelle ein Label für den TabIndex
+                    const tabIndexLabel = document.createElementNS(
+                        "http://www.w3.org/2000/svg",
+                        "text"
+                    )
+                    tabIndexLabel.setAttribute(
+                        "x",
+                        rect.left + window.scrollX + 5
+                    )
+                    tabIndexLabel.setAttribute(
+                        "y",
+                        rect.top + window.scrollY + 15
+                    )
+                    tabIndexLabel.setAttribute(
+                        "fill",
+                        isFocused ? baseColor : "#555"
+                    )
+                    tabIndexLabel.setAttribute("font-size", "11px")
+                    tabIndexLabel.setAttribute(
+                        "font-weight",
+                        isFocused ? "bold" : "normal"
+                    )
+                    tabIndexLabel.textContent = `Tab: ${tabIndexDisplay}`
+
+                    // Hintergrundfeld für bessere Lesbarkeit
+                    const textBg = document.createElementNS(
+                        "http://www.w3.org/2000/svg",
+                        "rect"
+                    )
+                    textBg.setAttribute("x", rect.left + window.scrollX + 2)
+                    textBg.setAttribute("y", rect.top + window.scrollY + 4)
+                    textBg.setAttribute(
+                        "width",
+                        tabIndexLabel.textContent.length * 7
+                    )
+                    textBg.setAttribute("height", 14)
+                    textBg.setAttribute("fill", "rgba(255, 255, 255, 0.85)")
+                    textBg.setAttribute("rx", "2")
+                    textBg.setAttribute("ry", "2")
+
+                    this.svg.appendChild(textBg)
+                    this.svg.appendChild(tabIndexLabel)
+                }
+            })
+
+            // Event-Listener für Fokus-Änderungen
+            if (!this._focusListenerAdded) {
+                document.addEventListener("focusin", this._focusChangeListener)
+
+                // Marker setzen, dass wir den Listener nur einmal hinzufügen
+                this._focusListenerAdded = true
+            }
+        } catch (error) {
+            console.error(
+                "[A11y-Map Focus] Fehler beim Zeichnen fokussierbarer Elemente:",
+                error
+            )
+        }
     }
 }

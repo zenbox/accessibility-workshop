@@ -77,17 +77,30 @@
                 colorMapping
             )
 
-            // NEU: Erstelle den Kontrast-Picker sofort beim Start
-            colorContrastPicker =
-                new colorContrastPickerModule.ColorContrastPicker()
+            // Initialisiere den ColorContrastPicker nur bei Bedarf
+            try {
+                colorContrastPicker = new colorContrastPickerModule.ColorContrastPicker()
+                console.log(
+                    "%c[A11y-Map Injected]",
+                    "color: #4285f4; font-weight: bold;",
+                    "ColorContrastPicker initialized"
+                )
+            } catch (error) {
+                console.error("[A11y-Map Injected] Error initializing ColorContrastPicker:", error)
+                colorContrastPicker = null
+            }
 
             // Initialisiere die Karte
             function updateMap() {
+                // Zeichne die Karte (drawFocusableElements wird jetzt automatisch innerhalb von drawAllRectangles aufgerufen)
                 renderer.drawAllRectangles()
-
-                // Aktualisiere die Statistiken, wenn sie sichtbar sind
-                if (statisticsModule) {
-                    statisticsModule.update()
+                
+                // Log only for debugging
+                if (colorMapping.Fokus) {
+                    console.log(
+                        "[A11y-Map Injected] Fokus-Status:",
+                        colorMapping.Fokus.enabled ? "aktiviert" : "deaktiviert"
+                    )
                 }
             }
 
@@ -103,6 +116,24 @@
                     statisticsModule.toggle()
                 }
             })
+
+            // // +++++
+            // document.addEventListener("a11y-map-focus-toggle", (e) => {
+            //     console.log(
+            //         "[A11y-Map Injected] Fokus-Toggle-Event empfangen:",
+            //         e.detail.active
+            //     )
+            //     if (
+            //         e.detail.active &&
+            //         typeof renderer.drawFocusableElements === "function"
+            //     ) {
+            //         renderer.drawFocusableElements()
+            //     } else {
+            //         // Neu zeichnen, um Fokus-Elemente zu entfernen
+            //         renderer.drawAllRectangles()
+            //     }
+            // })
+            // // +++++
 
             // Zeichne die Karte
             renderer.drawAllRectangles()
@@ -121,7 +152,11 @@
 
                     // Bereinige auch den ColorContrastPicker
                     if (colorContrastPicker) {
-                        colorContrastPicker.cleanup()
+                        try {
+                            colorContrastPicker.cleanup()
+                        } catch (error) {
+                            console.error("[A11y-Map Injected] Error cleaning up ColorContrastPicker:", error)
+                        }
                         colorContrastPicker = null
                     }
 

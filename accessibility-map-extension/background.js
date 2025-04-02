@@ -5,28 +5,28 @@ console.log("Accessibility Map background service worker started")
 let activeAccessibilityMap = {}
 let cachedColorMapping = null
 
-// Lade die colorMapping.json Datei
+// Lade die wcag-criteria-test.json Datei
 async function loadColorMapping() {
     if (cachedColorMapping !== null) {
         return cachedColorMapping
     }
 
     try {
-        // Lade die colorMapping.json aus den Extension-Ressourcen
-        const url = chrome.runtime.getURL("colorMapping.json")
+        // Lade die wcag-criteria-test.json aus den Extension-Ressourcen
+        const url = chrome.runtime.getURL("wcag-criteria-test.json")
         const response = await fetch(url)
 
         if (!response.ok) {
             throw new Error(
-                `Failed to load colorMapping.json: ${response.status} ${response.statusText}`
+                `Failed to load wcag-criteria-test.json: ${response.status} ${response.statusText}`
             )
         }
 
         cachedColorMapping = await response.json()
-        console.log("Successfully loaded colorMapping.json")
+        console.log("Successfully loaded wcag-criteria-test.json")
         return cachedColorMapping
     } catch (error) {
-        console.error("Error loading colorMapping.json:", error)
+        console.error("Error loading wcag-criteria-test.json:", error)
         // Fallback zu einem einfachen Standard-Objekt im Fehlerfall
         return {
             Struktur: {
@@ -65,7 +65,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 activeAccessibilityMap[tab.id] = !activeAccessibilityMap[tab.id]
 
                 try {
-                    // Lade die colorMapping.json
+                    // Lade die wcag-criteria-test.json
                     const colorMapping = await loadColorMapping()
 
                     // WICHTIG: Prüfe ob der Content Script bereits läuft, wenn nicht, injiziere ihn

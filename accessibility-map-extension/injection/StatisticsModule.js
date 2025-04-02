@@ -32,7 +32,8 @@ export class StatisticsModule {
                         details: this.getDetailedStatistics(
                             elements,
                             type,
-                            category
+                            category,
+                            selectors
                         ),
                     }
                 } catch (error) {
@@ -49,7 +50,7 @@ export class StatisticsModule {
     }
 
     // Sammelt detaillierte Statistiken je nach Kategorie-Typ
-    getDetailedStatistics(elements, type, category) {
+    getDetailedStatistics(elements, type, category, selectors) {
         const details = {}
 
         // Für verschiedene Kategorien unterschiedliche Details sammeln

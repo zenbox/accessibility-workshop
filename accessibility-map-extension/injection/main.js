@@ -55,34 +55,34 @@ async function loadColorMapping() {
             chrome.runtime &&
             chrome.runtime.getURL
         ) {
-            const url = chrome.runtime.getURL("colorMapping.json")
-            log("Lade colorMapping.json von:", url)
+            const url = chrome.runtime.getURL("wcag-criteria-test.json")
+            log("Lade wcag-criteria-test.json von:", url)
             const response = await fetch(url)
 
             if (!response.ok) {
                 throw new Error(
-                    `Failed to fetch colorMapping.json: ${response.status}`
+                    `Failed to fetch wcag-criteria-test.json: ${response.status}`
                 )
             }
 
             const colorMapping = await response.json()
-            log("colorMapping.json erfolgreich geladen")
+            log("wcag-criteria-test.json erfolgreich geladen")
             return colorMapping
         } else {
             // Fallback für Entwicklungsumgebungen
             log("Chrome API nicht verfügbar, versuche relative URL")
-            const response = await fetch("./colorMapping.json")
+            const response = await fetch("./wcag-criteria-test.json")
             if (!response.ok) {
                 throw new Error(
-                    `Failed to fetch colorMapping.json: ${response.status}`
+                    `Failed to fetch wcag-criteria-test.json: ${response.status}`
                 )
             }
             const colorMapping = await response.json()
-            log("colorMapping.json erfolgreich geladen (relative URL)")
+            log("wcag-criteria-test.json erfolgreich geladen (relative URL)")
             return colorMapping
         }
     } catch (err) {
-        warn("Fehler beim Laden der colorMapping.json:", err)
+        warn("Fehler beim Laden der wcag-criteria-test.json:", err)
         warn("Verwende Fallback-Mapping")
         return fallbackColorMapping
     }
