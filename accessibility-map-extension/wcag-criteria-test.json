@@ -20,7 +20,7 @@
         "enabled": false
     },
     "1.3.1 Listen": {
-        "selectors": "ul, ol, dl, menu",
+        "selectors": "ul, ol, dl, li, menu",
         "color": "hsla(30, 100%, 50%, 0.85)",
         "type": "element",
         "enabled": false
