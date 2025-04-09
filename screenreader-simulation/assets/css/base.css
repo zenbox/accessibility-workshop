@@ -27,7 +27,7 @@ p {
 }
 
 a {
-    color: var(--primary-color);
+    color: var(--primary);
     text-decoration: none;
 }
 
@@ -38,7 +38,7 @@ a:hover {
 /* Standard-Formularelemente */
 button {
     padding: var(--spacing-sm) var(--spacing-md);
-    background-color: var(--primary-color);
+    background-color: var(--primary);
     color: white;
     border: none;
     border-radius: var(--border-radius-md);
@@ -48,7 +48,7 @@ button {
 }
 
 button:hover {
-    background-color: var(--primary-color-dark);
+    background-color: var(--primary-dark);
 }
 
 input,
@@ -72,13 +72,13 @@ textarea:focus {
 input:invalid,
 select:invalid,
 textarea:invalid {
-    border-color: var(--error-color);
+    border-color: var(--error);
 }
 
 /* Allgemeine Info-Panel */
 .info-panel {
     background-color: var(--light-bg);
-    border-left: 4px solid var(--primary-color);
+    border-left: 4px solid var(--primary);
     padding: var(--spacing-md);
     margin: var(--spacing-lg) 0;
 }

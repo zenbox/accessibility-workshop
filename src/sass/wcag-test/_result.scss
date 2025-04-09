@@ -1,0 +1,36 @@
+.result-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.result-fulfilled {
+    background-color: rgba(67, 160, 71, 0.2);
+    color: var(--success);
+}
+
+.result-mostly-fulfilled {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #2e7d32;
+}
+
+.result-partially-fulfilled {
+    background-color: rgba(253, 216, 53, 0.2);
+    color: #f9a825;
+}
+
+.result-mostly-not-fulfilled {
+    background-color: rgba(251, 140, 0, 0.2);
+    color: #e65100;
+}
+
+.result-not-fulfilled {
+    background-color: rgba(229, 57, 53, 0.2);
+    color: var(--error);
+}
+
+.result-not-applicable {
+    background-color: rgba(189, 189, 189, 0.2);
+    color: #616161;
+}

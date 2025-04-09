@@ -1,0 +1,45 @@
+.comment-item {
+    margin-bottom: 8px;
+    line-height: 1.5;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.comments-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.comment-entry {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.comment-entry textarea {
+    flex: 1;
+}
+
+.delete-comment {
+    background-color: var(--error);
+    padding: 5px 10px;
+}
+
+.new-comment {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.new-comment textarea {
+    flex: 1;
+}
+
+.no-comments {
+    font-style: italic;
+    color: var(--text-secondary);
+}

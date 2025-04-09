@@ -27,7 +27,7 @@
 .language-example h3 small {
     font-weight: normal;
     font-size: var(--font-size-sm);
-    color: var(--info-color);
+    color: var(--info);
 }
 
 /* Sprachspezifische Hintergrundfarben */

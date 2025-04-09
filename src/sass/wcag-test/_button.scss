@@ -1,0 +1,51 @@
+.wcag-test {
+    .button-group button {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: #0d62d1;
+        }
+    }
+
+    button.secondary {
+        background-color: transparent;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+    }
+
+    button.secondary:hover {
+        background-color: rgba(26, 115, 232, 0.1);
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .button-group button,
+    .button-group label.button {
+        flex: 1;
+        min-width: 150px;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    @media (max-width: 576px) {
+        .button-group {
+            flex-direction: column;
+        }
+
+        .button-group button,
+        .button-group label.button {
+            width: 100%;
+        }
+    }
+}

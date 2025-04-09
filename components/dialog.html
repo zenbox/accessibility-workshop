@@ -1,358 +1,443 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barrierefreie Dialoge</title>
-    
-    <style>
-        :root {
-            --focus-color: #2563eb;
-            --border-color: #cdcdcd;
-            --hover-color: #f3f4f6;
-            --active-color: #cdcdcd;
-            --primary-color: #2563eb;
-            --secondary-color: #6B7280;
-            --error-color: #EF4444;
-            --backdrop-color: rgba(0, 0, 0, 0.5);
-            --surface-color: #ffffff;
-            --text-color: #333333;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Barrierefreie Dialoge</title>
 
-        * {
-            box-sizing: border-box;
-        }
+        <style>
+            :root {
+                --focus-color: #2563eb;
+                --border-color: #cdcdcd;
+                --hover-color: #f3f4f6;
+                --active-color: #cdcdcd;
+                --primary: #2563eb;
+                --secondary: #6b7280;
+                --error: #ef4444;
+                --backdrop-color: rgba(0, 0, 0, 0.5);
+                --surface-color: #ffffff;
+                --text-primary: #333333;
+            }
 
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            color: var(--text-color);
-        }
+            * {
+                box-sizing: border-box;
+            }
 
-        h1, h2, h3, h4 {
-            color: #1e40af;
-        }
+            body {
+                font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+                    "Helvetica Neue", sans-serif;
+                line-height: 1.6;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                color: var(--text-primary);
+            }
 
-        h2 {
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            margin-top: 2rem;
-        }
+            h1,
+            h2,
+            h3,
+            h4 {
+                color: #1e40af;
+            }
 
-        h3 {
-            margin-top: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.25rem;
-        }
+            h2 {
+                border-bottom: 2px solid var(--border-color);
+                padding-bottom: 0.5rem;
+                margin-top: 2rem;
+            }
 
-        /* Button Styles */
-        button {
-            background-color: var(--primary-color);
-            border: none;
-            border-radius: 4px;
-            color: white;
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 8px 16px;
-            margin: 8px 4px;
-            transition: opacity 0.2s, background-color 0.2s;
-        }
+            h3 {
+                margin-top: 1.5rem;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 0.25rem;
+            }
 
-        button:hover {
-            opacity: 0.9;
-        }
+            /* Button Styles */
+            button {
+                background-color: var(--primary);
+                border: none;
+                border-radius: 4px;
+                color: white;
+                cursor: pointer;
+                font-size: 1rem;
+                padding: 8px 16px;
+                margin: 8px 4px;
+                transition: opacity 0.2s, background-color 0.2s;
+            }
 
-        button:focus {
-            outline: 2px solid var(--focus-color);
-            outline-offset: 2px;
-        }
+            button:hover {
+                opacity: 0.9;
+            }
 
-        button.secondary {
-            background-color: var(--secondary-color);
-        }
+            button:focus {
+                outline: 2px solid var(--focus-color);
+                outline-offset: 2px;
+            }
 
-        /* Dialog Styles */
-        dialog {
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
-        }
+            button.secondary {
+                background-color: var(--secondary);
+            }
 
-        dialog::backdrop {
-            background-color: var(--backdrop-color);
-        }
+            /* Dialog Styles */
+            dialog {
+                padding: 20px;
+                border-radius: 8px;
+                border: 1px solid var(--border-color);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                max-width: 500px;
+                width: 100%;
+            }
 
-        dialog form {
-            display: flex;
-            flex-direction: column;
-        }
+            dialog::backdrop {
+                background-color: var(--backdrop-color);
+            }
 
-        dialog h3 {
-            margin-top: 0;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
+            dialog form {
+                display: flex;
+                flex-direction: column;
+            }
 
-        .dialog-content {
-            margin-bottom: 20px;
-        }
+            dialog h3 {
+                margin-top: 0;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 10px;
+                margin-bottom: 15px;
+            }
 
-        .dialog-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
+            .dialog-content {
+                margin-bottom: 20px;
+            }
 
-        .form-group {
-            margin-bottom: 16px;
-        }
+            .dialog-buttons {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                margin-top: 20px;
+            }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
+            .form-group {
+                margin-bottom: 16px;
+            }
 
-        input, textarea, select {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 1rem;
-        }
+            label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 500;
+            }
 
-        input:focus, textarea:focus, select:focus {
-            outline: 2px solid var(--focus-color);
-            outline-offset: -1px;
-        }
+            input,
+            textarea,
+            select {
+                width: 100%;
+                padding: 8px 12px;
+                border: 1px solid var(--border-color);
+                border-radius: 4px;
+                font-size: 1rem;
+            }
 
-        /* Demo container */
-        .demo-container {
-            background-color: #f9fafb;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
+            input:focus,
+            textarea:focus,
+            select:focus {
+                outline: 2px solid var(--focus-color);
+                outline-offset: -1px;
+            }
 
-        .demo-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+            /* Demo container */
+            .demo-container {
+                background-color: #f9fafb;
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                padding: 20px;
+                margin: 20px 0;
+            }
 
-        /* Code sample styles */
-        .code-sample {
-            background: #f1f5f9;
-            padding: 1rem;
-            border-radius: 4px;
-            border-left: 4px solid var(--primary-color);
-            margin: 1.5rem 0;
-            overflow-x: auto;
-        }
+            .demo-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
 
-        .code-sample pre {
-            margin: 0;
-        }
+            /* Code sample styles */
+            .code-sample {
+                background: #f1f5f9;
+                padding: 1rem;
+                border-radius: 4px;
+                border-left: 4px solid var(--primary);
+                margin: 1.5rem 0;
+                overflow-x: auto;
+            }
 
-        .code-sample code {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-size: 0.9rem;
-        }
+            .code-sample pre {
+                margin: 0;
+            }
 
-        /* Accessibility notes */
-        .note {
-            background-color: #eff6ff;
-            border-left: 4px solid #3b82f6;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 4px;
-        }
+            .code-sample code {
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco,
+                    Consolas, "Liberation Mono", "Courier New", monospace;
+                font-size: 0.9rem;
+            }
 
-        .note h4 {
-            margin-top: 0;
-            font-size: 1rem;
-            color: #1e40af;
-        }
+            /* Accessibility notes */
+            .note {
+                background-color: #eff6ff;
+                border-left: 4px solid #3b82f6;
+                padding: 1rem;
+                margin: 1.5rem 0;
+                border-radius: 4px;
+            }
 
-        .note ul {
-            margin-bottom: 0;
-        }
+            .note h4 {
+                margin-top: 0;
+                font-size: 1rem;
+                color: #1e40af;
+            }
 
-        /* Keyboard navigation */
-        dl {
-            background-color: #f9fafb;
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary-color);
-        }
+            .note ul {
+                margin-bottom: 0;
+            }
 
-        dt {
-            font-weight: bold;
-            margin-top: 0.8rem;
-            display: flex;
-            align-items: center;
-        }
+            /* Keyboard navigation */
+            dl {
+                background-color: #f9fafb;
+                padding: 1rem;
+                border-radius: 8px;
+                border-left: 4px solid var(--primary);
+            }
 
-        dt:first-child {
-            margin-top: 0;
-        }
+            dt {
+                font-weight: bold;
+                margin-top: 0.8rem;
+                display: flex;
+                align-items: center;
+            }
 
-        dt kbd {
-            display: inline-block;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-            padding: 0.25rem 0.5rem;
-            font-family: monospace;
-            font-size: 0.9rem;
-            margin-right: 0.5rem;
-        }
+            dt:first-child {
+                margin-top: 0;
+            }
 
-        dt .plus {
-            margin: 0 0.5rem;
-            font-weight: normal;
-            color: #6b7280;
-        }
+            dt kbd {
+                display: inline-block;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                padding: 0.25rem 0.5rem;
+                font-family: monospace;
+                font-size: 0.9rem;
+                margin-right: 0.5rem;
+            }
 
-        dd {
-            margin-left: 0;
-            margin-bottom: 0.8rem;
-            padding-left: 1.5rem;
-        }
+            dt .plus {
+                margin: 0 0.5rem;
+                font-weight: normal;
+                color: #6b7280;
+            }
 
-        samp i {
-            display: inline-block;
-            margin-inline-start: 0.25rem;
-            font-style: normal;
-            color: hsla(0, 85%, 47.5%, 1);
-        }
+            dd {
+                margin-left: 0;
+                margin-bottom: 0.8rem;
+                padding-left: 1.5rem;
+            }
 
-        .sample {
-            background: #f9fafb;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-    </style>
-</head>
-<body>
-    <a href="../">zurück zu den Erläuterungen</a>
-    
-    <h1>Barrierefreie Dialoge</h1>
-    
-    <p>Beispiele für semantisch korrekte Dialog-Komponenten mit verschiedenen Varianten, Tastatursteuerung und ARIA-Attributen zur Verbesserung der Barrierefreiheit.</p>
-    
-    <h2>Beispiele von Dialog-Elementen</h2>
-    
-    <div class="demo-container">
-        <h3>1. Einfacher Dialog (nicht-modal)</h3>
-        <p>Ein einfacher nicht-modaler Dialog erscheint, ohne den Rest der Seite zu blockieren.</p>
-        
-        <div class="demo-buttons">
-            <button id="openDialogNonModal">Nicht-modalen Dialog öffnen</button>
-        </div>
-        
-        <dialog id="myDialog" aria-labelledby="simple-dialog-title">
-            <h3 id="simple-dialog-title">Einfacher Dialog</h3>
-            <div class="dialog-content">
-                <p>Dies ist ein einfacher, nicht-modaler Dialog. Er blockiert nicht den Zugriff auf die restliche Seite.</p>
+            samp i {
+                display: inline-block;
+                margin-inline-start: 0.25rem;
+                font-style: normal;
+                color: hsla(0, 85%, 47.5%, 1);
+            }
+
+            .sample {
+                background: #f9fafb;
+                padding: 1rem;
+                border-radius: 8px;
+                margin: 1.5rem 0;
+            }
+        </style>
+    </head>
+    <body>
+        <a href="../">zurück zu den Erläuterungen</a>
+
+        <h1>Barrierefreie Dialoge</h1>
+
+        <p>
+            Beispiele für semantisch korrekte Dialog-Komponenten mit
+            verschiedenen Varianten, Tastatursteuerung und ARIA-Attributen zur
+            Verbesserung der Barrierefreiheit.
+        </p>
+
+        <h2>Beispiele von Dialog-Elementen</h2>
+
+        <div class="demo-container">
+            <h3>1. Einfacher Dialog (nicht-modal)</h3>
+            <p>
+                Ein einfacher nicht-modaler Dialog erscheint, ohne den Rest der
+                Seite zu blockieren.
+            </p>
+
+            <div class="demo-buttons">
+                <button id="openDialogNonModal">
+                    Nicht-modalen Dialog öffnen
+                </button>
             </div>
-            <div class="dialog-buttons">
-                <button id="closeDialog">Schließen</button>
-            </div>
-        </dialog>
-    </div>
 
-    <div class="demo-container">
-        <h3>2. Modaler Dialog mit Backdrop</h3>
-        <p>Ein modaler Dialog erscheint mit einem abgedunkelten Hintergrund und blockiert die Interaktion mit der restlichen Seite.</p>
-        
-        <div class="demo-buttons">
-            <button id="openBackdropDialog">Modalen Dialog öffnen</button>
-        </div>
-        
-        <dialog id="backdropDialog" aria-labelledby="modal-dialog-title" aria-describedby="modal-dialog-desc">
-            <h3 id="modal-dialog-title">Modaler Dialog</h3>
-            <div class="dialog-content">
-                <p id="modal-dialog-desc">Dieser Dialog ist modal. Er hat einen abgedunkelten Hintergrund und fokussiert die Aufmerksamkeit auf seinen Inhalt. Die Interaktion mit der restlichen Seite ist blockiert.</p>
-            </div>
-            <div class="dialog-buttons">
-                <button id="closeBackdropDialog">Schließen</button>
-            </div>
-        </dialog>
-    </div>
-
-    <div class="demo-container">
-        <h3>3. Formular-Dialog mit Bestätigung</h3>
-        <p>Ein Dialog mit Formularelementen und mehreren Aktionsbuttons.</p>
-        
-        <div class="demo-buttons">
-            <button id="openFormDialog">Formular-Dialog öffnen</button>
-        </div>
-        
-        <dialog id="formDialog" aria-labelledby="form-dialog-title">
-            <form method="dialog">
-                <h3 id="form-dialog-title">Formular-Dialog</h3>
-                
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required aria-required="true">
+            <dialog
+                id="myDialog"
+                aria-labelledby="simple-dialog-title"
+            >
+                <h3 id="simple-dialog-title">Einfacher Dialog</h3>
+                <div class="dialog-content">
+                    <p>
+                        Dies ist ein einfacher, nicht-modaler Dialog. Er
+                        blockiert nicht den Zugriff auf die restliche Seite.
+                    </p>
                 </div>
-                
-                <div class="form-group">
-                    <label for="email">E-Mail:</label>
-                    <input type="email" id="email" name="email" required aria-required="true">
-                </div>
-                
-                <div class="form-group">
-                    <label for="comment">Kommentar:</label>
-                    <textarea id="comment" name="comment" rows="4"></textarea>
-                </div>
-                
                 <div class="dialog-buttons">
-                    <button type="button" class="secondary" id="cancelFormDialog">Abbrechen</button>
-                    <button type="submit" class="primary">Absenden</button>
+                    <button id="closeDialog">Schließen</button>
                 </div>
-            </form>
-        </dialog>
-    </div>
-
-    <div class="demo-container">
-        <h3>4. Benachrichtigungs-Dialog</h3>
-        <p>Ein Dialog für wichtige Benachrichtigungen oder Warnungen.</p>
-        
-        <div class="demo-buttons">
-            <button id="openNotificationDialog">Benachrichtigung anzeigen</button>
+            </dialog>
         </div>
-        
-        <dialog id="notificationDialog" aria-labelledby="notification-title" aria-describedby="notification-desc" role="alertdialog">
-            <h3 id="notification-title">Wichtige Mitteilung</h3>
-            <div class="dialog-content">
-                <p id="notification-desc">Dies ist eine wichtige Benachrichtigung, die Ihre Aufmerksamkeit erfordert. Der Dialog verwendet das ARIA-Attribut <code>role="alertdialog"</code>, um seine Dringlichkeit anzuzeigen.</p>
-            </div>
-            <div class="dialog-buttons">
-                <button id="acknowledgeNotification">Verstanden</button>
-            </div>
-        </dialog>
-    </div>
 
-    <h2>Semantischer Aufbau</h2>
-    <p>Der semantisch korrekte Aufbau von Dialog-Elementen verbessert die Zugänglichkeit für Screenreader und andere Hilfstechnologien.</p>
-    
-    <div class="code-sample">
-        <h3>Struktur eines modalen Dialogs</h3>
-        <pre><code>&lt;dialog id="exampleDialog" aria-labelledby="dialog-title" aria-describedby="dialog-desc">
+        <div class="demo-container">
+            <h3>2. Modaler Dialog mit Backdrop</h3>
+            <p>
+                Ein modaler Dialog erscheint mit einem abgedunkelten Hintergrund
+                und blockiert die Interaktion mit der restlichen Seite.
+            </p>
+
+            <div class="demo-buttons">
+                <button id="openBackdropDialog">Modalen Dialog öffnen</button>
+            </div>
+
+            <dialog
+                id="backdropDialog"
+                aria-labelledby="modal-dialog-title"
+                aria-describedby="modal-dialog-desc"
+            >
+                <h3 id="modal-dialog-title">Modaler Dialog</h3>
+                <div class="dialog-content">
+                    <p id="modal-dialog-desc">
+                        Dieser Dialog ist modal. Er hat einen abgedunkelten
+                        Hintergrund und fokussiert die Aufmerksamkeit auf seinen
+                        Inhalt. Die Interaktion mit der restlichen Seite ist
+                        blockiert.
+                    </p>
+                </div>
+                <div class="dialog-buttons">
+                    <button id="closeBackdropDialog">Schließen</button>
+                </div>
+            </dialog>
+        </div>
+
+        <div class="demo-container">
+            <h3>3. Formular-Dialog mit Bestätigung</h3>
+            <p>Ein Dialog mit Formularelementen und mehreren Aktionsbuttons.</p>
+
+            <div class="demo-buttons">
+                <button id="openFormDialog">Formular-Dialog öffnen</button>
+            </div>
+
+            <dialog
+                id="formDialog"
+                aria-labelledby="form-dialog-title"
+            >
+                <form method="dialog">
+                    <h3 id="form-dialog-title">Formular-Dialog</h3>
+
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                            aria-required="true"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-Mail:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            aria-required="true"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comment">Kommentar:</label>
+                        <textarea
+                            id="comment"
+                            name="comment"
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <div class="dialog-buttons">
+                        <button
+                            type="button"
+                            class="secondary"
+                            id="cancelFormDialog"
+                        >
+                            Abbrechen
+                        </button>
+                        <button
+                            type="submit"
+                            class="primary"
+                        >
+                            Absenden
+                        </button>
+                    </div>
+                </form>
+            </dialog>
+        </div>
+
+        <div class="demo-container">
+            <h3>4. Benachrichtigungs-Dialog</h3>
+            <p>Ein Dialog für wichtige Benachrichtigungen oder Warnungen.</p>
+
+            <div class="demo-buttons">
+                <button id="openNotificationDialog">
+                    Benachrichtigung anzeigen
+                </button>
+            </div>
+
+            <dialog
+                id="notificationDialog"
+                aria-labelledby="notification-title"
+                aria-describedby="notification-desc"
+                role="alertdialog"
+            >
+                <h3 id="notification-title">Wichtige Mitteilung</h3>
+                <div class="dialog-content">
+                    <p id="notification-desc">
+                        Dies ist eine wichtige Benachrichtigung, die Ihre
+                        Aufmerksamkeit erfordert. Der Dialog verwendet das
+                        ARIA-Attribut <code>role="alertdialog"</code>, um seine
+                        Dringlichkeit anzuzeigen.
+                    </p>
+                </div>
+                <div class="dialog-buttons">
+                    <button id="acknowledgeNotification">Verstanden</button>
+                </div>
+            </dialog>
+        </div>
+
+        <h2>Semantischer Aufbau</h2>
+        <p>
+            Der semantisch korrekte Aufbau von Dialog-Elementen verbessert die
+            Zugänglichkeit für Screenreader und andere Hilfstechnologien.
+        </p>
+
+        <div class="code-sample">
+            <h3>Struktur eines modalen Dialogs</h3>
+            <pre><code>&lt;dialog id="exampleDialog" aria-labelledby="dialog-title" aria-describedby="dialog-desc">
     &lt;h3 id="dialog-title">Dialog-Titel&lt;/h3>
     &lt;div class="dialog-content">
         &lt;p id="dialog-desc">Inhaltsbeschreibung des Dialogs.&lt;/p>
@@ -363,12 +448,12 @@
         &lt;button id="confirmButton">Bestätigen&lt;/button>
     &lt;/div>
 &lt;/dialog></code></pre>
-    </div>
-    
-    <div class="sample">
-        <h3>Wichtige ARIA-Attribute für Dialoge</h3>
-        <samp>
-            <pre><code>
+        </div>
+
+        <div class="sample">
+            <h3>Wichtige ARIA-Attribute für Dialoge</h3>
+            <samp>
+                <pre><code>
 <b>dialog</b>#exampleDialog<i>[aria-labelledby=dialog-title]</i><i>[aria-describedby=dialog-desc]</i>
     <b>h3</b>#dialog-title
     <b>div</b>.dialog-content
@@ -377,59 +462,98 @@
         <b>button</b>#cancelButton
         <b>button</b>#confirmButton
             </code></pre>
-        </samp>
-    </div>
-    
-    <h3>Unterschied zwischen <code>show()</code> und <code>showModal()</code></h3>
-    <ul>
-        <li><strong>show()</strong>: Zeigt den Dialog nicht-modal an, sodass der Benutzer noch mit dem Rest der Seite interagieren kann</li>
-        <li><strong>showModal()</strong>: Zeigt den Dialog modal an, mit einem Hintergrund-Overlay und blockiert die Interaktion mit dem Rest der Seite</li>
-    </ul>
-    
-    <h2>Tastatursteuerung der Dialoge</h2>
-    
-    <section>
-        <h3>Allgemeine Tastatursteuerung</h3>
-        <dl>
-            <dt><kbd>Tab</kbd></dt>
-            <dd>Navigiert zwischen fokussierbaren Elementen innerhalb des Dialogs</dd>
-            
-            <dt><kbd>Shift</kbd> <span class="plus">+</span> <kbd>Tab</kbd></dt>
-            <dd>Rückwärts-Navigation zwischen fokussierbaren Elementen</dd>
-            
-            <dt><kbd>Escape</kbd> / <kbd>ESC</kbd></dt>
-            <dd>Schließt den modalen Dialog</dd>
-        </dl>
-    </section>
-    
-    <section>
-        <h3>Bei modalen Dialogen</h3>
-        <dl>
-            <dt><kbd>Tab</kbd></dt>
-            <dd>Fokus bleibt innerhalb des Dialogs, auch beim Erreichen des letzten fokussierbaren Elements (Fokus-Trap)</dd>
-            
-            <dt>Öffnen des Dialogs</dt>
-            <dd>Fokus wird automatisch auf das erste fokussierbare Element im Dialog gesetzt</dd>
-            
-            <dt>Schließen des Dialogs</dt>
-            <dd>Fokus sollte auf das Element zurückkehren, das den Dialog geöffnet hat</dd>
-        </dl>
-    </section>
-    
-    <div class="note">
-        <h4>Zugänglichkeitshinweise</h4>
+            </samp>
+        </div>
+
+        <h3>
+            Unterschied zwischen <code>show()</code> und
+            <code>showModal()</code>
+        </h3>
         <ul>
-            <li>Dialoge sollten beschriftende Elemente haben, die von Screenreadern angekündigt werden können (z.B. <code>aria-labelledby</code>)</li>
-            <li>Modale Dialoge sollten den Fokus innerhalb des Dialogs halten, bis sie geschlossen werden</li>
-            <li>Der Escape-Taste sollte stets den Dialog schließen können</li>
-            <li>Nach dem Schließen eines Dialogs sollte der Fokus auf ein sinnvolles Element zurückgesetzt werden</li>
-            <li>Für Warnungen oder wichtige Mitteilungen sollte <code>role="alertdialog"</code> verwendet werden</li>
+            <li>
+                <strong>show()</strong>: Zeigt den Dialog nicht-modal an, sodass
+                der Benutzer noch mit dem Rest der Seite interagieren kann
+            </li>
+            <li>
+                <strong>showModal()</strong>: Zeigt den Dialog modal an, mit
+                einem Hintergrund-Overlay und blockiert die Interaktion mit dem
+                Rest der Seite
+            </li>
         </ul>
-    </div>
-    
-    <h2>JavaScript-Implementierung</h2>
-    <div class="code-sample">
-        <pre><code>// Nicht-modaler Dialog
+
+        <h2>Tastatursteuerung der Dialoge</h2>
+
+        <section>
+            <h3>Allgemeine Tastatursteuerung</h3>
+            <dl>
+                <dt><kbd>Tab</kbd></dt>
+                <dd>
+                    Navigiert zwischen fokussierbaren Elementen innerhalb des
+                    Dialogs
+                </dd>
+
+                <dt>
+                    <kbd>Shift</kbd> <span class="plus">+</span> <kbd>Tab</kbd>
+                </dt>
+                <dd>Rückwärts-Navigation zwischen fokussierbaren Elementen</dd>
+
+                <dt><kbd>Escape</kbd> / <kbd>ESC</kbd></dt>
+                <dd>Schließt den modalen Dialog</dd>
+            </dl>
+        </section>
+
+        <section>
+            <h3>Bei modalen Dialogen</h3>
+            <dl>
+                <dt><kbd>Tab</kbd></dt>
+                <dd>
+                    Fokus bleibt innerhalb des Dialogs, auch beim Erreichen des
+                    letzten fokussierbaren Elements (Fokus-Trap)
+                </dd>
+
+                <dt>Öffnen des Dialogs</dt>
+                <dd>
+                    Fokus wird automatisch auf das erste fokussierbare Element
+                    im Dialog gesetzt
+                </dd>
+
+                <dt>Schließen des Dialogs</dt>
+                <dd>
+                    Fokus sollte auf das Element zurückkehren, das den Dialog
+                    geöffnet hat
+                </dd>
+            </dl>
+        </section>
+
+        <div class="note">
+            <h4>Zugänglichkeitshinweise</h4>
+            <ul>
+                <li>
+                    Dialoge sollten beschriftende Elemente haben, die von
+                    Screenreadern angekündigt werden können (z.B.
+                    <code>aria-labelledby</code>)
+                </li>
+                <li>
+                    Modale Dialoge sollten den Fokus innerhalb des Dialogs
+                    halten, bis sie geschlossen werden
+                </li>
+                <li>
+                    Der Escape-Taste sollte stets den Dialog schließen können
+                </li>
+                <li>
+                    Nach dem Schließen eines Dialogs sollte der Fokus auf ein
+                    sinnvolles Element zurückgesetzt werden
+                </li>
+                <li>
+                    Für Warnungen oder wichtige Mitteilungen sollte
+                    <code>role="alertdialog"</code> verwendet werden
+                </li>
+            </ul>
+        </div>
+
+        <h2>JavaScript-Implementierung</h2>
+        <div class="code-sample">
+            <pre><code>// Nicht-modaler Dialog
 const dialog = document.getElementById("myDialog");
 const openDialogButton = document.getElementById("openDialogNonModal");
 const closeDialogButton = document.getElementById("closeDialog");
@@ -467,142 +591,184 @@ closeBackdropDialogButton.addEventListener("click", () => {
     backdropDialog.close();
     openBackdropDialogButton.focus();
 });</code></pre>
-    </div>
-    
-    <h2>Alternativen</h2>
-    <ul>
-        <li>Custom-Dialoge mit <code>div</code>-Elementen und <code>role="dialog"</code> oder <code>role="alertdialog"</code> ARIA-Attributen</li>
-        <li>JavaScript-Bibliotheken wie <code>a11y-dialog</code> für erweiterte Funktionalität</li>
-        <li>Modale Fenster in UI-Frameworks wie Bootstrap, Material-UI oder TailwindUI</li>
-    </ul>
-    
-    <h2>Vor- und Nachteile des HTML dialog-Elements</h2>
-    
-    <h3>Vorteile</h3>
-    <ul>
-        <li>Eingebaute Browser-Unterstützung für Fokus-Management</li>
-        <li>Automatisches Handling des Modal-Verhaltens mit <code>showModal()</code></li>
-        <li>Eingebautes Styling des Backdrops mit <code>::backdrop</code></li>
-        <li>Standardmäßiges Schließen bei Escape-Taste</li>
-        <li>Semantisch korrekt ohne zusätzliche JavaScript-Bibliotheken</li>
-    </ul>
-    
-    <h3>Nachteile</h3>
-    <ul>
-        <li>Neuere Browser-API, daher eingeschränkte Unterstützung in älteren Browsern</li>
-        <li>Eingeschränkte Anpassungsmöglichkeiten für komplexe UI-Interaktionen</li>
-        <li>Anforderungen für vollständige Barrierefreiheit müssen manuell implementiert werden</li>
-    </ul>
-    
-    <script>
-        // Nicht-modaler Dialog
-        const dialog = document.getElementById("myDialog");
-        const openDialogButton = document.getElementById("openDialogNonModal");
-        const closeDialogButton = document.getElementById("closeDialog");
+        </div>
 
-        openDialogButton.addEventListener("click", () => {
-            dialog.show();
-            
-            // Fokus auf erstes fokussierbares Element setzen
-            const firstFocusable = dialog.querySelector("button, [href], input, select, textarea");
-            if (firstFocusable) {
-                firstFocusable.focus();
-            }
-        });
+        <h2>Alternativen</h2>
+        <ul>
+            <li>
+                Custom-Dialoge mit <code>div</code>-Elementen und
+                <code>role="dialog"</code> oder
+                <code>role="alertdialog"</code> ARIA-Attributen
+            </li>
+            <li>
+                JavaScript-Bibliotheken wie <code>a11y-dialog</code> für
+                erweiterte Funktionalität
+            </li>
+            <li>
+                Modale Fenster in UI-Frameworks wie Bootstrap, Material-UI oder
+                TailwindUI
+            </li>
+        </ul>
 
-        closeDialogButton.addEventListener("click", () => {
-            dialog.close();
-            // Fokus zurück auf den Öffnen-Button setzen
-            openDialogButton.focus();
-        });
+        <h2>Vor- und Nachteile des HTML dialog-Elements</h2>
 
-        // Modaler Dialog
-        const backdropDialog = document.getElementById("backdropDialog");
-        const openBackdropDialogButton = document.getElementById("openBackdropDialog");
-        const closeBackdropDialogButton = document.getElementById("closeBackdropDialog");
+        <h3>Vorteile</h3>
+        <ul>
+            <li>Eingebaute Browser-Unterstützung für Fokus-Management</li>
+            <li>
+                Automatisches Handling des Modal-Verhaltens mit
+                <code>showModal()</code>
+            </li>
+            <li>
+                Eingebautes Styling des Backdrops mit <code>::backdrop</code>
+            </li>
+            <li>Standardmäßiges Schließen bei Escape-Taste</li>
+            <li>Semantisch korrekt ohne zusätzliche JavaScript-Bibliotheken</li>
+        </ul>
 
-        openBackdropDialogButton.addEventListener("click", () => {
-            backdropDialog.showModal();
-            const firstFocusable = backdropDialog.querySelector("button, [href], input, select, textarea");
-            if (firstFocusable) {
-                firstFocusable.focus();
-            }
-        });
+        <h3>Nachteile</h3>
+        <ul>
+            <li>
+                Neuere Browser-API, daher eingeschränkte Unterstützung in
+                älteren Browsern
+            </li>
+            <li>
+                Eingeschränkte Anpassungsmöglichkeiten für komplexe
+                UI-Interaktionen
+            </li>
+            <li>
+                Anforderungen für vollständige Barrierefreiheit müssen manuell
+                implementiert werden
+            </li>
+        </ul>
 
-        closeBackdropDialogButton.addEventListener("click", () => {
-            backdropDialog.close();
-            openBackdropDialogButton.focus();
-        });
+        <script>
+            // Nicht-modaler Dialog
+            const dialog = document.getElementById("myDialog")
+            const openDialogButton =
+                document.getElementById("openDialogNonModal")
+            const closeDialogButton = document.getElementById("closeDialog")
 
-        // Formular-Dialog
-        const formDialog = document.getElementById("formDialog");
-        const openFormDialogButton = document.getElementById("openFormDialog");
-        const cancelFormDialogButton = document.getElementById("cancelFormDialog");
+            openDialogButton.addEventListener("click", () => {
+                dialog.show()
 
-        openFormDialogButton.addEventListener("click", () => {
-            formDialog.showModal();
-            
-            // Fokus auf erstes Eingabefeld setzen
-            const firstInput = formDialog.querySelector("input");
-            if (firstInput) {
-                firstInput.focus();
-            }
-        });
+                // Fokus auf erstes fokussierbares Element setzen
+                const firstFocusable = dialog.querySelector(
+                    "button, [href], input, select, textarea"
+                )
+                if (firstFocusable) {
+                    firstFocusable.focus()
+                }
+            })
 
-        cancelFormDialogButton.addEventListener("click", () => {
-            formDialog.close();
-            openFormDialogButton.focus();
-        });
+            closeDialogButton.addEventListener("click", () => {
+                dialog.close()
+                // Fokus zurück auf den Öffnen-Button setzen
+                openDialogButton.focus()
+            })
 
-        // Formular abschicken Event - wird automatisch durch method="dialog" behandelt
-        formDialog.addEventListener("close", () => {
-            if (formDialog.returnValue !== "") {
-                console.log("Formular abgeschickt:", formDialog.returnValue);
-            }
-        });
+            // Modaler Dialog
+            const backdropDialog = document.getElementById("backdropDialog")
+            const openBackdropDialogButton =
+                document.getElementById("openBackdropDialog")
+            const closeBackdropDialogButton = document.getElementById(
+                "closeBackdropDialog"
+            )
 
-        // Benachrichtigungs-Dialog
-        const notificationDialog = document.getElementById("notificationDialog");
-        const openNotificationDialogButton = document.getElementById("openNotificationDialog");
-        const acknowledgeNotificationButton = document.getElementById("acknowledgeNotification");
+            openBackdropDialogButton.addEventListener("click", () => {
+                backdropDialog.showModal()
+                const firstFocusable = backdropDialog.querySelector(
+                    "button, [href], input, select, textarea"
+                )
+                if (firstFocusable) {
+                    firstFocusable.focus()
+                }
+            })
 
-        openNotificationDialogButton.addEventListener("click", () => {
-            notificationDialog.showModal();
-            acknowledgeNotificationButton.focus();
-        });
+            closeBackdropDialogButton.addEventListener("click", () => {
+                backdropDialog.close()
+                openBackdropDialogButton.focus()
+            })
 
-        acknowledgeNotificationButton.addEventListener("click", () => {
-            notificationDialog.close();
-            openNotificationDialogButton.focus();
-        });
+            // Formular-Dialog
+            const formDialog = document.getElementById("formDialog")
+            const openFormDialogButton =
+                document.getElementById("openFormDialog")
+            const cancelFormDialogButton =
+                document.getElementById("cancelFormDialog")
 
-        // Allgemeine Funktion für alle modalen Dialoge: Escape-Taste und Fokus-Trap
-        const allModalDialogs = document.querySelectorAll("dialog");
-        
-        allModalDialogs.forEach(dialog => {
-            // Escape-Taste wird vom Browser standardmäßig behandelt
-            
-            // Fokus innerhalb des Dialogs halten (Fokus-Trap)
-            dialog.addEventListener('keydown', (e) => {
-                if (e.key === 'Tab') {
-                    const focusableElements = dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                    const firstElement = focusableElements[0];
-                    const lastElement = focusableElements[focusableElements.length - 1];
+            openFormDialogButton.addEventListener("click", () => {
+                formDialog.showModal()
 
-                    if (e.shiftKey) {
-                        if (document.activeElement === firstElement) {
-                            lastElement.focus();
-                            e.preventDefault();
-                        }
-                    } else {
-                        if (document.activeElement === lastElement) {
-                            firstElement.focus();
-                            e.preventDefault();
+                // Fokus auf erstes Eingabefeld setzen
+                const firstInput = formDialog.querySelector("input")
+                if (firstInput) {
+                    firstInput.focus()
+                }
+            })
+
+            cancelFormDialogButton.addEventListener("click", () => {
+                formDialog.close()
+                openFormDialogButton.focus()
+            })
+
+            // Formular abschicken Event - wird automatisch durch method="dialog" behandelt
+            formDialog.addEventListener("close", () => {
+                if (formDialog.returnValue !== "") {
+                    console.log("Formular abgeschickt:", formDialog.returnValue)
+                }
+            })
+
+            // Benachrichtigungs-Dialog
+            const notificationDialog =
+                document.getElementById("notificationDialog")
+            const openNotificationDialogButton = document.getElementById(
+                "openNotificationDialog"
+            )
+            const acknowledgeNotificationButton = document.getElementById(
+                "acknowledgeNotification"
+            )
+
+            openNotificationDialogButton.addEventListener("click", () => {
+                notificationDialog.showModal()
+                acknowledgeNotificationButton.focus()
+            })
+
+            acknowledgeNotificationButton.addEventListener("click", () => {
+                notificationDialog.close()
+                openNotificationDialogButton.focus()
+            })
+
+            // Allgemeine Funktion für alle modalen Dialoge: Escape-Taste und Fokus-Trap
+            const allModalDialogs = document.querySelectorAll("dialog")
+
+            allModalDialogs.forEach((dialog) => {
+                // Escape-Taste wird vom Browser standardmäßig behandelt
+
+                // Fokus innerhalb des Dialogs halten (Fokus-Trap)
+                dialog.addEventListener("keydown", (e) => {
+                    if (e.key === "Tab") {
+                        const focusableElements = dialog.querySelectorAll(
+                            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                        )
+                        const firstElement = focusableElements[0]
+                        const lastElement =
+                            focusableElements[focusableElements.length - 1]
+
+                        if (e.shiftKey) {
+                            if (document.activeElement === firstElement) {
+                                lastElement.focus()
+                                e.preventDefault()
+                            }
+                        } else {
+                            if (document.activeElement === lastElement) {
+                                firstElement.focus()
+                                e.preventDefault()
+                            }
                         }
                     }
-                }
-            });
-        });
-    </script>
-</body>
+                })
+            })
+        </script>
+    </body>
 </html>

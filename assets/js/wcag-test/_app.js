@@ -1528,7 +1528,7 @@ class WcagTestApp extends HTMLElement {
                                               100
                                       )
                                     : 0
-                            }%; background-color: var(--success-color); float: left;"></div>
+                            }%; background-color: var(--success); float: left;"></div>
                             <div style="height: 100%; width: ${
                                 summary.total
                                     ? Math.round(
@@ -1537,7 +1537,7 @@ class WcagTestApp extends HTMLElement {
                                               100
                                       )
                                     : 0
-                            }%; background-color: var(--error-color); float: left;"></div>
+                            }%; background-color: var(--error); float: left;"></div>
                             <div style="height: 100%; width: ${
                                 summary.total
                                     ? Math.round(

@@ -1,364 +1,434 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WCAG Kontrastanalyse-Tool</title>
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --background-color: #ffffff;
-            --border-color: #e5e7eb;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>WCAG Kontrastanalyse-Tool</title>
+        <style>
+            :root {
+                --primary: #2563eb;
+                --background-color: #ffffff;
+                --border-color: #e5e7eb;
+            }
 
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: var(--background-color);
-        }
+            body {
+                font-family: system-ui, -apple-system, sans-serif;
+                margin: 0;
+                padding: 20px;
+                background: var(--background-color);
+            }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
 
-        .measuring-point {
-            position: relative;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
+            .measuring-point {
+                position: relative;
+                cursor: pointer;
+                margin-bottom: 10px;
+            }
 
-        .measuring-point::after {
-            content: '📏';
-            position: absolute;
-            right: -25px;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 0.7;
-        }
+            .measuring-point::after {
+                content: "📏";
+                position: absolute;
+                right: -25px;
+                top: 50%;
+                transform: translateY(-50%);
+                opacity: 0.7;
+            }
 
-        .measuring-point:hover::after {
-            opacity: 1;
-        }
+            .measuring-point:hover::after {
+                opacity: 1;
+            }
 
-        .bg-blue {
-            background-color: #4a90e2;
-            padding: 10px;
-        }
+            .bg-blue {
+                background-color: #4a90e2;
+                padding: 10px;
+            }
 
-        .bg-mint {
-            background-color: #98d8d6;
-            padding: 10px;
-        }
+            .bg-mint {
+                background-color: #98d8d6;
+                padding: 10px;
+            }
 
-        .bg-gradient {
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
-            padding: 10px;
-        }
+            .bg-gradient {
+                background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+                padding: 10px;
+            }
 
-        .bg-image {
-            background-image: url('https://picsum.photos/id/68/400/400');
-            background-size: cover;
-            padding: 10px;
-            color: white;
-        }
+            .bg-image {
+                background-image: url("https://picsum.photos/id/68/400/400");
+                background-size: cover;
+                padding: 10px;
+                color: white;
+            }
 
-        .page {
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            margin: 20px 0;
-            min-height: 200px;
-        }
+            .page {
+                border: 1px solid var(--border-color);
+                padding: 20px;
+                margin: 20px 0;
+                min-height: 200px;
+            }
 
-        .results-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+            .results-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
 
-        .results-table th,
-        .results-table td {
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            vertical-align: middle;
-        }
+            .results-table th,
+            .results-table td {
+                padding: 12px;
+                border: 1px solid var(--border-color);
+                vertical-align: middle;
+            }
 
-        .results-table th {
-            background: #f9fafb;
-            font-weight: 500;
-        }
+            .results-table th {
+                background: #f9fafb;
+                font-weight: 500;
+            }
 
-        .color-field {
-            position: relative;
-            width: 60px;
-            height: 60px;
-            margin: 0 auto;
-        }
-        
-        .color-background {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            border: 1px solid #ccc;
-        }
-        
-        .color-foreground {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 1px solid rgba(0,0,0,0.2);
-            z-index: 1;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+            .color-field {
+                position: relative;
+                width: 60px;
+                height: 60px;
+                margin: 0 auto;
+            }
 
-        .wcag-rating {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
+            .color-background {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                border: 1px solid #ccc;
+            }
 
-        .wcag-fail {
-            background: #fee2e2;
-            color: #991b1b;
-        }
+            .color-foreground {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                z-index: 1;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
 
-        .wcag-aa {
-            background: #fef3c7;
-            color: #92400e;
-        }
+            .wcag-rating {
+                display: inline-block;
+                padding: 2px 8px;
+                border-radius: 4px;
+                font-weight: bold;
+            }
 
-        .wcag-aaa {
-            background: #dcfce7;
-            color: #166534;
-        }
+            .wcag-fail {
+                background: #fee2e2;
+                color: #991b1b;
+            }
 
-        .color-values {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+            .wcag-aa {
+                background: #fef3c7;
+                color: #92400e;
+            }
 
-        .color-value {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+            .wcag-aaa {
+                background: #dcfce7;
+                color: #166534;
+            }
 
-        .color-label {
-            font-weight: 500;
-            min-width: 100px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>WCAG Kontrastanalyse-Tool</h1>
-        
-        <div id="page" class="page">
-            <h2 class="measuring-point bg-blue">Hauptüberschrift</h2>
-            <p class="measuring-point bg-mint">Dies ist ein Beispieltext für die Kontrastanalyse mit hellem Hintergrund.</p>
-            <div class="measuring-point bg-gradient">
-                <h3>Abschnitt mit Farbverlauf</h3>
-                <p>Text auf einem Verlaufshintergrund zur Demonstration verschiedener Kontraste.</p>
+            .color-values {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .color-value {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .color-label {
+                font-weight: 500;
+                min-width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>WCAG Kontrastanalyse-Tool</h1>
+
+            <div
+                id="page"
+                class="page"
+            >
+                <h2 class="measuring-point bg-blue">Hauptüberschrift</h2>
+                <p class="measuring-point bg-mint">
+                    Dies ist ein Beispieltext für die Kontrastanalyse mit hellem
+                    Hintergrund.
+                </p>
+                <div class="measuring-point bg-gradient">
+                    <h3>Abschnitt mit Farbverlauf</h3>
+                    <p>
+                        Text auf einem Verlaufshintergrund zur Demonstration
+                        verschiedener Kontraste.
+                    </p>
+                </div>
+                <div class="measuring-point bg-image">
+                    <h3>Abschnitt mit Bild</h3>
+                    <p>
+                        Dieser Text liegt auf einem Hintergrundbild und
+                        verwendet daher helle Schrift.
+                    </p>
+                </div>
             </div>
-            <div class="measuring-point bg-image">
-                <h3>Abschnitt mit Bild</h3>
-                <p>Dieser Text liegt auf einem Hintergrundbild und verwendet daher helle Schrift.</p>
-            </div>
+
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Element</th>
+                        <th>Kontrastverhältnis</th>
+                        <th>WCAG Level</th>
+                        <th>Farbfeld</th>
+                        <th>Farbwerte</th>
+                        <th>Schriftgröße</th>
+                        <th>Schriftgewicht</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody"></tbody>
+            </table>
         </div>
 
-        <table class="results-table">
-            <thead>
-                <tr>
-                    <th>Element</th>
-                    <th>Kontrastverhältnis</th>
-                    <th>WCAG Level</th>
-                    <th>Farbfeld</th>
-                    <th>Farbwerte</th>
-                    <th>Schriftgröße</th>
-                    <th>Schriftgewicht</th>
-                </tr>
-            </thead>
-            <tbody id="resultsBody"></tbody>
-        </table>
-    </div>
+        <script>
+            // RGB zu Hex konvertieren
+            function rgbToHex(rgb) {
+                const rgbArray = rgb.match(/\d+/g)
+                if (!rgbArray) return "#000000"
+                return (
+                    "#" +
+                    rgbArray
+                        .map((x) => {
+                            const hex = parseInt(x).toString(16)
+                            return hex.length === 1 ? "0" + hex : hex
+                        })
+                        .join("")
+                )
+            }
 
-    <script>
-        // RGB zu Hex konvertieren
-        function rgbToHex(rgb) {
-            const rgbArray = rgb.match(/\d+/g);
-            if (!rgbArray) return '#000000';
-            return '#' + rgbArray.map(x => {
-                const hex = parseInt(x).toString(16);
-                return hex.length === 1 ? '0' + hex : hex;
-            }).join('');
-        }
-
-        // WCAG Kontrast berechnen
-        function calculateWCAGContrast(color1, color2) {
-            function getRGB(color) {
-                if (color.startsWith('#')) {
-                    const hex = color.replace('#', '');
-                    const rgb = {
-                        r: parseInt(hex.substr(0, 2), 16),
-                        g: parseInt(hex.substr(2, 2), 16),
-                        b: parseInt(hex.substr(4, 2), 16)
-                    };
-                    return rgb;
-                } else {
-                    const matches = color.match(/\d+/g);
-                    if (!matches || matches.length < 3) {
-                        return { r: 0, g: 0, b: 0 };
+            // WCAG Kontrast berechnen
+            function calculateWCAGContrast(color1, color2) {
+                function getRGB(color) {
+                    if (color.startsWith("#")) {
+                        const hex = color.replace("#", "")
+                        const rgb = {
+                            r: parseInt(hex.substr(0, 2), 16),
+                            g: parseInt(hex.substr(2, 2), 16),
+                            b: parseInt(hex.substr(4, 2), 16),
+                        }
+                        return rgb
+                    } else {
+                        const matches = color.match(/\d+/g)
+                        if (!matches || matches.length < 3) {
+                            return { r: 0, g: 0, b: 0 }
+                        }
+                        const rgb = {
+                            r: parseInt(matches[0]),
+                            g: parseInt(matches[1]),
+                            b: parseInt(matches[2]),
+                        }
+                        return rgb
                     }
-                    const rgb = {
-                        r: parseInt(matches[0]),
-                        g: parseInt(matches[1]),
-                        b: parseInt(matches[2])
-                    };
-                    return rgb;
                 }
+
+                function getRelativeLuminance(color) {
+                    const rgb = getRGB(color)
+                    const rsRGB = rgb.r / 255
+                    const gsRGB = rgb.g / 255
+                    const bsRGB = rgb.b / 255
+
+                    const r =
+                        rsRGB <= 0.03928
+                            ? rsRGB / 12.92
+                            : Math.pow((rsRGB + 0.055) / 1.055, 2.4)
+                    const g =
+                        gsRGB <= 0.03928
+                            ? gsRGB / 12.92
+                            : Math.pow((gsRGB + 0.055) / 1.055, 2.4)
+                    const b =
+                        bsRGB <= 0.03928
+                            ? bsRGB / 12.92
+                            : Math.pow((bsRGB + 0.055) / 1.055, 2.4)
+
+                    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+                }
+
+                const L1 = getRelativeLuminance(color1)
+                const L2 = getRelativeLuminance(color2)
+
+                const contrastRatio =
+                    (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05)
+                return Math.round(contrastRatio * 100) / 100
             }
 
-            function getRelativeLuminance(color) {
-                const rgb = getRGB(color);
-                const rsRGB = rgb.r / 255;
-                const gsRGB = rgb.g / 255;
-                const bsRGB = rgb.b / 255;
+            // WCAG Level bestimmen
+            function getWCAGLevel(contrast, fontSize, fontWeight) {
+                const isLargeText =
+                    fontSize >= 18 || (fontSize >= 14 && fontWeight >= 700)
 
-                const r = rsRGB <= 0.03928 ? rsRGB / 12.92 : Math.pow((rsRGB + 0.055) / 1.055, 2.4);
-                const g = gsRGB <= 0.03928 ? gsRGB / 12.92 : Math.pow((gsRGB + 0.055) / 1.055, 2.4);
-                const b = bsRGB <= 0.03928 ? bsRGB / 12.92 : Math.pow((bsRGB + 0.055) / 1.055, 2.4);
+                let level = ""
+                let className = ""
 
-                return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-            }
-
-            const L1 = getRelativeLuminance(color1);
-            const L2 = getRelativeLuminance(color2);
-
-            const contrastRatio = (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
-            return Math.round(contrastRatio * 100) / 100;
-        }
-
-        // WCAG Level bestimmen
-        function getWCAGLevel(contrast, fontSize, fontWeight) {
-            const isLargeText = fontSize >= 18 || (fontSize >= 14 && fontWeight >= 700);
-            
-            let level = '';
-            let className = '';
-
-            if (isLargeText) {
-                if (contrast >= 4.5) {
-                    level = 'AAA';
-                    className = 'wcag-aaa';
-                } else if (contrast >= 3) {
-                    level = 'AA';
-                    className = 'wcag-aa';
+                if (isLargeText) {
+                    if (contrast >= 4.5) {
+                        level = "AAA"
+                        className = "wcag-aaa"
+                    } else if (contrast >= 3) {
+                        level = "AA"
+                        className = "wcag-aa"
+                    } else {
+                        level = "Fail"
+                        className = "wcag-fail"
+                    }
                 } else {
-                    level = 'Fail';
-                    className = 'wcag-fail';
+                    if (contrast >= 7) {
+                        level = "AAA"
+                        className = "wcag-aaa"
+                    } else if (contrast >= 4.5) {
+                        level = "AA"
+                        className = "wcag-aa"
+                    } else {
+                        level = "Fail"
+                        className = "wcag-fail"
+                    }
                 }
-            } else {
-                if (contrast >= 7) {
-                    level = 'AAA';
-                    className = 'wcag-aaa';
-                } else if (contrast >= 4.5) {
-                    level = 'AA';
-                    className = 'wcag-aa';
-                } else {
-                    level = 'Fail';
-                    className = 'wcag-fail';
-                }
+
+                return { level, className }
             }
 
-            return { level, className };
-        }
+            // Alle Messpunkte analysieren
+            function analyzeAllPoints() {
+                const resultsBody = document.getElementById("resultsBody")
+                resultsBody.innerHTML = ""
 
-        // Alle Messpunkte analysieren
-        function analyzeAllPoints() {
-            const resultsBody = document.getElementById('resultsBody');
-            resultsBody.innerHTML = '';
-            
-            // Sammle alle einzigartigen Farbkombinationen
-            const uniqueCombinations = new Map();
-            
-            document.querySelectorAll('.measuring-point').forEach((element) => {
-                const computedStyle = window.getComputedStyle(element);
-                const textColor = rgbToHex(computedStyle.color);
-                const bgColor = rgbToHex(computedStyle.backgroundColor);
-                const fontSize = parseInt(computedStyle.fontSize);
-                const fontWeight = computedStyle.fontWeight;
-                const backgroundImage = computedStyle.backgroundImage;
-                const backgroundType = backgroundImage === 'none' ? 'solid' :
-                                     backgroundImage.includes('linear-gradient') ? 'gradient' :
-                                     backgroundImage.includes('url') ? 'image' : 'solid';
-                
-                // Erstelle einen eindeutigen Schlüssel für diese Kombination
-                const colorKey = `${textColor}-${bgColor}-${backgroundType}`;
-                
-                if (!uniqueCombinations.has(colorKey)) {
-                    const contrast = calculateWCAGContrast(textColor, bgColor);
-                    const wcagInfo = getWCAGLevel(contrast, fontSize, fontWeight);
-                    
-                    uniqueCombinations.set(colorKey, {
+                // Sammle alle einzigartigen Farbkombinationen
+                const uniqueCombinations = new Map()
+
+                document
+                    .querySelectorAll(".measuring-point")
+                    .forEach((element) => {
+                        const computedStyle = window.getComputedStyle(element)
+                        const textColor = rgbToHex(computedStyle.color)
+                        const bgColor = rgbToHex(computedStyle.backgroundColor)
+                        const fontSize = parseInt(computedStyle.fontSize)
+                        const fontWeight = computedStyle.fontWeight
+                        const backgroundImage = computedStyle.backgroundImage
+                        const backgroundType =
+                            backgroundImage === "none"
+                                ? "solid"
+                                : backgroundImage.includes("linear-gradient")
+                                ? "gradient"
+                                : backgroundImage.includes("url")
+                                ? "image"
+                                : "solid"
+
+                        // Erstelle einen eindeutigen Schlüssel für diese Kombination
+                        const colorKey = `${textColor}-${bgColor}-${backgroundType}`
+
+                        if (!uniqueCombinations.has(colorKey)) {
+                            const contrast = calculateWCAGContrast(
+                                textColor,
+                                bgColor
+                            )
+                            const wcagInfo = getWCAGLevel(
+                                contrast,
+                                fontSize,
+                                fontWeight
+                            )
+
+                            uniqueCombinations.set(colorKey, {
+                                contrast,
+                                wcagInfo,
+                                textColor,
+                                bgColor,
+                                backgroundType,
+                                elements: [],
+                            })
+                        }
+
+                        uniqueCombinations.get(colorKey).elements.push({
+                            element,
+                            fontSize,
+                            fontWeight,
+                            type: element.tagName.toLowerCase(),
+                            text:
+                                element.firstChild?.textContent ||
+                                element.textContent,
+                        })
+                    })
+
+                // Zeige Ergebnisse
+                uniqueCombinations.forEach((data) => {
+                    const {
                         contrast,
                         wcagInfo,
                         textColor,
                         bgColor,
                         backgroundType,
-                        elements: []
-                    });
-                }
-                
-                uniqueCombinations.get(colorKey).elements.push({
-                    element,
-                    fontSize,
-                    fontWeight,
-                    type: element.tagName.toLowerCase(),
-                    text: element.firstChild?.textContent || element.textContent
-                });
-            });
-            
-            // Zeige Ergebnisse
-            uniqueCombinations.forEach((data) => {
-                const { contrast, wcagInfo, textColor, bgColor, backgroundType, elements } = data;
-                
-                const elementsList = elements.map(e => 
-                    `${e.type} (${e.fontSize}px, ${e.fontWeight}): "${e.text.substring(0, 20)}${e.text.length > 20 ? '...' : ''}"`
-                ).join('<br>');
-                
-                const newRow = resultsBody.insertRow();
-                const fontWeightNames = elements.map(e => {
-                    const weight = parseInt(e.fontWeight);
-                    return weight === 400 ? 'Regular' :
-                           weight === 700 ? 'Bold' :
-                           weight === 300 ? 'Light' :
-                           weight === 500 ? 'Medium' :
-                           weight;
-                });
+                        elements,
+                    } = data
 
-                let bgStyle;
-                switch(backgroundType) {
-                    case 'gradient':
-                        bgStyle = 'linear-gradient(45deg, ' + bgColor + ', #ffffff)';
-                        break;
-                    case 'image':
-                        bgStyle = 'url(https://picsum.photos/id/68/400/400)';
-                        break;
-                    default:
-                        bgStyle = bgColor;
-                }
+                    const elementsList = elements
+                        .map(
+                            (e) =>
+                                `${e.type} (${e.fontSize}px, ${
+                                    e.fontWeight
+                                }): "${e.text.substring(0, 20)}${
+                                    e.text.length > 20 ? "..." : ""
+                                }"`
+                        )
+                        .join("<br>")
 
-                newRow.innerHTML = `
+                    const newRow = resultsBody.insertRow()
+                    const fontWeightNames = elements.map((e) => {
+                        const weight = parseInt(e.fontWeight)
+                        return weight === 400
+                            ? "Regular"
+                            : weight === 700
+                            ? "Bold"
+                            : weight === 300
+                            ? "Light"
+                            : weight === 500
+                            ? "Medium"
+                            : weight
+                    })
+
+                    let bgStyle
+                    switch (backgroundType) {
+                        case "gradient":
+                            bgStyle =
+                                "linear-gradient(45deg, " +
+                                bgColor +
+                                ", #ffffff)"
+                            break
+                        case "image":
+                            bgStyle = "url(https://picsum.photos/id/68/400/400)"
+                            break
+                        default:
+                            bgStyle = bgColor
+                    }
+
+                    newRow.innerHTML = `
                     <td>${elementsList}</td>
                     <td>${contrast}:1</td>
-                    <td><span class="wcag-rating ${wcagInfo.className}">${wcagInfo.level}</span></td>
+                    <td><span class="wcag-rating ${wcagInfo.className}">${
+                        wcagInfo.level
+                    }</span></td>
                     <td>
                         <div class="color-field">
                             <div class="color-background" style="background: ${bgStyle}; background-size: cover;"></div>
@@ -373,29 +443,41 @@
                             </div>
                             <div class="color-value">
                                 <span class="color-label">Hintergrund:</span>
-                                <span>${backgroundType === 'image' ? 'Bild' : 
-                                       backgroundType === 'gradient' ? 'Verlauf' : 
-                                       bgColor}</span>
+                                <span>${
+                                    backgroundType === "image"
+                                        ? "Bild"
+                                        : backgroundType === "gradient"
+                                        ? "Verlauf"
+                                        : bgColor
+                                }</span>
                             </div>
                         </div>
                     </td>
-                    <td>${elements.map(e => `${e.fontSize}px`).join(', ')}</td>
-                    <td>${fontWeightNames.join(', ')}</td>
-                `;
+                    <td>${elements
+                        .map((e) => `${e.fontSize}px`)
+                        .join(", ")}</td>
+                    <td>${fontWeightNames.join(", ")}</td>
+                `
 
-                // Klick-Handler für Hervorhebung
-                newRow.addEventListener('click', () => {
-                    elements.forEach(({element}) => {
-                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        element.classList.add('highlighted');
-                        setTimeout(() => element.classList.remove('highlighted'), 2000);
-                    });
-                });
-            });
-        }
+                    // Klick-Handler für Hervorhebung
+                    newRow.addEventListener("click", () => {
+                        elements.forEach(({ element }) => {
+                            element.scrollIntoView({
+                                behavior: "smooth",
+                                block: "center",
+                            })
+                            element.classList.add("highlighted")
+                            setTimeout(
+                                () => element.classList.remove("highlighted"),
+                                2000
+                            )
+                        })
+                    })
+                })
+            }
 
-        // Automatische Analyse beim Laden
-        analyzeAllPoints();
-    </script>
-</body>
+            // Automatische Analyse beim Laden
+            analyzeAllPoints()
+        </script>
+    </body>
 </html>

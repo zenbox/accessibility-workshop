@@ -1,669 +1,909 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barrierefreies Flyout-Menü</title>
-    
-    <style>
-        :root {
-            --focus-color: #2563eb;
-            --hover-color: #dbeafe;
-            --border-color: #e5e7eb;
-            --header-color: #1e3a8a;
-            --text-color: #1f2937;
-            --light-text: #6b7280;
-            --background-color: #ffffff;
-            --menu-background: #f8fafc;
-            --menu-shadow: rgba(0, 0, 0, 0.1);
-            --overlay-color: rgba(0, 0, 0, 0.5);
-            --mobile-menu-bg: #f1f5f9;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Barrierefreies Flyout-Menü</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0;
-        }
-
-        .content-wrapper {
-            padding: 20px;
-        }
-
-        /* Navigation Styles */
-        .nav-container {
-            position: relative;
-            background-color: var(--background-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .main-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--header-color);
-            text-decoration: none;
-        }
-
-        /* Desktop Navigation */
-        .nav-desktop {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-desktop {
-                display: none;
+        <style>
+            :root {
+                --focus-color: #2563eb;
+                --hover-color: #dbeafe;
+                --border-color: #e5e7eb;
+                --header-color: #1e3a8a;
+                --text-primary: #1f2937;
+                --light-text: #6b7280;
+                --background-color: #ffffff;
+                --menu-background: #f8fafc;
+                --menu-shadow: rgba(0, 0, 0, 0.1);
+                --overlay-color: rgba(0, 0, 0, 0.5);
+                --mobile-menu-bg: #f1f5f9;
             }
-        }
 
-        .nav-item {
-            position: relative;
-        }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
 
-        .nav-link {
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 0.5rem;
-            display: inline-block;
-            position: relative;
-        }
+            body {
+                font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+                    "Helvetica Neue", sans-serif;
+                line-height: 1.6;
+                color: var(--text-primary);
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0;
+            }
 
-        .nav-link:hover {
-            color: var(--focus-color);
-        }
+            .content-wrapper {
+                padding: 20px;
+            }
 
-        .nav-link:focus {
-            outline: 2px solid var(--focus-color);
-            outline-offset: 2px;
-            border-radius: 2px;
-        }
+            /* Navigation Styles */
+            .nav-container {
+                position: relative;
+                background-color: var(--background-color);
+                border-bottom: 1px solid var(--border-color);
+            }
 
-        .nav-link[aria-expanded="true"] {
-            color: var(--focus-color);
-        }
+            .main-nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
 
-        /* Dropdown/Flyout Menu */
-        .flyout-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            min-width: 220px;
-            background-color: var(--menu-background);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            box-shadow: 0 4px 12px var(--menu-shadow);
-            z-index: 100;
-            display: none;
-            padding: 0.5rem 0;
-        }
+            .nav-logo {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: var(--header-color);
+                text-decoration: none;
+            }
 
-        .flyout-menu.active {
-            display: block;
-        }
+            /* Desktop Navigation */
+            .nav-desktop {
+                display: flex;
+                gap: 1.5rem;
+            }
 
-        /* Use transform for second level flyouts */
-        .flyout-menu .flyout-menu {
-            top: 0;
-            left: 100%;
-        }
+            @media (max-width: 768px) {
+                .nav-desktop {
+                    display: none;
+                }
+            }
 
-        .flyout-menu-item {
-            list-style: none;
-            position: relative;
-        }
+            .nav-item {
+                position: relative;
+            }
 
-        .flyout-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-decoration: none;
-            color: var(--text-color);
-            padding: 0.5rem 1rem;
-            width: 100%;
-            text-align: left;
-            background: none;
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-        }
+            .nav-link {
+                color: var(--text-primary);
+                text-decoration: none;
+                padding: 0.5rem;
+                display: inline-block;
+                position: relative;
+            }
 
-        .flyout-link:hover {
-            background-color: var(--hover-color);
-        }
+            .nav-link:hover {
+                color: var(--focus-color);
+            }
 
-        .flyout-link:focus {
-            outline: 2px solid var(--focus-color);
-            outline-offset: -2px;
-        }
+            .nav-link:focus {
+                outline: 2px solid var(--focus-color);
+                outline-offset: 2px;
+                border-radius: 2px;
+            }
 
-        .has-submenu > .flyout-link::after {
-            content: "→";
-            margin-left: 0.5rem;
-        }
+            .nav-link[aria-expanded="true"] {
+                color: var(--focus-color);
+            }
 
-        /* Mobile Menu Button */
-        .mobile-menu-button {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-color);
-            padding: 0.5rem;
-        }
+            /* Dropdown/Flyout Menu */
+            .flyout-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                min-width: 220px;
+                background-color: var(--menu-background);
+                border: 1px solid var(--border-color);
+                border-radius: 4px;
+                box-shadow: 0 4px 12px var(--menu-shadow);
+                z-index: 100;
+                display: none;
+                padding: 0.5rem 0;
+            }
 
-        .mobile-menu-button:focus {
-            outline: 2px solid var(--focus-color);
-            outline-offset: 2px;
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-button {
+            .flyout-menu.active {
                 display: block;
             }
-        }
 
-        /* Mobile Menu */
-        .nav-mobile {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 80%;
-            max-width: 320px;
-            background-color: var(--mobile-menu-bg);
-            z-index: 1000;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            overflow-y: auto;
-            padding: 1rem 0;
-        }
+            /* Use transform for second level flyouts */
+            .flyout-menu .flyout-menu {
+                top: 0;
+                left: 100%;
+            }
 
-        .nav-mobile.active {
-            transform: translateX(0);
-            box-shadow: -4px 0 12px var(--menu-shadow);
-        }
+            .flyout-menu-item {
+                list-style: none;
+                position: relative;
+            }
 
-        .mobile-menu-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 1rem 1rem;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 1rem;
-        }
+            .flyout-link {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                text-decoration: none;
+                color: var(--text-primary);
+                padding: 0.5rem 1rem;
+                width: 100%;
+                text-align: left;
+                background: none;
+                border: none;
+                font-size: 1rem;
+                cursor: pointer;
+            }
 
-        .mobile-close-button {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-color);
-            padding: 0.5rem;
-        }
+            .flyout-link:hover {
+                background-color: var(--hover-color);
+            }
 
-        .mobile-close-button:focus {
-            outline: 2px solid var(--focus-color);
-            outline-offset: 2px;
-        }
+            .flyout-link:focus {
+                outline: 2px solid var(--focus-color);
+                outline-offset: -2px;
+            }
 
-        .nav-mobile-items {
-            list-style: none;
-        }
+            .has-submenu > .flyout-link::after {
+                content: "→";
+                margin-left: 0.5rem;
+            }
 
-        .mobile-nav-link {
-            display: block;
-            text-decoration: none;
-            color: var(--text-color);
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
+            /* Mobile Menu Button */
+            .mobile-menu-button {
+                display: none;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: var(--text-primary);
+                padding: 0.5rem;
+            }
 
-        .mobile-nav-link:hover {
-            background-color: var(--hover-color);
-        }
+            .mobile-menu-button:focus {
+                outline: 2px solid var(--focus-color);
+                outline-offset: 2px;
+            }
 
-        .mobile-nav-link:focus {
-            outline: 2px solid var(--focus-color);
-            outline-offset: -2px;
-        }
+            @media (max-width: 768px) {
+                .mobile-menu-button {
+                    display: block;
+                }
+            }
 
-        /* Mobile Submenu */
-        .mobile-submenu-button {
-            background: none;
-            border: none;
-            font-size: 1rem;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-            color: var(--text-color);
-            padding: 0.75rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-        }
+            /* Mobile Menu */
+            .nav-mobile {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 80%;
+                max-width: 320px;
+                background-color: var(--mobile-menu-bg);
+                z-index: 1000;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                overflow-y: auto;
+                padding: 1rem 0;
+            }
 
-        .mobile-submenu-button:hover {
-            background-color: var(--hover-color);
-        }
+            .nav-mobile.active {
+                transform: translateX(0);
+                box-shadow: -4px 0 12px var(--menu-shadow);
+            }
 
-        .mobile-submenu-button:focus {
-            outline: 2px solid var(--focus-color);
-            outline-offset: -2px;
-        }
+            .mobile-menu-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 1rem 1rem;
+                border-bottom: 1px solid var(--border-color);
+                margin-bottom: 1rem;
+            }
 
-        .mobile-submenu-button::after {
-            content: "+";
-            font-size: 1.2rem;
-        }
+            .mobile-close-button {
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: var(--text-primary);
+                padding: 0.5rem;
+            }
 
-        .mobile-submenu-button[aria-expanded="true"]::after {
-            content: "-";
-        }
+            .mobile-close-button:focus {
+                outline: 2px solid var(--focus-color);
+                outline-offset: 2px;
+            }
 
-        .mobile-submenu {
-            display: none;
-            background-color: rgba(0, 0, 0, 0.05);
-        }
+            .nav-mobile-items {
+                list-style: none;
+            }
 
-        .mobile-submenu.active {
-            display: block;
-        }
+            .mobile-nav-link {
+                display: block;
+                text-decoration: none;
+                color: var(--text-primary);
+                padding: 0.75rem 1rem;
+                border-bottom: 1px solid var(--border-color);
+            }
 
-        .mobile-submenu-item {
-            list-style: none;
-        }
+            .mobile-nav-link:hover {
+                background-color: var(--hover-color);
+            }
 
-        .mobile-submenu .mobile-nav-link {
-            padding-left: 2rem;
-        }
+            .mobile-nav-link:focus {
+                outline: 2px solid var(--focus-color);
+                outline-offset: -2px;
+            }
 
-        .mobile-submenu .mobile-submenu .mobile-nav-link {
-            padding-left: 3rem;
-        }
+            /* Mobile Submenu */
+            .mobile-submenu-button {
+                background: none;
+                border: none;
+                font-size: 1rem;
+                width: 100%;
+                text-align: left;
+                cursor: pointer;
+                color: var(--text-primary);
+                padding: 0.75rem 1rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid var(--border-color);
+            }
 
-        /* Overlay */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--overlay-color);
-            z-index: 999;
-            display: none;
-        }
+            .mobile-submenu-button:hover {
+                background-color: var(--hover-color);
+            }
 
-        .menu-overlay.active {
-            display: block;
-        }
+            .mobile-submenu-button:focus {
+                outline: 2px solid var(--focus-color);
+                outline-offset: -2px;
+            }
 
-        /* Skip Link */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background-color: var(--focus-color);
-            color: white;
-            padding: 8px;
-            z-index: 2000;
-            text-decoration: none;
-        }
+            .mobile-submenu-button::after {
+                content: "+";
+                font-size: 1.2rem;
+            }
 
-        .skip-link:focus {
-            top: 0;
-        }
+            .mobile-submenu-button[aria-expanded="true"]::after {
+                content: "-";
+            }
 
-        /* Page Content Styles */
-        h1, h2, h3, h4 {
-            color: var(--header-color);
-            margin: 1.5rem 0 1rem;
-        }
+            .mobile-submenu {
+                display: none;
+                background-color: rgba(0, 0, 0, 0.05);
+            }
 
-        h1 {
-            font-size: 2rem;
-            margin-top: 2rem;
-        }
+            .mobile-submenu.active {
+                display: block;
+            }
 
-        h2 {
-            font-size: 1.5rem;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            margin-top: 2.5rem;
-        }
+            .mobile-submenu-item {
+                list-style: none;
+            }
 
-        h3 {
-            font-size: 1.25rem;
-            margin-top: 2rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.25rem;
-        }
+            .mobile-submenu .mobile-nav-link {
+                padding-left: 2rem;
+            }
 
-        p {
-            margin-bottom: 1rem;
-        }
+            .mobile-submenu .mobile-submenu .mobile-nav-link {
+                padding-left: 3rem;
+            }
 
-        /* Code Sample Styles */
-        .code-sample {
-            background: #f1f5f9;
-            padding: 1rem;
-            border-radius: 4px;
-            border-left: 4px solid var(--focus-color);
-            margin: 1.5rem 0;
-            overflow-x: auto;
-        }
+            /* Overlay */
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: var(--overlay-color);
+                z-index: 999;
+                display: none;
+            }
 
-        .code-sample pre {
-            margin: 0;
-        }
+            .menu-overlay.active {
+                display: block;
+            }
 
-        .code-sample code {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-size: 0.9rem;
-        }
+            /* Skip Link */
+            .skip-link {
+                position: absolute;
+                top: -40px;
+                left: 0;
+                background-color: var(--focus-color);
+                color: white;
+                padding: 8px;
+                z-index: 2000;
+                text-decoration: none;
+            }
 
-        /* Accessibility Notes */
-        .note {
-            background-color: #eff6ff;
-            border-left: 4px solid #3b82f6;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 4px;
-        }
+            .skip-link:focus {
+                top: 0;
+            }
 
-        .note h4 {
-            margin-top: 0;
-            font-size: 1rem;
-            color: #1e40af;
-        }
+            /* Page Content Styles */
+            h1,
+            h2,
+            h3,
+            h4 {
+                color: var(--header-color);
+                margin: 1.5rem 0 1rem;
+            }
 
-        .note ul {
-            margin-bottom: 0;
-        }
+            h1 {
+                font-size: 2rem;
+                margin-top: 2rem;
+            }
 
-        /* Keyboard Navigation */
-        dl {
-            background-color: #f9fafb;
-            padding: 1rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--focus-color);
-            margin: 1.5rem 0;
-        }
+            h2 {
+                font-size: 1.5rem;
+                border-bottom: 2px solid var(--border-color);
+                padding-bottom: 0.5rem;
+                margin-top: 2.5rem;
+            }
 
-        dt {
-            font-weight: bold;
-            margin-top: 0.8rem;
-            display: flex;
-            align-items: center;
-        }
+            h3 {
+                font-size: 1.25rem;
+                margin-top: 2rem;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 0.25rem;
+            }
 
-        dt:first-child {
-            margin-top: 0;
-        }
+            p {
+                margin-bottom: 1rem;
+            }
 
-        dt kbd {
-            display: inline-block;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-            padding: 0.25rem 0.5rem;
-            font-family: monospace;
-            font-size: 0.9rem;
-            margin-right: 0.5rem;
-        }
+            /* Code Sample Styles */
+            .code-sample {
+                background: #f1f5f9;
+                padding: 1rem;
+                border-radius: 4px;
+                border-left: 4px solid var(--focus-color);
+                margin: 1.5rem 0;
+                overflow-x: auto;
+            }
 
-        dt .plus {
-            margin: 0 0.5rem;
-            font-weight: normal;
-            color: #6b7280;
-        }
+            .code-sample pre {
+                margin: 0;
+            }
 
-        dd {
-            margin-left: 0;
-            margin-bottom: 0.8rem;
-            padding-left: 1.5rem;
-        }
+            .code-sample code {
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco,
+                    Consolas, "Liberation Mono", "Courier New", monospace;
+                font-size: 0.9rem;
+            }
 
-        /* Demo container */
-        .demo-container {
-            background-color: #f9fafb;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
+            /* Accessibility Notes */
+            .note {
+                background-color: #eff6ff;
+                border-left: 4px solid #3b82f6;
+                padding: 1rem;
+                margin: 1.5rem 0;
+                border-radius: 4px;
+            }
 
-        /* List styles */
-        ul, ol {
-            margin: 1rem 0;
-            padding-left: 2rem;
-        }
+            .note h4 {
+                margin-top: 0;
+                font-size: 1rem;
+                color: #1e40af;
+            }
 
-        li {
-            margin-bottom: 0.5rem;
-        }
+            .note ul {
+                margin-bottom: 0;
+            }
 
-        .sample {
-            background: #f9fafb;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
+            /* Keyboard Navigation */
+            dl {
+                background-color: #f9fafb;
+                padding: 1rem;
+                border-radius: 8px;
+                border-left: 4px solid var(--focus-color);
+                margin: 1.5rem 0;
+            }
 
-        samp i {
-            display: inline-block;
-            margin-inline-start: 0.25rem;
-            font-style: normal;
-            color: hsla(0, 85%, 47.5%, 1);
-        }
-    </style>
-</head>
-<body>
-    <a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
+            dt {
+                font-weight: bold;
+                margin-top: 0.8rem;
+                display: flex;
+                align-items: center;
+            }
 
-    <header class="nav-container">
-        <nav class="main-nav" aria-label="Hauptnavigation">
-            <a href="#" class="nav-logo">FlyoutMenu</a>
-            
-            <!-- Desktop Navigation -->
-            <ul class="nav-desktop" role="menubar">
-                <li class="nav-item" role="none">
-                    <a href="#" class="nav-link" role="menuitem">Startseite</a>
-                </li>
-                <li class="nav-item" role="none">
-                    <button class="nav-link" 
-                           aria-expanded="false" 
-                           aria-haspopup="true" 
-                           aria-controls="products-menu"
-                           role="menuitem">
-                        Produkte
-                    </button>
-                    <ul id="products-menu" class="flyout-menu" role="menu" aria-label="Produkte">
-                        <li class="flyout-menu-item" role="none">
-                            <a href="#" class="flyout-link" role="menuitem">Software</a>
-                        </li>
-                        <li class="flyout-menu-item has-submenu" role="none">
-                            <button class="flyout-link" 
-                                   aria-expanded="false" 
-                                   aria-haspopup="true" 
-                                   aria-controls="hardware-menu"
-                                   role="menuitem">
-                                Hardware
-                            </button>
-                            <ul id="hardware-menu" class="flyout-menu" role="menu" aria-label="Hardware">
-                                <li class="flyout-menu-item" role="none">
-                                    <a href="#" class="flyout-link" role="menuitem">Computer</a>
-                                </li>
-                                <li class="flyout-menu-item" role="none">
-                                    <a href="#" class="flyout-link" role="menuitem">Mobilgeräte</a>
-                                </li>
-                                <li class="flyout-menu-item" role="none">
-                                    <a href="#" class="flyout-link" role="menuitem">Zubehör</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="flyout-menu-item" role="none">
-                            <a href="#" class="flyout-link" role="menuitem">Lösungen</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item" role="none">
-                    <button class="nav-link" 
-                           aria-expanded="false" 
-                           aria-haspopup="true" 
-                           aria-controls="services-menu"
-                           role="menuitem">
-                        Dienstleistungen
-                    </button>
-                    <ul id="services-menu" class="flyout-menu" role="menu" aria-label="Dienstleistungen">
-                        <li class="flyout-menu-item" role="none">
-                            <a href="#" class="flyout-link" role="menuitem">Beratung</a>
-                        </li>
-                        <li class="flyout-menu-item" role="none">
-                            <a href="#" class="flyout-link" role="menuitem">Entwicklung</a>
-                        </li>
-                        <li class="flyout-menu-item" role="none">
-                            <a href="#" class="flyout-link" role="menuitem">Support</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item" role="none">
-                    <a href="#" class="nav-link" role="menuitem">Über uns</a>
-                </li>
-                <li class="nav-item" role="none">
-                    <a href="#" class="nav-link" role="menuitem">Kontakt</a>
-                </li>
-            </ul>
-            
-            <!-- Mobile Menu Button -->
-            <button class="mobile-menu-button" 
-                   aria-expanded="false" 
-                   aria-controls="mobile-menu"
-                   aria-label="Mobiles Menü öffnen">
-                ☰
-            </button>
-            
-            <!-- Mobile Navigation -->
-            <div id="mobile-menu" class="nav-mobile" aria-label="Mobiles Menü">
-                <div class="mobile-menu-header">
-                    <span>Menü</span>
-                    <button class="mobile-close-button" aria-label="Mobiles Menü schließen">×</button>
-                </div>
-                <ul class="nav-mobile-items">
-                    <li class="mobile-menu-item">
-                        <a href="#" class="mobile-nav-link">Startseite</a>
+            dt:first-child {
+                margin-top: 0;
+            }
+
+            dt kbd {
+                display: inline-block;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                padding: 0.25rem 0.5rem;
+                font-family: monospace;
+                font-size: 0.9rem;
+                margin-right: 0.5rem;
+            }
+
+            dt .plus {
+                margin: 0 0.5rem;
+                font-weight: normal;
+                color: #6b7280;
+            }
+
+            dd {
+                margin-left: 0;
+                margin-bottom: 0.8rem;
+                padding-left: 1.5rem;
+            }
+
+            /* Demo container */
+            .demo-container {
+                background-color: #f9fafb;
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                padding: 20px;
+                margin: 20px 0;
+            }
+
+            /* List styles */
+            ul,
+            ol {
+                margin: 1rem 0;
+                padding-left: 2rem;
+            }
+
+            li {
+                margin-bottom: 0.5rem;
+            }
+
+            .sample {
+                background: #f9fafb;
+                padding: 1rem;
+                border-radius: 8px;
+                margin: 1.5rem 0;
+            }
+
+            samp i {
+                display: inline-block;
+                margin-inline-start: 0.25rem;
+                font-style: normal;
+                color: hsla(0, 85%, 47.5%, 1);
+            }
+        </style>
+    </head>
+    <body>
+        <a
+            href="#main-content"
+            class="skip-link"
+            >Zum Hauptinhalt springen</a
+        >
+
+        <header class="nav-container">
+            <nav
+                class="main-nav"
+                aria-label="Hauptnavigation"
+            >
+                <a
+                    href="#"
+                    class="nav-logo"
+                    >FlyoutMenu</a
+                >
+
+                <!-- Desktop Navigation -->
+                <ul
+                    class="nav-desktop"
+                    role="menubar"
+                >
+                    <li
+                        class="nav-item"
+                        role="none"
+                    >
+                        <a
+                            href="#"
+                            class="nav-link"
+                            role="menuitem"
+                            >Startseite</a
+                        >
                     </li>
-                    <li class="mobile-menu-item">
-                        <button class="mobile-submenu-button" 
-                               aria-expanded="false" 
-                               aria-controls="mobile-products-menu">
+                    <li
+                        class="nav-item"
+                        role="none"
+                    >
+                        <button
+                            class="nav-link"
+                            aria-expanded="false"
+                            aria-haspopup="true"
+                            aria-controls="products-menu"
+                            role="menuitem"
+                        >
                             Produkte
                         </button>
-                        <ul id="mobile-products-menu" class="mobile-submenu">
-                            <li class="mobile-submenu-item">
-                                <a href="#" class="mobile-nav-link">Software</a>
+                        <ul
+                            id="products-menu"
+                            class="flyout-menu"
+                            role="menu"
+                            aria-label="Produkte"
+                        >
+                            <li
+                                class="flyout-menu-item"
+                                role="none"
+                            >
+                                <a
+                                    href="#"
+                                    class="flyout-link"
+                                    role="menuitem"
+                                    >Software</a
+                                >
                             </li>
-                            <li class="mobile-submenu-item">
-                                <button class="mobile-submenu-button" 
-                                       aria-expanded="false" 
-                                       aria-controls="mobile-hardware-menu">
+                            <li
+                                class="flyout-menu-item has-submenu"
+                                role="none"
+                            >
+                                <button
+                                    class="flyout-link"
+                                    aria-expanded="false"
+                                    aria-haspopup="true"
+                                    aria-controls="hardware-menu"
+                                    role="menuitem"
+                                >
                                     Hardware
                                 </button>
-                                <ul id="mobile-hardware-menu" class="mobile-submenu">
-                                    <li class="mobile-submenu-item">
-                                        <a href="#" class="mobile-nav-link">Computer</a>
+                                <ul
+                                    id="hardware-menu"
+                                    class="flyout-menu"
+                                    role="menu"
+                                    aria-label="Hardware"
+                                >
+                                    <li
+                                        class="flyout-menu-item"
+                                        role="none"
+                                    >
+                                        <a
+                                            href="#"
+                                            class="flyout-link"
+                                            role="menuitem"
+                                            >Computer</a
+                                        >
                                     </li>
-                                    <li class="mobile-submenu-item">
-                                        <a href="#" class="mobile-nav-link">Mobilgeräte</a>
+                                    <li
+                                        class="flyout-menu-item"
+                                        role="none"
+                                    >
+                                        <a
+                                            href="#"
+                                            class="flyout-link"
+                                            role="menuitem"
+                                            >Mobilgeräte</a
+                                        >
                                     </li>
-                                    <li class="mobile-submenu-item">
-                                        <a href="#" class="mobile-nav-link">Zubehör</a>
+                                    <li
+                                        class="flyout-menu-item"
+                                        role="none"
+                                    >
+                                        <a
+                                            href="#"
+                                            class="flyout-link"
+                                            role="menuitem"
+                                            >Zubehör</a
+                                        >
                                     </li>
                                 </ul>
                             </li>
-                            <li class="mobile-submenu-item">
-                                <a href="#" class="mobile-nav-link">Lösungen</a>
+                            <li
+                                class="flyout-menu-item"
+                                role="none"
+                            >
+                                <a
+                                    href="#"
+                                    class="flyout-link"
+                                    role="menuitem"
+                                    >Lösungen</a
+                                >
                             </li>
                         </ul>
                     </li>
-                    <li class="mobile-menu-item">
-                        <button class="mobile-submenu-button" 
-                               aria-expanded="false" 
-                               aria-controls="mobile-services-menu">
+                    <li
+                        class="nav-item"
+                        role="none"
+                    >
+                        <button
+                            class="nav-link"
+                            aria-expanded="false"
+                            aria-haspopup="true"
+                            aria-controls="services-menu"
+                            role="menuitem"
+                        >
                             Dienstleistungen
                         </button>
-                        <ul id="mobile-services-menu" class="mobile-submenu">
-                            <li class="mobile-submenu-item">
-                                <a href="#" class="mobile-nav-link">Beratung</a>
+                        <ul
+                            id="services-menu"
+                            class="flyout-menu"
+                            role="menu"
+                            aria-label="Dienstleistungen"
+                        >
+                            <li
+                                class="flyout-menu-item"
+                                role="none"
+                            >
+                                <a
+                                    href="#"
+                                    class="flyout-link"
+                                    role="menuitem"
+                                    >Beratung</a
+                                >
                             </li>
-                            <li class="mobile-submenu-item">
-                                <a href="#" class="mobile-nav-link">Entwicklung</a>
+                            <li
+                                class="flyout-menu-item"
+                                role="none"
+                            >
+                                <a
+                                    href="#"
+                                    class="flyout-link"
+                                    role="menuitem"
+                                    >Entwicklung</a
+                                >
                             </li>
-                            <li class="mobile-submenu-item">
-                                <a href="#" class="mobile-nav-link">Support</a>
+                            <li
+                                class="flyout-menu-item"
+                                role="none"
+                            >
+                                <a
+                                    href="#"
+                                    class="flyout-link"
+                                    role="menuitem"
+                                    >Support</a
+                                >
                             </li>
                         </ul>
                     </li>
-                    <li class="mobile-menu-item">
-                        <a href="#" class="mobile-nav-link">Über uns</a>
+                    <li
+                        class="nav-item"
+                        role="none"
+                    >
+                        <a
+                            href="#"
+                            class="nav-link"
+                            role="menuitem"
+                            >Über uns</a
+                        >
                     </li>
-                    <li class="mobile-menu-item">
-                        <a href="#" class="mobile-nav-link">Kontakt</a>
+                    <li
+                        class="nav-item"
+                        role="none"
+                    >
+                        <a
+                            href="#"
+                            class="nav-link"
+                            role="menuitem"
+                            >Kontakt</a
+                        >
                     </li>
                 </ul>
-            </div>
-            
-            <!-- Overlay for Mobile Menu -->
-            <div class="menu-overlay"></div>
-        </nav>
-    </header>
 
-    <div class="content-wrapper">
-        <main id="main-content">
-            <a href="../">zurück zu den Erläuterungen</a>
-            
-            <h1>Barrierefreies Flyout-Menü</h1>
-            
-            <p>Beispiel für ein responsives und barrierefreies Flyout-Menü (auch Dropdown- oder Mega-Menü genannt), das sowohl für Desktop- als auch für mobile Ansichten optimiert ist. Dieses Menü wurde unter Berücksichtigung von Tastaturnavigation, ARIA-Attributen und modernen UX-Praktiken entwickelt.</p>
-            
-            <h2>Merkmale des Flyout-Menüs</h2>
-            
-            <ul>
-                <li><strong>Responsives Design</strong>: Passt sich an Desktop- und Mobilgeräte an</li>
-                <li><strong>Mehrstufige Navigation</strong>: Unterstützt bis zu drei Navigationsebenen</li>
-                <li><strong>Tastatursteuerung</strong>: Vollständig mit der Tastatur bedienbar</li>
-                <li><strong>ARIA-Attribute</strong>: Verbesserung der Zugänglichkeit für Screenreader</li>
-                <li><strong>Fokus-Management</strong>: Sinnvoller und sichtbarer Fokus-Pfad</li>
-                <li><strong>Mobiles Menü</strong>: Angepasstes Layout für kleine Bildschirme</li>
-            </ul>
-            
-            <h2>Semantischer Aufbau</h2>
-            <p>Die semantische Struktur des Flyout-Menüs verwendet ARIA-Rollen und -Attribute, um die Zugänglichkeit für Screenreader zu verbessern.</p>
-            
-            <div class="sample">
-                <h3>Desktop-Menü Struktur</h3>
-                <samp>
-                    <pre><code>
+                <!-- Mobile Menu Button -->
+                <button
+                    class="mobile-menu-button"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu"
+                    aria-label="Mobiles Menü öffnen"
+                >
+                    ☰
+                </button>
+
+                <!-- Mobile Navigation -->
+                <div
+                    id="mobile-menu"
+                    class="nav-mobile"
+                    aria-label="Mobiles Menü"
+                >
+                    <div class="mobile-menu-header">
+                        <span>Menü</span>
+                        <button
+                            class="mobile-close-button"
+                            aria-label="Mobiles Menü schließen"
+                        >
+                            ×
+                        </button>
+                    </div>
+                    <ul class="nav-mobile-items">
+                        <li class="mobile-menu-item">
+                            <a
+                                href="#"
+                                class="mobile-nav-link"
+                                >Startseite</a
+                            >
+                        </li>
+                        <li class="mobile-menu-item">
+                            <button
+                                class="mobile-submenu-button"
+                                aria-expanded="false"
+                                aria-controls="mobile-products-menu"
+                            >
+                                Produkte
+                            </button>
+                            <ul
+                                id="mobile-products-menu"
+                                class="mobile-submenu"
+                            >
+                                <li class="mobile-submenu-item">
+                                    <a
+                                        href="#"
+                                        class="mobile-nav-link"
+                                        >Software</a
+                                    >
+                                </li>
+                                <li class="mobile-submenu-item">
+                                    <button
+                                        class="mobile-submenu-button"
+                                        aria-expanded="false"
+                                        aria-controls="mobile-hardware-menu"
+                                    >
+                                        Hardware
+                                    </button>
+                                    <ul
+                                        id="mobile-hardware-menu"
+                                        class="mobile-submenu"
+                                    >
+                                        <li class="mobile-submenu-item">
+                                            <a
+                                                href="#"
+                                                class="mobile-nav-link"
+                                                >Computer</a
+                                            >
+                                        </li>
+                                        <li class="mobile-submenu-item">
+                                            <a
+                                                href="#"
+                                                class="mobile-nav-link"
+                                                >Mobilgeräte</a
+                                            >
+                                        </li>
+                                        <li class="mobile-submenu-item">
+                                            <a
+                                                href="#"
+                                                class="mobile-nav-link"
+                                                >Zubehör</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="mobile-submenu-item">
+                                    <a
+                                        href="#"
+                                        class="mobile-nav-link"
+                                        >Lösungen</a
+                                    >
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="mobile-menu-item">
+                            <button
+                                class="mobile-submenu-button"
+                                aria-expanded="false"
+                                aria-controls="mobile-services-menu"
+                            >
+                                Dienstleistungen
+                            </button>
+                            <ul
+                                id="mobile-services-menu"
+                                class="mobile-submenu"
+                            >
+                                <li class="mobile-submenu-item">
+                                    <a
+                                        href="#"
+                                        class="mobile-nav-link"
+                                        >Beratung</a
+                                    >
+                                </li>
+                                <li class="mobile-submenu-item">
+                                    <a
+                                        href="#"
+                                        class="mobile-nav-link"
+                                        >Entwicklung</a
+                                    >
+                                </li>
+                                <li class="mobile-submenu-item">
+                                    <a
+                                        href="#"
+                                        class="mobile-nav-link"
+                                        >Support</a
+                                    >
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="mobile-menu-item">
+                            <a
+                                href="#"
+                                class="mobile-nav-link"
+                                >Über uns</a
+                            >
+                        </li>
+                        <li class="mobile-menu-item">
+                            <a
+                                href="#"
+                                class="mobile-nav-link"
+                                >Kontakt</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Overlay for Mobile Menu -->
+                <div class="menu-overlay"></div>
+            </nav>
+        </header>
+
+        <div class="content-wrapper">
+            <main id="main-content">
+                <a href="../">zurück zu den Erläuterungen</a>
+
+                <h1>Barrierefreies Flyout-Menü</h1>
+
+                <p>
+                    Beispiel für ein responsives und barrierefreies Flyout-Menü
+                    (auch Dropdown- oder Mega-Menü genannt), das sowohl für
+                    Desktop- als auch für mobile Ansichten optimiert ist. Dieses
+                    Menü wurde unter Berücksichtigung von Tastaturnavigation,
+                    ARIA-Attributen und modernen UX-Praktiken entwickelt.
+                </p>
+
+                <h2>Merkmale des Flyout-Menüs</h2>
+
+                <ul>
+                    <li>
+                        <strong>Responsives Design</strong>: Passt sich an
+                        Desktop- und Mobilgeräte an
+                    </li>
+                    <li>
+                        <strong>Mehrstufige Navigation</strong>: Unterstützt bis
+                        zu drei Navigationsebenen
+                    </li>
+                    <li>
+                        <strong>Tastatursteuerung</strong>: Vollständig mit der
+                        Tastatur bedienbar
+                    </li>
+                    <li>
+                        <strong>ARIA-Attribute</strong>: Verbesserung der
+                        Zugänglichkeit für Screenreader
+                    </li>
+                    <li>
+                        <strong>Fokus-Management</strong>: Sinnvoller und
+                        sichtbarer Fokus-Pfad
+                    </li>
+                    <li>
+                        <strong>Mobiles Menü</strong>: Angepasstes Layout für
+                        kleine Bildschirme
+                    </li>
+                </ul>
+
+                <h2>Semantischer Aufbau</h2>
+                <p>
+                    Die semantische Struktur des Flyout-Menüs verwendet
+                    ARIA-Rollen und -Attribute, um die Zugänglichkeit für
+                    Screenreader zu verbessern.
+                </p>
+
+                <div class="sample">
+                    <h3>Desktop-Menü Struktur</h3>
+                    <samp>
+                        <pre><code>
 <b>nav</b>.main-nav<i>[aria-label="Hauptnavigation"]</i>
     <b>a</b>.nav-logo
     <b>ul</b>.nav-desktop<i>[role="menubar"]</i>
@@ -680,13 +920,13 @@
                         <b>li</b>.flyout-menu-item<i>[role="none"]</i>
                             <b>a</b>.flyout-link<i>[role="menuitem"]</i>
                     </code></pre>
-                </samp>
-            </div>
-            
-            <div class="sample">
-                <h3>Mobile-Menü Struktur</h3>
-                <samp>
-                    <pre><code>
+                    </samp>
+                </div>
+
+                <div class="sample">
+                    <h3>Mobile-Menü Struktur</h3>
+                    <samp>
+                        <pre><code>
 <b>button</b>.mobile-menu-button<i>[aria-expanded="false"]</i><i>[aria-controls="mobile-menu"]</i><i>[aria-label="Mobiles Menü öffnen"]</i>
 <b>div</b>#mobile-menu.nav-mobile<i>[aria-label="Mobiles Menü"]</i>
     <b>div</b>.mobile-menu-header
@@ -701,76 +941,125 @@
                 <b>li</b>.mobile-submenu-item
                     <b>a</b>.mobile-nav-link
                     </code></pre>
-                </samp>
-            </div>
-            
-            <h2>Tastatursteuerung</h2>
-            
-            <section>
-                <h3>Desktop-Menü Navigation</h3>
-                <dl>
-                    <dt><kbd>Tab</kbd></dt>
-                    <dd>Navigiert zwischen den Hauptmenüpunkten und anderen fokussierbaren Elementen</dd>
-                    
-                    <dt><kbd>Enter</kbd> / <kbd>Space</kbd></dt>
-                    <dd>Öffnet das Untermenü oder aktiviert einen Link</dd>
-                    
-                    <dt><kbd>Escape</kbd></dt>
-                    <dd>Schließt das aktuell geöffnete Menü oder Untermenü</dd>
-                    
-                    <dt><kbd>↓</kbd> / <kbd>Pfeil nach unten</kbd></dt>
-                    <dd>Öffnet das Menü und bewegt den Fokus zum ersten Element oder zum nächsten Element im Menü</dd>
-                    
-                    <dt><kbd>↑</kbd> / <kbd>Pfeil nach oben</kbd></dt>
-                    <dd>Bewegt den Fokus zum vorherigen Element im Menü</dd>
-                    
-                    <dt><kbd>→</kbd> / <kbd>Pfeil nach rechts</kbd></dt>
-                    <dd>In der Hauptnavigation: Bewegt den Fokus zum nächsten Hauptmenüpunkt<br>
-                        In einem geöffneten Menü mit Untermenüs: Öffnet das Untermenü</dd>
-                    
-                    <dt><kbd>←</kbd> / <kbd>Pfeil nach links</kbd></dt>
-                    <dd>In der Hauptnavigation: Bewegt den Fokus zum vorherigen Hauptmenüpunkt<br>
-                        In einem Untermenü: Schließt das Untermenü und fokussiert den übergeordneten Menüpunkt</dd>
-                    
-                    <dt><kbd>Home</kbd></dt>
-                    <dd>Bewegt den Fokus zum ersten Element im aktuellen Menü</dd>
-                    
-                    <dt><kbd>End</kbd></dt>
-                    <dd>Bewegt den Fokus zum letzten Element im aktuellen Menü</dd>
-                </dl>
-            </section>
-            
-            <section>
-                <h3>Mobile-Menü Navigation</h3>
-                <dl>
-                    <dt><kbd>Tab</kbd></dt>
-                    <dd>Navigiert zwischen fokussierbaren Elementen im mobilen Menü</dd>
-                    
-                    <dt><kbd>Enter</kbd> / <kbd>Space</kbd></dt>
-                    <dd>Öffnet/schließt Untermenüs oder aktiviert einen Link</dd>
-                    
-                    <dt><kbd>Escape</kbd></dt>
-                    <dd>Schließt das mobile Menü</dd>
-                </dl>
-            </section>
-            
-            <div class="note">
-                <h4>Zugänglichkeitshinweise</h4>
-                <ul>
-                    <li>Die Verwendung von <code>role="menubar"</code>, <code>role="menu"</code> und <code>role="menuitem"</code> verbessert die Interpretation durch Screenreader</li>
-                    <li><code>aria-haspopup="true"</code> informiert Screenreader-Nutzer, dass ein Menüpunkt ein Untermenü enthält</li>
-                    <li><code>aria-expanded</code> gibt den aktuellen Zustand des Menüs an (geöffnet/geschlossen)</li>
-                    <li><code>aria-controls</code> stellt eine programmatische Beziehung zwischen dem Auslöserelement und dem Menü her</li>
-                    <li>Sichtbarer Fokus-Indikator für alle interaktiven Elemente</li>
-                    <li>Der Skip-Link ermöglicht es Tastaturnutzern, direkt zum Hauptinhalt zu springen</li>
-                </ul>
-            </div>
-            
-            <h2>JavaScript-Implementierung</h2>
-            
-            <div class="code-sample">
-                <h3>Desktop Flyout-Menü</h3>
-                <pre><code>// Desktop Menü Funktionalität
+                    </samp>
+                </div>
+
+                <h2>Tastatursteuerung</h2>
+
+                <section>
+                    <h3>Desktop-Menü Navigation</h3>
+                    <dl>
+                        <dt><kbd>Tab</kbd></dt>
+                        <dd>
+                            Navigiert zwischen den Hauptmenüpunkten und anderen
+                            fokussierbaren Elementen
+                        </dd>
+
+                        <dt><kbd>Enter</kbd> / <kbd>Space</kbd></dt>
+                        <dd>Öffnet das Untermenü oder aktiviert einen Link</dd>
+
+                        <dt><kbd>Escape</kbd></dt>
+                        <dd>
+                            Schließt das aktuell geöffnete Menü oder Untermenü
+                        </dd>
+
+                        <dt><kbd>↓</kbd> / <kbd>Pfeil nach unten</kbd></dt>
+                        <dd>
+                            Öffnet das Menü und bewegt den Fokus zum ersten
+                            Element oder zum nächsten Element im Menü
+                        </dd>
+
+                        <dt><kbd>↑</kbd> / <kbd>Pfeil nach oben</kbd></dt>
+                        <dd>Bewegt den Fokus zum vorherigen Element im Menü</dd>
+
+                        <dt><kbd>→</kbd> / <kbd>Pfeil nach rechts</kbd></dt>
+                        <dd>
+                            In der Hauptnavigation: Bewegt den Fokus zum
+                            nächsten Hauptmenüpunkt<br />
+                            In einem geöffneten Menü mit Untermenüs: Öffnet das
+                            Untermenü
+                        </dd>
+
+                        <dt><kbd>←</kbd> / <kbd>Pfeil nach links</kbd></dt>
+                        <dd>
+                            In der Hauptnavigation: Bewegt den Fokus zum
+                            vorherigen Hauptmenüpunkt<br />
+                            In einem Untermenü: Schließt das Untermenü und
+                            fokussiert den übergeordneten Menüpunkt
+                        </dd>
+
+                        <dt><kbd>Home</kbd></dt>
+                        <dd>
+                            Bewegt den Fokus zum ersten Element im aktuellen
+                            Menü
+                        </dd>
+
+                        <dt><kbd>End</kbd></dt>
+                        <dd>
+                            Bewegt den Fokus zum letzten Element im aktuellen
+                            Menü
+                        </dd>
+                    </dl>
+                </section>
+
+                <section>
+                    <h3>Mobile-Menü Navigation</h3>
+                    <dl>
+                        <dt><kbd>Tab</kbd></dt>
+                        <dd>
+                            Navigiert zwischen fokussierbaren Elementen im
+                            mobilen Menü
+                        </dd>
+
+                        <dt><kbd>Enter</kbd> / <kbd>Space</kbd></dt>
+                        <dd>
+                            Öffnet/schließt Untermenüs oder aktiviert einen Link
+                        </dd>
+
+                        <dt><kbd>Escape</kbd></dt>
+                        <dd>Schließt das mobile Menü</dd>
+                    </dl>
+                </section>
+
+                <div class="note">
+                    <h4>Zugänglichkeitshinweise</h4>
+                    <ul>
+                        <li>
+                            Die Verwendung von <code>role="menubar"</code>,
+                            <code>role="menu"</code> und
+                            <code>role="menuitem"</code> verbessert die
+                            Interpretation durch Screenreader
+                        </li>
+                        <li>
+                            <code>aria-haspopup="true"</code> informiert
+                            Screenreader-Nutzer, dass ein Menüpunkt ein
+                            Untermenü enthält
+                        </li>
+                        <li>
+                            <code>aria-expanded</code> gibt den aktuellen
+                            Zustand des Menüs an (geöffnet/geschlossen)
+                        </li>
+                        <li>
+                            <code>aria-controls</code> stellt eine
+                            programmatische Beziehung zwischen dem
+                            Auslöserelement und dem Menü her
+                        </li>
+                        <li>
+                            Sichtbarer Fokus-Indikator für alle interaktiven
+                            Elemente
+                        </li>
+                        <li>
+                            Der Skip-Link ermöglicht es Tastaturnutzern, direkt
+                            zum Hauptinhalt zu springen
+                        </li>
+                    </ul>
+                </div>
+
+                <h2>JavaScript-Implementierung</h2>
+
+                <div class="code-sample">
+                    <h3>Desktop Flyout-Menü</h3>
+                    <pre><code>// Desktop Menü Funktionalität
 const desktopMenuButtons = document.querySelectorAll('.nav-desktop .nav-link[aria-haspopup="true"]');
 const flyoutMenuButtons = document.querySelectorAll('.flyout-menu-item .flyout-link[aria-haspopup="true"]');
 
@@ -1005,11 +1294,11 @@ document.addEventListener('click', (e) => {
         closeAllMenus();
     }
 });</code></pre>
-            </div>
-            
-            <div class="code-sample">
-                <h3>Mobile Menü</h3>
-                <pre><code>// Mobile Menü Funktionalität
+                </div>
+
+                <div class="code-sample">
+                    <h3>Mobile Menü</h3>
+                    <pre><code>// Mobile Menü Funktionalität
 const mobileMenuButton = document.querySelector('.mobile-menu-button');
 const mobileCloseButton = document.querySelector('.mobile-close-button');
 const mobileMenu = document.querySelector('.nav-mobile');
@@ -1062,367 +1351,542 @@ mobileSubmenuButtons.forEach(button => {
         }
     });
 });</code></pre>
-            </div>
-            
-            <h2>Implementierungsdetails</h2>
-            
-            <h3>Desktop-Variante</h3>
-            <p>Die Desktop-Variante des Flyout-Menüs verwendet eine horizontale Menüleiste mit dropdown- oder flyout-artigen Untermenüs, die bei Hover oder Klick/Tastendruck erscheinen.</p>
-            
-            <ul>
-                <li><strong>Trigger-Elemente</strong>: Buttons anstelle von Links für Menüpunkte mit Untermenüs</li>
-                <li><strong>Positionierung</strong>: Untermenüs werden absolut positioniert</li>
-                <li><strong>Verschachtelung</strong>: Untermenüs zweiter Ebene werden rechtsbündig angezeigt</li>
-                <li><strong>Fokussteuerung</strong>: Detaillierte Tastatursteuerung mit Fokus-Management</li>
-            </ul>
-            
-            <h3>Mobile-Variante</h3>
-            <p>Die Mobile-Variante verwendet ein Off-Canvas-Menü, das von der rechten Seite eingeschoben wird und gestapelte Menüpunkte mit aufklappbaren Untermenüs bietet.</p>
-            
-            <ul>
-                <li><strong>Off-Canvas</strong>: Menü erscheint von der Seite durch CSS-Transformation</li>
-                <li><strong>Overlay</strong>: Abgedunkelter Hintergrund, der das Menü modal macht</li>
-                <li><strong>Akkordeon-Stil</strong>: Untermenüs werden vertikal auf- und zugeklappt</li>
-                <li><strong>Schließen-Button</strong>: Dedizierter Button zum Schließen des Menüs</li>
-                <li><strong>Scrollsperre</strong>: Verhindert das Scrollen der Hauptseite, wenn das Menü geöffnet ist</li>
-            </ul>
-            
-            <h2>Best Practices für barrierefreie Menüs</h2>
-            
-            <ul>
-                <li><strong>Skip-Link</strong>: Ermöglicht es Tastaturnutzern, direkt zum Hauptinhalt zu springen</li>
-                <li><strong>ARIA-Rollen</strong>: Verwendung von <code>menubar</code>, <code>menu</code> und <code>menuitem</code> zur korrekten Ankündigung</li>
-                <li><strong>Zustandsanzeige</strong>: Verwendung von <code>aria-expanded</code> für Screenreader</li>
-                <li><strong>Fokusreihenfolge</strong>: Logische und konsistente Fokusreihenfolge für Tastaturnavigation</li>
-                <li><strong>Sichtbarer Fokus</strong>: Deutlich sichtbare Fokus-Indikatoren für alle interaktiven Elemente</li>
-                <li><strong>Tastatursteuerung</strong>: Vollständige Bedienbarkeit mit Tastatur entsprechend den WAI-ARIA Authoring Practices</li>
-                <li><strong>Alternative für Touch</strong>: Sowohl Hover- als auch Klick-basierte Interaktion</li>
-                <li><strong>Text-Alternative</strong>: Text für Icons (z.B. Hamburger-Menü) durch <code>aria-label</code></li>
-            </ul>
-            
-            <h2>Alternativen</h2>
-            
-            <ul>
-                <li><strong>Mega-Menü</strong>: Erweitertes Dropdown-Menü, das mehrere Spalten und Bereiche nutzt</li>
-                <li><strong>Split-Button Menü</strong>: Kombiniert einen primären Link mit einem Dropdown-Trigger</li>
-                <li><strong>Breadcrumb-Navigation</strong>: Zeigt den aktuellen Pfad in einer hierarchischen Struktur</li>
-                <li><strong>Hamburger-Menü</strong>: Icon-basiertes Menü, das auf allen Geräten konsistent ist</li>
-                <li><strong>Bottom-Navigation</strong>: Mobile Menüleiste am unteren Bildschirmrand</li>
-            </ul>
-            
-            <div class="note">
-                <h4>Wichtig für Cross-Browser-Kompatibilität</h4>
+                </div>
+
+                <h2>Implementierungsdetails</h2>
+
+                <h3>Desktop-Variante</h3>
+                <p>
+                    Die Desktop-Variante des Flyout-Menüs verwendet eine
+                    horizontale Menüleiste mit dropdown- oder flyout-artigen
+                    Untermenüs, die bei Hover oder Klick/Tastendruck erscheinen.
+                </p>
+
                 <ul>
-                    <li>Touch-Events für mobile Geräte berücksichtigen</li>
-                    <li>Vollständige Unterstützung für Maus, Touch und Tastatur</li>
-                    <li>Responsive Breakpoints mit CSS-Medienabfragen</li>
-                    <li>Testen auf verschiedenen Browsern und Bildschirmgrößen</li>
-                    <li>Fokus-Handling in älteren Browsern beachten</li>
+                    <li>
+                        <strong>Trigger-Elemente</strong>: Buttons anstelle von
+                        Links für Menüpunkte mit Untermenüs
+                    </li>
+                    <li>
+                        <strong>Positionierung</strong>: Untermenüs werden
+                        absolut positioniert
+                    </li>
+                    <li>
+                        <strong>Verschachtelung</strong>: Untermenüs zweiter
+                        Ebene werden rechtsbündig angezeigt
+                    </li>
+                    <li>
+                        <strong>Fokussteuerung</strong>: Detaillierte
+                        Tastatursteuerung mit Fokus-Management
+                    </li>
                 </ul>
-            </div>
-            
-            <h2>Animation und Übergänge</h2>
-            <p>Gut gestaltete Animationen können die Nutzererfahrung verbessern, sollten aber mit Bedacht eingesetzt werden:</p>
-            
-            <ul>
-                <li>Kurze, subtile Animationen für Menü-Übergänge (maximale Dauer: 300ms)</li>
-                <li>Reduzierte Bewegung bei aktivierter <code>prefers-reduced-motion</code>-Einstellung</li>
-                <li>Konsistente Animationsrichtung (z.B. Untermenüs immer von oben nach unten öffnen)</li>
-                <li>Verwenden von CSS-Transformationen und Opazität für bessere Performance</li>
-            </ul>
-            
-            <script>
-                // Desktop Menü Funktionalität
-                const desktopMenuButtons = document.querySelectorAll('.nav-desktop .nav-link[aria-haspopup="true"]');
-                const flyoutMenuButtons = document.querySelectorAll('.flyout-menu-item .flyout-link[aria-haspopup="true"]');
 
-                // Funktion zum Schließen aller Menüs
-                function closeAllMenus() {
-                    // Hauptmenüs schließen
-                    desktopMenuButtons.forEach(button => {
-                        button.setAttribute('aria-expanded', 'false');
-                        const menuId = button.getAttribute('aria-controls');
-                        const menu = document.getElementById(menuId);
-                        if (menu) menu.classList.remove('active');
-                    });
-                    
-                    // Untermenüs schließen
-                    flyoutMenuButtons.forEach(button => {
-                        button.setAttribute('aria-expanded', 'false');
-                        const menuId = button.getAttribute('aria-controls');
-                        const menu = document.getElementById(menuId);
-                        if (menu) menu.classList.remove('active');
-                    });
-                }
+                <h3>Mobile-Variante</h3>
+                <p>
+                    Die Mobile-Variante verwendet ein Off-Canvas-Menü, das von
+                    der rechten Seite eingeschoben wird und gestapelte
+                    Menüpunkte mit aufklappbaren Untermenüs bietet.
+                </p>
 
-                // Event-Listener für Hauptmenü-Buttons
-                desktopMenuButtons.forEach(button => {
-                    // Click-Handler
-                    button.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const isExpanded = button.getAttribute('aria-expanded') === 'true';
-                        
-                        // Alle Menüs schließen
-                        closeAllMenus();
-                        
-                        // Dieses Menü öffnen, wenn es geschlossen war
-                        if (!isExpanded) {
-                            button.setAttribute('aria-expanded', 'true');
-                            const menuId = button.getAttribute('aria-controls');
-                            const menu = document.getElementById(menuId);
-                            if (menu) {
-                                menu.classList.add('active');
-                                // Fokus auf das erste Element im Menü setzen
-                                const firstItem = menu.querySelector('[role="menuitem"]');
-                                if (firstItem) {
-                                    setTimeout(() => firstItem.focus(), 100);
-                                }
-                            }
-                        }
-                    });
-                    
-                    // Tastatur-Navigation
-                    button.addEventListener('keydown', (e) => {
-                        const isExpanded = button.getAttribute('aria-expanded') === 'true';
-                        
-                        switch (e.key) {
-                            case 'ArrowDown':
-                                e.preventDefault();
-                                if (!isExpanded) {
-                                    // Menü öffnen
-                                    button.click();
-                                } else {
-                                    // Zum ersten Element im Menü navigieren
-                                    const menuId = button.getAttribute('aria-controls');
-                                    const menu = document.getElementById(menuId);
-                                    const firstItem = menu.querySelector('[role="menuitem"]');
-                                    if (firstItem) firstItem.focus();
-                                }
-                                break;
-                            case 'Escape':
-                                if (isExpanded) {
-                                    e.preventDefault();
-                                    closeAllMenus();
-                                    button.focus();
-                                }
-                                break;
-                        }
-                    });
-                });
+                <ul>
+                    <li>
+                        <strong>Off-Canvas</strong>: Menü erscheint von der
+                        Seite durch CSS-Transformation
+                    </li>
+                    <li>
+                        <strong>Overlay</strong>: Abgedunkelter Hintergrund, der
+                        das Menü modal macht
+                    </li>
+                    <li>
+                        <strong>Akkordeon-Stil</strong>: Untermenüs werden
+                        vertikal auf- und zugeklappt
+                    </li>
+                    <li>
+                        <strong>Schließen-Button</strong>: Dedizierter Button
+                        zum Schließen des Menüs
+                    </li>
+                    <li>
+                        <strong>Scrollsperre</strong>: Verhindert das Scrollen
+                        der Hauptseite, wenn das Menü geöffnet ist
+                    </li>
+                </ul>
 
-                // Event-Listener für Untermenü-Buttons
-                flyoutMenuButtons.forEach(button => {
-                    // Click-Handler
-                    button.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const isExpanded = button.getAttribute('aria-expanded') === 'true';
-                        
-                        // Schließe alle Untermenüs auf der gleichen Ebene
-                        const parentMenu = button.closest('.flyout-menu');
-                        const siblingButtons = parentMenu.querySelectorAll('.flyout-link[aria-haspopup="true"]');
-                        siblingButtons.forEach(btn => {
-                            if (btn !== button) {
-                                btn.setAttribute('aria-expanded', 'false');
-                                const menuId = btn.getAttribute('aria-controls');
-                                const menu = document.getElementById(menuId);
-                                if (menu) menu.classList.remove('active');
-                            }
-                        });
-                        
-                        // Dieses Untermenü umschalten
-                        button.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
-                        const menuId = button.getAttribute('aria-controls');
-                        const menu = document.getElementById(menuId);
-                        if (menu) {
-                            menu.classList.toggle('active');
+                <h2>Best Practices für barrierefreie Menüs</h2>
+
+                <ul>
+                    <li>
+                        <strong>Skip-Link</strong>: Ermöglicht es
+                        Tastaturnutzern, direkt zum Hauptinhalt zu springen
+                    </li>
+                    <li>
+                        <strong>ARIA-Rollen</strong>: Verwendung von
+                        <code>menubar</code>, <code>menu</code> und
+                        <code>menuitem</code> zur korrekten Ankündigung
+                    </li>
+                    <li>
+                        <strong>Zustandsanzeige</strong>: Verwendung von
+                        <code>aria-expanded</code> für Screenreader
+                    </li>
+                    <li>
+                        <strong>Fokusreihenfolge</strong>: Logische und
+                        konsistente Fokusreihenfolge für Tastaturnavigation
+                    </li>
+                    <li>
+                        <strong>Sichtbarer Fokus</strong>: Deutlich sichtbare
+                        Fokus-Indikatoren für alle interaktiven Elemente
+                    </li>
+                    <li>
+                        <strong>Tastatursteuerung</strong>: Vollständige
+                        Bedienbarkeit mit Tastatur entsprechend den WAI-ARIA
+                        Authoring Practices
+                    </li>
+                    <li>
+                        <strong>Alternative für Touch</strong>: Sowohl Hover-
+                        als auch Klick-basierte Interaktion
+                    </li>
+                    <li>
+                        <strong>Text-Alternative</strong>: Text für Icons (z.B.
+                        Hamburger-Menü) durch <code>aria-label</code>
+                    </li>
+                </ul>
+
+                <h2>Alternativen</h2>
+
+                <ul>
+                    <li>
+                        <strong>Mega-Menü</strong>: Erweitertes Dropdown-Menü,
+                        das mehrere Spalten und Bereiche nutzt
+                    </li>
+                    <li>
+                        <strong>Split-Button Menü</strong>: Kombiniert einen
+                        primären Link mit einem Dropdown-Trigger
+                    </li>
+                    <li>
+                        <strong>Breadcrumb-Navigation</strong>: Zeigt den
+                        aktuellen Pfad in einer hierarchischen Struktur
+                    </li>
+                    <li>
+                        <strong>Hamburger-Menü</strong>: Icon-basiertes Menü,
+                        das auf allen Geräten konsistent ist
+                    </li>
+                    <li>
+                        <strong>Bottom-Navigation</strong>: Mobile Menüleiste am
+                        unteren Bildschirmrand
+                    </li>
+                </ul>
+
+                <div class="note">
+                    <h4>Wichtig für Cross-Browser-Kompatibilität</h4>
+                    <ul>
+                        <li>Touch-Events für mobile Geräte berücksichtigen</li>
+                        <li>
+                            Vollständige Unterstützung für Maus, Touch und
+                            Tastatur
+                        </li>
+                        <li>Responsive Breakpoints mit CSS-Medienabfragen</li>
+                        <li>
+                            Testen auf verschiedenen Browsern und
+                            Bildschirmgrößen
+                        </li>
+                        <li>Fokus-Handling in älteren Browsern beachten</li>
+                    </ul>
+                </div>
+
+                <h2>Animation und Übergänge</h2>
+                <p>
+                    Gut gestaltete Animationen können die Nutzererfahrung
+                    verbessern, sollten aber mit Bedacht eingesetzt werden:
+                </p>
+
+                <ul>
+                    <li>
+                        Kurze, subtile Animationen für Menü-Übergänge (maximale
+                        Dauer: 300ms)
+                    </li>
+                    <li>
+                        Reduzierte Bewegung bei aktivierter
+                        <code>prefers-reduced-motion</code>-Einstellung
+                    </li>
+                    <li>
+                        Konsistente Animationsrichtung (z.B. Untermenüs immer
+                        von oben nach unten öffnen)
+                    </li>
+                    <li>
+                        Verwenden von CSS-Transformationen und Opazität für
+                        bessere Performance
+                    </li>
+                </ul>
+
+                <script>
+                    // Desktop Menü Funktionalität
+                    const desktopMenuButtons = document.querySelectorAll(
+                        '.nav-desktop .nav-link[aria-haspopup="true"]'
+                    )
+                    const flyoutMenuButtons = document.querySelectorAll(
+                        '.flyout-menu-item .flyout-link[aria-haspopup="true"]'
+                    )
+
+                    // Funktion zum Schließen aller Menüs
+                    function closeAllMenus() {
+                        // Hauptmenüs schließen
+                        desktopMenuButtons.forEach((button) => {
+                            button.setAttribute("aria-expanded", "false")
+                            const menuId = button.getAttribute("aria-controls")
+                            const menu = document.getElementById(menuId)
+                            if (menu) menu.classList.remove("active")
+                        })
+
+                        // Untermenüs schließen
+                        flyoutMenuButtons.forEach((button) => {
+                            button.setAttribute("aria-expanded", "false")
+                            const menuId = button.getAttribute("aria-controls")
+                            const menu = document.getElementById(menuId)
+                            if (menu) menu.classList.remove("active")
+                        })
+                    }
+
+                    // Event-Listener für Hauptmenü-Buttons
+                    desktopMenuButtons.forEach((button) => {
+                        // Click-Handler
+                        button.addEventListener("click", (e) => {
+                            e.preventDefault()
+                            const isExpanded =
+                                button.getAttribute("aria-expanded") === "true"
+
+                            // Alle Menüs schließen
+                            closeAllMenus()
+
+                            // Dieses Menü öffnen, wenn es geschlossen war
                             if (!isExpanded) {
-                                // Fokus auf das erste Element im Untermenü setzen
-                                const firstItem = menu.querySelector('[role="menuitem"]');
-                                if (firstItem) {
-                                    setTimeout(() => firstItem.focus(), 100);
+                                button.setAttribute("aria-expanded", "true")
+                                const menuId =
+                                    button.getAttribute("aria-controls")
+                                const menu = document.getElementById(menuId)
+                                if (menu) {
+                                    menu.classList.add("active")
+                                    // Fokus auf das erste Element im Menü setzen
+                                    const firstItem =
+                                        menu.querySelector('[role="menuitem"]')
+                                    if (firstItem) {
+                                        setTimeout(() => firstItem.focus(), 100)
+                                    }
                                 }
                             }
-                        }
-                    });
-                    
-                    // Tastatur-Navigation
-                    button.addEventListener('keydown', (e) => {
-                        const isExpanded = button.getAttribute('aria-expanded') === 'true';
-                        
-                        switch (e.key) {
-                            case 'ArrowRight':
-                                e.preventDefault();
-                                if (!isExpanded) {
-                                    // Untermenü öffnen
-                                    button.click();
-                                }
-                                break;
-                            case 'ArrowLeft':
-                                e.preventDefault();
-                                if (isExpanded) {
-                                    // Untermenü schließen
-                                    button.click();
-                                } else {
-                                    // Zum übergeordneten Menü zurückkehren und fokussieren
-                                    const parentMenu = button.closest('.flyout-menu');
-                                    const parentButton = document.querySelector(`[aria-controls="${parentMenu.id}"]`);
-                                    if (parentButton) parentButton.focus();
-                                }
-                                break;
-                            case 'Escape':
-                                e.preventDefault();
-                                if (isExpanded) {
-                                    // Untermenü schließen
-                                    button.click();
-                                } else {
-                                    // Alle Menüs schließen und zum Hauptmenüpunkt zurückkehren
-                                    closeAllMenus();
-                                    const parentMenu = button.closest('.flyout-menu');
-                                    const parentButton = document.querySelector(`[aria-controls="${parentMenu.id}"]`);
-                                    if (parentButton) parentButton.focus();
-                                }
-                                break;
-                        }
-                    });
-                });
+                        })
 
-                // Event-Listener für Menüelemente (Links)
-                const menuItems = document.querySelectorAll('.flyout-menu .flyout-link:not([aria-haspopup="true"])');
-                menuItems.forEach(item => {
-                    item.addEventListener('keydown', (e) => {
-                        switch (e.key) {
-                            case 'ArrowUp':
-                                e.preventDefault();
-                                const prevItem = item.closest('li').previousElementSibling;
-                                if (prevItem) {
-                                    const prevLink = prevItem.querySelector('.flyout-link');
-                                    if (prevLink) prevLink.focus();
-                                } else {
-                                    // Wenn kein vorheriges Element, zum letzten gehen
-                                    const menu = item.closest('.flyout-menu');
-                                    const lastItem = menu.querySelector('li:last-child .flyout-link');
-                                    if (lastItem) lastItem.focus();
-                                }
-                                break;
-                            case 'ArrowDown':
-                                e.preventDefault();
-                                const nextItem = item.closest('li').nextElementSibling;
-                                if (nextItem) {
-                                    const nextLink = nextItem.querySelector('.flyout-link');
-                                    if (nextLink) nextLink.focus();
-                                } else {
-                                    // Wenn kein nächstes Element, zum ersten gehen
-                                    const menu = item.closest('.flyout-menu');
-                                    const firstItem = menu.querySelector('li:first-child .flyout-link');
-                                    if (firstItem) firstItem.focus();
-                                }
-                                break;
-                            case 'ArrowLeft':
-                                e.preventDefault();
-                                // Zum übergeordneten Menü zurückkehren
-                                const parentMenu = item.closest('.flyout-menu');
-                                const parentButton = document.querySelector(`[aria-controls="${parentMenu.id}"]`);
-                                if (parentButton) {
-                                    if (parentButton.classList.contains('flyout-link')) {
-                                        // Wenn es ein Untermenü ist, schließe es
-                                        parentButton.setAttribute('aria-expanded', 'false');
-                                        parentMenu.classList.remove('active');
+                        // Tastatur-Navigation
+                        button.addEventListener("keydown", (e) => {
+                            const isExpanded =
+                                button.getAttribute("aria-expanded") === "true"
+
+                            switch (e.key) {
+                                case "ArrowDown":
+                                    e.preventDefault()
+                                    if (!isExpanded) {
+                                        // Menü öffnen
+                                        button.click()
+                                    } else {
+                                        // Zum ersten Element im Menü navigieren
+                                        const menuId =
+                                            button.getAttribute("aria-controls")
+                                        const menu =
+                                            document.getElementById(menuId)
+                                        const firstItem =
+                                            menu.querySelector(
+                                                '[role="menuitem"]'
+                                            )
+                                        if (firstItem) firstItem.focus()
                                     }
-                                    parentButton.focus();
+                                    break
+                                case "Escape":
+                                    if (isExpanded) {
+                                        e.preventDefault()
+                                        closeAllMenus()
+                                        button.focus()
+                                    }
+                                    break
+                            }
+                        })
+                    })
+
+                    // Event-Listener für Untermenü-Buttons
+                    flyoutMenuButtons.forEach((button) => {
+                        // Click-Handler
+                        button.addEventListener("click", (e) => {
+                            e.preventDefault()
+                            const isExpanded =
+                                button.getAttribute("aria-expanded") === "true"
+
+                            // Schließe alle Untermenüs auf der gleichen Ebene
+                            const parentMenu = button.closest(".flyout-menu")
+                            const siblingButtons = parentMenu.querySelectorAll(
+                                '.flyout-link[aria-haspopup="true"]'
+                            )
+                            siblingButtons.forEach((btn) => {
+                                if (btn !== button) {
+                                    btn.setAttribute("aria-expanded", "false")
+                                    const menuId =
+                                        btn.getAttribute("aria-controls")
+                                    const menu = document.getElementById(menuId)
+                                    if (menu) menu.classList.remove("active")
                                 }
-                                break;
-                            case 'Escape':
-                                e.preventDefault();
-                                // Alle Menüs schließen und zum Hauptmenüpunkt zurückkehren
-                                closeAllMenus();
-                                const topMenu = item.closest('.nav-desktop > li');
-                                if (topMenu) {
-                                    const topButton = topMenu.querySelector('.nav-link');
-                                    if (topButton) topButton.focus();
+                            })
+
+                            // Dieses Untermenü umschalten
+                            button.setAttribute(
+                                "aria-expanded",
+                                isExpanded ? "false" : "true"
+                            )
+                            const menuId = button.getAttribute("aria-controls")
+                            const menu = document.getElementById(menuId)
+                            if (menu) {
+                                menu.classList.toggle("active")
+                                if (!isExpanded) {
+                                    // Fokus auf das erste Element im Untermenü setzen
+                                    const firstItem =
+                                        menu.querySelector('[role="menuitem"]')
+                                    if (firstItem) {
+                                        setTimeout(() => firstItem.focus(), 100)
+                                    }
                                 }
-                                break;
-                            case 'Home':
-                                e.preventDefault();
-                                const menu = item.closest('.flyout-menu');
-                                const firstItem = menu.querySelector('li:first-child .flyout-link');
-                                if (firstItem) firstItem.focus();
-                                break;
-                            case 'End':
-                                e.preventDefault();
-                                const menuEnd = item.closest('.flyout-menu');
-                                const lastItem = menuEnd.querySelector('li:last-child .flyout-link');
-                                if (lastItem) lastItem.focus();
-                                break;
+                            }
+                        })
+
+                        // Tastatur-Navigation
+                        button.addEventListener("keydown", (e) => {
+                            const isExpanded =
+                                button.getAttribute("aria-expanded") === "true"
+
+                            switch (e.key) {
+                                case "ArrowRight":
+                                    e.preventDefault()
+                                    if (!isExpanded) {
+                                        // Untermenü öffnen
+                                        button.click()
+                                    }
+                                    break
+                                case "ArrowLeft":
+                                    e.preventDefault()
+                                    if (isExpanded) {
+                                        // Untermenü schließen
+                                        button.click()
+                                    } else {
+                                        // Zum übergeordneten Menü zurückkehren und fokussieren
+                                        const parentMenu =
+                                            button.closest(".flyout-menu")
+                                        const parentButton =
+                                            document.querySelector(
+                                                `[aria-controls="${parentMenu.id}"]`
+                                            )
+                                        if (parentButton) parentButton.focus()
+                                    }
+                                    break
+                                case "Escape":
+                                    e.preventDefault()
+                                    if (isExpanded) {
+                                        // Untermenü schließen
+                                        button.click()
+                                    } else {
+                                        // Alle Menüs schließen und zum Hauptmenüpunkt zurückkehren
+                                        closeAllMenus()
+                                        const parentMenu =
+                                            button.closest(".flyout-menu")
+                                        const parentButton =
+                                            document.querySelector(
+                                                `[aria-controls="${parentMenu.id}"]`
+                                            )
+                                        if (parentButton) parentButton.focus()
+                                    }
+                                    break
+                            }
+                        })
+                    })
+
+                    // Event-Listener für Menüelemente (Links)
+                    const menuItems = document.querySelectorAll(
+                        '.flyout-menu .flyout-link:not([aria-haspopup="true"])'
+                    )
+                    menuItems.forEach((item) => {
+                        item.addEventListener("keydown", (e) => {
+                            switch (e.key) {
+                                case "ArrowUp":
+                                    e.preventDefault()
+                                    const prevItem =
+                                        item.closest(
+                                            "li"
+                                        ).previousElementSibling
+                                    if (prevItem) {
+                                        const prevLink =
+                                            prevItem.querySelector(
+                                                ".flyout-link"
+                                            )
+                                        if (prevLink) prevLink.focus()
+                                    } else {
+                                        // Wenn kein vorheriges Element, zum letzten gehen
+                                        const menu =
+                                            item.closest(".flyout-menu")
+                                        const lastItem = menu.querySelector(
+                                            "li:last-child .flyout-link"
+                                        )
+                                        if (lastItem) lastItem.focus()
+                                    }
+                                    break
+                                case "ArrowDown":
+                                    e.preventDefault()
+                                    const nextItem =
+                                        item.closest("li").nextElementSibling
+                                    if (nextItem) {
+                                        const nextLink =
+                                            nextItem.querySelector(
+                                                ".flyout-link"
+                                            )
+                                        if (nextLink) nextLink.focus()
+                                    } else {
+                                        // Wenn kein nächstes Element, zum ersten gehen
+                                        const menu =
+                                            item.closest(".flyout-menu")
+                                        const firstItem = menu.querySelector(
+                                            "li:first-child .flyout-link"
+                                        )
+                                        if (firstItem) firstItem.focus()
+                                    }
+                                    break
+                                case "ArrowLeft":
+                                    e.preventDefault()
+                                    // Zum übergeordneten Menü zurückkehren
+                                    const parentMenu =
+                                        item.closest(".flyout-menu")
+                                    const parentButton = document.querySelector(
+                                        `[aria-controls="${parentMenu.id}"]`
+                                    )
+                                    if (parentButton) {
+                                        if (
+                                            parentButton.classList.contains(
+                                                "flyout-link"
+                                            )
+                                        ) {
+                                            // Wenn es ein Untermenü ist, schließe es
+                                            parentButton.setAttribute(
+                                                "aria-expanded",
+                                                "false"
+                                            )
+                                            parentMenu.classList.remove(
+                                                "active"
+                                            )
+                                        }
+                                        parentButton.focus()
+                                    }
+                                    break
+                                case "Escape":
+                                    e.preventDefault()
+                                    // Alle Menüs schließen und zum Hauptmenüpunkt zurückkehren
+                                    closeAllMenus()
+                                    const topMenu =
+                                        item.closest(".nav-desktop > li")
+                                    if (topMenu) {
+                                        const topButton =
+                                            topMenu.querySelector(".nav-link")
+                                        if (topButton) topButton.focus()
+                                    }
+                                    break
+                                case "Home":
+                                    e.preventDefault()
+                                    const menu = item.closest(".flyout-menu")
+                                    const firstItem = menu.querySelector(
+                                        "li:first-child .flyout-link"
+                                    )
+                                    if (firstItem) firstItem.focus()
+                                    break
+                                case "End":
+                                    e.preventDefault()
+                                    const menuEnd = item.closest(".flyout-menu")
+                                    const lastItem = menuEnd.querySelector(
+                                        "li:last-child .flyout-link"
+                                    )
+                                    if (lastItem) lastItem.focus()
+                                    break
+                            }
+                        })
+                    })
+
+                    // Schließe Menüs bei Klick außerhalb
+                    document.addEventListener("click", (e) => {
+                        // Prüfen, ob der Klick außerhalb des Menüs stattfand
+                        const isOutsideMenu =
+                            !e.target.closest(".nav-desktop") &&
+                            !e.target.classList.contains("nav-link")
+
+                        if (isOutsideMenu) {
+                            closeAllMenus()
                         }
-                    });
-                });
+                    })
 
-                // Schließe Menüs bei Klick außerhalb
-                document.addEventListener('click', (e) => {
-                    // Prüfen, ob der Klick außerhalb des Menüs stattfand
-                    const isOutsideMenu = !e.target.closest('.nav-desktop') && 
-                                        !e.target.classList.contains('nav-link');
-                    
-                    if (isOutsideMenu) {
-                        closeAllMenus();
+                    // Mobile Menü Funktionalität
+                    const mobileMenuButton = document.querySelector(
+                        ".mobile-menu-button"
+                    )
+                    const mobileCloseButton = document.querySelector(
+                        ".mobile-close-button"
+                    )
+                    const mobileMenu = document.querySelector(".nav-mobile")
+                    const menuOverlay = document.querySelector(".menu-overlay")
+                    const mobileSubmenuButtons = document.querySelectorAll(
+                        ".mobile-submenu-button"
+                    )
+
+                    // Öffnen des mobilen Menüs
+                    mobileMenuButton.addEventListener("click", () => {
+                        mobileMenu.classList.add("active")
+                        menuOverlay.classList.add("active")
+                        mobileMenuButton.setAttribute("aria-expanded", "true")
+                        mobileCloseButton.focus() // Fokus auf den Schließen-Button setzen
+
+                        // Scrollen verhindern
+                        document.body.style.overflow = "hidden"
+                    })
+
+                    // Schließen des mobilen Menüs
+                    function closeMobileMenu() {
+                        mobileMenu.classList.remove("active")
+                        menuOverlay.classList.remove("active")
+                        mobileMenuButton.setAttribute("aria-expanded", "false")
+                        mobileMenuButton.focus() // Fokus zurück auf den Öffnen-Button
+
+                        // Scrollen wieder erlauben
+                        document.body.style.overflow = ""
                     }
-                });
 
-                // Mobile Menü Funktionalität
-                const mobileMenuButton = document.querySelector('.mobile-menu-button');
-                const mobileCloseButton = document.querySelector('.mobile-close-button');
-                const mobileMenu = document.querySelector('.nav-mobile');
-                const menuOverlay = document.querySelector('.menu-overlay');
-                const mobileSubmenuButtons = document.querySelectorAll('.mobile-submenu-button');
+                    mobileCloseButton.addEventListener("click", closeMobileMenu)
+                    menuOverlay.addEventListener("click", closeMobileMenu)
 
-                // Öffnen des mobilen Menüs
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.add('active');
-                    menuOverlay.classList.add('active');
-                    mobileMenuButton.setAttribute('aria-expanded', 'true');
-                    mobileCloseButton.focus(); // Fokus auf den Schließen-Button setzen
-                    
-                    // Scrollen verhindern
-                    document.body.style.overflow = 'hidden';
-                });
-
-                // Schließen des mobilen Menüs
-                function closeMobileMenu() {
-                    mobileMenu.classList.remove('active');
-                    menuOverlay.classList.remove('active');
-                    mobileMenuButton.setAttribute('aria-expanded', 'false');
-                    mobileMenuButton.focus(); // Fokus zurück auf den Öffnen-Button
-                    
-                    // Scrollen wieder erlauben
-                    document.body.style.overflow = '';
-                }
-
-                mobileCloseButton.addEventListener('click', closeMobileMenu);
-                menuOverlay.addEventListener('click', closeMobileMenu);
-
-                // Escape-Taste für das mobile Menü
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-                        closeMobileMenu();
-                    }
-                });
-
-                // Untermenüs im mobilen Menü
-                mobileSubmenuButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        const isExpanded = button.getAttribute('aria-expanded') === 'true';
-                        button.setAttribute('aria-expanded', !isExpanded);
-                        
-                        const submenuId = button.getAttribute('aria-controls');
-                        const submenu = document.getElementById(submenuId);
-                        
-                        if (submenu) {
-                            submenu.classList.toggle('active');
+                    // Escape-Taste für das mobile Menü
+                    document.addEventListener("keydown", (e) => {
+                        if (
+                            e.key === "Escape" &&
+                            mobileMenu.classList.contains("active")
+                        ) {
+                            closeMobileMenu()
                         }
-                    });
-                });
-            </script>
-        </main>
-    </div>
-</body>
+                    })
+
+                    // Untermenüs im mobilen Menü
+                    mobileSubmenuButtons.forEach((button) => {
+                        button.addEventListener("click", () => {
+                            const isExpanded =
+                                button.getAttribute("aria-expanded") === "true"
+                            button.setAttribute("aria-expanded", !isExpanded)
+
+                            const submenuId =
+                                button.getAttribute("aria-controls")
+                            const submenu = document.getElementById(submenuId)
+
+                            if (submenu) {
+                                submenu.classList.toggle("active")
+                            }
+                        })
+                    })
+                </script>
+            </main>
+        </div>
+    </body>
 </html>

@@ -1,0 +1,65 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+:root {
+    font-size: clamp(16px, 1.2rem, 25px);
+}
+
+body {
+    font-family: "Barlow", sans-serif;
+    line-height: 1.414;
+    font-weight: 400;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-primary);
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-self: center;
+}
+
+h1,
+h2,
+h3 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: white;
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+.notification {
+    transition: opacity 0.3s ease;
+}

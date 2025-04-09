@@ -1,0 +1,101 @@
+:root {
+    --partial-color: #fdd835;
+    --card-background: #ffffff;
+
+    --dialog-background-color: hsla(0, 0%, 100%, 1);
+    --dialog-text-color: hsla(0, 0%, 15%, 1);
+
+    --background-color: hsla(0, 0%, 100%, 1);
+    --surface: hsla(0, 0%, 97%, 1);
+    --text-primary: hsla(0, 0%, 15%, 1);
+    --text-secondary: hsla(0, 0%, 40%, 1);
+    
+}
+
+html.dark {
+    --partial-color: #ffea00;
+    --card-background: hsla(0, 0%, 15%, 1);
+    --dialog-background-color: hsla(0, 0%, 15%, 1);
+    --dialog-text-color: hsla(0, 0%, 95%, 1);
+
+    --text-primary: #ffffff;
+    --border-color: #424242;
+
+    --background-color: hsla(0, 0%, 12%, 1);
+    --surface: hsla(0, 0%, 18%, 1);
+
+    --text-primary: hsla(0, 0%, 95%, 1);
+    --text-secondary: hsla(0, 0%, 75%, 1);
+    --border-color: hsla(0, 0%, 40%, 1);
+
+    --primary-light: hsla(230, 70%, 60%, 1);
+    --primary: hsla(230, 70%, 50%, 1);
+    --primary-dark: hsla(230, 70%, 40%, 1);
+    --on-primary: rgb(250, 204, 250);
+
+    --secondary-light: hsla(120, 60%, 50%, 1);
+    --secondary: hsla(120, 60%, 40%, 1);
+    --secondary-dark: hsla(120, 60%, 30%, 1);
+    --on-secondary: rgb(200, 250, 200);
+
+    --tertiary-light: hsla(174, 70%, 50%, 1);
+    --tertiary: hsla(174, 70%, 40%, 1);
+    --tertiary-dark: hsla(174, 70%, 30%, 1);
+    --on-tertiary: rgb(2, 47, 43);
+
+    --error: hsla(0, 100%, 50%, 1);
+    --on-error: rgb(251, 202, 202);
+    --warning: hsla(50, 100%, 50%, 1);
+    --on-warning: hsl(50, 98%, 23%);
+    --info: hsla(210, 100%, 50%, 1);
+    --on-info: rgb(164, 208, 251);
+    --success: hsla(110, 100%, 50%, 1);
+    --on-success: rgb(21, 124, 1);
+
+    --shadow-light: hsla(0, 0%, 0%, 0.2);
+    --shadow: hsla(0, 0%, 0%, 0.4);
+    --shadow-heavy: hsla(0, 0%, 0%, 0.7);
+
+    --outline-color: hsla(210, 100%, 70%, 0.8);
+
+    --link-color: hsla(210, 100%, 70%, 1);
+    --link-visited: hsla(270, 70%, 60%, 1);
+    --link-hover: hsla(0, 100%, 70%, 1);
+    --link-active: hsla(120, 100%, 50%, 1);
+}
+
+html.high-contrast-mode {
+    --background: #000000;
+    --surface: #000000;
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --border-color: #ffffff;
+    --primary: #ffffff;
+    --primary-light: #ffffff;
+    --primary-dark: #ffffff;
+    --on-primary: #000000;
+    --secondary: #ffffff;
+    --secondary-light: #ffffff;
+    --secondary-dark: #ffffff;
+    --on-secondary: #000000;
+    --tertiary: #ffffff;
+    --tertiary-light: #ffffff;
+    --tertiary-dark: #ffffff;
+    --on-tertiary: #000000;
+    --accent: #ffffff;
+    --on-accent: #000000;
+    --error: #ffffff;
+    --on-error: #000000;
+    --warning: #ffffff;
+    --on-warning: #000000;
+    --info: #ffffff;
+    --on-info: #000000;
+    --success: #ffffff;
+    --on-success: #000000;
+    --outline-color: #ffffff;
+    --focus-ring: 0 0 0 3px #ffffff, 0 0 0 5px #000000;
+    --link-color: #ffff00;
+    --link-visited: #ffff00;
+    --link-hover: #ffff00;
+    --link-active: #ffff00;
+}

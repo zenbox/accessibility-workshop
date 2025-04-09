@@ -1,0 +1,72 @@
+/* Markdown-Formatierung */
+.markdown-content h1 {
+    font-size: 1.8rem;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.markdown-content h2 {
+    font-size: 1.5rem;
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+
+.markdown-content h3 {
+    font-size: 1.2rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.markdown-content p {
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+    margin-bottom: 16px;
+    padding-left: 24px;
+}
+
+.markdown-content li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+.markdown-content code {
+    background-color: #f5f5f5;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.markdown-content pre {
+    background-color: #f5f5f5;
+    padding: 12px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin-bottom: 16px;
+}
+
+.markdown-content blockquote {
+    border-left: 4px solid #e0e0e0;
+    padding-left: 16px;
+    margin-left: 0;
+    color: #666;
+}
+
+.markdown-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.markdown-content th,
+.markdown-content td {
+    border: 1px solid #e0e0e0;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.markdown-content th {
+    background-color: #f5f5f5;
+}

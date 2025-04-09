@@ -1,0 +1,36 @@
+.editor-toolbar {
+    display: flex;
+    padding: 8px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.md-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--dark);
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.md-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.editor-preview {
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+    background-color: rgba(0, 0, 0, 0.02);
+    min-height: 100px;
+}
+
+.markdown-editor {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}

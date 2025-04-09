@@ -2,78 +2,75 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Noto+Sans+Mono&display=swap");
 
 :root {
-    /* Theme Variablen */
-    --font-main: "Barlow", sans-serif;
-    --font-code: "Noto Sans Mono", monospace;
-    --spacing-base: 20px;
-    --border-radius: 4px;
-    --transition-speed: 0.3s;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+  /* Theme Variablen */
+  --font-main: "Barlow", sans-serif;
+  --font-code: "Noto Sans Mono", monospace;
+  --spacing-base: 20px;
+  --border-radius: 4px;
+  --transition-speed: 0.3s;
+  --shadow-color: rgba(0, 0, 0, 0.1);
 
-    /* Light Theme */
-    --bg-color: #ffffff;
-    --text-color: #333333;
-    --border-color: #cccccc;
-    --header-bg: #f5f5f5;
-    --button-bg: #4a90e2;
-    --button-text: white;
-    --editor-bg: #ffffff;
+  /* Light Theme */
+  --bg-color: #ffffff;
+  --text-primary: #333333;
+  --border-color: #cccccc;
+  --header-bg: #f5f5f5;
+  --button-bg: #4a90e2;
+  --button-text: white;
+  --editor-bg: #ffffff;
 }
 
 /* Global Styles */
 * {
-    box-sizing: border-box;
-    transition: background-color var(--transition-speed),
-                color var(--transition-speed),
-                border-color var(--transition-speed),
-                box-shadow var(--transition-speed);
+  box-sizing: border-box;
+  transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family: var(--font-main);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: var(--spacing-base) var(--spacing-base) 60px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  margin: 0;
+  padding: var(--spacing-base) var(--spacing-base) 60px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Überschriften */
 .page-title {
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 600;
-    text-align: center;
-    margin: var(--spacing-base) 0 60px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  text-align: center;
+  margin: var(--spacing-base) 0 60px;
 }
 
 /* Focus States */
 :focus {
-    outline: 2px solid var(--button-bg);
-    outline-offset: 2px;
+  outline: 2px solid var(--button-bg);
+  outline-offset: 2px;
 }
 
 /* Scrollbar Styles */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--bg-color);
+  background: var(--bg-color);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 4px;
+  background: var(--border-color);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--text-color);
+  background: var(--text-primary);
 }
