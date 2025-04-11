@@ -51,44 +51,44 @@
     line-height: 1;
 }
 .green-1 {
-    color: var(--lightgreen);
-    background: var(--darkgreen);
+    color: var(--lightgreen) !important;
+    background: var(--darkgreen) !important;
 }
 .green-2 {
-    color: var(--darkgreen);
-    background: var(--lightgreen);
+    color: var(--darkgreen) !important;
+    background: var(--lightgreen) !important;
 }
 .green-3 {
-    color: var(--lightgreen-1);
-    background: var(--darkgreen-1);
+    color: var(--lightgreen-1) !important;
+    background: var(--darkgreen-1) !important;
 }
 .green-4 {
-    color: var(--darkgreen-1);
-    background: var(--lightgreen-1);
+    color: var(--darkgreen-1) !important;
+    background: var(--lightgreen-1) !important;
 }
 .blue-yellow-1 {
-    color: var(--yellow);
-    background: var(--blue);
+    color: var(--yellow) !important;
+    background: var(--blue) !important;
 }
 .blue-yellow-2 {
-    color: var(--blue);
-    background: var(--yellow);
+    color: var(--blue) !important;
+    background: var(--yellow) !important;
 }
 .lightgray-darkgray {
-    color: var(--lightgray);
-    background: var(--darkgray);
+    color: var(--lightgray) !important;
+    background: var(--darkgray) !important;
 }
 .darkgray-lightgray {
-    color: var(--darkgray);
-    background: var(--lightgray);
+    color: var(--darkgray) !important;
+    background: var(--lightgray) !important;
 }
 .lightgray-darkgray-1 {
-    color: var(--lightgray-1);
-    background: var(--darkgray);
+    color: var(--lightgray-1) !important;
+    background: var(--darkgray) !important;
 }
 .darkgray-lightgray-1 {
-    color: var(--darkgray);
-    background: var(--lightgray-1);
+    color: var(--darkgray) !important;
+    background: var(--lightgray-1) !important;
 }
 
 .image {
