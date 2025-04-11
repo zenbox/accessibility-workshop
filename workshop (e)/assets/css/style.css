@@ -1,0 +1,32 @@
+.sr-only,
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+
+    &:active, &:focus {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        clip: auto;
+    }
+}
+
+.ganz-weg {
+    display: none;
+}
+
+header {
+    display: flex;
+    flex-direction: row;;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
