@@ -1,0 +1,127 @@
+/* Virtual Keyboard styles */
+.virtual-keyboard {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background-color: #f0f0f0;
+  border-top: 2px solid #007bff;
+  padding: 10px;
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  font-family: 'Barlow', sans-serif;
+}
+
+.virtual-keyboard.hidden {
+  transform: translateY(100%);
+}
+
+.keyboard-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.keyboard-key {
+  min-width: 50px;
+  height: 40px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.keyboard-key:hover {
+  background-color: #e6e6e6;
+}
+
+.keyboard-key:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.keyboard-key.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.key-tab, .key-enter {
+  min-width: 70px;
+}
+
+.key-space {
+  min-width: 150px;
+}
+
+.key-shift, .key-escape {
+  min-width: 70px;
+}
+
+.keyboard-toggle {
+  display: block;
+  margin: 10px auto 0;
+  padding: 5px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.keyboard-toggle:hover {
+  background-color: #0056b3;
+}
+
+.keyboard-hint {
+  display: none;
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.focus-indicator {
+  position: absolute;
+  pointer-events: none;
+  border: 2px solid #007bff;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  transition: all 0.2s ease-out;
+  z-index: 9998;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(0, 123, 255, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); }
+}
+
+.focus-indicator.active {
+  animation: pulse 1.5s infinite;
+}
+
+.keyboard-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9000;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

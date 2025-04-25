@@ -9,6 +9,10 @@
         <title>Semantik und Tastatur - Workshop zur Barrierefreiheit</title>
         <link
             rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        />
+        <link
+            rel="stylesheet"
             href="assets/css/style.css"
         />
     </head>
@@ -39,7 +43,10 @@
             </div>
 
             <div>
-                <a href="semantik.html">
+                <a
+                    tabindex="-1"
+                    href="semantik.html"
+                >
                     <svg
                         aria-label="Logo - roter Kreis mit Schriftzug"
                         xmlns="http://www.w3.org/2000/svg"
@@ -89,22 +96,58 @@
 
         <main id="main-content">
             <article>
-                <h2>Überschrift 1</h2>
+                <form formnovalidate>
+                    <fieldset>
+                        <legend>Login</legend>
+                        <label for="login-email">E-Mail</label>
+                        <input
+                            id="login-email"
+                            type="email"
+                            required
+                            autocomplete="off"
+                        />
+
+                        <label for="login-password">Passwort</label>
+                        <input
+                            id="login-password"
+                            pattern="[A-Za-z]{3}"
+                            required
+                            type="password"
+                            autocomplete="off"
+                        />
+                        <button
+                            type="submit"
+                            aria-label="Anmelden"
+                        >
+                            Anmelden
+                        </button>
+                    </fieldset>
+                </form>
+            </article>
+
+            <article>
+                <h2 tabindex="0">Überschrift 1</h2>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Quisquam, voluptatibus. Lorem ipsum dolor sit amet
                     consectetur adipisicing elit. Quisquam, voluptatibus. Lorem
                     ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-                    voluptatibus. <abbr title="National Aeronautic Space Agency">NASA</abbr> ipsum dolor sit amet consectetur
-                    adipisicing elit. Quisquam, voluptatibus.
+                    voluptatibus.
+                    <abbr title="National Aeronautic Space Agency">NASA</abbr>
+                    ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+                    voluptatibus.
                 </p>
-                <p lang="es">Este es un texto en español que se leerá con una voz en español si está disponible.</p>
+                <p lang="es">
+                    Este es un texto en español que se leerá con una voz en
+                    español si está disponible.
+                </p>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Quisquam, voluptatibus. Lorem ipsum dolor sit amet
                     consectetur adipisicing elit. Quisquam, voluptatibus.
                 </p>
             </article>
+
             <article>
                 <h2>Überschrift 2</h2>
                 <p>
@@ -119,24 +162,56 @@
             <form
                 role="search"
                 action=""
+      
+                aria-live="assertive"
+                aria-atomic="true"
+                aria-relevant="removals additions"
             >
                 <fieldset>
-                    <legend>Suche über alle Seiten</legend>
+                    <legend id="search-desc">Suche über alle Seiten</legend>
                     <label for="search">Suchbegriff</label>
                     <input
-                        type="text"
+                        
+                        autocomplete="off"
+                        type="search"
                         id="search"
                         name="search"
                         placeholder="Suchbegriff"
                         aria-label="Suchbegriff"
+                        required
                         aria-required="true"
                     />
+
+
+                    <button
+                        class="fas fa-search"
+                        type="submit"
+                        aria-label="Suche starten"
+                        aria-describedby="search-desc address-desc"
+                    ></button>
+
+
+                    <p class="d-none" id="search-message">Du musst hier etwas eingeben!</p>
                 </fieldset>
             </form>
+<p role="log">Eine Notiz am Rande des Geschehens ...</p>
+            <dialog open role="alertdialog">
+                <form method="dialog">
+                    <p>Dies ist ein Dialog</p>
+                    <button
+                        type="submit"
+                        id="close-dialog"
+                        aria-label="Dialog schließen"
+                    >
+                        Schließen
+                    </button>
+                </form>
+            </dialog>
+
         </aside>
 
         <footer id="footer">
-            <address>&copy 20025 Michael</address>
+            <address id="address-desc">&copy 20025 Michael</address>
             <ul>
                 <li><a href="">Link 1</a></li>
                 <li><a href="">Link 2</a></li>

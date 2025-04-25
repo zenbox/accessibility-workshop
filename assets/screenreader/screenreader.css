@@ -1,0 +1,57 @@
+/* Screenreader styles */
+.screen-reader-output {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  resize: both;
+  overflow: hidden;
+  max-width: 500px;
+  min-width: 300px;
+  min-height: 150px;
+  max-height: 50vh;
+  transition: box-shadow 0.2s ease;
+}
+
+.screen-reader-output:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.sr-output-header {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 10px;
+  cursor: move;
+  user-select: none;
+  border-radius: 5px 5px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.screen-reader-output h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.sr-output-content {
+  min-height: 60px;
+  height: 100%;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.sr-output-content p {
+  margin: 5px 0;
+  padding: 3px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
