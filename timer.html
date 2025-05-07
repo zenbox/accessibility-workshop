@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html>
-    <!-- Head und Style bleiben unverändert -->
+<html lang="de">
     <head>
-        <title>Split Flap Display</title>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Split Flap Timer</title>
         <style>
             body {
                 display: flex;
@@ -152,6 +156,9 @@
             .controls {
                 display: flex;
                 gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+                max-width: 600px;
             }
 
             button {
@@ -173,6 +180,35 @@
                 background: #333;
                 cursor: not-allowed;
             }
+
+            .custom-timer {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-top: 15px;
+            }
+
+            .custom-timer input {
+                width: 80px;
+                padding: 10px;
+                background: #333;
+                color: white;
+                border: 1px solid #555;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+
+            .custom-timer label {
+                color: white;
+                font-size: 16px;
+            }
+
+            .timer-status {
+                margin-top: 10px;
+                color: white;
+                font-size: 14px;
+                opacity: 0.8;
+            }
         </style>
     </head>
     <body>
@@ -187,11 +223,39 @@
             <button onclick="startTimer(900)">15 Min</button>
             <button onclick="startTimer(600)">10 Min</button>
             <button onclick="startTimer(300)">5 Min</button>
-            <!--
-        <button onclick="startTimer(60)">1 Min Timer</button>
-        <button onclick="showText(' WEITER ')">WEITER</button>
-        <button onclick="showText('PAUSE  ')">PAUSE</button>
-        --></div>
+            <button
+                id="pauseResumeBtn"
+                onclick="pauseResumeTimer()"
+                disabled
+            >
+                Pause/Weiter
+            </button>
+            <button
+                onclick="resetTimer()"
+                id="resetBtn"
+                disabled
+            >
+                Reset
+            </button>
+        </div>
+
+        <div class="custom-timer">
+            <label for="customMinutes">Eigene Zeit:</label>
+            <input
+                type="number"
+                id="customMinutes"
+                min="1"
+                max="180"
+                value="25"
+                aria-label="Minuten eingeben"
+            />
+            <button onclick="startCustomTimer()">Start</button>
+        </div>
+
+        <div
+            class="timer-status"
+            id="timerStatus"
+        ></div>
 
         <script>
             const characters = [
@@ -206,6 +270,7 @@
                 "8",
                 "9",
                 ":",
+                " ",
                 "A",
                 "B",
                 "C",
@@ -234,7 +299,6 @@
                 "Z",
                 "!",
                 "?",
-                " ",
             ]
 
             const numbers = [
@@ -349,9 +413,17 @@
                 { length: 8 },
                 () => new SplitFlap(displayContainer)
             )
+            const pauseResumeBtn = document.getElementById("pauseResumeBtn")
+            const resetBtn = document.getElementById("resetBtn")
+            const timerStatus = document.getElementById("timerStatus")
 
             let currentMode = "time"
             let timerInterval
+            let timerPaused = false
+            let timerTimeLeft = 0
+            let timerStartTime = 0
+            let timerDuration = 0
+            let timerEndTime = 0
 
             function setDisplay(text, mode, reverse = false) {
                 const useNumbers = mode === "time" || mode === "timer"
@@ -360,7 +432,7 @@
                 flaps.forEach((flap, i) => {
                     setTimeout(() => {
                         flap.flipTo(chars[i], useNumbers, reverse)
-                    }, i * 200)
+                    }, i * 100) // Schnellere Animation (war 200ms)
                 })
             }
 
@@ -372,6 +444,71 @@
             function showTimerDone() {
                 document.body.style.backgroundColor = "#2d5a27"
                 document.body.classList.add("timer-done")
+
+                // Timer Abschluss-Ton abspielen
+                const audio = new Audio()
+                audio.src =
+                    "data:audio/wav;base64,UklGRgQFAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YeAEAACAgICAgICA/f39/f39/YKCgoKCgoKB/v7+/v7+/v+Dg4ODg4OD/v7+/v7+/oGEhISEhISE/v7+/v7+/oCEhISEhISE/v7+/v7+/v+DhISEhISEgvz8/Pz8/PyBhISEhISEhIH+/v7+/v7+/4GCgoKCgoKC/v7+/v7+/v+CgoKCgoKC//7+/v7+/v7+gIKCgoKCgoL+/v7+/v7+/oODg4ODg4OB/f39/f39/YODg4ODg4OD/v7+/v7+/v+Dg4ODg4ODgfz8/Pz8/PyDg4ODg4ODg/7+/v7+/v7/g4ODg4ODg4L8/Pz8/Pz8gIWFhYWFhYWB/f39/f39/YGDg4ODg4OD/v7+/v7+/v+AgICAgICAgP7+/v7+/v7/gICAgICAgIDAwMDAwMDAGP39/f39/f39/f39/f39/Rj+/v7+/v7+/v7+/v7+/v4Y/v7+/v7+/v7+/v7+/v7+HP7+/v7+/v7+/v7+/v7+/hn+/v7+/v7+/v7+/v7+/v4Y/f39/f39/f39/f39/f39Gv7+/v7+/v7+/v7+/v7+/hn9/f39/f39/f39/f39/f0Y/v7+/v7+/v7+/v7+/v7+GP7+/v7+/v7+/v7+/v7+/hr+/v7+/v7+/v7+/v7+/v4Y/f39/f39/f39/f39/f39GP7+/v7+/v7+/v7+/v7+/hr+/v7+/v7+/v7+/v7+/v4Y/f39/f39/f39/f39/f39GP7+/v7+/v7+/v7+/v7+/hn+/v7+/v7+/v7+/v7+/v4Y/v7+/v7+/v7+/v7+/v7+HP39/f39/f39/f39/f39/Rn+/v7+/v7+/v7+/v7+/v7+/v7+/v7AwMDAwMDACgAAvgIAAL4CAAC+AgAAvgIAAL4CAAC+AgAAvgIAAL4CAAAuAAAALgAAAC4BAAAuAQAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgAAAC4AAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAgAAGgIAABoCAAAaAgAAGgIAABoCAAAaAgAAGgIAABoCAAAKAAA="
+                audio.play()
+            }
+
+            function saveTimerToLocalStorage() {
+                if (currentMode === "timer") {
+                    localStorage.setItem(
+                        "timer",
+                        JSON.stringify({
+                            timeLeft: timerTimeLeft,
+                            duration: timerDuration,
+                            endTime: timerEndTime,
+                            paused: timerPaused,
+                        })
+                    )
+                    timerStatus.textContent = timerPaused
+                        ? "Timer angehalten."
+                        : "Timer läuft."
+                } else {
+                    localStorage.removeItem("timer")
+                    timerStatus.textContent = ""
+                }
+            }
+
+            function loadTimerFromLocalStorage() {
+                const timerData = localStorage.getItem("timer")
+                if (timerData) {
+                    const timer = JSON.parse(timerData)
+
+                    if (timer.endTime && !timer.paused) {
+                        // Timer war aktiv - aktualisiere die verbleibende Zeit basierend auf Endzeit
+                        const now = new Date().getTime()
+                        const remainingTime = Math.floor(
+                            (timer.endTime - now) / 1000
+                        )
+
+                        if (remainingTime <= 0) {
+                            // Timer ist abgelaufen
+                            showTimerDone()
+                            updateTimerDisplay(0)
+                            resetTimerControls()
+                            localStorage.removeItem("timer")
+                        } else {
+                            // Timer fortsetzen
+                            timerDuration = timer.duration
+                            timerEndTime = timer.endTime
+                            timerTimeLeft = remainingTime
+                            timerPaused = false
+                            resumeTimer()
+                        }
+                    } else if (timer.paused) {
+                        // Timer war pausiert
+                        timerTimeLeft = timer.timeLeft
+                        timerDuration = timer.duration
+                        timerPaused = true
+                        currentMode = "timer"
+                        updateTimerDisplay(timerTimeLeft)
+                        enableTimerControls()
+                        pauseResumeBtn.textContent = "Weiter"
+                    }
+                }
             }
 
             function showTime() {
@@ -381,12 +518,40 @@
                 }
 
                 resetBackground()
+                resetTimerControls()
                 currentMode = "time"
                 const now = new Date()
                 const hours = String(now.getHours()).padStart(2, "0")
                 const minutes = String(now.getMinutes()).padStart(2, "0")
                 const seconds = String(now.getSeconds()).padStart(2, "0")
                 setDisplay(`${hours}:${minutes}:${seconds}`, currentMode, false)
+                saveTimerToLocalStorage()
+            }
+
+            function updateTimerDisplay(timeLeft) {
+                let displayText = ""
+                if (timerDuration >= 3600) {
+                    // Format HH:MM:SS
+                    const hours = String(Math.floor(timeLeft / 3600)).padStart(
+                        2,
+                        "0"
+                    )
+                    const minutes = String(
+                        Math.floor((timeLeft % 3600) / 60)
+                    ).padStart(2, "0")
+                    const seconds = String(timeLeft % 60).padStart(2, "0")
+                    displayText = `${hours}:${minutes}:${seconds}`
+                } else {
+                    // Format MM:SS
+                    const minutes = String(Math.floor(timeLeft / 60)).padStart(
+                        2,
+                        "0"
+                    )
+                    const seconds = String(timeLeft % 60).padStart(2, "0")
+                    displayText = `   ${minutes}:${seconds}`
+                }
+
+                setDisplay(displayText, currentMode, true)
             }
 
             function startTimer(duration) {
@@ -396,74 +561,132 @@
 
                 resetBackground()
                 currentMode = "timer"
-                let timeLeft = duration // Sekunden
+                timerTimeLeft = duration
+                timerDuration = duration
+                timerPaused = false
 
-                function updateTimer() {
-                    if (timeLeft < 0) {
+                // Berechne die Endzeit
+                timerEndTime = new Date().getTime() + duration * 1000
+
+                enableTimerControls()
+
+                updateTimerDisplay(timerTimeLeft)
+                saveTimerToLocalStorage()
+
+                timerInterval = setInterval(() => {
+                    timerTimeLeft--
+
+                    if (timerTimeLeft < 0) {
                         clearInterval(timerInterval)
+                        timerInterval = null
                         showTimerDone()
+                        saveTimerToLocalStorage()
+                        resetTimerControls()
                         return
                     }
 
-                    let displayText = ""
-                    if (duration === 3600) {
-                        // 1 Stunde Timer - Format HH:MM:SS
-                        const hours = String(
-                            Math.floor(timeLeft / 3600)
-                        ).padStart(2, "0")
-                        const minutes = String(
-                            Math.floor((timeLeft % 3600) / 60)
-                        ).padStart(2, "0")
-                        const seconds = String(timeLeft % 60).padStart(2, "0")
-                        displayText = `${hours}:${minutes}:${seconds}`
-                    } else if (duration === 900) {
-                        // 15 Minuten Timer
-                        const minutes = String(
-                            Math.floor(timeLeft / 60)
-                        ).padStart(2, "0")
-                        const seconds = String(timeLeft % 60).padStart(2, "0")
-                        displayText = `00:${minutes}:${seconds}`
-                    } else if (duration === 600) {
-                        // 1 Minuten Timer
-                        const minutes = String(
-                            Math.floor(timeLeft / 60)
-                        ).padStart(2, "0")
-                        const seconds = String(timeLeft % 60).padStart(2, "0")
-                        displayText = `00:${minutes}:${seconds}`
-                    } else if (duration === 300) {
-                        // 1 Minuten Timer
-                        const minutes = String(
-                            Math.floor(timeLeft / 60)
-                        ).padStart(2, "0")
-                        const seconds = String(timeLeft % 60).padStart(2, "0")
-                        displayText = `00:${minutes}:${seconds}`
-                    }
-
-                    setDisplay(displayText, currentMode, true)
-                    timeLeft--
-                }
-
-                updateTimer()
-                timerInterval = setInterval(updateTimer, 1000)
+                    updateTimerDisplay(timerTimeLeft)
+                    saveTimerToLocalStorage()
+                }, 1000)
             }
 
-            function showText(text) {
+            function startCustomTimer() {
+                const minutes = parseInt(
+                    document.getElementById("customMinutes").value
+                )
+                if (isNaN(minutes) || minutes < 1 || minutes > 180) {
+                    alert("Bitte geben Sie eine Zahl zwischen 1 und 180 ein.")
+                    return
+                }
+
+                startTimer(minutes * 60)
+            }
+
+            function pauseResumeTimer() {
+                if (timerPaused) {
+                    resumeTimer()
+                } else {
+                    pauseTimer()
+                }
+            }
+
+            function pauseTimer() {
+                clearInterval(timerInterval)
+                timerInterval = null
+                timerPaused = true
+
+                pauseResumeBtn.textContent = "Weiter"
+                saveTimerToLocalStorage()
+            }
+
+            function resumeTimer() {
+                timerPaused = false
+                pauseResumeBtn.textContent = "Pause"
+
+                // Neue Endzeit berechnen
+                timerEndTime = new Date().getTime() + timerTimeLeft * 1000
+                saveTimerToLocalStorage()
+
+                timerInterval = setInterval(() => {
+                    timerTimeLeft--
+
+                    if (timerTimeLeft < 0) {
+                        clearInterval(timerInterval)
+                        timerInterval = null
+                        showTimerDone()
+                        saveTimerToLocalStorage()
+                        resetTimerControls()
+                        return
+                    }
+
+                    updateTimerDisplay(timerTimeLeft)
+                    saveTimerToLocalStorage()
+                }, 1000)
+            }
+
+            function resetTimer() {
                 if (timerInterval) {
                     clearInterval(timerInterval)
                     timerInterval = null
                 }
 
-                resetBackground()
-                currentMode = "text"
-                setDisplay(text, currentMode, false)
+                timerTimeLeft = timerDuration
+                timerPaused = true
+                pauseResumeBtn.textContent = "Start"
+
+                updateTimerDisplay(timerTimeLeft)
+                saveTimerToLocalStorage()
             }
 
+            function enableTimerControls() {
+                pauseResumeBtn.disabled = false
+                resetBtn.disabled = false
+            }
+
+            function resetTimerControls() {
+                pauseResumeBtn.disabled = true
+                resetBtn.disabled = true
+                timerStatus.textContent = ""
+            }
+
+            // Initialisierung
             setInterval(() => {
                 if (currentMode === "time") {
                     showTime()
                 }
             }, 1000)
 
+            // Wenn die Seite geladen wird, prüfen, ob ein Timer gespeichert ist
+            document.addEventListener("DOMContentLoaded", () => {
+                loadTimerFromLocalStorage()
+            })
+
+            // Wenn die Seite neu geladen oder geschlossen wird, Timer speichern
+            window.addEventListener("beforeunload", () => {
+                saveTimerToLocalStorage()
+            })
+
+            // Starte mit der Uhrzeit
             showTime()
         </script>
     </body>
