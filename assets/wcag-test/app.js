@@ -4,6 +4,7 @@
 // Initialisiere leere Arrays für WCAG-Kriterien
 let wcagCriteria = []
 let allWcagCriteria = []
+let rawCriteriaData = null // Hält die ursprünglichen JSON-Daten
 
 // Übersetzer für die Prinzipien
 const prinzipienUebersetzer = {
@@ -24,6 +25,9 @@ async function loadWcagCriteriaFromJson() {
 
         const data = await response.json()
         console.log("JSON-Daten geladen:", data)
+        
+        // Speichere die Rohdaten für den direkten Zugriff
+        rawCriteriaData = data
 
         // Arrays für die Kriterien initialisieren
         const tempWcagCriteria = []
@@ -40,8 +44,8 @@ async function loadWcagCriteriaFromJson() {
 
                 // Prüfschritte durchlaufen
                 sectionData.pruefschritte.forEach((pruefschritt) => {
-                    // Kriterien-ID bestimmen (bevorzugt wcagId, sonst id)
-                    const criteriaId = pruefschritt.wcagId || pruefschritt.id
+                    // Kriterien-ID bestimmen (id statt wcagId verwenden)
+                    const criteriaId = pruefschritt.id
                     if (!criteriaId) return
 
                     // Konformitätsstufe (Level) bestimmen
@@ -197,10 +201,12 @@ class TestModel {
 
     // Teste Ergebnisse verwalten
     setResult(pageId, criteriaId, resultType, comments) {
-        const key = `${pageId}-${criteriaId}`
+        // Sicherstellen, dass wir die exakte criteriaId verwenden
+        const exactCriteriaId = criteriaId.trim()
+        const key = `${pageId}-${exactCriteriaId}`
         this.results.set(key, {
             pageId,
-            criteriaId,
+            criteriaId: exactCriteriaId,
             resultType,
             comments: Array.isArray(comments)
                 ? comments
@@ -211,7 +217,9 @@ class TestModel {
     }
 
     getResult(pageId, criteriaId) {
-        const key = `${pageId}-${criteriaId}`
+        // Sicherstellen, dass wir die exakte criteriaId verwenden
+        const exactCriteriaId = criteriaId.trim()
+        const key = `${pageId}-${exactCriteriaId}`
         return this.results.get(key) || null
     }
 
@@ -219,18 +227,22 @@ class TestModel {
     addComment(pageId, criteriaId, comment) {
         if (!comment.trim()) return
 
-        const result = this.getResult(pageId, criteriaId)
+        // Sicherstellen, dass wir die exakte criteriaId verwenden
+        const exactCriteriaId = criteriaId.trim()
+        const result = this.getResult(pageId, exactCriteriaId)
         if (result) {
             const comments = result.comments || []
             comments.push(comment)
 
-            this.setResult(pageId, criteriaId, result.resultType, comments)
+            this.setResult(pageId, exactCriteriaId, result.resultType, comments)
         }
     }
 
     // Füge ein Bild zu einem Ergebnis hinzu
     addImage(pageId, criteriaId, imageData, description = "") {
-        const key = `${pageId}-${criteriaId}`
+        // Sicherstellen, dass wir die exakte criteriaId verwenden
+        const exactCriteriaId = criteriaId.trim()
+        const key = `${pageId}-${exactCriteriaId}`
         const result = this.results.get(key)
 
         if (!result) return false
@@ -254,7 +266,9 @@ class TestModel {
 
     // Lösche ein Bild
     deleteImage(pageId, criteriaId, imageId) {
-        const key = `${pageId}-${criteriaId}`
+        // Sicherstellen, dass wir die exakte criteriaId verwenden
+        const exactCriteriaId = criteriaId.trim()
+        const key = `${pageId}-${exactCriteriaId}`
         const result = this.results.get(key)
 
         if (!result || !result.images) return false
@@ -268,7 +282,9 @@ class TestModel {
 
     // Aktualisiere Bild-Beschreibung
     updateImageDescription(pageId, criteriaId, imageId, description) {
-        const key = `${pageId}-${criteriaId}`
+        // Sicherstellen, dass wir die exakte criteriaId verwenden
+        const exactCriteriaId = criteriaId.trim()
+        const key = `${pageId}-${exactCriteriaId}`
         const result = this.results.get(key)
 
         if (!result || !result.images) return false
@@ -1263,8 +1279,6 @@ class WcagTestApp extends HTMLElement {
 
     // Lade Markdown-Datei
     async loadCriteriaMarkdown(mdFile) {
-        // Simuliere das Laden der Markdown-Datei
-        // In einer realen Anwendung würde hier die Datei vom Server geladen
         return new Promise((resolve, reject) => {
             // Überprüfen, ob wir den Inhalt bereits im Cache haben
             if (
@@ -1275,22 +1289,85 @@ class WcagTestApp extends HTMLElement {
                 return
             }
 
-            // Simulierter Inhalt (in einer realen Anwendung würde hier die Datei geladen werden)
-            const mockContent = this.getMockMarkdownContent(mdFile)
-
-            // Cache initialisieren, falls er noch nicht existiert
-            if (!this.criteriaDialogContent) {
-                this.criteriaDialogContent = {}
+            // Extrahiere die Kriterien-ID aus dem Dateinamen
+            const matches = mdFile.match(/c-\d+-wcag-(.+?)\.md/)
+            if (!matches || matches.length < 2) {
+                // Wenn keine gültige ID gefunden wurde, Mock-Inhalt verwenden
+                const mockContent = this.getMockMarkdownContent(mdFile)
+                resolve(mockContent)
+                return
             }
 
-            // In den Cache legen
-            this.criteriaDialogContent[mdFile] = mockContent
-
-            // In der realen Anwendung würde die Datei asynchron geladen
-            setTimeout(() => {
-                resolve(mockContent)
-            }, 200)
+            const criteriaId = matches[1]
+            
+            // Datei aus dem gemeinsamen Verzeichnis laden
+            fetch(`./assets/data/docs/${criteriaId}.md`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`)
+                    }
+                    return response.text()
+                })
+                .then(content => {
+                    // Cache initialisieren, falls er noch nicht existiert
+                    if (!this.criteriaDialogContent) {
+                        this.criteriaDialogContent = {}
+                    }
+                    
+                    // In den Cache legen
+                    this.criteriaDialogContent[mdFile] = content
+                    
+                    // Inhalt zurückgeben
+                    resolve(content)
+                })
+                .catch(error => {
+                    console.error(`Fehler beim Laden der Markdown-Datei: ${error}`)
+                    // Im Fehlerfall Mock-Inhalt verwenden
+                    const mockContent = this.getMockMarkdownContent(mdFile)
+                    resolve(mockContent)
+                })
         })
+    }
+    
+    // Kurzbeschreibung für Tooltip laden
+    loadCriteriaDescription(criteriaId) {
+        // Falls direkt eine ID übergeben wurde, diese nutzen
+        if (!criteriaId.includes('c-')) {
+            return this.getCriteriaDescription(criteriaId);
+        }
+        
+        // Extrahiere die ID aus der WCAG-ID (Format: c-123-wcag-1.2.3a)
+        const id = criteriaId.replace('c-', '').split('-wcag-')[1];
+        if (!id) return this.getCriteriaDescription(criteriaId);
+        
+        // Fallback auf die extrahierte ID
+        const result = wcagCriteria.find(c => c.id === id)?.details?.description;
+        
+        return result || this.getCriteriaDescription(id);
+    }
+    
+    // Holt die Beschreibung direkt aus den Rohdaten der criterias.json
+    getDescriptionFromRawData(criteriaId) {
+        if (!rawCriteriaData || !rawCriteriaData.sections) {
+            return this.getCriteriaDescription(criteriaId);
+        }
+        
+        // Suche nach dem Prüfschritt in den Rohdaten
+        for (const section of rawCriteriaData.sections) {
+            const sectionData = section.undefined;
+            if (!sectionData || !sectionData.pruefschritte) continue;
+            
+            for (const pruefschritt of sectionData.pruefschritte) {
+                if (pruefschritt.id === criteriaId || pruefschritt.wcagId === criteriaId) {
+                    if (pruefschritt.details && pruefschritt.details.description) {
+                        return pruefschritt.details.description;
+                    }
+                }
+            }
+        }
+        
+        // Fallback auf die Hilfsmethode
+        return this.getCriteriaDescription(criteriaId);
     }
 
     // Einfache Markdown-Verarbeitung (in einer realen Anwendung würde eine Markdown-Bibliothek verwendet)
@@ -1372,6 +1449,7 @@ ${this.getCriteriaExamples(criteria.id)}
 
     // Hilfsfunktionen für die Demo-Inhalte
     getCriteriaDescription(criteriaId, detailed = false) {
+        // Standard-Beschreibungen für häufig verwendete Kriterien
         const descriptions = {
             "1.1.1": detailed
                 ? "Alle Nicht-Text-Inhalte, die dem Benutzer präsentiert werden, haben eine Textalternative, die einem äquivalenten Zweck dient, außer in den unten aufgeführten Situationen."
@@ -1382,8 +1460,21 @@ ${this.getCriteriaExamples(criteria.id)}
             "2.4.1": detailed
                 ? "Es ist ein Mechanismus verfügbar, um Blöcke von Inhalt, die auf verschiedenen Webseiten wiederholt werden, zu umgehen."
                 : "Ermöglicht es Benutzern, wiederkehrende Inhaltsblöcke zu überspringen.",
-        }
+            "9.1.1.1a": "Nicht-Text-Inhalte wie Bilder oder Grafiken müssen Textalternativen haben.",
+            "9.1.3.1a": "Webseiteninformationen und ihre Strukturen müssen programmatisch erfassbar sein."
+        };
 
+        // Versuchen, die Beschreibung direkt zu finden
+        if (descriptions[criteriaId]) {
+            return descriptions[criteriaId];
+        }
+        
+        // Wenn die ID ein a/b/c/d-Suffix enthält, versuchen, den Haupt-Teil zu matchen
+        const baseId = criteriaId.replace(/([a-z])$/, '');
+        if (descriptions[baseId]) {
+            return descriptions[baseId];
+        }
+        
         return (
             descriptions[criteriaId] ||
             (detailed
@@ -1587,11 +1678,80 @@ ${this.getCriteriaExamples(criteria.id)}
 
             // Info-Button für Kriterien
             this.querySelectorAll(".criteria-info-button").forEach((button) => {
+                // Dialog anzeigen bei Klick
                 button.addEventListener("click", (event) => {
                     event.stopPropagation() // Verhindert, dass das Kriterium ein-/ausgeklappt wird
                     const criteriaId = button.dataset.criteriaId
                     this.showCriteriaInfoDialog(criteriaId)
                 })
+                
+                // Tooltip bei Hover anzeigen - wie in treemap
+                button.addEventListener("mouseenter", () => {
+                    const criteriaId = button.dataset.criteriaId;
+                    
+                    // Versuchen, die Beschreibung aus den Rohdaten zu bekommen (wie bei der treemap)
+                    const description = this.getDescriptionFromRawData(criteriaId);
+                    
+                    if (description) {
+                        console.log("Showing tooltip for", criteriaId, description);
+                        
+                        // Tooltip erstellen
+                        const tooltip = document.createElement("div");
+                        tooltip.className = "tooltip";
+                        tooltip.textContent = description;
+                        
+                        // Tooltip positionieren
+                        document.body.appendChild(tooltip);
+                        const rect = button.getBoundingClientRect();
+                        const containerRect = document.querySelector(".container").getBoundingClientRect();
+                        
+                        // Prüfen, ob rechts genug Platz ist
+                        const rightSpace = containerRect.right - (rect.right + 10 + 300); // 300px ist max-width des Tooltips
+                        const leftPosition = rightSpace < 0;
+                        
+                        if (leftPosition) {
+                            tooltip.classList.add("left-position");
+                        } else {
+                            tooltip.classList.remove("left-position");
+                        }
+                        
+                        // Absolute Positionierung relativ zum Viewport
+                        tooltip.style.position = "fixed";
+                        tooltip.style.top = (rect.top + rect.height/2) + 'px';
+                        
+                        if (leftPosition) {
+                            tooltip.style.right = (window.innerWidth - rect.left) + 'px';
+                            tooltip.style.left = 'auto';
+                        } else {
+                            tooltip.style.left = (rect.right + 10) + 'px';
+                            tooltip.style.right = 'auto';
+                        }
+                        
+                        // Speichern für späteren Zugriff
+                        button.tooltipElement = tooltip;
+                        
+                        // Anzeigen nach kurzem Delay
+                        setTimeout(() => {
+                            tooltip.classList.add("visible");
+                        }, 50);
+                        
+                        // Mouseleave Ereignis
+                        const handleMouseLeave = () => {
+                            console.log("Mouse left", criteriaId);
+                            tooltip.classList.remove("visible");
+                            setTimeout(() => {
+                                if (tooltip.parentNode) {
+                                    tooltip.parentNode.removeChild(tooltip);
+                                }
+                                button.removeEventListener("mouseleave", handleMouseLeave);
+                            }, 300);
+                        };
+                        
+                        button.addEventListener("mouseleave", handleMouseLeave);
+                    } else {
+                        console.log("No description found for", criteriaId);
+                    }
+                });
             })
 
             // Ergebnis ändern

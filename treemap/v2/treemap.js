@@ -1,5 +1,5 @@
 // - - - - - - - - - -
-// ersion v2
+// Version v2
 // - - - - - - - - - -
 
 // Globale Variablen für Navigationsstatus
@@ -1333,7 +1333,7 @@ function addProfessionMarkers(card, pruefschritt) {
 }
 
 function loadAndRenderData() {
-    fetch("./criterias.json")
+    fetch("./../../assets/data/criterias.json")
         .then((response) => response.json())
         .then((data) => {
             renderTree(data)
@@ -1473,7 +1473,7 @@ function showDetails(pruefschritt) {
     const modal = document.getElementById("sectionModal")
     const modalContent = document.getElementById("modalContent")
 
-    fetch(`./../docs/${pruefschritt.id}.md`)
+    fetch(`./../../assets/data/docs/${pruefschritt.id}.md`)
         .then((response) => response.text())
         .then((markdown) => {
             modalContent.innerHTML = marked.parse(markdown)
