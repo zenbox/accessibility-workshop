@@ -207,11 +207,115 @@
                 margin-top: 10px;
                 color: white;
                 font-size: 14px;
-                opacity: 0.8;
+                opacity: 0;
+                transition: opacity 0.5s ease;
+            }
+
+            .drag-region {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 30px; /* Höhe der ziehbaren Region */
+                -webkit-app-region: drag; /* Macht den Bereich ziehbar */
+                z-index: 999; /* Unter der Titelleiste, aber über allem anderen */
+            }
+
+            .custom-titlebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 30px;
+                background-color: rgba(30, 30, 30, 0.7);
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+                z-index: 1000;
+            }
+
+            .custom-titlebar.visible {
+                opacity: 1;
+            }
+
+            /* Wichtig: Die Window Controls dürfen NICHT draggable sein */
+            .window-controls {
+                display: flex;
+                -webkit-app-region: no-drag; /* Verhindert, dass Buttons zum Ziehen verwendet werden */
+            }
+
+            .window-control {
+                width: 46px;
+                height: 30px;
+                background: transparent;
+                border: none;
+                color: #fff;
+                font-size: 16px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                transition: background-color 0.2s;
+            }
+
+            .window-control:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .window-control.close:hover {
+                background-color: #e81123;
+            }
+
+            .drag-region {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 40px;
+                -webkit-app-region: drag;
+                z-index: 1000;
             }
         </style>
     </head>
     <body>
+        <!-- Bereich zum Verschieben des Fensters (Drag Region) -->
+        <div
+            id="drag-region"
+            class="drag-region"
+        ></div>
+
+        <!-- Benutzerdefinierte Titelleiste mit Fenstersteuerelementen -->
+        <div
+            id="custom-titlebar"
+            class="custom-titlebar"
+        >
+            <div class="window-controls">
+                <button
+                    id="minimize-button"
+                    class="window-control minimize"
+                    aria-label="Fenster minimieren"
+                >
+                    <span>&#8211;</span>
+                </button>
+                <button
+                    id="maximize-button"
+                    class="window-control maximize"
+                    aria-label="Fenster maximieren"
+                >
+                    <span>□</span>
+                </button>
+                <button
+                    id="close-button"
+                    class="window-control close"
+                    aria-label="Fenster schließen"
+                >
+                    <span>×</span>
+                </button>
+            </div>
+        </div>
+
         <div
             class="display"
             id="displayContainer"
@@ -221,8 +325,8 @@
             <button onclick="showTime()">Uhrzeit</button>
             <button onclick="startTimer(3600)">1 Std</button>
             <button onclick="startTimer(900)">15 Min</button>
-            <button onclick="startTimer(600)">10 Min</button>
-            <button onclick="startTimer(300)">5 Min</button>
+            <!-- <button onclick="startTimer(600)">10 Min</button> -->
+            <!-- <button onclick="startTimer(300)">5 Min</button> -->
             <button
                 id="pauseResumeBtn"
                 onclick="pauseResumeTimer()"
@@ -233,6 +337,7 @@
             <button
                 onclick="resetTimer()"
                 id="resetBtn"
+                style="display: none"
                 disabled
             >
                 Reset
@@ -244,9 +349,10 @@
             <input
                 type="number"
                 id="customMinutes"
-                min="1"
+                min="0"
                 max="180"
-                value="25"
+                step="5"
+                value="5"
                 aria-label="Minuten eingeben"
             />
             <button onclick="startCustomTimer()">Start</button>
@@ -424,6 +530,7 @@
             let timerStartTime = 0
             let timerDuration = 0
             let timerEndTime = 0
+            let autoSaveNotificationTimeout
 
             function setDisplay(text, mode, reverse = false) {
                 const useNumbers = mode === "time" || mode === "timer"
@@ -448,7 +555,7 @@
                 // Timer Abschluss-Ton abspielen
                 const audio = new Audio()
                 audio.src =
-                    "data:audio/wav;base64,UklGRgQFAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YeAEAACAgICAgICA/f39/f39/YKCgoKCgoKB/v7+/v7+/v+Dg4ODg4OD/v7+/v7+/oGEhISEhISE/v7+/v7+/oCEhISEhISE/v7+/v7+/v+DhISEhISEgvz8/Pz8/PyBhISEhISEhIH+/v7+/v7+/4GCgoKCgoKC/v7+/v7+/v+CgoKCgoKC//7+/v7+/v7+gIKCgoKCgoL+/v7+/v7+/oODg4ODg4OB/f39/f39/YODg4ODg4OD/v7+/v7+/v+Dg4ODg4ODgfz8/Pz8/PyDg4ODg4ODg/7+/v7+/v7/g4ODg4ODg4L8/Pz8/Pz8gIWFhYWFhYWB/f39/f39/YGDg4ODg4OD/v7+/v7+/v+AgICAgICAgP7+/v7+/v7/gICAgICAgIDAwMDAwMDAGP39/f39/f39/f39/f39/Rj+/v7+/v7+/v7+/v7+/v4Y/v7+/v7+/v7+/v7+/v7+HP7+/v7+/v7+/v7+/v7+/hn+/v7+/v7+/v7+/v7+/v4Y/f39/f39/f39/f39/f39Gv7+/v7+/v7+/v7+/v7+/hn9/f39/f39/f39/f39/f0Y/v7+/v7+/v7+/v7+/v7+GP7+/v7+/v7+/v7+/v7+/hr+/v7+/v7+/v7+/v7+/v4Y/f39/f39/f39/f39/f39GP7+/v7+/v7+/v7+/v7+/hr+/v7+/v7+/v7+/v7+/v4Y/f39/f39/f39/f39/f39GP7+/v7+/v7+/v7+/v7+/hn+/v7+/v7+/v7+/v7+/v4Y/v7+/v7+/v7+/v7+/v7+HP39/f39/f39/f39/f39/Rn+/v7+/v7+/v7+/v7+/v7+/v7+/v7AwMDAwMDACgAAvgIAAL4CAAC+AgAAvgIAAL4CAAC+AgAAvgIAAL4CAAAuAAAALgAAAC4BAAAuAQAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgAAAC4AAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAgAAGgIAABoCAAAaAgAAGgIAABoCAAAaAgAAGgIAABoCAAAKAAA="
+                    "data:audio/wav;base64,UklGRgQFAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YeAEAACAgICAgICA/f39/f39/YKCgoKCgoKB/v7+/v7+/v+Dg4ODg4OD/v7+/v7+/oGEhISEhISE/v7+/v7+/oCEhISEhISE/v7+/v7+/v+DhISEhISEgvz8/Pz8/PyBhISEhISEhIH+/v7+/v7+/4GCgoKCgoKC/v7+/v7+/v+CgoKCgoKC//7+/v7+/v7+gIKCgoKCgoL+/v7+/v7+/oODg4ODg4OB/f39/f39/YODg4ODg4OD/v7+/v7+/v+Dg4ODg4ODgfz8/Pz8/PyDg4ODg4ODg/7+/v7+/v7/g4ODg4ODg4L8/Pz8/Pz8gIWFhYWFhYWB/f39/f39/YGDg4ODg4OD/v7+/v7+/v+AgICAgICAgP7+/v7+/v7/gICAgICAgIDAwMDAwMDAGP39/f39/f39/f39/f39/Rj+/v7+/v7+/v7+/v7+/v4Y/v7+/v7+/v7+/v7+/v7+HP7+/v7+/v7+/v7+/v7+/hn+/v7+/v7+/v7+/v7+/v4Y/f39/f39/f39/f39/f39Gv7+/v7+/v7+/v7+/v7+/hn9/f39/f39/f39/f39/f0Y/v7+/v7+/v7+/v7+/v7+GP7+/v7+/v7+/v7+/v7+/hr+/v7+/v7+/v7+/v7+/v4Y/f39/f39/f39/f39/f39GP7+/v7+/v7+/v7+/v7+/hr+/v7+/v7+/v7+/v7+/v4Y/f39/f39/f39/f39/f39GP7+/v7+/v7+/v7+/v7+/hn+/v7+/v7+/v7+/v7+/v4Y/v7+/v7+/v7+/v7+/v7+HP39/f39/f39/f39/f39/Rn+/v7+/v7+/v7+/v7+/v7+/v7+/v7AwMDAwMDACgAAvgIAAL4CAAC+AgAAvgIAAL4CAAC+AgAAvgIAAL4CAAAuAAAALgAAAC4BAAAuAQAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgIAAC4CAAAuAgAALgAAAC4AAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAQAAGgEAABoBAAAaAgAAGgIAABoCAAAaAgAAGgIAABoCAAAaAgAAGgIAABoCAAAKAAA="
                 audio.play()
             }
 
@@ -463,9 +570,16 @@
                             paused: timerPaused,
                         })
                     )
-                    timerStatus.textContent = timerPaused
-                        ? "Timer angehalten."
-                        : "Timer läuft."
+                    
+                    // Show auto-save notification
+                    timerStatus.textContent = "Automatisches Speichern aktiviert"
+                    timerStatus.style.opacity = "1"
+                    
+                    // Hide notification after 2 seconds
+                    clearTimeout(autoSaveNotificationTimeout)
+                    autoSaveNotificationTimeout = setTimeout(() => {
+                        timerStatus.style.opacity = "0"
+                    }, 2000)
                 } else {
                     localStorage.removeItem("timer")
                     timerStatus.textContent = ""
@@ -570,6 +684,16 @@
 
                 enableTimerControls()
 
+                // Show timer started status
+                timerStatus.textContent = "Timer gestartet"
+                timerStatus.style.opacity = "1"
+                
+                // Hide status after 2 seconds
+                clearTimeout(autoSaveNotificationTimeout)
+                autoSaveNotificationTimeout = setTimeout(() => {
+                    timerStatus.style.opacity = "0"
+                }, 2000)
+
                 updateTimerDisplay(timerTimeLeft)
                 saveTimerToLocalStorage()
 
@@ -616,6 +740,8 @@
                 timerPaused = true
 
                 pauseResumeBtn.textContent = "Weiter"
+                timerStatus.textContent = "Timer angehalten"
+                timerStatus.style.opacity = "1"
                 saveTimerToLocalStorage()
             }
 
@@ -625,6 +751,17 @@
 
                 // Neue Endzeit berechnen
                 timerEndTime = new Date().getTime() + timerTimeLeft * 1000
+                
+                // Show timer running status
+                timerStatus.textContent = "Timer läuft"
+                timerStatus.style.opacity = "1"
+                
+                // Hide status after 2 seconds
+                clearTimeout(autoSaveNotificationTimeout)
+                autoSaveNotificationTimeout = setTimeout(() => {
+                    timerStatus.style.opacity = "0"
+                }, 2000)
+                
                 saveTimerToLocalStorage()
 
                 timerInterval = setInterval(() => {
@@ -654,6 +791,16 @@
                 timerPaused = true
                 pauseResumeBtn.textContent = "Start"
 
+                // Show timer reset status
+                timerStatus.textContent = "Timer zurückgesetzt"
+                timerStatus.style.opacity = "1"
+                
+                // Hide status after 2 seconds
+                clearTimeout(autoSaveNotificationTimeout)
+                autoSaveNotificationTimeout = setTimeout(() => {
+                    timerStatus.style.opacity = "0"
+                }, 2000)
+
                 updateTimerDisplay(timerTimeLeft)
                 saveTimerToLocalStorage()
             }
@@ -667,6 +814,8 @@
                 pauseResumeBtn.disabled = true
                 resetBtn.disabled = true
                 timerStatus.textContent = ""
+                timerStatus.style.opacity = "0"
+                clearTimeout(autoSaveNotificationTimeout)
             }
 
             // Initialisierung
@@ -688,6 +837,59 @@
 
             // Starte mit der Uhrzeit
             showTime()
+
+            // Fenstersteuerung
+            document
+                .getElementById("minimize-button")
+                .addEventListener("click", () => {
+                    window.electronAPI.minimizeWindow()
+                })
+
+            document
+                .getElementById("maximize-button")
+                .addEventListener("click", () => {
+                    window.electronAPI.maximizeWindow()
+                })
+
+            document
+                .getElementById("close-button")
+                .addEventListener("click", () => {
+                    window.electronAPI.closeWindow()
+                })
+
+            // Titelleiste ein-/ausblenden bei Mausbewegung
+            const titlebar = document.getElementById("custom-titlebar")
+            let timeoutId = null
+
+            // Mouseover-Erkennung für den oberen Bereich des Fensters
+            document.addEventListener("mousemove", (event) => {
+                if (event.clientY < 40) {
+                    // Wenn die Maus im oberen Bereich ist
+                    titlebar.classList.add("visible")
+
+                    // Timer zurücksetzen, wenn die Maus bewegt wird
+                    clearTimeout(timeoutId)
+
+                    // Neuen Timer starten
+                    timeoutId = setTimeout(() => {
+                        if (!titlebar.matches(":hover")) {
+                            titlebar.classList.remove("visible")
+                        }
+                    }, 2000) // Nach 2 Sekunden ausblenden, wenn die Maus nicht über der Titelleiste ist
+                }
+            })
+
+            // Wenn die Maus die Titelleiste verlässt, Timer starten
+            titlebar.addEventListener("mouseleave", () => {
+                timeoutId = setTimeout(() => {
+                    titlebar.classList.remove("visible")
+                }, 1000)
+            })
+
+            // Wenn die Maus die Titelleiste betritt, Timer löschen
+            titlebar.addEventListener("mouseenter", () => {
+                clearTimeout(timeoutId)
+            })
         </script>
     </body>
 </html>

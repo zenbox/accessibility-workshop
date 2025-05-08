@@ -34,6 +34,12 @@
                     </button>
                     <button id="load-local-storage">Aus Browser laden</button>
                     <button id="export-data">Daten exportieren</button>
+                    <button
+                        id="delete-data"
+                        class="danger"
+                    >
+                        Daten löschen
+                    </button>
                     <label
                         for="import-file"
                         class="button primary"
@@ -45,6 +51,25 @@
                         id="import-file"
                         accept=".json"
                         style="display: none"
+                    />
+                </div>
+                <div class="autosave-status">
+                    <label class="switch">
+                        <input
+                            type="checkbox"
+                            id="autosave-toggle"
+                            checked
+                        />
+                        <span class="slider round"></span>
+                    </label>
+                    <span>Automatisches Speichern aktiviert</span>
+                </div>
+                <div class="filter-container" style="margin-top: 16px;">
+                    <label for="criteria-filter">Nach Stichworten filtern:</label>
+                    <input
+                        type="text"
+                        id="criteria-filter"
+                        placeholder="Stichwort eingeben..."
                     />
                 </div>
             </div>

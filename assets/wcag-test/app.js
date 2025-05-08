@@ -25,7 +25,7 @@ async function loadWcagCriteriaFromJson() {
 
         const data = await response.json()
         console.log("JSON-Daten geladen:", data)
-        
+
         // Speichere die Rohdaten für den direkten Zugriff
         rawCriteriaData = data
 
@@ -603,6 +603,7 @@ class WcagTestApp extends HTMLElement {
         this.currentView = "setup"
         this.currentPageId = null
         this.criteriaDialogContent = null
+        this.activeElements = [] // Speichert die IDs von geöffneten criteria-Elementen
 
         // Laden der WCAG-Kriterien aus der JSON-Datei
         this.initializeApp()
@@ -706,7 +707,7 @@ class WcagTestApp extends HTMLElement {
                                 <div class="editor-preview"></div>
                             </div>
                         </div>
-                        <button id="save-basic-data">Speichern</button>
+                        <!-- <button id="save-basic-data">Speichern</button> -->
                     </div>
 
                     <div class="card">
@@ -1299,75 +1300,86 @@ class WcagTestApp extends HTMLElement {
             }
 
             const criteriaId = matches[1]
-            
+
             // Datei aus dem gemeinsamen Verzeichnis laden
             fetch(`./assets/data/docs/${criteriaId}.md`)
-                .then(response => {
+                .then((response) => {
                     if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`)
+                        throw new Error(
+                            `HTTP error! Status: ${response.status}`
+                        )
                     }
                     return response.text()
                 })
-                .then(content => {
+                .then((content) => {
                     // Cache initialisieren, falls er noch nicht existiert
                     if (!this.criteriaDialogContent) {
                         this.criteriaDialogContent = {}
                     }
-                    
+
                     // In den Cache legen
                     this.criteriaDialogContent[mdFile] = content
-                    
+
                     // Inhalt zurückgeben
                     resolve(content)
                 })
-                .catch(error => {
-                    console.error(`Fehler beim Laden der Markdown-Datei: ${error}`)
+                .catch((error) => {
+                    console.error(
+                        `Fehler beim Laden der Markdown-Datei: ${error}`
+                    )
                     // Im Fehlerfall Mock-Inhalt verwenden
                     const mockContent = this.getMockMarkdownContent(mdFile)
                     resolve(mockContent)
                 })
         })
     }
-    
+
     // Kurzbeschreibung für Tooltip laden
     loadCriteriaDescription(criteriaId) {
         // Falls direkt eine ID übergeben wurde, diese nutzen
-        if (!criteriaId.includes('c-')) {
-            return this.getCriteriaDescription(criteriaId);
+        if (!criteriaId.includes("c-")) {
+            return this.getCriteriaDescription(criteriaId)
         }
-        
+
         // Extrahiere die ID aus der WCAG-ID (Format: c-123-wcag-1.2.3a)
-        const id = criteriaId.replace('c-', '').split('-wcag-')[1];
-        if (!id) return this.getCriteriaDescription(criteriaId);
-        
+        const id = criteriaId.replace("c-", "").split("-wcag-")[1]
+        if (!id) return this.getCriteriaDescription(criteriaId)
+
         // Fallback auf die extrahierte ID
-        const result = wcagCriteria.find(c => c.id === id)?.details?.description;
-        
-        return result || this.getCriteriaDescription(id);
+        const result = wcagCriteria.find((c) => c.id === id)?.details
+            ?.description
+
+        return result || this.getCriteriaDescription(id)
     }
-    
+
     // Holt die Beschreibung direkt aus den Rohdaten der criterias.json
     getDescriptionFromRawData(criteriaId) {
         if (!rawCriteriaData || !rawCriteriaData.sections) {
-            return this.getCriteriaDescription(criteriaId);
+            return this.getCriteriaDescription(criteriaId)
         }
-        
+
         // Suche nach dem Prüfschritt in den Rohdaten
         for (const section of rawCriteriaData.sections) {
-            const sectionData = section.undefined;
-            if (!sectionData || !sectionData.pruefschritte) continue;
-            
+            const sectionData = section.undefined
+            if (!sectionData || !sectionData.pruefschritte) continue
+
             for (const pruefschritt of sectionData.pruefschritte) {
-                if (pruefschritt.id === criteriaId || pruefschritt.wcagId === criteriaId) {
-                    if (pruefschritt.details && pruefschritt.details.description) {
-                        return pruefschritt.details.description;
+                if (
+                    pruefschritt.id === criteriaId ||
+                    pruefschritt.wcagId === criteriaId
+                ) {
+                    if (
+                        pruefschritt.details &&
+                        pruefschritt.details.description
+                    ) {
+                        return pruefschritt.details.description
                     }
                 }
             }
         }
-        
+
         // Fallback auf die Hilfsmethode
-        return this.getCriteriaDescription(criteriaId);
+        return this.getCriteriaDescription(criteriaId)
     }
 
     // Einfache Markdown-Verarbeitung (in einer realen Anwendung würde eine Markdown-Bibliothek verwendet)
@@ -1460,21 +1472,23 @@ ${this.getCriteriaExamples(criteria.id)}
             "2.4.1": detailed
                 ? "Es ist ein Mechanismus verfügbar, um Blöcke von Inhalt, die auf verschiedenen Webseiten wiederholt werden, zu umgehen."
                 : "Ermöglicht es Benutzern, wiederkehrende Inhaltsblöcke zu überspringen.",
-            "9.1.1.1a": "Nicht-Text-Inhalte wie Bilder oder Grafiken müssen Textalternativen haben.",
-            "9.1.3.1a": "Webseiteninformationen und ihre Strukturen müssen programmatisch erfassbar sein."
-        };
+            "9.1.1.1a":
+                "Nicht-Text-Inhalte wie Bilder oder Grafiken müssen Textalternativen haben.",
+            "9.1.3.1a":
+                "Webseiteninformationen und ihre Strukturen müssen programmatisch erfassbar sein.",
+        }
 
         // Versuchen, die Beschreibung direkt zu finden
         if (descriptions[criteriaId]) {
-            return descriptions[criteriaId];
+            return descriptions[criteriaId]
         }
-        
+
         // Wenn die ID ein a/b/c/d-Suffix enthält, versuchen, den Haupt-Teil zu matchen
-        const baseId = criteriaId.replace(/([a-z])$/, '');
+        const baseId = criteriaId.replace(/([a-z])$/, "")
         if (descriptions[baseId]) {
-            return descriptions[baseId];
+            return descriptions[baseId]
         }
-        
+
         return (
             descriptions[criteriaId] ||
             (detailed
@@ -1527,7 +1541,38 @@ ${this.getCriteriaExamples(criteria.id)}
 
     // Observer-Methode
     update() {
+        // Aktuelle Filtertext speichern
+        const filterInput = document.getElementById("criteria-filter")
+        const currentFilter = filterInput ? filterInput.value : ""
+
+        // Scrollposition merken
+        const scrollPosition = window.scrollY
+
         this.renderApp()
+
+        // Filter nach dem Rendering wieder anwenden
+        if (currentFilter && currentFilter.trim() !== "") {
+            // Stelle sicher, dass der Filtertext erhalten bleibt
+            const newFilterInput = document.getElementById("criteria-filter")
+            if (newFilterInput) {
+                newFilterInput.value = currentFilter
+
+                // Filter erneut anwenden
+                const criteriaItems = this.querySelectorAll(".criteria-item")
+                criteriaItems.forEach((item) => {
+                    const criteriaText = item.textContent.toLowerCase()
+                    const shouldShow =
+                        currentFilter === "" ||
+                        criteriaText.includes(currentFilter.toLowerCase())
+                    item.style.display = shouldShow ? "" : "none"
+                })
+            }
+        }
+
+        // Scrollposition wiederherstellen
+        setTimeout(() => {
+            window.scrollTo(0, scrollPosition)
+        }, 10)
     }
 
     // Event-Listener
@@ -1671,9 +1716,77 @@ ${this.getCriteriaExamples(criteria.id)}
                         return
                     }
 
+                    const criteriaItem = header.closest(".criteria-item")
+                    const criteriaId = criteriaItem
+                        ? criteriaItem.dataset.criteriaId
+                        : null
                     const content = header.nextElementSibling
+
                     content.classList.toggle("active")
+
+                    // Status des Elements im Array speichern für Erhalt zwischen Renders
+                    if (criteriaId) {
+                        if (content.classList.contains("active")) {
+                            if (!this.activeElements.includes(criteriaId)) {
+                                this.activeElements.push(criteriaId)
+                            }
+                        } else {
+                            this.activeElements = this.activeElements.filter(
+                                (id) => id !== criteriaId
+                            )
+                        }
+                    }
                 })
+            })
+
+            // Event-Listener für fokusbasiertes Schließen der Kriterien
+            this.querySelectorAll(".criteria-item").forEach((criteriaItem) => {
+                criteriaItem.addEventListener("focusout", (event) => {
+                    // Prüfen, ob der neue Fokus außerhalb des aktuellen criteria-item liegt
+                    if (!criteriaItem.contains(event.relatedTarget)) {
+                        // Verzögerung hinzufügen, um sicherzustellen, dass es sich um ein echtes focusout handelt
+                        // und nicht nur um einen Fokuswechsel innerhalb des Elements
+                        setTimeout(() => {
+                            // Erneut prüfen, ob ein Element innerhalb des criteria-item den Fokus hat
+                            const hasFocusWithin = Array.from(
+                                criteriaItem.querySelectorAll("*")
+                            ).some((el) => el === document.activeElement)
+
+                            // Nur schließen, wenn kein Element innerhalb fokussiert ist
+                            if (!hasFocusWithin) {
+                                const criteriaId =
+                                    criteriaItem.dataset.criteriaId
+                                const content =
+                                    criteriaItem.querySelector(
+                                        ".criteria-content"
+                                    )
+
+                                if (content) {
+                                    content.classList.remove("active")
+                                    // Auch aus dem Array entfernen
+                                    this.activeElements =
+                                        this.activeElements.filter(
+                                            (id) => id !== criteriaId
+                                        )
+                                }
+                            }
+                        }, 100)
+                    }
+                })
+            })
+
+            // Nach dem Rendern alle gespeicherten aktiven Elemente wiederherstellen
+            this.activeElements.forEach((criteriaId) => {
+                const criteriaItem = this.querySelector(
+                    `.criteria-item[data-criteria-id="${criteriaId}"]`
+                )
+                if (criteriaItem) {
+                    const content =
+                        criteriaItem.querySelector(".criteria-content")
+                    if (content) {
+                        content.classList.add("active")
+                    }
+                }
             })
 
             // Info-Button für Kriterien
@@ -1684,79 +1797,94 @@ ${this.getCriteriaExamples(criteria.id)}
                     const criteriaId = button.dataset.criteriaId
                     this.showCriteriaInfoDialog(criteriaId)
                 })
-                
+
                 // Tooltip bei Hover anzeigen - wie in treemap
                 button.addEventListener("mouseenter", () => {
-                    const criteriaId = button.dataset.criteriaId;
-                    
+                    const criteriaId = button.dataset.criteriaId
+
                     // Versuchen, die Beschreibung aus den Rohdaten zu bekommen (wie bei der treemap)
-                    const description = this.getDescriptionFromRawData(criteriaId);
-                    
+                    const description =
+                        this.getDescriptionFromRawData(criteriaId)
+
                     if (description) {
-                        console.log("Showing tooltip for", criteriaId, description);
-                        
+                        console.log(
+                            "Showing tooltip for",
+                            criteriaId,
+                            description
+                        )
+
                         // Tooltip erstellen
-                        const tooltip = document.createElement("div");
-                        tooltip.className = "tooltip";
-                        tooltip.textContent = description;
-                        
+                        const tooltip = document.createElement("div")
+                        tooltip.className = "tooltip"
+                        tooltip.textContent = description
+
                         // Tooltip positionieren
-                        document.body.appendChild(tooltip);
-                        const rect = button.getBoundingClientRect();
-                        const containerRect = document.querySelector(".container").getBoundingClientRect();
-                        
+                        document.body.appendChild(tooltip)
+                        const rect = button.getBoundingClientRect()
+                        const containerRect = document
+                            .querySelector(".container")
+                            .getBoundingClientRect()
+
                         // Prüfen, ob rechts genug Platz ist
-                        const rightSpace = containerRect.right - (rect.right + 10 + 300); // 300px ist max-width des Tooltips
-                        const leftPosition = rightSpace < 0;
-                        
+                        const rightSpace =
+                            containerRect.right - (rect.right + 10 + 300) // 300px ist max-width des Tooltips
+                        const leftPosition = rightSpace < 0
+
                         if (leftPosition) {
-                            tooltip.classList.add("left-position");
+                            tooltip.classList.add("left-position")
                         } else {
-                            tooltip.classList.remove("left-position");
+                            tooltip.classList.remove("left-position")
                         }
-                        
+
                         // Absolute Positionierung relativ zum Viewport
-                        tooltip.style.position = "fixed";
-                        tooltip.style.top = (rect.top + rect.height/2) + 'px';
-                        
+                        tooltip.style.position = "fixed"
+                        tooltip.style.top = rect.top + rect.height / 2 + "px"
+
                         if (leftPosition) {
-                            tooltip.style.right = (window.innerWidth - rect.left) + 'px';
-                            tooltip.style.left = 'auto';
+                            tooltip.style.right =
+                                window.innerWidth - rect.left + "px"
+                            tooltip.style.left = "auto"
                         } else {
-                            tooltip.style.left = (rect.right + 10) + 'px';
-                            tooltip.style.right = 'auto';
+                            tooltip.style.left = rect.right + 10 + "px"
+                            tooltip.style.right = "auto"
                         }
-                        
+
                         // Speichern für späteren Zugriff
-                        button.tooltipElement = tooltip;
-                        
+                        button.tooltipElement = tooltip
+
                         // Anzeigen nach kurzem Delay
                         setTimeout(() => {
-                            tooltip.classList.add("visible");
-                        }, 50);
-                        
+                            tooltip.classList.add("visible")
+                        }, 50)
+
                         // Mouseleave Ereignis
                         const handleMouseLeave = () => {
-                            console.log("Mouse left", criteriaId);
-                            tooltip.classList.remove("visible");
+                            console.log("Mouse left", criteriaId)
+                            tooltip.classList.remove("visible")
                             setTimeout(() => {
                                 if (tooltip.parentNode) {
-                                    tooltip.parentNode.removeChild(tooltip);
+                                    tooltip.parentNode.removeChild(tooltip)
                                 }
-                                button.removeEventListener("mouseleave", handleMouseLeave);
-                            }, 300);
-                        };
-                        
-                        button.addEventListener("mouseleave", handleMouseLeave);
+                                button.removeEventListener(
+                                    "mouseleave",
+                                    handleMouseLeave
+                                )
+                            }, 300)
+                        }
+
+                        button.addEventListener("mouseleave", handleMouseLeave)
                     } else {
-                        console.log("No description found for", criteriaId);
+                        console.log("No description found for", criteriaId)
                     }
-                });
+                })
             })
 
             // Ergebnis ändern
             this.querySelectorAll(".result-select").forEach((select) => {
-                select.addEventListener("change", () => {
+                select.addEventListener("change", (event) => {
+                    // Verhindere, dass das Event propagiert - wichtig für das Fokus-Management
+                    event.stopPropagation()
+
                     const pageId = parseInt(select.dataset.pageId)
                     const criteriaId = select.dataset.criteriaId
                     const resultType = select.value
@@ -1766,22 +1894,70 @@ ${this.getCriteriaExamples(criteria.id)}
                     const comments =
                         result && result.comments ? result.comments : []
 
+                    // Scrollposition merken
+                    const scrollPosition = window.scrollY
+
+                    // Finde das criteria-item Element und halte es garantiert offen
+                    const criteriaItem = select.closest(".criteria-item")
+                    const criteriaContent = criteriaItem
+                        ? criteriaItem.querySelector(".criteria-content")
+                        : null
+
+                    if (criteriaItem && criteriaId) {
+                        if (!this.activeElements.includes(criteriaId)) {
+                            this.activeElements.push(criteriaId)
+                        }
+
+                        // Wenn der Inhalt existiert, stelle sicher, dass er aktiv bleibt
+                        if (criteriaContent) {
+                            criteriaContent.classList.add("active")
+                        }
+                    }
+
                     this.model.setResult(
                         pageId,
                         criteriaId,
                         resultType,
                         comments
                     )
+
+                    // Stelle die Scrollposition nach der Aktualisierung wieder her
+                    setTimeout(() => {
+                        window.scrollTo(0, scrollPosition)
+                    }, 10)
                 })
             })
 
             // Vorhandene Kommentare bearbeiten
             this.querySelectorAll(".comment-text").forEach((textarea) => {
-                textarea.addEventListener("change", () => {
+                textarea.addEventListener("change", (event) => {
+                    // Verhindere Event-Propagation
+                    event.stopPropagation()
+
                     const pageId = parseInt(textarea.dataset.pageId)
                     const criteriaId = textarea.dataset.criteriaId
                     const index = parseInt(textarea.dataset.index)
                     const result = this.model.getResult(pageId, criteriaId)
+
+                    // Scrollposition merken
+                    const scrollPosition = window.scrollY
+
+                    // Finde das criteria-item Element und halte es garantiert offen
+                    const criteriaItem = textarea.closest(".criteria-item")
+                    const criteriaContent = criteriaItem
+                        ? criteriaItem.querySelector(".criteria-content")
+                        : null
+
+                    if (criteriaItem && criteriaId) {
+                        if (!this.activeElements.includes(criteriaId)) {
+                            this.activeElements.push(criteriaId)
+                        }
+
+                        // Wenn der Inhalt existiert, stelle sicher, dass er aktiv bleibt
+                        if (criteriaContent) {
+                            criteriaContent.classList.add("active")
+                        }
+                    }
 
                     if (
                         result &&
@@ -1799,6 +1975,11 @@ ${this.getCriteriaExamples(criteria.id)}
                             comments
                         )
                     }
+
+                    // Stelle die Scrollposition nach der Aktualisierung wieder her
+                    setTimeout(() => {
+                        window.scrollTo(0, scrollPosition)
+                    }, 10)
                 })
             })
 
@@ -2267,6 +2448,43 @@ function importData(file) {
     reader.readAsText(file)
 }
 
+// Toast-Benachrichtigung zum DOM hinzufügen
+function createAutoSaveUI() {
+    // Toast für Autosave-Benachrichtigung erstellen, falls nicht vorhanden
+    if (!document.getElementById("autosave-toast")) {
+        const toast = document.createElement("div")
+        toast.className = "notification"
+        toast.id = "autosave-toast"
+        toast.textContent = "Änderungen wurden automatisch gespeichert"
+        toast.style.position = "fixed"
+        toast.style.bottom = "20px"
+        toast.style.right = "20px"
+        toast.style.backgroundColor = "#e8f5e9"
+        toast.style.color = "#2e7d32"
+        toast.style.padding = "12px 16px"
+        toast.style.borderRadius = "4px"
+        toast.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)"
+        toast.style.zIndex = "1000"
+        toast.style.opacity = "0"
+        toast.style.transition = "opacity 0.3s ease"
+        document.body.appendChild(toast)
+    }
+
+    // Stelle sicher, dass die Statusanzeige richtig formatiert ist
+    const statusSpan = document.querySelector(".autosave-status span")
+    if (statusSpan) {
+        statusSpan.style.transition = "opacity 0.3s ease"
+        statusSpan.style.opacity = "1"
+    }
+
+    // Status-Text für automatisches Speichern hinzufügen
+    if (!document.querySelector(".autosave-status span")) {
+        const statusSpan = document.createElement("span")
+        statusSpan.textContent = "Automatisches Speichern aktiviert"
+        document.querySelector(".autosave-status")?.appendChild(statusSpan)
+    }
+}
+
 // Benachrichtigungsfunktion
 function showNotification(message, isError = false) {
     // Entferne vorhandene Benachrichtigungen
@@ -2313,10 +2531,172 @@ function showNotification(message, isError = false) {
     }, 3000)
 }
 
+function setupAutoSave() {
+    createAutoSaveUI()
+    const app = document.querySelector("wcag-test-app")
+
+    // Globale Variable für den Observer
+    if (window.wcagAutoSaveObserver) {
+        window.wcagAutoSaveObserver.disconnect()
+    }
+
+    // Speicherung mit Verzögerung
+    let saveTimeout = null
+
+    function autoSave() {
+        clearTimeout(saveTimeout)
+        saveTimeout = setTimeout(() => {
+            // Existierende Speicherfunktion verwenden
+            const saveButton = document.getElementById("save-local-storage")
+            console.log("Autosave triggering save button click")
+            saveButton.click()
+
+            // Benachrichtigung anzeigen
+            showSaveNotification()
+        }, 2000) // 2 Sekunden Verzögerung
+    }
+
+    // Benachrichtigung anzeigen
+    function showSaveNotification() {
+        const toast = document.getElementById("autosave-toast")
+        if (!toast) return
+
+        // Toast-Nachricht anzeigen
+        toast.style.opacity = "1"
+
+        // Nach 3 Sekunden ausblenden
+        setTimeout(() => {
+            toast.style.opacity = "0"
+        }, 3000)
+
+        // "Automatisches Speichern aktiviert" Status anzeigen
+        const statusSpan = document.querySelector(".autosave-status span")
+        if (statusSpan) {
+            // Text auf "Automatisches Speichern aktiviert" setzen
+            statusSpan.textContent = "Automatisches Speichern aktiviert"
+            statusSpan.style.opacity = "1"
+
+            // Nach 3 Sekunden ausblenden
+            setTimeout(() => {
+                statusSpan.style.opacity = "0.6"
+            }, 3000)
+        }
+    }
+
+    // Überwache Änderungen im gesamten Formular
+    const observer = new MutationObserver(() => {
+        console.log("Mutation detected, triggering autosave")
+        autoSave()
+    })
+
+    // Überwache Änderungen in der App mit allen Unterelementen
+    if (app) {
+        observer.observe(app, {
+            subtree: true,
+            childList: true,
+            characterData: true,
+            attributes: true,
+            attributeFilter: ["value", "selected", "checked"],
+        })
+
+        // Zusätzliche Event-Listener für Benutzereingaben
+        app.addEventListener("input", autoSave)
+        app.addEventListener("change", autoSave)
+
+        // Speichere Referenz für späteres Abmelden
+        window.wcagAutoSaveObserver = observer
+        console.log("Autosave successfully set up")
+    } else {
+        console.error("Web component not found, autosave setup failed")
+    }
+
+    // Füge globale Event-Listener für Formulareingaben hinzu
+    document.addEventListener("input", (e) => {
+        // Überprüfe, ob das Eingabeelement zum WCAG-Test gehört
+        if (e.target.closest("wcag-test-app")) {
+            autoSave()
+        }
+    })
+
+    return observer
+}
+
+// Daten löschen mit Bestätigungsdialog
+function deleteData() {
+    // Erstelle den Bestätigungsdialog
+    const dialogBackdrop = document.createElement("div")
+    dialogBackdrop.className = "confirm-dialog"
+
+    const dialogContent = document.createElement("div")
+    dialogContent.className = "confirm-dialog-content"
+
+    dialogContent.innerHTML = `
+        <h3>Daten löschen bestätigen</h3>
+        <p>Möchten Sie wirklich alle WCAG-Testdaten löschen? Diese Aktion kann nicht rückgängig gemacht werden.</p>
+        <div class="confirm-dialog-buttons">
+            <button id="cancel-delete" class="secondary">Abbrechen</button>
+            <button id="confirm-delete" class="danger">Löschen bestätigen</button>
+        </div>
+    `
+
+    dialogBackdrop.appendChild(dialogContent)
+    document.body.appendChild(dialogBackdrop)
+
+    // Event-Listener für die Buttons
+    document.getElementById("cancel-delete").addEventListener("click", () => {
+        document.body.removeChild(dialogBackdrop)
+    })
+
+    document.getElementById("confirm-delete").addEventListener("click", () => {
+        // Daten aus dem LocalStorage entfernen
+        localStorage.removeItem("wcagTestData")
+
+        // App zurücksetzen
+        const app = document.querySelector("wcag-test-app")
+        if (app) {
+            app.model = new TestModel() // Neues leeres Modell erstellen
+            app.currentView = "setup" // Zurück zur Einrichtungsansicht
+            app.renderApp() // UI neu rendern
+        }
+
+        // Dialog entfernen und Benachrichtigung anzeigen
+        document.body.removeChild(dialogBackdrop)
+        showNotification("Alle WCAG-Testdaten wurden gelöscht")
+    })
+
+    // Klick außerhalb des Dialogs schließt diesen
+    dialogBackdrop.addEventListener("click", (e) => {
+        if (e.target === dialogBackdrop) {
+            document.body.removeChild(dialogBackdrop)
+        }
+    })
+}
+
 // Initialisierung der Anwendung, sobald das DOM geladen ist
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM vollständig geladen")
     console.log("Save-Button:", document.getElementById("save-local-storage"))
+
+    // Stichwortfilter einrichten
+    const filterInput = document.getElementById("criteria-filter")
+    if (filterInput) {
+        filterInput.addEventListener("input", (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim()
+            const app = document.querySelector("wcag-test-app")
+
+            if (app) {
+                const criteriaItems = app.querySelectorAll(".criteria-item")
+
+                criteriaItems.forEach((item) => {
+                    const criteriaText = item.textContent.toLowerCase()
+                    const shouldShow =
+                        searchTerm === "" || criteriaText.includes(searchTerm)
+
+                    item.style.display = shouldShow ? "" : "none"
+                })
+            }
+        })
+    }
 
     // Export-Button
     document.getElementById("export-data").addEventListener("click", () => {
@@ -2387,5 +2767,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 showNotification("Keine gespeicherten Daten gefunden", true)
             }
         })
+
+    // Daten löschen Button
+    document.getElementById("delete-data").addEventListener("click", () => {
+        deleteData()
+    })
+
+    // Event-Listener für den Toggle-Button aktualisieren
+    document
+        .getElementById("autosave-toggle")
+        ?.addEventListener("change", function () {
+            if (this.checked) {
+                console.log("Autosave enabled via toggle")
+                setupAutoSave()
+                const statusSpan = document.querySelector(
+                    ".autosave-status > span"
+                )
+                statusSpan.textContent = "Automatisches Speichern aktiviert"
+                statusSpan.style.opacity = "1"
+
+                // Nach 3 Sekunden wieder ausblenden
+                setTimeout(() => {
+                    statusSpan.style.opacity = "0.6"
+                }, 3000)
+            } else {
+                console.log("Autosave disabled via toggle")
+                if (window.wcagAutoSaveObserver) {
+                    window.wcagAutoSaveObserver.disconnect()
+                    window.wcagAutoSaveObserver = null
+                }
+                const statusSpan = document.querySelector(
+                    ".autosave-status > span"
+                )
+                statusSpan.textContent = "Automatisches Speichern deaktiviert"
+                statusSpan.style.opacity = "1"
+
+                // Nach 3 Sekunden wieder ausblenden
+                setTimeout(() => {
+                    statusSpan.style.opacity = "0.6"
+                }, 3000)
+            }
+        })
 })
+
 // - - - - -
