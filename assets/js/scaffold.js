@@ -84,6 +84,27 @@ class Tooltip {
     }
 }
 
+// Helper function to calculate relative path to root
+function getRelativePathToRoot() {
+    // Get current path
+    const path = window.location.pathname;
+    const projectRoot = "/accessibility-workshop/";
+    
+    // If we're already at the root or the current path doesn't contain the project root
+    if (path.endsWith(projectRoot) || !path.includes(projectRoot)) {
+        return '';
+    }
+    
+    // Get path after project root
+    const pathAfterRoot = path.split(projectRoot)[1];
+    
+    // Count directories after root
+    const directoriesCount = pathAfterRoot.split('/').filter(Boolean).length;
+    
+    // Generate relative path (one "../" for each directory level)
+    return directoriesCount > 0 ? '../'.repeat(directoriesCount) : '';
+}
+
 function createMainNavigation() {
     const nav = document.createElement("nav")
     const ul = document.createElement("ul")
@@ -134,12 +155,15 @@ function createMainNavigation() {
     ]
 
     nav.id = "main-navigation"
+    
+    const relativePathToRoot = getRelativePathToRoot();
 
     navigation.forEach((entry) => {
         const li = document.createElement("li")
         const a = document.createElement("a")
 
-        a.href = entry.file
+        // Add relative path to root for href
+        a.href = relativePathToRoot + entry.file
         a.textContent = entry.text
 
         li.appendChild(a)
@@ -220,9 +244,11 @@ function createAccessibilitySettingsButton() {
 
     // Tooltip an Button anhängen
     tooltip.attachTo(accessibilityButton, getTooltipText)
+    
+    const relativePathToRoot = getRelativePathToRoot();
 
     accessibilityButton.addEventListener("click", () => {
-        window.location.href = "user-settings.html"
+        window.location.href = relativePathToRoot + "user-settings.html"
     })
 
     const li = document.createElement("li")
@@ -441,12 +467,14 @@ function createFooter() {
     address.innerHTML = " "
     address.appendChild(time)
     address.append(" Michael Reichart")
+    
+    const relativePathToRoot = getRelativePathToRoot();
 
-    a1.href = "index.html"
+    a1.href = relativePathToRoot + "index.html"
     a1.textContent = "Startseite    "
     nav.appendChild(a1)
 
-    a2.href = "imprint.html"
+    a2.href = relativePathToRoot + "imprint.html"
     a2.textContent = "Impressum    "
     nav.appendChild(a2)
 

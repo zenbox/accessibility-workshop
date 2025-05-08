@@ -116,13 +116,13 @@
     font-family: Barlow, sans-serif;
     font-size: 16px;
     line-height: 1.5;
+    background-color: hsla(0, 0%, 0%, 0.85);
 }
 
 body {
     margin: 0;
     padding: 2rem;
     min-width: min-content;
-    background-color: hsla(0, 0%, 0%, 0.85);
     color: white;
     overflow-x: auto;
     counter-reset: pruefschritt;
@@ -1267,4 +1267,20 @@ body {
     100% {
         outline-offset: 2px;
     }
+}
+
+#professions {
+    display: none;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.display-options {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.category-card {
+    display: none;
 }

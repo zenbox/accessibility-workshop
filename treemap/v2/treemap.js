@@ -682,6 +682,7 @@ function createFilterUI() {
 
     // Berufsgruppen-Filter
     const professionFiltersContainer = document.createElement("div")
+    professionFiltersContainer.id = "professions"
     professionFiltersContainer.className = "filter-group"
     professionFiltersContainer.innerHTML = `
         <div class="filter-group-title">Berufsgruppen</div>
@@ -702,7 +703,7 @@ function createFilterUI() {
     const displayOptionsContainer = document.createElement("div")
     displayOptionsContainer.className = "display-options"
     displayOptionsContainer.innerHTML = `
-        <div class="filter-group-title">Anzeigeoptionen</div>
+        <!--<div class="filter-group-title">Anzeigeoptionen</div>-->
         <label class="toggle-option">
             <input type="checkbox" id="display-bitv-id" checked>
             BITV-ID anzeigen
@@ -2084,7 +2085,6 @@ function loadUISettings() {
     const savedSettings = localStorage.getItem(UI_SETTINGS_KEY)
     return savedSettings ? JSON.parse(savedSettings) : { ...defaultSettings }
 }
-
 
 // - - - - - - - - - -
 // - - - - - - - - - -
