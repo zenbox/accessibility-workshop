@@ -1284,3 +1284,25 @@ body {
 .category-card {
     display: none;
 }
+
+.top-centered-container {
+    position: fixed;
+    width: 65vw;
+    background-color: rgba(0, 0, 0, 0.85);
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+
+    /* Sorgt dafür, dass das Element über anderen Elementen liegt */
+    z-index: 1000;
+
+    /* Optionale Stile für bessere Sichtbarkeit und Abstand vom oberen Rand */
+    padding: 0.5rem;
+    margin-top: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 5px 5px;
+
+    + * {
+        margin-top: 20rem;
+    }
+}

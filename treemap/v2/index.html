@@ -26,81 +26,81 @@
             class="skip-link"
             >Zum Hauptinhalt springen</a
         >
+        <div class="top-centered-container">
+            <nav aria-label="Hauptnavigation">
+                <ul
+                    style="
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        list-style: none;
+                    "
+                >
+                    <li>
+                        <a
+                            href="../../"
+                            class="nav-link"
+                            style="color: white; text-decoration: none"
+                            >Zurück zu den Erläuterungen</a
+                        >
+                    </li>
+                </ul>
+            </nav>
 
-        <nav aria-label="Hauptnavigation">
-            <ul
-                style="
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    list-style: none;
-                "
+            <h1>Alle Kriterien aus WCAG und BITV / EN 301 549</h1>
+
+            <aside id="collections"></aside>
+
+            <div
+                class="filter-bar"
+                role="region"
+                aria-label="Filteroptionen"
             >
-                <li>
-                    <a
-                        href="../../"
-                        class="nav-link"
-                        style="color: white; text-decoration: none"
-                        >Zurück zu den Erläuterungen</a
+                <div class="search-container">
+                    <span
+                        class="material-icons"
+                        aria-hidden="true"
+                        >search</span
                     >
-                </li>
-            </ul>
-        </nav>
-
-        <h1>Alle Kriterien aus WCAG und BITV / EN 301 549</h1>
-
-        <aside id="collections"></aside>
-
-        <div
-            class="filter-bar"
-            role="region"
-            aria-label="Filteroptionen"
-        >
-            <div class="search-container">
-                <span
-                    class="material-icons"
-                    aria-hidden="true"
-                    >search</span
-                >
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Suche nach Begriffen..."
-                    aria-label="Suche nach Begriffen"
-                />
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Suche nach Begriffen..."
+                        aria-label="Suche nach Begriffen"
+                    />
+                </div>
+                <div class="filter-buttons">
+                    <button
+                        class="filter-btn"
+                        data-level="A"
+                        aria-pressed="false"
+                    >
+                        <span class="material-icons">check_circle_outline</span>
+                        <span>A</span>
+                    </button>
+                    <button
+                        class="filter-btn"
+                        data-level="AA"
+                        aria-pressed="false"
+                    >
+                        <span class="material-icons">verified</span>
+                        <span>AA</span>
+                    </button>
+                    <button
+                        class="filter-btn"
+                        data-level="AAA"
+                        aria-pressed="false"
+                    >
+                        <span class="material-icons">verified_user</span>
+                        <span>AAA</span>
+                    </button>
+                </div>
+                <div class="active-filters">
+                    <span class="filter-count"></span>
+                </div>
+                <!-- Weitere Filter werden durch JavaScript hinzugefügt -->
             </div>
-            <div class="filter-buttons">
-                <button
-                    class="filter-btn"
-                    data-level="A"
-                    aria-pressed="false"
-                >
-                    <span class="material-icons">check_circle_outline</span>
-                    <span>A</span>
-                </button>
-                <button
-                    class="filter-btn"
-                    data-level="AA"
-                    aria-pressed="false"
-                >
-                    <span class="material-icons">verified</span>
-                    <span>AA</span>
-                </button>
-                <button
-                    class="filter-btn"
-                    data-level="AAA"
-                    aria-pressed="false"
-                >
-                    <span class="material-icons">verified_user</span>
-                    <span>AAA</span>
-                </button>
-            </div>
-            <div class="active-filters">
-                <span class="filter-count"></span>
-            </div>
-            <!-- Weitere Filter werden durch JavaScript hinzugefügt -->
         </div>
-
         <main id="main-content">
             <div
                 class="tree-container"

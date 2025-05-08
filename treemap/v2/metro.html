@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Metro Map Maker</title>
+    <link rel="stylesheet" href="../assets/css/metro.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="title">Metro Map Maker</div>
+      <div>
+        <button id="resetBtn" title="Reset">Zurücksetzen</button>
+        <button id="exportBtn">Exportieren</button>
+      </div>
+    </div>
+    <div class="canvas-container">
+      <svg id="canvas"></svg>
+
+      <div class="toolbar">
+        <button class="tool-button" id="shiftBtn" title="Multiple selection (Shift)">⇧</button>
+        <button class="tool-button" id="lineBtn" title="Create line (L)">L</button>
+        <button class="tool-button" id="drawLineBtn" title="Draw line">✏️L</button>
+        <button class="tool-button" id="deleteBtn" title="Delete (Del)">🗑️</button>
+        <button class="tool-button" id="editBtn" title="Edit name (E)">✏️</button>
+        <button class="tool-button" id="splitBtn" title="Umsteigestation erstellen">⊕</button>
+        <button class="tool-button" id="extractBtn" title="Station aus Gruppe herauslösen">⊖</button>
+        <button class="tool-button" id="rotateBtn" title="Stationsgruppe drehen">↻</button>
+      </div>
+      <!-- <div class="navigation-info">Rechtsklick zum Verschieben der Ansicht</div> -->
+
+      <!-- Neue Stationsliste -->
+      <div class="station-list-container">
+        <div class="station-list-header">
+          <h3>Stationen</h3>
+          <div class="station-list-controls">
+            <button id="sortNameBtn" title="Nach Namen sortieren">A-Z</button>
+            <button id="sortIdBtn" title="Nach ID sortieren">#</button>
+          </div>
+        </div>
+        <div class="station-list" id="stationList">
+          <!-- Stationen werden dynamisch hier eingefügt -->
+        </div>
+      </div>
+    </div>
+
+    <input type="text" class="edit-input" id="editInput" />
+    <script src="../assets/js/metro.js"></script>
+  </body>
+</html>
