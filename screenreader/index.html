@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Screenreader Steuerung</title>
+        <!-- Material Icons (Google) -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                font-family: "Barlow", sans-serif;
+                background-color: #f4f4f4;
+                color: #333;
+                margin: 0;
+                padding: 20px;
+            }
+            .d-none {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Steuerungen für den <span lang="en">compeople</span></h1>
+        <p id="elem-id">
+            Hier sind einige nützliche Steuerungen via ARIA für den
+            Screenreader:
+        </p>
+
+<p><abbr title="siehe oben">s.o.</abbr> (siehe oben) z. B.</p>
+
+
+        <nav
+        role="banner"
+            id="main-navigation"
+            tabindex="0"
+            aria-label="Hauptnavigation"
+            aria-describedby="elem-id"
+        >
+            <ol>
+                <li>
+                    <a
+                        tabindex="-1"
+                        href="#"
+                        class="button"
+                    >
+                        <span class="material-icons">play_arrow</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="#"
+                        class="button"
+                    >
+                        <span class="material-icons">pause</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="#"
+                        class="button"
+                    >
+                        <span class="material-icons">stop</span>
+                    </a>
+                </li>
+            </ol>
+        </nav>
+        <form action="" aria-live="assertive">
+            <fieldset>
+                <legend>Login</legend>
+
+                <label for="username">Benutzername</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    aria-required="true"
+                    aria-invalid="false"
+                />
+                <p class="error ">Du hast einen falschen Benutzernamen eingegeben!</p>
+                
+                <button
+                    type="submit"
+                    class="button"
+                    aria-label="Anmelden">Login</button>
+            </fieldset>
+        </form>
+        <script>
+            // JavaScript to handle the form submission and error message
+            const form = document.querySelector('form');
+            const errorMessage = document.querySelector('.error');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const username = document.getElementById('username').value;
+
+                if (username === '') {
+                    errorMessage.classList.remove('d-none');
+                    errorMessage.setAttribute('aria-live', 'assertive');
+                } else {
+                    errorMessage.classList.add('d-none');
+                    errorMessage.removeAttribute('aria-live');
+                }
+            });
+        </script>
+    </body>
+</html>
