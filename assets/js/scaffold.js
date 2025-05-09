@@ -87,22 +87,22 @@ class Tooltip {
 // Helper function to calculate relative path to root
 function getRelativePathToRoot() {
     // Get current path
-    const path = window.location.pathname;
-    const projectRoot = "/accessibility-workshop/";
-    
-    // If we're already at the root or the current path doesn't contain the project root
-    if (path.endsWith(projectRoot) || !path.includes(projectRoot)) {
-        return '';
+    const path = window.location.pathname
+    const onlineProjectRoot = "/accessibility-workshop/"
+    let pathAfterRoot = ""
+
+    if (path.includes(onlineProjectRoot)) {
+        pathAfterRoot = path.substring(
+            path.indexOf(onlineProjectRoot) + onlineProjectRoot.length
+        )
+    } else {
+        pathAfterRoot = path
     }
-    
-    // Get path after project root
-    const pathAfterRoot = path.split(projectRoot)[1];
-    
-    // Count directories after root
-    const directoriesCount = pathAfterRoot.split('/').filter(Boolean).length;
-    
-    // Generate relative path (one "../" for each directory level)
-    return directoriesCount > 0 ? '../'.repeat(directoriesCount) : '';
+
+    const segments = pathAfterRoot.split("/").filter(Boolean)
+    const dirCount = segments.length - (pathAfterRoot.endsWith("/") ? 0 : 1)
+
+    return dirCount > 0 ? "../".repeat(dirCount) : "./"
 }
 
 function createMainNavigation() {
@@ -155,8 +155,8 @@ function createMainNavigation() {
     ]
 
     nav.id = "main-navigation"
-    
-    const relativePathToRoot = getRelativePathToRoot();
+
+    const relativePathToRoot = getRelativePathToRoot()
 
     navigation.forEach((entry) => {
         const li = document.createElement("li")
@@ -244,8 +244,8 @@ function createAccessibilitySettingsButton() {
 
     // Tooltip an Button anhängen
     tooltip.attachTo(accessibilityButton, getTooltipText)
-    
-    const relativePathToRoot = getRelativePathToRoot();
+
+    const relativePathToRoot = getRelativePathToRoot()
 
     accessibilityButton.addEventListener("click", () => {
         window.location.href = relativePathToRoot + "user-settings.html"
@@ -467,8 +467,8 @@ function createFooter() {
     address.innerHTML = " "
     address.appendChild(time)
     address.append(" Michael Reichart")
-    
-    const relativePathToRoot = getRelativePathToRoot();
+
+    const relativePathToRoot = getRelativePathToRoot()
 
     a1.href = relativePathToRoot + "index.html"
     a1.textContent = "Startseite    "
