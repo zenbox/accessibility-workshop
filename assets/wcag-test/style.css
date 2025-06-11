@@ -174,7 +174,7 @@ button:focus,
 
 /* ============= BUTTON-VARIANTEN ============= */
 /* Primäre Buttons */
-button:not(.secondary):not(.danger):not(.md-btn),
+.container button:not(.secondary):not(.danger):not(.md-btn),
 .button:not(.secondary):not(.danger),
 .button.primary {
     background-color: var(--primary);

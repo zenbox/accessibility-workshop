@@ -171,6 +171,9 @@ class TestModel {
         this.mainUrl = mainUrl
         this.reportPreface = preface
         this.notifyObservers()
+
+        // NEU: Automatisches Speichern
+        this.autoSaveIfEnabled()
     }
 
     // Seiten verwalten
@@ -201,6 +204,13 @@ class TestModel {
 
     // Teste Ergebnisse verwalten
     setResult(pageId, criteriaId, resultType, comments) {
+        console.log("Setting result:", {
+            pageId,
+            criteriaId,
+            resultType,
+            comments,
+        })
+
         // Sicherstellen, dass wir die exakte criteriaId verwenden
         const exactCriteriaId = criteriaId.trim()
         const key = `${pageId}-${exactCriteriaId}`
@@ -214,6 +224,9 @@ class TestModel {
             images: this.results.get(key)?.images || [],
         })
         this.notifyObservers()
+
+        // NEU: Automatisches Speichern nach jeder Änderung
+        this.autoSaveIfEnabled()
     }
 
     getResult(pageId, criteriaId) {
@@ -227,14 +240,13 @@ class TestModel {
     addComment(pageId, criteriaId, comment) {
         if (!comment.trim()) return
 
-        // Sicherstellen, dass wir die exakte criteriaId verwenden
         const exactCriteriaId = criteriaId.trim()
         const result = this.getResult(pageId, exactCriteriaId)
         if (result) {
             const comments = result.comments || []
             comments.push(comment)
-
             this.setResult(pageId, exactCriteriaId, result.resultType, comments)
+            // NEU: AutoSave wird bereits in setResult() aufgerufen
         }
     }
 
@@ -565,12 +577,53 @@ class TestModel {
     // LocalStorage Funktionen
     saveToLocalStorage() {
         try {
+            // NEU: Aktuelle Eingabewerte vor Speicherung synchronisieren
+            this.syncFromInputFields()
+
             const data = this.toJSON()
             localStorage.setItem("wcagTestData", JSON.stringify(data))
+            console.log("💾 Daten gespeichert:", {
+                results: this.results.size,
+                title: this.title,
+                timestamp: new Date().toLocaleTimeString(),
+            })
             return true
         } catch (error) {
-            console.error("Fehler beim Speichern in localStorage:", error)
+            console.error("❌ Fehler beim Speichern:", error)
             return false
+        }
+    }
+
+    // NEU: Methode zum Synchronisieren der Input-Felder mit dem Model
+    syncFromInputFields() {
+        // Grunddaten aus Input-Feldern auslesen
+        const titleInput = document.getElementById("test-title")
+        const dateInput = document.getElementById("test-date")
+        const urlInput = document.getElementById("main-url")
+        const prefaceInput = document.getElementById("report-preface")
+
+        if (titleInput) {
+            this.title = titleInput.value || this.title
+            console.log("📝 Titel synchronisiert:", this.title)
+        }
+
+        if (dateInput) {
+            this.date = dateInput.value || this.date
+            console.log("📅 Datum synchronisiert:", this.date)
+        }
+
+        if (urlInput) {
+            this.mainUrl = urlInput.value || this.mainUrl
+            console.log("🌐 URL synchronisiert:", this.mainUrl)
+        }
+
+        if (prefaceInput) {
+            this.reportPreface = prefaceInput.value || this.reportPreface
+            console.log(
+                "📄 Präambel synchronisiert:",
+                this.reportPreface.length,
+                "Zeichen"
+            )
         }
     }
 
@@ -586,6 +639,68 @@ class TestModel {
             console.error("Fehler beim Laden aus localStorage:", error)
         }
         return false
+    }
+
+    // NEU: AutoSave-Methode im Model
+    autoSaveIfEnabled() {
+        const toggle = document.getElementById("autosave-toggle")
+        console.log("🔍 AutoSave check:", {
+            toggle: !!toggle,
+            checked: toggle?.checked,
+            hasTimeout: !!this.autoSaveTimeout,
+        })
+
+        if (toggle && toggle.checked) {
+            // Verzögerte Speicherung um Rapid-Fire zu vermeiden
+            clearTimeout(this.autoSaveTimeout)
+            this.autoSaveTimeout = setTimeout(() => {
+                console.log("🔄 AutoSave: Speichere Daten...")
+
+                // Input-Felder vor AutoSave synchronisieren
+                this.syncFromInputFields()
+
+                if (this.saveToLocalStorage()) {
+                    console.log("✅ AutoSave: Erfolgreich gespeichert")
+                    this.showAutoSaveNotification()
+                } else {
+                    console.log("❌ AutoSave: Speichern fehlgeschlagen")
+                }
+            }, 1000) // 1 Sekunde Verzögerung
+        } else {
+            console.log(
+                "⚠️ AutoSave: Toggle nicht aktiviert oder nicht gefunden"
+            )
+        }
+    }
+
+    // NEU: AutoSave-Benachrichtigung
+    showAutoSaveNotification() {
+        // Bestehende Toast-Benachrichtigung verwenden oder neue erstellen
+        let toast = document.getElementById("autosave-toast")
+        if (!toast) {
+            toast = document.createElement("div")
+            toast.id = "autosave-toast"
+            toast.style.cssText = `
+                position: fixed; 
+                top: 20px; 
+                right: 20px; 
+                background: var(--color-success); 
+                color: white; 
+                padding: 10px 15px; 
+                border-radius: 4px; 
+                opacity: 0; 
+                transition: opacity 0.3s; 
+                z-index: 1000;
+                font-size: 14px;
+            `
+            toast.textContent = "💾 Automatisch gespeichert"
+            document.body.appendChild(toast)
+        }
+
+        toast.style.opacity = "1"
+        setTimeout(() => {
+            toast.style.opacity = "0"
+        }, 2000)
     }
 }
 
@@ -1587,7 +1702,45 @@ ${this.getCriteriaExamples(criteria.id)}
 
         // Setup-View Event Listener
         if (this.currentView === "setup") {
-            // Grunddaten speichern
+            // NEU: Live-AutoSave für Setup-Felder
+            const titleInput = this.querySelector("#test-title")
+            const dateInput = this.querySelector("#test-date")
+            const urlInput = this.querySelector("#main-url")
+            const prefaceInput = this.querySelector("#report-preface")
+
+            // Titel-Input mit AutoSave
+            titleInput?.addEventListener("input", (e) => {
+                this.model.title = e.target.value
+                console.log("📝 Titel aktualisiert:", e.target.value)
+                this.model.autoSaveIfEnabled()
+            })
+
+            // Datum-Input mit AutoSave
+            dateInput?.addEventListener("input", (e) => {
+                this.model.date = e.target.value
+                console.log("📅 Datum aktualisiert:", e.target.value)
+                this.model.autoSaveIfEnabled()
+            })
+
+            // URL-Input mit AutoSave
+            urlInput?.addEventListener("input", (e) => {
+                this.model.mainUrl = e.target.value
+                console.log("🌐 URL aktualisiert:", e.target.value)
+                this.model.autoSaveIfEnabled()
+            })
+
+            // Präambel-Input mit AutoSave
+            prefaceInput?.addEventListener("input", (e) => {
+                this.model.reportPreface = e.target.value
+                console.log(
+                    "📄 Präambel aktualisiert:",
+                    e.target.value.length,
+                    "Zeichen"
+                )
+                this.model.autoSaveIfEnabled()
+            })
+
+            // Grunddaten speichern (bestehender Code bleibt)
             this.querySelector("#save-basic-data")?.addEventListener(
                 "click",
                 () => {
@@ -2062,12 +2215,12 @@ ${this.getCriteriaExamples(criteria.id)}
                         return
                     }
 
-                    // Zugriff auf Zwischenablage anfordern
+                    // Zugriff auf die Zwischenablage mit Berechtigungsanfrage
                     navigator.clipboard
                         .read()
                         .then(async (clipboardItems) => {
                             for (const clipboardItem of clipboardItems) {
-                                // Prüfen, ob ein Bild in der Zwischenablage ist
+                                // Nur Bildtypen verarbeiten
                                 if (
                                     clipboardItem.types.includes("image/png") ||
                                     clipboardItem.types.includes(
@@ -2533,92 +2686,10 @@ function showNotification(message, isError = false) {
 
 function setupAutoSave() {
     createAutoSaveUI()
-    const app = document.querySelector("wcag-test-app")
+    console.log("✅ AutoSave setup: Model-basiertes AutoSave aktiviert")
 
-    // Globale Variable für den Observer
-    if (window.wcagAutoSaveObserver) {
-        window.wcagAutoSaveObserver.disconnect()
-    }
-
-    // Speicherung mit Verzögerung
-    let saveTimeout = null
-
-    function autoSave() {
-        clearTimeout(saveTimeout)
-        saveTimeout = setTimeout(() => {
-            // Existierende Speicherfunktion verwenden
-            const saveButton = document.getElementById("save-local-storage")
-            console.log("Autosave triggering save button click")
-            saveButton.click()
-
-            // Benachrichtigung anzeigen
-            showSaveNotification()
-        }, 2000) // 2 Sekunden Verzögerung
-    }
-
-    // Benachrichtigung anzeigen
-    function showSaveNotification() {
-        const toast = document.getElementById("autosave-toast")
-        if (!toast) return
-
-        // Toast-Nachricht anzeigen
-        toast.style.opacity = "1"
-
-        // Nach 3 Sekunden ausblenden
-        setTimeout(() => {
-            toast.style.opacity = "0"
-        }, 3000)
-
-        // "Automatisches Speichern aktiviert" Status anzeigen
-        const statusSpan = document.querySelector(".autosave-status span")
-        if (statusSpan) {
-            // Text auf "Automatisches Speichern aktiviert" setzen
-            statusSpan.textContent = "Automatisches Speichern aktiviert"
-            statusSpan.style.opacity = "1"
-
-            // Nach 3 Sekunden ausblenden
-            setTimeout(() => {
-                statusSpan.style.opacity = "0.6"
-            }, 3000)
-        }
-    }
-
-    // Überwache Änderungen im gesamten Formular
-    const observer = new MutationObserver(() => {
-        console.log("Mutation detected, triggering autosave")
-        autoSave()
-    })
-
-    // Überwache Änderungen in der App mit allen Unterelementen
-    if (app) {
-        observer.observe(app, {
-            subtree: true,
-            childList: true,
-            characterData: true,
-            attributes: true,
-            attributeFilter: ["value", "selected", "checked"],
-        })
-
-        // Zusätzliche Event-Listener für Benutzereingaben
-        app.addEventListener("input", autoSave)
-        app.addEventListener("change", autoSave)
-
-        // Speichere Referenz für späteres Abmelden
-        window.wcagAutoSaveObserver = observer
-        console.log("Autosave successfully set up")
-    } else {
-        console.error("Web component not found, autosave setup failed")
-    }
-
-    // Füge globale Event-Listener für Formulareingaben hinzu
-    document.addEventListener("input", (e) => {
-        // Überprüfe, ob das Eingabeelement zum WCAG-Test gehört
-        if (e.target.closest("wcag-test-app")) {
-            autoSave()
-        }
-    })
-
-    return observer
+    // Keine komplexen Event-Listener oder Observer mehr nötig
+    // AutoSave läuft jetzt direkt über Model-Events
 }
 
 // Daten löschen mit Bestätigungsdialog
@@ -2777,35 +2848,26 @@ document.addEventListener("DOMContentLoaded", () => {
     document
         .getElementById("autosave-toggle")
         ?.addEventListener("change", function () {
+            const statusSpan = document.querySelector(".autosave-status > span")
+
             if (this.checked) {
-                console.log("Autosave enabled via toggle")
-                setupAutoSave()
-                const statusSpan = document.querySelector(
-                    ".autosave-status > span"
-                )
+                console.log("✅ AutoSave aktiviert")
                 statusSpan.textContent = "Automatisches Speichern aktiviert"
-                statusSpan.style.opacity = "1"
 
-                // Nach 3 Sekunden wieder ausblenden
-                setTimeout(() => {
-                    statusSpan.style.opacity = "0.6"
-                }, 3000)
-            } else {
-                console.log("Autosave disabled via toggle")
-                if (window.wcagAutoSaveObserver) {
-                    window.wcagAutoSaveObserver.disconnect()
-                    window.wcagAutoSaveObserver = null
+                // NEU: Sofort einmal speichern wenn aktiviert
+                const app = document.querySelector("wcag-test-app")
+                if (app && app.model) {
+                    app.model.autoSaveIfEnabled()
                 }
-                const statusSpan = document.querySelector(
-                    ".autosave-status > span"
-                )
+            } else {
+                console.log("❌ AutoSave deaktiviert")
                 statusSpan.textContent = "Automatisches Speichern deaktiviert"
-                statusSpan.style.opacity = "1"
 
-                // Nach 3 Sekunden wieder ausblenden
-                setTimeout(() => {
-                    statusSpan.style.opacity = "0.6"
-                }, 3000)
+                // NEU: Timeout löschen wenn deaktiviert
+                const app = document.querySelector("wcag-test-app")
+                if (app && app.model && app.model.autoSaveTimeout) {
+                    clearTimeout(app.model.autoSaveTimeout)
+                }
             }
         })
 })
