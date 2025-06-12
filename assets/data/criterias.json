@@ -2015,10 +2015,9 @@
                         "wcagId": "3.3.2",
                         "bitInklusivId": "3.3.2",
                         "title": "Beschriftung von Formularelementen",
-                        "description": "Alle Formularelemente müssen eine verständliche und zugängliche Beschriftung haben, sodass Nutzer wissen, welche Eingaben erforderlich sind.",
                         "conformanceLevel": "A",
                         "details": {
-                            "description": "",
+                            "description": "Alle Formularelemente müssen eine verständliche und zugängliche Beschriftung haben, sodass Nutzer wissen, welche Eingaben erforderlich sind.",
                             "who": [
                                 "Frontend-Entwickler",
                                 "Formulardesigner",

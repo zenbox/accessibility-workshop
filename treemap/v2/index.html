@@ -26,79 +26,106 @@
             class="skip-link"
             >Zum Hauptinhalt springen</a
         >
-        <div class="top-centered-container">
-            <nav aria-label="Hauptnavigation">
-                <ul
-                    style="
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        list-style: none;
-                    "
+        <div
+            class="top-centered-container"
+            id="navigation-panel"
+        >
+            <!-- NEU: Drag-Handle und Toggle-Button -->
+            <div class="nav-controls">
+                <!-- <button
+                    class="nav-drag-handle"
+                    aria-label="Navigation verschieben"
                 >
-                    <li>
-                        <a
-                            href="../../"
-                            class="nav-link"
-                            style="color: white; text-decoration: none"
-                            >Zurück zu den Erläuterungen</a
-                        >
-                    </li>
-                </ul>
-            </nav>
+                    <span class="material-icons">drag_indicator</span>
+                </button>
+                <button
+                    class="nav-toggle-button"
+                    aria-label="Navigation ein-/ausklappen"
+                >
+                    <span class="material-icons">keyboard_arrow_up</span>
+                </button> -->
+            </div>
 
-            <h1>Alle Kriterien aus WCAG und BITV / EN 301 549</h1>
-
-            <aside id="collections"></aside>
-
+            <!-- Bestehender Inhalt in Container -->
             <div
-                class="filter-bar"
-                role="region"
-                aria-label="Filteroptionen"
+                class="nav-content"
+                id="nav-content"
             >
-                <div class="search-container">
-                    <span
-                        class="material-icons"
-                        aria-hidden="true"
-                        >search</span
+                <nav aria-label="Hauptnavigation">
+                    <ul
+                        style="
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            list-style: none;
+                        "
                     >
-                    <input
-                        type="text"
-                        id="searchInput"
-                        placeholder="Suche nach Begriffen..."
-                        aria-label="Suche nach Begriffen"
-                    />
+                        <li>
+                            <a
+                                href="../../"
+                                class="nav-link"
+                                style="color: white; text-decoration: none"
+                                >Zurück zu den Erläuterungen</a
+                            >
+                        </li>
+                    </ul>
+                </nav>
+
+                <h1>Alle Kriterien aus WCAG und BITV / EN 301 549</h1>
+
+                <aside id="collections"></aside>
+
+                <div
+                    class="filter-bar"
+                    role="region"
+                    aria-label="Filteroptionen"
+                >
+                    <div class="search-container">
+                        <span
+                            class="material-icons"
+                            aria-hidden="true"
+                            >search</span
+                        >
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Suche nach Begriffen..."
+                            aria-label="Suche nach Begriffen"
+                        />
+                    </div>
+                    <div class="filter-buttons">
+                        <button
+                            class="filter-btn"
+                            data-level="A"
+                            aria-pressed="false"
+                        >
+                            <span class="material-icons"
+                                >check_circle_outline</span
+                            >
+                            <span>A</span>
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-level="AA"
+                            aria-pressed="false"
+                        >
+                            <span class="material-icons">verified</span>
+                            <span>AA</span>
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-level="AAA"
+                            aria-pressed="false"
+                        >
+                            <span class="material-icons">verified_user</span>
+                            <span>AAA</span>
+                        </button>
+                    </div>
+                    <div class="active-filters">
+                        <span class="filter-count"></span>
+                    </div>
+                    <!-- Weitere Filter werden durch JavaScript hinzugefügt -->
                 </div>
-                <div class="filter-buttons">
-                    <button
-                        class="filter-btn"
-                        data-level="A"
-                        aria-pressed="false"
-                    >
-                        <span class="material-icons">check_circle_outline</span>
-                        <span>A</span>
-                    </button>
-                    <button
-                        class="filter-btn"
-                        data-level="AA"
-                        aria-pressed="false"
-                    >
-                        <span class="material-icons">verified</span>
-                        <span>AA</span>
-                    </button>
-                    <button
-                        class="filter-btn"
-                        data-level="AAA"
-                        aria-pressed="false"
-                    >
-                        <span class="material-icons">verified_user</span>
-                        <span>AAA</span>
-                    </button>
-                </div>
-                <div class="active-filters">
-                    <span class="filter-count"></span>
-                </div>
-                <!-- Weitere Filter werden durch JavaScript hinzugefügt -->
             </div>
         </div>
         <main id="main-content">

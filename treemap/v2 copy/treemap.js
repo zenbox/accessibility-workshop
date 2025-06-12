@@ -2091,272 +2091,30 @@ function loadUISettings() {
 // - - - - - - - - - -
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Debug beim Start
-    console.log("🚀 DOM Content Loaded - Navigation Panel wird initialisiert")
+    loadAndRenderData()
+})
 
-    // Originale Funktion erweitern
+document.addEventListener("DOMContentLoaded", () => {
+    // Original loadAndRenderData Funktion erweitern
+    const originalLoadAndRenderData = loadAndRenderData
+    loadAndRenderData = function () {
+        // Die auskommentierten Tooltip-Funktionen entfernen
+        updateRenderTree()
+        originalLoadAndRenderData()
+    }
+})
+
+document.addEventListener("DOMContentLoaded", () => {
     const originalLoadAndRenderData = loadAndRenderData
     loadAndRenderData = function () {
         originalLoadAndRenderData()
 
-        // Navigation Panel nach dem Laden initialisieren
+        // Warten, bis der Baum gerendert ist
         setTimeout(() => {
-            console.log("🧭 Initialisiere Navigation Panel...")
-
-            // Debug-Ausgabe vor Initialisierung
-            //debugNavigationPanel()
-
-            initNavigationPanel()
-
-            // Debug-Ausgabe nach Initialisierung
-            // setTimeout(() => {
-            //     debugNavigationPanel()
-            //     console.log("✅ Navigation Panel initialisiert")
-            // }, 100)
-        }, 300) // Längere Verzögerung
-    }
-
-    // Funktion aufrufen
-    loadAndRenderData()
-})
-
-document.addEventListener("click", (event) => {
-    const card = event.target.closest(".pruefschritt-card")
-    if (card && card.pruefschrittData) {
-        showDetails(card.pruefschrittData)
+            addSkipLink()
+            initEnhancedKeyboardNavigation()
+            enhanceFilterControls()
+            enhanceModalAccessibility()
+        }, 300)
     }
 })
-
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-        document.getElementById("sectionModal").style.display = "none"
-    }
-})
-
-// Erweitere treemap.js um Navigation-Funktionalität:
-
-/**
- * Navigation Panel Management
- */
-function initNavigationPanel() {
-    const panel = document.getElementById("navigation-panel")
-    if (!panel) return
-
-    createNavigationControls(panel)
-    loadNavigationPosition(panel)
-    loadNavigationCollapseState(panel)
-    attachNavigationEventListeners(panel)
-}
-
-function createNavigationControls(panel) {
-    // Controls Container erstellen falls nicht vorhanden
-    let controls = panel.querySelector(".nav-controls")
-    if (!controls) {
-        controls = document.createElement("div")
-        controls.className = "nav-controls"
-        panel.appendChild(controls)
-    }
-
-    // Drag Handle
-    const dragHandle = document.createElement("button")
-    dragHandle.className = "nav-drag-handle"
-    dragHandle.setAttribute("aria-label", "Navigation verschieben")
-    dragHandle.innerHTML = '<span class="material-icons">drag_indicator</span>'
-
-    // Toggle Button
-    const toggleButton = document.createElement("button")
-    toggleButton.className = "nav-toggle-button"
-    toggleButton.setAttribute("aria-label", "Navigation ein-/ausklappen")
-    toggleButton.innerHTML =
-        '<span class="material-icons">keyboard_arrow_up</span>'
-
-    controls.appendChild(dragHandle)
-    controls.appendChild(toggleButton)
-
-    // Speichere Referenzen für Event-Listener
-    panel.dragHandle = dragHandle
-    panel.toggleButton = toggleButton
-}
-
-function attachNavigationEventListeners(panel) {
-    const dragHandle = panel.dragHandle
-    const toggleButton = panel.toggleButton
-
-    // Toggle-Funktionalität
-    toggleButton?.addEventListener("click", () =>
-        toggleNavigationCollapse(panel)
-    )
-
-    // Drag-Funktionalität
-    let isDragging = false
-    let startPos = { x: 0, y: 0 }
-    let panelPos = { x: 0, y: 0 }
-
-    dragHandle?.addEventListener("mousedown", (e) => {
-        e.preventDefault()
-        isDragging = true
-
-        panel.classList.add("dragging")
-
-        startPos.x = e.clientX
-        startPos.y = e.clientY
-
-        const rect = panel.getBoundingClientRect()
-        panelPos.x = rect.left
-        panelPos.y = rect.top
-
-        console.log("🖱️ Drag gestartet")
-    })
-
-    document.addEventListener("mousemove", (e) => {
-        if (!isDragging) return
-
-        e.preventDefault()
-
-        const deltaX = e.clientX - startPos.x
-        const deltaY = e.clientY - startPos.y
-
-        const newX = panelPos.x + deltaX
-        const newY = panelPos.y + deltaY
-
-        const maxX = window.innerWidth - panel.offsetWidth
-        const maxY = window.innerHeight - panel.offsetHeight
-
-        const boundedX = Math.max(0, Math.min(newX, maxX))
-        const boundedY = Math.max(0, Math.min(newY, maxY))
-
-        panel.style.left = `${boundedX}px`
-        panel.style.top = `${boundedY}px`
-        panel.style.transform = "none"
-    })
-
-    document.addEventListener("mouseup", () => {
-        if (!isDragging) return
-
-        isDragging = false
-        panel.classList.remove("dragging")
-
-        saveNavigationPosition(panel)
-        console.log("✋ Drag beendet")
-    })
-
-    // Tastatur-Shortcuts
-    document.addEventListener("keydown", (e) => {
-        if (e.altKey && e.key === "n") {
-            e.preventDefault()
-            toggleNavigationCollapse(panel)
-        }
-    })
-}
-
-function toggleNavigationCollapse(panel) {
-    const isCollapsed = panel.classList.contains("collapsed")
-
-    if (isCollapsed) {
-        expandNavigation(panel)
-    } else {
-        collapseNavigation(panel)
-    }
-}
-
-function collapseNavigation(panel) {
-    panel.classList.add("collapsed")
-    panel.toggleButton?.setAttribute("aria-label", "Navigation ausklappen")
-    saveNavigationCollapseState(true)
-    console.log("🔼 Navigation eingeklappt")
-}
-
-function expandNavigation(panel) {
-    panel.classList.remove("collapsed")
-    panel.toggleButton?.setAttribute("aria-label", "Navigation einklappen")
-    saveNavigationCollapseState(false)
-    console.log("🔽 Navigation ausgeklappt")
-}
-
-function saveNavigationPosition(panel) {
-    const rect = panel.getBoundingClientRect()
-    const position = {
-        left: rect.left,
-        top: rect.top,
-        transform: panel.style.transform,
-    }
-
-    localStorage.setItem("navigationPanelPosition", JSON.stringify(position))
-    console.log("💾 Navigation Position gespeichert:", position)
-}
-
-function loadNavigationPosition(panel) {
-    const savedPosition = localStorage.getItem("navigationPanelPosition")
-    if (!savedPosition) return
-
-    try {
-        const position = JSON.parse(savedPosition)
-
-        if (position.left !== undefined && position.top !== undefined) {
-            panel.style.left = `${position.left}px`
-            panel.style.top = `${position.top}px`
-
-            if (position.transform !== "none") {
-                panel.style.transform = position.transform || "none"
-            } else {
-                panel.style.transform = "none"
-            }
-
-            console.log("📍 Navigation Position wiederhergestellt:", position)
-        }
-    } catch (error) {
-        console.warn("⚠️ Fehler beim Laden der Navigation Position:", error)
-    }
-}
-
-function saveNavigationCollapseState(isCollapsed) {
-    localStorage.setItem(
-        "navigationPanelCollapsed",
-        JSON.stringify(isCollapsed)
-    )
-}
-
-function loadNavigationCollapseState(panel) {
-    const savedState = localStorage.getItem("navigationPanelCollapsed")
-    if (savedState === null) return
-
-    try {
-        const isCollapsed = JSON.parse(savedState)
-        if (isCollapsed) {
-            collapseNavigation(panel)
-        } else {
-            expandNavigation(panel)
-        }
-    } catch (error) {
-        console.warn("⚠️ Fehler beim Laden des Collapse-Status:", error)
-    }
-}
-
-// Debug-Funktionen für die Browser-Konsole:
-function resetNavigationPanel() {
-    const panel = document.getElementById("navigation-panel")
-    if (panel) {
-        panel.style.left = ""
-        panel.style.top = ""
-        panel.style.transform = "translateX(-50%)"
-        localStorage.removeItem("navigationPanelPosition")
-        localStorage.removeItem("navigationPanelCollapsed")
-        expandNavigation(panel)
-        console.log("🔄 Navigation Position zurückgesetzt")
-    }
-}
-
-function getNavigationStatus() {
-    const panel = document.getElementById("navigation-panel")
-    if (!panel) return "Navigation Panel nicht gefunden"
-
-    const rect = panel.getBoundingClientRect()
-    const isCollapsed = panel.classList.contains("collapsed")
-
-    return {
-        position: { left: rect.left, top: rect.top },
-        collapsed: isCollapsed,
-        width: rect.width,
-        height: rect.height,
-    }
-}

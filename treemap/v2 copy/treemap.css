@@ -162,96 +162,6 @@ body {
     top: 0;
 }
 
-/* Navigation Controls */
-.nav-controls {
-    position: absolute;
-    top: -15px;
-    right: 10px;
-    display: flex;
-    gap: 5px;
-    z-index: 1001;
-}
-
-.nav-drag-handle,
-.nav-toggle-button {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
-}
-
-.nav-drag-handle:hover,
-.nav-toggle-button:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.05);
-}
-
-.nav-drag-handle:focus,
-.nav-toggle-button:focus {
-    outline: 2px solid white;
-    outline-offset: 2px;
-}
-
-.nav-drag-handle {
-    cursor: move;
-}
-
-.nav-drag-handle:active {
-    cursor: grabbing;
-}
-
-/* Navigation Panel Transitions */
-.top-centered-container {
-    transition: transform var(--transition-speed) ease, height var(--transition-speed) ease;
-    position: fixed;
-    width: 65vw;
-    background-color: rgba(0, 0, 0, 0.85);
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%);
-    z-index: 1000;
-    padding: 0.5rem;
-    margin-top: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: 0 0 5px 5px;
-    min-height: 40px;
-}
-
-.nav-content {
-    transition: max-height var(--transition-speed) ease, opacity var(--transition-speed) ease;
-    overflow: hidden;
-}
-
-/* Collapsed State */
-.top-centered-container.collapsed .nav-content {
-    max-height: 0;
-    opacity: 0;
-    padding: 0;
-}
-
-.top-centered-container.collapsed {
-    height: 40px;
-    overflow: hidden;
-}
-
-.top-centered-container.collapsed .nav-toggle-button .material-icons {
-    transform: rotate(180deg);
-}
-
-/* Dragging State */
-.top-centered-container.dragging {
-    transition: none;
-    user-select: none;
-    cursor: grabbing;
-}
-
 /* ==============================
    5. Karten (Cards)
    ============================== */
@@ -520,7 +430,7 @@ body {
 }
 .section-19 {
     background-color: var(--section-19);
-    color: var,--onSection-19);
+    color: var(--onSection-19);
 }
 .section-20 {
     background-color: var(--section-20);
@@ -791,31 +701,31 @@ body {
 }
 .profession-filter-btn[aria-pressed="true"].testing {
     background-color: var(--testing);
-    color: var,--onTesting);
+    color: var(--onTesting);
 }
 .profession-filter-btn[aria-pressed="true"].release {
     background-color: var(--release);
-    color: var,--onRelease);
+    color: var(--onRelease);
 }
 .profession-filter-btn[aria-pressed="true"].maintenance {
     background-color: var(--maintenance);
-    color: var,--onMaintenance);
+    color: var(--onMaintenance);
 }
 .profession-filter-btn[aria-pressed="true"].content {
     background-color: var(--content);
-    color: var,--onContent);
+    color: var(--onContent);
 }
 .profession-filter-btn[aria-pressed="true"].ux-writer {
     background-color: var(--uxWriter);
-    color: var,--onUxWriter);
+    color: var(--onUxWriter);
 }
 .profession-filter-btn[aria-pressed="true"].redaktion {
     background-color: var(--redaktion);
-    color: var,--onRedaktion);
+    color: var(--onRedaktion);
 }
 .profession-filter-btn[aria-pressed="true"].corporate-text {
     background-color: var(--corporateText);
-    color: var,--onCorporateText);
+    color: var(--onCorporateText);
 }
 
 /* Filter-Gruppen */
