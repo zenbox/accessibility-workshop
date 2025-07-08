@@ -156,5 +156,22 @@
         </main>
 
         <script src="treemap.js"></script>
+
+        <script>
+            // Funktion zur Ausgabe der Viewport-Breite
+            function logViewportWidth() {
+                const viewportWidth = window.innerWidth;
+                console.log(`Viewport Breite: ${viewportWidth}px`);
+            }
+    
+            // Initiale Ausgabe beim Laden der Seite
+            logViewportWidth();
+    
+            // Event Listener für Resize-Events
+            window.addEventListener('resize', logViewportWidth);
+    
+            // Optional: Kontinuierliche Ausgabe alle 2 Sekunden
+            // setInterval(logViewportWidth, 2000);
+        </script>
     </body>
 </html>
