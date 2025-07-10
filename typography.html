@@ -29,15 +29,21 @@
                 anzubieten.
             </p>
             <p>
-                Menschen mit Legasthenie/Dyslexie verwenden gerne speziell
-                angepasste Schriften, die besser unterscheidbare Zeichen haben.
+                Für Menschen mit Legasthenie/Dyslexie stehen optimierte
+                Schriften zur besseren Leserlichkeit zur Verfügung. Eine solche
+                Schrift ist die <i>Atkinson Hyperlegible</i>. Sie wurde
+                entwickelt, um Menschen mit Dyslexie das Erkennen der einzelnen
+                Buchstaben zu erleichtern. Zeichen mit sonst ähnlichem Aussehen
+                haben hier eine unterscheidbare Form, zum Beispiel
+                <big>g</big> und <big>q</big> oder <big>0</big> (Null) und das
+                große <big>O</big>.
             </p>
             <p>
                 <button
                     class="_key"
                     id="set-dyslexie-font"
                 >
-                    Dyslexieschrift einstellen
+                    Atkinson Hyperlegible einstellen
                 </button>
             </p>
             <p>
@@ -533,7 +539,7 @@ h2 {
                     if (isDyslexieFontSet) {
                         unsetDylexieFont()
                         dyslexieButton.textContent =
-                            "Dyslexieschrift einstellen"
+                            "Atkinson Hyperlegible einstellen"
                     } else {
                         setDylexieFont()
                         dyslexieButton.textContent =
