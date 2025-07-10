@@ -22,6 +22,25 @@
                 <code>src/sass/typography.scss</code> zeigt meine Umsetzung.
             </p>
             <p>
+                Die Auswahl einer geeigneten, leserlichen Schrift ist für
+                Menschen mit Beeinträchtigungen im Lesevermögen sehr wichtig.
+                Geradlinigkeit, Deutlichkeit, Unterscheidbarkeit ähnlicher
+                Zeichen sind wichtige Eigenschaften, um Text leserich
+                anzubieten.
+            </p>
+            <p>
+                Menschen mit Legasthenie/Dyslexie verwenden gerne speziell
+                angepasste Schriften, die besser unterscheidbare Zeichen haben.
+            </p>
+            <p>
+                <button
+                    class="_key"
+                    id="set-dyslexie-font"
+                >
+                    Dyslexieschrift einstellen
+                </button>
+            </p>
+            <p>
                 Alle verwendeten Schriftfamilien stehen über den Schriftenserver
                 von Google frei zur Verfügung. (<a
                     href="https://fonts.google.com/"
@@ -31,7 +50,52 @@
         </header>
         <main>
             <article>
-                <h2>Die Schriftfamilien</h2>
+                <h2>Die Schrifarten</h2>
+                <p>
+                    Ohne zu sehr in die Tiefe zu gehen, unterscheidet man drei
+                    wesentliche Schriftarten:
+                </p>
+                <ul>
+                    <li>
+                        Serifenlose Schriften
+                        <samp
+                            style="
+                                display: inline-block;
+                                padding: 0;
+                                margin: 0 1rem;
+                            "
+                            class="sans-serif"
+                            ><abbr title="zum Beispiel">z. B.</abbr>
+                            Barlow</samp
+                        >
+                    </li>
+                    <li>
+                        Serifenschriften
+                        <samp
+                            style="
+                                display: inline-block;
+                                padding: 0;
+                                margin: 0 1rem;
+                            "
+                            class="serif"
+                            ><abbr title="zum Beispiel">z. B.</abbr>
+                            Playfair</samp
+                        >
+                    </li>
+                    <li>
+                        Schreibmaschinenschriften
+                        <samp
+                            style="
+                                display: inline-block;
+                                padding: 0;
+                                margin: 0 1rem;
+                            "
+                            class="monospace"
+                            ><abbr title="zum Beispiel">z. B.</abbr> Noto Sans
+                            Mono</samp
+                        >
+                    </li>
+                </ul>
                 <p class="sans-serif">
                     Als <em>serifenlose Schrift</em> setze ich hier Barlow für
                     den Mengentext ein. Serifenlose Schriften eignen sich
@@ -39,7 +103,15 @@
                     Darstellung auf Bildschirmen, deren Pixel am besten
                     gleichmäßige gerade Linien abbilden können. Die Barlow, die
                     ich hier verwende, ist eine der besten Schriften für
-                    Bildschirme, die ich kenne.
+                    Bildschirme, die ich kenne. In Punkto
+                    Barrierefreiheit/Leserlichkeit für Dyslexie ist sie
+                    allerdings nicht optimal.
+                </p>
+                <p>
+                    Menschen mit Dyslexie/Legasthenie müssen die Möglichkeit
+                    haben, die Schriftart auf einer Webseite zu ändern. So
+                    können sie für sich eine Schrift einstellen, die für sie
+                    besser zu lesen ist.
                 </p>
                 <p class="serif">
                     <big
@@ -60,7 +132,8 @@
                     für viele andere Gestaltungsideen gut. Die immer gleich
                     breiten Buchstaben sind ursprünglich der Mechanik einer
                     Schreibmaschine geschuldet. Seit ich die Schriftfamilie Noto
-                    entdeckt habe, gehört deren Mono Sans zu meinen Favoriten.
+                    entdeckt habe, gehört deren Noto Sans Mono zu meinen
+                    Favoriten.
                 </p>
                 <p class="dyslexic">
                     Die <em>Schrift zur Unterstützung von Dylexie</em>. Hier die
@@ -393,5 +466,82 @@ h2 {
         </main>
 
         <script src="assets/js/scaffold.js"></script>
+
+        <script>
+            function setDylexieFont() {
+                // Style-Element mit @font-face-Regeln für lokale Schriftarten erstellen
+                const style = document.createElement("style")
+                style.textContent = `
+
+  @font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('assets/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('assets/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('assets/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('assets/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  body, * {
+    font-family: 'Atkinson Hyperlegible', sans-serif !important;
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.8;
+  }
+`
+
+                // Style dem Dokument hinzufügen
+                document.head.appendChild(style)
+            }
+
+            function unsetDylexieFont() {
+                // Alle @font-face-Regeln entfernen
+                const styleElements = document.querySelectorAll("style")
+                styleElements.forEach((style) => {
+                    if (style.textContent.includes("@font-face")) {
+                        style.remove()
+                    }
+                })
+
+                // Schriftart auf die ursprüngliche Schriftart zurücksetzen
+                document.body.style.fontFamily = ""
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const dyslexieButton =
+                    document.getElementById("set-dyslexie-font")
+                let isDyslexieFontSet = false
+                dyslexieButton.addEventListener("click", () => {
+                    if (isDyslexieFontSet) {
+                        unsetDylexieFont()
+                        dyslexieButton.textContent =
+                            "Dyslexieschrift einstellen"
+                    } else {
+                        setDylexieFont()
+                        dyslexieButton.textContent =
+                            "Standardschrift einstellen"
+                    }
+                    isDyslexieFontSet = !isDyslexieFontSet
+                })
+            })
+        </script>
     </body>
 </html>
