@@ -15,12 +15,7 @@
     <body>
         <header>
             <h1>Typografie</h1>
-            <p>
-                Die wichtigsten typografischen HTML-Elemente und deren
-                Anwendung. Mit wenigen HTML Tags kann ein typografisches System
-                umgesetzt werden. Die Datei
-                <code>src/sass/typography.scss</code> zeigt meine Umsetzung.
-            </p>
+
             <p>
                 Die Auswahl einer geeigneten, leserlichen Schrift ist für
                 Menschen mit Beeinträchtigungen im Lesevermögen sehr wichtig.
@@ -43,8 +38,13 @@
                     class="_key"
                     id="set-dyslexie-font"
                 >
-                    Atkinson Hyperlegible einstellen
+                    Schriftart "Atkinson Hyperlegible" einstellen
                 </button>
+            </p>
+            <p>
+                Im folgenden findest Du die wichtigsten typografischen
+                HTML-Elemente und deren Anwendung. Die Datei
+                <code>src/sass/typography.scss</code> zeigt meine Umsetzung.
             </p>
             <p>
                 Alle verwendeten Schriftfamilien stehen über den Schriftenserver
@@ -56,7 +56,7 @@
         </header>
         <main>
             <article>
-                <h2>Die Schrifarten</h2>
+                <h2>Die Schriftarten</h2>
                 <p>
                     Ohne zu sehr in die Tiefe zu gehen, unterscheidet man drei
                     wesentliche Schriftarten:
@@ -141,14 +141,21 @@
                     entdeckt habe, gehört deren Noto Sans Mono zu meinen
                     Favoriten.
                 </p>
+                <h3>Leserlichkeit für Menschen mit Dyslexie/Legasthenie</h3>
                 <p class="dyslexic">
-                    Die <em>Schrift zur Unterstützung von Dylexie</em>. Hier die
+                    Eine <em>Schrift zur Unterstützung bei Dylexie</em> sollte
+                    vom Benutzer eingestellt werden können. Zum Beispiel die
                     <i>Atkinson Hyperlegible</i>. Sie wurde entwickelt, um
                     Menschen mit Dylexie das Erkennen der einzelnen Buchstaben
                     zu erleichtern. Zeichen mit sonst ähnlichem Aussehen haben
                     hier eine unterscheidbare Form, zum Beispiel
                     <big>g</big> und <big>q</big> oder <big>0</big> (Null) und
                     das große <big>O</big>.
+                </p>
+                <p>
+                    Weitere Schriften sind die <em>Lexend</em>, oder auch die
+                    <em>Frutiger 1450</em>. 1450 verweist auf die DIN Norm 1450
+                    zur Leserlichkeit von Schriften.
                 </p>
             </article>
             <article>
@@ -168,10 +175,14 @@ body {
     font-weight : 400;
 }
 
-/* Fluide Schriftgrößen sind schön. Browser-Erweiterungen, 
-die Schriften und deren Eigenschaften für Menschen mit 
-Lese-Schwierigkeiten um-konfigurieren können, müssen 
-allerdings getetst werden. */
+/* Fluide oder adaptive Schriftgrößen sind hilfreich, denn 
+sie passen sich an Bildschirmgrößen oder Vergrößerungsstufen
+an. Browser-Erweiterungen, die Schriften und deren 
+Eigenschaften für Menschen mit Lese-Schwierigkeiten 
+umkonfigurieren können, müssen allerdings getestet werden
+- lässt sich die CSS Einstellung durch die Erweiterung 
+überschreiben? */
+
 body {
     font-size: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem)
 }</code></pre>
@@ -505,13 +516,15 @@ h2 {
     src: url('assets/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-BoldItalic.ttf') format('truetype');
     font-weight: 700;
     font-style: italic;
-  }
-
-  body, * {
-    font-family: 'Atkinson Hyperlegible', sans-serif !important;
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.8;
-  }
+    }
+    body, * {
+      font-family: 'Atkinson Hyperlegible', sans-serif !important;
+      font-size: 1.125rem !important;
+      line-height: 1.6 !important;
+      }
+      h1, h2, h3, h4 {
+        font-size: 1.5rem !important;
+        font-weight: 700 !important;
 `
 
                 // Style dem Dokument hinzufügen
@@ -539,7 +552,7 @@ h2 {
                     if (isDyslexieFontSet) {
                         unsetDylexieFont()
                         dyslexieButton.textContent =
-                            "Atkinson Hyperlegible einstellen"
+                            'Schriftart "Atkinson Hyperlegible" einstellen'
                     } else {
                         setDylexieFont()
                         dyslexieButton.textContent =
