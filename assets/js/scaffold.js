@@ -124,6 +124,10 @@ function createMainNavigation() {
             text: "WCAG Test",
         },
         {
+            file: "checklists.html",
+            text: "Checklisten",
+        },
+        {
             file: "semantic.html",
             text: "Semantik",
         },
