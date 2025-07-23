@@ -1,0 +1,918 @@
+{
+    "non-text-content": {
+        "data-tags-con": [
+            "audio",
+            "captions",
+            "content",
+            "images",
+            "live-stream",
+            "moving-content",
+            "text-alternatives",
+            "video",
+            "visual-cues",
+            "buttons"
+        ],
+        "data-tags-dev": ["captcha", "images", "text-alternatives", "video"],
+        "data-tags-int": ["audio", "video", "buttons", "carousels", "captcha"],
+        "data-tags-vis": [
+            "images",
+            "images-of-text",
+            "animation",
+            "progress-steps",
+            "text-alternatives",
+            "video"
+        ]
+    },
+    "audio-only-and-video-only-prerecorded": {
+        "data-tags-con": [
+            "audio",
+            "captions",
+            "content",
+            "moving-content",
+            "text-alternatives",
+            "video"
+        ],
+        "data-tags-dev": ["video", "text-alternatives"],
+        "data-tags-int": ["audio", "video"],
+        "data-tags-vis": ["animation", "text-alternatives", "video"]
+    },
+    "captions-prerecorded": {
+        "data-tags-con": [
+            "audio",
+            "captions",
+            "content",
+            "moving-content",
+            "text-alternatives",
+            "video"
+        ],
+        "data-tags-dev": ["video", "text", "text-alternatives"],
+        "data-tags-int": ["audio", "video"],
+        "data-tags-vis": ["animation", "text-alternatives", "video"]
+    },
+    "audio-description-or-media-alternative-prerecorded": {
+        "data-tags-con": ["content", "video"],
+        "data-tags-dev": ["video"],
+        "data-tags-int": ["audio", "video"],
+        "data-tags-vis": ["animation", "video"]
+    },
+    "captions-live": {
+        "data-tags-con": ["audio", "captions", "content", "live-stream"],
+        "data-tags-dev": ["video", "text", "text-alternatives"],
+        "data-tags-int": ["audio", "video", "streaming"],
+        "data-tags-vis": ["animation", "text-alternatives", "video"]
+    },
+    "audio-description-prerecorded": {
+        "data-tags-con": ["content", "live-stream", "video"],
+        "data-tags-dev": ["video"],
+        "data-tags-int": ["audio", "video", "streaming"],
+        "data-tags-vis": ["animation", "text-alternatives", "video"]
+    },
+    "sign-language-prerecorded": {
+        "data-tags-con": ["audio", "content", "video"],
+        "data-tags-dev": ["video"],
+        "data-tags-int": ["audio", "video"],
+        "data-tags-vis": ["video"]
+    },
+    "extended-audio-description-prerecorded": {
+        "data-tags-con": ["content", "video"],
+        "data-tags-dev": ["video"],
+        "data-tags-int": ["audio", "video"],
+        "data-tags-vis": ["animation", "video"]
+    },
+    "media-alternative-prerecorded": {
+        "data-tags-con": ["audio", "content", "video"],
+        "data-tags-dev": ["video", "text", "text-alternatives", "images"],
+        "data-tags-int": ["audio", "video"],
+        "data-tags-vis": ["animation", "text-alternatives", "video"]
+    },
+    "audio-only-live": {
+        "data-tags-con": ["audio", "live-stream"],
+        "data-tags-dev": ["text", "text-alternatives"],
+        "data-tags-int": ["audio", "streaming"],
+        "data-tags-vis": ["text-alternatives"]
+    },
+    "info-and-relationships": {
+        "data-tags-con": [
+            "consistent-experience",
+            "content",
+            "headings",
+            "hidden-content",
+            "progress-steps",
+            "structure",
+            "visual-cues"
+        ],
+        "data-tags-dev": [
+            "forms",
+            "headings",
+            "labels",
+            "menus",
+            "markup",
+            "structure",
+            "tables"
+        ],
+        "data-tags-int": [
+            "buttons",
+            "carousels",
+            "changing-content",
+            "controls",
+            "errors",
+            "forms",
+            "modals",
+            "navigation",
+            "skip-to-content"
+        ],
+        "data-tags-vis": [
+            "hidden-content",
+            "layout",
+            "progress-steps",
+            "structure",
+            "tables"
+        ]
+    },
+    "meaningful-sequence": {
+        "data-tags-con": [
+            "consistent-experience",
+            "content",
+            "hidden-content",
+            "messaging",
+            "progress-steps",
+            "structure"
+        ],
+        "data-tags-dev": ["forms", "keyboard", "structure"],
+        "data-tags-int": [
+            "buttons",
+            "carousels",
+            "controls",
+            "errors",
+            "focus",
+            "forms",
+            "navigation",
+            "skip-to-content",
+            "tab-order"
+        ],
+        "data-tags-vis": [
+            "hidden-content",
+            "layout",
+            "progress-steps",
+            "structure",
+            "tables"
+        ]
+    },
+    "sensory-characteristics": {
+        "data-tags-con": [
+            "audio",
+            "consistent-experience",
+            "content",
+            "messaging",
+            "visual-cues"
+        ],
+        "data-tags-dev": ["text"],
+        "data-tags-int": ["buttons", "controls", "errors", "navigation"],
+        "data-tags-vis": ["color", "layout", "structure"]
+    },
+    "orientation": {
+        "data-tags-con": [],
+        "data-tags-dev": ["meta-tag", "viewport", "mobile"],
+        "data-tags-int": ["meta-tag", "viewport", "mobile"],
+        "data-tags-vis": ["user-interface", "orientation", "mobile", "layout"]
+    },
+    "identify-input-purpose": {
+        "data-tags-con": [],
+        "data-tags-dev": ["forms", "controls", "auto-complete"],
+        "data-tags-int": ["forms", "controls", "auto-complete"],
+        "data-tags-vis": []
+    },
+    "identify-purpose": {
+        "data-tags-con": ["regions", "icons"],
+        "data-tags-dev": [
+            "regions",
+            "icons",
+            "components",
+            "controls",
+            "forms"
+        ],
+        "data-tags-int": [
+            "regions",
+            "icons",
+            "components",
+            "controls",
+            "forms"
+        ],
+        "data-tags-vis": ["regions", "icons"]
+    },
+    "use-of-color": {
+        "data-tags-con": ["content", "links", "messaging", "text"],
+        "data-tags-dev": [],
+        "data-tags-int": [
+            "buttons",
+            "controls",
+            "errors",
+            "focus",
+            "forms",
+            "navigation"
+        ],
+        "data-tags-vis": ["color", "text"]
+    },
+    "audio-control": {
+        "data-tags-con": ["buttons"],
+        "data-tags-dev": ["controls", "video"],
+        "data-tags-int": [
+            "audio",
+            "autoplay",
+            "controls",
+            "streaming",
+            "video"
+        ],
+        "data-tags-vis": []
+    },
+    "contrast-minimum": {
+        "data-tags-con": ["content", "messaging"],
+        "data-tags-dev": [],
+        "data-tags-int": ["buttons", "errors", "focus", "forms", "navigation"],
+        "data-tags-vis": ["color", "contrast", "images-of-text", "text"]
+    },
+    "resize-text": {
+        "data-tags-con": [],
+        "data-tags-dev": ["text"],
+        "data-tags-int": [],
+        "data-tags-vis": ["layout", "text", "zoom"]
+    },
+    "images-of-text": {
+        "data-tags-con": ["content", "images", "text", "text-alternatives"],
+        "data-tags-dev": ["images", "text"],
+        "data-tags-int": ["buttons"],
+        "data-tags-vis": [
+            "contrast",
+            "images-of-text",
+            "text",
+            "text-alternatives"
+        ]
+    },
+    "contrast-enhanced": {
+        "data-tags-con": ["content", "messaging"],
+        "data-tags-dev": [],
+        "data-tags-int": ["buttons", "errors", "focus", "forms", "navigation"],
+        "data-tags-vis": ["color", "contrast", "images-of-text", "text"]
+    },
+    "low-or-no-background-audio": {
+        "data-tags-con": [],
+        "data-tags-dev": ["captcha", "video"],
+        "data-tags-int": [
+            "audio",
+            "autoplay",
+            "controls",
+            "streaming",
+            "captcha"
+        ],
+        "data-tags-vis": []
+    },
+    "visual-presentation": {
+        "data-tags-con": ["content", "structure", "text"],
+        "data-tags-dev": ["controls", "text"],
+        "data-tags-int": ["controls"],
+        "data-tags-vis": [
+            "color",
+            "contrast",
+            "layout",
+            "structure",
+            "text",
+            "zoom"
+        ]
+    },
+    "images-of-text-no-exception": {
+        "data-tags-con": ["consistent-experience", "structure", "text"],
+        "data-tags-dev": ["images", "text"],
+        "data-tags-int": ["buttons"],
+        "data-tags-vis": [
+            "contrast",
+            "images",
+            "images-of-text",
+            "text",
+            "text-alternatives"
+        ]
+    },
+    "reflow": {
+        "data-tags-con": ["text", "screen-size", "orientation", "reflow"],
+        "data-tags-dev": [
+            "media-queries",
+            "screen-size",
+            "orientation",
+            "mobile",
+            "zoom"
+        ],
+        "data-tags-int": [
+            "media-queries",
+            "screen-size",
+            "orientation",
+            "mobile",
+            "zoom"
+        ],
+        "data-tags-vis": [
+            "text",
+            "screen-size",
+            "orientation",
+            "layout",
+            "mobile",
+            "reflow"
+        ]
+    },
+    "non-text-contrast": {
+        "data-tags-con": ["contrast", "graphical-objects"],
+        "data-tags-dev": [],
+        "data-tags-int": ["contrast", "graphical-objects"],
+        "data-tags-vis": ["color", "controls", "contrast", "graphical-objects"]
+    },
+    "text-spacing": {
+        "data-tags-con": ["reflow", "text", "readability"],
+        "data-tags-dev": ["reflow", "layout", "text"],
+        "data-tags-int": ["reflow", "layout", "text"],
+        "data-tags-vis": ["reflow", "text", "readability"]
+    },
+    "content-on-hover-or-focus": {
+        "data-tags-con": [],
+        "data-tags-dev": [
+            "interaction",
+            "pop-up",
+            "keyboard",
+            "hover",
+            "focus",
+            "navigation"
+        ],
+        "data-tags-int": [
+            "interaction",
+            "pop-up",
+            "keyboard",
+            "hover",
+            "focus",
+            "navigation"
+        ],
+        "data-tags-vis": [
+            "interaction",
+            "pop-up",
+            "hover",
+            "focus",
+            "navigation"
+        ]
+    },
+    "keyboard": {
+        "data-tags-con": ["links", "messaging"],
+        "data-tags-dev": ["controls", "focus", "keyboard", "events", "video"],
+        "data-tags-int": [
+            "autoplay",
+            "buttons",
+            "carousels",
+            "controls",
+            "errors",
+            "focus",
+            "forms",
+            "events",
+            "navigation",
+            "streaming",
+            "video",
+            "tab-order",
+            "skip-to-content"
+        ],
+        "data-tags-vis": []
+    },
+    "no-keyboard-trap": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls", "focus", "keyboard", "events", "video"],
+        "data-tags-int": [
+            "autoplay",
+            "buttons",
+            "carousels",
+            "controls",
+            "errors",
+            "focus",
+            "forms",
+            "events",
+            "navigation",
+            "streaming",
+            "video",
+            "tab-order",
+            "skip-to-content"
+        ],
+        "data-tags-vis": []
+    },
+    "keyboard-no-exception": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls", "focus", "keyboard", "events", "video"],
+        "data-tags-int": [
+            "autoplay",
+            "buttons",
+            "carousels",
+            "controls",
+            "errors",
+            "focus",
+            "forms",
+            "events",
+            "navigation",
+            "streaming",
+            "video",
+            "tab-order",
+            "skip-to-content"
+        ],
+        "data-tags-vis": []
+    },
+    "character-key-shortcuts": {
+        "data-tags-con": [],
+        "data-tags-dev": ["focus", "keyboard"],
+        "data-tags-int": ["focus", "keyboard"],
+        "data-tags-vis": []
+    },
+    "timing-adjustable": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls"],
+        "data-tags-int": ["controls", "time-limits"],
+        "data-tags-vis": []
+    },
+    "pause-stop-hide": {
+        "data-tags-con": ["buttons"],
+        "data-tags-dev": ["controls", "video"],
+        "data-tags-int": [
+            "audio",
+            "autoplay",
+            "carousels",
+            "changing-content",
+            "controls",
+            "video",
+            "time-limits"
+        ],
+        "data-tags-vis": ["blinking", "animation", "video"]
+    },
+    "no-timing": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls"],
+        "data-tags-int": ["controls", "time-limits"],
+        "data-tags-vis": []
+    },
+    "interruptions": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls"],
+        "data-tags-int": [
+            "controls",
+            "errors",
+            "changing-content",
+            "time-limits"
+        ],
+        "data-tags-vis": []
+    },
+    "re-authenticating": {
+        "data-tags-con": [],
+        "data-tags-dev": [],
+        "data-tags-int": ["forms", "time-limits"],
+        "data-tags-vis": ["text"]
+    },
+    "timeouts": {
+        "data-tags-con": [],
+        "data-tags-dev": [
+            "controls",
+            "errors",
+            "changing-content",
+            "time-limits"
+        ],
+        "data-tags-int": [
+            "controls",
+            "errors",
+            "changing-content",
+            "time-limits",
+            "notifications"
+        ],
+        "data-tags-vis": ["content", "visual-cues", "notifications"]
+    },
+    "three-flashes-or-below-threshold": {
+        "data-tags-con": ["content", "video", "moving-content"],
+        "data-tags-dev": [],
+        "data-tags-int": [],
+        "data-tags-vis": ["flashing", "animation"]
+    },
+    "three-flashes": {
+        "data-tags-con": ["content", "video", "moving-content"],
+        "data-tags-dev": [],
+        "data-tags-int": [],
+        "data-tags-vis": ["flashing", "animation"]
+    },
+    "animation-from-interactions": {
+        "data-tags-con": [],
+        "data-tags-dev": [
+            "controls",
+            "animation",
+            "keyboard",
+            "focus",
+            "interaction",
+            "carousels"
+        ],
+        "data-tags-int": [
+            "controls",
+            "animation",
+            "keyboard",
+            "focus",
+            "interaction",
+            "carousels"
+        ],
+        "data-tags-vis": [
+            "consistent-experience",
+            "visual-cues",
+            "controls",
+            "animation",
+            "interaction",
+            "carousels"
+        ]
+    },
+    "bypass-blocks": {
+        "data-tags-con": ["headings"],
+        "data-tags-dev": [
+            "headings",
+            "menus",
+            "markup",
+            "structure",
+            "iframes"
+        ],
+        "data-tags-int": ["navigation", "skip-to-content"],
+        "data-tags-vis": ["layout", "structure"]
+    },
+    "page-titled": {
+        "data-tags-con": ["content", "page-title", "structure"],
+        "data-tags-dev": ["page-title"],
+        "data-tags-int": ["navigation"],
+        "data-tags-vis": ["structure", "progress-steps"]
+    },
+    "focus-order": {
+        "data-tags-con": ["buttons"],
+        "data-tags-dev": [
+            "errors",
+            "focus",
+            "forms",
+            "keyboard",
+            "links",
+            "menus",
+            "events"
+        ],
+        "data-tags-int": [
+            "buttons",
+            "carousels",
+            "controls",
+            "errors",
+            "focus",
+            "forms",
+            "modals",
+            "events",
+            "navigation",
+            "skip-to-content",
+            "tab-order"
+        ],
+        "data-tags-vis": ["structure"]
+    },
+    "link-purpose-in-context": {
+        "data-tags-con": ["content", "links", "buttons"],
+        "data-tags-dev": ["links", "menus"],
+        "data-tags-int": ["buttons", "navigation"],
+        "data-tags-vis": []
+    },
+    "multiple-ways": {
+        "data-tags-con": [],
+        "data-tags-dev": ["menus"],
+        "data-tags-int": ["navigation"],
+        "data-tags-vis": ["structure"]
+    },
+    "headings-and-labels": {
+        "data-tags-con": ["content", "headings", "messaging"],
+        "data-tags-dev": [
+            "errors",
+            "forms",
+            "headings",
+            "labels",
+            "menus",
+            "tables"
+        ],
+        "data-tags-int": ["errors", "forms", "navigation"],
+        "data-tags-vis": ["text"]
+    },
+    "focus-visible": {
+        "data-tags-con": ["buttons"],
+        "data-tags-dev": ["controls", "focus", "keyboard", "menus"],
+        "data-tags-int": [
+            "controls",
+            "focus",
+            "navigation",
+            "skip-to-content",
+            "tab-order"
+        ],
+        "data-tags-vis": ["color", "contrast", "progress-steps"]
+    },
+    "location": {
+        "data-tags-con": [],
+        "data-tags-dev": ["menus"],
+        "data-tags-int": ["navigation"],
+        "data-tags-vis": []
+    },
+    "link-purpose-link-only": {
+        "data-tags-con": ["content", "links", "buttons"],
+        "data-tags-dev": ["menus", "links"],
+        "data-tags-int": ["buttons", "navigation"],
+        "data-tags-vis": []
+    },
+    "section-headings": {
+        "data-tags-con": ["content", "headings", "progress-steps"],
+        "data-tags-dev": ["headings", "markup", "structure"],
+        "data-tags-int": [],
+        "data-tags-vis": ["structure", "text"]
+    },
+    "focus-not-obscured-minimum": {
+        "data-tags-con": [],
+        "data-tags-dev": [
+            "positioning",
+            "focus",
+            "sticky",
+            "fixed",
+            "keyboard",
+            "controls",
+            "menus"
+        ],
+        "data-tags-int": [
+            "positioning",
+            "focus",
+            "sticky",
+            "fixed",
+            "navigation",
+            "tab-order"
+        ],
+        "data-tags-vis": ["focus", "sticky", "fixed"]
+    },
+    "focus-not-obscured-enhanced": {
+        "data-tags-con": [],
+        "data-tags-dev": [
+            "positioning",
+            "focus",
+            "sticky",
+            "fixed",
+            "keyboard",
+            "controls",
+            "menus"
+        ],
+        "data-tags-int": [
+            "positioning",
+            "focus",
+            "sticky",
+            "fixed",
+            "navigation",
+            "tab-order"
+        ],
+        "data-tags-vis": ["focus", "sticky", "fixed"]
+    },
+    "focus-appearance": {
+        "data-tags-con": ["buttons"],
+        "data-tags-dev": ["controls", "focus", "keyboard", "menus"],
+        "data-tags-int": [
+            "controls",
+            "focus",
+            "navigation",
+            "skip-to-content",
+            "tab-order"
+        ],
+        "data-tags-vis": ["color", "contrast", "progress-steps"]
+    },
+    "pointer-gestures": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls", "events", "mobile"],
+        "data-tags-int": ["controls", "events", "mobile"],
+        "data-tags-vis": []
+    },
+    "pointer-cancellation": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls", "events", "mobile"],
+        "data-tags-int": ["controls", "events", "mobile"],
+        "data-tags-vis": []
+    },
+    "label-in-name": {
+        "data-tags-con": [
+            "consistent-experience",
+            "content",
+            "visual-cues",
+            "controls",
+            "buttons",
+            "forms",
+            "labels"
+        ],
+        "data-tags-dev": ["controls", "buttons", "forms", "labels", "links"],
+        "data-tags-int": ["controls", "buttons", "forms", "labels", "links"],
+        "data-tags-vis": [
+            "consistent-experience",
+            "content",
+            "visual-cues",
+            "controls",
+            "buttons",
+            "forms",
+            "labels"
+        ]
+    },
+    "motion-actuation": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls", "keyboard", "mobile"],
+        "data-tags-int": ["controls", "keyboard", "mobile"],
+        "data-tags-vis": []
+    },
+    "target-size-enhanced": {
+        "data-tags-con": [],
+        "data-tags-dev": [],
+        "data-tags-int": ["buttons", "controls", "forms", "mobile"],
+        "data-tags-vis": ["buttons", "controls", "forms", "mobile"]
+    },
+    "concurrent-input-mechanisms": {
+        "data-tags-con": [],
+        "data-tags-dev": [
+            "navigation",
+            "links",
+            "controls",
+            "events",
+            "mobile",
+            "keyboard"
+        ],
+        "data-tags-int": [],
+        "data-tags-vis": []
+    },
+    "dragging-movements": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls", "events", "drag-and-drop"],
+        "data-tags-int": ["controls", "events", "drag-and-drop"],
+        "data-tags-vis": []
+    },
+    "target-size-minimum": {
+        "data-tags-con": [],
+        "data-tags-dev": [],
+        "data-tags-int": ["buttons", "controls", "forms", "mobile"],
+        "data-tags-vis": ["buttons", "controls", "forms", "mobile"]
+    },
+    "language-of-page": {
+        "data-tags-con": [],
+        "data-tags-dev": ["language", "text"],
+        "data-tags-int": [],
+        "data-tags-vis": ["text"]
+    },
+    "language-of-parts": {
+        "data-tags-con": [],
+        "data-tags-dev": ["language", "text"],
+        "data-tags-int": [],
+        "data-tags-vis": ["text"]
+    },
+    "unusual-words": {
+        "data-tags-con": ["content"],
+        "data-tags-dev": ["text", "markup"],
+        "data-tags-int": [],
+        "data-tags-vis": ["text"]
+    },
+    "abbreviations": {
+        "data-tags-con": ["content"],
+        "data-tags-dev": ["text", "markup"],
+        "data-tags-int": [],
+        "data-tags-vis": ["text"]
+    },
+    "reading-level": {
+        "data-tags-con": ["content"],
+        "data-tags-dev": [],
+        "data-tags-int": [],
+        "data-tags-vis": ["text"]
+    },
+    "pronunciation": {
+        "data-tags-con": ["content"],
+        "data-tags-dev": [],
+        "data-tags-int": [],
+        "data-tags-vis": ["text"]
+    },
+    "on-focus": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls", "focus", "forms", "menus", "events"],
+        "data-tags-int": ["controls", "forms", "events", "navigation"],
+        "data-tags-vis": []
+    },
+    "on-input": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls", "forms", "menus", "events"],
+        "data-tags-int": ["controls", "forms", "events", "navigation"],
+        "data-tags-vis": []
+    },
+    "consistent-navigation": {
+        "data-tags-con": ["progress-steps"],
+        "data-tags-dev": ["menus"],
+        "data-tags-int": ["navigation"],
+        "data-tags-vis": ["layout", "progress-steps"]
+    },
+    "consistent-identification": {
+        "data-tags-con": [
+            "consistent-experience",
+            "content",
+            "visual-cues",
+            "buttons"
+        ],
+        "data-tags-dev": ["controls", "forms", "menus", "structure"],
+        "data-tags-int": [
+            "buttons",
+            "controls",
+            "forms",
+            "modals",
+            "navigation"
+        ],
+        "data-tags-vis": ["progress-steps", "structure"]
+    },
+    "change-on-request": {
+        "data-tags-con": [],
+        "data-tags-dev": ["controls", "forms", "menus", "events"],
+        "data-tags-int": ["controls", "forms", "events", "navigation"],
+        "data-tags-vis": []
+    },
+    "consistent-help": {
+        "data-tags-con": ["content"],
+        "data-tags-dev": [],
+        "data-tags-int": ["help"],
+        "data-tags-vis": ["help"]
+    },
+    "error-identification": {
+        "data-tags-con": ["content"],
+        "data-tags-dev": ["controls", "errors", "focus", "forms", "labels"],
+        "data-tags-int": ["controls", "errors", "focus", "forms"],
+        "data-tags-vis": []
+    },
+    "labels-or-instructions": {
+        "data-tags-con": [
+            "content",
+            "messaging",
+            "progress-steps",
+            "visual-cues"
+        ],
+        "data-tags-dev": ["controls", "focus", "forms", "labels"],
+        "data-tags-int": ["controls", "errors", "focus", "forms"],
+        "data-tags-vis": []
+    },
+    "error-suggestion": {
+        "data-tags-con": ["content", "messaging"],
+        "data-tags-dev": ["controls", "errors", "focus", "forms", "labels"],
+        "data-tags-int": ["controls", "errors", "focus", "forms"],
+        "data-tags-vis": []
+    },
+    "error-prevention-legal-financial-data": {
+        "data-tags-con": ["content", "messaging"],
+        "data-tags-dev": ["errors", "forms"],
+        "data-tags-int": ["errors", "forms"],
+        "data-tags-vis": []
+    },
+    "help": {
+        "data-tags-con": ["content", "messaging"],
+        "data-tags-dev": ["errors", "forms", "text"],
+        "data-tags-int": ["errors"],
+        "data-tags-vis": ["text"]
+    },
+    "error-prevention-all": {
+        "data-tags-con": ["content"],
+        "data-tags-dev": ["errors", "forms"],
+        "data-tags-int": ["errors", "forms"],
+        "data-tags-vis": []
+    },
+    "redundant-entry": {
+        "data-tags-con": ["forms"],
+        "data-tags-dev": ["forms"],
+        "data-tags-int": ["forms"],
+        "data-tags-vis": ["forms"]
+    },
+    "accessible-authentication-minimum": {
+        "data-tags-con": ["forms", "logins"],
+        "data-tags-dev": ["forms", "logins"],
+        "data-tags-int": ["forms", "logins"],
+        "data-tags-vis": ["forms", "logins"]
+    },
+    "accessible-authentication-enhanced": {
+        "data-tags-con": ["forms", "logins"],
+        "data-tags-dev": ["forms", "logins"],
+        "data-tags-int": ["forms", "logins"],
+        "data-tags-vis": ["forms", "logins"]
+    },
+    "parsing": {
+        "data-tags-con": [],
+        "data-tags-dev": ["markup", "structure"],
+        "data-tags-int": [],
+        "data-tags-vis": []
+    },
+    "name-role-value": {
+        "data-tags-con": ["messaging", "moving-content"],
+        "data-tags-dev": [
+            "markup",
+            "structure",
+            "forms",
+            "labels",
+            "menus",
+            "video"
+        ],
+        "data-tags-int": [],
+        "data-tags-vis": []
+    },
+    "status-messages": {
+        "data-tags-con": ["content", "messaging"],
+        "data-tags-dev": ["forms", "errors"],
+        "data-tags-int": ["errors", "forms", "messaging"],
+        "data-tags-vis": [
+            "content",
+            "messaging",
+            "progress-steps",
+            "visual-cues"
+        ]
+    }
+}

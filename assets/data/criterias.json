@@ -8,15 +8,16 @@
                 "Systemarchitekten"
             ],
             "Design": [
+                "Visual Design",
                 "Designer",
                 "UX-Designer",
                 "Grafiker",
                 "Formulardesigner",
-                "Interaktionsdesigner",
+                "Interaktionsdesign",
                 "Mobile-Experten"
             ],
             "Entwicklung": [
-                "Entwickler",
+                "Developing",
                 "Frontend-Entwickler",
                 "Entwickler von Autorenwerkzeugen",
                 "Audio-Ingenieure",
@@ -37,6 +38,7 @@
             "Wartung": ["Support-Teams", "Technischer Kundendienst"],
             "Content": {
                 "UX Writer": [
+                    "UI Texter",
                     "Kommunikationsspezialisten",
                     "Gebärdensprachexperten",
                     "Sprachexperten",
@@ -44,6 +46,7 @@
                     "Audiodeskriptionsexperten"
                 ],
                 "Redaktion": [
+                    "Content Creation",
                     "Redakteure",
                     "Content-Manager",
                     "Videoredakteure",
@@ -51,6 +54,7 @@
                     "Medienspezialisten"
                 ],
                 "Corporate Text": [
+                    "Corporate Language",
                     "Dokumentenspezialisten",
                     "Synchronisationsexperten",
                     "Synchronisationsspezialisten"

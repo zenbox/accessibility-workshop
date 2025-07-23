@@ -4847,6 +4847,44 @@ nav.breadcrumb [aria-current=page] {
   border-radius: 0rem;
 }
 
+.checklists .phases a[href] {
+  color: var(--onSection-1);
+  background: var(--section-1);
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+.checklists h2 {
+  padding-block-start: 5rem !important;
+}
+.checklists h3 + ul {
+  list-style: none;
+  padding: 0;
+}
+.checklists h3 + ul li::before {
+  content: " ";
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-inline-end: 0.5rem;
+  border: 3px solid hsla(0, 40%, 40%, 0.5);
+  border-radius: 50%;
+}
+
+section.details {
+  background: white;
+  margin-inline: -1rem;
+  padding-inline: 1rem;
+}
+section.details h3 {
+  padding-block-start: 2rem;
+}
+section.details h3::before {
+  content: "Frage & Antwort";
+  display: block;
+  font-size: 0.85rem;
+}
+
 a.icon {
   color: var(--on-primary);
   background-color: var(--primary);

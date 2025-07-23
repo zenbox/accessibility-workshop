@@ -1,0 +1,123 @@
+@import url("../../../treemap/v2/_colors.css");
+
+.filter-hideversion-:not(.current) {
+    opacity: 0.25;
+    display: none !important;
+}
+.permalink,
+.toplink,li
+.understanding {
+    display: none;
+}
+
+.panel-primary > .panel-heading {
+    color: black;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+
+.techniques-button,
+.sc-text .btn-info {
+    display: none;
+}
+
+.filter-status-row {
+    display: none;
+}
+#hidesidebars {
+    display: none;
+}
+
+body * {
+    font-family: Barlow !important;
+}
+h2,
+h3 {
+    margin-block-start: 3rem !important;
+}
+
+.sc-wrapper {
+    border-color: #eee;
+}
+
+.subheading > button {
+    display: none;
+}
+
+#text-alternatives,
+.panel-heading:has(#text-alternatives) ~ article {
+    background-color: var(--section-4) !important;
+    color: var(--onSection-4) !important;
+}
+
+#time-based-media,
+.panel-heading:has(#time-based-media) ~ article {
+    background-color: var(--section-5) !important;
+    color: var(--onSection-5) !important;
+}
+
+#adaptable,
+.panel-heading:has(#adaptable) ~ article {
+    background-color: var(--section-6) !important;
+    color: var(--onSection-6) !important;
+}
+
+#distinguishable,
+.panel-heading:has(#distinguishable) ~ article {
+    background-color: var(--section-7) !important;
+    color: var(--onSection-7) !important;
+}
+
+#keyboard-accessible,
+.panel-heading:has(#keyboard-accessible) ~ article {
+    background-color: var(--section-8) !important;
+    color: var(--onSection-8) !important;
+}
+
+#enough-time,
+.panel-heading:has(#enough-time) ~ article {
+    background-color: var(--section-9) !important;
+    color: var(--onSection-9) !important;
+}
+
+#seizures-and-physical-reactions,
+.panel-heading:has(#seizures-and-physical-reactions) ~ article {
+    background-color: var(--section-10) !important;
+    color: var(--onSection-10) !important;
+}
+
+#navigable,
+.panel-heading:has(#navigable) ~ article {
+    background-color: var(--section-11) !important;
+    color: var(--onSection-11) !important;
+}
+
+#input-modalities,
+.panel-heading:has(#input-modalities) ~ article {
+    background-color: var(--section-12) !important;
+    color: var(--onSection-12) !important;
+}
+
+#readable,
+.panel-heading:has(#readable) ~ article {
+    background-color: var(--section-13) !important;
+    color: var(--onSection-13) !important;
+}
+
+#predictable,
+.panel-heading:has(#predictable) ~ article {
+    background-color: var(--section-14) !important;
+    color: var(--onSection-14) !important;
+}
+
+#input-assistance,
+.panel-heading:has(#input-assistance) ~ article {
+    background-color: var(--section-15) !important;
+    color: var(--onSection-15) !important;
+}
+
+#compatible,
+.panel-heading:has(#compatible) ~ article {
+    background-color: var(--section-16) !important;
+    color: var(--onSection-16) !important;
+}

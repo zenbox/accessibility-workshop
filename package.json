@@ -2,5 +2,8 @@
   "dependencies": {
     "randomcolor": "^0.6.2",
     "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.1"
   }
 }

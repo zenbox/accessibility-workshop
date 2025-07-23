@@ -7,16 +7,17 @@
             content="width=device-width, initial-scale=1.0"
         />
         <title>Checklisten zur Barrierefreiheit</title>
+
         <link
             rel="stylesheet"
             href="assets/css/style.css"
         />
         <link
             rel="stylesheet"
-            href="treemap/v2/treemap.css"
+            href="--treemap/v2/treemap.css"
         />
     </head>
-    <body>
+    <body class="checklists">
         <header>
             <h1>Checklisten für Teams - Wer macht was?</h1>
             <p>
@@ -24,6 +25,83 @@
                 einzelner erreicht. Im folgenden verusche ich mit Hilfe der
                 klassischen Software-Enwicklungsphasen Zuständigkeiten und deren
                 Aufgabengebiete im Kontext der Barrierefreiheit festzulegen.
+            </p>
+            <p>
+                Die "Master-Checkliste" ist die WCAG in ihrer aktuellen Version
+                2.2 und der neuen Version 3.0, sie in Entwicklung ist.Die WCAG
+                bietet übder die Schnellreferenz einen Filter, mit dem sich die
+                Vielzahl der Kriterien nach Arbeitsfeld oder Stichwort sortieren
+                lassen.
+            </p>
+            <p>
+                Ich finde die Darstellung der WCAG Schnellreferenz überladen und
+                unübersichtlich. Mit nachfolgendem Bookmarklet habe ich die
+                Darstellung zur besseren Forschung reduziert und an mein
+                Treemap-Farbmodell angepasst. Das Bookmarklet bindet dafür eine
+                CSS Datei ein.
+            </p>
+            <ul>
+                <li>
+                    <a
+                        href="https://www.w3.org/WAI/WCAG22/quickref/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >WCAG 2.2 Schnellreferenz</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="javascript:(function(){   var l = document.createElement('link');   l.rel = 'stylesheet';   l.href = 'https://michaelreichart.de/accessibility-workshop/checklists/assets/css/mr-theme.css';   document.head.appendChild(l); })();"
+                        rel="noopener noreferrer"
+                        >Bookmarklet Clean Up WCAG Quickref</a
+                    ><br />
+                    <small
+                        >(Öffne deine Lesezeichenleiste im Browser (z. B. mit
+                        Strg+Shift+B oder Cmd+Shift+B) und ziehe den Link
+                        dorthin, um ihn als Lesezeichen zu speichern. Klicke
+                        dann auf das Lesezeichen, wenn du die WCAG
+                        Schnellreferenz geöffnet hast. Das Lesezeichen fügt eine
+                        CSS Datei ein, die die Darstellung der Schnellreferenz
+                        vereinfacht.)</small
+                    >
+                </li>
+
+                <li>
+                    <a
+                        href="treemap/v2/index.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Kriterien als Treemap mit WCAG Tags</a
+                    >
+                </li>
+
+                <li>
+                    <small>
+                        <a
+                            href="https://www.w3.org/WAI/WCAG22/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >WCAG 2.2</a
+                        ></small
+                    >
+                </li>
+
+                <li>
+                    <small>
+                        <a
+                            href="https://www.w3.org/TR/wcag-3.0"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >WCAG 3.0</a
+                        ></small
+                    >
+                </li>
+            </ul>
+
+            <p>
+                Im folgenden findest du Erläuterungen und generelle Todo's nach
+                dem Team-Ansatz aus meinen Seminarinhalten.
             </p>
         </header>
 
@@ -62,12 +140,12 @@
             <h2>Was ist alles zu tun?</h2>
             <p>Ein erster Ansatz, der Aufgaben zuordnet:</p>
             <ul class="phases">
-                <li>Requirements</li>
-                <li>Design</li>
-                <li>Implementierung</li>
-                <li>Test</li>
-                <li>Release</li>
-                <li>Wartung</li>
+                <li><a href="#requirements">Requirements</a></li>
+                <li><a href="#design">Design</a></li>
+                <li><a href="#implementation">Implementierung</a></li>
+                <li><a href="#testing">Test</a></li>
+                <li><a href="#release">Release</a></li>
+                <li><a href="#maintenance">Wartung</a></li>
             </ul>
             <ul class="phases phases-brighter">
                 <li>
@@ -121,7 +199,10 @@
         </article>
 
         <article class="phases-requirements-bright">
-            <h2 class="phases-requirements">
+            <h2
+                id="requirements"
+                class="phases-requirements"
+            >
                 Requirements - was muss festgelegt werden?
             </h2>
             <dl>
@@ -142,92 +223,109 @@
                     Es ist wichtig, im Vorfeld abzusprechen, welche Regeln
                     gelten sollen.
                 </dd>
+                <dt>Gilt das Barrierefreiheitsstärkungsgesetz?</dt>
+                <dd>
+                    Das Barrierefreiheitsstärkungsgesetz (BFSG) gilt seit Juni
+                    2025 für alle B2C-Webseiten, die von Unternehmen betrieben
+                    werden und die es ermöglichen, Dienstleistungen in Anspruch
+                    zu nehmen oder Produkte zu beziehen.
+                </dd>
                 <dt>Kommunikation in die Teams ?</dt>
                 <dd>
                     Die Vorgaben müssen an alle Beteiligten kommuniziert werden,
                     damit sie umgesetzt werden können.
                 </dd>
             </dl>
-            <!--            <h3>WCAG, BITV oder EN 301 459?</h3>
-            <p>
-                Die WCAG 2.2 ist eine internationale Norm, die für alle
-                Webseiten gilt, die von Unternehmen oder Organisationen
-                betrieben werden. Sie ist eine Empfehlung und keine verbindliche
-                Norm, es wird empfohlen, sie zu beachten. Die WCAG 3.0 ist
-                bereits in Vorbereitung und wird die WCAG 2.2 ablösen.
-            </p>
-            <p>
-                Die BITV 2.0 ist die deutsche Umsetzung der WCAG 2.1. Sie ist
-                also eine Übersetzung und Anpassung der WCAG 2.1 an die
-                deutschen Gegebenheiten.
-            </p>
-            <p>
-                Die BITV 2.0 ist für alle öffentlichen Stellen in Deutschland
-                verbindlich. Sie gilt für alle Webseiten, die von öffentlichen
-                Stellen betrieben werden, sowie für alle Webseiten, die von
-                Unternehmen betrieben werden, die öffentliche Aufträge umsetzen.
-            </p>
-            <p>
-                Die EN 301 459 ist die europäische Norm für die Barrierefreiheit
-                von Webseiten. Sie ist eine Übersetzung und Anpassung der WCAG
-                2.1 an die europäischen Gegebenheiten. Sie beinhaltet im Kapitel
-                9 die ursprünglische BITV 2.0 und ergänzt sie um weitere
-                Aspekte.
-            </p>
-            <h3>Ist der Kunde öffentlich? Dann gilt die BITV!</h3>
-            <p>
-                Öffentliche Seiten erhalten ihr Prüfsiegel zur Barrierefreiheit
-                über die Prüfungen, die die BITV vorgibt. Seiten der
-                öffentlichen Hand werden von offiziell benannten Prüfstellen
-                geprüft.
-            </p>
-            <h3>
-                Ist der Kunde ein privatwirtschaftlich geführtes Unternehmen?
-            </h3>
-            <p>
-                Dann gelten auf jeden Fall die Empfehlungen der WCAG, vor allem
-                auch dann, wenn das Unternehmen international agiert. Für
-                B2C-Seiten gilt seit Juni 2025 das BFSG.
-            </p>
-            <p>
-                Es ist in jedem Fall empfehlenswert, mit dem Kunden, der
-                letzlich die Verantwortung zur Barriertefreiheit trägt, im
-                Vorfeld abzusprechen, welche Regeln gelten sollen.
-            </p>
-            <h3>Konformitätsstufen A, AA oder AAA?</h3>
-            <p>
-                Die WCAG Konformitätsstufen beschreiben die Notwendigkeit einer
-                Maßnahme zur Barrierefreiheit, aber auch häufig deren
-                Umsetzbarkeit.
-            </p>
-            <ol>
-                <li>
-                    A bedeutet, dass das Nicht-Erfüllen einer Anforderung eine
-                    Zielgruppe aufgrund einer Beeinträchtigung vollständig
-                    ausschließt. Es ist nicht empfehlenswert, Kriterien der
-                    Konformitätsstufe A zu ignorieren.
-                </li>
-                <li>
-                    AA bedeutet, dass das Nicht-Erfüllen einer Anforderung eine
-                    Zielgruppe aufgrund einer Beeinträchtigung Personen
-                    erheblich einschränkt. Es ist empfehlenswert, Kriterien der
-                    Konformitätsstufe AA zu erfüllen.
-                </li>
-                <li>
-                    AAA bedeutet, dass das Nicht-Erfüllen einer Anforderung eine
-                    Zielgruppe aufgrund einer Beeinträchtigung nur geringfügig
-                    einschränkt oder dass eine barrierefreie Umsetzung nur sehr
-                    schwer zu erreichen ist. Es ist nicht empfehlenswert,
-                    Kriterien der Konformitätsstufe AAA zu ignorieren, aber es
-                    ist auch nicht zwingend erforderlich, sie zu erfüllen. Hier
-                    ist eine genau Absprache zwischen Auftraggeber und
-                    Umsetzungsteam wichtig.
-                </li>
-            </ol>
-            -->
+
+            <section class="details">
+                <h3>WCAG, BITV oder EN 301 459?</h3>
+                <p>
+                    Die WCAG 2.2 ist eine internationale Norm, die für alle
+                    Webseiten gilt, die von Unternehmen oder Organisationen
+                    betrieben werden. Sie ist eine Empfehlung und keine
+                    verbindliche Norm, es wird empfohlen, sie zu beachten. Die
+                    WCAG 3.0 ist bereits in Vorbereitung und wird die WCAG 2.2
+                    ablösen.
+                </p>
+                <p>
+                    Die BITV 2.0 ist die deutsche Umsetzung der WCAG 2.1. Sie
+                    ist also eine Übersetzung und Anpassung der WCAG 2.1 an die
+                    deutschen Gegebenheiten.
+                </p>
+                <p>
+                    Die BITV 2.0 ist für alle öffentlichen Stellen in
+                    Deutschland verbindlich. Sie gilt für alle Webseiten, die
+                    von öffentlichen Stellen betrieben werden, sowie für alle
+                    Webseiten, die von Unternehmen betrieben werden, die
+                    öffentliche Aufträge umsetzen.
+                </p>
+                <p>
+                    Die EN 301 459 ist die europäische Norm für die
+                    Barrierefreiheit von Webseiten. Sie ist eine Übersetzung und
+                    Anpassung der WCAG 2.1 an die europäischen Gegebenheiten.
+                    Sie beinhaltet im Kapitel 9 die ursprünglische BITV 2.0 und
+                    ergänzt sie um weitere Aspekte.
+                </p>
+                <h3>Ist der Kunde öffentlich? Dann gilt die BITV!</h3>
+                <p>
+                    Öffentliche Seiten erhalten ihr Prüfsiegel zur
+                    Barrierefreiheit über die Prüfungen, die die BITV vorgibt.
+                    Seiten der öffentlichen Hand werden von offiziell benannten
+                    Prüfstellen geprüft.
+                </p>
+                <h3>
+                    Ist der Kunde ein privatwirtschaftlich geführtes
+                    Unternehmen?
+                </h3>
+                <p>
+                    Dann gelten auf jeden Fall die Empfehlungen der WCAG, vor
+                    allem auch dann, wenn das Unternehmen international agiert.
+                    Für B2C-Seiten gilt seit Juni 2025 das BFSG.
+                </p>
+                <p>
+                    Der Kunden trägt letzlich die Verantwortung zur
+                    Barriertefreiheit. Deshalb muss mit ihm vereinbart werden,
+                    welche Regeln gelten sollen.
+                </p>
+                <h3>Konformitätsstufen A, AA oder AAA?</h3>
+                <p>
+                    Die WCAG Konformitätsstufen beschreiben die Notwendigkeit
+                    einer Maßnahme zur Barrierefreiheit, aber auch häufig deren
+                    Umsetzbarkeit.
+                </p>
+                <ol>
+                    <li>
+                        A bedeutet, dass das Nicht-Erfüllen einer Anforderung
+                        eine Zielgruppe aufgrund einer Beeinträchtigung
+                        vollständig ausschließt. Es ist nicht empfehlenswert,
+                        Kriterien der Konformitätsstufe A zu ignorieren.
+                    </li>
+                    <li>
+                        AA bedeutet, dass das Nicht-Erfüllen einer Anforderung
+                        eine Zielgruppe aufgrund einer Beeinträchtigung Personen
+                        erheblich einschränkt. Es ist empfehlenswert, Kriterien
+                        der Konformitätsstufe AA zu erfüllen.
+                    </li>
+                    <li>
+                        AAA bedeutet, dass das Nicht-Erfüllen einer Anforderung
+                        eine Zielgruppe aufgrund einer Beeinträchtigung nur
+                        geringfügig einschränkt oder dass eine barrierefreie
+                        Umsetzung nur sehr schwer zu erreichen ist. Es ist nicht
+                        empfehlenswert, Kriterien der Konformitätsstufe AAA zu
+                        ignorieren, aber es ist auch nicht zwingend
+                        erforderlich, sie zu erfüllen. Hier ist eine genau
+                        Absprache zwischen Auftraggeber und Umsetzungsteam
+                        wichtig.
+                    </li>
+                    <li></li>
+                </ol>
+            </section>
         </article>
 
-        <article class="phases-design-bright">
+        <article
+            id="design"
+            class="phases-design-bright"
+        >
             <h2 class="phases-design">Design</h2>
             <dl>
                 <dt>Typografie</dt>
@@ -280,9 +378,63 @@
                     eine klare Bedeutung haben und leicht verständlich sind.
                 </dd>
             </dl>
+
+            <section class="details">
+                <h3>Kontrast, Farben und dann?</h3>
+                <p>
+                    Für <b>Kontraste</b> gibt es mehrere Anforderungen, die sicherstellen sollen, dass Text auf Hintergrund gut lesbar ist. Dazu gehören:
+
+                </p>
+                <ul>
+                    <li>
+                        <b>Kontrast (grundlegend) von 4.5 : 1</b>: Dieser Kontrastwert gilt für normalen Text. Er sorgt dafür, dass der Text auf dem Hintergrund gut lesbar ist - Lwevel AA.
+                    </li>
+                    <li>
+                        <b>Kontrast (grundlegend) von 3 : 1</b>: Dieser Kontrastwert gilt für großen oder gefetteten Text - Level AA.
+                        </li>
+                    <li>
+                        <b>Kontrast (erweitert) von 7 : 1</b>: Dieser deutlich höhere Kontrast ist für Menschen mit Farbenblindheit, Netzhautablösung und anderen gravierenden Dysfunktionen gedacht - Level AAA.
+                    </li>
+                </ul>
+
+                <p><em>Der erweiterte Kontrast ist ein AAA-Kriterium, d. h. es wird von keiner Prüfung verpflichtend verlangt. Aber es ist für die genannten Zielgruppen unverzichtbar. Dies ist ein Beispiel, dass sich Konformitätsstufen an Aufwand oder Machbarkeit orientieren, anstatt am echten Bedarf von Menschen mit Beinträchtigungen.</em></p>
+
+                <p>Höhere Kontrastmodelle (7:1 oder mehr) werden häufig über die Einstellungen des Betriebssystes angefordert, ebenso wie reduzierte oder invertierte Farben. Diese Einstellungen lassen sich  über Media Queries in CSS abfragen, <a href="user-settings.html">Siehe Benutzereinstellungen</a> und sollten über den Entwurf bedient werden.</p>
+
+                <p>Es gilt: Die Kontraste müssen so gewählt werden, dass sie für alle Menschen gut erkennbar sind. Das übersteigt die in der WCAG oder BITV verlangten Kontrastanforderungen um einiges.</p>
+
+                <h4>Farben</h4>
+                <p>Farben werden in der WCAG nicht gesondert erwähnt. Es gibt Kriterien, die Erkennbarkeit, Nachvollziehbarkeit unf Unterscheidbarkeit einfordern. Der wichtigste Kriterium ist <i>1.4.1 Ohne Farben nutzbar (use of color)</i>. Darin wird beschrieben, dass überall dort, wo Farbe als Bedeutungs-Kennzeichen verwendet wird, mindestens ein weiteres Merkmal zur Erkennung der Bedeutung eingesetzt wird.</p>
+
+                <p>Die Bedeutung von Farben, z. B. Rot = Gefahr, Grün = Ok muss kulturabhängig und nicht allgemeingültig gewählt werden. Dennoch ist Farbe ein wichtiger Beitrag zur Verständlichkeit von Botschaften. Fehlermeldungen sind sinnvollerweise eher rot, oder zumindest nicht grün.</p>
+
+                <h4>Icons</h4>
+                <p>Icons können Farben und Texte gut ergänzen, um dem Kriterium "1.4.1 Ohne Farben nutzbar (use of color)" zu genügen. Auch wenn eine E-Mail nicht in einem Umschlag verschickt wird, ist der Briefumschlag ein gelerntes und geeignetes Icon, um E-Mail zu signalisieren. Bei der Ikonografie geht es um Verständichkeit ohne Worte.</p>
+
+                <p>Im Kontrast sollte sich ein Icon wie Text verhalten, also den Kontrastregeln 3:1, 4.5:1 oder 7:1 entsprechen.</p>
+
+                <h3>Schrift, Zoombarkeit und Text-Umbruch?</h3>
+                <p>Schrift und andere Inhalte sollen auf mindestens 200% vergrößerbar sein, ohne dass ein horizontales Scrollen notwendig wird. Im Wesentlichen erreicht man das mit Hilfe der Geräteunterscheidungen aus dem responsiven Design.</p>
+
+                <p>Der Browser vergrößert via <kbd style="border: 1px solid lightgrey; border-radius: 3px;padding: 2px;">Strg</kbd> + <kbd style="border: 1px solid lightgrey; border-radius: 3px;padding: 2px;">+</kbd> ohne Zutun auf bis zu 500%. Solange die Inhalte hier auf passende Darstellungsgrößen aus dem responsiven Design zurückgreifen können, ist damit das meiste erledigt.</p>
+
+                <p>Mit 200% sollte man sich auf keinen Fall zufrieden geben, Eine Vergößerung auf 500% oder 800% oder noch mehr Prozent ist für Menschen mit nicht korrigierbarem schlechtem Visus unabdingbar.</p>
+
+                <h4>Die zugrundeliegende Schriftgröße?</h4>
+                <p>
+                    Die zugrundeliegende Schriftgröße sollte bei 16px liegen. Das ist die Standardgröße, die die meisten Browser verwenden. Sie ist für die meisten Menschen gut lesbar und ermöglicht eine gute Vergrößerung ohne dass der Text zu klein wird.
+                </p>
+
+                <p>Die DIN 1450 oder der Schriftgrößenrechner bei <a href="https://leserlich.info" target="_blank">leserlich.info</a> würde hier allerding oft widersprechen! Viele Schriften entwickeln erst ab 18px ausreichend, Strichdeutlichkeit oder Größe, um von Menschen mit einem Visus von 0.7 gut gelesen werden zu können.</p>
+
+                <p>Auch hier ist eine Vergrößerbarkeit auf mehr als 200% Pflicht, um Menschen mit einem Visus unter 0.7 zu bedienen. </p>
+
         </article>
 
-        <article class="phases-implementation-bright">
+        <article
+            id="implementation"
+            class="phases-implementation-bright"
+        >
             <h2 class="phases-implementation">Implementierung</h2>
             <dl>
                 <dt>Semantik und W3-Validität</dt>
@@ -318,40 +470,14 @@
                     wiedergegeben werden.
                 </dd>
             </dl>
-            <div class="pruefschritte"
-            >
+
             <!-- - - - - - -->
-                <div
-                    class="card pruefschritt-card section-1"
-                >
-                    <div class="A">A</div>
-                    <div class="wcag-id">WCAG 1.4.1</div>
-                    <div class="bitv-id">BITV 9.1.4.1</div>
-                    Ohne Farben nutzbar
-                </div>
-
-                <div
-                    class="card pruefschritt-card section-2"
-                >
-                    <div class="A">A</div>
-                    <div class="wcag-id">WCAG 1.4.1</div>
-                    <div class="bitv-id">BITV 9.1.4.1</div>
-                    Ohne Farben nutzbar
-                </div>
-
-                <div
-                    class="card pruefschritt-card section-3"
-                >
-                    <div class="A">A</div>
-                    <div class="wcag-id">WCAG 1.4.1</div>
-                    <div class="bitv-id">BITV 9.1.4.1</div>
-                    Ohne Farben nutzbar
-                </div>
-                <!-- - - - - - -->
-            </div>
         </article>
 
-        <article class="phases-testing-bright">
+        <article
+            id="testing"
+            class="phases-testing-bright"
+        >
             <h2 class="phases-testing">Testen, Qualitätssicherung</h2>
             <dl>
                 <dt>Laufende Qualitätssicherung</dt>
@@ -375,7 +501,10 @@
             </dl>
         </article>
 
-        <article class="phases-release-bright">
+        <article
+            id="release"
+            class="phases-release-bright"
+        >
             <h2 class="phases-release">Release</h2>
             <dl>
                 <dt>Barrierefreiheits-Erklärung</dt>
@@ -400,7 +529,10 @@
             </dl>
         </article>
 
-        <article class="phases-maintenance-bright">
+        <article
+            id="maintenance"
+            class="phases-maintenance-bright"
+        >
             <h2 class="phases-maintenance">Wartung, Lifecycle, Updates</h2>
             <dl>
                 <dt>Feedback</dt>
