@@ -1338,6 +1338,7 @@ function loadAndRenderData() {
         .then((response) => response.json())
         .then((data) => {
             renderTree(data)
+            enhanceCategoryHeaderAccessibility() // Neue Funktion aufrufen
             initKeyboardNavigation()
             initializeFilters() // Initialize filters after rendering
         })
@@ -1366,6 +1367,102 @@ function handleMouseLeave(element, tooltip) {
 function renderTree(bitvData) {
     const container = document.querySelector(".tree-container")
 
+    // Mapping der Sektionen zu WCAG-Kategorien und EN 301 549 Addons
+    const sectionCategoryMapping = {
+        // WCAG Kategorien (basierend auf den Sektionstiteln aus dem Bild)
+        "Textalternativen": {
+            type: "wcag",
+            category: "perceivable",
+            title: "Wahrnehmbar",
+        },
+        "Zeitbasierte Medien": {
+            type: "wcag",
+            category: "perceivable",
+            title: "Wahrnehmbar",
+        },
+        "Anpassbar": {
+            type: "wcag",
+            category: "perceivable",
+            title: "Wahrnehmbar",
+        },
+        "Unterscheidbar": {
+            type: "wcag",
+            category: "perceivable",
+            title: "Wahrnehmbar",
+        },
+        "Tastaturbedienbar": {
+            type: "wcag",
+            category: "operable",
+            title: "Bedienbar",
+        },
+        "Ausreichend Zeit": {
+            type: "wcag",
+            category: "operable",
+            title: "Bedienbar",
+        },
+        "Anfälle": { type: "wcag", category: "operable", title: "Bedienbar" },
+        "Navigierbar": {
+            type: "wcag",
+            category: "operable",
+            title: "Bedienbar",
+        },
+        "Eingabemodalitäten": {
+            type: "wcag",
+            category: "operable",
+            title: "Bedienbar",
+        },
+        "Lesbar": {
+            type: "wcag",
+            category: "understandable",
+            title: "Verständlich",
+        },
+        "Vorhersehbar": {
+            type: "wcag",
+            category: "understandable",
+            title: "Verständlich",
+        },
+        "Eingabeunterstützung": {
+            type: "wcag",
+            category: "understandable",
+            title: "Verständlich",
+        },
+        "Kompatibel": { type: "wcag", category: "robust", title: "Robust" },
+
+        // EN 301 549 Addons
+        "Allgemeine Anforderungen": {
+            type: "en301549",
+            category: "addon1",
+            title: "EN 301 549 Addons I",
+        },
+        "Zwei-Wege-Sprachkommunikation": {
+            type: "en301549",
+            category: "addon2",
+            title: "EN 301 549 Addons II",
+        },
+        "Videofähigkeiten": {
+            type: "en301549",
+            category: "addon2",
+            title: "EN 301 549 Addons II",
+        },
+        "Benutzerpräferenzen": {
+            type: "en301549",
+            category: "addon3",
+            title: "EN 301 549 Addons III",
+        },
+        "Autorenwerkzeuge": {
+            type: "en301549",
+            category: "addon3",
+            title: "EN 301 549 Addons III",
+        },
+        "Dokumentation und Support": {
+            type: "en301549",
+            category: "addon4",
+            title: "EN 301 549 Addons IV",
+        },
+    }
+
+    let lastCategoryHeader = null
+
     bitvData.sections.forEach((section, index) => {
         const sectionObj = section["undefined"]
         if (!sectionObj) return
@@ -1373,97 +1470,111 @@ function renderTree(bitvData) {
         const column = document.createElement("div")
         column.className = "section-column"
 
-        // Erstelle die übergeordnete Kategorie-Karte (schwarz)
+        // Prüfe, ob eine neue Kategorie-Header benötigt wird
+        const categoryInfo = sectionCategoryMapping[sectionObj.title]
+        if (categoryInfo) {
+            const currentCategoryKey = `${categoryInfo.type}-${categoryInfo.category}`
+
+            if (lastCategoryHeader !== currentCategoryKey) {
+                // Erstelle Kategorie-Header
+                const categoryHeader = document.createElement("div")
+                categoryHeader.className = `${categoryInfo.type}-category-header ${categoryInfo.category}`
+                categoryHeader.textContent = categoryInfo.title
+                categoryHeader.setAttribute("role", "heading")
+                categoryHeader.setAttribute("aria-level", "2")
+
+                column.appendChild(categoryHeader)
+                lastCategoryHeader = currentCategoryKey
+            }
+        }
+
+        // Erstelle die übergeordnete Kategorie-Karte (schwarz) - bestehender Code
         const categoryCard = document.createElement("div")
         categoryCard.className = "card category-card"
         categoryCard.textContent = " "
 
         column.appendChild(categoryCard)
 
-        // Create section card
+        // Create section card - bestehender Code
         const sectionCard = document.createElement("div")
         sectionCard.className = `card section-card section-${index + 1}`
         sectionCard.textContent = sectionObj.title
 
-        // Create and store tooltip
+        // Create and store tooltip - bestehender Code
         if (sectionObj.details?.description) {
             const tooltip = createTooltip(sectionObj.details.description)
-            sectionCard.tooltipElement = tooltip
-
-            // Add mouse events for section card
-            sectionCard.addEventListener("mouseenter", () =>
-                handleMouseEnter(sectionCard, tooltip)
-            )
-            sectionCard.addEventListener("mouseleave", () =>
-                handleMouseLeave(sectionCard, tooltip)
-            )
+            if (tooltip) {
+                sectionCard.tooltipElement = tooltip
+                sectionCard.setAttribute("data-has-tooltip", "true")
+            }
         }
 
         column.appendChild(sectionCard)
 
+        // Bestehender Code für Prüfschritte
         sectionObj.pruefschritte.forEach((pruefschritt) => {
-            const pruefschrittCard = document.createElement("div")
-            pruefschrittCard.className = `card pruefschritt-card section-${
-                index + 1
-            }`
+            const card = document.createElement("div")
+            card.className = "card pruefschritt-card"
+            card.setAttribute("role", "button")
+            card.setAttribute("tabindex", "0")
+            card.setAttribute("aria-describedby", `desc-${pruefschritt.id}`)
 
-            // Store pruefschritt data for modal
-            pruefschrittCard.pruefschrittData = pruefschritt
-            let hasInformation = false
-            if (pruefschritt.details.description === "") {
-                //console.log(pruefschritt.id, pruefschritt.title)
-            } else {
-                hasInformation = true
+            // Prüfschritt-Titel
+            const titleElement = document.createElement("div")
+            titleElement.className = "pruefschritt-title"
+            titleElement.textContent = pruefschritt.title
+
+            // WCAG-ID
+            if (pruefschritt.wcagId) {
+                const wcagIdElement = document.createElement("div")
+                wcagIdElement.className = "wcag-id"
+                wcagIdElement.textContent = `WCAG ${pruefschritt.wcagId}`
+                card.appendChild(wcagIdElement)
             }
 
-            const wcagId = pruefschritt.wcagId
-                ? `<div class="wcag-id">WCAG ${pruefschritt.wcagId}</div>`
-                : ""
-
-            const bitvId = pruefschritt.bitvId
-                ? `<div class="bitv-id">BITV ${pruefschritt.bitvId}</div>`
-                : ""
-
-            const conformanceLevel = pruefschritt.conformanceLevel
-                ? `<div class="${pruefschritt.conformanceLevel}">${pruefschritt.conformanceLevel}</div>`
-                : ""
-
-            if (bitvId !== "") {
-                pruefschrittCard.classList.add("is-bitv")
+            // BITV-ID
+            if (pruefschritt.bitvId) {
+                const bitvIdElement = document.createElement("div")
+                bitvIdElement.className = "bitv-id"
+                bitvIdElement.textContent = `BITV ${pruefschritt.bitvId}`
+                card.appendChild(bitvIdElement)
+                card.classList.add("is-bitv")
             }
 
-            if (hasInformation === true) {
-                pruefschrittCard.classList.add("has-information")
+            card.appendChild(titleElement)
+
+            // Konformitätslevel
+            if (pruefschritt.conformanceLevel) {
+                const levelElement = document.createElement("div")
+                levelElement.className = pruefschritt.conformanceLevel
+                levelElement.textContent = pruefschritt.conformanceLevel
+                card.appendChild(levelElement)
             }
 
-            pruefschrittCard.innerHTML = `${conformanceLevel}
-                ${wcagId}
-                ${bitvId}
-                ${pruefschritt.title}`
+            // Bestehender Code für Sektionsfarbe, Tooltips, etc.
+            card.style.backgroundColor = getComputedStyle(
+                document.documentElement
+            ).getPropertyValue(`--section-${index + 1}`)
+            card.style.color = getComputedStyle(
+                document.documentElement
+            ).getPropertyValue(`--onSection-${index + 1}`)
 
-            // Füge Berufsgruppen-Marker hinzu
-            addProfessionMarkers(pruefschrittCard, pruefschritt)
-
-            // Create and store tooltip
+            // Tooltip erstellen
             if (pruefschritt.details?.description) {
                 const tooltip = createTooltip(pruefschritt.details.description)
-                pruefschrittCard.tooltipElement = tooltip
-
-                // Add mouse events for pruefschritt card
-                pruefschrittCard.addEventListener("mouseenter", () =>
-                    handleMouseEnter(pruefschrittCard, tooltip)
-                )
-                pruefschrittCard.addEventListener("mouseleave", () =>
-                    handleMouseLeave(pruefschrittCard, tooltip)
-                )
-                pruefschrittCard.addEventListener("click", () => {
-                    if (pruefschrittCard.pruefschrittData) {
-                        showDetails(pruefschrittCard.pruefschrittData)
-                    }
-                })
+                if (tooltip) {
+                    card.tooltipElement = tooltip
+                    card.setAttribute("data-has-tooltip", "true")
+                }
             }
 
-            column.appendChild(pruefschrittCard)
+            // Berufsgruppen-Marker hinzufügen
+            addProfessionMarkers(card, pruefschritt)
+
+            // Daten für Modal-Dialog speichern
+            card.pruefschrittData = pruefschritt
+
+            column.appendChild(card)
         })
 
         container.appendChild(column)
@@ -2190,6 +2301,7 @@ function attachNavigationEventListeners(panel) {
     // Drag-Funktionalität
     let isDragging = false
     let startPos = { x: 0, y: 0 }
+
     let panelPos = { x: 0, y: 0 }
 
     dragHandle?.addEventListener("mousedown", (e) => {
@@ -2359,4 +2471,57 @@ function getNavigationStatus() {
         width: rect.width,
         height: rect.height,
     }
+}
+
+/**
+ * Verbessert die Accessibility für Kategorien-Header
+ */
+function enhanceCategoryHeaderAccessibility() {
+    // WCAG Kategorien-Header
+    document
+        .querySelectorAll(".wcag-category-header")
+        .forEach((header, index) => {
+            header.setAttribute("id", `wcag-category-${index + 1}`)
+            header.setAttribute("role", "banner")
+            header.setAttribute(
+                "aria-label",
+                `WCAG Hauptkategorie: ${header.textContent}`
+            )
+
+            // Verknüpfe nachfolgende Sektionen mit diesem Header
+            let nextElement = header.nextElementSibling
+            while (
+                nextElement &&
+                !nextElement.classList.contains("wcag-category-header")
+            ) {
+                if (nextElement.classList.contains("section-column")) {
+                    nextElement.setAttribute("aria-labelledby", header.id)
+                }
+                nextElement = nextElement.nextElementSibling
+            }
+        })
+
+    // EN 301 549 Kategorien-Header
+    document
+        .querySelectorAll(".en301549-category-header")
+        .forEach((header, index) => {
+            header.setAttribute("id", `en301549-category-${index + 1}`)
+            header.setAttribute("role", "banner")
+            header.setAttribute(
+                "aria-label",
+                `EN 301 549 Kategorie: ${header.textContent}`
+            )
+
+            // Verknüpfe nachfolgende Sektionen mit diesem Header
+            let nextElement = header.nextElementSibling
+            while (
+                nextElement &&
+                !nextElement.classList.contains("en301549-category-header")
+            ) {
+                if (nextElement.classList.contains("section-column")) {
+                    nextElement.setAttribute("aria-labelledby", header.id)
+                }
+                nextElement = nextElement.nextElementSibling
+            }
+        })
 }

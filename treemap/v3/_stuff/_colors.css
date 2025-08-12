@@ -3,45 +3,45 @@
    ============================== */
 :root {
     /* Sektionsfarben */
-    --section-1: hsl(0, 100%, 75%);
-    --onSection-1: #fff;
-    --section-2: hsl(18, 100%, 75%);
-    --onSection-2: #fff;
-    --section-3: hsl(36, 100%, 75%);
+    --section-1: #CADA6C; /* Allgemeine Anforderungen */
+    --onSection-1: #000;
+    --section-2: #BED24B; /* Zwei-Wege-Sprachkommunikation */
+    --onSection-2: #000;
+    --section-3: #AEC431; /* Videofähigkeiten */
     --onSection-3: #000;
-    --section-4: hsl(54, 100%, 75%); /* 1.1 */
+    --section-4: #DAB46C; /* Textalternativen */
     --onSection-4: #000;
-    --section-5: hsl(72, 100%, 75%);
+    --section-5: #D2A34B; /* Zeitbasierte Medien */
     --onSection-5: #000;
-    --section-6: hsl(90, 100%, 75%);
+    --section-6: #C49031; /* Anpassbar */
     --onSection-6: #000;
-    --section-7: hsl(108, 100%, 75%);
-    --onSection-7: #000;
-    --section-8: hsl(126, 100%, 75%);
+    --section-7: #A37829; /* Unterscheidbar */
+    --onSection-7: #fff;
+    --section-8: #DA7D6C; /* Tastaturbedienbar */
     --onSection-8: #000;
-    --section-9: hsl(144, 100%, 75%);
+    --section-9: #D2604B; /* Ausreichend Zeit */
     --onSection-9: #000;
-    --section-10: hsl(162, 100%, 75%);
-    --onSection-10: #000;
-    --section-11: hsl(180, 100%, 75%);
-    --onSection-11: #000;
-    --section-12: hsl(198, 100%, 75%);
-    --onSection-12: #000;
-    --section-13: hsl(216, 100%, 75%);
+    --section-10: #C44731; /* Anfälle */
+    --onSection-10: #fff;
+    --section-11: #A33B29; /* Navigierbar */
+    --onSection-11: #fff;
+    --section-12: #A33B29; /* Eingabemodalitäten */
+    --onSection-12: #fff;
+    --section-13: #6CCADA; /* Lesbar */
     --onSection-13: #000;
-    --section-14: hsl(234, 100%, 75%);
-    --onSection-14: #fff;
-    --section-15: hsl(252, 100%, 75%);
-    --onSection-15: #fff;
-    --section-16: hsl(267, 88%, 74%);
-    --onSection-16: #fff;
-    --section-17: hsl(283, 89%, 75%);
-    --onSection-17: #fff;
-    --section-18: hsl(302, 76%, 73%);
+    --section-14: #4BBED2; /* Vorhersehbar */
+    --onSection-14: #000;
+    --section-15: #31AEC4; /* Eingabeunterstützung */
+    --onSection-15: #000;
+    --section-16: #6C93DA; /* Kompatibel */
+    --onSection-16: #000;
+    --section-17: #31C447; /* Benutzerpräferenzen */
+    --onSection-17: #000;
+    --section-18: #29A33B; /* Autorenwerkzeuge */
     --onSection-18: #fff;
-    --section-19: hsl(324, 100%, 75%);
-    --onSection-19: #fff;
-    --section-20: hsl(2, 100%, 74%);
+    --section-19: #6CDAB4; /* Dokumentation und Support */
+    --onSection-19: #000;
+    --section-20: hsl(2, 100%, 74%); /* Sonstige */
     --onSection-20: #fff;
 
     /* Konformitätslevel-Farben */

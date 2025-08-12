@@ -26,88 +26,8 @@
   12. Animationen
    ============================== */
 
-/* ==============================
-   1. Variablen und Farbdefinitionen
-   ============================== */
-:root {
-    /* Sektionsfarben */
-    --section-1: hsl(0, 100%, 75%);
-    --onSection-1: #fff;
-    --section-2: hsl(18, 100%, 75%);
-    --onSection-2: #fff;
-    --section-3: hsl(36, 100%, 75%);
-    --onSection-3: #000;
-    --section-4: hsl(54, 100%, 75%);
-    --onSection-4: #000;
-    --section-5: hsl(72, 100%, 75%);
-    --onSection-5: #000;
-    --section-6: hsl(90, 100%, 75%);
-    --onSection-6: #000;
-    --section-7: hsl(108, 100%, 75%);
-    --onSection-7: #000;
-    --section-8: hsl(126, 100%, 75%);
-    --onSection-8: #000;
-    --section-9: hsl(144, 100%, 75%);
-    --onSection-9: #000;
-    --section-10: hsl(162, 100%, 75%);
-    --onSection-10: #000;
-    --section-11: hsl(180, 100%, 75%);
-    --onSection-11: #000;
-    --section-12: hsl(198, 100%, 75%);
-    --onSection-12: #000;
-    --section-13: hsl(216, 100%, 75%);
-    --onSection-13: #000;
-    --section-14: hsl(234, 100%, 75%);
-    --onSection-14: #fff;
-    --section-15: hsl(252, 100%, 75%);
-    --onSection-15: #fff;
-    --section-16: hsl(267, 88%, 74%);
-    --onSection-16: #fff;
-    --section-17: hsl(283, 89%, 75%);
-    --onSection-17: #fff;
-    --section-18: hsl(302, 76%, 73%);
-    --onSection-18: #fff;
-    --section-19: hsl(324, 100%, 75%);
-    --onSection-19: #fff;
-    --section-20: hsl(2, 100%, 74%);
-    --onSection-20: #fff;
-
-    /* Konformitätslevel-Farben */
-    --A: hsl(181, 100%, 29%);
-    --onA: #fff;
-    --AA: hsl(59, 100%, 29%);
-    --onAA: #fff;
-    --AAA: hsl(33, 100%, 29%);
-    --onAAA: #fff;
-
-    /* Berufsgruppen-Farben */
-    --requirements: hsl(41, 100%, 74%);
-    --onRequirements: #000;
-    --design: hsl(35, 100%, 50%);
-    --onDesign: #000;
-    --development: hsl(9, 100%, 50%);
-    --onDevelopment: #fff;
-    --testing: hsl(205, 100%, 50%);
-    --onTesting: #fff;
-    --release: hsl(154, 100%, 28%);
-    --onRelease: #fff;
-    --maintenance: hsl(268, 69%, 34%);
-    --onMaintenance: #fff;
-    --content: hsl(205, 82%, 78%);
-    --onContent: #000;
-    --uxWriter: hsl(204, 43%, 65%);
-    --onUxWriter: #fff;
-    --redaktion: hsl(204, 43%, 65%);
-    --onRedaktion: #fff;
-    --corporateText: hsl(205, 78%, 77%);
-    --onCorporateText: #000;
-
-    /* Globale Variablen */
-    --primary-focus-color: #4d90fe;
-    --focus-outline-width: 2px;
-    --focus-outline-offset: 2px;
-    --transition-speed: 0.2s;
-}
+@import "treemap-colors";
+@import "treemap-controls";
 
 /* ==============================
    2. Basis-Styling
@@ -201,6 +121,16 @@ body {
     border-radius: 0;
     margin-top: 0;
     border-top: none;
+    border: 5px solid white;
+    min-height: 40px;
+    max-height: 120px;
+    height: 120px;
+    font-size: 1.2rem;
+}
+
+[class*="category-header"] {
+    margin-block-start: -4.2rem;
+    border: 2px solid white;
 }
 
 .category-card {
@@ -263,14 +193,16 @@ body {
 .A,
 .AA,
 .AAA {
+    position: absolute;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 2rem;
     height: 2rem;
-    margin-left: -0px;
-    margin-top: -1.9rem;
+
+    margin-top:7rem;
     font-size: 0.8rem;
     color: #fff;
     border: 2px solid white;
@@ -493,274 +425,6 @@ body {
 .tooltip.visible {
     opacity: 0.95;
     transform: translateY(-50%) scale(1);
-}
-
-/* ==============================
-   7. Filter-Leiste und Steuerelemente
-   ============================== */
-/* Filter-Container */
-.filter-bar {
-    margin: 1rem 0 2rem;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 0.5rem;
-    display: flex;
-    gap: 2vw;
-    align-items: center;
-    flex-wrap: wrap;
-
-    & * {
-        font-size: 1.5vh !important;
-    }
-}
-
-/* Suchfeld */
-.search-container {
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-    min-width: 300px;
-}
-
-.search-container .material-icons {
-    margin-right: 0.5rem;
-    opacity: 0.7;
-}
-
-#searchInput {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    width: 100%;
-    outline: none;
-}
-
-#searchInput::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-#searchInput:focus {
-    outline: var(--focus-outline-width) solid white;
-    outline-offset: var(--focus-outline-offset);
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-.filter-buttons {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.active-filters {
-    font-size: 0.9rem;
-    opacity: 0.7;
-}
-
-/* Filter-Buttons Basisstil */
-.filter-btn,
-.standard-filter-btn,
-.profession-filter-btn {
-    background: none;
-    color: white;
-    cursor: pointer;
-    transition: all var(--transition-speed);
-}
-
-.filter-btn:hover,
-.standard-filter-btn:hover,
-.profession-filter-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-1px);
-}
-
-.filter-btn:focus,
-.standard-filter-btn:focus,
-.profession-filter-btn:focus,
-.filter-btn:focus-visible,
-.standard-filter-btn:focus-visible,
-.profession-filter-btn:focus-visible {
-    outline: var(--focus-outline-width) solid white;
-    outline-offset: var(--focus-outline-offset);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-/* Spezifische Filter-Button-Stile */
-.filter-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-}
-
-.filter-btn[aria-pressed="true"] {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: white;
-}
-
-/* Konformitätslevel-Buttons */
-.filter-btn[data-level="A"] {
-    border-color: var(--A);
-}
-
-.filter-btn[data-level="AA"] {
-    border-color: var(--AA);
-}
-
-.filter-btn[data-level="AAA"] {
-    border-color: var(--AAA);
-}
-
-.filter-btn[aria-pressed="true"][data-level="A"] {
-    background: var(--A);
-}
-
-.filter-btn[aria-pressed="true"][data-level="AA"] {
-    background: var(--AA);
-}
-
-.filter-btn[aria-pressed="true"][data-level="AAA"] {
-    background: var(--AAA);
-}
-
-/* Standard-Filter-Buttons */
-.standard-filter-btn {
-    padding: 8px 12px;
-    border-radius: 4px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    margin-right: 5px;
-}
-
-.standard-filter-btn[aria-pressed="true"] {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-color: white;
-}
-
-/* Berufsgruppen-Filter */
-.profession-filter-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.profession-filter-btn[aria-pressed="true"] {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-color: white;
-}
-
-/* Berufsgruppen-Farben für Buttons */
-.profession-filter-btn.requirements {
-    border-color: var(--requirements);
-}
-.profession-filter-btn.design {
-    border-color: var(--design);
-}
-.profession-filter-btn.entwicklung {
-    border-color: var(--development);
-}
-.profession-filter-btn.testing {
-    border-color: var(--testing);
-}
-.profession-filter-btn.release {
-    border-color: var(--release);
-}
-.profession-filter-btn.maintenance {
-    border-color: var(--maintenance);
-}
-.profession-filter-btn.content {
-    border-color: var(--content);
-}
-.profession-filter-btn.ux-writer {
-    border-color: var(--uxWriter);
-}
-.profession-filter-btn.redaktion {
-    border-color: var(--redaktion);
-}
-.profession-filter-btn.corporate-text {
-    border-color: var(--corporateText);
-}
-
-.profession-filter-btn[aria-pressed="true"].requirements {
-    background-color: var(--requirements);
-    color: var(--onRequirements);
-}
-.profession-filter-btn[aria-pressed="true"].design {
-    background-color: var(--design);
-    color: var(--onDesign);
-}
-.profession-filter-btn[aria-pressed="true"].entwicklung {
-    background-color: var(--development);
-    color: var(--onDevelopment);
-}
-.profession-filter-btn[aria-pressed="true"].testing {
-    background-color: var(--testing);
-    color: var(--onTesting);
-}
-.profession-filter-btn[aria-pressed="true"].release {
-    background-color: var(--release);
-    color: var(--onRelease);
-}
-.profession-filter-btn[aria-pressed="true"].maintenance {
-    background-color: var(--maintenance);
-    color: var(--onMaintenance);
-}
-.profession-filter-btn[aria-pressed="true"].content {
-    background-color: var(--content);
-    color: var(--onContent);
-}
-.profession-filter-btn[aria-pressed="true"].ux-writer {
-    background-color: var(--uxWriter);
-    color: var(--onUxWriter);
-}
-.profession-filter-btn[aria-pressed="true"].redaktion {
-    background-color: var(--redaktion);
-    color: var(--onRedaktion);
-}
-.profession-filter-btn[aria-pressed="true"].corporate-text {
-    background-color: var(--corporateText);
-    color: var(--onCorporateText);
-}
-
-/* Filter-Gruppen */
-.filter-group {
-    margin-bottom: 15px;
-}
-
-.filter-group-title {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 8px;
-}
-
-.filter-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-/* Anzeigeoptionen */
-.display-options {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.toggle-option {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
-.toggle-option input[type="checkbox"] {
-    margin-right: 10px;
 }
 
 /* Gefilterte Karten ausblenden */
@@ -1304,5 +968,104 @@ body {
 
     + * {
         margin-top: 20rem;
+    }
+}
+
+/* ==============================
+   5.1 Kategorien-Header (WCAG & EN 301 549)
+   ============================== */
+
+/* WCAG Hauptkategorien-Header */
+.wcag-category-header {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+
+.wcag-category-header.perceivable {
+    background-color: var(--wcag-perceivable);
+    color: var(--onWcag-perceivable);
+}
+
+.wcag-category-header.operable {
+    background-color: var(--wcag-operable);
+    color: var(--onWcag-operable);
+}
+
+.wcag-category-header.understandable {
+    background-color: var(--wcag-understandable);
+    color: var(--onWcag-understandable);
+}
+
+.wcag-category-header.robust {
+    background-color: var(--wcag-robust);
+    color: var(--onWcag-robust);
+}
+
+/* EN 301 549 Addons-Header */
+.en301549-category-header {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+
+.en301549-category-header.addon1 {
+    background-color: var(--en301549-addon1);
+    color: var(--onEn301549-addon1);
+}
+
+.en301549-category-header.addon2 {
+    background-color: var(--en301549-addon2);
+    color: var(--onEn301549-addon2);
+}
+
+.en301549-category-header.addon3 {
+    background-color: var(--en301549-addon3);
+    color: var(--onEn301549-addon3);
+}
+
+.en301549-category-header.addon4 {
+    background-color: var(--en301549-addon4);
+    color: var(--onEn301549-addon4);
+}
+
+/* Hover-Effekte für Kategorien-Header */
+.wcag-category-header:hover,
+.en301549-category-header:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease;
+}
+
+/* Responsive Anpassungen für Kategorien-Header */
+@media (max-width: 768px) {
+    .wcag-category-header,
+    .en301549-category-header {
+        font-size: 0.75rem;
+        padding: 6px 8px;
+        margin-bottom: 8px;
     }
 }

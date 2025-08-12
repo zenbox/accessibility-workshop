@@ -115,8 +115,8 @@ function createMainNavigation() {
             text: "Startseite",
         },
         {
-            file: "treemap/v2/index.html",
-            text: "Kriterien (v2)",
+            file: "treemap/v3/index.html",
+            text: "Kriterien (v3)",
         },
 
         {

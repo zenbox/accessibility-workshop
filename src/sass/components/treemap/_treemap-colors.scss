@@ -1,0 +1,102 @@
+/* ==============================
+   1. Variablen und Farbdefinitionen
+   ============================== */
+:root {
+    /* WCAG Hauptkategorien-Farben */
+    --wcag-perceivable: hsl(120, 60%, 35%);
+    --onWcag-perceivable: #fff;
+    --wcag-operable: hsl(30, 80%, 45%);
+    --onWcag-operable: #fff;
+    --wcag-understandable: hsl(210, 70%, 45%);
+    --onWcag-understandable: #fff;
+    --wcag-robust: hsl(300, 60%, 40%);
+    --onWcag-robust: #fff;
+
+    /* EN 301 549 Addons-Farben */
+    --en301549-addon1: hsl(0, 0%, 25%);
+    --onEn301549-addon1: #fff;
+    --en301549-addon2: hsl(0, 0%, 35%);
+    --onEn301549-addon2: #fff;
+    --en301549-addon3: hsl(0, 0%, 45%);
+    --onEn301549-addon3: #fff;
+    --en301549-addon4: hsl(0, 0%, 55%);
+    --onEn301549-addon4: #000;
+
+    /* Bestehende Sektionsfarben */
+    --section-1: #cada6c; /* Allgemeine Anforderungen */
+    --onSection-1: #000;
+    --section-2: #bed24b; /* Zwei-Wege-Sprachkommunikation */
+    --onSection-2: #000;
+    --section-3: #aec431; /* Videofähigkeiten */
+    --onSection-3: #000;
+    --section-4: #dab46c; /* Textalternativen */
+    --onSection-4: #000;
+    --section-5: #d2a34b; /* Zeitbasierte Medien */
+    --onSection-5: #000;
+    --section-6: #c49031; /* Anpassbar */
+    --onSection-6: #000;
+    --section-7: #a37829; /* Unterscheidbar */
+    --onSection-7: #fff;
+    --section-8: #da7d6c; /* Tastaturbedienbar */
+    --onSection-8: #000;
+    --section-9: #d2604b; /* Ausreichend Zeit */
+    --onSection-9: #000;
+    --section-10: #c44731; /* Anfälle */
+    --onSection-10: #fff;
+    --section-11: #a33b29; /* Navigierbar */
+    --onSection-11: #fff;
+    --section-12: #a33b29; /* Eingabemodalitäten */
+    --onSection-12: #fff;
+    --section-13: #6ccada; /* Lesbar */
+    --onSection-13: #000;
+    --section-14: #4bbed2; /* Vorhersehbar */
+    --onSection-14: #000;
+    --section-15: #31aec4; /* Eingabeunterstützung */
+    --onSection-15: #000;
+    --section-16: #6c93da; /* Kompatibel */
+    --onSection-16: #000;
+    --section-17: #31c447; /* Benutzerpräferenzen */
+    --onSection-17: #000;
+    --section-18: #29a33b; /* Autorenwerkzeuge */
+    --onSection-18: #fff;
+    --section-19: #6cdab4; /* Dokumentation und Support */
+    --onSection-19: #000;
+    --section-20: hsl(2, 100%, 74%); /* Sonstige */
+    --onSection-20: #fff;
+
+    /* Konformitätslevel-Farben */
+    --A: hsl(181, 100%, 29%);
+    --onA: #fff;
+    --AA: hsl(59, 100%, 29%);
+    --onAA: #fff;
+    --AAA: hsl(33, 100%, 29%);
+    --onAAA: #fff;
+
+    /* Berufsgruppen-Farben */
+    --requirements: hsl(41, 100%, 74%);
+    --onRequirements: #000;
+    --design: hsl(35, 100%, 50%);
+    --onDesign: #000;
+    --development: hsl(9, 100%, 50%);
+    --onDevelopment: #fff;
+    --testing: hsl(205, 100%, 50%);
+    --onTesting: #fff;
+    --release: hsl(154, 100%, 28%);
+    --onRelease: #fff;
+    --maintenance: hsl(268, 69%, 34%);
+    --onMaintenance: #fff;
+    --content: hsl(205, 82%, 78%);
+    --onContent: #000;
+    --uxWriter: hsl(204, 43%, 65%);
+    --onUxWriter: #fff;
+    --redaktion: hsl(204, 43%, 65%);
+    --onRedaktion: #fff;
+    --corporateText: hsl(205, 78%, 77%);
+    --onCorporateText: #000;
+
+    /* Globale Variablen */
+    --primary-focus-color: #4d90fe;
+    --focus-outline-width: 2px;
+    --focus-outline-offset: 2px;
+    --transition-speed: 0.2s;
+}

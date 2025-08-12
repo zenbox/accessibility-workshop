@@ -1,0 +1,430 @@
+/* Navigation Controls */
+.nav-controls {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+    z-index: 1001;
+}
+
+.nav-drag-handle,
+.nav-toggle-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-speed) ease,
+        transform var(--transition-speed) ease;
+}
+
+.nav-drag-handle:hover,
+.nav-toggle-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.nav-drag-handle:focus,
+.nav-toggle-button:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+.nav-drag-handle {
+    cursor: move;
+}
+
+.nav-drag-handle:active {
+    cursor: grabbing;
+}
+
+/* Navigation Panel Transitions */
+.top-centered-container {
+    transition: transform var(--transition-speed) ease,
+        height var(--transition-speed) ease;
+    position: fixed;
+    min-width: 24rem;
+    max-width: 80rem;
+    background-color: rgba(0, 0, 0, 0.85);
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 0.5rem;
+    margin-top: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 5px 5px;
+    min-height: 40px;
+}
+
+.nav-content {
+    transition: max-height var(--transition-speed) ease,
+        opacity var(--transition-speed) ease;
+    overflow: hidden;
+}
+
+/* Collapsed State */
+.top-centered-container.collapsed .nav-content {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+}
+
+.top-centered-container.collapsed {
+    height: 40px;
+    overflow: hidden;
+}
+
+.top-centered-container.collapsed .nav-toggle-button .material-icons {
+    transform: rotate(180deg);
+}
+
+/* Dragging State */
+.top-centered-container.dragging {
+    transition: none;
+    user-select: none;
+    cursor: grabbing;
+}
+
+/* TODO: experimentell: die Schriftgröße eines Elements stabilisieren */
+@media (max-width: 980px) and (resolution: 192dpi) {
+    .filter-bar {
+        /* border: 4px solid red !important; */
+
+        * {
+            font-size: clamp(16px, 1.1vw, 24px) !important;
+        }
+    }
+}
+
+@media (max-width: 980px) and (resolution: 196dpi) {
+    .filter-bar {
+        /* border: 4px solid red !important; */
+
+        * {
+            font-size: clamp(16px, 1.5vh, 24px) !important;
+        }
+    }
+}
+
+/* Suchfeld */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    min-width: 300px;
+}
+
+.search-container .material-icons {
+    margin-right: 0.5rem;
+    opacity: 0.7;
+}
+
+#searchInput {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+}
+
+#searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#searchInput:focus {
+    outline: var(--focus-outline-width) solid white;
+    outline-offset: var(--focus-outline-offset);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.active-filters {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Filter-Buttons Basisstil */
+.filter-btn,
+.standard-filter-btn,
+.profession-filter-btn {
+    background: none;
+    color: white;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.filter-btn:hover,
+.standard-filter-btn:hover,
+.profession-filter-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.filter-btn:focus,
+.standard-filter-btn:focus,
+.profession-filter-btn:focus,
+.filter-btn:focus-visible,
+.standard-filter-btn:focus-visible,
+.profession-filter-btn:focus-visible {
+    outline: var(--focus-outline-width) solid white;
+    outline-offset: var(--focus-outline-offset);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Spezifische Filter-Button-Stile */
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+}
+
+.filter-btn[aria-pressed="true"] {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: white;
+}
+
+/* Konformitätslevel-Buttons */
+.filter-btn[data-level="A"] {
+    border-color: var(--A);
+}
+
+.filter-btn[data-level="AA"] {
+    border-color: var(--AA);
+}
+
+.filter-btn[data-level="AAA"] {
+    border-color: var(--AAA);
+}
+
+.filter-btn[aria-pressed="true"][data-level="A"] {
+    background: var(--A);
+}
+
+.filter-btn[aria-pressed="true"][data-level="AA"] {
+    background: var(--AA);
+}
+
+.filter-btn[aria-pressed="true"][data-level="AAA"] {
+    background: var(--AAA);
+}
+
+/* Standard-Filter-Buttons */
+.standard-filter-btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-right: 5px;
+}
+
+.standard-filter-btn[aria-pressed="true"] {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: white;
+}
+
+/* Berufsgruppen-Filter */
+.profession-filter-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.profession-filter-btn[aria-pressed="true"] {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: white;
+}
+
+/* Berufsgruppen-Farben für Buttons */
+.profession-filter-btn.requirements {
+    border-color: var(--requirements);
+}
+.profession-filter-btn.design {
+    border-color: var(--design);
+}
+.profession-filter-btn.entwicklung {
+    border-color: var(--development);
+}
+.profession-filter-btn.testing {
+    border-color: var(--testing);
+}
+.profession-filter-btn.release {
+    border-color: var(--release);
+}
+.profession-filter-btn.maintenance {
+    border-color: var(--maintenance);
+}
+.profession-filter-btn.content {
+    border-color: var(--content);
+}
+.profession-filter-btn.ux-writer {
+    border-color: var(--uxWriter);
+}
+.profession-filter-btn.redaktion {
+    border-color: var(--redaktion);
+}
+.profession-filter-btn.corporate-text {
+    border-color: var(--corporateText);
+}
+
+.profession-filter-btn[aria-pressed="true"].requirements {
+    background-color: var(--requirements);
+    color: var(--onRequirements);
+}
+.profession-filter-btn[aria-pressed="true"].design {
+    background-color: var(--design);
+    color: var(--onDesign);
+}
+.profession-filter-btn[aria-pressed="true"].entwicklung {
+    background-color: var(--development);
+    color: var(--onDevelopment);
+}
+.profession-filter-btn[aria-pressed="true"].testing {
+    background-color: var(--testing);
+    color: var(--onTesting);
+}
+.profession-filter-btn[aria-pressed="true"].release {
+    background-color: var(--release);
+    color: var(--onRelease);
+}
+.profession-filter-btn[aria-pressed="true"].maintenance {
+    background-color: var(--maintenance);
+    color: var(--onMaintenance);
+}
+.profession-filter-btn[aria-pressed="true"].content {
+    background-color: var(--content);
+    color: var(--onContent);
+}
+.profession-filter-btn[aria-pressed="true"].ux-writer {
+    background-color: var(--uxWriter);
+    color: var(--onUxWriter);
+}
+.profession-filter-btn[aria-pressed="true"].redaktion {
+    background-color: var(--redaktion);
+    color: var(--onRedaktion);
+}
+.profession-filter-btn[aria-pressed="true"].corporate-text {
+    background-color: var(--corporateText);
+    color: var(--onCorporateText);
+}
+
+/* Filter-Gruppen */
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group-title {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 8px;
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Anzeigeoptionen */
+.display-options {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toggle-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.toggle-option input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* ==============================
+   7. Filter-Leiste und Steuerelemente
+   ============================== */
+/* Filter-Container */
+.filter-bar {
+    margin: 1rem 0 2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    // display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    grid-template-rows: auto auto auto;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.filter-bar > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border: 2px solid hsla(0, 0%, 50%, 0.5);
+    padding: 0.5rem;
+    border-radius: 0.125rem;
+    height: 5rem;
+}
+
+.filter-bar > .search-container {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    display: flex;
+    flex-wrap: nowrap;
+    border: 2px solid hsla(0, 0%, 50%, 0.5);
+    border-radius: 3rem;
+}
+
+.filter-bar > .filter-buttons {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.filter-bar > .active-filters {
+    display: none;
+    border: 1px solid cyan;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+.filter-bar > .filter-group:nth-of-type(6) {
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+}
+.filter-bar > .filter-group:nth-of-type(4) {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.filter-bar > .display-options {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
