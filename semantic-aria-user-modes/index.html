@@ -1,255 +1,357 @@
 <!DOCTYPE html>
-<html
-    lang="de-DE"
-    class="customer-1">
+<html lang="de-DE">
     <head>
         <meta charset="UTF-8" />
         <meta
             name="viewport"
-            content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-
+            content="width=device-width, initial-scale=1.0, user-scalable=yes"
+        />
+        <title>
+            Startseite der mediadialog Gesellschaft für Softwareentwicklung mbH
+        </title>
+        <!-- Font Awesome einbinden -->
         <link
             rel="stylesheet"
-            href="assets/css/style.css" />
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="breakpoints.css"
+        />
+        <link
+            rel="stylesheet"
+            href="accessibility.css"
+        />
     </head>
-    <body class="app-container">
-        <!-- Skiplink Navigation -->
-        <div style="display: none">
-            <a href="#page-header">Skip to header</a>
-            <a href="#page-main-content">Skip to main content</a>
-            <a href="#page-footer">Skip to footer</a>
-        </div>
-        <!-- End Skiplink Navigation -->
+    <body>
+        <header class="header">
+            logo
 
-        <!-- ========================================
-         HAMBURGER BUTTON
-    ======================================== -->
-        <button
-            class="hamburger-button small"
-            id="hamburgerBtn"
-            aria-label="Menü umschalten">
-            <span class="hamburger-line line-top"></span>
-            <span class="hamburger-line line-middle"></span>
-            <span class="hamburger-line line-bottom"></span>
-        </button>
+            <nav>
+                <ul>
+                    <li>
+                        <style>
+                            .hint {
+                                display: none;
+                            }
+                            a:focus > .hint {
+                                display: block !important;
+                            }
+                        </style>
+                        <a
+                            href="#"
+                            title="zur Startseite"
+                            aria-label="zur Startseite"
+                        >
+                            <i class="fa-solid fa-home"></i>
+                            <span class="hint">(Startseite)</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa-solid fa-box"></i> Produkte</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            ><i class="fa-solid fa-envelope"></i> Kontakt</a
+                        >
+                    </li>
+                </ul>
+            </nav>
 
-        <header id="page-header">
-            <!--
-            Nicht-semantischen Elemente sind:
-            div, span, u, b, i
-            -->
-            <div class="brand">logo</div>
-            <nav>header navigation</nav>
+            <form>
+                <button
+                    h
+                    title="bestellen"
+                    aria-label="bestellen"
+                >
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="hint">(bestellen)</span>
+                </button>
+            </form>
         </header>
 
         <nav
-            id="navigation"
-            class="app-nav">
-            Navigation
+            id="main-navigation"
+            title="Hauptnavigation"
+        >
+            <ul>
+                <li><a href="#">Startseite</a></li>
+                <li><a href="#">Leistungen</a></li>
+                <li><a href="#">Referenzen</a></li>
+                <li><a href="#">Über uns</a></li>
+                <li><a href="#">Kontakt</a></li>
+            </ul>
         </nav>
 
-        <main id="page-main-content">
-            <article>
-                <figure style="margin: 0">
-                    <!-- - - - - - -->
-                    <!-- <picture>
-                        <source
-                            media="(min-width: 1200px)  and (min-resolution: 192dpi)"
-                            srcset="https://picsum.photos/id/73/400/267" />
+        <nav
+            id="breadcrumb"
+            title="Sie sind hier"
+            aria-label="Breadcrumb"
+        >
+            <ol>
+                <li><a href="#">Startseite</a></li>
+                <li><a href="#">Sie sind hier</a></li>
+            </ol>
+        </nav>
 
-                        <source
-                            media="(max-width: 600px and orientation: portrait)"
-                            srcset="https://picsum.photos/id/74/200/400" />
+        <main>
+            <header>
+                <h1>Willkommen bei mediadialog</h1>
+            </header>
 
-                        <source
-                            media="(min-width: 900px)"
-                            srcset="https://picsum.photos/id/72/450/300" />
-
-                        <source
-                            media="(min-width: 800px)"
-                            srcset="https://picsum.photos/id/69/800/533" />
-
-                        <img
-                            class="app-image app-image-responsive"
-                            src="https://picsum.photos/id/68/240/160"
-                            alt="" />
-                    </picture> -->
-                    <!-- - - - - - -->
-                    <!-- <img
-                        class="app-image app-image-responsive"
-                        sizes="(min-width: 900px)  50w,         
-                                (max-width: 899px)  100w"
-                        srcset="
-                            https://picsum.photos/id/68/200/160  200w,
-                            https://picsum.photos/id/69/400/240  400w,
-                            https://picsum.photos/id/70/800/320  800w,
-                            https://picsum.photos/id/71/800/400 1600w
-                        "
-                        src="https://picsum.photos/id/68/240/160"
-                        alt="" /> -->
-
-                    <!-- <img style="background: red;box-shadow: 0.5rem 0.5rem 1rem black;" width="200" src="assets/figures/shou.svg" alt="Shou" /> -->
-                    <!-- - - - - - -->
-
-                    <svg
-                        aria-live="polite"
-                        role="image"
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 4196 4196"
-                        version="1.1"
-                        class="app-svg">
-                        <desc>Shou</desc>
-                        <g
-                            id="lower"
-                            transform="matrix(1,0,0,-1,0,4172.86)">
-                            <path
-                                d="M2496.4,139.729C2608.86,162.407 2822.6,235.208 2822.6,235.208C3254.59,402.98 3614.03,716.627 3840.28,1115.52C3898.92,1218.87 3948.62,1327.94 3988.28,1441.72C4012.79,1511.8 4035.51,1583.88 4050.09,1657.15C4068.05,1747.42 4092.4,1829.59 4096.06,1983.35L102.876,1983.35C108.496,1885.83 140.125,1689.38 143.111,1676.22C159.743,1602.77 186.16,1511.78 210.653,1441.72C250.34,1327.98 300.017,1218.92 358.669,1115.52C585.5,715.571 946.325,401.267 1380,233.776C1484.76,193.31 1593.79,161.417 1706.2,138.981L1706.2,550.539C1592.12,579.435 1482.9,620.616 1380,672.638C1169.15,779.185 985.051,931.089 840.573,1115.52C762.292,1215.39 695.64,1324.81 642.667,1441.72C611.247,1511.05 584.643,1582.99 563.268,1657.15L1936.37,1657.15L1936.37,1441.72L920.976,1441.72C989.102,1320.13 1075.5,1210.15 1176.44,1115.52C1238.98,1056.84 1307.14,1004.06 1380,958.06C1480.57,894.514 1590.08,843.895 1706.2,808.559L1706.2,1115.52L1936.37,1115.52L1936.37,106.854C1990.16,102.465 2097.78,99.11 2097.78,99.11C2151.81,99.178 2209.62,102.533 2262.57,106.855L2262.57,1115.52L2496.4,1115.52L2496.4,809.648C2612.59,845.38 2722.11,896.391 2822.6,960.356C2894.08,1005.82 2960.99,1057.82 3022.52,1115.52C3123.45,1210.16 3209.84,1320.12 3277.91,1441.72L2262.57,1441.72L2262.57,1657.15L3635.67,1657.15C3614.3,1583.01 3587.7,1511.08 3556.27,1441.72C3503.3,1324.81 3436.66,1215.39 3358.37,1115.52C3214.75,932.178 3031.93,780.951 2822.6,674.493C2822.6,674.493 2610.55,580.677 2496.4,551.466L2496.4,139.729Z" />
-                        </g>
-
-                        <g
-                            id="upper"
-                            class="red">
-                            <path
-                                d="M2496.4,139.729C2608.86,162.407 2822.6,235.208 2822.6,235.208C3254.59,402.98 3614.03,716.627 3840.28,1115.52C3898.92,1218.87 3948.62,1327.94 3988.28,1441.72C4012.79,1511.8 4035.51,1583.88 4050.09,1657.15C4068.05,1747.42 4092.4,1829.59 4096.06,1983.35L102.876,1983.35C108.496,1885.83 140.125,1689.38 143.111,1676.22C159.743,1602.77 186.16,1511.78 210.653,1441.72C250.34,1327.98 300.017,1218.92 358.669,1115.52C585.5,715.571 946.325,401.267 1380,233.776C1484.76,193.31 1593.79,161.417 1706.2,138.981L1706.2,550.539C1592.12,579.435 1482.9,620.616 1380,672.638C1169.15,779.185 985.051,931.089 840.573,1115.52C762.292,1215.39 695.64,1324.81 642.667,1441.72C611.247,1511.05 584.643,1582.99 563.268,1657.15L1936.37,1657.15L1936.37,1441.72L920.976,1441.72C989.102,1320.13 1075.5,1210.15 1176.44,1115.52C1238.98,1056.84 1307.14,1004.06 1380,958.06C1480.57,894.514 1590.08,843.895 1706.2,808.559L1706.2,1115.52L1936.37,1115.52L1936.37,106.854C1990.16,102.465 2097.78,99.11 2097.78,99.11C2151.81,99.178 2209.62,102.533 2262.57,106.855L2262.57,1115.52L2496.4,1115.52L2496.4,809.648C2612.59,845.38 2722.11,896.391 2822.6,960.356C2894.08,1005.82 2960.99,1057.82 3022.52,1115.52C3123.45,1210.16 3209.84,1320.12 3277.91,1441.72L2262.57,1441.72L2262.57,1657.15L3635.67,1657.15C3614.3,1583.01 3587.7,1511.08 3556.27,1441.72C3503.3,1324.81 3436.66,1215.39 3358.37,1115.52C3214.75,932.178 3031.93,780.951 2822.6,674.493C2822.6,674.493 2610.55,580.677 2496.4,551.466L2496.4,139.729Z" />
-                        </g>
-                    </svg>
-
-                    <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                            const upper = document.getElementById("upper");
-                            upper.addEventListener("click", function () {
-                                location.href =
-                                    "https://de.wikipedia.org/wiki/Shou";
-                            });
-                        });
-                    </script>
-                    <!-- - - - - - -->
-                    <figcaption>Bildbeschreibung</figcaption>
-                </figure>
-
-                <h1>Hallo Welt!</h1>
-                <div class="multicolumn">
-                    <p>
-                        Er hörte leise Schritte hinter sich. Das bedeutete
-                        nichts Gutes. Wer würde ihm schon folgen, spät in der
-                        Nacht und dazu noch in dieser engen Gasse mitten im übel
-                        beleumundeten Hafenviertel? Gerade jetzt, wo er das Ding
-                        seines Lebens gedreht hatte und mit der Beute
-                        verschwinden wollte!</p><p> Hatte einer seiner zahllosen
-                        Kollegen dieselbe Idee gehabt, ihn beobachtet und
-                        abgewartet, um ihn nun um die Früchte seiner Arbeit zu
-                        erleichtern? Oder gehörten die Schritte hinter ihm zu
-                        einem der unzähligen Gesetzeshüter dieser Stadt, und die
-                        stählerne Acht um seine Handgelenke würde gleich
-                        zuschnappen? </p>
-                        <p>Er konnte die Aufforderung stehen zu
-                        bleiben schon hören. Gehetzt sah er sich um. Plötzlich
-                        erblickte er den schmalen Durchgang. Blitzartig drehte
-                        er sich nach rechts und verschwand zwischen den beiden
-                        Gebäuden. Beinahe wäre er dabei über den umgestürzten
-                        Mülleimer gefallen, der mitten im Weg lag. </p><p>Er versuchte,
-                        sich in der Dunkelheit seinen Weg zu ertasten und
-                        erstarrte: Anscheinend gab es keinen anderen Ausweg aus
-                        diesem kleinen Hof als den Durchgang, durch den er
-                        gekommen war. Die Schritte wurden lauter und lauter, er
-                        sah eine dunkle Gestalt um die Ecke biegen. Fieberhaft
-                        irrten seine Augen durch die nächtliche Dunkelheit und
-                        suchten einen Ausweg. War jetzt wirklich alles vorbei,
-                    </p>
-                </div>
-
-                <p lang="en">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Quas atque sapiente possimus adipisci ipsam? Dolorem,
-                    voluptate velit. Odit.
-                </p>
-                <p>Noch ein Absatz</p>
-            </article>
             <form
-                id="form-login"
-                class="app-form-login"
+                action=""
                 aria-live="polite"
-                action="">
+            >
                 <fieldset>
-                    <legend>Login</legend>
+                    <legend>Das grosse tolle Formular</legend>
 
-                    <label for="login-email">E-Mail</label>
-                    <input
-                        type="email"
-                        id="login-email"
-                        name="email"
-                        required
-                        autocomplete="off" />
+                    <fieldset>
+                        <legend>Raumauswahl</legend>
+                        <style>
+                            a:link,
+                            input,
+                            button {
+                                display: inline-block;
+                                outline: 5px solid hsla(221, 93%, 63%, 0.4);
+                                outline-offset: 5px;
+                                margin-block: 5px;
+                                margin-inline: 1rem;
+                            }
+                            *:focus {
+                                background: yellow;
+                                outline: 5px solid rgba(213, 42, 42, 0.8) !important;
+                                outline-offset: 5px;
+                            }
+                            a:link::before,
+                            input::before,
+                            button::before {
+                                font-size: 1.2rem;
+                            }
+                            b {
+                                margin-inline: 0.5rem;
+                                border: 1px solid black;
+                                border-radius: 1rem;
+                                padding: 0.1rem 0.3rem;
+                                background: grey;
+                                color: white;
+                            }
+                            [role="group"] {
+                                display: flex;
+                                flex-direction: row;
+                                flex-wrap: nowrap;
+                                justify-content: space-between;
+                                align-items: stretch;
 
-                    <label for="login-password">Passwort</label>
-                    <input
-                        type="password"
-                        id="login-password"
-                        name="password"
-                        pattern=".{8,}"
-                        required
-                        autocomplete="off" />
-                    <p
-                        class="app-form-login-error"
-                        id="login-password-error">
-                        <i class="fas fa-exclamation-triangle"></i> Das Passwort
-                        muss mindestens 8 Zeichen lang sein.
-                    </p>
-                    <p class="app-form-login-hint">
-                        <i class="fas fa-info-circle"></i>
-                        Bitte ein sicheres Passwort wählen.
-                    </p>
-                    <p class="app-form-login-warning">
-                        <i class="fas fa-exclamation-circle"></i> Verwenden Sie
-                        eine Kombination aus Buchstaben, Zahlen und
-                        Sonderzeichen.
-                    </p>
-                    <p class="app-form-login-success">
-                        <i class="fas fa-check-circle"></i> Passwort erfolgreich
-                        gesetzt.
-                    </p>
+                                & > * {
+                                    flex: 1 1 auto;
+                                    padding: 0 0.5rem;
+                                    border: 1px solid lightgrey;
 
-                    <label for="login-file">File upload</label>
-                    <input
-                        type="file"
-                        id="login-file"
-                        name="file" />
-                    <p class="app-form-login-hint--permanent">
-                        <i class="fas fa-info-circle"></i>
-                        Die Datei darf maximal 10 Mb haben..
-                    </p>
+                                    &:nth-child(2) {
+                                        flex-basis: 15%;
+                                    }
+                                    &:nth-child(3) {
+                                        flex-basis: 25%;
+                                    }
+                                }
+                            }
+                        </style>
 
-                    <button type="submit">Einloggen</button>
+                        <ul>
+                            <li role="group">
+                                <section>
+                                    <i class="fa-solid fa-user-group"></i>
+                                    <input
+                                        type="radio"
+                                        id="option1"
+                                        name="options"
+                                        value="option1"
+                                        aria-describedby="multiraum-info"
+                                    />
+                                    <label for="option1">Multiraum</label>
+                                    <p id="multiraum-info">
+                                        Erklärtext zum Multiraum
+                                    </p>
+                                    <i class="fa-solid fa-refresh"></i
+                                    ><a
+                                        tabindex="-1"
+                                        href="#"
+                                        >Termine erzeugen Konflikte</a
+                                    >
+                                </section>
+                                <section>
+                                    <b><i class="fa-solid fa-square"></i>9</b>
+                                    <b><i class="fa-solid fa-clock"></i>3</b>
+                                    <b><i class="fa-solid fa-coffee"></i>6</b>
+                                </section>
+                                <section>
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur
+                                        adipisicing elit. Numquam odit doloribus
+                                        at!
+                                    </p>
+                                </section>
+                                <section>
+                                    <b
+                                        ><i class="fa-solid fa-key"></i
+                                        >checkin</b
+                                    >
+                                </section>
+                                <section>
+                                    <i class="fa-solid fa-info-circle"></i>
+                                </section>
+                            </li>
+
+                            <li role="group">
+                                <section>
+                                    <i class="fa-solid fa-user-group"></i>
+                                    <input
+                                        type="radio"
+                                        id="option3"
+                                        name="options"
+                                        value="option3"
+                                        aria-describedby="mehrfachraum-info"
+                                    />
+                                    <label for="option3">Mehrfachraum</label>
+                                    <p id="mehrfachraum-info">
+                                        Erklärtext zum Mehrfachraum
+                                    </p>
+                                    <i class="fa-solid fa-refresh"></i
+                                    ><a href="#">Termine erzeugen Konflikte</a>
+                                </section>
+                                <section>
+                                    <b><i class="fa-solid fa-square"></i>9</b>
+                                    <b><i class="fa-solid fa-clock"></i>3</b>
+                                    <b><i class="fa-solid fa-coffee"></i>6</b>
+                                </section>
+
+                                <section>
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur
+                                        adipisicing elit. Numquam odit doloribus
+                                        at!
+                                    </p>
+                                </section>
+                                <section>
+                                    <b
+                                        ><i class="fa-solid fa-key"></i
+                                        >checkin</b
+                                    >
+                                </section>
+                                <section>
+                                    <i class="fa-solid fa-info-circle"></i>
+                                </section>
+                            </li>
+
+                            <li role="group">
+                                <section>
+                                    <i class="fa-solid fa-user-group"></i>
+                                    <input
+                                        type="radio"
+                                        id="option2"
+                                        name="options"
+                                        value="option2"
+                                        aria-describedby="einzelraum-info"
+                                    />
+                                    <label for="option2">Einzelraum</label>
+                                    <p id="einzelraum-info">
+                                        Erklärtext zum Einzelraum
+                                    </p>
+                                    <i class="fa-solid fa-refresh"></i
+                                    ><a href="#">Termine erzeugen Konflikte</a>
+                                </section>
+                                <section>
+                                    <b><i class="fa-solid fa-square"></i>9</b>
+                                    <b><i class="fa-solid fa-clock"></i>3</b>
+                                    <b><i class="fa-solid fa-coffee"></i>6</b>
+                                </section>
+                                <section>
+                                    <p>
+                                        Lorem, ipsum dolor sit amet consectetur
+                                        adipisicing elit. Numquam odit doloribus
+                                        at!
+                                    </p>
+                                </section>
+                                <section>
+                                    <b
+                                        ><i class="fa-solid fa-key"></i
+                                        >checkin</b
+                                    >
+                                </section>
+                                <section>
+                                    <i class="fa-solid fa-info-circle"></i>
+                                </section>
+                            </li>
+                        </ul>
+                    </fieldset>
                 </fieldset>
             </form>
+
+            <article
+                id="search"
+                title="Suchen"
+                aria-label="Suchformular"
+            >
+                <form>
+                    <fieldset>
+                        <legend>Suchformular</legend>
+                        <label for="search">Suche:</label>
+                        <input
+                            type="text"
+                            id="search-2"
+                            name="search"
+                            pattern=".{3,}"
+                        />
+                        <p
+                            role="alert"
+                            class="error"
+                            id="search-error"
+                        >
+                            Fehler-Erklärtext zur Sucheingabe
+                        </p>
+                        <button type="submit">Suchen</button>
+                        <style>
+                            .error {
+                                display: none;
+                                color: red;
+                            }
+                            input:user-invalid + .error {
+                                display: block;
+                            }
+                        </style>
+                    </fieldset>
+                </form>
+            </article>
+
+            <article>
+                <div>
+                    <h2>Artikelüberschrift</h2>
+                    <p>
+                        <strong>einfacher Text</strong>
+                        <em>Lorem ipsum dolor</em>
+
+                        <b>sit amet consectetur</b>
+                        <i>adipisicing elit.</i>
+                        <u>Iste porro suscipit sint</u>
+                        animi aliquam itaque. Nesciunt, impedit exercitationem!
+                    </p>
+                </div>
+            </article>
+
+            <article>
+                <h2>Sektion 2</h2>
+            </article>
+
+            <footer>Hauptbereichs-Footer</footer>
         </main>
 
-        <aside>Aside</aside>
+        <aside>Seitenleiste</aside>
 
-        <footer
-            id="page-footer"
-            class="app-footer row">
-            <nav>
-                <ul>
-                    <li><a href="">Link 1</a></li>
-                    <li><a href="">Link 2</a></li>
-                    <li><a href="">Link 3</a></li>
-                    <li><a href="">Link 4</a></li>
-                    <li><a href="">Link 5</a></li>
-                    <li><a href="">Link 6</a></li>
-                    <li><a href="">Link 7</a></li>
-                    <li><a href="">Link 8</a></li>
-                </ul>
-            </nav>
-            <address>
-                &copy; <time datetime="2025">2025</time> Deine Firma
-                Irgendwostraße 123, 123456 Einestadt Kontakt:
-                <a href="mailto:info@yourcompany.com">info@deinefirma.de</a>
-            </address>
+        <footer>
+            <address>&copy; <time>2025</time> Mediadialog GmbH</address>
+            Impressum Datenschutz
         </footer>
-
-      
     </body>
 </html>

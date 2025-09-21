@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+
+<html lang="de">
+    <head>
+        <title>Raumliste mit Tastaturnavigation und VoiceOver Simulation</title>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            html {
+                font-family: Barlow;
+                background: #f5f5f5;
+                padding: 20px;
+            }
+
+            /* Focus animation */
+            @keyframes focusPulse {
+                0% {
+                    box-shadow: 0 0 0 2px #007bff;
+                }
+                50% {
+                    box-shadow: 0 0 0 4px #007bff66;
+                }
+                100% {
+                    box-shadow: 0 0 0 2px #007bff;
+                }
+            }
+
+            .focus-outline {
+                outline: none;
+                border-radius: 4px;
+                animation: focusPulse 1.5s infinite;
+            }
+
+            /* Special focus style for room in detail mode */
+            .room-detail-focus {
+                outline: none;
+                border-radius: 8px;
+                box-shadow: 0 0 0 3px #28a745;
+                border-color: #28a745 !important;
+                background: #f8fff9 !important;
+            }
+
+            fieldset {
+                border: 2px solid #ddd;
+                border-radius: 8px;
+                padding: 20px;
+                background: white;
+                max-width: 600px;
+            }
+
+            legend {
+                font-weight: 700;
+                font-size: 1.2em;
+                padding: 0 10px;
+            }
+
+            ul,
+            ol {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .room-item {
+                margin: 10px 0;
+                padding: 15px;
+                border: 2px solid #e0e0e0;
+                border-radius: 8px;
+                background: #fafafa;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .room-item:hover {
+                background: #f0f0f0;
+                border-color: #007bff;
+            }
+
+            .room-item.selected {
+                background: #e3f2fd;
+                border-color: #007bff;
+            }
+
+            .room-header {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .room-details {
+                margin-top: 15px;
+                padding-left: 30px;
+            }
+
+            .room-details ol {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .detail-item {
+                padding: 8px 12px;
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .detail-item:hover {
+                background: #f0f8ff;
+                border-color: #007bff;
+            }
+
+            .numbers {
+                display: flex;
+                gap: 15px;
+            }
+
+            .number-item {
+                padding: 8px 16px;
+                background: #007bff;
+                color: white;
+                border-radius: 20px;
+                font-weight: 700;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .number-item:hover {
+                background: #0056b3;
+                transform: scale(1.05);
+            }
+
+            input[type="radio"] {
+                width: 18px;
+                height: 18px;
+                cursor: pointer;
+            }
+
+            label {
+                font-weight: 700;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            /* Screenreader simulation */
+            .screenreader-output {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #1a1a1a;
+                color: #00ff00;
+                padding: 15px;
+                border-radius: 8px;
+                font-family: monospace;
+                font-size: 0.9em;
+                max-width: 300px;
+                min-height: 100px;
+                border: 2px solid #333;
+                z-index: 1000;
+            }
+
+            .screenreader-title {
+                color: #ffff00;
+                font-weight: bold;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #333;
+                padding-bottom: 5px;
+            }
+
+            .screenreader-text {
+                line-height: 1.4;
+                word-wrap: break-word;
+            }
+
+            /* Keyboard navigation indicators */
+            .keyboard-hint {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #333;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 8px;
+                font-size: 0.9em;
+                opacity: 0.8;
+            }
+        </style>
+        <style>
+            @media (min-width: 768px) {
+                .room-item,
+                .room-details ol {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+            }
+        </style>
+        <style>
+            @media screen and (prefers-contrast: more) {
+                /* Basis-Reset für alle Elemente */
+                * {
+                    background: black !important;
+                    color: white !important;
+                    border-color: white !important;
+                    animation: none !important;
+                    transition: none !important;
+                }
+
+                /* Spezifische Zustände */
+                :hover {
+                    background: #333 !important;
+                    border-color: #f2ec33 !important;
+                    color: white !important;
+                }
+
+                :focus {
+                    background: black !important;
+                    color: white !important;
+                    outline: 3px solid #3dd7fd !important;
+                    box-shadow: 0 0 0 3px #3dd7fd !important;
+                }
+
+                :disabled {
+                    background: black !important;
+                    color: #666 !important;
+                    border-color: #666 !important;
+                }
+
+                /* Ausgewählte Elemente */
+                .selected,
+                :checked {
+                    background: black !important;
+                    color: white !important;
+                    border-color: #3dd7fd !important;
+                }
+
+                /* Spezielle Fokus-Klassen */
+                .focus-outline {
+                    box-shadow: 0 0 0 3px #3dd7fd !important;
+                }
+
+                .room-detail-focus {
+                    box-shadow: 0 0 0 3px #f2ec33 !important;
+                    border-color: #f2ec33 !important;
+                }
+
+                /* Number Items - invertiert für bessere Sichtbarkeit */
+                .number-item {
+                    background: white !important;
+                    color: black !important;
+                }
+
+                .number-item:hover {
+                    background: #f2ec33 !important;
+                    color: black !important;
+                }
+
+                /* Text-Selektion */
+                ::selection {
+                    background: #3dd7fd !important;
+                    color: black !important;
+                }
+            }
+
+            @media screen and (prefers-reduced-motion: reduce) {
+                body {
+                    *,
+                    *::before,
+                    *::after {
+                        scroll-behavior: auto !important;
+                        animation-duration: 0.01s !important;
+                        transition-duration: 0.01s !important;
+                    }
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <form
+            method="post"
+            action=""
+        >
+            <fieldset>
+                <legend>Räume</legend>
+                <ul id="room-list">
+                    <li
+                        class="room-item"
+                        data-room="one"
+                    >
+                        <header class="room-header">
+                            <input
+                                type="radio"
+                                id="room-1"
+                                name="rooms"
+                                value="one"
+                            />
+                            <label for="room-1">Raum Eins</label>
+                        </header>
+                        <div class="room-details">
+                            <ol>
+                                <li
+                                    class="detail-item numbers"
+                                    tabindex="0"
+                                >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >12</span
+                                    >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >5</span
+                                    >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >8</span
+                                    >
+                                </li>
+                                <li
+                                    class="detail-item"
+                                    tabindex="0"
+                                >
+                                    <p>
+                                        Lorem ipsum dolor sit, amet consectetur
+                                        adipisicing elit. Eaque quibusdam sit
+                                        tenetur modi, nesciunt excepturi quos id
+                                        dolor laudantium voluptatem dolorem.
+                                    </p>
+                                </li>
+                                <li
+                                    class="detail-item"
+                                    tabindex="0"
+                                >
+                                    <i>Check-in verfügbar</i>
+                                </li>
+                            </ol>
+                        </div>
+                    </li>
+
+                    <li
+                        class="room-item"
+                        data-room="two"
+                    >
+                        <header class="room-header">
+                            <input
+                                type="radio"
+                                id="room-2"
+                                name="rooms"
+                                value="two"
+                            />
+                            <label for="room-2">Raum Zwei</label>
+                        </header>
+                        <div class="room-details">
+                            <ol>
+                                <li
+                                    class="detail-item numbers"
+                                    tabindex="0"
+                                >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >9</span
+                                    >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >3</span
+                                    >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >6</span
+                                    >
+                                </li>
+                                <li
+                                    class="detail-item"
+                                    tabindex="0"
+                                >
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur
+                                        adipisicing elit. Voluptatibus, nulla?
+                                        Quos voluptatem repellendus sunt nostrum
+                                        dolores eveniet.
+                                    </p>
+                                </li>
+                                <li
+                                    class="detail-item"
+                                    tabindex="0"
+                                >
+                                    <i>Früher Check-in möglich</i>
+                                </li>
+                            </ol>
+                        </div>
+                    </li>
+
+                    <li
+                        class="room-item"
+                        data-room="three"
+                    >
+                        <header class="room-header">
+                            <input
+                                type="radio"
+                                id="room-3"
+                                name="rooms"
+                                value="three"
+                            />
+                            <label for="room-3">Raum Drei</label>
+                        </header>
+                        <div class="room-details">
+                            <ol>
+                                <li
+                                    class="detail-item numbers"
+                                    tabindex="0"
+                                >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >15</span
+                                    >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >7</span
+                                    >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >4</span
+                                    >
+                                </li>
+                                <li
+                                    class="detail-item"
+                                    tabindex="0"
+                                >
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur
+                                        adipisicing elit. Earum rerum mollitia
+                                        voluptatem.
+                                    </p>
+                                </li>
+                                <li
+                                    class="detail-item"
+                                    tabindex="0"
+                                >
+                                    <i>Früher Check-in möglich</i>
+                                </li>
+                            </ol>
+                        </div>
+                    </li>
+
+                    <li
+                        class="room-item"
+                        data-room="four"
+                    >
+                        <header class="room-header">
+                            <input
+                                type="radio"
+                                id="room-4"
+                                name="rooms"
+                                value="four"
+                            />
+                            <label for="room-4">Raum Vier</label>
+                        </header>
+                        <div class="room-details">
+                            <ol>
+                                <li
+                                    class="detail-item numbers"
+                                    tabindex="0"
+                                >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >11</span
+                                    >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >2</span
+                                    >
+                                    <span
+                                        class="number-item"
+                                        tabindex="0"
+                                        >9</span
+                                    >
+                                </li>
+                                <li
+                                    class="detail-item"
+                                    tabindex="0"
+                                >
+                                    <p>
+                                        Lorem ipsum dolor sit, amet consectetur
+                                        adipisicing elit. Molestiae nobis
+                                        deleniti quas natus non sunt
+                                        praesentium? Id, quaerat reprehenderit.
+                                    </p>
+                                </li>
+                                <li
+                                    class="detail-item"
+                                    tabindex="0"
+                                >
+                                    <i>Später Check-out verfügbar</i>
+                                </li>
+                            </ol>
+                        </div>
+                    </li>
+                </ul>
+            </fieldset>
+        </form>
+
+        <h1>Beschreibung</h1>
+        <p>
+            Die Räume sind eine Liste, hier <code>&lt;ul&gt;</code>. Vorteil:
+            der Screenreader liest Struktur und Anzahl der Raumeinträge vor.
+        </p>
+
+        <p>
+            Ein einzelner Raum ist eine Zusammenstellung von ggf. Überschriften,
+            Listen und Texten. Auch hier liest der Screenreader Struktur und
+            Anzahl, zum Beispiel der Badges (&lt;ol&gt;) vor.
+        </p>
+
+        <p>
+            Bei Erreichen eines Raumes (Pfeiltasten rauf/runter) wird nur der
+            Raumname vorgelesen und die Steuerung angekündigt. Über die
+            programmierte Tastatursteuerung können dann die Inhalte pro Raum
+            angefordert werden (Pfeiltasten links/rechts).
+        </p>
+
+        <div class="screenreader-output">
+            <div class="screenreader-title">VoiceOver Simulation</div>
+            <div
+                class="screenreader-text"
+                id="voiceover-text"
+            >
+                Zimmernavigation bereit
+            </div>
+        </div>
+
+        <div class="keyboard-hint">
+            Verwende ↑↓ um Zimmer zu navigieren, Leertaste zum Auswählen, ←→ für
+            Zimmerdetails
+        </div>
+
+        <script>
+            class RoomNavigation {
+                constructor() {
+                    this.rooms = document.querySelectorAll(".room-item")
+                    this.currentRoomIndex = 0
+                    this.currentDetailIndex = -1
+                    this.isInDetailMode = false
+                    this.currentDetailItems = []
+                    this.voiceoverOutput =
+                        document.getElementById("voiceover-text")
+
+                    this.init()
+                }
+
+                init() {
+                    this.setFocus(0)
+                    this.bindEvents()
+                }
+
+                bindEvents() {
+                    document.addEventListener("keydown", (e) =>
+                        this.handleKeyDown(e)
+                    )
+
+                    // Mouse support
+                    this.rooms.forEach((room, index) => {
+                        room.addEventListener("click", () => {
+                            this.selectRoom(index)
+                        })
+                    })
+                }
+
+                announceToVoiceOver(text) {
+                    this.voiceoverOutput.textContent = text
+                    // Simulate screen reader announcement timing
+                    setTimeout(() => {
+                        this.voiceoverOutput.style.backgroundColor = "#2a2a2a"
+                        setTimeout(() => {
+                            this.voiceoverOutput.style.backgroundColor =
+                                "#1a1a1a"
+                        }, 200)
+                    }, 100)
+                }
+
+                getRoomAnnouncement(roomIndex) {
+                    const room = this.rooms[roomIndex]
+                    const label = room.querySelector("label").textContent
+                    const radio = room.querySelector('input[type="radio"]')
+                    const isChecked = radio.checked
+                    const roomNumber = roomIndex + 1
+                    const totalRooms = this.rooms.length
+
+                    return `${label}, Optionsfeld, ${
+                        isChecked ? "ausgewählt" : "nicht ausgewählt"
+                    }, ${roomNumber} von ${totalRooms}. Zum Erweitern der Details, Pfeil rechts drücken.`
+                }
+
+                getDetailAnnouncement(detailIndex) {
+                    const currentDetail = this.currentDetailItems[detailIndex]
+                    const totalDetails = this.currentDetailItems.length
+                    const detailNumber = detailIndex + 1
+
+                    if (currentDetail.classList.contains("numbers")) {
+                        const numbers = Array.from(
+                            currentDetail.querySelectorAll(".number-item")
+                        )
+                            .map((item) => item.textContent)
+                            .join(", ")
+                        return `Detail ${detailNumber} von ${totalDetails}: Zahlen, ${numbers}`
+                    } else if (currentDetail.querySelector("p")) {
+                        const text =
+                            currentDetail.querySelector("p").textContent
+                        return `Detail ${detailNumber} von ${totalDetails}: ${text}`
+                    } else if (currentDetail.querySelector("i")) {
+                        const text =
+                            currentDetail.querySelector("i").textContent
+                        return `Detail ${detailNumber} von ${totalDetails}: ${text}`
+                    }
+
+                    return `Detail ${detailNumber} von ${totalDetails}`
+                }
+
+                handleKeyDown(e) {
+                    switch (e.key) {
+                        case "ArrowUp":
+                            e.preventDefault()
+                            // Always navigate rooms, exit detail mode if necessary
+                            if (this.isInDetailMode) {
+                                this.exitDetailMode()
+                            }
+                            this.navigateRooms(-1)
+                            break
+
+                        case "ArrowDown":
+                            e.preventDefault()
+                            // Always navigate rooms, exit detail mode if necessary
+                            if (this.isInDetailMode) {
+                                this.exitDetailMode()
+                            }
+                            this.navigateRooms(1)
+                            break
+
+                        case "ArrowLeft":
+                            e.preventDefault()
+                            if (this.isInDetailMode) {
+                                this.navigateDetails(-1)
+                            } else {
+                                this.announceToVoiceOver(
+                                    "Pfeil links: Keine Aktion verfügbar. Pfeil rechts drücken um Zimmerdetails zu erweitern."
+                                )
+                            }
+                            break
+
+                        case "ArrowRight":
+                            e.preventDefault()
+                            if (this.isInDetailMode) {
+                                this.navigateDetails(1)
+                            } else {
+                                this.enterDetailMode()
+                            }
+                            break
+
+                        case " ":
+                            e.preventDefault()
+                            if (!this.isInDetailMode) {
+                                this.selectRoom(this.currentRoomIndex)
+                                this.announceToVoiceOver(
+                                    `${
+                                        this.rooms[
+                                            this.currentRoomIndex
+                                        ].querySelector("label").textContent
+                                    } ausgewählt`
+                                )
+                            } else {
+                                this.announceToVoiceOver(
+                                    "Leertaste: Keine Aktion verfügbar im Detailmodus. Escape drücken um Details zu verlassen."
+                                )
+                            }
+                            break
+
+                        case "Escape":
+                            e.preventDefault()
+                            if (this.isInDetailMode) {
+                                this.exitDetailMode()
+                            } else {
+                                this.announceToVoiceOver(
+                                    "Escape: Kein Detailmodus zum Verlassen."
+                                )
+                            }
+                            break
+                    }
+                }
+
+                setFocus(roomIndex) {
+                    // Remove focus from all rooms
+                    this.rooms.forEach((room) => {
+                        room.classList.remove("focus-outline")
+                        room.classList.remove("room-detail-focus")
+                    })
+
+                    // Add focus to current room
+                    this.rooms[roomIndex].classList.add("focus-outline")
+                    this.rooms[roomIndex].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                    })
+
+                    // Automatically check the radio button when room gets focus
+                    this.selectRoom(roomIndex)
+
+                    // Announce to screen reader
+                    this.announceToVoiceOver(
+                        this.getRoomAnnouncement(roomIndex)
+                    )
+                }
+
+                navigateRooms(direction) {
+                    this.currentRoomIndex = Math.max(
+                        0,
+                        Math.min(
+                            this.rooms.length - 1,
+                            this.currentRoomIndex + direction
+                        )
+                    )
+                    this.setFocus(this.currentRoomIndex)
+                }
+
+                navigateDetails(direction) {
+                    if (this.currentDetailItems.length === 0) return
+
+                    this.currentDetailIndex = Math.max(
+                        0,
+                        Math.min(
+                            this.currentDetailItems.length - 1,
+                            this.currentDetailIndex + direction
+                        )
+                    )
+                    this.setDetailFocus(this.currentDetailIndex)
+
+                    // Announce detail
+                    this.announceToVoiceOver(
+                        this.getDetailAnnouncement(this.currentDetailIndex)
+                    )
+                }
+
+                setDetailFocus(detailIndex) {
+                    // Remove focus from all detail items
+                    this.currentDetailItems.forEach((item) =>
+                        item.classList.remove("focus-outline")
+                    )
+
+                    // Add focus to current detail item
+                    if (this.currentDetailItems[detailIndex]) {
+                        this.currentDetailItems[detailIndex].classList.add(
+                            "focus-outline"
+                        )
+                        this.currentDetailItems[detailIndex].scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                        })
+                    }
+                }
+
+                enterDetailMode() {
+                    const currentRoom = this.rooms[this.currentRoomIndex]
+                    const detailItems =
+                        currentRoom.querySelectorAll(".detail-item")
+
+                    if (detailItems.length > 0) {
+                        this.isInDetailMode = true
+                        this.currentDetailItems = Array.from(detailItems)
+                        this.currentDetailIndex = 0
+
+                        // Remove normal room focus and add detail mode focus
+                        currentRoom.classList.remove("focus-outline")
+                        currentRoom.classList.add("room-detail-focus")
+
+                        // Set detail focus
+                        this.setDetailFocus(0)
+
+                        // Announce entering detail mode
+                        const roomName =
+                            currentRoom.querySelector("label").textContent
+                        this.announceToVoiceOver(
+                            `Betrete Details für ${roomName}. Verwende Pfeil links und rechts um durch Details zu navigieren, Escape zum Verlassen.`
+                        )
+
+                        // Announce first detail after a short delay
+                        setTimeout(() => {
+                            this.announceToVoiceOver(
+                                this.getDetailAnnouncement(0)
+                            )
+                        }, 1000)
+                    }
+                }
+
+                exitDetailMode() {
+                    if (this.isInDetailMode) {
+                        // Remove focus from all detail items
+                        this.currentDetailItems.forEach((item) =>
+                            item.classList.remove("focus-outline")
+                        )
+
+                        // Remove detail mode focus from room
+                        const currentRoom = this.rooms[this.currentRoomIndex]
+                        currentRoom.classList.remove("room-detail-focus")
+
+                        this.isInDetailMode = false
+                        this.currentDetailIndex = -1
+                        this.currentDetailItems = []
+
+                        // Restore normal room focus
+                        this.setFocus(this.currentRoomIndex)
+
+                        // Announce exiting detail mode
+                        this.announceToVoiceOver(
+                            `Details verlassen. Zurück zur Zimmernavigation.`
+                        )
+                    }
+                }
+
+                selectRoom(roomIndex) {
+                    const room = this.rooms[roomIndex]
+                    const radio = room.querySelector('input[type="radio"]')
+
+                    if (radio) {
+                        radio.checked = true
+
+                        // Visual feedback
+                        this.rooms.forEach((r) =>
+                            r.classList.remove("selected")
+                        )
+                        room.classList.add("selected")
+
+                        // Trigger change event
+                        radio.dispatchEvent(
+                            new Event("change", { bubbles: true })
+                        )
+                    }
+
+                    this.currentRoomIndex = roomIndex
+                }
+            }
+
+            // Initialize navigation when page loads
+            document.addEventListener("DOMContentLoaded", () => {
+                new RoomNavigation()
+            })
+
+            // Handle form submission
+            document.querySelector("form").addEventListener("submit", (e) => {
+                e.preventDefault()
+                const formData = new FormData(e.target)
+                const selectedRoom = formData.get("rooms")
+                alert(`Ausgewähltes Zimmer: ${selectedRoom}`)
+            })
+        </script>
+    </body>
+</html>

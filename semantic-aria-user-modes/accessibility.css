@@ -1,0 +1,51 @@
+html {font-family: Barlow;}
+.sr-only,
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+@media screen and (prefers-contrast: more) {
+    body {
+        background: black;
+        color: white;
+    }
+    :link,
+    :visited {
+        color: #f2ec33;
+    }
+    a:focus,
+    a:hover {
+        text-decoration: underline;
+    }
+
+    :disabled {
+        color: #46d462;
+    }
+    :focus, ::selection {
+        background: #3DD7FD;
+        color: black;
+        outline: none;
+    }
+    [tabindex], :link, button, input, select, textarea {
+        outline: none !important
+    }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    body {
+        *,
+        *::before,
+        *::after {
+            scroll-behavior: auto !important;
+            animation-duration: 0.01s !important;
+            transition-duration: 0.01s !important;
+        }
+    }
+}
