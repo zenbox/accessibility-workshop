@@ -540,13 +540,10 @@
         </form>
 
         <h1>Beschreibung</h1>
-        <h2>Überschrift für die Räume</h2>
         <p>
             Die Räume sind eine Liste, hier <code>&lt;ul&gt;</code>. Vorteil:
             der Screenreader liest Struktur und Anzahl der Raumeinträge vor.
         </p>
-
-        <h4>Überschrift 4 für die Beschreibungen</h4>
 
         <p>
             Ein einzelner Raum ist eine Zusammenstellung von ggf. Überschriften,
@@ -577,6 +574,344 @@
         </div>
 
         <script>
+            class ScreenReaderSimulator {
+                constructor() {
+                    this.currentElement = null
+                    this.verbosityLevel = "detailed" // 'brief', 'detailed', 'verbose'
+                    this.readingMode = "navigate" // 'navigate', 'browse', 'forms'
+                    this.output = document.getElementById("voiceover-text")
+                }
+
+                // Hauptfunktion: Element fokussieren und vorlesen
+                focusElement(element) {
+                    this.currentElement = element
+                    const announcement = this.generateAnnouncement(element)
+                    this.announce(announcement)
+                }
+
+                // Generiert Ansage basierend auf DOM-Struktur und ARIA
+                generateAnnouncement(element) {
+                    if (!element) return ""
+
+                    let parts = []
+
+                    // 1. Elementtyp und Rolle ermitteln
+                    const role = this.getEffectiveRole(element)
+                    parts.push(this.getRoleAnnouncement(role, element))
+
+                    // 2. Zugänglicher Name ermitteln
+                    const accessibleName = this.getAccessibleName(element)
+                    if (accessibleName) {
+                        parts.unshift(accessibleName)
+                    }
+
+                    // 3. Zustand ermitteln
+                    const state = this.getStateAnnouncement(element)
+                    if (state) {
+                        parts.push(state)
+                    }
+
+                    // 4. Position in Container ermitteln
+                    const position = this.getPositionAnnouncement(element)
+                    if (position) {
+                        parts.push(position)
+                    }
+
+                    // 5. Beschreibung ermitteln
+                    const description = this.getAccessibleDescription(element)
+                    if (description && this.verbosityLevel !== "brief") {
+                        parts.push(description)
+                    }
+
+                    // 6. Interaktionshinweise
+                    const hints = this.getInteractionHints(element)
+                    if (hints && this.verbosityLevel === "verbose") {
+                        parts.push(hints)
+                    }
+
+                    return parts.filter((part) => part).join(", ")
+                }
+
+                // Effektive Rolle ermitteln (role-Attribut oder implizite Rolle)
+                getEffectiveRole(element) {
+                    const explicitRole = element.getAttribute("role")
+                    if (explicitRole) return explicitRole
+
+                    const tagName = element.tagName.toLowerCase()
+                    const type = element.getAttribute("type")
+
+                    // Implizite Rollen basierend auf HTML-Semantik
+                    const implicitRoles = {
+                        'input[type="radio"]': "radio",
+                        'input[type="checkbox"]': "checkbox",
+                        'input[type="button"]': "button",
+                        "button": "button",
+                        "a": "link",
+                        "li": "listitem",
+                        "ul": "list",
+                        "ol": "list",
+                        "h1": "heading",
+                        "h2": "heading",
+                        "h3": "heading",
+                        "h4": "heading",
+                        "h5": "heading",
+                        "h6": "heading",
+                        "p": "paragraph",
+                        "label": "label",
+                        "fieldset": "group",
+                        "legend": "legend",
+                    }
+
+                    if (type && tagName === "input") {
+                        return (
+                            implicitRoles[`${tagName}[type="${type}"]`] ||
+                            "textbox"
+                        )
+                    }
+
+                    return implicitRoles[tagName] || "generic"
+                }
+
+                // Rollenansage generieren
+                getRoleAnnouncement(role, element) {
+                    const roleAnnouncements = {
+                        radio: "Optionsfeld",
+                        checkbox: "Kontrollkästchen",
+                        button: "Schaltfläche",
+                        link: "Link",
+                        listitem: "Listenelement",
+                        list: "Liste",
+                        heading: this.getHeadingAnnouncement(element),
+                        paragraph: null, // Wird meist nicht angesagt
+                        textbox: "Eingabefeld",
+                        group: "Gruppe",
+                        generic: null,
+                    }
+
+                    return roleAnnouncements[role] || role
+                }
+
+                // Überschriften-Level ermitteln
+                getHeadingAnnouncement(element) {
+                    const level =
+                        element.tagName.match(/h(\d)/i)?.[1] ||
+                        element.getAttribute("aria-level")
+                    return level ? `Überschrift Ebene ${level}` : "Überschrift"
+                }
+
+                // Zugänglichen Namen ermitteln (Accessible Name Calculation)
+                getAccessibleName(element) {
+                    // 1. aria-labelledby
+                    const labelledby = element.getAttribute("aria-labelledby")
+                    if (labelledby) {
+                        const labelElements = labelledby
+                            .split(" ")
+                            .map((id) => document.getElementById(id))
+                            .filter((el) => el)
+                        if (labelElements.length > 0) {
+                            return labelElements
+                                .map((el) => el.textContent.trim())
+                                .join(" ")
+                        }
+                    }
+
+                    // 2. aria-label
+                    const ariaLabel = element.getAttribute("aria-label")
+                    if (ariaLabel) return ariaLabel.trim()
+
+                    // 3. Label-Element (für form controls)
+                    if (element.tagName === "INPUT") {
+                        const id = element.id
+                        if (id) {
+                            const label = document.querySelector(
+                                `label[for="${id}"]`
+                            )
+                            if (label) return label.textContent.trim()
+                        }
+
+                        // Label als Parent
+                        const parentLabel = element.closest("label")
+                        if (parentLabel) {
+                            return parentLabel.textContent
+                                .replace(element.value || "", "")
+                                .trim()
+                        }
+                    }
+
+                    // 4. Eigener Textinhalt
+                    if (element.textContent && element.textContent.trim()) {
+                        return element.textContent.trim()
+                    }
+
+                    // 5. Alt-Attribut (für Bilder)
+                    const alt = element.getAttribute("alt")
+                    if (alt !== null) return alt
+
+                    // 6. Placeholder
+                    const placeholder = element.getAttribute("placeholder")
+                    if (placeholder) return placeholder
+
+                    return null
+                }
+
+                // Zustandsansage ermitteln
+                getStateAnnouncement(element) {
+                    let states = []
+
+                    // Checked state
+                    if (element.hasAttribute("checked") || element.checked) {
+                        states.push("ausgewählt")
+                    } else if (
+                        element.type === "radio" ||
+                        element.type === "checkbox"
+                    ) {
+                        states.push("nicht ausgewählt")
+                    }
+
+                    // Disabled state
+                    if (
+                        element.disabled ||
+                        element.getAttribute("aria-disabled") === "true"
+                    ) {
+                        states.push("deaktiviert")
+                    }
+
+                    // Expanded state
+                    const expanded = element.getAttribute("aria-expanded")
+                    if (expanded === "true") {
+                        states.push("ausgeklappt")
+                    } else if (expanded === "false") {
+                        states.push("eingeklappt")
+                    }
+
+                    // Required state
+                    if (
+                        element.required ||
+                        element.getAttribute("aria-required") === "true"
+                    ) {
+                        states.push("erforderlich")
+                    }
+
+                    // Invalid state
+                    if (element.getAttribute("aria-invalid") === "true") {
+                        states.push("ungültig")
+                    }
+
+                    return states.join(", ")
+                }
+
+                // Position im Container ermitteln
+                getPositionAnnouncement(element) {
+                    const parent = element.parentElement
+                    if (!parent) return null
+
+                    // Position in Liste
+                    if (parent.tagName === "UL" || parent.tagName === "OL") {
+                        const siblings = Array.from(parent.children).filter(
+                            (child) => child.tagName === element.tagName
+                        )
+                        const position = siblings.indexOf(element) + 1
+                        const total = siblings.length
+                        return `${position} von ${total}`
+                    }
+
+                    // Position in Gruppe (role="group" oder fieldset)
+                    if (
+                        parent.getAttribute("role") === "group" ||
+                        parent.tagName === "FIELDSET"
+                    ) {
+                        const siblings = Array.from(parent.children).filter(
+                            (child) =>
+                                this.getEffectiveRole(child) ===
+                                this.getEffectiveRole(element)
+                        )
+                        if (siblings.length > 1) {
+                            const position = siblings.indexOf(element) + 1
+                            const total = siblings.length
+                            return `${position} von ${total}`
+                        }
+                    }
+
+                    return null
+                }
+
+                // Zugängliche Beschreibung ermitteln
+                getAccessibleDescription(element) {
+                    // aria-describedby
+                    const describedby = element.getAttribute("aria-describedby")
+                    if (describedby) {
+                        const descElements = describedby
+                            .split(" ")
+                            .map((id) => document.getElementById(id))
+                            .filter((el) => el)
+                        if (descElements.length > 0) {
+                            return descElements
+                                .map((el) => el.textContent.trim())
+                                .join(" ")
+                        }
+                    }
+
+                    // aria-description
+                    const ariaDescription =
+                        element.getAttribute("aria-description")
+                    if (ariaDescription) return ariaDescription.trim()
+
+                    return null
+                }
+
+                // Interaktionshinweise generieren
+                getInteractionHints(element) {
+                    const role = this.getEffectiveRole(element)
+                    const hints = {
+                        radio: "Verwenden Sie die Pfeiltasten zur Navigation",
+                        checkbox: "Drücken Sie die Leertaste zum Umschalten",
+                        button: "Drücken Sie die Eingabetaste oder Leertaste zum Aktivieren",
+                        link: "Drücken Sie die Eingabetaste zum Folgen des Links",
+                    }
+
+                    return hints[role] || null
+                }
+
+                // Ansage ausgeben
+                announce(text) {
+                    if (!text) return
+
+                    this.output.textContent = text
+
+                    // Visuelle Animation wie bei echtem Screenreader
+                    setTimeout(() => {
+                        this.output.style.backgroundColor = "#2a2a2a"
+                        setTimeout(() => {
+                            this.output.style.backgroundColor = "#1a1a1a"
+                        }, 200)
+                    }, 100)
+
+                    // Optional: Auch an echte Screen Reader weiterleiten
+                    this.announceToScreenReader(text)
+                }
+
+                // An echte Screen Reader weiterleiten (falls verfügbar)
+                announceToScreenReader(text) {
+                    // Live Region für echte Screen Reader
+                    let liveRegion = document.getElementById("sr-live-region")
+                    if (!liveRegion) {
+                        liveRegion = document.createElement("div")
+                        liveRegion.id = "sr-live-region"
+                        liveRegion.setAttribute("aria-live", "assertive")
+                        liveRegion.setAttribute("aria-atomic", "true")
+                        liveRegion.style.position = "absolute"
+                        liveRegion.style.left = "-10000px"
+                        liveRegion.style.width = "1px"
+                        liveRegion.style.height = "1px"
+                        liveRegion.style.overflow = "hidden"
+                        document.body.appendChild(liveRegion)
+                    }
+
+                    liveRegion.textContent = text
+                }
+            }
+
+            // RoomNavigation Klasse anpassen
             class RoomNavigation {
                 constructor() {
                     this.rooms = document.querySelectorAll(".room-item")
@@ -584,8 +919,7 @@
                     this.currentDetailIndex = -1
                     this.isInDetailMode = false
                     this.currentDetailItems = []
-                    this.voiceoverOutput =
-                        document.getElementById("voiceover-text")
+                    this.screenReader = new ScreenReaderSimulator() // Neue Screenreader-Instanz
 
                     this.init()
                 }
@@ -746,10 +1080,11 @@
                     // Automatically check the radio button when room gets focus
                     this.selectRoom(roomIndex)
 
-                    // Announce to screen reader
-                    this.announceToVoiceOver(
-                        this.getRoomAnnouncement(roomIndex)
+                    // Use ScreenReaderSimulator instead of manual announcement
+                    const radioButton = this.rooms[roomIndex].querySelector(
+                        'input[type="radio"]'
                     )
+                    this.screenReader.focusElement(radioButton)
                 }
 
                 navigateRooms(direction) {
@@ -796,6 +1131,11 @@
                             behavior: "smooth",
                             block: "nearest",
                         })
+
+                        // Use ScreenReaderSimulator for detail announcements
+                        this.screenReader.focusElement(
+                            this.currentDetailItems[detailIndex]
+                        )
                     }
                 }
 

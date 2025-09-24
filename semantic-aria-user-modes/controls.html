@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0, minimum-scale=1.0"
+        />
+        <title>Bibliographie - Autor</title>
+    </head>
+    <body>
+        <style>
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                border: 0;
+            }
+        </style>
+        <!-- 
+        <div id="skiplinks">
+            <a
+                class="sr-only"
+                href="#header"
+                >Direkt zum Kopfbereich springen</a
+            >
+            <a
+                class="sr-only"
+                href="#navigation"
+                >Direkt zur Navigation springen</a
+            >
+            <a
+                class="sr-only"
+                href="#main"
+                >Direkt zum Hauptinhalt springen</a
+            >
+            <a
+                class="sr-only"
+                href="#footer"
+                >Direkt zum Fußbereich springen</a
+            >
+        </div> -->
+
+        <div
+            role="banner"
+            id="header"
+        ></div>
+
+        <div
+            role="navigation"
+            id="navigation"
+        >
+            <ul role="tree">
+                <li>
+                    <a
+                        href="#"
+                        role="treeitem"
+                        >lorem ipsum</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="#"
+                        role="treeitem"
+                        >lorem ipsum</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="#"
+                        role="treeitem"
+                        >lorem ipsum</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="#"
+                        role="treeitem"
+                        >lorem ipsum</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="#"
+                        role="treeitem"
+                        >lorem ipsum</a
+                    >
+                </li>
+            </ul>
+        </div>
+
+        <aside>
+            <!-- Login Component -->
+            <form id="login-form">
+                <div role="group" aria-label="Login">
+
+                    <label for="login-email">E-Mail</label>
+                    <input
+                        type="email"
+                        id="login-email"
+                        name="email"
+                        required
+                        autocomplete="off"
+                    />
+                    <p class="hint-message">Bitte achte auf die richtige Schreibweise.</p>
+
+                    <label for="login-password">Passwort</label>
+                    <input
+                        type="password"
+                        id="login-password"
+                        name="password"
+                        required
+                    />
+
+                    <button type="submit">Anmelden</button>
+                </div>
+            </form>
+            <!-- /Login Component -->
+        </aside>
+
+        <main id="main">
+            <div
+                role="heading"
+                aria-level="1"
+            >
+                Main header
+            </div>
+
+            <p lang="en">if it s in english ...</p>
+            <p>
+                Deutscher Absatz mit einem <span lang="en">control</span>, das
+                ...
+            </p>
+        </main>
+
+        <div
+            role="contentinfo"
+            id="footer"
+        ></div>
+    </body>
+</html>

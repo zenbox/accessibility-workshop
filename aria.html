@@ -87,7 +87,8 @@
                     das aktuelle Element verwendet wird.
                     <samp>
                         <code
-                            >&lt;label id="label"&gt;Schließen&lt;/label&gt;<br />
+                            >&lt;label id="label"&gt;Fenster
+                            schließen&lt;/label&gt;<br />
                             &lt;button aria-labelledby="label"&gt;</code
                         >
                     </samp>
@@ -98,11 +99,15 @@
                     Beschreibung für das aktuelle Element verwendet wird.
                     <samp>
                         <code
-                            >&lt;div id="description"&gt;Schließen Sie das
-                            Fenster&lt;/div&gt;<br />
-                            &lt;button aria-describedby="description"&gt;</code
+                            >&lt;p class="sr-only visually-hidden"
+                            id="description"&gt;Schließt das
+                            Fenster.&lt;/p&gt;<br /><br />
+                            &lt;button
+                            aria-describedby="description"&gt;Schließen&lt;/button&gt;</code
                         >
                     </samp>
+                    <!-- <p style="cursor: default">Default Cursor</p>
+                    <p style="cursor: pointer">Pointer Cursor</p> -->
                 </dd>
             </dl>
         </article>
