@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Axe Accessibility – Vollständige Seite testen</title>
+
+        <style>
+            :root {
+                --maxw: 1200px;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                color: #222;
+                line-height: 1.5;
+            }
+            .container {
+                max-width: var(--maxw);
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+
+            /* Skip-Link */
+            .skip-link {
+                position: absolute;
+                left: -9999px;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+            }
+            .skip-link:focus {
+                position: fixed;
+                left: 20px;
+                top: 20px;
+                width: auto;
+                height: auto;
+                background: #000;
+                color: #fff;
+                padding: 0.5rem 0.75rem;
+                border-radius: 0.25rem;
+                z-index: 1002;
+            }
+
+            header[role="banner"] {
+                background: #2c3e50;
+                color: #fff;
+            }
+            header .brand {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 16px 0;
+            }
+            header nav[aria-label] a {
+                color: #fff;
+                text-decoration: none;
+                padding: 0.5rem 0.75rem;
+                border-radius: 0.25rem;
+                display: inline-block;
+            }
+            header nav[aria-label] a:focus,
+            header nav[aria-label] a:hover {
+                background: rgba(255, 255, 255, 0.15);
+            }
+
+            main {
+                padding: 24px 0;
+                display: grid;
+                grid-template-columns: 1fr 300px;
+                gap: 24px;
+            }
+            aside[role="complementary"] {
+                background: #f6f7f9;
+                padding: 16px;
+                border-radius: 8px;
+                border: 1px solid #e5e7eb;
+            }
+            footer[role="contentinfo"] {
+                background: #111827;
+                color: #e5e7eb;
+                padding: 24px 0;
+                margin-top: 24px;
+            }
+
+            .card {
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                padding: 16px;
+                background: #fff;
+                margin-bottom: 16px;
+            }
+            .card h3 {
+                margin-top: 0;
+            }
+
+            /* Test-Panel (von Tests ausgeschlossen) */
+            .test-controls {
+                position: fixed;
+                inset: auto 16px 16px auto;
+                width: 320px;
+                max-width: 90vw;
+                background: #2c3e50;
+                color: #fff;
+                padding: 16px;
+                border-radius: 8px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+                z-index: 1001;
+            }
+            .test-controls h3 {
+                margin: 0 0 8px;
+            }
+            .test-controls .row {
+                display: flex;
+                gap: 8px;
+                margin: 6px 0;
+            }
+            .test-controls button {
+                background: hsl(210, 50%, 40%);
+                color: #fff;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 12px;
+                cursor: pointer;
+                flex: 1;
+            }
+            .test-controls button:hover {
+                background: #2980b9;
+            }
+            .test-controls label {
+                font-size: 0.9rem;
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            /* Ergebnis-Panel (von Tests ausgeschlossen) */
+            .results-panel {
+                margin: 24px 0;
+                padding: 20px;
+                background: #f8f9fa;
+                border-radius: 8px;
+                border-left: 4px solid #17a2b8;
+            }
+            .status-bar {
+                padding: 10px;
+                text-align: center;
+                font-weight: bold;
+                border-radius: 6px;
+                margin-bottom: 15px;
+            }
+            .status-bar.success {
+                background: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+            .status-bar.error {
+                background: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+
+            /* Violation Cards */
+            .violation-item {
+                background: #fff;
+                margin: 10px 0;
+                padding: 15px;
+                border-radius: 6px;
+                border-left: 4px solid #dc3545;
+            }
+            .violation-item.minor {
+                border-left-color: #ffc107;
+            }
+            .violation-item.moderate {
+                border-left-color: #fd7e14;
+            }
+            .violation-item.serious {
+                border-left-color: #dc3545;
+            }
+            .violation-item.critical {
+                border-left-color: #6f42c1;
+            }
+            .violation-header {
+                font-weight: bold;
+                color: #2c3e50;
+                margin-bottom: 8px;
+            }
+            .violation-help {
+                color: #6c757d;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            .violation-nodes {
+                background: #f1f3f4;
+                padding: 10px;
+                border-radius: 6px;
+                margin-top: 10px;
+            }
+            .node-item {
+                margin: 5px 0;
+                font-family: monospace;
+                font-size: 12px;
+                background: #fff;
+                padding: 6px;
+                border-radius: 4px;
+            }
+
+            /* Highlights */
+            .highlight-violation {
+                outline: 2px solid red !important;
+                outline-offset: 2px;
+                position: relative;
+            }
+            .highlight-violation::after {
+                content: attr(data-violation-info);
+                position: absolute;
+                top: -30px;
+                left: 0;
+                background: rgba(220, 53, 69, 0.95);
+                color: #fff;
+                padding: 2px 6px;
+                border-radius: 4px;
+                font-size: 12px;
+                white-space: nowrap;
+                z-index: 1001;
+            }
+
+            /* Demo-Güte/Fehler */
+            .good-contrast {
+                background: #2c3e50;
+                color: #fff;
+                padding: 10px;
+                border-radius: 6px;
+            }
+            .bad-contrast {
+                background: #ddd;
+                color: #ccc;
+                padding: 10px;
+                border-radius: 6px;
+            }
+            .very-bad-contrast {
+                background: #f0f0f0;
+                color: #f5f5f5;
+                padding: 10px;
+                border-radius: 6px;
+            }
+            .focus-issue {
+                outline: none;
+            }
+            .focus-issue:focus {
+                outline: none;
+            }
+            .good-focus:focus {
+                outline: 2px solid #007acc;
+                outline-offset: 2px;
+            }
+
+            /* Responsive */
+            @media (max-width: 900px) {
+                main {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <a
+            class="skip-link"
+            href="#hauptinhalt"
+            >Zum Inhalt springen</a
+        >
+
+        <header role="banner">
+            <div class="container">
+                <div class="brand">
+                    <img
+                        src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIxNiIgZmlsbD0iI2ZmZiIvPjx0ZXh0IHg9IjE2IiB5PSIyMSIgZm9udC1zaXplPSIxMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzJjM2U1MCI+QXg8L3RleHQ+PC9zdmc+"
+                        alt="Logo"
+                        width="32"
+                        height="32"
+                    />
+                    <strong>Axe A11y Demo</strong>
+                </div>
+                <nav
+                    aria-label="Hauptnavigation"
+                    class="container"
+                    style="padding-bottom: 12px"
+                >
+                    <a href="#start">Start</a>
+                    <a href="#features">Features</a>
+                    <a href="#kontakt">Kontakt</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Test Control Panel (ausgeschlossen) -->
+        <section
+            class="test-controls"
+            data-exclude="true"
+            aria-label="Axe Testpanel"
+        >
+            <h3>🔍 Axe Tests</h3>
+            <!-- <div class="row">
+                <button
+                    type="button"
+                    onclick="runFullTest()"
+                >
+                    Vollständiger Test
+                </button>
+                <button
+                    type="button"
+                    onclick="runQuickTest()"
+                >
+                    Schneller Test
+                </button>
+            </div> -->
+            <div class="row">
+                <!-- <button
+                    type="button"
+                    onclick="runWCAGTest()"
+                >
+                    WCAG 2.1 AA
+                </button> -->
+
+                <!-- - - - - - -->
+                <button
+                    type="button"
+                    onclick="runTargetSizeTests()"
+                >
+                    Target Size testen
+                </button>
+                <!-- - - - - - -->
+            </div>
+            <div class="row">
+                <button
+                    type="button"
+                    onclick="clearResults()"
+                >
+                    Ergebnisse löschen
+                </button>
+            </div>
+            <div
+                class="row"
+                style="align-items: center"
+            >
+                <label
+                    ><input
+                        type="checkbox"
+                        id="highlightElements"
+                        checked
+                    />
+                    Elemente hervorheben</label
+                >
+            </div>
+            <fieldset
+                style="
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    padding: 8px;
+                    border-radius: 6px;
+                "
+            >
+                <legend style="padding: 0 6px">Scope</legend>
+                <label
+                    ><input
+                        type="radio"
+                        name="scope"
+                        value="document"
+                        checked
+                    />
+                    Ganze Seite</label
+                >
+                <label
+                    ><input
+                        type="radio"
+                        name="scope"
+                        value="main"
+                    />
+                    Nur Hauptinhalt</label
+                >
+            </fieldset>
+            <small style="opacity: 0.85; display: block; margin-top: 6px">
+                Shortcuts: Ctrl+T (Quick) • Ctrl+Shift+T (Full) • Ctrl+L (8
+                Tests) • Ctrl+R (Clear)
+            </small>
+        </section>
+
+        <div class="container">
+            <main
+                id="hauptinhalt"
+                role="main"
+            >
+                <article class="target-size-tests with-errors">
+                    <h2>Target Size Tests</h2>
+                    <style>
+                        .target-size-tests {
+                            a:link,
+                            button {
+                                /* outline: 2px solid blue;
+                                outline-offset: 2px; */
+                                background: hsl(0 85 50 /0.25);
+                            }
+
+                            &.without-errors {
+                                a:link,
+                                button {
+                                    display: inline-block;
+                                    background: hsl(120 85 50 /0.25);
+                                    min-width: 24px;
+                                    min-height: 24px;
+                                }
+                            }
+                        }
+                    </style>
+                    <nav>
+                        <ul>
+                            <li><a href="">Link One</a></li>
+                            <li><a href="">Link Two</a></li>
+                            <li><a href="">Link Three</a></li>
+                            <li><a href="">Link Four</a></li>
+                            <li><a href="">Link Five</a></li>
+                        </ul>
+                    </nav>
+
+                    <button>Button Text</button>
+                </article>
+
+                <article class="target-size-tests without-errors">
+                    <h2>Target Size Tests</h2>
+
+                    <nav>
+                        <ul>
+                            <li><a href="">Link One</a></li>
+                            <li><a href="">Link Two</a></li>
+                            <li><a href="">Link Three</a></li>
+                            <li><a href="">Link Four</a></li>
+                            <li><a href="">Link Five</a></li>
+                        </ul>
+                    </nav>
+
+                    <button>Button Text</button>
+                </article>
+            </main>
+        </div>
+
+        <!-- Anmerkungen zu den Tests-->
+        <section>
+            <aside
+                role="complementary"
+                aria-label="Zusatzinformationen"
+            >
+                <h2 style="margin-top: 0">Hinweise</h2>
+                <ul>
+                    <li>Das Testpanel ist von Scans ausgeschlossen.</li>
+                    <li>
+                        Über den Scope „Ganze Seite“ auch Header/Aside/Footer
+                        mitscannen.
+                    </li>
+                </ul>
+            </aside>
+        </section>
+
+        <!-- Testergebnisse -->
+        <section
+            id="results"
+            class="results-panel"
+            data-exclude="true"
+            aria-labelledby="ergebnisse-heading"
+            hidden
+        >
+            <h2 id="ergebnisse-heading">Test-Ergebnisse</h2>
+            <div
+                id="status-bar"
+                class="status-bar"
+                role="status"
+                aria-live="polite"
+            ></div>
+            <div id="violations-list"></div>
+        </section>
+
+        <footer role="contentinfo">
+            <div class="container">
+                <p>
+                    &copy; 2025 Axe A11y Demo ·
+                    <a
+                        href="#kontakt"
+                        style="color: #9dd1ff"
+                        >Kontakt</a
+                    >
+                </p>
+            </div>
+        </footer>
+
+        <!-- Axe Core -->
+        <script src="assets/lib/axe.min.js"></script>
+
+        <script>
+            /* ========== Helpers ========== */
+            function waitForAxe(timeout = 10000) {
+                return new Promise((resolve, reject) => {
+                    const t0 = Date.now()
+                    ;(function check() {
+                        if (window.axe && typeof axe.run === "function")
+                            return resolve()
+                        if (Date.now() - t0 > timeout)
+                            return reject(new Error("axe-core nicht geladen"))
+                        requestAnimationFrame(check)
+                    })()
+                })
+            }
+
+            const $ = (sel, root = document) => root.querySelector(sel)
+            const $all = (sel, root = document) =>
+                Array.from(root.querySelectorAll(sel))
+
+            function showPanel() {
+                $("#results").hidden = false
+            }
+
+            function showLoading() {
+                showPanel()
+                const bar = $("#status-bar")
+                bar.className = "status-bar"
+                bar.textContent = "🔄 Tests werden ausgeführt..."
+            }
+
+            function showError(msg) {
+                showPanel()
+                const bar = $("#status-bar")
+                bar.className = "status-bar error"
+                bar.textContent = "🔥 " + msg
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement("div")
+                div.textContent = String(text ?? "")
+                return div.innerHTML
+            }
+
+            function scopeSelector() {
+                const val = document.querySelector(
+                    'input[name="scope"]:checked'
+                ).value
+                return val === "main" ? "main" : document // 'document' == ganze Seite
+            }
+
+            /* ========== Rendering ========== */
+            function createViolationElement(violation) {
+                const div = document.createElement("div")
+                div.className = `violation-item ${violation.impact || ""}`
+                div.innerHTML = `
+        <div class="violation-header">${escapeHtml(violation.id)} ${(
+                    violation.impact || ""
+                ).toUpperCase()}</div>
+        <div class="violation-help">
+          ${escapeHtml(violation.help)}
+          <a href="${
+              violation.helpUrl
+          }" target="_blank" style="margin-left:10px;">📖 Mehr Info</a>
+        </div>
+        <div class="violation-nodes">
+          <strong>Betroffene Elemente (${violation.nodes.length}):</strong>
+          ${violation.nodes
+              .map(
+                  (node) => `
+            <div class="node-item">
+              <strong>Selector:</strong> ${escapeHtml(
+                  (node.target || []).join(", ")
+              )}<br>
+              <strong>HTML:</strong> ${escapeHtml(node.html)}<br>
+              <strong>Problem:</strong> ${escapeHtml(node.failureSummary)}
+            </div>
+          `
+              )
+              .join("")}
+        </div>`
+                return div
+            }
+
+            function displayResults(results) {
+                showPanel()
+                const bar = $("#status-bar")
+                const list = $("#violations-list")
+                const n = results.violations.length
+
+                bar.className =
+                    n === 0 ? "status-bar success" : "status-bar error"
+                bar.textContent =
+                    n === 0
+                        ? "✅ Keine Accessibility-Violations gefunden!"
+                        : `❌ ${n} Accessibility-Violation(s) gefunden`
+                list.innerHTML = ""
+                results.violations.forEach((v) =>
+                    list.appendChild(createViolationElement(v))
+                )
+
+                console.group("🔍 Axe Ergebnis")
+                console.log("Violations:", n)
+                console.log("Passes:", results.passes.length)
+                console.log("Incomplete:", results.incomplete.length)
+                console.log("Inapplicable:", results.inapplicable.length)
+                if (n > 0) {
+                    console.group("Details:")
+                    results.violations.forEach((v) =>
+                        console.log(
+                            `${v.id} (${v.impact}): ${v.nodes.length} nodes`
+                        )
+                    )
+                    console.groupEnd()
+                }
+                console.groupEnd()
+            }
+
+            /* ========== Highlights ========== */
+            function clearHighlights() {
+                $all(".highlight-violation").forEach((el) => {
+                    el.classList.remove("highlight-violation")
+                    el.removeAttribute("data-violation-info")
+                })
+            }
+
+            function highlightViolations(violations) {
+                clearHighlights()
+                if (!$("#highlightElements").checked) return
+
+                violations.forEach((v) => {
+                    ;(v.nodes || []).forEach((node) => {
+                        ;(node.target || []).forEach((sel) => {
+                            try {
+                                document.querySelectorAll(sel).forEach((el) => {
+                                    if (!el.closest('[data-exclude="true"]')) {
+                                        el.classList.add("highlight-violation")
+                                        el.setAttribute(
+                                            "data-violation-info",
+                                            `${v.id} (${v.impact})`
+                                        )
+                                    }
+                                })
+                            } catch (e) {
+                                console.warn(
+                                    "Highlight-Fehler für Selector:",
+                                    sel
+                                )
+                            }
+                        })
+                    })
+                })
+            }
+
+            /* ========== Scans ========== */
+            async function runFullTest() {
+                showLoading()
+                try {
+                    const target = scopeSelector()
+                    const results = await axe.run(target, {
+                        exclude: [
+                            '[data-exclude="true"]',
+                            ".test-controls",
+                            "#results",
+                        ],
+                    })
+                    displayResults(results)
+                    highlightViolations(results.violations)
+                } catch (err) {
+                    showError("Fehler beim Test: " + err.message)
+                }
+            }
+
+            async function runQuickTest() {
+                showLoading()
+                try {
+                    const target = scopeSelector()
+                    const results = await axe.run(target, {
+                        tags: ["wcag2a"],
+                        exclude: [
+                            '[data-exclude="true"]',
+                            ".test-controls",
+                            "#results",
+                        ],
+                        timeout: 5000,
+                    })
+                    displayResults(results)
+                    highlightViolations(results.violations)
+                } catch (err) {
+                    showError("Fehler beim Quick Test: " + err.message)
+                }
+            }
+
+            async function runWCAGTest() {
+                showLoading()
+                try {
+                    const target = scopeSelector()
+                    const results = await axe.run(target, {
+                        tags: ["wcag2a", "wcag2aa", "wcag21aa"],
+                        exclude: [
+                            '[data-exclude="true"]',
+                            ".test-controls",
+                            "#results",
+                        ],
+                        timeout: 10000,
+                    })
+                    displayResults(results)
+                    highlightViolations(results.violations)
+                } catch (err) {
+                    showError("Fehler beim WCAG Test: " + err.message)
+                }
+            }
+
+            /**
+             * Run Target Size Tests
+             *
+             * hier testen wir wir für alle Beispiele
+             * die Regel mit den 24px ...
+             */
+            async function runTargetSizeTests() {
+                // show indicator
+                showLoading()
+
+                // Test execution
+                try {
+                    // get the testing scope
+                    const target = scopeSelector()
+
+                    // run only the target-size rule
+                    const results = await axe.run(target, {
+                        runOnly: { type: "rule", values: ["target-size"] },
+                        exclude: [
+                            '[data-exclude="true"]',
+                            ".test-controls",
+                            "#results",
+                        ],
+                        timeout: 6000, // 6 seconds, must be enough
+                    })
+
+                    // show results in an aside panel
+                    displayResults(results)
+
+                    // highlight the violations in the document
+                    highlightViolations(results.violations)
+                } catch (err) {
+                    showError("Fehler beim Target Size Test: " + err.message)
+                }
+            }
+
+            async function runListOfTests() {
+                showLoading()
+                const bar = $("#status-bar")
+                const allViolations = []
+                const tests = [
+                    {
+                        name: "🖼️ Bilder & Alt-Text",
+                        rules: ["image-alt", "svg-img-alt", "area-alt"],
+                    },
+                    // {name:'📝 Formulare & Labels', rules:['label','form-field-multiple-labels','duplicate-id']},
+                    // {name:'🔘 Buttons & Links', rules:['button-name','link-name']},
+                    // {name:'🎨 Farbkontrast', rules:['color-contrast']},
+                    // {name:'📋 Heading-Struktur', rules:['heading-order','empty-heading','page-has-heading-one']},
+                    // {name:'⌨️ Keyboard & Focus', rules:['tabindex','focusable-content']},
+                    // {name:'📊 Tabellen', rules:['table-fake-caption','td-headers-attr','th-has-data-cells']},
+                    // {name:'🏗️ ARIA & Semantik', rules:['aria-valid-attr','aria-valid-attr-value','aria-roles']}
+                ]
+
+                try {
+                    const target = scopeSelector()
+                    for (let i = 0; i < tests.length; i++) {
+                        const t = tests[i]
+                        bar.className = "status-bar"
+                        bar.textContent = `🔄 Test ${i + 1}/${tests.length}: ${
+                            t.name
+                        }`
+                        try {
+                            const res = await axe.run(target, {
+                                runOnly: { type: "rule", values: t.rules },
+                                exclude: [
+                                    '[data-exclude="true"]',
+                                    ".test-controls",
+                                    "#results",
+                                ],
+                                timeout: 6000,
+                            })
+                            allViolations.push(...res.violations)
+                        } catch (err) {
+                            console.warn(
+                                "Einzeltest-Fehler:",
+                                t.name,
+                                err.message
+                            )
+                        }
+                    }
+                    const results = {
+                        violations: allViolations,
+                        passes: [],
+                        incomplete: [],
+                        inapplicable: [],
+                    }
+                    displayResults(results)
+                    highlightViolations(allViolations)
+                } catch (err) {
+                    showError("Fehler bei Einzeltests: " + err.message)
+                }
+            }
+
+            /* ========== Utilities ========== */
+            function clearResults() {
+                $("#results").hidden = true
+                $("#violations-list").innerHTML = ""
+                clearHighlights()
+            }
+
+            function doSomething() {
+                alert(
+                    "Diese Funktion sollte über einen echten Button zugänglich sein!"
+                )
+            }
+
+            /* ========== Shortcuts & Init ========== */
+            document.addEventListener("keydown", (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    if (e.key === "t") {
+                        e.preventDefault()
+                        runQuickTest()
+                    }
+                    if (e.key === "T") {
+                        e.preventDefault()
+                        runFullTest()
+                    }
+                    if (e.key === "l") {
+                        e.preventDefault()
+                        runListOfTests()
+                    }
+                    if (e.key === "r") {
+                        e.preventDefault()
+                        clearResults()
+                    }
+                }
+            })
+
+            window.addEventListener("load", async () => {
+                try {
+                    await waitForAxe()
+                    console.log(
+                        "✅ axe-core geladen. Scope umschaltbar (Ganze Seite / Main)."
+                    )
+                } catch (err) {
+                    showError(err.message)
+                }
+            })
+        </script>
+
+        <!-- Hier ist ein superkompaktes, framework-freies Beispiel in JavaScript für
+        WCAG 2.x – 1.1.1 Non-text Content. Es prüft u. a. <img />,
+        <input type="image" />, <area />, sowie Elemente mit role="img" (z. B.
+        SVG-Icons) auf einen zugänglichen Namen und ignoriert dekorative Inhalte
+        (alt="", role="presentation", aria-hidden="true"). -->
+
+        <script>
+            /**
+             * Prüft 1.1.1 Non-text Content:
+             * - img: alt erforderlich (alt="" ist OK, wenn explizit dekorativ markiert)
+             * - input[type=image]: alt erforderlich
+             * - area (Image-Map): alt erforderlich
+             * - [role="img"] (z.B. <svg role="img">): aria-label ODER aria-labelledby erforderlich
+             *
+             * Rückgabe: Array von { element, reason }
+             */
+            function testSC111(root = document) {
+                const issues = []
+
+                const isDecorative = (el) => {
+                    // als dekorativ behandeln, wenn:
+                    // - aria-hidden="true" ODER
+                    // - role="presentation"/"none" ODER
+                    // - img mit alt="" (explizit dekorativ)
+                    const role = (el.getAttribute("role") || "").toLowerCase()
+                    if (el.getAttribute("aria-hidden") === "true") return true
+                    if (role === "presentation" || role === "none") return true
+                    if (
+                        el.tagName === "IMG" &&
+                        el.hasAttribute("alt") &&
+                        el.getAttribute("alt") === ""
+                    )
+                        return true
+                    return false
+                }
+
+                const getAccessibleName = (el) => {
+                    // Minimaler Accessible-Name-Check (hier bewusst simpel):
+                    if (
+                        el.tagName === "IMG" ||
+                        (el.tagName === "INPUT" && el.type === "image")
+                    )
+                        return el.getAttribute("alt") ?? ""
+
+                    if (el.tagName === "AREA")
+                        return el.getAttribute("alt") ?? ""
+
+                    // Für role="img": aria-label oder aria-labelledby
+                    const ariaLabel = el.getAttribute("aria-label") || ""
+                    if (ariaLabel.trim()) return ariaLabel.trim()
+
+                    const labelledbyId = el.getAttribute("aria-labelledby")
+                    if (labelledbyId) {
+                        const labelEl = root.getElementById(labelledbyId)
+                        if (labelEl) return (labelEl.textContent || "").trim()
+                    }
+                    return ""
+                }
+
+                // Kandidaten sammeln
+                const candidates = [
+                    ...root.querySelectorAll(
+                        'img, input[type="image"], area, [role="img"]'
+                    ),
+                ]
+
+                candidates.forEach((el) => {
+                    // CSS-Hintergrundbilder werden hier nicht geprüft (außerhalb Scope dieser Regel)
+                    if (isDecorative(el)) return
+
+                    const name = getAccessibleName(el)
+
+                    if (!name || !name.trim()) {
+                        // Sonderfall: img ohne alt-Attribut (nicht mal alt="")
+                        if (el.tagName === "IMG" && !el.hasAttribute("alt")) {
+                            issues.push({
+                                element: el,
+                                reason: "<img> fehlt alt-Attribut",
+                            })
+                            return
+                        }
+
+                        // input[type=image], area, role="img" ohne Name
+                        if (el.tagName === "INPUT" && el.type === "image") {
+                            issues.push({
+                                element: el,
+                                reason: '<input type="image"> braucht alt',
+                            })
+                            return
+                        }
+                        if (el.tagName === "AREA") {
+                            issues.push({
+                                element: el,
+                                reason: "<area> in Image-Maps braucht alt",
+                            })
+                            return
+                        }
+                        if (el.getAttribute("role") === "img") {
+                            issues.push({
+                                element: el,
+                                reason: '[role="img] braucht aria-label oder aria-labelledby',
+                            })
+                            return
+                        }
+
+                        // img mit alt="" aber NICHT dekorativ markiert -> wahrscheinlich problematisch
+                        if (
+                            el.tagName === "IMG" &&
+                            el.hasAttribute("alt") &&
+                            el.getAttribute("alt") === ""
+                        ) {
+                            issues.push({
+                                element: el,
+                                reason: '<img alt=""> ohne Deko-Markierung (erwäge role="presentation" oder aria-hidden="true")',
+                            })
+                            return
+                        }
+                    }
+                })
+
+                return issues
+            }
+
+            /* --------- Beispiel-Nutzung ---------- */
+            ;(function runDemo111() {
+                const problems = testSC111()
+                if (problems.length === 0) {
+                    console.info(
+                        "✅ SC 1.1.1: Keine offensichtlichen Probleme gefunden."
+                    )
+                } else {
+                    console.warn(
+                        `❌ SC 1.1.1: ${problems.length} Problem(e) gefunden:`
+                    )
+                    console.table(
+                        problems.map((p) => ({
+                            reason: p.reason,
+                            snippet:
+                                p.element.outerHTML.slice(0, 120) +
+                                (p.element.outerHTML.length > 120 ? "…" : ""),
+                        }))
+                    )
+
+                    // Optional: visuell hervorheben
+                    problems.forEach((p) => {
+                        p.element.style.outline = "2px solid red"
+                        p.element.style.outlineOffset = "2px"
+                        p.element.title =
+                            (p.element.title ? p.element.title + " | " : "") +
+                            p.reason
+                    })
+                }
+            })()
+        </script>
+
+        <!-- Kurz erklärt:
+	•	Dekoratives wird über aria-hidden="true", role="presentation"/"none" oder bei <img> durch alt="" akzeptiert.
+	•	Bedeutungsrelevante Non-Text-Inhalte brauchen einen zugänglichen Namen:
+	•	<img> / <input type="image"> / <area> → alt
+	•	[role="img"] (z. B. svg) → aria-label oder aria-labelledby
+	•	Das Beispiel ist bewusst minimal. Für produktive Checks würdest du zusätzlich Sonderfälle (z. B. verlinkte Bilder, redundante Alternativtexte, leere aria-labelledby-Ziele, dynamische States) ausbauen.
+  -->
+    </body>
+</html>
