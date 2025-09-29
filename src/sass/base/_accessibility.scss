@@ -1,4 +1,5 @@
-.sr-only, .visually-hidden {
+.sr-only,
+.visually-hidden {
     word-wrap: normal;
     position: absolute;
 
@@ -238,7 +239,7 @@ td {
     z-index: 1001;
     background-color: hsla(0, 0%, 100%, 0.85);
     color: black;
-    font-size: 3rem;
+    font-size: 1.5rem;
     margin: 0;
     overflow: visible;
     clip-path: auto;
@@ -255,12 +256,12 @@ td {
     }
     @media (prefers-reduced-motion: reduce) {
         display: block;
-    }   
+    }
 }
 .prefers-contrast {
     @media (prefers-contrast: no-preference) {
         display: block;
-        color: lightgrey !important
+        color: lightgrey !important;
     }
     @media (prefers-contrast: less) {
         display: block;
@@ -286,7 +287,7 @@ td {
 .forced-color {
     @media (forced-color: none) {
         display: block;
-        color: lightgrey !important
+        color: lightgrey !important;
     }
     @media (forced-color: active) {
         display: block;
@@ -295,7 +296,7 @@ td {
 .prefers-reduced-data {
     @media (prefers-reduced-data: no-preference) {
         display: block;
-        color: lightgrey !important
+        color: lightgrey !important;
     }
     @media (prefers-reduced-data: reduce) {
         display: block;
@@ -304,7 +305,7 @@ td {
 .prefers-reduced-transparency {
     @media (prefers-reduced-transparency: no-preference) {
         display: block;
-        color: lightgrey !important
+        color: lightgrey !important;
     }
     @media (prefers-reduced-transparency: reduce) {
         display: block;
@@ -313,9 +314,69 @@ td {
 .inverted-color {
     @media (inverted-color: none) {
         display: block;
-        color: lightgrey !important
+        color: lightgrey !important;
     }
     @media (inverted-color: inverted) {
         display: block;
+    }
+}
+
+/* HIGH CONTRAST OVERWRITE */
+@media (prefers-contrast: more) {
+    /* Basis-Reset für alle Elemente */
+    * {
+        background: black !important;
+        color: white !important;
+        border-color: white !important;
+        animation: none !important;
+        transition: none !important;
+    }
+
+    /* Spezifische Zustände */
+    button {
+        border-style: solid;
+        border-color: white;
+        border-width: 2px;
+        margin: 0.5rem;
+    }
+    a:link,
+    button {
+        &:hover {
+            background: #333 !important;
+            border-color: #f2ec33 !important;
+            color: white !important;
+        }
+    }
+
+    :focus {
+        background: black !important;
+        color: white !important;
+        outline: 3px solid #3dd7fd !important;
+        box-shadow: 0 0 0 3px #3dd7fd !important;
+    }
+
+    :disabled {
+        background: black !important;
+        color: #666 !important;
+        border-color: #666 !important;
+    }
+
+    /* Ausgewählte Elemente */
+    .selected,
+    :checked {
+        background: black !important;
+        color: white !important;
+        border-color: #3dd7fd !important;
+    }
+
+    /* Spezielle Fokus-Klassen */
+    .focus-outline {
+        box-shadow: 0 0 0 3px #3dd7fd !important;
+    }
+
+    /* Text-Selektion */
+    ::selection {
+        background: #3dd7fd !important;
+        color: black !important;
     }
 }

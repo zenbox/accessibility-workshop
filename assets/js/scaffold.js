@@ -84,6 +84,198 @@ class Tooltip {
     }
 }
 
+function createAxeCoreTestScripts() {
+    const relativePathToRoot = getRelativePathToRoot()
+
+    // Axe Core Library Script erstellen
+    const axeLibScript = document.createElement("script")
+    axeLibScript.src = relativePathToRoot + "assets/lib/axe.min.js"
+    axeLibScript.type = "text/javascript"
+    axeLibScript.async = false // Stelle sicher, dass axe vor dem Test-Script lädt
+
+    // Axe Core Test Script erstellen
+    const axeTestScript = document.createElement("script")
+    axeTestScript.src = relativePathToRoot + "assets/js/axe-core-test.js"
+    axeTestScript.type = "text/javascript"
+    axeTestScript.async = false
+
+    // Error-Handler für fehlende Dateien
+    axeLibScript.onerror = () => {
+        console.warn(
+            "⚠️ axe.min.js konnte nicht geladen werden:",
+            axeLibScript.src
+        )
+    }
+
+    axeTestScript.onerror = () => {
+        console.warn(
+            "⚠️ axe-core-test.js konnte nicht geladen werden:",
+            axeTestScript.src
+        )
+    }
+
+    // Success-Handler
+    axeLibScript.onload = () => {
+        console.log("✅ axe.min.js erfolgreich geladen")
+    }
+
+    axeTestScript.onload = () => {
+        console.log("✅ axe-core-test.js erfolgreich geladen")
+    }
+
+    // Scripts vor dem Ende des Body einfügen
+    // Erst die Library, dann das Test-Script
+    document.body.appendChild(axeLibScript)
+
+    // Test-Script erst laden, wenn axe Library geladen ist
+    axeLibScript.addEventListener("load", () => {
+        document.body.appendChild(axeTestScript)
+    })
+
+    return {
+        axeLib: axeLibScript,
+        axeTest: axeTestScript,
+    }
+}
+
+function createAxeCoreUI() {
+    // Floating Action Button (FAB) erstellen
+    const fab = document.createElement("button")
+    fab.id = "axe-fab"
+    fab.type = "button"
+    fab.className = "axe-fab"
+    fab.setAttribute("aria-label", "WCAG Test für diese Seite")
+    fab.title = "WCAG Test für diese Seite"
+    fab.innerHTML = `
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+    `
+
+    // Overlay Container erstellen
+    const overlay = document.createElement("div")
+    overlay.id = "axe-overlay"
+    overlay.className = "axe-overlay"
+    overlay.setAttribute("role", "dialog")
+    overlay.setAttribute("aria-modal", "true")
+    overlay.setAttribute("aria-labelledby", "axe-dialog-title")
+    overlay.style.display = "none"
+
+    // Overlay Content
+    overlay.innerHTML = `
+        <div class="axe-dialog">
+            <header class="axe-dialog-header">
+                <h2 id="axe-dialog-title">WCAG Accessibility Test</h2>
+                <button type="button" class="axe-close-btn" aria-label="Fenster schließen">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </header>
+            
+            <div class="axe-dialog-content">
+                <div class="axe-test-buttons">
+                    <button type="button" class="axe-test-btn" onclick="runWCAGTest()">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                        WCAG Test starten
+                    </button>
+                    <button type="button" class="axe-test-btn" onclick="runQuickTest()">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/>
+                        </svg>
+                        Quick Test
+                    </button>
+                    <button type="button" class="axe-test-btn" onclick="runFullTest()">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                        </svg>
+                        Vollständiger Test
+                    </button>
+                </div>
+
+                <!-- Testergebnisse -->
+                <section id="results" class="results-panel" aria-labelledby="ergebnisse-heading" style="display: none;">
+                    <h3 id="ergebnisse-heading">Test-Ergebnisse</h3>
+                    <div id="status-bar" class="status-bar" role="status" aria-live="polite"></div>
+                    <div id="violations-list"></div>
+                </section>
+            </div>
+            
+            <footer class="axe-dialog-footer">
+                <button type="button" class="axe-close-btn-text" onclick="closeAxeOverlay()">
+                    Fenster schließen
+                </button>
+            </footer>
+        </div>
+    `
+
+    // Event-Listener für FAB
+    fab.addEventListener("click", openAxeOverlay)
+
+    // Event-Listener für Overlay schließen
+    const closeBtn = overlay.querySelector(".axe-close-btn")
+    const closeTextBtn = overlay.querySelector(".axe-close-btn-text")
+
+    closeBtn.addEventListener("click", closeAxeOverlay)
+    closeTextBtn.addEventListener("click", closeAxeOverlay)
+
+    // Overlay schließen bei Klick außerhalb
+    overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+            closeAxeOverlay()
+        }
+    })
+
+    // ESC-Taste Handler
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && overlay.style.display !== "none") {
+            closeAxeOverlay()
+        }
+    })
+
+    // Elemente zum DOM hinzufügen
+    document.body.appendChild(fab)
+    document.body.appendChild(overlay)
+
+    console.log("✅ Axe Core UI erstellt (FAB + Overlay)")
+
+    return { fab, overlay }
+}
+
+// Globale Funktionen für Overlay-Steuerung
+function openAxeOverlay() {
+    const overlay = document.getElementById("axe-overlay")
+    overlay.style.display = "flex"
+    
+    // Focus auf ersten Button setzen
+    const firstBtn = overlay.querySelector(".axe-test-btn")
+    if (firstBtn) firstBtn.focus()
+    
+    // Scroll-Lock für Body
+    document.body.style.overflow = "hidden"
+}
+
+function closeAxeOverlay() {
+    const overlay = document.getElementById("axe-overlay")
+    overlay.style.display = "none"
+    
+    // Ergebnisse ausblenden
+    const results = document.getElementById("results")
+    if (results) results.style.display = "none"
+    
+    // Highlights entfernen
+    clearHighlights()
+    
+    // Scroll-Lock aufheben
+    document.body.style.overflow = ""
+    
+    // Focus zurück auf FAB
+    const fab = document.getElementById("axe-fab")
+    if (fab) fab.focus()
+}
+
 // Helper function to calculate relative path to root
 function getRelativePathToRoot() {
     // Get current path
@@ -108,6 +300,8 @@ function getRelativePathToRoot() {
 function createMainNavigation() {
     const nav = document.createElement("nav")
     const ul = document.createElement("ul")
+
+    nav.setAttribute("aria-label", "Hauptnavigation")
 
     const navigation = [
         {
@@ -183,6 +377,7 @@ function createSkipLinks() {
     // Build a skip link navigation
     // - - - - - - - - - -
     const skipLinks = document.createElement("nav")
+    skipLinks.setAttribute("aria-label", "Skip-Links")
     skipLinks.id = "skip-links"
     const links = [
         { selector: "body > main", href: "#main-content", text: "zum Inhalt" },
@@ -791,6 +986,9 @@ document.addEventListener("DOMContentLoaded", () => {
     createFooter()
     createSkipLinks()
     setTabindizes()
+
+    createAxeCoreTestScripts()
+    createAxeCoreUI()
 
     document.querySelector("html").setAttribute("lang", "de")
 })

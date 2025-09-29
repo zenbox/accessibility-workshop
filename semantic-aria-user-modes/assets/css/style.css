@@ -1,63 +1,63 @@
 @charset "UTF-8";
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css");
 :root {
-  /* BASE THEME – Schriftgrößen */
-  font-size: 14px;
-  /* BASE THEME – Abstände */
-  --spacing-xs: 0.25rem; /* 4px */
-  --spacing-sm: 0.5rem; /* 8px */
-  --spacing-md: 1rem; /* 16px */
-  --spacing-lg: 1.5rem; /* 24px */
-  --spacing-xl: 2rem; /* 32px */
-  --spacing-xxl: 4rem; /* 64px */
-  /* BASE THEME – Border Radius */
-  --border-radius: 0.6rem;
-  --border-radius-sm: calc(var(--border-radius) / 2);
-  --border-radius-xs: calc(var(--border-radius) / 3);
-  --border-radius-xxs: calc(var(--border-radius) / 8);
-  /* BASE THEME – Primäre Farben */
-  --color-primary: hsl(129, 97%, 27%);
-  --color-primary-dark: hsl(170, 37%, 46%);
-  --color-secondary: hsl(210, 29%, 24%);
-  --color-secondary-light: hsl(210, 29%, 29%);
-  /* BASE THEME – Neutrale Farben */
-  --color-white: hsl(0, 0%, 100%);
-  --color-light-gray: hsl(0, 0%, 96%);
-  --color-medium-gray: hsl(192, 15%, 94%);
-  --color-dark-gray: hsl(204, 8%, 76%);
-  --color-black: hsl(0, 0%, 0%);
-  --color-text: hsl(0, 0%, 20%);
-  /* BASE THEME – Overlay Farben */
-  --color-overlay-dark: hsla(0, 0%, 0%, 0.5);
-  --color-overlay-light: hsla(0, 0%, 100%, 0.1);
-  --color-gradient-overlay: hsla(229, 76%, 66%, 0.1);
-  --color-gradient-overlay-end: hsla(270, 37%, 46%, 0.1);
-  /* BASE THEME – Schatten */
-  --shadow-light: 0 1px 3px hsla(0, 0%, 0%, 0.1);
-  --shadow-medium: 0 2px 10px hsla(0, 0%, 0%, 0.1);
-  --shadow-heavy: 0 4px 15px hsla(0, 0%, 0%, 0.2);
-  --shadow-nav: 4px 0 15px hsla(0, 0%, 0%, 0.3);
-  --shadow-container: 0 0 20px hsla(0, 0%, 0%, 0.1);
-  /* BASE THEME – Text Schatten */
-  --text-shadow-light: 1px 1px 2px hsla(0, 0%, 0%, 0.3);
-  --text-shadow-medium: 2px 2px 4px hsla(0, 0%, 0%, 0.3);
-  /* LAYOUT – Grid Layout Maße */
-  --grid-nav-width: 250px;
-  --grid-aside-width: 220px;
-  --grid-mobile-nav-width: 280px;
-  --grid-mobile-nav-width-small: 260px;
-  --grid-max-width: 1400px;
-  /* LAYOUT – Hero Section Höhe */
-  --hero-height-desktop: 500px;
-  --hero-height-tablet: 350px;
-  --hero-height-mobile: 300px;
-  /* BASE THEME – Transitionen */
-  --transition-fast: 0.3s ease;
-  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.5s ease;
-  /* LAYOUT – Breakpoints */
-  --breakpoint-mobile: 480px;
-  --breakpoint-tablet: 768px;
+    /* BASE THEME – Schriftgrößen */
+    font-size: 14px;
+    /* BASE THEME – Abstände */
+    --spacing-xs: 0.25rem; /* 4px */
+    --spacing-sm: 0.5rem; /* 8px */
+    --spacing-md: 1rem; /* 16px */
+    --spacing-lg: 1.5rem; /* 24px */
+    --spacing-xl: 2rem; /* 32px */
+    --spacing-xxl: 4rem; /* 64px */
+    /* BASE THEME – Border Radius */
+    --border-radius: 0.6rem;
+    --border-radius-sm: calc(var(--border-radius) / 2);
+    --border-radius-xs: calc(var(--border-radius) / 3);
+    --border-radius-xxs: calc(var(--border-radius) / 8);
+    /* BASE THEME – Primäre Farben */
+    --color-primary: hsl(129, 97%, 27%);
+    --color-primary-dark: hsl(170, 37%, 46%);
+    --color-secondary: hsl(210, 29%, 24%);
+    --color-secondary-light: hsl(210, 29%, 29%);
+    /* BASE THEME – Neutrale Farben */
+    --color-white: hsl(0, 0%, 100%);
+    --color-light-gray: hsl(0, 0%, 96%);
+    --color-medium-gray: hsl(192, 15%, 94%);
+    --color-dark-gray: hsl(204, 8%, 76%);
+    --color-black: hsl(0, 0%, 0%);
+    --color-text: hsl(0, 0%, 20%);
+    /* BASE THEME – Overlay Farben */
+    --color-overlay-dark: hsla(0, 0%, 0%, 0.5);
+    --color-overlay-light: hsla(0, 0%, 100%, 0.1);
+    --color-gradient-overlay: hsla(229, 76%, 66%, 0.1);
+    --color-gradient-overlay-end: hsla(270, 37%, 46%, 0.1);
+    /* BASE THEME – Schatten */
+    --shadow-light: 0 1px 3px hsla(0, 0%, 0%, 0.1);
+    --shadow-medium: 0 2px 10px hsla(0, 0%, 0%, 0.1);
+    --shadow-heavy: 0 4px 15px hsla(0, 0%, 0%, 0.2);
+    --shadow-nav: 4px 0 15px hsla(0, 0%, 0%, 0.3);
+    --shadow-container: 0 0 20px hsla(0, 0%, 0%, 0.1);
+    /* BASE THEME – Text Schatten */
+    --text-shadow-light: 1px 1px 2px hsla(0, 0%, 0%, 0.3);
+    --text-shadow-medium: 2px 2px 4px hsla(0, 0%, 0%, 0.3);
+    /* LAYOUT – Grid Layout Maße */
+    --grid-nav-width: 250px;
+    --grid-aside-width: 220px;
+    --grid-mobile-nav-width: 280px;
+    --grid-mobile-nav-width-small: 260px;
+    --grid-max-width: 1400px;
+    /* LAYOUT – Hero Section Höhe */
+    --hero-height-desktop: 500px;
+    --hero-height-tablet: 350px;
+    --hero-height-mobile: 300px;
+    /* BASE THEME – Transitionen */
+    --transition-fast: 0.3s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s ease;
+    /* LAYOUT – Breakpoints */
+    --breakpoint-mobile: 480px;
+    --breakpoint-tablet: 768px;
 }
 
 header {
@@ -71,39 +71,39 @@ footer {
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  font-family: Arial, sans-serif;
-  font-size: 16px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
 }
 
 body {
-  line-height: 1.2;
+    line-height: 1.2;
 }
 
 nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 /* ... */
 .multicolumn {
-  text-justify: inter-word;
-  word-wrap: break-word;
-  text-align: left;
-  column-width: 20em;
-  column-gap: 2em;
-  column-rule: 2px dotted black;
-  orphans: 2;
-  widows: 2;
-  hyphens: auto;
+    text-justify: inter-word;
+    word-wrap: break-word;
+    text-align: left;
+    column-width: 20em;
+    column-gap: 2em;
+    column-rule: 2px dotted black;
+    orphans: 2;
+    widows: 2;
+    hyphens: auto;
 }
 
 .app-container {
-  /**
+    /**
   * Breakpoints from material.io
 
   xs, extra-small: 0px
@@ -114,177 +114,177 @@ nav ul {
   */
 }
 @media (min-width: 600px) {
-  .app-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr auto auto;
-    grid-template-areas: "header" "main" "aside" "footer";
-  }
+    .app-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr auto auto;
+        grid-template-areas: "header" "main" "aside" "footer";
+    }
 }
 @media (min-width: 900px) {
-  .app-container {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: 10rem auto auto;
-    gap: 0.125rem;
-    grid-template-areas: "header header header header header header header header" "nav nav main main main main aside aside" "footer footer footer footer footer footer footer footer";
-  }
+    .app-container {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: 10rem auto auto;
+        gap: 0.125rem;
+        grid-template-areas: "header header header header header header header header" "nav nav main main main main aside aside" "footer footer footer footer footer footer footer footer";
+    }
 }
 .app-container > header {
-  grid-area: header;
+    grid-area: header;
 }
 .app-container nav {
-  grid-area: nav;
+    grid-area: nav;
 }
 .app-container main {
-  grid-area: main;
+    grid-area: main;
 }
 .app-container aside {
-  grid-area: aside;
+    grid-area: aside;
 }
 .app-container > footer {
-  grid-area: footer;
+    grid-area: footer;
 }
 
 #page-footer {
-  display: block;
+    display: block;
 }
 
 .app-footer.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }
 .app-image-responsive {
-  max-width: 100%;
-  height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 .app-form-login {
-  margin-block: 3rem;
+    margin-block: 3rem;
 }
 .app-form-login label::before {
-  content: " ";
-  display: block;
-  height: 0.5em;
-  margin-block-end: 0.5em;
+    content: " ";
+    display: block;
+    height: 0.5em;
+    margin-block-end: 0.5em;
 }
 .app-form-login button {
-  display: block;
-  margin-block-start: 0.5em;
-  padding-inline: 1rem;
+    display: block;
+    margin-block-start: 0.5em;
+    padding-inline: 1rem;
 }
-.app-form-login input[type=password]:focus ~ [class*=hint] {
-  outline: 2px solid steelblue;
-  display: block;
+.app-form-login input[type="password"]:focus ~ [class*="hint"] {
+    outline: 2px solid steelblue;
+    display: block;
 }
-.app-form-login input[type=password]:user-valid ~ [class*=success] {
-  display: block;
-  outline: 2px solid hsl(129, 97%, 27%);
+.app-form-login input[type="password"]:user-valid ~ [class*="success"] {
+    display: block;
+    outline: 2px solid hsl(129, 97%, 27%);
 }
-.app-form-login input[type=password]:user-invalid ~ [class*=error] {
-  display: block;
-  outline: 2px solid hsl(0, 100%, 50%);
+.app-form-login input[type="password"]:user-invalid ~ [class*="error"] {
+    display: block;
+    outline: 2px solid hsl(0, 100%, 50%);
 }
 .app-form-login-error {
-  color: hsl(0, 100%, 50%);
-  font-size: 0.875rem;
-  display: block;
+    color: hsl(0, 100%, 50%);
+    font-size: 0.875rem;
+    display: block;
 }
 .app-form-login-success {
-  color: hsl(129, 97%, 27%);
-  font-size: 0.875rem;
-  display: block;
+    color: hsl(129, 97%, 27%);
+    font-size: 0.875rem;
+    display: block;
 }
 .app-form-login-hint {
-  color: hsl(210, 100%, 50%);
-  font-size: 0.875rem;
-  display: block;
+    color: hsl(210, 100%, 50%);
+    font-size: 0.875rem;
+    display: block;
 }
 .app-form-login-hint--permanent {
-  color: hsl(210, 100%, 50%);
-  display: block;
+    color: hsl(210, 100%, 50%);
+    display: block;
 }
 .app-form-login-warning {
-  color: hsl(30, 100%, 50%);
-  font-size: 0.875rem;
-  display: block;
+    color: hsl(30, 100%, 50%);
+    font-size: 0.875rem;
+    display: block;
 }
 @media (prefers-contrast: more) {
-  .app-form-login-warning {
-    color: black;
-  }
+    .app-form-login-warning {
+        color: black;
+    }
 }
 
 .app-nav {
-  transition-property: left;
-  transition-duration: 250ms;
-  transition-timing-function: ease-out;
-  transition-delay: 0s;
-  transition-behavior: smooth;
-  background: oklch(50% 0.1 240deg / 0.5);
+    transition-property: left;
+    transition-duration: 250ms;
+    transition-timing-function: ease-out;
+    transition-delay: 0s;
+    transition-behavior: smooth;
+    background: oklch(50% 0.1 240deg / 0.5);
 }
 @media (min-width: 600px) {
-  .app-nav {
-    position: fixed;
-    top: 0;
-    left: calc(-1 * 33vw);
-    width: 33vw;
-    height: 100vh;
-    opacity: 0;
-    box-shadow: 0 0 30px black;
-  }
+    .app-nav {
+        position: fixed;
+        top: 0;
+        left: calc(-1 * 33vw);
+        width: 33vw;
+        height: 100vh;
+        opacity: 0;
+        box-shadow: 0 0 30px black;
+    }
 }
 @media (prefers-reduced-motion: reduce) {
-  .app-nav {
-    transition-duration: 0.01s;
-    transition-timing-function: none;
-  }
+    .app-nav {
+        transition-duration: 0.01s;
+        transition-timing-function: none;
+    }
 }
 @media (min-width: 600px) {
-  .app-nav-active {
-    left: 0;
-    background-color: oklch(50% 0.1 240deg / 0.9);
-    opacity: 1;
-  }
+    .app-nav-active {
+        left: 0;
+        background-color: oklch(50% 0.1 240deg / 0.9);
+        opacity: 1;
+    }
 }
 
 .app-svg {
-  fill-rule: evenodd;
-  clip-rule: evenodd;
-  stroke-linejoin: round;
-  stroke-miterlimit: 2;
-  width: 240px;
-  height: auto;
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    stroke-linejoin: round;
+    stroke-miterlimit: 2;
+    width: 240px;
+    height: auto;
 }
 .app-svg .red {
-  fill: rebeccapurple;
-  translate: 20rem;
-  rotate: 5deg;
+    fill: rebeccapurple;
+    translate: 20rem;
+    rotate: 5deg;
 }
 .app-svg .red:hover {
-  fill: cyan;
+    fill: cyan;
 }
 
 @keyframes navigation-movement {
-  0% {
-    left: -100vw;
-    opacity: 0;
-    display: none;
-  }
-  1% {
-    display: block;
-  }
-  15% {
-    background: red;
-  }
-  80% {
-    background: yellow;
-  }
-  100% {
-    left: 0;
-    opacity: 1;
-  }
+    0% {
+        left: -100vw;
+        opacity: 0;
+        display: none;
+    }
+    1% {
+        display: block;
+    }
+    15% {
+        background: red;
+    }
+    80% {
+        background: yellow;
+    }
+    100% {
+        left: 0;
+        opacity: 1;
+    }
 }

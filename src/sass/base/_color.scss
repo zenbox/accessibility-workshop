@@ -26,12 +26,12 @@
     --on-primary: rgb(250, 204, 250);
     --secondary: hsla(120, 94%, 33%, 1);
     --on-secondary: rgb(200, 250, 200);
-    --tertiary: hsla(174, 90%, 37%, 1);
+    --tertiary: rgb(6, 163, 147);
     --on-tertiary: rgb(2, 47, 43);
-    --accred: hsl(360, 84%, 64%);
+    --accred: hsl(0, 83%, 50%);
     --on-accred: var(--bright);
-    --neutral: hsla(0, 0%, 50%, 1);
-    --on-neutral: hsla(0, 0%, 85%, 1);
+    --neutral: hsl(0, 0%, 50%);
+    --on-neutral: rgb(26, 1, 1);
 
     // Semantic
     --error: hsla(0, 100%, 50%, 1);

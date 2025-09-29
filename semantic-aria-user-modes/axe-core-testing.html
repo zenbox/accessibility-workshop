@@ -268,6 +268,33 @@
                 }
             }
         </style>
+
+        <!-- HybridAI Desktop Chat Widget v2 -->
+        <script>
+            window.chatbotConfig = {
+                chatbotId: "8fdee549-265a-4063-8e11-1e2f7ee45af7",
+                chatbotServer: "https://hybridai.one",
+                position: "bottom-right",
+                width: "400px",
+                height: "500px",
+                marginX: "20px",
+                marginY: "20px",
+                opacity: "0.95",
+                autoOpen: false,
+                fontSize: "14px",
+                color_scheme: "#4a6cf7",
+                customWelcomeMessage: "",
+                theme: "light",
+                borderRadius: "8px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                zIndex: 9999,
+                positionOffset: {
+                    top: 0,
+                    left: 0,
+                },
+            }
+        </script>
+        <script src="https://hybridai.one/hai_embed.js?chatbotId=8fdee549-265a-4063-8e11-1e2f7ee45af7"></script>
     </head>
     <body>
         <a
@@ -336,6 +363,20 @@
                     Target Size testen
                 </button>
                 <!-- - - - - - -->
+                <button
+                    type="button"
+                    onclick="runColorContrastTests()"
+                >
+                    Farbkontraste testen
+                </button>
+                <!-- - - - - - -->
+                <button
+                    type="button"
+                    onclick="runTableTests()"
+                >
+                    Tabellen testen
+                </button>
+                <!-- - - - - - -->
             </div>
             <div class="row">
                 <button
@@ -368,6 +409,8 @@
                 <legend style="padding: 0 6px">Scope</legend>
                 <label
                     ><input
+                        style="margin: 1rem"
+                        data-exclude="true"
                         type="radio"
                         name="scope"
                         value="document"
@@ -377,6 +420,8 @@
                 >
                 <label
                     ><input
+                        style="margin: 1rem"
+                        data-exclude="true"
                         type="radio"
                         name="scope"
                         value="main"
@@ -399,8 +444,20 @@
                     <h2>Target Size Tests</h2>
                     <style>
                         .target-size-tests {
+                            ul {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 0; /* Empfehlung 4 */
+                            }
+                            li {
+                                margin: 0; /* Empfehlung 1 */
+                                padding: 0; /* Empfehlung 2 */
+                                line-height: 1; /* Empfehlung 3*/
+                                border: 1px solid hsl(0, 0%, 93%); /* Empfehlung 5 */
+                            }
                             a:link,
                             button {
+                                box-sizing: border-box;
                                 /* outline: 2px solid blue;
                                 outline-offset: 2px; */
                                 background: hsl(0 85 50 /0.25);
@@ -445,6 +502,96 @@
 
                     <button>Button Text</button>
                 </article>
+
+                <article class="color-contrast-tests with-errors">
+                    <style>
+                        .color-contrast-tests {
+                            .color-1 {
+                                color: hsl(0 85 38);
+                                background: hsl(0 85 50 / 0.22);
+                            }
+                            big {
+                                font-size: 1.5rem;
+                            } /* 1,5 fache Schriftgröße des HTML Elements -> 16px */
+                        }
+                    </style>
+                    <h2>Color Contrast Tests</h2>
+                    <ul style="font-size: 18.2px">
+                        <li class="color-1">
+                            Text in normaler Größe (14pt bzw. 18.2px, 4,5:1)
+                        </li>
+                        <li class="color-1">
+                            <strong
+                                >Text in normaler Größe, gefettet (14pt bzw.
+                                18.2px, 3:1)</strong
+                            >
+                        </li>
+                        <li class="color-1">
+                            <big>Text, groß (18pt bzw. 24px, 3:1)</big>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="color-contrast-tests without-errors">
+                    <style>
+                        .color-contrast-tests {
+                            .color-2 {
+                                color: hsl(0 85 15);
+                                background: hsl(0 85 50 / 0.22);
+                            }
+                        }
+                    </style>
+                    <h2>Color Contrast Tests</h2>
+                    <ul>
+                        <li class="color-2">Text in normaler Größe</li>
+                        <li class="color-2">
+                            <strong>Text in normaler Größe, gefettet</strong>
+                        </li>
+                        <li class="color-2"><big>Text, groß</big></li>
+                    </ul>
+                </article>
+
+                <article class="table-tests with-errors">
+                    <style>
+                        .table-tests {
+                            table,
+                            th,
+                            td {
+                                border: 1px solid black;
+                            }
+                        }
+                    </style>
+                    <h2>Table Tests</h2>
+                    <table>
+                        <caption>
+                            Tabellenüberschrift
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th>Spaltenüberschrift</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tabelleninhalt Zeile 1</td>
+                            </tr>
+                            <tr>
+                                <td>Tabelleninhalt Zeile 2</td>
+                            </tr>
+                            <tr>
+                                <td>Tabelleninhalt Zeile 3</td>
+                            </tr>
+                            <tr>
+                                <td>Tabelleninhalt Zeile 4</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Tabellenfuß</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </article>
             </main>
         </div>
 
@@ -456,6 +603,13 @@
             >
                 <h2 style="margin-top: 0">Hinweise</h2>
                 <ul>
+                    <li>
+                        <a
+                            href="https://dequeuniversity.com/rules/axe/4.10/"
+                            target="_blank"
+                            >Übersicht über die Testregeln von axe core</a
+                        >
+                    </li>
                     <li>Das Testpanel ist von Scans ausgeschlossen.</li>
                     <li>
                         Über den Scope „Ganze Seite“ auch Header/Aside/Footer
@@ -744,6 +898,77 @@
                     highlightViolations(results.violations)
                 } catch (err) {
                     showError("Fehler beim Target Size Test: " + err.message)
+                }
+            }
+
+            async function runColorContrastTests() {
+                // show indicator
+                showLoading()
+
+                // Test execution
+                try {
+                    // get the testing scope
+                    const target = scopeSelector()
+
+                    // run only the target-size rule
+                    const results = await axe.run(target, {
+                        runOnly: { type: "rule", values: ["color-contrast"] },
+                        exclude: [
+                            '[data-exclude="true"]',
+                            ".test-controls",
+                            "#results",
+                        ],
+                        timeout: 6000, // 6 seconds, must be enough
+                    })
+
+                    // show results in an aside panel
+                    displayResults(results)
+
+                    // highlight the violations in the document
+                    highlightViolations(results.violations)
+                } catch (err) {
+                    showError(
+                        "Fehler beim Colour Contrast Test: " + err.message
+                    )
+                }
+            }
+
+            async function runTableTests() {
+                // show indicator
+                showLoading()
+
+                // Test execution
+                try {
+                    // get the testing scope
+                    const target = scopeSelector()
+
+                    // run only the target-size rule
+                    const results = await axe.run(target, {
+                        runOnly: {
+                            type: "rule",
+                            values: [
+                                "td-headers-attr",
+                                "th-has-data-cells",
+                                "empty-table-header",
+                                "table-fake-caption",
+                                "table-duplicate-name",
+                            ],
+                        },
+                        exclude: [
+                            '[data-exclude="true"]',
+                            ".test-controls",
+                            "#results",
+                        ],
+                        timeout: 6000, // 6 seconds, must be enough
+                    })
+
+                    // show results in an aside panel
+                    displayResults(results)
+
+                    // highlight the violations in the document
+                    highlightViolations(results.violations)
+                } catch (err) {
+                    showError("Fehler beim Table Test: " + err.message)
                 }
             }
 

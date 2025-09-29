@@ -1,0 +1,21 @@
+{
+    "remotePath": "./accessibility-workshop/semantic-aria-user-modes",
+    "host": "michaelreichart.de",
+    "username": "mreichart_04",
+    "password": "#N3gyv3nKarf1olt!",
+    "port": 21,
+    "secure": false,
+    "protocol": "ftp",
+    "uploadOnSave": true,
+    "passive": true,
+    "debug": false,
+    "privateKeyPath": null,
+    "passphrase": null,
+    "agent": null,
+    "allow": [],
+    "ignore": ["\\.vscode", "\\.git", "\\.DS_Store"],
+    "generatedFiles": {
+        "extensionsToInclude": [".js", ".css", ".html"],
+        "path": ""
+    }
+}

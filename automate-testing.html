@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Automatisch testen</title>
+        <link
+            rel="stylesheet"
+            href="assets/css/style.css"
+        />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.8.2/axe.min.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <h1>Automatisiert testen</h1>
+
+            <p>
+                Viele Kriterien der WCAG lassen sich automatisiert testen. In
+                diesem Modul lernen Sie, wie Sie automatisierte Tests in Ihre
+                Entwicklungs- und Testprozesse integrieren können.
+            </p>
+        </header>
+        <main>
+            <article>
+                <h2>Axe Core Testing</h2>
+                <p>
+                    Axe Core ist eine leistungsstarke Open-Source-Bibliothek zur
+                    automatisierten Überprüfung von Barrierefreiheitsproblemen
+                    auf Webseiten.
+                </p>
+                <div class="testing-container">
+                    <h3>Target Size</h3>
+
+                    <div class="test-selector">
+                        <label for="testSelect">Test auswählen:</label>
+                        <select id="testSelect">
+                            <option value="target-size">
+                                Target Size (Minimum)
+                            </option>
+                        </select>
+                        <button
+                            class="btn"
+                            id="loadExample"
+                        >
+                            Beispiel laden
+                        </button>
+                    </div>
+
+                    <div class="editor-container">
+                        <div class="editor-panel">
+                            <div class="editor-header">HTML Editor</div>
+                            <textarea
+                                class="editor"
+                                id="htmlEditor"
+                                placeholder="HTML Code hier eingeben..."
+                            ></textarea>
+                        </div>
+
+                        <div class="editor-panel">
+                            <div class="editor-header">CSS Editor</div>
+                            <textarea
+                                class="editor"
+                                id="cssEditor"
+                                placeholder="CSS Code hier eingeben..."
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button
+                            class="btn success"
+                            id="updatePreview"
+                        >
+                            Vorschau aktualisieren
+                        </button>
+                        <button
+                            class="btn"
+                            id="runTest"
+                        >
+                            Test ausführen
+                        </button>
+                    </div>
+
+                    <div
+                        class="preview-container"
+                        id="previewContainer"
+                    >
+                        <div class="preview-header">
+                            <span>Vorschau</span>
+                            <span id="previewInfo"
+                                >Aktualisieren Sie die Vorschau</span
+                            >
+                        </div>
+                        <div
+                            class="preview-frame"
+                            id="previewFrame"
+                        >
+                            <!-- Hier wird die Vorschau angezeigt -->
+                        </div>
+                    </div>
+
+                    <div
+                        class="results-container"
+                        id="resultsContainer"
+                        style="display: none"
+                    >
+                        <div
+                            class="results-header"
+                            id="resultsHeader"
+                        >
+                            Testergebnisse
+                        </div>
+                        <div
+                            class="results-content"
+                            id="resultsContent"
+                        >
+                            <!-- Hier werden die Testergebnisse angezeigt -->
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <script src="assets/js/scaffold.js"></script>
+
+        <script src="assets/js/automate-testing.js"></script>
+    </body>
+</html>
