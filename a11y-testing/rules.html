@@ -1,0 +1,974 @@
+ ---
+ title: "axe-core/doc/rule-descriptions.md at develop · dequelabs/axe-core"
+ source: "https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md"
+ author:
+ - "[[dequelabs]]"
+ - "[[straker]]"
+ published:
+ created: 2025-09-29
+ description: "Accessibility engine for automated Web UI testing. Contribute to dequelabs/axe-core development by creating an account on GitHub."
+ tags:
+ - "clippings"
+ ---
+ Partial conversion completed with errors. Original HTML:
+
+ <turbo-frame xmlns="http://www.w3.org/1999/xhtml"><react-app>
+     <p><span><a href="https://github.com/dequelabs/axe-core/commit/2f32aa5bada78ffcfc965ed2b64be533263c6bd5">fix(meta-viewport): lower impact to moderate (</a><a href="https://github.com/dequelabs/axe-core/pull/4887">#4887</a><a href="https://github.com/dequelabs/axe-core/commit/2f32aa5bada78ffcfc965ed2b64be533263c6bd5">)</a></span></p>
+     <p><span><a aria-label="Commit 2f32aa5" href="https://github.com/dequelabs/axe-core/commit/2f32aa5bada78ffcfc965ed2b64be533263c6bd5">2f32aa5</a> · </span></p>
+     <article>
+       <h2 dir="auto">Rule Descriptions</h2>
+       <ul dir="auto">
+         <li><a href="https://github.com/dequelabs/axe-core/blob/develop/doc/#wcag-20-level-a--aa-rules">WCAG 2.0 Level A &amp; AA Rules</a></li>
+         <li><a href="https://github.com/dequelabs/axe-core/blob/develop/doc/#wcag-21-level-a--aa-rules">WCAG 2.1 Level A &amp; AA Rules</a></li>
+         <li><a href="https://github.com/dequelabs/axe-core/blob/develop/doc/#wcag-22-level-a--aa-rules">WCAG 2.2 Level A &amp; AA Rules</a></li>
+         <li><a href="https://github.com/dequelabs/axe-core/blob/develop/doc/#best-practices-rules">Best Practices Rules</a></li>
+         <li><a href="https://github.com/dequelabs/axe-core/blob/develop/doc/#wcag-2x-level-aaa-rules">WCAG 2.x level AAA rules</a></li>
+         <li><a href="https://github.com/dequelabs/axe-core/blob/develop/doc/#experimental-rules">Experimental Rules</a></li>
+         <li><a href="https://github.com/dequelabs/axe-core/blob/develop/doc/#deprecated-rules">Deprecated Rules</a></li>
+       </ul> <markdown-accessiblity-table>
+         <table>
+           <thead>
+             <tr>
+               <th align="left">Rule ID</th>
+               <th align="left">Description</th>
+               <th align="left">Impact</th>
+               <th align="left">Tags</th>
+               <th align="left">Issue Type</th>
+               <th align="left"><a href="https://www.w3.org/WAI/standards-guidelines/act/rules/">ACT Rules</a></th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/area-alt?application=RuleDescription">area-alt</a></td>
+               <td align="left">Ensure &lt;area&gt; elements of image maps have alternative text</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.text-alternatives, wcag2a, wcag244, wcag412, section508, section508.22.a, TTv5, TT6.a, EN-301-549, EN-9.2.4.4, EN-9.4.1.2, ACT, RGAAv4, RGAA-1.1.2</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/c487ae">c487ae</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-allowed-attr?application=RuleDescription">aria-allowed-attr</a></td>
+               <td align="left">Ensure an element's role supports its ARIA attributes</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.aria, wcag2a, wcag412, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/5c01ea">5c01ea</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-braille-equivalent?application=RuleDescription">aria-braille-equivalent</a></td>
+               <td align="left">Ensure aria-braillelabel and aria-brailleroledescription have a non-braille equivalent</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, wcag2a, wcag412, EN-301-549, EN-9.4.1.2</td>
+               <td align="left">needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-command-name?application=RuleDescription">aria-command-name</a></td>
+               <td align="left">Ensure every ARIA button, link and menuitem has an accessible name</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, wcag2a, wcag412, TTv5, TT6.a, EN-301-549, EN-9.4.1.2, ACT, RGAAv4, RGAA-11.9.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/97a4e1">97a4e1</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-conditional-attr?application=RuleDescription">aria-conditional-attr</a></td>
+               <td align="left">Ensure ARIA attributes are used as described in the specification of the element's role</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, wcag2a, wcag412, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/5c01ea">5c01ea</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-deprecated-role?application=RuleDescription">aria-deprecated-role</a></td>
+               <td align="left">Ensure elements do not use deprecated roles</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.aria, wcag2a, wcag412, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/674b10">674b10</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-hidden-body?application=RuleDescription">aria-hidden-body</a></td>
+               <td align="left">Ensure aria-hidden="true" is not present on the document body.</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.aria, wcag2a, wcag131, wcag412, EN-301-549, EN-9.1.3.1, EN-9.4.1.2, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-hidden-focus?application=RuleDescription">aria-hidden-focus</a></td>
+               <td align="left">Ensure aria-hidden elements are not focusable nor contain focusable elements</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.name-role-value, wcag2a, wcag412, TTv5, TT6.a, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/6cfa84">6cfa84</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-input-field-name?application=RuleDescription">aria-input-field-name</a></td>
+               <td align="left">Ensure every ARIA input field has an accessible name</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, wcag2a, wcag412, TTv5, TT5.c, EN-301-549, EN-9.4.1.2, ACT, RGAAv4, RGAA-11.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/e086e5">e086e5</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-meter-name?application=RuleDescription">aria-meter-name</a></td>
+               <td align="left">Ensure every ARIA meter node has an accessible name</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, wcag2a, wcag111, EN-301-549, EN-9.1.1.1, RGAAv4, RGAA-11.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-progressbar-name?application=RuleDescription">aria-progressbar-name</a></td>
+               <td align="left">Ensure every ARIA progressbar node has an accessible name</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, wcag2a, wcag111, EN-301-549, EN-9.1.1.1, RGAAv4, RGAA-11.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-prohibited-attr?application=RuleDescription">aria-prohibited-attr</a></td>
+               <td align="left">Ensure ARIA attributes are not prohibited for an element's role</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, wcag2a, wcag412, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/5c01ea">5c01ea</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-required-attr?application=RuleDescription">aria-required-attr</a></td>
+               <td align="left">Ensure elements with ARIA roles have all required ARIA attributes</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.aria, wcag2a, wcag412, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/4e8ab6">4e8ab6</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-required-children?application=RuleDescription">aria-required-children</a></td>
+               <td align="left">Ensure elements with an ARIA role that require child roles contain them</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.aria, wcag2a, wcag131, EN-301-549, EN-9.1.3.1, RGAAv4, RGAA-9.3.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/bc4a75">bc4a75</a>, <a href="https://act-rules.github.io/rules/ff89c9">ff89c9</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-required-parent?application=RuleDescription">aria-required-parent</a></td>
+               <td align="left">Ensure elements with an ARIA role that require parent roles are contained by them</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.aria, wcag2a, wcag131, EN-301-549, EN-9.1.3.1, RGAAv4, RGAA-9.3.1</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/ff89c9">ff89c9</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-roles?application=RuleDescription">aria-roles</a></td>
+               <td align="left">Ensure all elements with a role attribute use a valid value</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.aria, wcag2a, wcag412, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/674b10">674b10</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-toggle-field-name?application=RuleDescription">aria-toggle-field-name</a></td>
+               <td align="left">Ensure every ARIA toggle field has an accessible name</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, wcag2a, wcag412, TTv5, TT5.c, EN-301-549, EN-9.4.1.2, ACT, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/e086e5">e086e5</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-tooltip-name?application=RuleDescription">aria-tooltip-name</a></td>
+               <td align="left">Ensure every ARIA tooltip node has an accessible name</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, wcag2a, wcag412, EN-301-549, EN-9.4.1.2</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-valid-attr-value?application=RuleDescription">aria-valid-attr-value</a></td>
+               <td align="left">Ensure all ARIA attributes have valid values</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.aria, wcag2a, wcag412, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/6a7281">6a7281</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-valid-attr?application=RuleDescription">aria-valid-attr</a></td>
+               <td align="left">Ensure attributes that begin with aria- are valid ARIA attributes</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.aria, wcag2a, wcag412, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/5f99a7">5f99a7</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/blink?application=RuleDescription">blink</a></td>
+               <td align="left">Ensure &lt;blink&gt; elements are not used</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.time-and-media, wcag2a, wcag222, section508, section508.22.j, TTv5, TT2.b, EN-301-549, EN-9.2.2.2, RGAAv4, RGAA-13.8.1</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/button-name?application=RuleDescription">button-name</a></td>
+               <td align="left">Ensure buttons have discernible text</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.name-role-value, wcag2a, wcag412, section508, section508.22.a, TTv5, TT6.a, EN-301-549, EN-9.4.1.2, ACT, RGAAv4, RGAA-11.9.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/97a4e1">97a4e1</a>, <a href="https://act-rules.github.io/rules/m6b1q3">m6b1q3</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/bypass?application=RuleDescription">bypass</a></td>
+               <td align="left">Ensure each page has at least one mechanism for a user to bypass navigation and jump straight to the content</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.keyboard, wcag2a, wcag241, section508, section508.22.o, TTv5, TT9.a, EN-301-549, EN-9.2.4.1, RGAAv4, RGAA-12.7.1</td>
+               <td align="left">needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/cf77f2">cf77f2</a>, <a href="https://act-rules.github.io/rules/047fe0">047fe0</a>, <a href="https://act-rules.github.io/rules/b40fd1">b40fd1</a>, <a href="https://act-rules.github.io/rules/3e12e1">3e12e1</a>, <a href="https://act-rules.github.io/rules/ye5d6e">ye5d6e</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=RuleDescription">color-contrast</a></td>
+               <td align="left">Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.color, wcag2aa, wcag143, TTv5, TT13.c, EN-301-549, EN-9.1.4.3, ACT, RGAAv4, RGAA-3.2.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/afw4f7">afw4f7</a>, <a href="https://act-rules.github.io/rules/09o5cg">09o5cg</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/definition-list?application=RuleDescription">definition-list</a></td>
+               <td align="left">Ensure &lt;dl&gt; elements are structured correctly</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.structure, wcag2a, wcag131, EN-301-549, EN-9.1.3.1, RGAAv4, RGAA-9.3.3</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/dlitem?application=RuleDescription">dlitem</a></td>
+               <td align="left">Ensure &lt;dt&gt; and &lt;dd&gt; elements are contained by a &lt;dl&gt;</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.structure, wcag2a, wcag131, EN-301-549, EN-9.1.3.1, RGAAv4, RGAA-9.3.3</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/document-title?application=RuleDescription">document-title</a></td>
+               <td align="left">Ensure each HTML document contains a non-empty &lt;title&gt; element</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.text-alternatives, wcag2a, wcag242, TTv5, TT12.a, EN-301-549, EN-9.2.4.2, ACT, RGAAv4, RGAA-8.5.1</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/2779a5">2779a5</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/duplicate-id-aria?application=RuleDescription">duplicate-id-aria</a></td>
+               <td align="left">Ensure every id attribute value used in ARIA and in labels is unique</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.parsing, wcag2a, wcag412, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-8.2.1</td>
+               <td align="left">needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/3ea0c8">3ea0c8</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/form-field-multiple-labels?application=RuleDescription">form-field-multiple-labels</a></td>
+               <td align="left">Ensure form field does not have multiple label elements</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.forms, wcag2a, wcag332, TTv5, TT5.c, EN-301-549, EN-9.3.3.2, RGAAv4, RGAA-11.2.1</td>
+               <td align="left">needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/frame-focusable-content?application=RuleDescription">frame-focusable-content</a></td>
+               <td align="left">Ensure &lt;frame&gt; and &lt;iframe&gt; elements with focusable content do not have tabindex=-1</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.keyboard, wcag2a, wcag211, TTv5, TT4.a, EN-301-549, EN-9.2.1.1, RGAAv4, RGAA-7.3.2</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/akn7bn">akn7bn</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/frame-title-unique?application=RuleDescription">frame-title-unique</a></td>
+               <td align="left">Ensure &lt;iframe&gt; and &lt;frame&gt; elements contain a unique title attribute</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.text-alternatives, wcag2a, wcag412, TTv5, TT12.d, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-2.2.1</td>
+               <td align="left">needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/4b1c6c">4b1c6c</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/frame-title?application=RuleDescription">frame-title</a></td>
+               <td align="left">Ensure &lt;iframe&gt; and &lt;frame&gt; elements have an accessible name</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.text-alternatives, wcag2a, wcag412, section508, section508.22.i, TTv5, TT12.d, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-2.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/cae760">cae760</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/html-has-lang?application=RuleDescription">html-has-lang</a></td>
+               <td align="left">Ensure every HTML document has a lang attribute</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.language, wcag2a, wcag311, TTv5, TT11.a, EN-301-549, EN-9.3.1.1, ACT, RGAAv4, RGAA-8.3.1</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/b5c3f8">b5c3f8</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/html-lang-valid?application=RuleDescription">html-lang-valid</a></td>
+               <td align="left">Ensure the lang attribute of the &lt;html&gt; element has a valid value</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.language, wcag2a, wcag311, TTv5, TT11.a, EN-301-549, EN-9.3.1.1, ACT, RGAAv4, RGAA-8.4.1</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/bf051a">bf051a</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/html-xml-lang-mismatch?application=RuleDescription">html-xml-lang-mismatch</a></td>
+               <td align="left">Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.language, wcag2a, wcag311, EN-301-549, EN-9.3.1.1, ACT, RGAAv4, RGAA-8.3.1</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/5b7ae0">5b7ae0</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/image-alt?application=RuleDescription">image-alt</a></td>
+               <td align="left">Ensure &lt;img&gt; elements have alternative text or a role of none or presentation</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a, TTv5, TT7.a, TT7.b, EN-301-549, EN-9.1.1.1, ACT, RGAAv4, RGAA-1.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/23a2a8">23a2a8</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/input-button-name?application=RuleDescription">input-button-name</a></td>
+               <td align="left">Ensure input buttons have discernible text</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.name-role-value, wcag2a, wcag412, section508, section508.22.a, TTv5, TT5.c, EN-301-549, EN-9.4.1.2, ACT, RGAAv4, RGAA-11.9.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/97a4e1">97a4e1</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/input-image-alt?application=RuleDescription">input-image-alt</a></td>
+               <td align="left">Ensure &lt;input type="image"&gt; elements have alternative text</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.text-alternatives, wcag2a, wcag111, wcag412, section508, section508.22.a, TTv5, TT7.a, EN-301-549, EN-9.1.1.1, EN-9.4.1.2, ACT, RGAAv4, RGAA-1.1.3</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/59796f">59796f</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/label?application=RuleDescription">label</a></td>
+               <td align="left">Ensure every form element has a label</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.forms, wcag2a, wcag412, section508, section508.22.n, TTv5, TT5.c, EN-301-549, EN-9.4.1.2, ACT, RGAAv4, RGAA-11.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/e086e5">e086e5</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/link-in-text-block?application=RuleDescription">link-in-text-block</a></td>
+               <td align="left">Ensure links are distinguished from surrounding text in a way that does not rely on color</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.color, wcag2a, wcag141, TTv5, TT13.a, EN-301-549, EN-9.1.4.1, RGAAv4, RGAA-10.6.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/link-name?application=RuleDescription">link-name</a></td>
+               <td align="left">Ensure links have discernible text</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.name-role-value, wcag2a, wcag244, wcag412, section508, section508.22.a, TTv5, TT6.a, EN-301-549, EN-9.2.4.4, EN-9.4.1.2, ACT, RGAAv4, RGAA-6.2.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/c487ae">c487ae</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/list?application=RuleDescription">list</a></td>
+               <td align="left">Ensure that lists are structured correctly</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.structure, wcag2a, wcag131, EN-301-549, EN-9.1.3.1, RGAAv4, RGAA-9.3.1</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/listitem?application=RuleDescription">listitem</a></td>
+               <td align="left">Ensure &lt;li&gt; elements are used semantically</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.structure, wcag2a, wcag131, EN-301-549, EN-9.1.3.1, RGAAv4, RGAA-9.3.1</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/marquee?application=RuleDescription">marquee</a></td>
+               <td align="left">Ensure &lt;marquee&gt; elements are not used</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.parsing, wcag2a, wcag222, TTv5, TT2.b, EN-301-549, EN-9.2.2.2, RGAAv4, RGAA-13.8.1</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/meta-refresh?application=RuleDescription">meta-refresh</a></td>
+               <td align="left">Ensure &lt;meta http-equiv="refresh"&gt; is not used for delayed refresh</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.time-and-media, wcag2a, wcag221, TTv5, TT8.a, EN-301-549, EN-9.2.2.1, RGAAv4, RGAA-13.1.2</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/bc659a">bc659a</a>, <a href="https://act-rules.github.io/rules/bisz58">bisz58</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/meta-viewport?application=RuleDescription">meta-viewport</a></td>
+               <td align="left">Ensure &lt;meta name="viewport"&gt; does not disable text scaling and zooming</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.sensory-and-visual-cues, wcag2aa, wcag144, EN-301-549, EN-9.1.4.4, ACT, RGAAv4, RGAA-10.4.2</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/b4f0c3">b4f0c3</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/nested-interactive?application=RuleDescription">nested-interactive</a></td>
+               <td align="left">Ensure interactive controls are not nested as they are not always announced by screen readers or can cause focus problems for assistive technologies</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.keyboard, wcag2a, wcag412, TTv5, TT6.a, EN-301-549, EN-9.4.1.2, RGAAv4, RGAA-7.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/307n5z">307n5z</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/no-autoplay-audio?application=RuleDescription">no-autoplay-audio</a></td>
+               <td align="left">Ensure &lt;video&gt; or &lt;audio&gt; elements do not autoplay audio for more than 3 seconds without a control mechanism to stop or mute the audio</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.time-and-media, wcag2a, wcag142, TTv5, TT2.a, EN-301-549, EN-9.1.4.2, ACT, RGAAv4, RGAA-4.10.1</td>
+               <td align="left">needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/80f0bf">80f0bf</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/object-alt?application=RuleDescription">object-alt</a></td>
+               <td align="left">Ensure &lt;object&gt; elements have alternative text</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a, EN-301-549, EN-9.1.1.1, RGAAv4, RGAA-1.1.6</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/8fc3b6">8fc3b6</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/role-img-alt?application=RuleDescription">role-img-alt</a></td>
+               <td align="left">Ensure [role="img"] elements have alternative text</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a, TTv5, TT7.a, EN-301-549, EN-9.1.1.1, ACT, RGAAv4, RGAA-1.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/23a2a8">23a2a8</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/scrollable-region-focusable?application=RuleDescription">scrollable-region-focusable</a></td>
+               <td align="left">Ensure elements that have scrollable content are accessible by keyboard</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.keyboard, wcag2a, wcag211, wcag213, TTv5, TT4.a, EN-301-549, EN-9.2.1.1, EN-9.2.1.3, RGAAv4, RGAA-7.3.2</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/0ssw9k">0ssw9k</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/select-name?application=RuleDescription">select-name</a></td>
+               <td align="left">Ensure select element has an accessible name</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.forms, wcag2a, wcag412, section508, section508.22.n, TTv5, TT5.c, EN-301-549, EN-9.4.1.2, ACT, RGAAv4, RGAA-11.1.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/e086e5">e086e5</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/server-side-image-map?application=RuleDescription">server-side-image-map</a></td>
+               <td align="left">Ensure that server-side image maps are not used</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.text-alternatives, wcag2a, wcag211, section508, section508.22.f, TTv5, TT4.a, EN-301-549, EN-9.2.1.1, RGAAv4, RGAA-1.1.4</td>
+               <td align="left">needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/summary-name?application=RuleDescription">summary-name</a></td>
+               <td align="left">Ensure summary elements have discernible text</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.name-role-value, wcag2a, wcag412, section508, section508.22.a, TTv5, TT6.a, EN-301-549, EN-9.4.1.2</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/svg-img-alt?application=RuleDescription">svg-img-alt</a></td>
+               <td align="left">Ensure &lt;svg&gt; elements with an img, graphics-document or graphics-symbol role have accessible text</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a, TTv5, TT7.a, EN-301-549, EN-9.1.1.1, ACT, RGAAv4, RGAA-1.1.5</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/7d6734">7d6734</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/td-headers-attr?application=RuleDescription">td-headers-attr</a></td>
+               <td align="left">Ensure that each cell in a table that uses the headers attribute refers only to other &lt;th&gt; elements in that table</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.tables, wcag2a, wcag131, section508, section508.22.g, TTv5, TT14.b, EN-301-549, EN-9.1.3.1, RGAAv4, RGAA-5.7.4</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/a25f45">a25f45</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/th-has-data-cells?application=RuleDescription">th-has-data-cells</a></td>
+               <td align="left">Ensure that &lt;th&gt; elements and elements with role=columnheader/rowheader have data cells they describe</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.tables, wcag2a, wcag131, section508, section508.22.g, TTv5, TT14.b, EN-301-549, EN-9.1.3.1, RGAAv4, RGAA-5.7.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/d0f69e">d0f69e</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/valid-lang?application=RuleDescription">valid-lang</a></td>
+               <td align="left">Ensure lang attributes have valid values</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.language, wcag2aa, wcag312, TTv5, TT11.b, EN-301-549, EN-9.3.1.2, ACT, RGAAv4, RGAA-8.7.1</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/de46e4">de46e4</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/video-caption?application=RuleDescription">video-caption</a></td>
+               <td align="left">Ensure &lt;video&gt; elements have captions</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.text-alternatives, wcag2a, wcag122, section508, section508.22.a, TTv5, TT17.a, EN-301-549, EN-9.1.2.2, RGAAv4, RGAA-4.3.1</td>
+               <td align="left">needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/eac66b">eac66b</a></td>
+             </tr>
+           </tbody>
+         </table>
+       </markdown-accessiblity-table> <markdown-accessiblity-table>
+         <table>
+           <thead>
+             <tr>
+               <th align="left">Rule ID</th>
+               <th align="left">Description</th>
+               <th align="left">Impact</th>
+               <th align="left">Tags</th>
+               <th align="left">Issue Type</th>
+               <th align="left"><a href="https://www.w3.org/WAI/standards-guidelines/act/rules/">ACT Rules</a></th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/autocomplete-valid?application=RuleDescription">autocomplete-valid</a></td>
+               <td align="left">Ensure the autocomplete attribute is correct and suitable for the form field</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.forms, wcag21aa, wcag135, EN-301-549, EN-9.1.3.5, ACT, RGAAv4, RGAA-11.13.1</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/73f2c2">73f2c2</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/avoid-inline-spacing?application=RuleDescription">avoid-inline-spacing</a></td>
+               <td align="left">Ensure that text spacing set through style attributes can be adjusted with custom stylesheets</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.structure, wcag21aa, wcag1412, EN-301-549, EN-9.1.4.12, ACT</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/24afc2">24afc2</a>, <a href="https://act-rules.github.io/rules/9e45ec">9e45ec</a>, <a href="https://act-rules.github.io/rules/78fd32">78fd32</a></td>
+             </tr>
+           </tbody>
+         </table>
+       </markdown-accessiblity-table>
+       <p dir="auto">These rules are disabled by default, until WCAG 2.2 is more widely adopted and required.</p><markdown-accessiblity-table>
+         <table>
+           <thead>
+             <tr>
+               <th align="left">Rule ID</th>
+               <th align="left">Description</th>
+               <th align="left">Impact</th>
+               <th align="left">Tags</th>
+               <th align="left">Issue Type</th>
+               <th align="left"><a href="https://www.w3.org/WAI/standards-guidelines/act/rules/">ACT Rules</a></th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/target-size?application=RuleDescription">target-size</a></td>
+               <td align="left">Ensure touch targets have sufficient size and space</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.sensory-and-visual-cues, wcag22aa, wcag258</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+           </tbody>
+         </table>
+       </markdown-accessiblity-table>
+       <p dir="auto">Rules that do not necessarily conform to WCAG success criterion but are industry accepted practices that improve the user experience.</p><markdown-accessiblity-table>
+         <table>
+           <thead>
+             <tr>
+               <th align="left">Rule ID</th>
+               <th align="left">Description</th>
+               <th align="left">Impact</th>
+               <th align="left">Tags</th>
+               <th align="left">Issue Type</th>
+               <th align="left"><a href="https://www.w3.org/WAI/standards-guidelines/act/rules/">ACT Rules</a></th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/accesskeys?application=RuleDescription">accesskeys</a></td>
+               <td align="left">Ensure every accesskey attribute value is unique</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.keyboard, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-allowed-role?application=RuleDescription">aria-allowed-role</a></td>
+               <td align="left">Ensure role attribute has an appropriate value for the element</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.aria, best-practice</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-dialog-name?application=RuleDescription">aria-dialog-name</a></td>
+               <td align="left">Ensure every ARIA dialog and alertdialog node has an accessible name</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, best-practice</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-text?application=RuleDescription">aria-text</a></td>
+               <td align="left">Ensure role="text" is used on elements with no focusable descendants</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, best-practice</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-treeitem-name?application=RuleDescription">aria-treeitem-name</a></td>
+               <td align="left">Ensure every ARIA treeitem node has an accessible name</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, best-practice</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/empty-heading?application=RuleDescription">empty-heading</a></td>
+               <td align="left">Ensure headings have discernible text</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.name-role-value, best-practice</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/ffd0e9">ffd0e9</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/empty-table-header?application=RuleDescription">empty-table-header</a></td>
+               <td align="left">Ensure table headers have discernible text</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.name-role-value, best-practice</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/frame-tested?application=RuleDescription">frame-tested</a></td>
+               <td align="left">Ensure &lt;iframe&gt; and &lt;frame&gt; elements contain the axe-core script</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.structure, best-practice, review-item</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/heading-order?application=RuleDescription">heading-order</a></td>
+               <td align="left">Ensure the order of headings is semantically correct</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.semantics, best-practice</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/image-redundant-alt?application=RuleDescription">image-redundant-alt</a></td>
+               <td align="left">Ensure image alternative is not repeated as text</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.text-alternatives, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/label-title-only?application=RuleDescription">label-title-only</a></td>
+               <td align="left">Ensure that every form element has a visible label and is not solely labeled using hidden labels, or the title or aria-describedby attributes</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.forms, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/landmark-banner-is-top-level?application=RuleDescription">landmark-banner-is-top-level</a></td>
+               <td align="left">Ensure the banner landmark is at top level</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.semantics, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/landmark-complementary-is-top-level?application=RuleDescription">landmark-complementary-is-top-level</a></td>
+               <td align="left">Ensure the complementary landmark or aside is at top level</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.semantics, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/landmark-contentinfo-is-top-level?application=RuleDescription">landmark-contentinfo-is-top-level</a></td>
+               <td align="left">Ensure the contentinfo landmark is at top level</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.semantics, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/landmark-main-is-top-level?application=RuleDescription">landmark-main-is-top-level</a></td>
+               <td align="left">Ensure the main landmark is at top level</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.semantics, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/landmark-no-duplicate-banner?application=RuleDescription">landmark-no-duplicate-banner</a></td>
+               <td align="left">Ensure the document has at most one banner landmark</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.semantics, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/landmark-no-duplicate-contentinfo?application=RuleDescription">landmark-no-duplicate-contentinfo</a></td>
+               <td align="left">Ensure the document has at most one contentinfo landmark</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.semantics, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/landmark-no-duplicate-main?application=RuleDescription">landmark-no-duplicate-main</a></td>
+               <td align="left">Ensure the document has at most one main landmark</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.semantics, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/landmark-one-main?application=RuleDescription">landmark-one-main</a></td>
+               <td align="left">Ensure the document has a main landmark</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.semantics, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/landmark-unique?application=RuleDescription">landmark-unique</a></td>
+               <td align="left">Ensure landmarks are unique</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.semantics, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/meta-viewport-large?application=RuleDescription">meta-viewport-large</a></td>
+               <td align="left">Ensure &lt;meta name="viewport"&gt; can scale a significant amount</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.sensory-and-visual-cues, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/page-has-heading-one?application=RuleDescription">page-has-heading-one</a></td>
+               <td align="left">Ensure that the page, or at least one of its frames contains a level-one heading</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.semantics, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/presentation-role-conflict?application=RuleDescription">presentation-role-conflict</a></td>
+               <td align="left">Ensure elements marked as presentational do not have global ARIA or tabindex so that all screen readers ignore them</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.aria, best-practice, ACT</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/46ca7f">46ca7f</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/region?application=RuleDescription">region</a></td>
+               <td align="left">Ensure all page content is contained by landmarks</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.keyboard, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/scope-attr-valid?application=RuleDescription">scope-attr-valid</a></td>
+               <td align="left">Ensure the scope attribute is used correctly on tables</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.tables, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/skip-link?application=RuleDescription">skip-link</a></td>
+               <td align="left">Ensure all skip links have a focusable target</td>
+               <td align="left">Moderate</td>
+               <td align="left">cat.keyboard, best-practice</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/tabindex?application=RuleDescription">tabindex</a></td>
+               <td align="left">Ensure tabindex attribute values are not greater than 0</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.keyboard, best-practice</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/table-duplicate-name?application=RuleDescription">table-duplicate-name</a></td>
+               <td align="left">Ensure the &lt;caption&gt; element does not contain the same text as the summary attribute</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.tables, best-practice</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+           </tbody>
+         </table>
+       </markdown-accessiblity-table>
+       <p dir="auto">Rules that check for conformance to WCAG AAA success criteria that can be fully automated. These are disabled by default in axe-core.</p><markdown-accessiblity-table>
+         <table>
+           <thead>
+             <tr>
+               <th align="left">Rule ID</th>
+               <th align="left">Description</th>
+               <th align="left">Impact</th>
+               <th align="left">Tags</th>
+               <th align="left">Issue Type</th>
+               <th align="left"><a href="https://www.w3.org/WAI/standards-guidelines/act/rules/">ACT Rules</a></th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/color-contrast-enhanced?application=RuleDescription">color-contrast-enhanced</a></td>
+               <td align="left">Ensure the contrast between foreground and background colors meets WCAG 2 AAA enhanced contrast ratio thresholds</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.color, wcag2aaa, wcag146, ACT</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/09o5cg">09o5cg</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/identical-links-same-purpose?application=RuleDescription">identical-links-same-purpose</a></td>
+               <td align="left">Ensure that links with the same accessible name serve a similar purpose</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.semantics, wcag2aaa, wcag249</td>
+               <td align="left">needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/b20e66">b20e66</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/meta-refresh-no-exceptions?application=RuleDescription">meta-refresh-no-exceptions</a></td>
+               <td align="left">Ensure &lt;meta http-equiv="refresh"&gt; is not used for delayed refresh</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.time-and-media, wcag2aaa, wcag224, wcag325</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/bisz58">bisz58</a></td>
+             </tr>
+           </tbody>
+         </table>
+       </markdown-accessiblity-table>
+       <h2 dir="auto">Experimental Rules</h2>
+       <p dir="auto">Rules we are still testing and developing. They are disabled by default in axe-core, but are enabled for the axe browser extensions.</p><markdown-accessiblity-table>
+         <table>
+           <thead>
+             <tr>
+               <th align="left">Rule ID</th>
+               <th align="left">Description</th>
+               <th align="left">Impact</th>
+               <th align="left">Tags</th>
+               <th align="left">Issue Type</th>
+               <th align="left"><a href="https://www.w3.org/WAI/standards-guidelines/act/rules/">ACT Rules</a></th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/css-orientation-lock?application=RuleDescription">css-orientation-lock</a></td>
+               <td align="left">Ensure content is not locked to any specific display orientation, and the content is operable in all display orientations</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.structure, wcag134, wcag21aa, EN-301-549, EN-9.1.3.4, RGAAv4, RGAA-13.9.1, experimental</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/b33eff">b33eff</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/focus-order-semantics?application=RuleDescription">focus-order-semantics</a></td>
+               <td align="left">Ensure elements in the focus order have a role appropriate for interactive content</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.keyboard, best-practice, experimental</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/hidden-content?application=RuleDescription">hidden-content</a></td>
+               <td align="left">Inform users about hidden content.</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.structure, best-practice, experimental, review-item</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/label-content-name-mismatch?application=RuleDescription">label-content-name-mismatch</a></td>
+               <td align="left">Ensure that elements labelled through their content must have their visible text as part of their accessible name</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.semantics, wcag21a, wcag253, EN-301-549, EN-9.2.5.3, RGAAv4, RGAA-6.1.5, experimental</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/2ee8b8">2ee8b8</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/p-as-heading?application=RuleDescription">p-as-heading</a></td>
+               <td align="left">Ensure bold, italic text and font-size is not used to style &lt;p&gt; elements as a heading</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.semantics, wcag2a, wcag131, EN-301-549, EN-9.1.3.1, RGAAv4, RGAA-9.1.3, experimental</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/table-fake-caption?application=RuleDescription">table-fake-caption</a></td>
+               <td align="left">Ensure that tables with a caption use the &lt;caption&gt; element.</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.tables, experimental, wcag2a, wcag131, section508, section508.22.g, EN-301-549, EN-9.1.3.1, RGAAv4, RGAA-5.4.1</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/td-has-header?application=RuleDescription">td-has-header</a></td>
+               <td align="left">Ensure that each non-empty data cell in a &lt;table&gt; larger than 3 by 3 has one or more table headers</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.tables, experimental, wcag2a, wcag131, section508, section508.22.g, TTv5, TT14.b, EN-301-549, EN-9.1.3.1, RGAAv4, RGAA-5.7.4</td>
+               <td align="left">failure</td>
+               <td align="left"></td>
+             </tr>
+           </tbody>
+         </table>
+       </markdown-accessiblity-table>
+       <h2 dir="auto">Deprecated Rules</h2>
+       <p dir="auto">Deprecated rules are disabled by default and will be removed in the next major release.</p><markdown-accessiblity-table>
+         <table>
+           <thead>
+             <tr>
+               <th align="left">Rule ID</th>
+               <th align="left">Description</th>
+               <th align="left">Impact</th>
+               <th align="left">Tags</th>
+               <th align="left">Issue Type</th>
+               <th align="left"><a href="https://www.w3.org/WAI/standards-guidelines/act/rules/">ACT Rules</a></th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/aria-roledescription?application=RuleDescription">aria-roledescription</a></td>
+               <td align="left">Ensure aria-roledescription is only used on elements with an implicit or explicit role</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.aria, wcag2a, wcag412, EN-301-549, EN-9.4.1.2, deprecated</td>
+               <td align="left">failure, needs review</td>
+               <td align="left"></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/audio-caption?application=RuleDescription">audio-caption</a></td>
+               <td align="left">Ensure &lt;audio&gt; elements have captions</td>
+               <td align="left">Critical</td>
+               <td align="left">cat.time-and-media, wcag2a, wcag121, EN-301-549, EN-9.1.2.1, section508, section508.22.a, deprecated</td>
+               <td align="left">needs review</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/2eb176">2eb176</a>, <a href="https://act-rules.github.io/rules/afb423">afb423</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/duplicate-id-active?application=RuleDescription">duplicate-id-active</a></td>
+               <td align="left">Ensure every id attribute value of active elements is unique</td>
+               <td align="left">Serious</td>
+               <td align="left">cat.parsing, wcag2a-obsolete, wcag411, deprecated</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/3ea0c8">3ea0c8</a></td>
+             </tr>
+             <tr>
+               <td align="left"><a href="https://dequeuniversity.com/rules/axe/4.10/duplicate-id?application=RuleDescription">duplicate-id</a></td>
+               <td align="left">Ensure every id attribute value is unique</td>
+               <td align="left">Minor</td>
+               <td align="left">cat.parsing, wcag2a-obsolete, wcag411, deprecated</td>
+               <td align="left">failure</td>
+               <td align="left"><a href="https://act-rules.github.io/rules/3ea0c8">3ea0c8</a></td>
+             </tr>
+           </tbody>
+         </table>
+       </markdown-accessiblity-table>
+     </article>
+   </react-app></turbo-frame>

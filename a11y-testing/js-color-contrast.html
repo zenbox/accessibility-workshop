@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farbkontrast Accessibility Tests</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 { color: #333; margin-bottom: 10px; }
+    figure { margin-inline: 0; }
+    .test-section {
+      margin: 30px 0;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 4px;
+    }
+    .contrast-examples {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .contrast-box {
+      padding: 20px;
+      border-radius: 4px;
+      border: 2px solid #ddd;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    figcaption {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    code {
+      display: block;
+      background: #fff;
+      padding: 8px;
+      border-radius: 3px;
+      margin-top: 5px;
+      font-size: 11px;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+    .contrast-info {
+      font-size: 12px;
+      margin-top: 5px;
+      color: #666;
+    }
+    button {
+      background: #0066cc;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 10px 10px 10px 0;
+    }
+    button:hover { background: #0052a3; }
+    #results {
+      margin-top: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 4px;
+      border-left: 4px solid #0066cc;
+    }
+    .test-result {
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 4px;
+      border-left: 4px solid;
+    }
+    .test-result.pass {
+      background: #e8f5e9;
+      border-left-color: #4caf50;
+    }
+    .test-result.fail {
+      background: #ffebee;
+      border-left-color: #f44336;
+    }
+    .test-result.warning {
+      background: #fff3e0;
+      border-left-color: #ff9800;
+    }
+    .test-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .test-details {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #666;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+    .icon { font-size: 20px; }
+    .summary {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+      padding: 20px;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+    .summary-item {
+      flex: 1;
+      text-align: center;
+      padding: 15px;
+      background: white;
+      border-radius: 4px;
+    }
+    .summary-number {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .summary-label {
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 Farbkontrast Accessibility Tests</h1>
+    <p>Diese Seite testet Farbkontraste nach WCAG 2.1 Standards.</p>
+    <p><small>WCAG AA: Min. 4.5:1 für normalen Text, 3:1 für großen Text (18pt+)<br>
+    WCAG AAA: Min. 7:1 für normalen Text, 4.5:1 für großen Text</small></p>
+
+
+<div>
+  <button onclick="runAllTests()">Alle Tests ausführen</button>
+  <button onclick="clearResults()">Ergebnisse löschen</button>
+</div>
+
+<div class="test-section">
+  <h2>Test-Beispiele</h2>
+  <div class="contrast-examples">
+    
+    <!-- Guter Kontrast -->
+    <figure>
+      <div class="contrast-box" style="background: #000000; color: #ffffff;" data-test="good-contrast">
+        Schwarzer Text auf Weiß
+      </div>
+      <figcaption>
+        <strong>Sehr guter Kontrast</strong><br>
+        <div class="contrast-info">Hintergrund: #000000, Text: #ffffff</div>
+        <code>background: #000000;
+
+
+color: #ffffff;</code>
+</figcaption>
+</figure>
+
+
+    <!-- WCAG AA konform -->
+    <figure>
+      <div class="contrast-box" style="background: #ffffff; color: #595959;" data-test="aa-pass">
+        WCAG AA konform
+      </div>
+      <figcaption>
+        <strong>WCAG AA Pass (4.5:1)</strong><br>
+        <div class="contrast-info">Hintergrund: #ffffff, Text: #595959</div>
+        <code>background: #ffffff;
+
+
+color: #595959;</code>
+</figcaption>
+</figure>
+
+
+    <!-- Grenzfall WCAG AA -->
+    <figure>
+      <div class="contrast-box" style="background: #ffffff; color: #767676;" data-test="aa-borderline">
+        Grenzfall AA
+      </div>
+      <figcaption>
+        <strong>Grenzfall WCAG AA (~4.5:1)</strong><br>
+        <div class="contrast-info">Hintergrund: #ffffff, Text: #767676</div>
+        <code>background: #ffffff;
+
+
+color: #767676;</code>
+</figcaption>
+</figure>
+
+
+    <!-- WCAG AA Fail -->
+    <figure>
+      <div class="contrast-box" style="background: #ffffff; color: #999999;" data-test="aa-fail">
+        WCAG AA Fail
+      </div>
+      <figcaption>
+        <strong>WCAG AA Fail (2.8:1)</strong><br>
+        <div class="contrast-info">Hintergrund: #ffffff, Text: #999999</div>
+        <code>background: #ffffff;
+
+
+color: #999999;</code>
+</figcaption>
+</figure>
+
+
+    <!-- Sehr schlechter Kontrast -->
+    <figure>
+      <div class="contrast-box" style="background: #ffffff; color: #cccccc;" data-test="very-bad">
+        Sehr schlechter Kontrast
+      </div>
+      <figcaption>
+        <strong>Sehr schlecht (1.6:1)</strong><br>
+        <div class="contrast-info">Hintergrund: #ffffff, Text: #cccccc</div>
+        <code>background: #ffffff;
+
+
+color: #cccccc;</code>
+</figcaption>
+</figure>
+
+
+    <!-- Farbiger Hintergrund gut -->
+    <figure>
+      <div class="contrast-box" style="background: #0066cc; color: #ffffff;" data-test="colored-good">
+        Weißer Text auf Blau
+      </div>
+      <figcaption>
+        <strong>Farbig - Gut (8.6:1)</strong><br>
+        <div class="contrast-info">Hintergrund: #0066cc, Text: #ffffff</div>
+        <code>background: #0066cc;
+
+
+color: #ffffff;</code>
+</figcaption>
+</figure>
+
+
+    <!-- Farbiger Hintergrund schlecht -->
+    <figure>
+      <div class="contrast-box" style="background: #ffeb3b; color: #ffffff;" data-test="colored-bad">
+        Weißer Text auf Gelb
+      </div>
+      <figcaption>
+        <strong>Farbig - Schlecht (1.1:1)</strong><br>
+        <div class="contrast-info">Hintergrund: #ffeb3b, Text: #ffffff</div>
+        <code>background: #ffeb3b;
+
+
+color: #ffffff;</code>
+</figcaption>
+</figure>
+
+
+    <!-- Links mit schlechtem Kontrast -->
+    <figure>
+      <div class="contrast-box" style="background: #ffffff; color: #333333;">
+        Normaler Text <a href="#" style="color: #66b3ff;">Link (schlecht)</a>
+      </div>
+      <figcaption>
+        <strong>Link mit schlechtem Kontrast</strong><br>
+        <div class="contrast-info">Link: #66b3ff auf #ffffff</div>
+        <code>a { color: #66b3ff; }</code>
+      </figcaption>
+    </figure>
+
+    <!-- Links mit gutem Kontrast -->
+    <figure>
+      <div class="contrast-box" style="background: #ffffff; color: #333333;">
+        Normaler Text <a href="#" style="color: #0066cc; text-decoration: underline;">Link (gut)</a>
+      </div>
+      <figcaption>
+        <strong>Link mit gutem Kontrast</strong><br>
+        <div class="contrast-info">Link: #0066cc auf #ffffff</div>
+        <code>a { 
+
+
+color: #0066cc;
+text-decoration: underline;
+}</code>
+</figcaption>
+</figure>
+
+
+  </div>
+</div>
+
+<div id="results"></div>
+
+
+  </div>
+
+  <script>
+    class ContrastTester {
+      constructor() {
+        this.results = [];
+        this.stats = {
+          total: 0,
+          passed: 0,
+          failed: 0,
+          warnings: 0
+        };
+      }
+
+      addResult(title, status, details = '') {
+        this.results.push({ title, status, details });
+        this.stats.total++;
+        if (status === 'pass') this.stats.passed++;
+        else if (status === 'fail') this.stats.failed++;
+        else if (status === 'warning') this.stats.warnings++;
+      }
+
+      // Relative Luminanz berechnen (WCAG Formel)
+      getLuminance(r, g, b) {
+        const [rs, gs, bs] = [r, g, b].map(c => {
+          c = c / 255;
+          return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+      }
+
+      // RGB aus Hex extrahieren
+      hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        } : null;
+      }
+
+      // RGB aus rgb() String extrahieren
+      rgbStringToRgb(rgbString) {
+        const match = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        return match ? {
+          r: parseInt(match[1]),
+          g: parseInt(match[2]),
+          b: parseInt(match[3])
+        } : null;
+      }
+
+      // Kontrastverhältnis berechnen
+      getContrastRatio(color1, color2) {
+        let rgb1, rgb2;
+
+        if (color1.startsWith('#')) {
+          rgb1 = this.hexToRgb(color1);
+        } else if (color1.startsWith('rgb')) {
+          rgb1 = this.rgbStringToRgb(color1);
+        }
+
+        if (color2.startsWith('#')) {
+          rgb2 = this.hexToRgb(color2);
+        } else if (color2.startsWith('rgb')) {
+          rgb2 = this.rgbStringToRgb(color2);
+        }
+
+        if (!rgb1 || !rgb2) return 1;
+
+        const lum1 = this.getLuminance(rgb1.r, rgb1.g, rgb1.b);
+        const lum2 = this.getLuminance(rgb2.r, rgb2.g, rgb2.b);
+
+        const lighter = Math.max(lum1, lum2);
+        const darker = Math.min(lum1, lum2);
+
+        return (lighter + 0.05) / (darker + 0.05);
+      }
+
+      testTextContrast() {
+        const elements = document.querySelectorAll('.contrast-box');
+        const failures = [];
+        const warnings = [];
+
+        elements.forEach((element, index) => {
+          const style = window.getComputedStyle(element);
+          const bgColor = style.backgroundColor;
+          const textColor = style.color;
+          const fontSize = parseFloat(style.fontSize);
+
+          const ratio = this.getContrastRatio(bgColor, textColor);
+          const isLargeText = fontSize >= 18 || (fontSize >= 14 && style.fontWeight >= 700);
+
+          const minRatio = isLargeText ? 3 : 4.5;
+          const wcagLevel = ratio >= 7 ? 'AAA' : ratio >= minRatio ? 'AA' : 'Fail';
+
+          if (ratio < minRatio) {
+            failures.push({
+              index: index + 1,
+              ratio: ratio.toFixed(2),
+              required: minRatio,
+              text: element.textContent.trim().substring(0, 30),
+              bg: bgColor,
+              fg: textColor
+            });
+          } else if (ratio < 7 && !isLargeText) {
+            warnings.push({
+              index: index + 1,
+              ratio: ratio.toFixed(2),
+              level: wcagLevel,
+              text: element.textContent.trim().substring(0, 30)
+            });
+          }
+        });
+
+        if (failures.length === 0) {
+          this.addResult(
+            'Alle Texte erfüllen WCAG AA Kontrast-Anforderungen',
+            'pass',
+            `${elements.length} Elemente geprüft`
+          );
+        } else {
+          const details = failures.map(f =>
+            `Element #${f.index}: "${f.text}"\n  Kontrast: ${f.ratio}:1 (benötigt: ${f.required}:1)\n  Farben: ${f.fg} auf ${f.bg}`
+          ).join('\n\n');
+
+          this.addResult(
+            'Unzureichender Farbkontrast gefunden',
+            'fail',
+            `${failures.length} von ${elements.length} Elementen:\n\n${details}`
+          );
+        }
+
+        if (warnings.length > 0) {
+          const details = warnings.map(w =>
+            `Element #${w.index}: "${w.text}"\n  Kontrast: ${w.ratio}:1 (${w.level})`
+          ).join('\n\n');
+
+          this.addResult(
+            'Elemente erfüllen nur WCAG AA (nicht AAA)',
+            'warning',
+            `${warnings.length} Elemente:\n\n${details}`
+          );
+        }
+      }
+
+      testLinkContrast() {
+        const links = document.querySelectorAll('a');
+        const failures = [];
+
+        links.forEach((link, index) => {
+          const style = window.getComputedStyle(link);
+          const linkColor = style.color;
+          
+          // Parent-Hintergrundfarbe finden
+          let parent = link.parentElement;
+          let bgColor = window.getComputedStyle(parent).backgroundColor;
+          
+          while (bgColor === 'rgba(0, 0, 0, 0)' && parent.parentElement) {
+            parent = parent.parentElement;
+            bgColor = window.getComputedStyle(parent).backgroundColor;
+          }
+
+          const ratio = this.getContrastRatio(bgColor, linkColor);
+          const hasUnderline = style.textDecoration.includes('underline');
+
+          if (ratio < 3 && !hasUnderline) {
+            failures.push({
+              index: index + 1,
+              ratio: ratio.toFixed(2),
+              text: link.textContent.trim(),
+              hasUnderline
+            });
+          }
+        });
+
+        if (failures.length === 0) {
+          this.addResult(
+            'Alle Links sind vom umgebenden Text unterscheidbar',
+            'pass',
+            `${links.length} Links geprüft`
+          );
+        } else {
+          const details = failures.map(f =>
+            `Link #${f.index}: "${f.text}"\n  Kontrast: ${f.ratio}:1 (benötigt: 3:1 oder Unterstreichung)`
+          ).join('\n\n');
+
+          this.addResult(
+            'Links nicht ausreichend unterscheidbar',
+            'fail',
+            details
+          );
+        }
+      }
+
+      testColorAloneNotUsed() {
+        // Hinweis-Test: Prüft nicht automatisch, gibt nur Warnung
+        this.addResult(
+          'Farbe nicht als einziges Mittel zur Informationsvermittlung',
+          'warning',
+          'Manuelle Prüfung erforderlich:\n- Werden Fehler nur durch rote Farbe angezeigt?\n- Sind erforderliche Felder nur durch Farbe gekennzeichnet?\n- Werden Links nur durch Farbe vom Text unterschieden?\n\nFarbe darf nicht das einzige Mittel sein, um Informationen zu vermitteln.'
+        );
+      }
+
+      displayResults() {
+        const resultsDiv = document.getElementById('results');
+
+        const summaryHTML = `
+          <div class="summary">
+            <div class="summary-item">
+              <div class="summary-number">${this.stats.total}</div>
+              <div class="summary-label">Tests</div>
+            </div>
+            <div class="summary-item" style="color: #4caf50;">
+              <div class="summary-number">${this.stats.passed}</div>
+              <div class="summary-label">Bestanden</div>
+            </div>
+            <div class="summary-item" style="color: #f44336;">
+              <div class="summary-number">${this.stats.failed}</div>
+              <div class="summary-label">Fehlgeschlagen</div>
+            </div>
+            <div class="summary-item" style="color: #ff9800;">
+              <div class="summary-number">${this.stats.warnings}</div>
+              <div class="summary-label">Warnungen</div>
+            </div>
+          </div>
+        `;
+
+        const resultsHTML = this.results.map(result => {
+          const icon = result.status === 'pass' ? '✓' :
+            result.status === 'fail' ? '✗' : '⚠';
+
+          return `
+            <div class="test-result ${result.status}">
+              <div class="test-title">
+                <span class="icon">${icon}</span>
+                ${result.title}
+              </div>
+              ${result.details ? `<div class="test-details">${result.details}</div>` : ''}
+            </div>
+          `;
+        }).join('');
+
+        resultsDiv.innerHTML = `
+          <h2>Test-Ergebnisse</h2>
+          ${summaryHTML}
+          ${resultsHTML}
+        `;
+      }
+
+      runAll() {
+        this.results = [];
+        this.stats = { total: 0, passed: 0, failed: 0, warnings: 0 };
+
+        this.testTextContrast();
+        this.testLinkContrast();
+        this.testColorAloneNotUsed();
+
+        this.displayResults();
+      }
+    }
+
+    function runAllTests() {
+      const tester = new ContrastTester();
+      tester.runAll();
+    }
+
+    function clearResults() {
+      document.getElementById('results').innerHTML = '';
+    }
+
+    window.addEventListener('load', runAllTests);
+  </script>
+
+</body>
+</html>

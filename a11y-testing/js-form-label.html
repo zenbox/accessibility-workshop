@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formular Accessibility Tests</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    .container {
+      background: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    figure {
+      margin-inline: 0;
+    }
+
+    .test-section {
+      margin: 30px 0;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 4px;
+    }
+
+    .form-examples {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .form-group {
+      padding: 15px;
+      background: white;
+      border-radius: 4px;
+      border: 2px solid #ddd;
+      margin-bottom: 10px;
+      min-height: 80px;
+    }
+
+    figcaption {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    code {
+      display: block;
+      background: #fff;
+      padding: 8px;
+      border-radius: 3px;
+      margin-top: 5px;
+      font-size: 11px;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .form-group.error input {
+      border-color: #f44336;
+    }
+
+    .error-message {
+      display: block;
+      color: #f44336;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    button {
+      background: #0066cc;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 10px 10px 10px 0;
+    }
+
+    button:hover {
+      background: #0052a3;
+    }
+
+    #results {
+      margin-top: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 4px;
+      border-left: 4px solid #0066cc;
+    }
+
+    .test-result {
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 4px;
+      border-left: 4px solid;
+    }
+
+    .test-result.pass {
+      background: #e8f5e9;
+      border-left-color: #4caf50;
+    }
+
+    .test-result.fail {
+      background: #ffebee;
+      border-left-color: #f44336;
+    }
+
+    .test-result.warning {
+      background: #fff3e0;
+      border-left-color: #ff9800;
+    }
+
+    .test-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .test-details {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #666;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+
+    .icon {
+      font-size: 20px;
+    }
+
+    .summary {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+      padding: 20px;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+
+    .summary-item {
+      flex: 1;
+      text-align: center;
+      padding: 15px;
+      background: white;
+      border-radius: 4px;
+    }
+
+    .summary-number {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .summary-label {
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🔍 Formular Accessibility Tests</h1>
+    <p>Diese Seite testet Formularelemente auf Barrierefreiheit.</p>
+
+
+    <div>
+      <button onclick="runAllTests()">Alle Tests ausführen</button>
+      <button onclick="clearResults()">Ergebnisse löschen</button>
+    </div>
+
+    <div class="test-section">
+      <h2>Test-Formularelemente</h2>
+      <div class="form-examples">
+
+        <!-- Gutes Beispiel: Label mit for -->
+        <figure>
+          <div class="form-group">
+            <label for="good-name">Name (gut):</label>
+            <input type="text" id="good-name" name="name">
+          </div>
+          <figcaption>
+            <strong>Gutes Label mit for-Attribut</strong><br>
+            <code>&lt;label for="good-name">Name:&lt;/label>
+              <br>
+              &lt;input type=“text” id=“good-name”></code>
+          </figcaption>
+        </figure>
+
+
+        <!-- Fehlendes Label -->
+        <figure>
+          <div class="form-group">
+            <input type="text" id="no-label" placeholder="Name (kein Label)">
+          </div>
+          <figcaption>
+            <strong>Fehlendes Label</strong><br>
+            <code>&lt;input type="text" placeholder="Name"></code>
+          </figcaption>
+        </figure>
+
+        <!-- Label ohne for -->
+        <figure>
+          <div class="form-group">
+            <label>E-Mail (Label ohne for):</label>
+            <input type="email" id="no-for-email">
+          </div>
+          <figcaption>
+            <strong>Label ohne for-Attribut</strong><br>
+            <code>&lt;label>E-Mail:&lt;/label>
+              <br>
+              &lt;input type=“email” id=“no-for-email”></code>
+          </figcaption>
+        </figure>
+
+
+        <!-- Gutes Beispiel: Verschachteltes Label -->
+        <figure>
+          <div class="form-group">
+            <label>
+              Telefon (verschachtelt):
+              <input type="tel" name="phone">
+            </label>
+          </div>
+          <figcaption>
+            <strong>Verschachteltes Label (gut)</strong><br>
+            <code>&lt;label>
+              Telefon:
+              &lt;input type=“tel”>
+              &lt;/label></code>
+          </figcaption>
+        </figure>
+
+
+        <!-- Aria-label statt Label -->
+        <figure>
+          <div class="form-group">
+            <input type="text" aria-label="Stadt (aria-label)" placeholder="Stadt">
+          </div>
+          <figcaption>
+            <strong>Aria-label statt Label</strong><br>
+            <code>&lt;input type="text"
+              aria-label="Stadt"></code>
+          </figcaption>
+        </figure>
+
+        <!-- Required ohne Kennzeichnung -->
+        <figure>
+          <div class="form-group">
+            <label for="required-bad">Pflichtfeld ohne Hinweis:</label>
+            <input type="text" id="required-bad" required>
+          </div>
+          <figcaption>
+            <strong>Required ohne visuelle Kennzeichnung</strong><br>
+            <code>&lt;label for="required-bad">Pflichtfeld:&lt;/label>
+              <br>
+              &lt;input type=“text” id=“required-bad” required></code>
+          </figcaption>
+        </figure>
+
+
+        <!-- Gutes Required mit aria-required -->
+        <figure>
+          <div class="form-group">
+            <label for="required-good">Pflichtfeld <span aria-hidden="true">*</span>:</label>
+            <input type="text" id="required-good" aria-required="true" required>
+          </div>
+          <figcaption>
+            <strong>Required mit aria-required</strong><br>
+            <code>&lt;label for="required-good">
+              Pflichtfeld &lt;span aria-hidden=“true”>*&lt;/span>:
+              &lt;/label>
+              <br>
+              &lt;input type=“text” id=“required-good”
+              aria-required=“true” required></code>
+          </figcaption>
+        </figure>
+
+
+        <!-- Fehlermeldung ohne aria-describedby -->
+        <figure>
+          <div class="form-group error">
+            <label for="error-bad">Mit Fehler (schlecht):</label>
+            <input type="email" id="error-bad" class="error">
+            <span class="error-message">Ungültige E-Mail</span>
+          </div>
+          <figcaption>
+            <strong>Fehler ohne aria-describedby</strong><br>
+            <code>&lt;label for="error-bad">Mit Fehler:&lt;/label>
+              <br>
+              &lt;input type=“email” id=“error-bad” class=“error”><br>
+              &lt;span class=“error-message”>Ungültige E-Mail&lt;/span></code>
+          </figcaption>
+        </figure>
+
+
+        <!-- Gute Fehlermeldung mit aria-describedby -->
+        <figure>
+          <div class="form-group error">
+            <label for="error-good">Mit Fehler (gut):</label>
+            <input type="email" id="error-good" aria-describedby="error-good-msg" aria-invalid="true">
+            <span id="error-good-msg" class="error-message" role="alert">Bitte gültige E-Mail eingeben</span>
+          </div>
+          <figcaption>
+            <strong>Fehler mit aria-describedby</strong><br>
+            <code>&lt;label for="error-good">Mit Fehler:&lt;/label>
+              <br>
+              &lt;input type=“email” id=“error-good”
+              aria-describedby=“error-good-msg”
+              aria-invalid=“true”>
+              <br>
+              &lt;span id=“error-good-msg”
+              class=“error-message”
+              role=“alert”>
+              Bitte gültige E-Mail eingeben
+              &lt;/span></code>
+          </figcaption>
+        </figure>
+
+
+      </div>
+    </div>
+
+    <div id="results"></div>
+
+  </div>
+
+  <script>
+    class FormAccessibilityTester {
+      constructor() {
+        this.results = [];
+        this.stats = {
+          total: 0,
+          passed: 0,
+          failed: 0,
+          warnings: 0
+        };
+      }
+
+      addResult(title, status, details = '') {
+        this.results.push({ title, status, details });
+        this.stats.total++;
+        if (status === 'pass') this.stats.passed++;
+        else if (status === 'fail') this.stats.failed++;
+        else if (status === 'warning') this.stats.warnings++;
+      }
+
+      testFormLabels() {
+        const inputs = document.querySelectorAll('input:not([type="hidden"]), textarea, select');
+        const missingLabels = [];
+
+        inputs.forEach((input, index) => {
+          const id = input.id;
+          const hasLabel = id && document.querySelector(`label[for="${id}"]`);
+          const hasAriaLabel = input.hasAttribute('aria-label');
+          const hasAriaLabelledBy = input.hasAttribute('aria-labelledby');
+          const isWrappedInLabel = input.closest('label');
+
+          if (!hasLabel && !hasAriaLabel && !hasAriaLabelledBy && !isWrappedInLabel) {
+            missingLabels.push({
+              index: index + 1,
+              type: input.type || input.tagName.toLowerCase(),
+              id: id || 'keine ID'
+            });
+          }
+        });
+
+        if (missingLabels.length === 0) {
+          this.addResult(
+            'Alle Formularfelder haben Labels',
+            'pass',
+            `${inputs.length} Formularfelder geprüft`
+          );
+        } else {
+          const details = missingLabels.map(input =>
+            `${input.type} #${input.index}: ID="${input.id}"`
+          ).join('\n');
+
+          this.addResult(
+            'Formularfelder ohne Label',
+            'fail',
+            `${missingLabels.length} von ${inputs.length} Feldern haben kein Label:\n${details}`
+          );
+        }
+      }
+
+      testLabelForAttribute() {
+        const labels = document.querySelectorAll('label[for]');
+        const invalidFor = [];
+
+        labels.forEach((label, index) => {
+          const forId = label.getAttribute('for');
+          const targetElement = document.getElementById(forId);
+
+          if (!targetElement) {
+            invalidFor.push({
+              index: index + 1,
+              forId: forId,
+              text: label.textContent.trim()
+            });
+          }
+        });
+
+        if (invalidFor.length === 0) {
+          this.addResult(
+            'Alle Label-for-Attribute sind korrekt',
+            'pass',
+            `${labels.length} Labels geprüft`
+          );
+        } else {
+          const details = invalidFor.map(label =>
+            `Label "${label.text}" verweist auf nicht-existierende ID: "${label.forId}"`
+          ).join('\n');
+
+          this.addResult(
+            'Labels mit ungültigem for-Attribut',
+            'fail',
+            details
+          );
+        }
+      }
+
+      testRequiredFields() {
+        const requiredInputs = document.querySelectorAll('input[required], textarea[required], select[required]');
+        const missingIndicator = [];
+
+        requiredInputs.forEach((input, index) => {
+          const hasAriaRequired = input.hasAttribute('aria-required');
+          const id = input.id;
+          const label = id ? document.querySelector(`label[for="${id}"]`) : input.closest('label');
+
+          const labelText = label ? label.textContent : '';
+          const hasVisualIndicator = labelText.includes('*') ||
+            labelText.toLowerCase().includes('pflicht') ||
+            labelText.toLowerCase().includes('required');
+
+          if (!hasAriaRequired) {
+            missingIndicator.push({
+              index: index + 1,
+              issue: 'Fehlendes aria-required',
+              id: id || 'keine ID'
+            });
+          }
+
+          if (!hasVisualIndicator && label) {
+            missingIndicator.push({
+              index: index + 1,
+              issue: 'Keine visuelle Kennzeichnung (*, Pflicht)',
+              id: id || 'keine ID'
+            });
+          }
+        });
+
+        if (missingIndicator.length === 0) {
+          this.addResult(
+            'Pflichtfelder korrekt gekennzeichnet',
+            'pass',
+            `${requiredInputs.length} Pflichtfelder geprüft`
+          );
+        } else {
+          const details = missingIndicator.map(item =>
+            `Feld #${item.index} (${item.id}): ${item.issue}`
+          ).join('\n');
+
+          this.addResult(
+            'Probleme bei Pflichtfeld-Kennzeichnung',
+            'warning',
+            details
+          );
+        }
+      }
+
+      testErrorMessages() {
+        const invalidInputs = document.querySelectorAll('input[aria-invalid="true"], input.error');
+        const missingDescribedBy = [];
+
+        invalidInputs.forEach((input, index) => {
+          const hasAriaDescribedBy = input.hasAttribute('aria-describedby');
+          const hasAriaInvalid = input.getAttribute('aria-invalid') === 'true';
+
+          if (!hasAriaDescribedBy) {
+            missingDescribedBy.push({
+              index: index + 1,
+              id: input.id || 'keine ID',
+              issue: 'Fehlendes aria-describedby für Fehlermeldung'
+            });
+          }
+
+          if (!hasAriaInvalid) {
+            missingDescribedBy.push({
+              index: index + 1,
+              id: input.id || 'keine ID',
+              issue: 'Fehlendes aria-invalid="true"'
+            });
+          }
+        });
+
+        if (missingDescribedBy.length === 0) {
+          this.addResult(
+            'Fehlermeldungen korrekt verknüpft',
+            'pass',
+            `${invalidInputs.length} Fehlerfelder geprüft`
+          );
+        } else {
+          const details = missingDescribedBy.map(item =>
+            `Feld (${item.id}): ${item.issue}`
+          ).join('\n');
+
+          this.addResult(
+            'Fehlermeldungen nicht barrierefrei',
+            'fail',
+            details
+          );
+        }
+      }
+
+      testInputTypes() {
+        const inputs = document.querySelectorAll('input');
+        const missingTypes = [];
+
+        inputs.forEach((input, index) => {
+          const type = input.type;
+          const id = input.id || `input-${index + 1}`;
+
+          if (type === 'text') {
+            const label = input.id ? document.querySelector(`label[for="${input.id}"]`) : null;
+            const labelText = label ? label.textContent.toLowerCase() : '';
+            const placeholder = (input.placeholder || '').toLowerCase();
+            const ariaLabel = (input.getAttribute('aria-label') || '').toLowerCase();
+            const allText = labelText + placeholder + ariaLabel;
+
+            if (allText.includes('email') || allText.includes('e-mail')) {
+              missingTypes.push({ id, suggested: 'email', current: 'text' });
+            } else if (allText.includes('tel') || allText.includes('phone')) {
+              missingTypes.push({ id, suggested: 'tel', current: 'text' });
+            } else if (allText.includes('url') || allText.includes('website')) {
+              missingTypes.push({ id, suggested: 'url', current: 'text' });
+            }
+          }
+        });
+
+        if (missingTypes.length === 0) {
+          this.addResult(
+            'Input-Typen korrekt verwendet',
+            'pass',
+            `${inputs.length} Inputs geprüft`
+          );
+        } else {
+          const details = missingTypes.map(item =>
+            `${item.id}: Sollte type="${item.suggested}" statt "${item.current}" sein`
+          ).join('\n');
+
+          this.addResult(
+            'Suboptimale Input-Typen',
+            'warning',
+            details
+          );
+        }
+      }
+
+      displayResults() {
+        const resultsDiv = document.getElementById('results');
+
+        const summaryHTML = `
+          <div class="summary">
+            <div class="summary-item">
+              <div class="summary-number">${this.stats.total}</div>
+              <div class="summary-label">Tests</div>
+            </div>
+            <div class="summary-item" style="color: #4caf50;">
+              <div class="summary-number">${this.stats.passed}</div>
+              <div class="summary-label">Bestanden</div>
+            </div>
+            <div class="summary-item" style="color: #f44336;">
+              <div class="summary-number">${this.stats.failed}</div>
+              <div class="summary-label">Fehlgeschlagen</div>
+            </div>
+            <div class="summary-item" style="color: #ff9800;">
+              <div class="summary-number">${this.stats.warnings}</div>
+              <div class="summary-label">Warnungen</div>
+            </div>
+          </div>
+        `;
+
+        const resultsHTML = this.results.map(result => {
+          const icon = result.status === 'pass' ? '✓' :
+            result.status === 'fail' ? '✗' : '⚠';
+
+          return `
+            <div class="test-result ${result.status}">
+              <div class="test-title">
+                <span class="icon">${icon}</span>
+                ${result.title}
+              </div>
+              ${result.details ? `<div class="test-details">${result.details}</div>` : ''}
+            </div>
+          `;
+        }).join('');
+
+        resultsDiv.innerHTML = `
+          <h2>Test-Ergebnisse</h2>
+          ${summaryHTML}
+          ${resultsHTML}
+        `;
+      }
+
+      runAll() {
+        this.results = [];
+        this.stats = { total: 0, passed: 0, failed: 0, warnings: 0 };
+
+        this.testFormLabels();
+        this.testLabelForAttribute();
+        this.testRequiredFields();
+        this.testErrorMessages();
+        this.testInputTypes();
+
+        this.displayResults();
+      }
+    }
+
+    function runAllTests() {
+      const tester = new FormAccessibilityTester();
+      tester.runAll();
+    }
+
+    function clearResults() {
+      document.getElementById('results').innerHTML = '';
+    }
+
+    window.addEventListener('load', runAllTests);
+  </script>
+
+</body>
+
+</html>

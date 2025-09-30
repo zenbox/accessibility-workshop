@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Document</title>
+    </head>
+    <body>
+        <!-- Dokumenten-Strukur -->
+        <nav id="skip-links">
+            <a
+                href="#main"
+                class="skip-link"
+                >Zum Hauptinhalt springen</a
+            >
+            <a
+                href="#footer"
+                class="skip-link"
+                >Zum Footer springen</a
+            >
+        </nav>
+        <header></header>
+        <main id="main">
+            <article id="teaser">
+                <h1>Teaser-Überschrift</h1>
+                <p>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Quis iusto expedita enim nihil dolor dignissimos delectus
+                    consectetur, nobis eos! Ipsam quae itaque pariatur adipisci?
+                </p>
+            </article>
+            <article>
+                <h2>Veranstaltungen</h2>
+                <p>
+                    Hier finden Sie eine Übersicht unserer kommenden
+                    Veranstaltungen.
+                </p>
+                <ol>
+                    <li class="card">Workshop Barrierefreiheit - 15.11.2024</li>
+                    <li class="card">Seminar Usability - 22.11.2024</li>
+                    <li class="card">
+                        Webinar Accessibility Testing - 29.11.2024
+                    </li>
+                </ol>
+                <style>
+                    ol:has(.card) {
+                        list-style: none;
+                        padding: 0;
+                        display: flex;
+                        gap: 1rem;
+                    }
+                    .card {
+                        border: 1px solid #ccc;
+                        border-radius: 8px;
+                        padding: 1rem;
+                        margin-bottom: 1rem;
+                        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+                        transition: box-shadow 0.3s ease;
+                    }
+
+                    .card:hover {
+                        box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+                    }
+                </style>
+            </article>
+            <article></article>
+        </main>
+        <footer id="footer">
+            <address></address>
+            <!-- Komponenten-Struktur -->
+            <nav id="footer-nav">
+                <ul>
+                    <li><a href="#">Datenschutz</a></li>
+                    <li><a href="#">Impressum</a></li>
+                    <li><a href="#">Kontakt</a></li>
+                </ul>
+            </nav>
+        </footer>
+    </body>
+</html>
