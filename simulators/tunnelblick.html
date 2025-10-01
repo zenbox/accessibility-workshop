@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tunnelblick-Simulation</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f0f0f0;
+    }
+
+    /* Container für den simulierten Inhalt */
+    .tunnelblick-container {
+      position: relative;
+      width: 400px;
+      height: 400px;
+    }
+
+    /* Der periphere Bereich mit Unschärfe */
+    .tunnelblick-background, .tunnelblick-focus {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://picsum.photos/id/88/400');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Unschärfe für den peripheren Bereich */
+    .tunnelblick-background {
+      filter: blur(10px);
+    }
+
+    /* Scharfer zentraler Bereich */
+    .tunnelblick-focus {
+      clip-path: circle(80px at center); /* Größe des scharfen Bereichs */
+      z-index: 1;
+    }
+
+    /* Dunkler peripherer Bereich, um den Tunnelblick-Effekt zu verstärken */
+    .tunnelblick-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.8) 70%);
+      pointer-events: none; /* Damit es nicht anklickbar ist */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tunnelblick-container">
+    <!-- Unscharfer Hintergrund (peripherer Bereich) -->
+    <div class="tunnelblick-background"></div>
+
+    <!-- Scharfer zentraler Bereich -->
+    <div class="tunnelblick-focus"></div>
+
+    <!-- Dunkler Overlay für Tunnelblick -->
+    <div class="tunnelblick-overlay"></div>
+  </div>
+
+  <script>
+    const container = document.querySelector('.tunnelblick-container');
+    const focus = document.querySelector('.tunnelblick-focus');
+    const overlay = document.querySelector('.tunnelblick-overlay');
+
+    // Funktion zur Aktualisierung der Position des scharfen Bereichs und des Verlaufs
+    function updateFocusPosition(x, y) {
+      const rect = container.getBoundingClientRect();
+      const relativeX = x - rect.left;
+      const relativeY = y - rect.top;
+
+      // Scharfen Bereich neu positionieren
+      focus.style.clipPath = `circle(80px at ${relativeX}px ${relativeY}px)`;
+
+      // Radialer Verlauf neu positionieren
+      overlay.style.background = `radial-gradient(circle at ${relativeX}px ${relativeY}px, transparent 40%, rgba(0, 0, 0, 0.8) 70%)`;
+    }
+
+    // Mausbewegung verfolgen
+    container.addEventListener('mousemove', (e) => {
+      updateFocusPosition(e.clientX, e.clientY);
+    });
+
+    // Touch-Bewegungen verfolgen (für mobile Geräte)
+    container.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      updateFocusPosition(touch.clientX, touch.clientY);
+    });
+  </script>
+
+</body>
+</html>

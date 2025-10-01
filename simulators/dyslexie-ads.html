@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dyslexie- und ADS-Effekte</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      color: #333;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+    }
+
+    /* Basis Textformatierungen */
+    .highlight {
+      background-color: yellow;
+      font-weight: bold;
+    }
+
+    .important {
+      color: red;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    /* Dyslexie-Effekt */
+    .dyslexie p {
+      position: relative;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+    }
+
+    .dyslexie p span {
+      display: inline-block;
+      position: relative;
+      top: 0;
+      transform: rotate(0deg);
+      animation: dyslexieEffect 2s infinite;
+    }
+
+    @keyframes dyslexieEffect {
+      0%, 100% {
+        top: 0;
+        transform: rotate(0deg);
+      }
+      33% {
+        top: -2px;
+        transform: rotate(-1deg);
+      }
+      66% {
+        top: 2px;
+        transform: rotate(1deg);
+      }
+    }
+
+    /* ADS-Effekt */
+    .ads p {
+      position: relative;
+    }
+
+    .ads .distraction {
+      display: inline-block;
+      color: transparent;
+      animation: adsEffect 1s infinite;
+    }
+
+    @keyframes adsEffect {
+      0% {
+        color: transparent;
+      }
+      50% {
+        color: red;
+      }
+      100% {
+        color: transparent;
+      }
+    }
+
+    /* Buttons */
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Willkommen auf meiner Beispielseite</h1>
+  <p>
+    Dies ist ein Beispieltext, der genutzt wird, um Effekte zu simulieren. <span class="highlight">Lesen</span> kann für manche Menschen eine Herausforderung sein.
+  </p>
+
+  <h2>Wichtige Informationen</h2>
+  <p>
+    Manchmal werden <span class="important">wichtige Informationen</span> durch andere Reize übersehen. Bei ADS kann dies oft vorkommen.
+  </p>
+
+  <h3>Ein längerer Text</h3>
+  <p>
+    Dies ist ein längerer Abschnitt mit mehreren Sätzen. Menschen mit <span class="highlight">Dyslexie</span> oder <span class="highlight">ADS</span> haben möglicherweise Schwierigkeiten, den Inhalt dieses Textes zu verarbeiten. Um dies zu simulieren, verwenden wir visuelle Effekte, die das Lesen erschweren. Diese Effekte lassen sich ein- und ausschalten, um die Herausforderungen nachzuvollziehen, denen diese Menschen begegnen.
+  </p>
+
+  <h3>Ein weiterer Abschnitt</h3>
+  <p>
+    Der <span class="highlight">Aufmerksamkeitsverlust</span> kann bei Menschen mit ADS zu ständigen Unterbrechungen führen. Störungen durch <span class="distraction">blinkende Elemente</span> oder andere ablenkende Reize erschweren es, den Fokus auf den Text zu halten.
+  </p>
+
+  <!-- Buttons zum Aktivieren und Deaktivieren der Effekte -->
+  <button onclick="toggleDyslexie()">Dyslexie-Effekt umschalten</button>
+  <button onclick="toggleADS()">ADS-Effekt umschalten</button>
+
+  <!-- JavaScript zum Ein- und Ausschalten der Effekte -->
+  <script>
+    function toggleDyslexie() {
+      document.body.classList.toggle('dyslexie');
+    }
+
+    function toggleADS() {
+      document.body.classList.toggle('ads');
+    }
+  </script>
+
+</body>
+</html>

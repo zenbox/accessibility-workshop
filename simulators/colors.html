@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farbsimulationen</title>
+  <style>
+  button{
+    min-width: 3rem; height:3rem;
+    background:hsla(0,0%,0%,0.85);
+    color:hsla(0,0%,100%,0.85);
+    border:none;
+  }
+    /* Basis Farben */
+    :root {
+      --color-white: #ffffff;
+      --color-black: #000000;
+
+      /* Corporate Farben */
+      --color-primary: #0044cc;
+      --color-secondary: #00cc44;
+      --color-tertiary: #cc4400;
+
+      /* Semantische Farben */
+      --color-success-background: #d4edda;
+      --color-success-text: #155724;
+      --color-error-background: #f8d7da;
+      --color-error-text: #721c24;
+      --color-warning-background: #fff3cd;
+      --color-warning-text: #856404;
+      --color-info-background: #d1ecf1;
+      --color-info-text: #0c5460;
+    }
+
+    /* Light Mode */
+    .light-mode {
+      --background-color: var(--color-white);
+      --text-color: var(--color-black);
+      --link-color: var(--color-primary);
+      --button-background-color: var(--color-primary);
+      --button-text-color: var(--color-white);
+    }
+
+    /* Dark Mode */
+    .dark-mode {
+      --background-color: var(--color-black);
+      --text-color: var(--color-white);
+      --link-color: var(--color-secondary);
+      --button-background-color: var(--color-secondary);
+      --button-text-color: var(--color-white);
+    }
+
+    /* Hochkontrast-Modus */
+    .high-contrast {
+      --background-color: var(--color-black);
+      --text-color: var(--color-white);
+      --link-color: yellow;
+      --button-background-color: var(--color-black);
+      --button-text-color: yellow;
+
+      /* Semantische Farben für Hochkontrast-Modus */
+      --color-success-background: yellow;
+      --color-success-text: var(--color-black);
+      --color-error-background: red;
+      --color-error-text: var(--color-black);
+      --color-warning-background: orange;
+      --color-warning-text: var(--color-black);
+      --color-info-background: blue;
+      --color-info-text: var(--color-white);
+    }
+
+    /* Simulationen für Farbenblindheit */
+    .protanopia {
+      filter: url('#protanopia-blur');
+    }
+
+    .deuteranopia {
+      filter: url('#deuteranopia-blur');
+    }
+
+    .tritanopia {
+      filter: url('#tritanopia-blur');
+    }
+
+    .color-blind {
+      filter: url('#color-blind-blur');
+    }
+    
+     .achromatopsia {
+    filter: url(#achromatopsia-blur);
+  } 
+
+    /* Visus-Simulationen */
+    .visus-07 {
+      filter: url('#visus-07');
+    }
+
+    .visus-05 {
+      filter: url('#visus-05');
+    }
+
+    .visus-04 {
+      filter: url('#visus-04');
+    }
+
+    .visus-008 {
+      filter: url('#visus-008');
+    }
+
+    /* Farbfelder */
+    section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid #000;
+    }
+
+    .color-box {
+      width: 2rem;
+      height: 2rem;
+      display: inline-block;
+      border: 1px solid #000;
+    }
+
+    .color-primary {
+      background-color: var(--color-primary);
+    }
+
+    .color-secondary {
+      background-color: var(--color-secondary);
+    }
+
+    .color-tertiary {
+      background-color: var(--color-tertiary);
+    }
+
+    .color-success {
+      background-color: var(--color-success-background);
+    }
+
+    .color-error {
+      background-color: var(--color-error-background);
+    }
+
+    .color-warning {
+      background-color: var(--color-warning-background);
+    }
+
+    .color-info {
+      background-color: var(--color-info-background);
+    }
+    
+    section {
+      background: var(--background-color);
+      color: var(--text-color);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Steuerungstasten -->
+  <button onclick="toggleClass('section', 'high-contrast')">Hochkontrast umschalten</button>
+  <button onclick="toggleClass('section', 'protanopia')">Protanopie umschalten</button>
+  <button onclick="toggleClass('section', 'deuteranopia')">Deuteranopie umschalten</button>
+  <button onclick="toggleClass('section', 'tritanopia')">Tritanopie umschalten</button>
+  <button onclick="toggleClass('section', 'color-blind')">Generelle Farbfehlsichtigkeit umschalten</button>
+  <button onclick="toggleClass('section', 'achromatopsia')">Völlige Farbenblindheit umschalten umschalten</button>
+  
+  <button onclick="toggleClass('section', 'visus-07')">Visus 0.7 umschalten</button>
+  <button onclick="toggleClass('section', 'visus-05')">Visus 0.5 umschalten</button>
+  <button onclick="toggleClass('section', 'visus-04')">Visus 0.4 umschalten</button>
+  <button onclick="toggleClass('section', 'visus-008')">Visus 0.08 umschalten</button>
+  
+  <!-- Neue Steuerungstasten -->
+  <button onclick="resetSection()">Zurücksetzen</button>
+  <button onclick="applyMode('dark-mode')">Dark Mode</button>
+  <button onclick="applyMode('light-mode')">Light Mode</button>
+
+  <!-- Sektion mit Farbfeldern -->
+  <section>
+    <figure>
+    <div class="color-box color-primary" title="Primary"></div>
+    <div class="color-box color-secondary" title="Secondary"></div>
+    <div class="color-box color-tertiary" title="Tertiary"></div>
+    <div class="color-box color-success" title="Success"></div>
+    <div class="color-box color-error" title="Error"></div>
+    <div class="color-box color-warning" title="Warning"></div>
+    <div class="color-box color-info" title="Info"></div>
+ </figure>
+ <article>
+   <h1>Beispiel</h1>
+   <p>Ein simpler Text</p>
+   <p class="color-success">Erfolgreiche Meldung</p>
+   <p class="color-error">Fehlermeldung</p>
+   <p class="color-info">Information</p>
+   <p class="color-warning">Warnhinweis</p>
+ </article>
+ <article>
+   <p style="font-size:5rem">Wirklich groß</p>
+   <p style="font-size:4rem">Sehr groß</p>
+   <p style="font-size:3rem">Groß</p>
+   <p style="font-size:2rem">doppelte Größe</p>
+   <p style="font-size:1rem">Leseschrift</p>
+   <p style="font-size:0.8rem">Konsultationstext</p>
+ </article>
+ <article>
+   <!-- SVG-Symbole für Icons -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+  <!-- Erfolgs-Icon -->
+  <symbol id="icon-success" viewBox="0 0 24 24" fill="green">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-4-4 1.41-1.41L11 14.17l5.59-5.59L18 10l-7 7z"/>
+  </symbol>
+
+  <!-- Fehler-Icon -->
+  <symbol id="icon-error" viewBox="0 0 24 24" fill="red">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+  </symbol>
+
+  <!-- Warnungs-Icon -->
+  <symbol id="icon-warning" viewBox="0 0 24 24" fill="orange">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+  </symbol>
+
+  <!-- Info-Icon -->
+  <symbol id="icon-info" viewBox="0 0 24 24" fill="blue">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M11 17h2v-6h-2v6zm0-8h2V7h-2v2zm1-7C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+  </symbol>
+</svg>
+
+<!-- Login-Formular -->
+<form action="/login" method="POST">
+  <fieldset>
+    <legend>Login</legend>
+
+    <!-- E-Mail Eingabe -->
+    <p>
+      <label for="email">E-Mail:</label>
+      <input type="email" id="email" name="email" required>
+    </p>
+
+    <!-- Passwort Eingabe -->
+    <p>
+      <label for="password">Passwort:</label>
+      <input type="password" id="password" name="password" required>
+    </p>
+
+    <!-- Semantische Hinweise -->
+    <p class="color-success" style="padding: 0.5rem; margin-top: 1rem;">
+      <!-- Erfolg Icon -->
+      <svg width="24px" height="24px">
+        <use href="#icon-success"></use>
+      </svg>
+      Hinweis: Dein Login war erfolgreich. Willkommen zurück!
+    </p>
+
+    <p class="color-error" style="padding: 0.5rem; margin-top: 1rem;">
+      <!-- Fehler Icon -->
+      <svg width="24px" height="24px">
+        <use href="#icon-error"></use>
+      </svg>
+      Fehler: Ungültige E-Mail-Adresse oder Passwort. Bitte versuche es erneut.
+    </p>
+
+    <p class="color-warning" style="padding: 0.5rem; margin-top: 1rem;">
+      <!-- Warnung Icon -->
+      <svg width="24px" height="24px">
+        <use href="#icon-warning"></use>
+      </svg>
+      Warnung: Dein Passwort läuft bald ab. Bitte ändere es, um den Zugriff zu behalten.
+    </p>
+
+    <p class="color-info" style="padding: 0.5rem; margin-top: 1rem;">
+      <!-- Info Icon -->
+      <svg width="24px" height="24px">
+        <use href="#icon-info"></use>
+      </svg>
+      Hinweis: Wir haben unsere Datenschutzrichtlinien aktualisiert. Bitte lies sie durch.
+    </p>
+
+    <!-- Absenden Button -->
+    <p style="margin-top: 1rem;">
+      <button type="submit">Anmelden</button>
+    </p>
+
+  </fieldset>
+</form>
+ </article>
+  </section>
+
+  <!-- SVG-Filter -->
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display:none">
+    <!-- Protanopie Filter -->
+    <filter id="protanopia-blur">
+      <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0, 0.558, 0.442, 0, 0, 0, 0, 0.242, 0.758, 0, 0, 0, 0, 0, 1, 0" />
+      <feGaussianBlur stdDeviation="0.0" />
+    </filter>
+
+    <!-- Deuteranopie Filter -->
+    <filter id="deuteranopia-blur">
+      <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0, 0.7, 0.3, 0, 0, 0, 0, 0.3, 0.7, 0, 0, 0, 0, 0, 1, 0" />
+      <feGaussianBlur stdDeviation="0.0" />
+    </filter>
+
+    <!-- Tritanopie Filter -->
+    <filter id="tritanopia-blur">
+      <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0, 0, 0.433, 0.567, 0, 0, 0, 0.475, 0.525, 0, 0, 0, 0, 0, 1, 0" />
+      <feGaussianBlur stdDeviation="0.0" />
+    </filter>
+
+    <!-- Generische Farbblindheit -->
+    <filter id="color-blind-blur">
+      <feColorMatrix type="matrix" values="0.618, 0.320, 0.062, 0, 0, 0.163, 0.775, 0.062, 0, 0, 0.163, 0.320, 0.516, 0, 0, 0, 0, 0, 1, 0" />
+      <feGaussianBlur stdDeviation="1.5" />
+    </filter>
+
+      <!-- Filter für völlige Farbenblindheit (Achromatopsie) -->
+  <filter id="achromatopsia-blur">
+       <feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0
+                                         0.33 0.33 0.33 0 0
+                                         0.33 0.33 0.33 0 0
+                                         0    0    0    1 0" />
+                                         <feGaussianBlur stdDeviation="1.5" />
+     </filter>
+    
+    <!-- Visus Filter -->
+    <filter id="visus-07">
+      <feGaussianBlur stdDeviation="1.5" />
+    </filter>
+    <filter id="visus-05">
+      <feGaussianBlur stdDeviation="3" />
+    </filter>
+    <filter id="visus-04">
+      <feGaussianBlur stdDeviation="4.5" />
+    </filter>
+    <filter id="visus-008">
+      <feGaussianBlur stdDeviation="12" />
+    </filter>
+  </svg>
+
+  <script>
+    // Toggle-Klasse auf die Sektion anwenden
+    function toggleClass(section, className) {
+      document.querySelector(section).classList.toggle(className);
+    }
+
+    // Alle Klassen von der Sektion entfernen (zurücksetzen)
+    function resetSection() {
+      const section = document.querySelector('section');
+      section.className = ''; // Entfernt alle Klassen
+    }
+
+    // Modus anwenden (Light oder Dark)
+    function applyMode(mode) {
+      const section = document.querySelector('section');
+      section.classList.remove('dark-mode', 'light-mode'); // Entfernt vorhandene Modi
+      section.classList.add(mode); // Fügt neuen Modus hinzu
+    }
+  </script>
+
+</body>
+</html>
