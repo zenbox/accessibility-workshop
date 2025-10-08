@@ -1,0 +1,162 @@
+/* public/style.css */
+/* SMACSS-ish Struktur, kompakt gehalten. Barlow + Material Icons global eingebunden. */
+
+:root {
+  --bg: #0f1220;
+  --panel: #171a2b;
+  --panel-2: #1f2340;
+  --text: #ebedf5;
+  --muted: #a8acc3;
+  --primary: #7c4dff;
+  --accent: #00d1b2;
+  --danger: #ff5d5d;
+  --border: #2b2e4a;
+
+  --radius: 10px;
+  --space: 12px;
+
+  --toolbar-w: 300px;
+
+  --mono: 'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: 'Barlow', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--text);
+  background: radial-gradient(1200px 800px at 30% 20%, #15203c 0%, var(--bg) 60%);
+}
+
+.app-header, .app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space) calc(var(--space) * 2);
+  background: linear-gradient(0deg, var(--panel-2), var(--panel));
+  border-bottom: 1px solid var(--border);
+}
+
+.app-footer {
+  border-top: 1px solid var(--border);
+  border-bottom: none;
+  justify-content: center;
+  gap: 10px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: .3px;
+}
+
+.board-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.board-controls input[type="text"],
+.toolbar input[type="text"],
+.toolbar input[type="color"],
+.toolbar input[type="range"],
+.toolbar select {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+.btn {
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn:hover { outline: 1px solid #3e436b; }
+.btn:active { transform: translateY(1px); }
+.btn.toggle.active { background: var(--primary); border-color: #5d3ade; }
+.btn.danger { background: #2a1820; border-color: #542736; color: #ff9aa7; }
+
+.app-main {
+  display: grid;
+  grid-template-columns: var(--toolbar-w) 1fr;
+  height: calc(100vh - 120px);
+}
+
+.toolbar {
+  border-right: 1px solid var(--border);
+  padding: calc(var(--space) * 1.5);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: linear-gradient(0deg, var(--panel), #12152a);
+}
+
+.tool-group {
+  display: grid;
+  gap: 10px;
+}
+
+.stack {
+  display: grid;
+  gap: 6px;
+}
+
+.mono { font-family: var(--mono); color: var(--muted); }
+
+.hint {
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+.board-wrapper {
+  position: relative;
+  background: repeating-conic-gradient(from 45deg, #151a30 0% 25%, #14182a 0% 50%) 50% / 40px 40px;
+}
+
+#board {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cursor-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  font: 12px var(--sans);
+  color: #fff;
+}
+
+.cursor-tag {
+  position: absolute;
+  transform: translate(-50%, -150%);
+  background: rgba(0,0,0,.5);
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  border: 1px solid rgba(255,255,255,.15);
+}
+
+.cursor-dot {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px rgba(255,255,255,.6);
+}

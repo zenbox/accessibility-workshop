@@ -1,546 +1,927 @@
 <!DOCTYPE html>
 
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=3.0, user-scalable=yes">
-    <title>Visus-Simulator</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-```
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        overflow-x: hidden;
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    body.high-contrast {
-        background-color: #000000;
-        color: #FFFFFF;
-    }
-
-    body.high-contrast #example-content h1,
-    body.high-contrast #example-content h2,
-    body.high-contrast #example-content p {
-        color: #FFFFFF;
-    }
-
-    body.high-contrast .color-samples {
-        border: 2px solid #FFFFFF;
-        padding: 10px;
-    }
-
-    body.high-contrast .image-sample {
-        border: 3px solid #FFFF00;
-    }
-
-    #example-content {
-        padding: 40px 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-        transition: filter 0.3s ease;
-    }
-
-    #example-content h1 {
-        color: #2c3e50;
-        margin-bottom: 20px;
-        font-size: clamp(24px, 5vw, 32px);
-    }
-
-    #example-content h2 {
-        color: #34495e;
-        margin-top: 30px;
-        margin-bottom: 15px;
-        font-size: clamp(18px, 4vw, 24px);
-    }
-
-    #example-content p {
-        line-height: 1.8;
-        margin-bottom: 15px;
-        color: #34495e;
-    }
-
-    .color-samples {
-        display: flex;
-        gap: 15px;
-        margin: 30px 0;
-        flex-wrap: wrap;
-    }
-
-    .color-box {
-        width: 80px;
-        height: 80px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        font-size: 14px;
-    }
-
-    .image-sample {
-        width: 100%;
-        max-width: 600px;
-        height: 250px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 12px;
-        margin: 20px 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 20px;
-    }
-
-    #control-panel {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: rgba(255, 255, 255, 0.98);
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        max-width: 340px;
-        z-index: 1000;
-        backdrop-filter: blur(10px);
-        transition: all 0.3s ease;
-    }
-
-    #control-panel.collapsed {
-        max-height: 60px;
-        overflow: hidden;
-    }
-
-    body.high-contrast #control-panel {
-        background: rgba(0, 0, 0, 0.98);
-        border: 3px solid #FFFF00;
-    }
-
-    body.high-contrast #control-panel label,
-    body.high-contrast #control-panel .panel-header,
-    body.high-contrast #control-panel .value-display {
-        color: #FFFFFF;
-    }
-
-    body.high-contrast .control-group {
-        background: #1a1a1a;
-        border: 1px solid #FFFF00;
-    }
-
-    .panel-header {
-        font-weight: bold;
-        padding: 15px;
-        color: #2c3e50;
-        cursor: move;
-        touch-action: none;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        user-select: none;
-        border-bottom: 2px solid #3498db;
-    }
-
-    .panel-header-text {
-        pointer-events: none;
-    }
-
-    .toggle-btn {
-        background: #3498db;
-        color: white;
-        border: none;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        transition: transform 0.3s ease, background 0.2s;
-        flex-shrink: 0;
-        touch-action: manipulation;
-    }
-
-    .toggle-btn:hover {
-        background: #2980b9;
-    }
-
-    .toggle-btn:active {
-        transform: scale(0.95);
-    }
-
-    #control-panel.collapsed .toggle-btn {
-        transform: rotate(180deg);
-    }
-
-    .panel-content {
-        padding: 15px;
-        max-height: calc(90vh - 80px);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .control-group {
-        margin-bottom: 15px;
-        padding: 10px;
-        background: #f8f9fa;
-        border-radius: 6px;
-    }
-
-    .control-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 13px;
-        font-weight: 600;
-        color: #495057;
-        cursor: pointer;
-    }
-
-    .info-text {
-        font-size: 11px;
-        color: #6c757d;
-        font-style: italic;
-        margin-top: 5px;
-        line-height: 1.3;
-    }
-
-    body.high-contrast .info-text {
-        color: #CCCCCC;
-    }
-
-    input[type="range"] {
-        width: 100%;
-        margin: 5px 0;
-        -webkit-appearance: none;
-        appearance: none;
-        height: 8px;
-        border-radius: 5px;
-        background: #d3d3d3;
-        outline: none;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #3498db;
-        cursor: pointer;
-    }
-
-    input[type="range"]::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #3498db;
-        cursor: pointer;
-        border: none;
-    }
-
-    input[type="checkbox"] {
-        margin-right: 8px;
-        width: 18px;
-        height: 18px;
-        cursor: pointer;
-    }
-
-    .value-display {
-        font-size: 12px;
-        color: #6c757d;
-        margin-top: 3px;
-    }
-
-    .reset-btn, .contrast-btn {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 600;
-        margin-top: 10px;
-        font-size: 14px;
-        touch-action: manipulation;
-        transition: all 0.2s;
-    }
-
-    .reset-btn {
-        background: #e74c3c;
-        color: white;
-    }
-
-    .reset-btn:hover {
-        background: #c0392b;
-    }
-
-    .reset-btn:active {
-        transform: scale(0.98);
-    }
-
-    .contrast-btn {
-        background: #000000;
-        color: #FFFF00;
-        border: 2px solid #FFFF00;
-    }
-
-    .contrast-btn:hover {
-        background: #FFFF00;
-        color: #000000;
-    }
-
-    .contrast-btn:active {
-        transform: scale(0.98);
-    }
-
-    #effect-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 999;
-    }
-
-    @media (max-width: 768px) {
-        #control-panel {
-            right: 10px;
-            top: 10px;
-            max-width: calc(100vw - 20px);
-        }
-
-        .color-box {
-            width: 70px;
-            height: 70px;
-            font-size: 12px;
-        }
-
-        #example-content {
-            padding: 20px 15px;
-        }
-    }
-</style>
-```
-
-</head>
-<body>
-    <div id="effect-overlay"></div>
-
-```
-<div id="example-content">
-    <h1>Beispiel-Webseite für Visus-Simulation</h1>
-    
-    <p>Dies ist eine Beispielseite, um verschiedene Seheinschränkungen zu simulieren. 
-    Der Text sollte in verschiedenen Größen und Kontrasten lesbar sein.</p>
-    
-    <h2>Farbproben zur Überprüfung von Farbenfehlsichtigkeit</h2>
-    <div class="color-samples">
-        <div class="color-box" style="background: #e74c3c;">Rot</div>
-        <div class="color-box" style="background: #2ecc71;">Grün</div>
-        <div class="color-box" style="background: #3498db;">Blau</div>
-        <div class="color-box" style="background: #f39c12;">Orange</div>
-        <div class="color-box" style="background: #9b59b6;">Lila</div>
-        <div class="color-box" style="background: #1abc9c;">Türkis</div>
-    </div>
-
-    <div class="image-sample">
-        Beispiel-Bildbereich
-    </div>
-
-    <h2>Textbeispiel in verschiedenen Größen</h2>
-    <p style="font-size: 20px;">Große Schrift – sollte auch bei Kurzsichtigkeit erkennbar sein</p>
-    <p style="font-size: 16px;">Mittlere Schrift – Standardgröße für Fließtext</p>
-    <p style="font-size: 12px;">Kleine Schrift – kann bei Seheinschränkungen schwer lesbar sein</p>
-    <p style="font-size: 10px;">Sehr kleine Schrift – Test für Detailerkennung</p>
-
-    <h2>Kontrastbeispiele</h2>
-    <p style="background: #f0f0f0; padding: 10px; border-radius: 4px;">
-        Grauer Hintergrund mit schwarzem Text – mittlerer Kontrast
-    </p>
-    <p style="background: #333; color: white; padding: 10px; border-radius: 4px;">
-        Dunkler Hintergrund mit weißem Text – hoher Kontrast
-    </p>
-
-    <h2>Orientierungstest</h2>
-    <p>Bei Makuladegeneration können Sie diesen Text in der Peripherie noch wahrnehmen, 
-    aber nicht direkt lesen. Bei Tunnelblick ist es genau umgekehrt - Sie sehen nur 
-    den Bereich, auf den Sie direkt schauen.</p>
-</div>
-
-<div id="control-panel">
-    <div class="panel-header" id="panel-header">
-        <span class="panel-header-text">👁️ Visus-Simulator</span>
-        <button class="toggle-btn" id="toggle-btn" onclick="togglePanel()">▼</button>
-    </div>
-
-    <div class="panel-content" id="panel-content">
-        <button class="contrast-btn" onclick="toggleHighContrast()">
-            🔲 Hochkontrast-Modus
-        </button>
-
-        <div class="control-group">
-            <label>Betrachtungsabstand zum Bildschirm</label>
-            <input type="range" id="viewing-distance" min="20" max="80" step="5" value="50">
-            <div class="value-display">Abstand: <span id="distance-value">50</span> cm</div>
-            <div class="info-text">Beeinflusst die Unschärfe bei Fehlsichtigkeit (20cm=Handy, 50-80cm=Desktop)</div>
-        </div>
-
-        <div class="control-group">
-            <label>Seiten-Zoom</label>
-            <input type="range" id="page-zoom" min="100" max="800" step="50" value="100">
-            <div class="value-display">Zoom: <span id="zoom-value">100</span>%</div>
-            <div class="info-text">Vergrößert die gesamte Seite - Demonstriert Hilfsmittel für Sehschwache</div>
-        </div>
-
-        <div class="control-group">
-            <label>
-                <input type="checkbox" id="protanopia"> Protanopie (Rotschwäche)
-            </label>
-            <label>
-                <input type="checkbox" id="deuteranopia"> Deuteranopie (Grünschwäche)
-            </label>
-            <label>
-                <input type="checkbox" id="tritanopia"> Tritanopie (Blauschwäche)
-            </label>
-            <label>
-                <input type="checkbox" id="achromatopsia"> Achromatopsie (Farbenblind)
-            </label>
-        </div>
-
-        <div class="control-group">
-            <label>Kurzsichtigkeit (Myopie)</label>
-            <input type="checkbox" id="myopia-enable">
-            <input type="range" id="myopia" min="0" max="10" step="0.5" value="0">
-            <div class="value-display">Dioptrien: <span id="myopia-value">0.0</span> | Visus: <span id="myopia-visus">1.0</span></div>
-            <div class="info-text">Fernsicht verschwommen</div>
-        </div>
-
-        <div class="control-group">
-            <label>Weitsichtigkeit (Hyperopie)</label>
-            <input type="checkbox" id="hyperopia-enable">
-            <input type="range" id="hyperopia" min="0" max="8" step="0.5" value="0">
-            <div class="value-display">Dioptrien: <span id="hyperopia-value">0.0</span> | Visus: <span id="hyperopia-visus">1.0</span></div>
-            <div class="info-text">Nahsicht verschwommen</div>
-        </div>
-
-        <div class="control-group">
-            <label>Tunnelblick (Gesichtsfeldausfall peripher)</label>
-            <input type="checkbox" id="tunnel-enable">
-            <input type="range" id="tunnel" min="5" max="50" step="5" value="50">
-            <div class="value-display">Sichtfeld-Radius: <span id="tunnel-value">50</span>%</div>
-            <div class="info-text">Nur zentrales Sehen erhalten, Peripherie schwarz (z.B. Glaukom)</div>
-        </div>
-
-        <div class="control-group">
-            <label>Makuladegeneration (zentraler Ausfall)</label>
-            <input type="checkbox" id="macular-enable">
-            <input type="range" id="macular" min="0" max="100" step="10" value="0">
-            <div class="value-display">Intensität: <span id="macular-value">0</span>%</div>
-            <div class="info-text">Zentrales Sehen ausgefallen, nur Peripherie funktioniert</div>
-        </div>
-
-        <button class="reset-btn" onclick="resetAll()">Alle zurücksetzen</button>
-    </div>
-</div>
-
-<script>
-    const content = document.getElementById('example-content');
-    const overlay = document.getElementById('effect-overlay');
-    const panel = document.getElementById('control-panel');
-    const panelHeader = document.getElementById('panel-header');
-    
-    // Globale Variable für Zoom-Faktor
-    let currentZoom = 1;
-    let viewingDistance = 50; // in cm
-    
-    // Auf/Zuklappen
-    function togglePanel() {
-        panel.classList.toggle('collapsed');
-    }
-
-    // Hochkontrast-Modus
-    function toggleHighContrast() {
-        document.body.classList.toggle('high-contrast');
-    }
-
-    // Visus-Berechnung basierend auf Dioptrien und Entfernung (physikalisch korrekter)
-    function calculateVisus(diopters, distanceCm) {
-        if (diopters === 0) return 1.0;
-        
-        // Fernpunkt in Metern: 1/Dioptrien
-        const farPoint = 1 / Math.abs(diopters); // in Metern
-        const distanceM = distanceCm / 100;
-        
-        // Für Myopie (Kurzsichtigkeit): gut in der Nähe, schlecht in der Ferne
-        // Für Hyperopie (Weitsichtigkeit): schlecht in der Nähe, besser in der Ferne
-        
-        let visus;
-        if (diopters > 0) {
-            // Hyperopie: Je näher desto schlechter
-            const defocus = Math.abs(diopters * distanceM);
-            visus = Math.max(0.05, 1.0 / (1 + defocus * 2));
-        } else {
-            // Myopie: Scharf bis zum Fernpunkt, dann unscharf
-            if (distanceM <= farPoint) {
-                // Innerhalb des Fernpunkts: gutes Sehen
-                visus = 1.0;
-            } else {
-                // Außerhalb des Fernpunkts: unscharf
-                const defocus = Math.abs((1/distanceM) - diopters);
-                visus = Math.max(0.05, 1.0 / (1 + defocus * 3));
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=3.0, user-scalable=yes"
+        />
+        <title>Visus-Simulator</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                -webkit-tap-highlight-color: transparent;
             }
-        }
-        
-        return visus.toFixed(2);
-    }
-    
-    // Blur-Berechnung basierend auf Zerstreuungskreis (Circle of Confusion)
-    function calculateBlur(diopters, distanceCm, isMyopia) {
-        if (diopters === 0) return 0;
-        
-        const distanceM = distanceCm / 100;
-        const pupilDiameter = 0.004; // 4mm Pupille bei normaler Beleuchtung
-        
-        if (isMyopia) {
-            // Myopie: Fernpunkt in Metern
-            const farPoint = 1 / Math.abs(diopters);
-            
-            if (distanceM <= farPoint) {
-                // Innerhalb des Fernpunkts: scharf
-                return 0;
-            } else {
-                // Außerhalb: Zerstreuungskreis wächst
-                const defocus = Math.abs((1/distanceM) - diopters);
-                // CoC in Metern auf der Netzhaut, umgerechnet in Pixel (approximiert)
-                const coc = pupilDiameter * defocus * distanceM * distanceM;
-                // Umrechnung in wahrgenommene Pixel-Unschärfe (Faktor 3000 empirisch)
-                return coc * 3000;
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                overflow-x: hidden;
+                transition: background-color 0.3s, color 0.3s;
             }
-        } else {
-            // Hyperopie: immer Akkommodationsbedarf in der Nähe
-            const defocus = diopters * distanceM;
-            const coc = pupilDiameter * defocus * distanceM;
-            return coc * 3000;
-        }
-    }
 
-    // Farbenfehlsichtigkeit Filter
-    const colorFilters = {
-        protanopia: 'url(#protanopia-filter)',
-        deuteranopia: 'url(#deuteranopia-filter)',
-        tritanopia: 'url(#tritanopia-filter)',
-        achromatopsia: 'grayscale(100%)'
-    };
+            body.high-contrast {
+                background-color: #000000;
+                color: #ffffff;
+            }
 
-    // SVG Filter für Farbenfehlsichtigkeit
-    const svgFilters = `
+            body.high-contrast #example-content h1,
+            body.high-contrast #example-content h2,
+            body.high-contrast #example-content p {
+                color: #ffffff;
+            }
+
+            body.high-contrast .color-samples {
+                border: 2px solid #ffffff;
+                padding: 10px;
+            }
+
+            body.high-contrast .image-sample {
+                border: 3px solid #ffff00;
+            }
+
+            #example-content {
+                padding: 40px 20px;
+                max-width: 1200px;
+                margin: 0 auto;
+                transition: filter 0.3s ease;
+            }
+
+            #example-content h1 {
+                color: #2c3e50;
+                margin-bottom: 20px;
+                font-size: clamp(24px, 5vw, 32px);
+            }
+
+            #example-content h2 {
+                color: #34495e;
+                margin-top: 30px;
+                margin-bottom: 15px;
+                font-size: clamp(18px, 4vw, 24px);
+            }
+
+            #example-content p {
+                line-height: 1.8;
+                margin-bottom: 15px;
+                color: #34495e;
+            }
+
+            .color-samples {
+                display: flex;
+                gap: 15px;
+                margin: 30px 0;
+                flex-wrap: wrap;
+            }
+
+            .color-box {
+                width: 80px;
+                height: 80px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-weight: bold;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+                font-size: 14px;
+            }
+
+            .image-sample {
+                width: 100%;
+                max-width: 600px;
+                height: 250px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 12px;
+                margin: 20px 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 20px;
+            }
+
+            #control-panel {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: rgba(255, 255, 255, 0.98);
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                max-width: 340px;
+                z-index: 1000;
+                backdrop-filter: blur(10px);
+                transition: all 0.3s ease;
+            }
+
+            #control-panel.collapsed {
+                max-height: 60px;
+                overflow: hidden;
+            }
+
+            body.high-contrast #control-panel {
+                background: rgba(0, 0, 0, 0.98);
+                border: 3px solid #ffff00;
+            }
+
+            body.high-contrast #control-panel label,
+            body.high-contrast #control-panel .panel-header,
+            body.high-contrast #control-panel .value-display {
+                color: #ffffff;
+            }
+
+            body.high-contrast .control-group {
+                background: #1a1a1a;
+                border: 1px solid #ffff00;
+            }
+
+            .panel-header {
+                font-weight: bold;
+                padding: 15px;
+                color: #2c3e50;
+                cursor: move;
+                touch-action: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                user-select: none;
+                border-bottom: 2px solid #3498db;
+            }
+
+            .panel-header-text {
+                pointer-events: none;
+            }
+
+            .toggle-btn {
+                background: #3498db;
+                color: white;
+                border: none;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+                transition: transform 0.3s ease, background 0.2s;
+                flex-shrink: 0;
+                touch-action: manipulation;
+            }
+
+            .toggle-btn:hover {
+                background: #2980b9;
+            }
+
+            .toggle-btn:active {
+                transform: scale(0.95);
+            }
+
+            #control-panel.collapsed .toggle-btn {
+                transform: rotate(180deg);
+            }
+
+            .panel-content {
+                padding: 15px;
+                max-height: calc(90vh - 80px);
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .control-group {
+                margin-bottom: 15px;
+                padding: 10px;
+                background: #f8f9fa;
+                border-radius: 6px;
+            }
+
+            .control-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-size: 13px;
+                font-weight: 600;
+                color: #495057;
+                cursor: pointer;
+            }
+
+            .info-text {
+                font-size: 11px;
+                color: #6c757d;
+                font-style: italic;
+                margin-top: 5px;
+                line-height: 1.3;
+            }
+
+            body.high-contrast .info-text {
+                color: #cccccc;
+            }
+
+            input[type="range"] {
+                width: 100%;
+                margin: 5px 0;
+                -webkit-appearance: none;
+                appearance: none;
+                height: 8px;
+                border-radius: 5px;
+                background: #d3d3d3;
+                outline: none;
+            }
+
+            input[type="range"]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: #3498db;
+                cursor: pointer;
+            }
+
+            input[type="range"]::-moz-range-thumb {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: #3498db;
+                cursor: pointer;
+                border: none;
+            }
+
+            input[type="checkbox"] {
+                margin-right: 8px;
+                width: 18px;
+                height: 18px;
+                cursor: pointer;
+            }
+
+            .value-display {
+                font-size: 12px;
+                color: #6c757d;
+                margin-top: 3px;
+            }
+
+            .reset-btn,
+            .contrast-btn {
+                width: 100%;
+                padding: 10px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 600;
+                margin-top: 10px;
+                font-size: 14px;
+                touch-action: manipulation;
+                transition: all 0.2s;
+            }
+
+            .reset-btn {
+                background: #e74c3c;
+                color: white;
+            }
+
+            .reset-btn:hover {
+                background: #c0392b;
+            }
+
+            .reset-btn:active {
+                transform: scale(0.98);
+            }
+
+            .contrast-btn {
+                background: #000000;
+                color: #ffff00;
+                border: 2px solid #ffff00;
+            }
+
+            .contrast-btn:hover {
+                background: #ffff00;
+                color: #000000;
+            }
+
+            .contrast-btn:active {
+                transform: scale(0.98);
+            }
+
+            #effect-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 999;
+            }
+
+            /* Styles für Light-Condition Select */
+            select {
+                font-family: inherit;
+                background-color: white;
+                transition: border-color 0.2s ease;
+            }
+
+            select:focus {
+                outline: none;
+                border-color: #3498db;
+                box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            }
+
+            select:hover {
+                border-color: #999;
+            }
+
+            body.high-contrast select {
+                background-color: #000;
+                color: #fff;
+                border-color: #ffff00;
+            }
+
+            body.high-contrast select option {
+                background-color: #000;
+                color: #fff;
+            }
+
+            /* Glare-Effekt Overlay */
+            .glare-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 998;
+            }
+
+            /* Night/Bright Overlays */
+            .light-condition-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 997;
+                transition: opacity 0.3s ease;
+            }
+
+            @media (max-width: 768px) {
+                #control-panel {
+                    right: 10px;
+                    top: 10px;
+                    max-width: calc(100vw - 20px);
+                }
+
+                .color-box {
+                    width: 70px;
+                    height: 70px;
+                    font-size: 12px;
+                }
+
+                #example-content {
+                    padding: 20px 15px;
+                }
+            }
+
+            /* Optimierung für Mouse-Tracking */
+            #tunnel-overlay,
+            #macular-overlay-outer {
+                will-change: background, transform;
+            }
+
+            #macular-overlay-outer > div {
+                will-change: left, top;
+            }
+
+            /* Smooth Mouse-Tracking */
+            .macular-spot {
+                will-change: left, top;
+            }
+
+            #tunnel-overlay {
+                will-change: background;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="effect-overlay"></div>
+
+        <div id="example-content">
+            <h1>Beispiel-Webseite für Visus-Simulation</h1>
+
+            <p>
+                Dies ist eine Beispielseite, um verschiedene Seheinschränkungen
+                zu simulieren. Der Text sollte in verschiedenen Größen und
+                Kontrasten lesbar sein.
+            </p>
+
+            <h2>Farbproben zur Überprüfung von Farbenfehlsichtigkeit</h2>
+            <div class="color-samples">
+                <div
+                    class="color-box"
+                    style="background: #e74c3c"
+                >
+                    Rot
+                </div>
+                <div
+                    class="color-box"
+                    style="background: #2ecc71"
+                >
+                    Grün
+                </div>
+                <div
+                    class="color-box"
+                    style="background: #3498db"
+                >
+                    Blau
+                </div>
+                <div
+                    class="color-box"
+                    style="background: #f39c12"
+                >
+                    Orange
+                </div>
+                <div
+                    class="color-box"
+                    style="background: #9b59b6"
+                >
+                    Lila
+                </div>
+                <div
+                    class="color-box"
+                    style="background: #1abc9c"
+                >
+                    Türkis
+                </div>
+            </div>
+
+            <div class="image-sample">Beispiel-Bildbereich</div>
+
+            <h2>Textbeispiel in verschiedenen Größen</h2>
+            <p style="font-size: 20px">
+                Große Schrift – sollte auch bei Kurzsichtigkeit erkennbar sein
+            </p>
+            <p style="font-size: 16px">
+                Mittlere Schrift – Standardgröße für Fließtext
+            </p>
+            <p style="font-size: 12px">
+                Kleine Schrift – kann bei Seheinschränkungen schwer lesbar sein
+            </p>
+            <p style="font-size: 10px">
+                Sehr kleine Schrift – Test für Detailerkennung
+            </p>
+
+            <h2>Kontrastbeispiele</h2>
+            <p style="background: #f0f0f0; padding: 10px; border-radius: 4px">
+                Grauer Hintergrund mit schwarzem Text – mittlerer Kontrast
+            </p>
+            <p
+                style="
+                    background: #333;
+                    color: white;
+                    padding: 10px;
+                    border-radius: 4px;
+                "
+            >
+                Dunkler Hintergrund mit weißem Text – hoher Kontrast
+            </p>
+
+            <h2>Orientierungstest</h2>
+            <p>
+                Bei Makuladegeneration können Sie diesen Text in der Peripherie
+                noch wahrnehmen, aber nicht direkt lesen. Bei Tunnelblick ist es
+                genau umgekehrt - Sie sehen nur den Bereich, auf den Sie direkt
+                schauen.
+            </p>
+        </div>
+
+        <div id="control-panel">
+            <div
+                class="panel-header"
+                id="panel-header"
+            >
+                <span class="panel-header-text">👁️ Visus-Simulator</span>
+                <button
+                    class="toggle-btn"
+                    id="toggle-btn"
+                    onclick="togglePanel()"
+                >
+                    ▼
+                </button>
+            </div>
+
+            <div
+                class="panel-content"
+                id="panel-content"
+            >
+                <button
+                    class="contrast-btn"
+                    onclick="toggleHighContrast()"
+                >
+                    🔲 Hochkontrast-Modus
+                </button>
+
+                <div class="control-group">
+                    <label>Betrachtungsabstand zum Bildschirm</label>
+                    <input
+                        type="range"
+                        id="viewing-distance"
+                        min="20"
+                        max="80"
+                        step="5"
+                        value="60"
+                    />
+                    <div class="value-display">
+                        Abstand: <span id="distance-value">60</span> cm
+                    </div>
+                    <div class="info-text">
+                        Beeinflusst die Unschärfe bei Fehlsichtigkeit
+                        (20cm=Handy, 50-80cm=Desktop)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Seiten-Zoom</label>
+                    <input
+                        type="range"
+                        id="page-zoom"
+                        min="50"
+                        max="800"
+                        step="10"
+                        value="100"
+                    />
+                    <div class="value-display">
+                        Zoom: <span id="zoom-value">100</span>%
+                    </div>
+                    <div class="info-text">
+                        Vergrößert die gesamte Seite - Demonstriert Hilfsmittel
+                        für Sehschwache
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="protanopia"
+                        />
+                        Protanopie (Rotschwäche)
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="deuteranopia"
+                        />
+                        Deuteranopie (Grünschwäche)
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="tritanopia"
+                        />
+                        Tritanopie (Blauschwäche)
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="achromatopsia"
+                        />
+                        Achromatopsie (Farbenblind)
+                    </label>
+                </div>
+
+                <div class="control-group">
+                    <label>Kurzsichtigkeit (Myopie)</label>
+                    <input
+                        type="checkbox"
+                        id="myopia-enable"
+                    />
+                    <input
+                        type="range"
+                        id="myopia"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value="0"
+                    />
+                    <div class="value-display">
+                        Dioptrien: <span id="myopia-value">0.0</span> | Visus:
+                        <span id="myopia-visus">1.0</span>
+                    </div>
+                    <div class="info-text">Fernsicht verschwommen</div>
+                </div>
+
+                <div class="control-group">
+                    <label>Weitsichtigkeit (Hyperopie)</label>
+                    <input
+                        type="checkbox"
+                        id="hyperopia-enable"
+                    />
+                    <input
+                        type="range"
+                        id="hyperopia"
+                        min="0"
+                        max="8"
+                        step="0.5"
+                        value="0"
+                    />
+                    <div class="value-display">
+                        Dioptrien: <span id="hyperopia-value">0.0</span> |
+                        Visus: <span id="hyperopia-visus">1.0</span>
+                    </div>
+                    <div class="info-text">Nahsicht verschwommen</div>
+                </div>
+
+                <div class="control-group">
+                    <label>Tunnelblick (Gesichtsfeldausfall peripher)</label>
+                    <input
+                        type="checkbox"
+                        id="tunnel-enable"
+                    />
+                    <input
+                        type="range"
+                        id="tunnel"
+                        min="5"
+                        max="50"
+                        step="5"
+                        value="50"
+                    />
+                    <div class="value-display">
+                        Sichtfeld-Radius: <span id="tunnel-value">50</span>%
+                    </div>
+                    <div class="info-text">
+                        Nur zentrales Sehen erhalten, Peripherie schwarz (z.B.
+                        Glaukom)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Makuladegeneration (zentraler Ausfall)</label>
+                    <input
+                        type="checkbox"
+                        id="macular-enable"
+                    />
+                    <input
+                        type="range"
+                        id="macular"
+                        min="0"
+                        max="100"
+                        step="10"
+                        value="0"
+                    />
+                    <div class="value-display">
+                        Intensität: <span id="macular-value">0</span>%
+                    </div>
+                    <div class="info-text">
+                        Zentrales Sehen ausgefallen, nur Peripherie funktioniert
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Helligkeits- & Kontrastempfindlichkeit</label>
+                    <input
+                        type="checkbox"
+                        id="brightness-contrast-enable"
+                    />
+
+                    <div style="margin-top: 10px">
+                        <label style="font-size: 12px"
+                            >Helligkeitsreduktion</label
+                        >
+                        <input
+                            type="range"
+                            id="brightness-reduction"
+                            min="0"
+                            max="100"
+                            step="5"
+                            value="0"
+                        />
+                        <div class="value-display">
+                            Reduktion: <span id="brightness-value">0</span>%
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 10px">
+                        <label style="font-size: 12px">Kontrastreduktion</label>
+                        <input
+                            type="range"
+                            id="contrast-reduction"
+                            min="0"
+                            max="100"
+                            step="5"
+                            value="0"
+                        />
+                        <div class="value-display">
+                            Reduktion: <span id="contrast-value">0</span>%
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 10px">
+                        <label style="font-size: 12px"
+                            >Blendempfindlichkeit</label
+                        >
+                        <input
+                            type="range"
+                            id="glare-sensitivity"
+                            min="0"
+                            max="100"
+                            step="10"
+                            value="0"
+                        />
+                        <div class="value-display">
+                            Intensität: <span id="glare-value">0</span>%
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 10px">
+                        <label style="font-size: 12px">Lichtverhältnisse</label>
+                        <select
+                            id="light-condition"
+                            style="
+                                width: 100%;
+                                padding: 8px;
+                                border-radius: 4px;
+                                border: 1px solid #ddd;
+                                font-size: 13px;
+                                cursor: pointer;
+                            "
+                        >
+                            <option value="normal">Normal (Tag)</option>
+                            <option value="night">
+                                Nacht (Nachtblindheit)
+                            </option>
+                            <option value="bright">Grell (Tagblindheit)</option>
+                            <option value="low-light">Dämmerlicht</option>
+                        </select>
+                    </div>
+
+                    <div
+                        class="info-text"
+                        style="margin-top: 8px"
+                    >
+                        Simuliert Katarakt, Nachtblindheit, Blendempfindlichkeit
+                        und reduzierte Kontrastsensitivität
+                    </div>
+                </div>
+
+                <button
+                    class="reset-btn"
+                    onclick="resetAll()"
+                >
+                    Alle zurücksetzen
+                </button>
+            </div>
+        </div>
+
+        <script>
+            const content = document.getElementById("example-content")
+            const overlay = document.getElementById("effect-overlay")
+            const panel = document.getElementById("control-panel")
+            const panelHeader = document.getElementById("panel-header")
+
+            // Globale Variable für Zoom-Faktor
+            let currentZoom = 1
+            let viewingDistance = 50 // in cm
+
+            // Auf/Zuklappen
+            function togglePanel() {
+                panel.classList.toggle("collapsed")
+            }
+
+            // Hochkontrast-Modus
+            function toggleHighContrast() {
+                document.body.classList.toggle("high-contrast")
+            }
+
+            /**
+             * Konvertiert Dioptrien zu Visus (Sehschärfe)
+             * @param {number} diopt - Dioptrienwert (negativ für Myopie)
+             * @returns {number} Visus-Wert zwischen 0.05 und 1.0
+             */
+            function diopterToVisus(diopt) {
+                const absDiopt = Math.abs(diopt)
+
+                if (absDiopt === 0) return 1.0
+
+                // Medizinisch korrekte Näherungsformel
+                // Basierend auf: Visus = 1 / (1 + 0.05 * D)
+                let visus = 1 / (1 + 0.05 * absDiopt)
+
+                // Auf realistischen Bereich begrenzen
+                return Math.max(0.05, Math.min(1.0, visus))
+            }
+
+            /**
+             * Konvertiert Visus zu Dioptrien
+             * @param {number} visus - Visus-Wert zwischen 0.05 und 1.0
+             * @returns {number} Dioptrienwert (negativ)
+             */
+            function visusToDiopter(visus) {
+                if (visus >= 1.0) return 0
+
+                // Umkehrformel: D = (1/Visus - 1) / 0.05
+                const diopt = (1 / visus - 1) / 0.05
+
+                // Auf realistischen Bereich begrenzen (-20 bis 0)
+                return -Math.min(20, Math.max(0, diopt))
+            }
+
+            /**
+             * Formatiert Visus-Wert für Anzeige
+             * @param {number} visus - Visus-Wert
+             * @returns {string} Formatierter Visus mit Beschreibung
+             */
+            function formatVisus(visus) {
+                const visusPercent = Math.round(visus * 100)
+                let category = ""
+
+                if (visus >= 1.0) {
+                    category = "Normal"
+                } else if (visus >= 0.8) {
+                    category = "Leicht eingeschränkt"
+                } else if (visus >= 0.5) {
+                    category = "Mäßig eingeschränkt"
+                } else if (visus >= 0.3) {
+                    category = "Stark eingeschränkt"
+                } else if (visus >= 0.1) {
+                    category = "Hochgradig eingeschränkt"
+                } else {
+                    category = "Schwer sehbehindert"
+                }
+
+                return `${visus.toFixed(2)} (${visusPercent}%) - ${category}`
+            }
+
+            // Visus-Berechnung basierend auf Dioptrien und Entfernung (physikalisch korrekter)
+            function calculateVisus(diopters, distanceCm) {
+                if (diopters === 0) return 1.0
+
+                // Fernpunkt in Metern: 1/Dioptrien
+                const farPoint = 1 / Math.abs(diopters) // in Metern
+                const distanceM = distanceCm / 100
+
+                // Für Myopie (Kurzsichtigkeit): gut in der Nähe, schlecht in der Ferne
+                // Für Hyperopie (Weitsichtigkeit): schlecht in der Nähe, besser in der Ferne
+
+                let visus
+                if (diopters > 0) {
+                    // Hyperopie: Je näher desto schlechter
+                    const defocus = Math.abs(diopters * distanceM)
+                    visus = Math.max(0.05, 1.0 / (1 + defocus * 2))
+                } else {
+                    // Myopie: Scharf bis zum Fernpunkt, dann unscharf
+                    if (distanceM <= farPoint) {
+                        // Innerhalb des Fernpunkts: gutes Sehen
+                        visus = 1.0
+                    } else {
+                        // Außerhalb des Fernpunkts: unscharf
+                        const defocus = Math.abs(1 / distanceM - diopters)
+                        visus = Math.max(0.05, 1.0 / (1 + defocus * 3))
+                    }
+                }
+
+                return visus.toFixed(2)
+            }
+
+            // Blur-Berechnung basierend auf Zerstreuungskreis (Circle of Confusion)
+            function calculateBlur(diopters, distanceCm, isMyopia) {
+                if (diopters === 0) return 0
+
+                const distanceM = distanceCm / 100
+                const pupilDiameter = 0.004 // 4mm Pupille bei normaler Beleuchtung
+
+                if (isMyopia) {
+                    // Myopie: Fernpunkt in Metern
+                    const farPoint = 1 / Math.abs(diopters)
+
+                    if (distanceM <= farPoint) {
+                        // Innerhalb des Fernpunkts: scharf
+                        return 0
+                    } else {
+                        // Außerhalb: Zerstreuungskreis wächst
+                        const defocus = Math.abs(1 / distanceM - diopters)
+                        // CoC in Metern auf der Netzhaut, umgerechnet in Pixel (approximiert)
+                        const coc =
+                            pupilDiameter * defocus * distanceM * distanceM
+                        // Umrechnung in wahrgenommene Pixel-Unschärfe (Faktor 3000 empirisch)
+                        return coc * 3000
+                    }
+                } else {
+                    // Hyperopie: immer Akkommodationsbedarf in der Nähe
+                    const defocus = diopters * distanceM
+                    const coc = pupilDiameter * defocus * distanceM
+                    return coc * 3000
+                }
+            }
+
+            // Farbenfehlsichtigkeit Filter
+            const colorFilters = {
+                protanopia: "url(#protanopia-filter)",
+                deuteranopia: "url(#deuteranopia-filter)",
+                tritanopia: "url(#tritanopia-filter)",
+                achromatopsia: "grayscale(100%)",
+            }
+
+            // SVG Filter für Farbenfehlsichtigkeit
+            const svgFilters = `
         <svg style="position: absolute; width: 0; height: 0;">
             <defs>
                 <filter id="protanopia-filter">
@@ -566,251 +947,893 @@
                 </filter>
             </defs>
         </svg>
-    `;
-    document.body.insertAdjacentHTML('afterbegin', svgFilters);
+    `
+            document.body.insertAdjacentHTML("afterbegin", svgFilters)
 
-    function applyEffects() {
-        let filters = [];
-        let overlayHTML = '';
+            function applyEffects() {
+                let filters = []
+                let overlayHTML = ""
 
-        // Farbenfehlsichtigkeit
-        ['protanopia', 'deuteranopia', 'tritanopia', 'achromatopsia'].forEach(type => {
-            if (document.getElementById(type).checked) {
-                filters.push(colorFilters[type]);
+                // Farbenfehlsichtigkeit
+                ;[
+                    "protanopia",
+                    "deuteranopia",
+                    "tritanopia",
+                    "achromatopsia",
+                ].forEach((type) => {
+                    if (document.getElementById(type).checked) {
+                        filters.push(colorFilters[type])
+                    }
+                })
+
+                // Helligkeits- & Kontrastempfindlichkeit
+                if (
+                    document.getElementById("brightness-contrast-enable")
+                        .checked
+                ) {
+                    const brightnessReduction = parseFloat(
+                        document.getElementById("brightness-reduction").value
+                    )
+                    const contrastReduction = parseFloat(
+                        document.getElementById("contrast-reduction").value
+                    )
+                    const glareSensitivity = parseFloat(
+                        document.getElementById("glare-sensitivity").value
+                    )
+                    const lightCondition =
+                        document.getElementById("light-condition").value
+
+                    // Helligkeit anpassen (0-100% Reduktion)
+                    if (brightnessReduction > 0) {
+                        const brightness = 100 - brightnessReduction
+                        filters.push(`brightness(${brightness}%)`)
+                    }
+
+                    // Kontrast anpassen (0-100% Reduktion)
+                    if (contrastReduction > 0) {
+                        const contrast = 100 - contrastReduction
+                        filters.push(`contrast(${contrast}%)`)
+                    }
+
+                    // Blendempfindlichkeit (Glare-Effekt)
+                    if (glareSensitivity > 0) {
+                        const glareIntensity = glareSensitivity / 100
+                        overlayHTML += `
+                            <div class="glare-overlay" style="
+                                background: radial-gradient(
+                                    circle at 50% 20%,
+                                    rgba(255, 255, 255, ${
+                                        glareIntensity * 0.8
+                                    }) 0%,
+                                    rgba(255, 255, 255, ${
+                                        glareIntensity * 0.5
+                                    }) 15%,
+                                    rgba(255, 255, 220, ${
+                                        glareIntensity * 0.3
+                                    }) 30%,
+                                    transparent 60%
+                                );
+                                filter: blur(${glareSensitivity / 5}px);
+                            "></div>
+                        `
+
+                        // Zusätzlicher diffuser Glare
+                        overlayHTML += `
+                            <div class="glare-overlay" style="
+                                background: rgba(255, 255, 255, ${
+                                    glareIntensity * 0.2
+                                });
+                                backdrop-filter: blur(${
+                                    glareSensitivity / 10
+                                }px);
+                            "></div>
+                        `
+                    }
+
+                    // Lichtverhältnisse
+                    switch (lightCondition) {
+                        case "night":
+                            // Nachtblindheit: Stark reduzierte Helligkeit, erhöhtes Rauschen
+                            filters.push(
+                                "brightness(30%)",
+                                "contrast(60%)",
+                                "saturate(40%)"
+                            )
+                            overlayHTML += `
+                                <div class="light-condition-overlay" style="
+                                    background: 
+                                        repeating-linear-gradient(
+                                            0deg,
+                                            transparent,
+                                            transparent 2px,
+                                            rgba(0, 0, 0, 0.03) 2px,
+                                            rgba(0, 0, 0, 0.03) 4px
+                                    ),
+                                    repeating-linear-gradient(
+                                        90deg,
+                                        transparent,
+                                        transparent 2px,
+                                        rgba(0, 0, 0, 0.03) 2px,
+                                        rgba(0, 0, 0, 0.03) 4px
+                                    ),
+                                    rgba(0, 0, 30, 0.5);
+                                "></div>
+                            `
+                            break
+
+                        case "bright":
+                            // Tagblindheit: Überbelichtung, starke Blendung
+                            filters.push(
+                                "brightness(180%)",
+                                "contrast(40%)",
+                                "saturate(150%)"
+                            )
+                            overlayHTML += `
+                                <div class="light-condition-overlay" style="
+                                    background: radial-gradient(
+                                        ellipse at center,
+                                        rgba(255, 255, 255, 0.6) 0%,
+                                        rgba(255, 255, 220, 0.4) 40%,
+                                        rgba(255, 255, 200, 0.2) 70%,
+                                        transparent 100%
+                                    );
+                                    backdrop-filter: blur(1px);
+                                "></div>
+                            `
+                            break
+
+                        case "low-light":
+                            // Dämmerlicht: Reduzierte Farbwahrnehmung
+                            filters.push(
+                                "brightness(50%)",
+                                "contrast(70%)",
+                                "saturate(30%)"
+                            )
+                            overlayHTML += `
+                                <div class="light-condition-overlay" style="
+                                    background: 
+                                        linear-gradient(
+                                            180deg,
+                                            rgba(30, 30, 50, 0.3) 0%,
+                                            rgba(20, 20, 40, 0.4) 100%
+                                    );
+                                "></div>
+                            `
+                            break
+
+                        case "normal":
+                        default:
+                            // Normale Lichtverhältnisse
+                            break
+                    }
+                }
+
+                // Kurzsichtigkeit - Physikalisch korrekt mit Abstand
+                if (document.getElementById("myopia-enable").checked) {
+                    const diopters = parseFloat(
+                        document.getElementById("myopia").value
+                    )
+                    const baseBlur = calculateBlur(
+                        diopters,
+                        viewingDistance,
+                        true
+                    )
+                    const adjustedBlur = baseBlur / currentZoom
+                    if (adjustedBlur > 0.1) {
+                        filters.push(`blur(${adjustedBlur}px)`)
+                    }
+                }
+
+                // Weitsichtigkeit - Physikalisch korrekt mit Abstand
+                if (document.getElementById("hyperopia-enable").checked) {
+                    const diopters = parseFloat(
+                        document.getElementById("hyperopia").value
+                    )
+                    const baseBlur = calculateBlur(
+                        diopters,
+                        viewingDistance,
+                        false
+                    )
+                    const adjustedBlur = baseBlur / currentZoom
+                    if (adjustedBlur > 0.1) {
+                        filters.push(`blur(${adjustedBlur}px)`)
+                    }
+                }
+
+                content.style.filter = filters.join(" ")
+
+                // Tunnelblick - MIT MAUSVERFOLGUNG ✨
+                if (document.getElementById("tunnel-enable").checked) {
+                    const value = document.getElementById("tunnel").value
+                    isMouseTracking = true // Mouse-Tracking aktivieren
+
+                    overlayHTML += `
+                        <div id="tunnel-overlay" style="
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: radial-gradient(circle at ${mouseX}% ${mouseY}%, 
+                                transparent 0%, 
+                                transparent ${value}%, 
+                                rgba(0,0,0,1) ${parseFloat(value) + 5}%);
+                            pointer-events: none;
+                            transition: background 0.05s linear;
+                        "></div>
+                    `
+                } else if (!document.getElementById("macular-enable").checked) {
+                    // Nur deaktivieren wenn beide aus sind
+                    isMouseTracking = false
+                }
+
+                // Makuladegeneration - MIT MAUSVERFOLGUNG ✨
+                if (document.getElementById("macular-enable").checked) {
+                    const value = document.getElementById("macular").value
+                    const opacity = value / 100
+                    const blurAmount = 15 + value / 10
+                    isMouseTracking = true // Mouse-Tracking aktivieren
+
+                    overlayHTML += `
+                        <div id="macular-overlay-outer" style="
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            pointer-events: none;
+                        ">
+                            <div class="macular-spot" style="
+                                position: absolute;
+                                left: ${mouseX}%;
+                                top: ${mouseY}%;
+                                transform: translate(-50%, -50%);
+                                width: 35vw;
+                                height: 35vh;
+                                background: radial-gradient(circle at center, 
+                                    rgba(150,150,150,${opacity * 0.9}) 0%, 
+                                    rgba(100,100,100,${opacity * 0.7}) 30%,
+                                    rgba(80,80,80,${opacity * 0.4}) 60%,
+                                    transparent 100%);
+                                filter: blur(${blurAmount}px);
+                                pointer-events: none;
+                                transition: left 0.05s linear, top 0.05s linear;
+                            "></div>
+                            <div class="macular-spot" style="
+                                position: absolute;
+                                left: ${mouseX}%;
+                                top: ${mouseY}%;
+                                transform: translate(-50%, -50%);
+                                width: 25vw;
+                                height: 25vh;
+                                background: rgba(120,120,100,${opacity * 0.5});
+                                border-radius: 50%;
+                                filter: blur(${blurAmount * 1.5}px);
+                                pointer-events: none;
+                                transition: left 0.05s linear, top 0.05s linear;
+                            "></div>
+                        </div>
+                    `
+                } else if (!document.getElementById("tunnel-enable").checked) {
+                    // Nur deaktivieren wenn beide aus sind
+                    isMouseTracking = false
+                }
+
+                overlay.innerHTML = overlayHTML
             }
-        });
 
-        // Kurzsichtigkeit - Physikalisch korrekt mit Abstand
-        if (document.getElementById('myopia-enable').checked) {
-            const diopters = parseFloat(document.getElementById('myopia').value);
-            const baseBlur = calculateBlur(diopters, viewingDistance, true);
-            const adjustedBlur = baseBlur / currentZoom;
-            if (adjustedBlur > 0.1) {
-                filters.push(`blur(${adjustedBlur}px)`);
+            // Event Listeners
+            document
+                .querySelectorAll('input[type="checkbox"], input[type="range"]')
+                .forEach((input) => {
+                    input.addEventListener("change", applyEffects)
+                    input.addEventListener("input", applyEffects)
+                })
+
+            // Werte-Anzeigen aktualisieren
+            document
+                .getElementById("myopia")
+                .addEventListener("input", function () {
+                    const value = parseFloat(this.value)
+                    const visus = diopterToVisus(value) // ✅ Korrekte Funktion verwenden
+
+                    document.getElementById("myopia-value").textContent =
+                        value.toFixed(1)
+                    document.getElementById("myopia-visus").textContent =
+                        visus.toFixed(2)
+                })
+
+            document
+                .getElementById("hyperopia")
+                .addEventListener("input", function () {
+                    const value = parseFloat(this.value)
+                    const visus = diopterToVisus(value) // ✅ Korrekte Funktion verwenden
+
+                    document.getElementById("hyperopia-value").textContent =
+                        value.toFixed(1)
+                    document.getElementById("hyperopia-visus").textContent =
+                        visus.toFixed(2)
+                })
+
+            document
+                .getElementById("tunnel")
+                .addEventListener("input", function () {
+                    document.getElementById("tunnel-value").textContent =
+                        this.value
+                })
+
+            document
+                .getElementById("macular")
+                .addEventListener("input", function () {
+                    document.getElementById("macular-value").textContent =
+                        this.value
+                })
+
+            // ✅ HIER HINZUFÜGEN:
+            document
+                .getElementById("brightness-reduction")
+                .addEventListener("input", function () {
+                    document.getElementById("brightness-value").textContent =
+                        this.value
+                })
+
+            document
+                .getElementById("contrast-reduction")
+                .addEventListener("input", function () {
+                    document.getElementById("contrast-value").textContent =
+                        this.value
+                })
+
+            document
+                .getElementById("glare-sensitivity")
+                .addEventListener("input", function () {
+                    document.getElementById("glare-value").textContent =
+                        this.value
+                })
+
+            document
+                .getElementById("light-condition")
+                .addEventListener("change", applyEffects)
+
+            // Betrachtungsabstand (existierender Code bleibt)
+            document
+                .getElementById("viewing-distance")
+                .addEventListener("input", function () {
+                    viewingDistance = parseFloat(this.value)
+                    document.getElementById("distance-value").textContent =
+                        this.value
+
+                    // Visus-Werte neu berechnen mit korrekter Funktion
+                    const myopiaValue = parseFloat(
+                        document.getElementById("myopia").value
+                    )
+                    const hyperopiaValue = parseFloat(
+                        document.getElementById("hyperopia").value
+                    )
+
+                    document.getElementById("myopia-visus").textContent =
+                        diopterToVisus(myopiaValue).toFixed(2) // ✅ Korrekte Funktion
+                    document.getElementById("hyperopia-visus").textContent =
+                        diopterToVisus(hyperopiaValue).toFixed(2) // ✅ Korrekte Funktion
+
+                    // Effekte neu anwenden mit angepasstem Blur
+                    applyEffects()
+                })
+
+            // Seiten-Zoom
+            document
+                .getElementById("page-zoom")
+                .addEventListener("input", function () {
+                    const value = this.value
+                    document.getElementById("zoom-value").textContent = value
+                    currentZoom = value / 100 // Globale Variable aktualisieren
+                    content.style.transform = `scale(${currentZoom})`
+                    content.style.transformOrigin = "top center"
+                    content.style.width = `${100 / currentZoom}%`
+
+                    // Effekte neu anwenden mit angepasstem Blur
+                    applyEffects()
+                })
+
+            function resetAll() {
+                document
+                    .querySelectorAll('input[type="checkbox"]')
+                    .forEach((cb) => (cb.checked = false))
+                document
+                    .querySelectorAll('input[type="range"]')
+                    .forEach((range) => {
+                        if (range.id === "tunnel") {
+                            range.value = 50
+                        } else if (range.id === "page-zoom") {
+                            range.value = 100
+                        } else {
+                            range.value = 0
+                        }
+                    })
+                document.getElementById("myopia-value").textContent = "0.0"
+                document.getElementById("myopia-visus").textContent = "1.0"
+                document.getElementById("hyperopia-value").textContent = "0.0"
+                document.getElementById("hyperopia-visus").textContent = "1.0"
+                document.getElementById("tunnel-value").textContent = "50"
+                document.getElementById("macular-value").textContent = "0"
+                document.getElementById("zoom-value").textContent = "100"
+                currentZoom = 1 // Globale Variable zurücksetzen
+                content.style.transform = "scale(1)"
+                content.style.width = "100%"
+                document.body.classList.remove("high-contrast")
+
+                // Neue Controls zurücksetzen
+                document.getElementById(
+                    "brightness-contrast-enable"
+                ).checked = false
+                document.getElementById("brightness-reduction").value = 0
+                document.getElementById("brightness-value").textContent = "0"
+                document.getElementById("contrast-reduction").value = 0
+                document.getElementById("contrast-value").textContent = "0"
+                document.getElementById("glare-sensitivity").value = 0
+                document.getElementById("glare-value").textContent = "0"
+                document.getElementById("light-condition").value = "normal"
+
+                applyEffects()
             }
-        }
 
-        // Weitsichtigkeit - Physikalisch korrekt mit Abstand
-        if (document.getElementById('hyperopia-enable').checked) {
-            const diopters = parseFloat(document.getElementById('hyperopia').value);
-            const baseBlur = calculateBlur(diopters, viewingDistance, false);
-            const adjustedBlur = baseBlur / currentZoom;
-            if (adjustedBlur > 0.1) {
-                filters.push(`blur(${adjustedBlur}px)`);
+            // Draggable mit Touch-Support
+            let isDragging = false
+            let currentX, currentY, initialX, initialY
+
+            // Mouse Events
+            panelHeader.addEventListener("mousedown", dragStart)
+            document.addEventListener("mousemove", drag)
+            document.addEventListener("mouseup", dragEnd)
+
+            // Touch Events für iPhone
+            panelHeader.addEventListener("touchstart", touchStart, {
+                passive: false,
+            })
+            document.addEventListener("touchmove", touchDrag, {
+                passive: false,
+            })
+            document.addEventListener("touchend", dragEnd)
+
+            function dragStart(e) {
+                if (e.target.closest(".toggle-btn")) return
+
+                initialX = e.clientX - panel.offsetLeft
+                initialY = e.clientY - panel.offsetTop
+                isDragging = true
             }
-        }
 
-        content.style.filter = filters.join(' ');
+            function touchStart(e) {
+                if (e.target.closest(".toggle-btn")) return
 
-        // Tunnelblick
-        if (document.getElementById('tunnel-enable').checked) {
-            const value = document.getElementById('tunnel').value;
-            overlayHTML += `
-                <div style="
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: radial-gradient(circle at center, 
+                const touch = e.touches[0]
+                initialX = touch.clientX - panel.offsetLeft
+                initialY = touch.clientY - panel.offsetTop
+                isDragging = true
+                e.preventDefault()
+            }
+
+            function drag(e) {
+                if (!isDragging) return
+                e.preventDefault()
+
+                currentX = e.clientX - initialX
+                currentY = e.clientY - initialY
+
+                updatePosition(currentX, currentY)
+            }
+
+            function touchDrag(e) {
+                if (!isDragging) return
+                e.preventDefault()
+
+                const touch = e.touches[0]
+                currentX = touch.clientX - initialX
+                currentY = touch.clientY - initialY
+
+                updatePosition(currentX, currentY)
+            }
+
+            function updatePosition(x, y) {
+                const maxX = window.innerWidth - panel.offsetWidth
+                const maxY = window.innerHeight - panel.offsetHeight
+
+                x = Math.max(0, Math.min(x, maxX))
+                y = Math.max(0, Math.min(y, maxY))
+
+                panel.style.left = x + "px"
+                panel.style.top = y + "px"
+                panel.style.right = "auto"
+            }
+
+            function dragEnd() {
+                isDragging = false
+            }
+
+            // ============================================
+            // LocalStorage - Persistente Einstellungen
+            // ============================================
+
+            const STORAGE_KEY = "visus-simulator-settings"
+
+            console.log("💾 LocalStorage-Modul wird initialisiert...")
+
+            function saveSettings() {
+                const settings = {
+                    protanopia: document.getElementById("protanopia").checked,
+                    deuteranopia:
+                        document.getElementById("deuteranopia").checked,
+                    tritanopia: document.getElementById("tritanopia").checked,
+                    achromatopsia:
+                        document.getElementById("achromatopsia").checked,
+                    myopiaEnable:
+                        document.getElementById("myopia-enable").checked,
+                    hyperopiaEnable:
+                        document.getElementById("hyperopia-enable").checked,
+                    tunnelEnable:
+                        document.getElementById("tunnel-enable").checked,
+                    macularEnable:
+                        document.getElementById("macular-enable").checked,
+                    brightnessContrastEnable: document.getElementById(
+                        "brightness-contrast-enable"
+                    ).checked,
+                    viewingDistance: parseFloat(
+                        document.getElementById("viewing-distance").value
+                    ),
+                    pageZoom: parseFloat(
+                        document.getElementById("page-zoom").value
+                    ),
+                    myopia: parseFloat(document.getElementById("myopia").value),
+                    hyperopia: parseFloat(
+                        document.getElementById("hyperopia").value
+                    ),
+                    tunnel: parseFloat(document.getElementById("tunnel").value),
+                    macular: parseFloat(
+                        document.getElementById("macular").value
+                    ),
+                    brightnessReduction: parseFloat(
+                        document.getElementById("brightness-reduction").value
+                    ),
+                    contrastReduction: parseFloat(
+                        document.getElementById("contrast-reduction").value
+                    ),
+                    glareSensitivity: parseFloat(
+                        document.getElementById("glare-sensitivity").value
+                    ),
+                    lightCondition:
+                        document.getElementById("light-condition").value,
+                    highContrast:
+                        document.body.classList.contains("high-contrast"),
+                    panelCollapsed: document
+                        .getElementById("control-panel")
+                        .classList.contains("collapsed"),
+                    panelLeft: panel.style.left,
+                    panelTop: panel.style.top,
+                    savedAt: new Date().toISOString(),
+                }
+
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
+                    console.log("✅ Gespeichert:", settings)
+                    return true
+                } catch (error) {
+                    console.error("❌ Fehler beim Speichern:", error)
+                    return false
+                }
+            }
+
+            function loadSettings() {
+                try {
+                    const saved = localStorage.getItem(STORAGE_KEY)
+                    console.log(
+                        "🔍 localStorage lesen:",
+                        saved ? "Daten gefunden" : "Keine Daten"
+                    )
+
+                    if (!saved) return false
+
+                    const settings = JSON.parse(saved)
+                    console.log("📥 Wiederherstellen:", settings)
+
+                    // Checkboxen
+                    document.getElementById("protanopia").checked =
+                        settings.protanopia || false
+                    document.getElementById("deuteranopia").checked =
+                        settings.deuteranopia || false
+                    document.getElementById("tritanopia").checked =
+                        settings.tritanopia || false
+                    document.getElementById("achromatopsia").checked =
+                        settings.achromatopsia || false
+                    document.getElementById("myopia-enable").checked =
+                        settings.myopiaEnable || false
+                    document.getElementById("hyperopia-enable").checked =
+                        settings.hyperopiaEnable || false
+                    document.getElementById("tunnel-enable").checked =
+                        settings.tunnelEnable || false
+                    document.getElementById("macular-enable").checked =
+                        settings.macularEnable || false
+                    document.getElementById(
+                        "brightness-contrast-enable"
+                    ).checked = settings.brightnessContrastEnable || false
+
+                    // Slider
+                    if (settings.viewingDistance !== undefined) {
+                        document.getElementById("viewing-distance").value =
+                            settings.viewingDistance
+                        document.getElementById("distance-value").textContent =
+                            settings.viewingDistance
+                        viewingDistance = settings.viewingDistance
+                    }
+
+                    if (settings.pageZoom !== undefined) {
+                        document.getElementById("page-zoom").value =
+                            settings.pageZoom
+                        document.getElementById("zoom-value").textContent =
+                            settings.pageZoom
+                        currentZoom = settings.pageZoom / 100
+                        content.style.transform = `scale(${currentZoom})`
+                        content.style.width = `${100 / currentZoom}%`
+                    }
+
+                    if (settings.myopia !== undefined) {
+                        document.getElementById("myopia").value =
+                            settings.myopia
+                        document.getElementById("myopia-value").textContent =
+                            settings.myopia.toFixed(1)
+                        document.getElementById("myopia-visus").textContent =
+                            diopterToVisus(settings.myopia).toFixed(2)
+                    }
+
+                    if (settings.hyperopia !== undefined) {
+                        document.getElementById("hyperopia").value =
+                            settings.hyperopia
+                        document.getElementById("hyperopia-value").textContent =
+                            settings.hyperopia.toFixed(1)
+                        document.getElementById("hyperopia-visus").textContent =
+                            diopterToVisus(settings.hyperopia).toFixed(2)
+                    }
+
+                    if (settings.tunnel !== undefined) {
+                        document.getElementById("tunnel").value =
+                            settings.tunnel
+                        document.getElementById("tunnel-value").textContent =
+                            settings.tunnel
+                    }
+
+                    if (settings.macular !== undefined) {
+                        document.getElementById("macular").value =
+                            settings.macular
+                        document.getElementById("macular-value").textContent =
+                            settings.macular
+                    }
+
+                    if (settings.brightnessReduction !== undefined) {
+                        document.getElementById("brightness-reduction").value =
+                            settings.brightnessReduction
+                        document.getElementById(
+                            "brightness-value"
+                        ).textContent = settings.brightnessReduction
+                    }
+
+                    if (settings.contrastReduction !== undefined) {
+                        document.getElementById("contrast-reduction").value =
+                            settings.contrastReduction
+                        document.getElementById("contrast-value").textContent =
+                            settings.contrastReduction
+                    }
+
+                    if (settings.glareSensitivity !== undefined) {
+                        document.getElementById("glare-sensitivity").value =
+                            settings.glareSensitivity
+                        document.getElementById("glare-value").textContent =
+                            settings.glareSensitivity
+                    }
+
+                    if (settings.lightCondition !== undefined) {
+                        document.getElementById("light-condition").value =
+                            settings.lightCondition
+                    }
+
+                    // Hochkontrast
+                    if (settings.highContrast) {
+                        document.body.classList.add("high-contrast")
+                    }
+
+                    // Panel
+                    if (settings.panelCollapsed) {
+                        document
+                            .getElementById("control-panel")
+                            .classList.add("collapsed")
+                    }
+
+                    if (settings.panelLeft && settings.panelTop) {
+                        panel.style.left = settings.panelLeft
+                        panel.style.top = settings.panelTop
+                        panel.style.right = "auto"
+                    }
+
+                    // Effekte anwenden
+                    applyEffects()
+
+                    console.log("✅ Wiederherstellung erfolgreich")
+                    return true
+                } catch (error) {
+                    console.error("❌ Fehler beim Laden:", error)
+                    return false
+                }
+            }
+
+            function clearSettings() {
+                localStorage.removeItem(STORAGE_KEY)
+                console.log("🗑️ Einstellungen gelöscht")
+            }
+
+            // ============================================
+            // Debounce und Auto-Save
+            // ============================================
+
+            // Debounce
+            function debounce(func, wait) {
+                let timeout
+                return function (...args) {
+                    clearTimeout(timeout)
+                    timeout = setTimeout(() => func(...args), wait)
+                }
+            }
+
+            const debouncedSave = debounce(saveSettings, 300)
+
+            // Auto-Save Event-Listener
+            document
+                .querySelectorAll(
+                    'input[type="checkbox"], input[type="range"], select'
+                ) // ✅ select hinzugefügt
+                .forEach((input) => {
+                    input.addEventListener("change", debouncedSave)
+                    input.addEventListener("input", debouncedSave)
+                })
+
+            // Funktionen erweitern
+            const _originalToggleHighContrast = toggleHighContrast
+            toggleHighContrast = function () {
+                _originalToggleHighContrast()
+                saveSettings()
+            }
+
+            const _originalResetAll = resetAll
+            resetAll = function () {
+                _originalResetAll()
+                clearSettings()
+            }
+
+            const _originalTogglePanel = togglePanel
+            togglePanel = function () {
+                _originalTogglePanel()
+                saveSettings()
+            }
+
+            // beforeunload
+            window.addEventListener("beforeunload", saveSettings)
+
+            // SOFORT beim Script-Laden ausführen
+            ;(function () {
+                console.log("🚀 Initialisiere Simulator...")
+                setTimeout(() => {
+                    const loaded = loadSettings()
+                    if (loaded) {
+                        console.log("✅ Settings geladen!")
+                    }
+                }, 50)
+            })()
+
+            // Console API
+            window.visusSimulator = {
+                saveSettings,
+                loadSettings,
+                clearSettings,
+                getSettings: () =>
+                    JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"),
+            }
+
+            console.log(
+                "💾 Commands: visusSimulator.getSettings(), .saveSettings(), .loadSettings(), .clearSettings()"
+            )
+
+            // ============================================
+            // Maus-Tracking für Tunnelblick & Makuladegeneration
+            // ============================================
+
+            let isMouseTracking = false
+            let mouseX = 50
+            let mouseY = 50
+
+            function updateMousePosition(e) {
+                if (!isMouseTracking) return
+
+                // Mausposition in Prozent des Viewports
+                mouseX = (e.clientX / window.innerWidth) * 100
+                mouseY = (e.clientY / window.innerHeight) * 100
+
+                // Dynamisch Overlays updaten
+                const tunnelOverlay = document.getElementById("tunnel-overlay")
+                const macularSpots = document.querySelectorAll(".macular-spot")
+
+                if (tunnelOverlay) {
+                    const value = document.getElementById("tunnel").value
+                    tunnelOverlay.style.background = `radial-gradient(circle at ${mouseX}% ${mouseY}%, 
                         transparent 0%, 
                         transparent ${value}%, 
-                        rgba(0,0,0,1) ${parseFloat(value) + 5}%);
-                    pointer-events: none;
-                "></div>
-            `;
-        }
+                        rgba(0,0,0,1) ${parseFloat(value) + 5}%)`
+                }
 
-        // Makuladegeneration
-        if (document.getElementById('macular-enable').checked) {
-            const value = document.getElementById('macular').value;
-            const opacity = value / 100;
-            const blurAmount = 15 + (value / 10);
-            
-            overlayHTML += `
-                <div style="
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 35vw;
-                    height: 35vh;
-                    background: radial-gradient(circle at center, 
-                        rgba(150,150,150,${opacity * 0.9}) 0%, 
-                        rgba(100,100,100,${opacity * 0.7}) 30%,
-                        rgba(80,80,80,${opacity * 0.4}) 60%,
-                        transparent 100%);
-                    filter: blur(${blurAmount}px);
-                    pointer-events: none;
-                "></div>
-                <div style="
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 25vw;
-                    height: 25vh;
-                    background: rgba(120,120,100,${opacity * 0.5});
-                    border-radius: 50%;
-                    filter: blur(${blurAmount * 1.5}px);
-                    pointer-events: none;
-                "></div>
-            `;
-        }
-
-        overlay.innerHTML = overlayHTML;
-    }
-
-    // Event Listeners
-    document.querySelectorAll('input[type="checkbox"], input[type="range"]').forEach(input => {
-        input.addEventListener('change', applyEffects);
-        input.addEventListener('input', applyEffects);
-    });
-
-    // Werte-Anzeigen aktualisieren
-    document.getElementById('myopia').addEventListener('input', function() {
-        const value = parseFloat(this.value);
-        document.getElementById('myopia-value').textContent = value.toFixed(1);
-        document.getElementById('myopia-visus').textContent = calculateVisus(-value, viewingDistance);
-    });
-
-    document.getElementById('hyperopia').addEventListener('input', function() {
-        const value = parseFloat(this.value);
-        document.getElementById('hyperopia-value').textContent = value.toFixed(1);
-        document.getElementById('hyperopia-visus').textContent = calculateVisus(value, viewingDistance);
-    });
-
-    document.getElementById('tunnel').addEventListener('input', function() {
-        document.getElementById('tunnel-value').textContent = this.value;
-    });
-
-    document.getElementById('macular').addEventListener('input', function() {
-        document.getElementById('macular-value').textContent = this.value;
-    });
-
-    // Betrachtungsabstand
-    document.getElementById('viewing-distance').addEventListener('input', function() {
-        viewingDistance = parseFloat(this.value);
-        document.getElementById('distance-value').textContent = this.value;
-        
-        // Visus-Werte neu berechnen
-        const myopiaValue = parseFloat(document.getElementById('myopia').value);
-        const hyperopiaValue = parseFloat(document.getElementById('hyperopia').value);
-        document.getElementById('myopia-visus').textContent = calculateVisus(-myopiaValue, viewingDistance);
-        document.getElementById('hyperopia-visus').textContent = calculateVisus(hyperopiaValue, viewingDistance);
-        
-        // Effekte neu anwenden mit angepasstem Blur
-        applyEffects();
-    });
-
-    // Seiten-Zoom
-    document.getElementById('page-zoom').addEventListener('input', function() {
-        const value = this.value;
-        document.getElementById('zoom-value').textContent = value;
-        currentZoom = value / 100; // Globale Variable aktualisieren
-        content.style.transform = `scale(${currentZoom})`;
-        content.style.transformOrigin = 'top center';
-        content.style.width = `${100 / currentZoom}%`;
-        
-        // Effekte neu anwenden mit angepasstem Blur
-        applyEffects();
-    });
-
-    function resetAll() {
-        document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-        document.querySelectorAll('input[type="range"]').forEach(range => {
-            if (range.id === 'tunnel') {
-                range.value = 50;
-            } else if (range.id === 'page-zoom') {
-                range.value = 100;
-            } else {
-                range.value = 0;
+                if (macularSpots.length > 0) {
+                    macularSpots.forEach((spot) => {
+                        spot.style.left = `${mouseX}%`
+                        spot.style.top = `${mouseY}%`
+                    })
+                }
             }
-        });
-        document.getElementById('myopia-value').textContent = '0.0';
-        document.getElementById('myopia-visus').textContent = '1.0';
-        document.getElementById('hyperopia-value').textContent = '0.0';
-        document.getElementById('hyperopia-visus').textContent = '1.0';
-        document.getElementById('tunnel-value').textContent = '50';
-        document.getElementById('macular-value').textContent = '0';
-        document.getElementById('zoom-value').textContent = '100';
-        currentZoom = 1; // Globale Variable zurücksetzen
-        content.style.transform = 'scale(1)';
-        content.style.width = '100%';
-        document.body.classList.remove('high-contrast');
-        applyEffects();
-    }
 
-    // Draggable mit Touch-Support
-    let isDragging = false;
-    let currentX, currentY, initialX, initialY;
+            // Touch-Support für Mobile
+            function updateTouchPosition(e) {
+                if (!isMouseTracking) return
+                if (e.touches.length === 0) return
 
-    // Mouse Events
-    panelHeader.addEventListener('mousedown', dragStart);
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', dragEnd);
+                const touch = e.touches[0]
+                mouseX = (touch.clientX / window.innerWidth) * 100
+                mouseY = (touch.clientY / window.innerHeight) * 100
 
-    // Touch Events für iPhone
-    panelHeader.addEventListener('touchstart', touchStart, { passive: false });
-    document.addEventListener('touchmove', touchDrag, { passive: false });
-    document.addEventListener('touchend', dragEnd);
+                const tunnelOverlay = document.getElementById("tunnel-overlay")
+                const macularSpots = document.querySelectorAll(".macular-spot")
 
-    function dragStart(e) {
-        if (e.target.closest('.toggle-btn')) return;
-        
-        initialX = e.clientX - panel.offsetLeft;
-        initialY = e.clientY - panel.offsetTop;
-        isDragging = true;
-    }
+                if (tunnelOverlay) {
+                    const value = document.getElementById("tunnel").value
+                    tunnelOverlay.style.background = `radial-gradient(circle at ${mouseX}% ${mouseY}%, 
+                        transparent 0%, 
+                        transparent ${value}%, 
+                        rgba(0,0,0,1) ${parseFloat(value) + 5}%)`
+                }
 
-    function touchStart(e) {
-        if (e.target.closest('.toggle-btn')) return;
-        
-        const touch = e.touches[0];
-        initialX = touch.clientX - panel.offsetLeft;
-        initialY = touch.clientY - panel.offsetTop;
-        isDragging = true;
-        e.preventDefault();
-    }
+                if (macularSpots.length > 0) {
+                    macularSpots.forEach((spot) => {
+                        spot.style.left = `${mouseX}%`
+                        spot.style.top = `${mouseY}%`
+                    })
+                }
+            }
 
-    function drag(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        
-        currentX = e.clientX - initialX;
-        currentY = e.clientY - initialY;
+            // Event-Listener für Maus-Tracking (MUSS VOR localStorage-Init sein!)
+            document.addEventListener("mousemove", updateMousePosition)
+            document.addEventListener("touchmove", updateTouchPosition, {
+                passive: true,
+            })
 
-        updatePosition(currentX, currentY);
-    }
+            // Bei Aktivierung/Deaktivierung neu rendern
+            document
+                .getElementById("tunnel-enable")
+                .addEventListener("change", function () {
+                    if (this.checked) {
+                        isMouseTracking = true
+                        applyEffects()
+                    } else {
+                        isMouseTracking =
+                            document.getElementById("macular-enable").checked
+                        applyEffects()
+                    }
+                })
 
-    function touchDrag(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        
-        const touch = e.touches[0];
-        currentX = touch.clientX - initialX;
-        currentY = touch.clientY - initialY;
-
-        updatePosition(currentX, currentY);
-    }
-
-    function updatePosition(x, y) {
-        const maxX = window.innerWidth - panel.offsetWidth;
-        const maxY = window.innerHeight - panel.offsetHeight;
-
-        x = Math.max(0, Math.min(x, maxX));
-        y = Math.max(0, Math.min(y, maxY));
-
-        panel.style.left = x + 'px';
-        panel.style.top = y + 'px';
-        panel.style.right = 'auto';
-    }
-
-    function dragEnd() {
-        isDragging = false;
-    }
-</script>
-```
-
-</body>
+            document
+                .getElementById("macular-enable")
+                .addEventListener("change", function () {
+                    if (this.checked) {
+                        isMouseTracking = true
+                        applyEffects()
+                    } else {
+                        isMouseTracking =
+                            document.getElementById("tunnel-enable").checked
+                        applyEffects()
+                    }
+                })
+        </script>
+    </body>
 </html>

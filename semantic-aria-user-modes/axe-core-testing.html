@@ -103,7 +103,7 @@
             /* Test-Panel (von Tests ausgeschlossen) */
             .test-controls {
                 position: fixed;
-                inset: auto 16px 16px auto;
+                inset: auto auto 16px 16px;
                 width: 320px;
                 max-width: 90vw;
                 background: #2c3e50;
@@ -270,6 +270,8 @@
         </style>
 
         <!-- HybridAI Desktop Chat Widget v2 -->
+        <!-- HybridAI Content-Embedded Chat Widget v2 -->
+        <!-- HybridAI Desktop Chat Widget v2 -->
         <script>
             window.chatbotConfig = {
                 chatbotId: "8fdee549-265a-4063-8e11-1e2f7ee45af7",
@@ -294,7 +296,9 @@
                 },
             }
         </script>
-        <script src="https://hybridai.one/hai_embed.js?chatbotId=8fdee549-265a-4063-8e11-1e2f7ee45af7"></script>
+        <script src="https://hybridai.one/hai_embed.js?chatbotId=1abe2983-e604-46d0-bdc5-ff53b1e0a8f9"></script>
+
+        <!-- /HybridAI Chatbot -->
     </head>
     <body>
         <a
@@ -440,6 +444,36 @@
                 id="hauptinhalt"
                 role="main"
             >
+                <article>
+                    <h2>Beispiel Button mit gutem Kontrast</h2>
+                    <style>
+                        /* Button-Stil mit gutem Kontrast */
+                        .mein-button {
+                            background-color: #000080; /* Blau */
+                            color: white; /* Weißer Text für starken Kontrast */
+                            border: none;
+                            padding: 12px 24px; /* Polsterung für bessere Klickfläche */
+                            font-size: 16px; /* Gut lesbare Größe */
+                            border-radius: 4px; /* Leicht abgerundete Ecken */
+                            cursor: pointer; /* Zeigt an, dass es klickbar ist */
+                            transition: background-color 0.3s; /* Sanfte Farbänderung */
+                        }
+
+                        /* Hover-Effekt (wenn Maus drüber) */
+                        .mein-button:hover {
+                            background-color: #0052a3; /* Etwas dunkleres Blau */
+                        }
+
+                        /* Fokus-Stil (für Tastatur-Nutzer) */
+                        .mein-button:focus {
+                            outline: 2px solid #003366; /* Deutliche Umrandung */
+                            outline-offset: 2px; /* Abstand zum Button */
+                        }
+                    </style>
+
+                    <!-- Der Button -->
+                    <button class="mein-button">Klick mich!</button>
+                </article>
                 <article class="target-size-tests with-errors">
                     <h2>Target Size Tests</h2>
                     <style>
@@ -1239,5 +1273,11 @@
 	•	[role="img"] (z. B. svg) → aria-label oder aria-labelledby
 	•	Das Beispiel ist bewusst minimal. Für produktive Checks würdest du zusätzlich Sonderfälle (z. B. verlinkte Bilder, redundante Alternativtexte, leere aria-labelledby-Ziele, dynamische States) ausbauen.
   -->
+
+        <!-- Hybridai deconstruct -->
+        <!-- <script
+            defer
+            src="../assets/js/hybridai-deconstruct.js"
+        ></script> -->
     </body>
 </html>
