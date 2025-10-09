@@ -12,7 +12,7 @@ body > nav[id="main-navigation"] {
     z-index: 1000;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
     background: var(--medium-bright);
-    
+
     ul,
     ol {
         display: flex;
@@ -45,5 +45,85 @@ body > nav[id="main-navigation"] {
 
     + * {
         margin-top: toRem(5);
+    }
+
+    .main-nav-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .main-nav-item {
+        position: relative;
+
+        &.has-submenu {
+            padding-right: toRem(2);
+        }
+    }
+
+    .submenu-toggle {
+        position: absolute;
+        right: toRem(0.4);
+        top: 50%;
+        transform: translateY(-50%);
+        width: toRem(1.6);
+        height: toRem(1.6);
+        border: none;
+        background: transparent;
+        cursor: pointer;
+
+        &::after {
+            content: "▾";
+            display: block;
+            font-size: toRem(1.1);
+            line-height: 1;
+            color: var(--dark);
+        }
+
+        &:focus-visible {
+            outline: toRem(0.2) solid var(--dark);
+            outline-offset: toRem(0.2);
+        }
+
+        &[aria-expanded="true"]::after {
+            content: "▴";
+        }
+    }
+
+    .submenu {
+        list-style: none;
+        margin: 0;
+        padding: toRem(0.5) 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: toRem(10);
+        background: var(--medium-bright);
+        box-shadow: 0 0 toRem(1) rgba(0, 0, 0, 0.2);
+        // border-radius: toRem(0.4);
+        display: none;
+        flex-direction: column;
+        gap: 0;
+
+        li {
+            padding: toRem(0.4) toRem(0.8);
+
+            a:link {
+                color: var(--dark);
+            }
+
+            &:has(a:hover) {
+                // a:hover {
+                background: var(--dark);
+
+                a {
+                    color: var(--bright);
+                }
+            }
+        }
+    }
+
+    .main-nav-item[aria-expanded="true"] > .submenu {
+        display: flex;
     }
 }

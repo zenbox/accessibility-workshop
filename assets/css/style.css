@@ -5049,6 +5049,71 @@ body > nav[id=main-navigation] li:has(a:hover) a {
 body > nav[id=main-navigation] + * {
   margin-top: 5rem;
 }
+body > nav[id=main-navigation] .main-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+body > nav[id=main-navigation] .main-nav-item {
+  position: relative;
+}
+body > nav[id=main-navigation] .main-nav-item.has-submenu {
+  padding-right: 2rem;
+}
+body > nav[id=main-navigation] .submenu-toggle {
+  position: absolute;
+  right: 0.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.6rem;
+  height: 1.6rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+body > nav[id=main-navigation] .submenu-toggle::after {
+  content: "▾";
+  display: block;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--dark);
+}
+body > nav[id=main-navigation] .submenu-toggle:focus-visible {
+  outline: 0.2rem solid var(--dark);
+  outline-offset: 0.2rem;
+}
+body > nav[id=main-navigation] .submenu-toggle[aria-expanded=true]::after {
+  content: "▴";
+}
+body > nav[id=main-navigation] .submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 10rem;
+  background: var(--medium-bright);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  gap: 0;
+}
+body > nav[id=main-navigation] .submenu li {
+  padding: 0.4rem 0.8rem;
+}
+body > nav[id=main-navigation] .submenu li a:link {
+  color: var(--dark);
+}
+body > nav[id=main-navigation] .submenu li:has(a:hover) {
+  background: var(--dark);
+}
+body > nav[id=main-navigation] .submenu li:has(a:hover) a {
+  color: var(--bright);
+}
+body > nav[id=main-navigation] .main-nav-item[aria-expanded=true] > .submenu {
+  display: flex;
+}
 
 #menubar {
   /* aria-current styling */

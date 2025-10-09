@@ -248,11 +248,11 @@ function createAxeCoreUI() {
 function openAxeOverlay() {
     const overlay = document.getElementById("axe-overlay")
     overlay.style.display = "flex"
-    
+
     // Focus auf ersten Button setzen
     const firstBtn = overlay.querySelector(".axe-test-btn")
     if (firstBtn) firstBtn.focus()
-    
+
     // Scroll-Lock für Body
     document.body.style.overflow = "hidden"
 }
@@ -260,17 +260,17 @@ function openAxeOverlay() {
 function closeAxeOverlay() {
     const overlay = document.getElementById("axe-overlay")
     overlay.style.display = "none"
-    
+
     // Ergebnisse ausblenden
     const results = document.getElementById("results")
     if (results) results.style.display = "none"
-    
+
     // Highlights entfernen
     clearHighlights()
-    
+
     // Scroll-Lock aufheben
     document.body.style.overflow = ""
-    
+
     // Focus zurück auf FAB
     const fab = document.getElementById("axe-fab")
     if (fab) fab.focus()
@@ -372,282 +372,163 @@ function createMainNavigation() {
     document.body.prepend(nav)
 }
 
-function createSkipLinks() {
-    // - - - - - - - - - -
-    // Build a skip link navigation
-    // - - - - - - - - - -
-    const skipLinks = document.createElement("nav")
-    skipLinks.setAttribute("aria-label", "Skip-Links")
-    skipLinks.id = "skip-links"
-    const links = [
-        { selector: "body > main", href: "#main-content", text: "zum Inhalt" },
-        {
-            selector: "body > nav",
-            href: "#main-navigation",
-            text: "zur Hauptnavigation",
-        },
-        {
-            selector: "body [type=search]",
-            href: "#main-search",
-            text: "zur Suche",
-        },
-        {
-            selector: "body > header",
-            href: "#header",
-            text: "zur Kopf-Sektion",
-        },
-        { selector: "body > footer", href: "#footer", text: "zur Fuß-Sektion" },
-    ]
+function createMainNavigationWithSubmenu() {
+    const nav = document.createElement("nav")
+    nav.id = "main-navigation"
+    nav.setAttribute("aria-label", "Hauptnavigation")
 
-    links.forEach((link) => {
-        let el = document.querySelector(link.selector)
-        if (el) el.id = link.href.substr(1, link.href.length)
-        if (document.querySelector(`${link.href}`)) {
-            const a = document.createElement("a")
-            a.href = link.href
-            a.textContent = link.text
-
-            skipLinks.appendChild(a)
-        }
-    })
-
-    skipLinks.addEventListener("keydown", (event) => {
-        console.log(event.key)
-        if (event.key === "Escape") {
-            event.preventDefault()
-            event.target.blur()
-        }
-    })
-    document.body.prepend(skipLinks)
-}
-
-function createAccessibilitySettingsButton() {
-    const accessibilityButton = document.createElement("button")
-    accessibilityButton.classList.add("btn-accessibility-settings")
-    accessibilityButton.title = "Barrierefreiheitseinstellungen"
-    let accessibilityButtonState
-
-    const html = document.querySelector("html")
-
-    // Tooltip erstellen
-    const tooltip = new Tooltip({
-        className: "accessibility-settings-tooltip",
-        maxWidth: "250px",
-        additionalStyles: {
-            transition: "opacity 0.2s ease-in-out",
-        },
-    })
-
-    // Tooltip Text Funktion
-    const getTooltipText = "Zu den Barrierefreiheitseinstellungen"
-
-    // Tooltip an Button anhängen
-    tooltip.attachTo(accessibilityButton, getTooltipText)
+    const ul = document.createElement("ul")
+    ul.classList.add("main-nav-list")
 
     const relativePathToRoot = getRelativePathToRoot()
 
-    accessibilityButton.addEventListener("click", () => {
-        window.location.href = relativePathToRoot + "user-settings.html"
-    })
-
-    const li = document.createElement("li")
-    li.appendChild(accessibilityButton)
-    document.querySelector("#main-navigation ul").prepend(li)
-}
-
-function createDeveloperButton() {
-    const developerButton = document.createElement("button")
-    developerButton.classList.add("btn-developer")
-    developerButton.title = "Entwicklermodus anschalten"
-    let developerButtonState
-
-    // Tooltip erstellen
-    const tooltip = new Tooltip({
-        className: "developer-tooltip",
-        maxWidth: "300px",
-    })
-
-    // Tooltip Text Funktion
-    const getTooltipText = () =>
-        developerButtonState
-            ? "Im Entwicklermodus werden  Elemente aus dem HTML angezeigt, die für Barrierefreiheit relevant sind."
-            : "Aktivieren Sie den Entwicklermodus um HTML-Elemente zu sehen, die für Barrierefreiheit relevant sind."
-
-    if (localStorage.getItem("developer") === "on") {
-        developerButtonState = true
-        document.body.classList.add("developer")
-        developerButton.classList.add("on")
-        developerButton.title = "Entwicklermodus ausschalten"
-    } else {
-        developerButtonState = false
-        developerButton.classList.add("off")
-        developerButton.title = "Entwicklermodus anschalten"
-    }
-
-    developerButton.tabIndex = -1
-
-    // Tooltip an Button anhängen
-    tooltip.attachTo(developerButton, getTooltipText)
-
-    developerButton.addEventListener("click", () => {
-        developerButtonState = !developerButtonState
-        if (developerButtonState) {
-            document.body.classList.add("developer")
-            developerButton.classList.remove("off")
-            developerButton.classList.add("on")
-            localStorage.setItem("developer", "on")
-            developerButton.title = "Entwicklermodus ausschalten"
-        } else {
-            document.body.classList.remove("developer")
-            developerButton.classList.remove("on")
-            developerButton.classList.add("off")
-            localStorage.setItem("developer", "off")
-            developerButton.title = "Entwicklermodus anschalten"
-        }
-    })
-
-    const li = document.createElement("li")
-    li.appendChild(developerButton)
-    document.querySelector("#main-navigation ul").prepend(li)
-}
-
-function createDarkModeButton() {
-    const darkModeButton = document.createElement("button")
-    darkModeButton.title = "Dark Mode anschalten"
-    darkModeButton.classList.add("btn-dark-mode")
-    let darkModeButtonState
-
-    const html = document.querySelector("html")
-
-    // Tooltip erstellen
-    const tooltip = new Tooltip({
-        className: "dark-mode-tooltip",
-        maxWidth: "250px",
-        additionalStyles: {
-            transition: "opacity 0.2s ease-in-out",
+    const navigation = [
+        { file: "index.html", text: "Startseite" },
+        { file: "treemap/v3/index.html", text: "Kriterien (v3)" },
+        { file: "wcag-test.html", text: "WCAG Test" },
+        { file: "checklists.html", text: "Checklisten" },
+        { file: "semantic.html", text: "Semantik" },
+        { file: "aria.html", text: "ARIA" },
+        { file: "typography.html", text: "Typografie" },
+        { file: "contrast.html", text: "Kontrast" },
+        { file: "color.html", text: "Farbe" },
+        { file: "keyboard.html", text: "Tastatur" },
+        {
+            file: "screenreader-simulation/",
+            text: "Screenreader",
         },
-    })
-
-    // Tooltip Text Funktion
-    const getTooltipText = () =>
-        darkModeButtonState
-            ? "Dunkles Farbschema deaktivieren und zum hellen Design zurückkehren"
-            : "Dunkles Farbschema aktivieren für bessere Lesbarkeit bei wenig Umgebungslicht"
-
-    if (localStorage.getItem("darkMode") === "on") {
-        darkModeButtonState = true
-        html.classList.add("dark")
-        darkModeButton.classList.add("on")
-        darkModeButton.title = "Dark Mode ausschalten"
-    } else {
-        darkModeButtonState = false
-        darkModeButton.classList.add("off")
-        darkModeButton.title = "Dark Mode anschalten"
-    }
-
-    darkModeButton.tabIndex = -1
-
-    // Tooltip an Button anhängen
-    tooltip.attachTo(darkModeButton, getTooltipText)
-
-    darkModeButton.addEventListener("click", () => {
-        darkModeButtonState = !darkModeButtonState
-        if (darkModeButtonState) {
-            html.classList.add("dark")
-            darkModeButton.classList.remove("off")
-            darkModeButton.classList.add("on")
-            localStorage.setItem("darkMode", "on")
-            darkModeButton.title = "Dark Mode ausschalten"
-        } else {
-            html.classList.remove("dark")
-            darkModeButton.classList.remove("on")
-            darkModeButton.classList.add("off")
-            localStorage.setItem("darkMode", "off")
-            darkModeButton.title = "Dark Mode anschalten"
-        }
-    })
-
-    const li = document.createElement("li")
-    li.appendChild(darkModeButton)
-    document.querySelector("#main-navigation ul").prepend(li)
-}
-
-function createThemeModeButton() {
-    const themeButton = document.createElement("button")
-    themeButton.classList.add("btn-theme-mode")
-    let currentMode = "light" // Mögliche Werte: "light", "dark", "high-contrast"
-
-    const html = document.querySelector("html")
-
-    // Tooltip erstellen
-    const tooltip = new Tooltip({
-        className: "theme-mode-tooltip",
-        maxWidth: "250px",
-        additionalStyles: {
-            transition: "opacity 0.2s ease-in-out",
+        {
+            file: "non-text-content.html",
+            text: "Nicht-Text",
         },
+        {
+            file: "user-settings.html",
+            text: "Benutzereinstellungen",
+        },
+        {
+            file: "text-level/index.html",
+            text: "Text-Level",
+        },
+        {
+            file: "components/index.html",
+            text: "Komponenten",
+            children: [
+                { file: "components/accordion.html", text: "Accordion" },
+                { file: "components/dialog.html", text: "Dialog" },
+                { file: "components/flyout.html", text: "Flyout" },
+                {
+                    file: "components/jquery-datepicker-example.html",
+                    text: "jQuery Datepicker",
+                },
+                {
+                    file: "components/form-with-dependencies.html",
+                    text: "Formular mit Abhängigkeiten",
+                },
+                {
+                    file: "components/barriere-melden.html",
+                    text: "Barriere melden",
+                },
+                {
+                    file: "components/complex-components.html",
+                    text: "komplexe UI-Komponenten",
+                },
+                {
+                    file: "components/error-with-server.html",
+                    text: "Fehlermeldung nach Serverauswertung",
+                },
+            ],
+        },
+    ]
+
+    navigation.forEach((entry) => {
+        const li = document.createElement("li")
+        li.classList.add("main-nav-item")
+
+        const link = document.createElement("a")
+        link.href = relativePathToRoot + entry.file
+        link.textContent = entry.text
+        li.appendChild(link)
+
+        if (Array.isArray(entry.children) && entry.children.length > 0) {
+            li.classList.add("has-submenu")
+            li.setAttribute("aria-haspopup", "true")
+            li.setAttribute("aria-expanded", "false")
+
+            const toggleBtn = document.createElement("button")
+            toggleBtn.type = "button"
+            toggleBtn.classList.add("submenu-toggle")
+            toggleBtn.setAttribute("aria-expanded", "false")
+            toggleBtn.innerHTML = `<span class="sr-only">${entry.text} Untermenü</span>`
+
+            const submenu = document.createElement("ul")
+            submenu.classList.add("submenu")
+            submenu.hidden = true
+
+            entry.children.forEach((child) => {
+                const childLi = document.createElement("li")
+                const childLink = document.createElement("a")
+                childLink.href = relativePathToRoot + child.file
+                childLink.textContent = child.text
+                childLi.appendChild(childLink)
+                submenu.appendChild(childLi)
+            })
+
+            li.appendChild(toggleBtn)
+            li.appendChild(submenu)
+
+            const openSubmenu = () => {
+                toggleBtn.setAttribute("aria-expanded", "true")
+                li.setAttribute("aria-expanded", "true")
+                submenu.hidden = false
+            }
+
+            const closeSubmenu = () => {
+                toggleBtn.setAttribute("aria-expanded", "false")
+                li.setAttribute("aria-expanded", "false")
+                submenu.hidden = true
+            }
+
+            let hoverTimeout = null
+
+            toggleBtn.addEventListener("click", (event) => {
+                event.preventDefault()
+                const expanded =
+                    toggleBtn.getAttribute("aria-expanded") === "true"
+                if (expanded) {
+                    closeSubmenu()
+                } else {
+                    openSubmenu()
+                }
+            })
+
+            li.addEventListener("mouseenter", () => {
+                clearTimeout(hoverTimeout)
+                openSubmenu()
+            })
+
+            li.addEventListener("mouseleave", () => {
+                hoverTimeout = setTimeout(() => closeSubmenu(), 120)
+            })
+
+            li.addEventListener("focusin", () => {
+                clearTimeout(hoverTimeout)
+                openSubmenu()
+            })
+
+            li.addEventListener("focusout", (event) => {
+                hoverTimeout = setTimeout(() => {
+                    if (!li.contains(document.activeElement)) {
+                        closeSubmenu()
+                    }
+                }, 120)
+            })
+        }
+
+        ul.appendChild(li)
     })
 
-    // Hilfsfunktionen für State Management
-    function updateButtonState(mode) {
-        // Alle Klassen entfernen
-        themeButton.classList.remove("light", "dark", "high-contrast")
-        html.classList.remove("light", "dark", "high-contrast")
-
-        // Neue Klasse hinzufügen
-        themeButton.classList.add(mode)
-        html.classList.add(mode)
-
-        // Button Titel aktualisieren
-        const titles = {
-            "light": "Dark Mode aktivieren",
-            "dark": "High Contrast Mode aktivieren",
-            "high-contrast": "Light Mode aktivieren",
-        }
-        themeButton.title = titles[mode]
-
-        // Mode im localStorage speichern
-        localStorage.setItem("themeMode", mode)
-
-        // Aktuellen Modus aktualisieren
-        currentMode = mode
-    }
-
-    // Tooltip Text Funktion
-    const getTooltipText = () => {
-        const tooltips = {
-            "light":
-                "Dunkles Farbschema aktivieren für bessere Lesbarkeit bei wenig Umgebungslicht",
-            "dark": "Hochkontrast-Modus aktivieren für maximale Lesbarkeit und Barrierefreiheit",
-            "high-contrast": "Zurück zum hellen Standarddesign wechseln",
-        }
-        return tooltips[currentMode]
-    }
-
-    // Initialen Zustand setzen
-    const savedMode = localStorage.getItem("themeMode")
-    if (savedMode && ["light", "dark", "high-contrast"].includes(savedMode)) {
-        updateButtonState(savedMode)
-    } else {
-        updateButtonState("light")
-    }
-
-    themeButton.tabIndex = -1
-
-    // Tooltip an Button anhängen
-    tooltip.attachTo(themeButton, getTooltipText)
-
-    // Click Handler
-    themeButton.addEventListener("click", () => {
-        const modeSequence = ["light", "dark", "high-contrast"]
-        const currentIndex = modeSequence.indexOf(currentMode)
-        const nextMode = modeSequence[(currentIndex + 1) % modeSequence.length]
-        updateButtonState(nextMode)
-    })
-
-    const li = document.createElement("li")
-    li.appendChild(themeButton)
-    document.querySelector("#main-navigation ul").prepend(li)
+    nav.appendChild(ul)
+    document.body.prepend(nav)
 }
 
 // - - - - - - - - - - -
@@ -943,7 +824,7 @@ function handlePresentationModeKeydown(event) {
         if (presentationModeActive) {
             localStorage.setItem("presentationMode", "on")
             initPresentationMode()
-            console.log("🎯 Präsentationsmodus aktiviert (Control+P)")
+            console.log("🎯 Präsenxtationsmodus aktiviert (Control+P)")
         } else {
             localStorage.setItem("presentationMode", "off")
             destroyPresentationMode()
@@ -976,7 +857,7 @@ function debugPresentationMode() {
 // AUFRUF
 // - - - - - - - - - -
 document.addEventListener("DOMContentLoaded", () => {
-    createMainNavigation()
+    createMainNavigationWithSubmenu()
     createAccessibilitySettingsButton()
     createDeveloperButton()
     // createDarkModeButton()
