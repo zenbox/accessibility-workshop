@@ -104,7 +104,9 @@ body > nav[id="main-navigation"] {
         display: none;
         flex-direction: column;
         gap: 0;
-
+        a {
+            color: var(--dark) !important;
+        }
         li {
             padding: toRem(0.4) toRem(0.8);
 
@@ -117,7 +119,7 @@ body > nav[id="main-navigation"] {
                 background: var(--dark);
 
                 a {
-                    color: var(--bright);
+                    color: var(--bright) !important;
                 }
             }
         }

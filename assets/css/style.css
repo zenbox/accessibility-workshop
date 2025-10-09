@@ -5099,6 +5099,9 @@ body > nav[id=main-navigation] .submenu {
   flex-direction: column;
   gap: 0;
 }
+body > nav[id=main-navigation] .submenu a {
+  color: var(--dark) !important;
+}
 body > nav[id=main-navigation] .submenu li {
   padding: 0.4rem 0.8rem;
 }
@@ -5109,7 +5112,7 @@ body > nav[id=main-navigation] .submenu li:has(a:hover) {
   background: var(--dark);
 }
 body > nav[id=main-navigation] .submenu li:has(a:hover) a {
-  color: var(--bright);
+  color: var(--bright) !important;
 }
 body > nav[id=main-navigation] .main-nav-item[aria-expanded=true] > .submenu {
   display: flex;

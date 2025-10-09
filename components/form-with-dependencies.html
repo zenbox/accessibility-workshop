@@ -100,8 +100,21 @@
                 border-radius: 8px;
             }
 
+            .shade-option input[type="radio"] {
+                width: 1.25rem;
+                height: 1.25rem;
+                margin: 0;
+            }
+
             .shade-option:hover {
                 background: rgba(0, 95, 184, 0.08);
+            }
+
+            .shade-list {
+                display: grid;
+                gap: var(--spacing-sm);
+                margin: 0;
+                padding: 0;
             }
 
             .shade-preview {
@@ -148,12 +161,15 @@
         <main>
             <h1 id="page-title">Abhängige Farbauswahl</h1>
             <p>
-                Wählen Sie zuerst eine Grundfarbe. Anschließend erscheinen passende
-                Helligkeiten als Optionen. Alle Änderungen werden in der Live-Region
-                angekündigt.
+                Wählen Sie zuerst eine Grundfarbe. Anschließend erscheinen
+                passende Helligkeiten als Optionen. Alle Änderungen werden in
+                der Live-Region angekündigt.
             </p>
 
-            <form id="color-form" aria-labelledby="page-title">
+            <form
+                id="color-form"
+                aria-labelledby="page-title"
+            >
                 <div>
                     <label
                         for="base-color"
@@ -162,8 +178,8 @@
                         Schritt&nbsp;1: Grundfarbe auswählen
                     </label>
                     <p id="base-color-hint">
-                        Wählen Sie Rot, Grün oder Blau. Danach erscheinen passende
-                        Helligkeiten.
+                        Wählen Sie Rot, Grün oder Blau. Danach erscheinen
+                        passende Helligkeiten.
                     </p>
                     <select
                         id="base-color"
@@ -186,9 +202,25 @@
                     <legend id="shade-legend">
                         Schritt&nbsp;2: Wählen Sie eine Helligkeit
                     </legend>
-                    <p id="shade-placeholder">
-                        Noch keine Farbe gewählt. Bitte treffen Sie zuerst eine Auswahl
-                        oben.
+                    <div
+                        id="shade-container"
+                        role="group"
+                        aria-describedby="shade-help"
+                    >
+                        <p
+                            id="shade-placeholder"
+                            class="shade-placeholder"
+                        >
+                            Noch keine Farbe gewählt. Bitte treffen Sie zuerst
+                            eine Auswahl oben.
+                        </p>
+                    </div>
+                    <p
+                        id="shade-help"
+                        class="sr-only"
+                    >
+                        Wählen Sie genau eine Helligkeit aus. Die Optionen
+                        ändern sich je nach Grundfarbe.
                     </p>
                 </fieldset>
 
@@ -222,66 +254,190 @@
                 <ul>
                     <li>
                         <strong>ARIA-Live-Regionen:</strong>
-                        <code>role="status"</code> (polite) für Statusmeldungen und
-                        <code>role="alert"</code> (assertive) für Fehler. Änderungen
-                        werden automatisch vorgelesen.
+                        <code>role="status"</code> (polite) für Statusmeldungen
+                        und <code>role="alert"</code> (assertive) für Fehler.
+                        Änderungen werden automatisch vorgelesen.
                     </li>
                     <li>
                         <strong>Dynamisches Feldset:</strong>
                         <code>aria-live="polite"</code> mit
-                        <code>aria-relevant="additions removals"</code> sorgt dafür,
-                        dass neue Radio-Buttons angekündigt werden, ohne alte Inhalte
-                        erneut vorzulesen.
+                        <code>aria-relevant="additions removals"</code> sorgt
+                        dafür, dass neue Radio-Buttons angekündigt werden, ohne
+                        alte Inhalte erneut vorzulesen.
+                    </li>
+                    <li>
+                        <code>aria-live</code>,
+                        <code>aria-relevant="additions"</code> und
+                        <code>aria-relevant="removals"</code> gehören zusammen
+                        und steuern,
+                        <strong
+                            >wie Screenreader auf dynamische Änderungen im
+                            Inhalt reagieren</strong
+                        >
+                        – also wenn Text oder Elemente auf einer Seite
+                        hinzugefügt, entfernt oder geändert werden, ohne dass
+                        die Seite neu geladen wird.
+
+                        <h3>aria-live</h3>
+                        <ul>
+                            <li>
+                                Gibt an,
+                                <strong
+                                    >dass ein Bereich dynamisch aktualisiert
+                                    wird</strong
+                                >
+                            </li>
+                            <li>
+                                Screenreader lesen Änderungen in diesem Bereich
+                                <strong>automatisch vor</strong>
+                            </li>
+                            <li>
+                                Mögliche Werte:
+                                <ul>
+                                    <li>
+                                        <code>off</code> → Änderungen werden
+                                        ignoriert (Standard)
+                                    </li>
+                                    <li>
+                                        <code>polite</code> → Änderungen werden
+                                        vorgelesen,
+                                        <strong
+                                            >wenn der Screenreader gerade nichts
+                                            anderes liest</strong
+                                        >
+                                    </li>
+                                    <li>
+                                        <code>assertive</code> → Änderungen
+                                        werden
+                                        <strong>sofort vorgelesen</strong>, auch
+                                        wenn gerade etwas anderes vorgelesen
+                                        wird (wird unterbrochen)
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <h3>aria-relevant</h3>
+                        <ul>
+                            <li>
+                                Bestimmt,
+                                <strong
+                                    >welche Arten von Änderungen vorgelesen
+                                    werden</strong
+                                >
+                            </li>
+                            <li>
+                                Mögliche Werte (mehrere durch Leerzeichen
+                                trennbar):
+                                <ul>
+                                    <li>
+                                        <code>additions</code> → Neue Inhalte
+                                        werden vorgelesen
+                                    </li>
+                                    <li>
+                                        <code>removals</code> → Gelöschte
+                                        Inhalte werden vorgelesen
+                                    </li>
+                                    <li>
+                                        <code>text</code> → Änderungen im Text
+                                        werden vorgelesen
+                                    </li>
+                                    <li>
+                                        <code>all</code> → Alle Arten von
+                                        Änderungen (entspricht additions,
+                                        removals und text)
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <strong>Beschreibungshilfen:</strong>
-                        <code>aria-describedby</code> verknüpft Auswahlfelder mit
-                        Hinweisen, damit Screenreader die erklärenden Texte mitlesen.
+                        <code>aria-describedby</code> verknüpft Auswahlfelder
+                        mit Hinweisen, damit Screenreader die erklärenden Texte
+                        mitlesen.
                     </li>
                     <li>
                         <strong>Focus-Management:</strong>
-                        Nach dem Laden der Helligkeiten erhält die erste Option den
-                        Fokus, sodass Tastatur- und Screenreader-Nutzer direkt
-                        weiternavigieren können.
+                        Nach dem Laden der Helligkeiten erhält die erste Option
+                        den Fokus, sodass Tastatur- und Screenreader-Nutzer
+                        direkt weiternavigieren können.
                     </li>
                 </ul>
             </section>
         </main>
 
         <script>
-            const colorForm = document.getElementById("color-form")
-            const baseColorSelect = document.getElementById("base-color")
             const shadeFieldset = document.getElementById("shade-fieldset")
             const shadeLegend = document.getElementById("shade-legend")
+            const shadeContainer = document.getElementById("shade-container")
             const statusRegion = document.getElementById("status-region")
             const alertRegion = document.getElementById("alert-region")
+            const baseColorSelect = document.getElementById("base-color")
 
             const shades = {
                 red: {
                     legend: "Schritt 2: Helligkeit für Rot wählen",
                     options: [
-                        { value: "light-red", label: "Hellrot", hex: "#ffb3b3" },
-                        { value: "medium-red", label: "Mittelrot", hex: "#ff4d4d" },
-                        { value: "dark-red", label: "Dunkelrot", hex: "#b30000" }
-                    ]
+                        {
+                            value: "light-red",
+                            label: "Hellrot",
+                            hex: "#ffb3b3",
+                        },
+                        {
+                            value: "medium-red",
+                            label: "Mittelrot",
+                            hex: "#ff4d4d",
+                        },
+                        {
+                            value: "dark-red",
+                            label: "Dunkelrot",
+                            hex: "#b30000",
+                        },
+                    ],
                 },
                 green: {
                     legend: "Schritt 2: Helligkeit für Grün wählen",
                     options: [
-                        { value: "light-green", label: "Hellgrün", hex: "#c6ffc6" },
-                        { value: "medium-green", label: "Mittelgrün", hex: "#4cd34c" },
-                        { value: "dark-green", label: "Dunkelgrün", hex: "#117a11" }
-                    ]
+                        {
+                            value: "light-green",
+                            label: "Hellgrün",
+                            hex: "#c6ffc6",
+                        },
+                        {
+                            value: "medium-green",
+                            label: "Mittelgrün",
+                            hex: "#4cd34c",
+                        },
+                        {
+                            value: "dark-green",
+                            label: "Dunkelgrün",
+                            hex: "#117a11",
+                        },
+                    ],
                 },
                 blue: {
                     legend: "Schritt 2: Helligkeit für Blau wählen",
                     options: [
-                        { value: "light-blue", label: "Hellblau", hex: "#b3d9ff" },
-                        { value: "medium-blue", label: "Mittelblau", hex: "#3385ff" },
-                        { value: "dark-blue", label: "Dunkelblau", hex: "#003380" }
-                    ]
-                }
+                        {
+                            value: "light-blue",
+                            label: "Hellblau",
+                            hex: "#b3d9ff",
+                        },
+                        {
+                            value: "medium-blue",
+                            label: "Mittelblau",
+                            hex: "#3385ff",
+                        },
+                        {
+                            value: "dark-blue",
+                            label: "Dunkelblau",
+                            hex: "#003380",
+                        },
+                    ],
+                },
             }
+
 
             function announce(target, message) {
                 if (!target) return
@@ -291,15 +447,13 @@
             }
 
             function renderShades(colorKey) {
-                shadeFieldset.innerHTML = ""
                 const config = shades[colorKey]
 
                 if (!config) {
-                    shadeFieldset.appendChild(
-                        document.getElementById("shade-placeholder")
-                    )
                     shadeLegend.textContent =
                         "Schritt 2: Wählen Sie eine Helligkeit"
+                    shadeContainer.innerHTML =
+                        '<p id="shade-placeholder" class="shade-placeholder">Noch keine Farbe gewählt. Bitte treffen Sie zuerst eine Auswahl oben.</p>'
                     announce(alertRegion, "Keine passende Auswahl gefunden.")
                     return
                 }
@@ -307,7 +461,6 @@
                 shadeLegend.textContent = config.legend
 
                 const list = document.createElement("div")
-                list.setAttribute("role", "group")
                 list.className = "shade-list"
 
                 config.options.forEach((option, index) => {
@@ -319,10 +472,6 @@
                     radio.name = "color-shade"
                     radio.value = option.value
                     radio.required = true
-                    radio.setAttribute(
-                        "aria-describedby",
-                        `${option.value}-desc`
-                    )
 
                     const preview = document.createElement("span")
                     preview.className = "shade-preview"
@@ -332,36 +481,27 @@
                     const textWrap = document.createElement("span")
                     textWrap.textContent = option.label
 
-                    const desc = document.createElement("span")
-                    desc.id = `${option.value}-desc`
-                    desc.className = "sr-only"
-                    desc.textContent = `Farbwert ${option.hex}`
-
                     wrapper.appendChild(radio)
                     wrapper.appendChild(preview)
                     wrapper.appendChild(textWrap)
-                    wrapper.appendChild(desc)
                     list.appendChild(wrapper)
 
                     radio.addEventListener("change", () => {
-                        announce(
-                            statusRegion,
-                            `${option.label} mit Farbwert ${option.hex} ausgewählt.`
-                        )
+                        announce(statusRegion, `${option.label} ausgewählt.`)
                     })
 
                     if (index === 0) {
-                        setTimeout(() => radio.focus(), 120)
+                        //setTimeout(() => radio.focus(), 120)
                     }
                 })
 
-                shadeFieldset.appendChild(list)
+                shadeContainer.innerHTML = ""
+                shadeContainer.appendChild(list)
                 announce(
                     statusRegion,
                     `${config.options.length} Helligkeiten für ${
-                        baseColorSelect.options[
-                            baseColorSelect.selectedIndex
-                        ].text
+                        baseColorSelect.options[baseColorSelect.selectedIndex]
+                            .text
                     } geladen.`
                 )
             }
@@ -371,8 +511,8 @@
                 if (!selected) {
                     shadeLegend.textContent =
                         "Schritt 2: Wählen Sie eine Helligkeit"
-                    shadeFieldset.innerHTML =
-                        '<p id="shade-placeholder">Noch keine Farbe gewählt. Bitte treffen Sie zuerst eine Auswahl oben.</p>'
+                    shadeContainer.innerHTML =
+                        '<p id="shade-placeholder" class="shade-placeholder">Noch keine Farbe gewählt. Bitte treffen Sie zuerst eine Auswahl oben.</p>'
                     announce(statusRegion, "Auswahl zurückgesetzt.")
                     return
                 }
@@ -396,8 +536,8 @@
                 colorForm.reset()
                 shadeLegend.textContent =
                     "Schritt 2: Wählen Sie eine Helligkeit"
-                shadeFieldset.innerHTML =
-                    '<p id="shade-placeholder">Noch keine Farbe gewählt. Bitte treffen Sie zuerst eine Auswahl oben.</p>'
+                shadeContainer.innerHTML =
+                    '<p id="shade-placeholder" class="shade-placeholder">Noch keine Farbe gewählt. Bitte treffen Sie zuerst eine Auswahl oben.</p>'
                 baseColorSelect.focus()
             })
         </script>
