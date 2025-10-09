@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Barriere melden – Hilfsformular</title>
+        <style>
+            :root {
+                --color-primary: #005fb8;
+                --color-primary-dark: #00427f;
+                --color-primary-light: #e2f1ff;
+                --color-success: #1d824c;
+                --color-error: #c71f37;
+                --color-bg: #f4f6f8;
+                --color-surface: #ffffff;
+                --color-text: #1b1b1b;
+                --color-text-muted: #545454;
+                --color-focus: #ffbf47;
+                --border-radius: 12px;
+                --border-radius-sm: 8px;
+                --border-width: 2px;
+                --font-base: "Barlow", system-ui, sans-serif;
+                --font-mono: "Fira Mono", monospace;
+                --spacing-2: 0.5rem;
+                --spacing-3: 0.75rem;
+                --spacing-4: 1rem;
+                --spacing-5: 1.5rem;
+                --spacing-6: 2rem;
+                --input-height: 3rem;
+            }
+
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: var(--font-base);
+                background: var(--color-bg);
+                color: var(--color-text);
+                line-height: 1.6;
+            }
+
+            a.skip-link {
+                position: absolute;
+                left: -999px;
+                top: 0;
+                background: var(--color-primary);
+                color: #fff;
+                padding: var(--spacing-2) var(--spacing-4);
+                border-radius: 0 0 var(--border-radius-sm)
+                    var(--border-radius-sm);
+                z-index: 10;
+            }
+
+            a.skip-link:focus {
+                left: var(--spacing-4);
+            }
+
+            header {
+                background: var(--color-primary);
+                color: #fff;
+                padding: var(--spacing-6) var(--spacing-4) var(--spacing-5);
+            }
+
+            header h1 {
+                margin: 0;
+                font-size: 2.1rem;
+            }
+
+            header p {
+                margin-top: var(--spacing-3);
+                max-width: 52ch;
+            }
+
+            main {
+                padding: var(--spacing-5) var(--spacing-4) var(--spacing-6);
+                display: grid;
+                gap: var(--spacing-5);
+            }
+
+            section {
+                background: var(--color-surface);
+                border-radius: var(--border-radius);
+                padding: var(--spacing-5);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            }
+
+            .section-title {
+                margin-top: 0;
+            }
+
+            form {
+                display: grid;
+                gap: var(--spacing-5);
+            }
+
+            fieldset {
+                margin: 0;
+                border: var(--border-width) solid #d7dce2;
+                border-radius: var(--border-radius);
+                padding: var(--spacing-4);
+            }
+
+            legend {
+                font-weight: 700;
+                font-size: 1.2rem;
+            }
+
+            .form-help {
+                margin: var(--spacing-2) 0 0;
+                color: var(--color-text-muted);
+            }
+
+            label {
+                display: block;
+                font-weight: 600;
+                margin-bottom: var(--spacing-2);
+            }
+
+            select,
+            textarea,
+            input[type="email"],
+            input[type="text"],
+            input[type="tel"] {
+                width: 100%;
+                min-height: var(--input-height);
+                padding: var(--spacing-2) var(--spacing-3);
+                border-radius: var(--border-radius-sm);
+                border: var(--border-width) solid #c3c9d1;
+                background: #fff;
+                font: inherit;
+            }
+
+            textarea {
+                min-height: 8rem;
+                resize: vertical;
+            }
+
+            select:focus,
+            textarea:focus,
+            input:focus {
+                outline: var(--border-width) solid var(--color-focus);
+                outline-offset: 2px;
+                border-color: var(--color-primary);
+            }
+
+            .option-list {
+                display: grid;
+                gap: var(--spacing-3);
+                margin-top: var(--spacing-3);
+            }
+
+            .option-box {
+                display: flex;
+                align-items: flex-start;
+                gap: var(--spacing-3);
+                padding: var(--spacing-3);
+                border-radius: var(--border-radius-sm);
+                border: var(--border-width) solid #d7dce2;
+                background: var(--color-primary-light);
+                transition: border-color 0.2s ease;
+            }
+
+            .option-box input {
+                margin-top: 0.25rem;
+                min-width: 1.5rem;
+                min-height: 1.5rem;
+            }
+
+            .option-box:hover {
+                border-color: var(--color-primary);
+            }
+
+            .option-box label {
+                margin: 0;
+                font-weight: 600;
+            }
+
+            .option-box span {
+                display: block;
+                font-size: 0.95rem;
+                margin-top: 0.25rem;
+                color: var(--color-text-muted);
+            }
+
+            .form-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--spacing-3);
+                align-items: center;
+            }
+
+            button[type="submit"] {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 48px;
+                min-width: 180px;
+                padding: 0 var(--spacing-5);
+                border-radius: var(--border-radius-sm);
+                background: var(--color-primary-dark);
+                color: #fff;
+                font-weight: 700;
+                border: none;
+                cursor: pointer;
+            }
+
+            button[type="submit"]:hover,
+            button[type="submit"]:focus-visible {
+                background: #003566;
+            }
+
+            button[type="submit"]:focus-visible {
+                outline: var(--border-width) solid var(--color-focus);
+                outline-offset: 4px;
+            }
+
+            button[type="reset"] {
+                min-height: 48px;
+                padding: 0 var(--spacing-4);
+                border-radius: var(--border-radius-sm);
+                border: var(--border-width) solid #c3c9d1;
+                background: #fff;
+                color: var(--color-text);
+                cursor: pointer;
+            }
+
+            button[type="reset"]:hover,
+            button[type="reset"]:focus-visible {
+                border-color: var(--color-primary);
+            }
+
+            .form-feedback {
+                margin-top: var(--spacing-3);
+                padding: var(--spacing-3);
+                border-radius: var(--border-radius-sm);
+                border: var(--border-width) solid transparent;
+                font-weight: 600;
+            }
+
+            .form-feedback.success {
+                border-color: var(--color-success);
+                background: #e8f6ed;
+                color: var(--color-success);
+            }
+
+            .form-feedback.error {
+                border-color: var(--color-error);
+                background: #fde7eb;
+                color: var(--color-error);
+            }
+
+            .info-panel {
+                background: var(--color-primary-light);
+                border-radius: var(--border-radius-sm);
+                padding: var(--spacing-4);
+                border: var(--border-width) dashed var(--color-primary);
+            }
+
+            .info-panel h3 {
+                margin-top: 0;
+            }
+
+            footer {
+                padding: var(--spacing-4);
+                text-align: center;
+                font-size: 0.95rem;
+                color: var(--color-text-muted);
+            }
+
+            details {
+                margin-top: var(--spacing-4);
+            }
+
+            summary {
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            @media (max-width: 640px) {
+                header,
+                main {
+                    padding: var(--spacing-4);
+                }
+
+                section {
+                    padding: var(--spacing-4);
+                }
+            }
+
+            @media (prefers-contrast: more) {
+                :root {
+                    --color-primary: #000;
+                    --color-primary-dark: #000;
+                    --color-primary-light: #fff;
+                    --color-focus: #ff0;
+                }
+
+                body {
+                    background: #fff;
+                    color: #000;
+                }
+
+                section {
+                    border: 3px solid #000;
+                    box-shadow: none;
+                }
+
+                .option-box {
+                    background: #fff;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <a
+            class="skip-link"
+            href="#main-content"
+        >
+            Zum Hauptinhalt springen
+        </a>
+
+        <header>
+            <h1
+                id="page-title"
+                aria-describedby="page-intro"
+            >
+                Barriere melden
+            </h1>
+            <p id="page-intro">
+                Alle Menschen sollen diese Website leicht nutzen können. Wenn
+                Sie eine Hürde entdeckt haben, helfen Sie uns bitte, indem Sie
+                sie uns melden. Das geht in nur wenigen Schritten und ist ganz
+                einfach.
+            </p>
+        </header>
+
+        <main id="main-content">
+            <section aria-labelledby="form-heading">
+                <h2
+                    id="form-heading"
+                    class="section-title"
+                >
+                    Schnelles Meldeformular
+                </h2>
+                <p>
+                    Füllen Sie die drei kurzen Schritte aus. Sie können das
+                    Formular jederzeit speichern oder abbrechen. Pflichtfelder
+                    sind klar markiert.
+                </p>
+
+                <form
+                    id="barrier-form"
+                    novalidate
+                    aria-describedby="form-guidance"
+                >
+                    <p
+                        id="form-guidance"
+                        class="info-panel"
+                    >
+                        <strong>Hinweis:</strong> Wir speichern Ihre Angaben nur
+                        für die Bearbeitung der Meldung. Wenn Sie keine
+                        Kontaktdaten hinterlassen, bleiben Sie anonym.
+                    </p>
+
+                    <fieldset>
+                        <legend>Schritt 1: Worum geht es?</legend>
+                        <p
+                            id="type-help"
+                            class="form-help"
+                        >
+                            Wählen Sie eine Kategorie. So können wir Ihr
+                            Anliegen schneller zuordnen.
+                        </p>
+
+                        <div class="option-list">
+                            <label
+                                class="option-box"
+                                for="type-content"
+                            >
+                                <input
+                                    type="radio"
+                                    id="type-content"
+                                    name="barrier-type"
+                                    value="content"
+                                    aria-describedby="type-content-desc"
+                                    required
+                                />
+                                <div>
+                                    Inhalt ist schwer zu verstehen
+                                    <span id="type-content-desc">
+                                        Beispiel: Sprache zu kompliziert, Texte
+                                        nicht in leichter Sprache.
+                                    </span>
+                                </div>
+                            </label>
+
+                            <label
+                                class="option-box"
+                                for="type-technical"
+                            >
+                                <input
+                                    type="radio"
+                                    id="type-technical"
+                                    name="barrier-type"
+                                    value="technical"
+                                    aria-describedby="type-technical-desc"
+                                />
+                                <div>
+                                    Technik funktioniert nicht
+                                    <span id="type-technical-desc">
+                                        Beispiel: Formulare lassen sich nicht
+                                        senden, Buttons reagieren nicht.
+                                    </span>
+                                </div>
+                            </label>
+
+                            <label
+                                class="option-box"
+                                for="type-visual"
+                            >
+                                <input
+                                    type="radio"
+                                    id="type-visual"
+                                    name="barrier-type"
+                                    value="visual"
+                                    aria-describedby="type-visual-desc"
+                                />
+                                <div>
+                                    Darstellung ist schwer zu erkennen
+                                    <span id="type-visual-desc">
+                                        Beispiel: Farben haben wenig Kontrast,
+                                        Text ist zu klein.
+                                    </span>
+                                </div>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Schritt 2: Beschreiben Sie die Barriere</legend>
+                        <label for="page-url"
+                            >Seite oder Bereich (optional)</label
+                        >
+                        <input
+                            type="text"
+                            id="page-url"
+                            name="page-url"
+                            inputmode="url"
+                            aria-describedby="page-url-hint"
+                            placeholder="z. B. https://beispiel.de/kontakt"
+                        />
+                        <p
+                            id="page-url-hint"
+                            class="form-help"
+                        >
+                            Kopieren Sie den Link oder beschreiben Sie den
+                            Abschnitt.
+                        </p>
+
+                        <label for="description">
+                            Was ist passiert? <span aria-hidden="true">*</span>
+                        </label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            aria-describedby="description-hint"
+                            required
+                            placeholder="Beschreiben Sie in einfachen Worten, was nicht funktioniert hat."
+                        ></textarea>
+                        <p
+                            id="description-hint"
+                            class="form-help"
+                        >
+                            Beispiel: „Ich nutze eine Tastatur. Der
+                            Senden-Button lässt sich nicht mit Tab erreichen.“
+                        </p>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>
+                            Schritt 3: Wie dürfen wir Sie ansprechen?
+                        </legend>
+                        <p class="form-help">
+                            Diese Angaben sind freiwillig. Wir nutzen sie nur
+                            für Rückfragen.
+                        </p>
+
+                        <label for="contact-name">Ihr Name (optional)</label>
+                        <input
+                            type="text"
+                            id="contact-name"
+                            name="contact-name"
+                            autocomplete="name"
+                            placeholder="Max Mustermann"
+                        />
+
+                        <label for="email"> E-Mail-Adresse (optional) </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            autocomplete="email"
+                            inputmode="email"
+                            placeholder="name@example.de"
+                            aria-describedby="email-hint"
+                        />
+                        <p
+                            id="email-hint"
+                            class="form-help"
+                        >
+                            Wir schreiben Ihnen nur, wenn wir Rückfragen haben.
+                        </p>
+
+                        <label for="contact-phone">
+                            Telefonnummer (optional)
+                        </label>
+                        <input
+                            type="tel"
+                            id="contact-phone"
+                            name="contact-phone"
+                            inputmode="tel"
+                            autocomplete="tel"
+                            placeholder="0151 1234567"
+                        />
+
+                        <label for="contact-preference">
+                            Wie sollen wir Sie kontaktieren?
+                        </label>
+                        <select
+                            id="contact-preference"
+                            name="contact-preference"
+                            aria-describedby="contact-preference-hint"
+                        >
+                            <option value="">Bitte auswählen</option>
+                            <option value="email">E-Mail</option>
+                            <option value="phone">Telefon</option>
+                            <option value="no-contact">
+                                Bitte nicht kontaktieren
+                            </option>
+                        </select>
+                        <p
+                            id="contact-preference-hint"
+                            class="form-help"
+                        >
+                            Wenn Sie „Bitte nicht kontaktieren“ wählen,
+                            antworten wir nicht, arbeiten aber trotzdem an der
+                            Lösung.
+                        </p>
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <button type="submit">Barriere melden</button>
+                        <button type="reset">Formular leeren</button>
+                        <div
+                            id="form-feedback"
+                            class="form-feedback"
+                            role="status"
+                            aria-live="polite"
+                            aria-atomic="true"
+                        ></div>
+                    </div>
+                </form>
+            </section>
+
+            <section aria-labelledby="support-heading">
+                <h2
+                    id="support-heading"
+                    class="section-title"
+                >
+                    Unterstützung &amp; nächste Schritte
+                </h2>
+                <p>
+                    Ihre Meldung wird schnellstmöglich von unserem Team geprüft.
+                    Wir sammeln ähnliche Hinweise, um dauerhafte Lösungen zu
+                    finden.
+                </p>
+
+                <details>
+                    <summary>Wie geht es nach dem Absenden weiter?</summary>
+                    <ol>
+                        <li>
+                            Meldung geht bei uns ein und Sie erhalten eine
+                            Bestätigung.
+                        </li>
+                        <li>
+                            Wir prüfen den Bereich und planen eine Verbesserung.
+                        </li>
+                        <li>
+                            Optional informieren wir Sie über den Fortschritt.
+                        </li>
+                    </ol>
+                </details>
+
+                <details>
+                    <summary>Welche ARIA-Attribute kommen zum Einsatz?</summary>
+                    <ul>
+                        <li>
+                            <code>aria-describedby</code> verbindet Felder mit
+                            kurzen Erklärungen.
+                        </li>
+                        <li>
+                            <code>role="status"</code> und
+                            <code>aria-live="polite"</code> melden den
+                            Formularstatus für Screenreader.
+                        </li>
+                        <li>
+                            Pflichtfelder sind per
+                            <code>required</code> markiert, damit Browser und
+                            Screenreader warnen können.
+                        </li>
+                    </ul>
+                </details>
+            </section>
+        </main>
+
+        <footer>
+            <p>
+                Danke für Ihre Unterstützung für eine barrierefreie Website.
+                <a href="mailto:barrierefrei@example.de">Kontakt per E-Mail</a>
+            </p>
+        </footer>
+
+        <script>
+            const form = document.getElementById("barrier-form")
+            const feedback = document.getElementById("form-feedback")
+
+            function setFeedback(message, type = "success") {
+                if (!feedback) return
+                feedback.textContent = message
+                feedback.classList.remove("success", "error")
+                if (message) {
+                    feedback.classList.add(type)
+                }
+            }
+
+            form.addEventListener("submit", (event) => {
+                event.preventDefault()
+                const formData = new FormData(form)
+
+                const requiredFields = ["barrier-type", "description"]
+                const hasAllRequired = requiredFields.every((field) =>
+                    formData.get(field)
+                )
+
+                if (!hasAllRequired) {
+                    setFeedback(
+                        "Bitte füllen Sie alle Pflichtfelder aus.",
+                        "error"
+                    )
+                    const firstMissing = requiredFields.find(
+                        (field) => !formData.get(field)
+                    )
+                    if (firstMissing) {
+                        const field =
+                            document.querySelector(
+                                `[name="${firstMissing}"]`
+                            ) || form.querySelector(`#${firstMissing}`)
+                        field?.focus()
+                    }
+                    return
+                }
+
+                const request = Object.fromEntries(formData.entries())
+                console.table(request)
+
+                setFeedback(
+                    "Vielen Dank! Ihre Meldung wurde gespeichert. Wir melden uns, falls Sie Kontakt gewünscht haben.",
+                    "success"
+                )
+                form.reset()
+                form.querySelector('[name="barrier-type"]')?.focus()
+            })
+
+            form.addEventListener("reset", () => {
+                setFeedback("")
+                setTimeout(() => {
+                    form.querySelector("fieldset")?.focus()
+                }, 10)
+            })
+        </script>
+    </body>
+</html>

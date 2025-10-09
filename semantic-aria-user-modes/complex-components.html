@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <title>Raumliste mit Tastaturnavigation und VoiceOver Simulation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --color-primary: #007bff;
+                --color-primary-hover: #0056b3;
+                --color-primary-light: #e3f2fd;
+                --color-primary-lighter: #f0f8ff;
+                --color-primary-alpha-66: rgba(0, 123, 255, 0.4);
+
+                --color-success: #28a745;
+                --color-success-light: #f8fff9;
+                --color-success-alpha-30: rgba(40, 167, 69, 0.3);
+
+                --color-warning: #ffc107;
+                --color-warning-light: #fff3cd;
+                --color-warning-alpha-30: rgba(255, 193, 7, 0.3);
+                --color-warning-alpha-50: rgba(255, 193, 7, 0.5);
+
+                --color-info-light: #d1ecf1;
+                --color-info-dark: #0c5460;
+                --color-info-bright: #3dd7fd;
+
+                --color-gray-50: #f5f5f5;
+                --color-gray-100: #fafafa;
+                --color-gray-200: #f0f0f0;
+                --color-gray-300: #e0e0e0;
+                --color-gray-400: #ddd;
+                --color-gray-500: #888;
+                --color-gray-800: #1a1a1a;
+
+                --color-text-primary: #000;
+                --color-text-inverse: #fff;
+                --color-text-success: #00ff00;
+                --color-text-warning: #ffff00;
+
+                --color-bg-page: #f5f5f5;
+                --color-bg-card: #fff;
+                --color-bg-input: #fafafa;
+                --color-bg-screenreader: #1a1a1a;
+                --color-bg-keyboard-hint: rgba(51, 51, 51, 0.9);
+
+                --color-border-light: #e0e0e0;
+                --color-border-medium: #d5d5d5;
+                --color-border-dark: #333;
+
+                --radius-xs: 4px;
+                --radius-sm: 8px;
+                --radius-md: 12px;
+                --radius-full: 50%;
+
+                --border-thin: 1px;
+                --border-medium: 2px;
+                --border-thick: 3px;
+
+                --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+                --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+                --shadow-focus-primary: 0 0 0 2px var(--color-primary);
+                --shadow-focus-primary-light: 0 0 0 4px var(--color-primary-alpha-66);
+                --shadow-focus-warning: 0 0 0 2px var(--color-warning);
+                --shadow-focus-warning-light: 0 0 0 4px var(--color-warning-alpha-50);
+                --shadow-focus-warning-ring: 0 0 0 3px var(--color-warning-alpha-30);
+                --shadow-inset-primary: inset 0 0 0 2px var(--color-primary);
+                --shadow-inset-success: inset 0 0 0 3px var(--color-success);
+                --shadow-inset-info: inset 0 0 0 3px var(--color-info-dark);
+
+                --spacing-xs: 6px;
+                --spacing-sm: 10px;
+                --spacing-md: 16px;
+                --spacing-lg: 24px;
+                --spacing-xl: 32px;
+
+                --transition-fast: 0.2s ease;
+                --transition-normal: 0.3s ease;
+
+                --font-family-base: "Barlow", sans-serif;
+                --font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono",
+                    monospace;
+                --font-weight-normal: 400;
+                --font-weight-bold: 700;
+                --line-height-base: 1.5;
+
+                --z-index-screenreader: 1000;
+            }
+
+            @keyframes focusPulse {
+                0% {
+                    box-shadow: var(--shadow-focus-primary);
+                }
+                50% {
+                    box-shadow: var(--shadow-focus-primary-light);
+                }
+                100% {
+                    box-shadow: var(--shadow-focus-primary);
+                }
+            }
+
+            @keyframes focusPulseYellow {
+                0% {
+                    box-shadow: var(--shadow-focus-warning);
+                }
+                50% {
+                    box-shadow: var(--shadow-focus-warning-light);
+                }
+                100% {
+                    box-shadow: var(--shadow-focus-warning);
+                }
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: var(--font-family-base);
+                background: var(--color-bg-page);
+                color: var(--color-text-primary);
+                line-height: var(--line-height-base);
+            }
+
+            main {
+                padding: var(--spacing-lg);
+                display: grid;
+                gap: var(--spacing-xl);
+            }
+
+            article {
+                background: var(--color-bg-card);
+                border: var(--border-medium) solid var(--color-border-medium);
+                border-radius: var(--radius-sm);
+                padding: var(--spacing-xl);
+                box-shadow: var(--shadow-sm);
+            }
+
+            h1,
+            h2,
+            h3 {
+                margin-top: 0;
+            }
+
+            .screenreader-output {
+                position: fixed;
+                top: var(--spacing-lg);
+                right: var(--spacing-lg);
+                background: var(--color-bg-screenreader);
+                color: var(--color-text-success);
+                padding: var(--spacing-md);
+                border-radius: var(--radius-sm);
+                border: var(--border-medium) solid var(--color-border-dark);
+                width: 320px;
+                z-index: var(--z-index-screenreader);
+                box-shadow: var(--shadow-md);
+            }
+
+            .screenreader-title {
+                color: var(--color-text-warning);
+                font-weight: var(--font-weight-bold);
+                margin-bottom: var(--spacing-sm);
+                border-bottom: var(--border-thin) solid var(--color-border-dark);
+                padding-bottom: var(--spacing-xs);
+            }
+
+            .screenreader-text {
+                font-family: var(--font-family-mono);
+                font-size: 0.92rem;
+                white-space: pre-wrap;
+                min-height: 4.5em;
+            }
+
+            .keyboard-hint {
+                position: fixed;
+                bottom: var(--spacing-lg);
+                right: var(--spacing-lg);
+                background: var(--color-bg-keyboard-hint);
+                color: var(--color-text-inverse);
+                padding: var(--spacing-sm) var(--spacing-md);
+                border-radius: var(--radius-sm);
+                font-size: 0.85rem;
+                max-width: 300px;
+                box-shadow: var(--shadow-md);
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            fieldset {
+                border: var(--border-medium) solid var(--color-border-medium);
+                border-radius: var(--radius-sm);
+                padding: var(--spacing-lg);
+            }
+
+            legend {
+                font-weight: var(--font-weight-bold);
+                font-size: 1.2rem;
+            }
+
+            .room-list {
+                list-style: none;
+                margin: var(--spacing-lg) 0 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+
+            .room-item {
+                border: var(--border-medium) solid var(--color-border-light);
+                border-radius: var(--radius-sm);
+                background: var(--color-bg-input);
+                padding: var(--spacing-md);
+                transition: all var(--transition-normal);
+            }
+
+            .room-item:hover {
+                border-color: var(--color-primary);
+                background: var(--color-primary-lighter);
+            }
+
+            .room-item.selected {
+                border-color: var(--color-primary);
+                background: var(--color-primary-light);
+            }
+
+            .room-header {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-sm);
+            }
+
+            .room-header label {
+                font-weight: var(--font-weight-bold);
+                cursor: pointer;
+            }
+
+            .room-details {
+                margin-top: var(--spacing-md);
+                padding-left: 1.8rem;
+            }
+
+            .room-details ol {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+
+            .detail-item {
+                background: var(--color-bg-card);
+                border: var(--border-thin) solid var(--color-border-medium);
+                border-radius: var(--radius-xs);
+                padding: var(--spacing-sm) var(--spacing-md);
+                transition: all var(--transition-fast);
+            }
+
+            .detail-item:hover {
+                border-color: var(--color-primary);
+                background: var(--color-primary-lighter);
+            }
+
+            .detail-item.focus-outline,
+            .detail-item:focus {
+                outline: var(--border-medium) solid var(--color-warning);
+                outline-offset: -2px;
+                background: var(--color-warning-light) !important;
+                box-shadow: var(--shadow-focus-warning-ring);
+                animation: focusPulseYellow 1.5s infinite;
+            }
+
+            .numbers {
+                display: flex;
+                gap: var(--spacing-sm);
+                flex-wrap: wrap;
+            }
+
+            .number-item {
+                padding: 6px 14px;
+                border-radius: var(--radius-md);
+                background: var(--color-primary);
+                color: var(--color-text-inverse);
+                font-weight: var(--font-weight-bold);
+            }
+
+            .focus-outline {
+                animation: focusPulse 1.5s infinite;
+                border-radius: var(--radius-xs);
+            }
+
+            .room-detail-focus {
+                box-shadow: var(--shadow-inset-success);
+                border-color: var(--color-success) !important;
+                background: var(--color-success-light) !important;
+            }
+
+            #list-table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                background: var(--color-bg-card);
+                border-radius: var(--radius-sm);
+                overflow: hidden;
+                box-shadow: var(--shadow-sm);
+            }
+
+            #list-table caption {
+                caption-side: top;
+                text-align: left;
+                font-weight: var(--font-weight-bold);
+                padding: var(--spacing-md);
+                background: var(--color-primary);
+                color: var(--color-text-inverse);
+            }
+
+            #list-table thead {
+                background: var(--color-primary);
+                color: var(--color-text-inverse);
+            }
+
+            #list-table th {
+                padding: var(--spacing-md);
+                text-align: left;
+                font-weight: var(--font-weight-bold);
+            }
+
+            #list-table td {
+                padding: 14px var(--spacing-md);
+                border-bottom: var(--border-thin) solid var(--color-border-light);
+            }
+
+            .table-row-navigable {
+                cursor: pointer;
+                transition: background-color var(--transition-fast);
+            }
+
+            .table-row-navigable:hover {
+                background: var(--color-gray-100);
+            }
+
+            .table-row-navigable:focus {
+                outline: none;
+                background: var(--color-primary-light);
+                box-shadow: var(--shadow-inset-primary);
+            }
+
+            .table-row-focus {
+                background: var(--color-primary-light) !important;
+            }
+
+            .table-row-detail-mode {
+                background: var(--color-info-light) !important;
+                box-shadow: var(--shadow-inset-info);
+            }
+
+            .table-cell-focus {
+                background: var(--color-warning-light) !important;
+                outline: var(--border-medium) solid var(--color-warning);
+                outline-offset: -2px;
+                box-shadow: var(--shadow-focus-warning-ring);
+            }
+
+            @media (prefers-contrast: more) {
+                #list-table caption {
+                    background: var(--color-bg-card) !important;
+                    color: var(--color-text-primary) !important;
+                    border-bottom: var(--border-medium) solid
+                        var(--color-border-dark);
+                }
+
+                .table-row-navigable:focus {
+                    box-shadow: inset 0 0 0 var(--border-thick)
+                        var(--color-info-bright) !important;
+                }
+
+                .table-cell-focus,
+                .detail-item.focus-outline {
+                    outline-color: var(--color-warning) !important;
+                    box-shadow: 0 0 0 var(--border-thick) var(--color-warning) !important;
+                }
+
+                .room-detail-focus,
+                .room-item.focus-outline {
+                    box-shadow: 0 0 0 var(--border-thick) var(--color-info-bright) !important;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                    scroll-behavior: auto !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="screenreader-output">
+            <div class="screenreader-title">VoiceOver Simulation</div>
+            <div
+                id="voiceover-text"
+                class="screenreader-text"
+                aria-live="polite"
+            >
+VoiceOver Simulation geladen.
+            </div>
+        </div>
+
+        <div
+            id="room-keyboard-hint"
+            class="keyboard-hint hidden"
+        >
+            Räume: Tab wechselt zwischen Räumen, ↑↓ für Räume, → für Details, Escape
+            zum Verlassen.
+        </div>
+
+        <div
+            id="table-keyboard-hint"
+            class="keyboard-hint hidden"
+            style="bottom: 120px"
+        >
+            Tabelle: Tab für Zeilen, ↑↓ zwischen Zeilen, ←→ zwischen Zellen, Escape
+            zum Verlassen.
+        </div>
+
+        <main>
+            <header>
+                <h1>Interaktive Raum- und Tabellen-Navigation</h1>
+                <p>
+                    Diese Demo zeigt Tastaturnavigation mit einer VoiceOver-Simulation
+                    für Räume und Tabellen. Verwenden Sie die Hinweise unten rechts,
+                    um sich zu orientieren.
+                </p>
+            </header>
+
+            <article>
+                <h2>Räume auswählen</h2>
+                <form
+                    id="room-selection-form"
+                    aria-labelledby="room-legend"
+                >
+                    <fieldset>
+                        <legend id="room-legend">Räume und Detailinformationen</legend>
+                        <p>
+                            Navigieren Sie mit Tab zu den einzelnen Räumen. Pfeil rechts
+                            öffnet die Details, Pfeil links/Escape schließt sie wieder.
+                        </p>
+
+                        <ol class="room-list">
+                            <li
+                                class="room-item"
+                                data-room-index="0"
+                            >
+                                <div class="room-header">
+                                    <input
+                                        type="radio"
+                                        id="room-alpha"
+                                        name="rooms"
+                                        value="alpha"
+                                    />
+                                    <label for="room-alpha">Konferenzraum Alpha</label>
+                                </div>
+                                <div class="room-details">
+                                    <ol>
+                                        <li class="detail-item">
+                                            Kapazität: 12 Personen
+                                        </li>
+                                        <li class="detail-item">
+                                            Ausstattung: Videokonferenz, Whiteboard
+                                        </li>
+                                        <li class="detail-item numbers">
+                                            <span class="number-item">09:00</span>
+                                            <span class="number-item">11:30</span>
+                                            <span class="number-item">15:45</span>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+
+                            <li
+                                class="room-item"
+                                data-room-index="1"
+                            >
+                                <div class="room-header">
+                                    <input
+                                        type="radio"
+                                        id="room-beta"
+                                        name="rooms"
+                                        value="beta"
+                                    />
+                                    <label for="room-beta">Projektlabor Beta</label>
+                                </div>
+                                <div class="room-details">
+                                    <ol>
+                                        <li class="detail-item">
+                                            Kapazität: 6 Personen
+                                        </li>
+                                        <li class="detail-item">
+                                            Ausstattung: 3D-Drucker, Werkbank
+                                        </li>
+                                        <li class="detail-item numbers">
+                                            <span class="number-item">WLAN</span>
+                                            <span class="number-item">IoT</span>
+                                            <span class="number-item">VR</span>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+
+                            <li
+                                class="room-item"
+                                data-room-index="2"
+                            >
+                                <div class="room-header">
+                                    <input
+                                        type="radio"
+                                        id="room-gamma"
+                                        name="rooms"
+                                        value="gamma"
+                                    />
+                                    <label for="room-gamma">Atelier Gamma</label>
+                                </div>
+                                <div class="room-details">
+                                    <ol>
+                                        <li class="detail-item">
+                                            Kapazität: 20 Personen
+                                        </li>
+                                        <li class="detail-item">
+                                            Ausstattung: Galeriebeleuchtung, Staffeleien
+                                        </li>
+                                        <li class="detail-item numbers">
+                                            <span class="number-item">Malerei</span>
+                                            <span class="number-item">Skulptur</span>
+                                            <span class="number-item">Mixed Media</span>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+                        </ol>
+
+                        <div style="margin-top: var(--spacing-lg)">
+                            <button type="submit">Auswahl bestätigen</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </article>
+
+            <article>
+                <h2 id="table-title">Tabellarische Raumübersicht</h2>
+                <p>
+                    Bewegen Sie sich mit Tab in die Tabelle und nutzen Sie die
+                    Pfeiltasten zur Navigation. Die VoiceOver-Simulation liest Zeilen
+                    und Zellen automatisch vor.
+                </p>
+                <table
+                    id="list-table"
+                    role="table"
+                    aria-labelledby="table-title"
+                >
+                    <caption>Besprechungsräume mit Status</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Nummer</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Kategorie</th>
+                            <th scope="col">Standort</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            class="table-row-navigable"
+                            tabindex="0"
+                            data-row-index="0"
+                        >
+                            <td
+                                data-col-index="0"
+                                aria-label="Nummer"
+                            >
+                                1
+                            </td>
+                            <td
+                                data-col-index="1"
+                                aria-label="Name"
+                            >
+                                Konferenzraum Alpha
+                            </td>
+                            <td
+                                data-col-index="2"
+                                aria-label="Kategorie"
+                            >
+                                Technik
+                            </td>
+                            <td
+                                data-col-index="3"
+                                aria-label="Standort"
+                            >
+                                Berlin
+                            </td>
+                        </tr>
+                        <tr
+                            class="table-row-navigable"
+                            tabindex="0"
+                            data-row-index="1"
+                        >
+                            <td
+                                data-col-index="0"
+                                aria-label="Nummer"
+                            >
+                                2
+                            </td>
+                            <td
+                                data-col-index="1"
+                                aria-label="Name"
+                            >
+                                Projektlabor Beta
+                            </td>
+                            <td
+                                data-col-index="2"
+                                aria-label="Kategorie"
+                            >
+                                Forschung
+                            </td>
+                            <td
+                                data-col-index="3"
+                                aria-label="Standort"
+                            >
+                                Hamburg
+                            </td>
+                        </tr>
+                        <tr
+                            class="table-row-navigable"
+                            tabindex="0"
+                            data-row-index="2"
+                        >
+                            <td
+                                data-col-index="0"
+                                aria-label="Nummer"
+                            >
+                                3
+                            </td>
+                            <td
+                                data-col-index="1"
+                                aria-label="Name"
+                            >
+                                Atelier Gamma
+                            </td>
+                            <td
+                                data-col-index="2"
+                                aria-label="Kategorie"
+                            >
+                                Kreativ
+                            </td>
+                            <td
+                                data-col-index="3"
+                                aria-label="Standort"
+                            >
+                                München
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+        </main>
+
+        <script>
+            class ScreenReaderSimulator {
+                constructor() {
+                    this.output = document.getElementById("voiceover-text")
+                    this.queue = []
+                    this.isAnnouncing = false
+                    this.announce("VoiceOver Simulation geladen.")
+                }
+
+                announce(text) {
+                    if (!text) return
+                    this.queue.push(text)
+                    if (!this.isAnnouncing) {
+                        this.processQueue()
+                    }
+                }
+
+                processQueue() {
+                    if (this.queue.length === 0) {
+                        this.isAnnouncing = false
+                        return
+                    }
+                    this.isAnnouncing = true
+                    const text = this.queue.shift()
+
+                    if (this.output) {
+                        this.output.textContent = text
+                        this.animateOutput()
+                    }
+
+                    console.log("🔊 VoiceOver:", text)
+
+                    requestAnimationFrame(() => {
+                        setTimeout(() => this.processQueue(), 80)
+                    })
+                }
+
+                animateOutput() {
+                    if (!this.output) return
+                    this.output.style.backgroundColor = "#262626"
+                    setTimeout(() => {
+                        this.output.style.backgroundColor = varFallback(
+                            "--color-bg-screenreader",
+                            "#1a1a1a"
+                        )
+                    }, 160)
+                }
+
+                focusElement(element) {
+                    if (!element) return
+                    const description = this.describeElement(element)
+                    if (description) {
+                        this.announce(description)
+                    }
+                }
+
+                describeElement(element) {
+                    if (!element) return ""
+                    const role =
+                        element.getAttribute("role") ||
+                        element.getAttribute("type") ||
+                        element.tagName.toLowerCase()
+
+                    const label =
+                        element.getAttribute("aria-label") ||
+                        this.resolveLabelledBy(element) ||
+                        element.getAttribute("value") ||
+                        element.textContent.trim()
+
+                    let state = []
+                    if (element.checked) state.push("ausgewählt")
+                    if (element.disabled) state.push("deaktiviert")
+
+                    const stateText = state.length ? ` (${state.join(", ")})` : ""
+                    return label ? `${label} – ${role}${stateText}` : role
+                }
+
+                resolveLabelledBy(element) {
+                    const ids = element.getAttribute("aria-labelledby")
+                    if (!ids) return ""
+                    return ids
+                        .split(" ")
+                        .map((id) => {
+                            const ref = document.getElementById(id)
+                            return ref ? ref.textContent.trim() : ""
+                        })
+                        .filter(Boolean)
+                        .join(" ")
+                }
+            }
+
+            function varFallback(varName, fallback) {
+                return getComputedStyle(document.documentElement)
+                    .getPropertyValue(varName)
+                    .trim() || fallback
+            }
+
+            class RoomNavigation {
+                constructor(screenReader) {
+                    this.rooms = document.querySelectorAll(".room-item")
+                    this.currentRoomIndex = 0
+                    this.currentDetailIndex = -1
+                    this.isInDetailMode = false
+                    this.currentDetailItems = []
+                    this.screenReader = screenReader
+                    this.isActive = false
+                    this.keyboardHint = document.getElementById(
+                        "room-keyboard-hint"
+                    )
+
+                    this.init()
+                }
+
+                init() {
+                    this.bindEvents()
+                    console.log(
+                        `RoomNavigation initialized with ${this.rooms.length} rooms`
+                    )
+                }
+
+                bindEvents() {
+                    this.rooms.forEach((room, index) => {
+                        const radio = room.querySelector('input[type="radio"]')
+
+                        radio.addEventListener("focus", () => {
+                            this.activate()
+                            this.currentRoomIndex = index
+                            this.setFocus(index)
+                        })
+
+                        radio.addEventListener("blur", () => {
+                            setTimeout(() => {
+                                if (!this.isRoomFocused()) {
+                                    this.deactivate()
+                                }
+                            }, 50)
+                        })
+
+                        room.addEventListener("click", () => {
+                            this.activate()
+                            this.selectRoom(index)
+                        })
+                    })
+
+                    document.addEventListener("keydown", (e) => {
+                        if (this.isActive) {
+                            this.handleKeyDown(e)
+                        }
+                    })
+
+                    document.addEventListener("focusin", (e) => {
+                        if (e.target.closest(".detail-item")) {
+                            this.activate()
+                        }
+                    })
+                }
+
+                activate() {
+                    if (this.isActive) return
+                    this.isActive = true
+                    this.keyboardHint?.classList.remove("hidden")
+
+                    if (window.tableNavigation) {
+                        window.tableNavigation.deactivate()
+                    }
+
+                    console.log("🎯 RoomNavigation activated")
+                }
+
+                deactivate() {
+                    if (!this.isActive) return
+                    this.isActive = false
+                    this.keyboardHint?.classList.add("hidden")
+
+                    this.rooms.forEach((room) => {
+                        room.classList.remove("focus-outline", "room-detail-focus")
+                    })
+
+                    if (this.isInDetailMode) {
+                        this.currentDetailItems.forEach((item) =>
+                            item.classList.remove("focus-outline")
+                        )
+                    }
+
+                    console.log("💤 RoomNavigation deactivated")
+                }
+
+                isRoomFocused() {
+                    const activeElement = document.activeElement
+                    return (
+                        activeElement.closest(".room-item") !== null ||
+                        activeElement.closest(".detail-item") !== null
+                    )
+                }
+
+                handleKeyDown(e) {
+                    if (!this.isActive) return
+
+                    switch (e.key) {
+                        case "ArrowUp":
+                            e.preventDefault()
+                            if (this.isInDetailMode) this.exitDetailMode()
+                            this.navigateRooms(-1)
+                            break
+                        case "ArrowDown":
+                            e.preventDefault()
+                            if (this.isInDetailMode) this.exitDetailMode()
+                            this.navigateRooms(1)
+                            break
+                        case "ArrowRight":
+                            e.preventDefault()
+                            if (this.isInDetailMode) {
+                                this.navigateDetails(1)
+                            } else {
+                                this.enterDetailMode()
+                            }
+                            break
+                        case "ArrowLeft":
+                            e.preventDefault()
+                            if (this.isInDetailMode) {
+                                this.navigateDetails(-1)
+                            } else {
+                                this.screenReader.announce(
+                                    "Pfeil links: Keine Aktion. Pfeil rechts für Details."
+                                )
+                            }
+                            break
+                        case "Escape":
+                            e.preventDefault()
+                            if (this.isInDetailMode) {
+                                this.exitDetailMode()
+                            }
+                            break
+                        case " ":
+                            e.preventDefault()
+                            if (!this.isInDetailMode) {
+                                this.selectRoom(this.currentRoomIndex)
+                            }
+                            break
+                        default:
+                            break
+                    }
+                }
+
+                navigateRooms(direction) {
+                    this.currentRoomIndex = Math.max(
+                        0,
+                        Math.min(
+                            this.rooms.length - 1,
+                            this.currentRoomIndex + direction
+                        )
+                    )
+                    this.setFocus(this.currentRoomIndex)
+                }
+
+                setFocus(roomIndex) {
+                    this.rooms.forEach((room) => {
+                        room.classList.remove("focus-outline", "room-detail-focus")
+                    })
+
+                    const currentRoom = this.rooms[roomIndex]
+                    currentRoom.classList.add("focus-outline")
+                    currentRoom.scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                    })
+
+                    this.selectRoom(roomIndex, false)
+                    const radio = currentRoom.querySelector('input[type="radio"]')
+                    this.screenReader.focusElement(radio)
+                    this.announceRoom(roomIndex)
+                }
+
+                selectRoom(roomIndex, announce = true) {
+                    const room = this.rooms[roomIndex]
+                    const radio = room.querySelector('input[type="radio"]')
+                    radio.checked = true
+
+                    this.rooms.forEach((r) => r.classList.remove("selected"))
+                    room.classList.add("selected")
+
+                    if (announce) {
+                        this.screenReader.announce(
+                            `${room.querySelector("label").textContent} ausgewählt`
+                        )
+                    }
+                }
+
+                enterDetailMode() {
+                    const room = this.rooms[this.currentRoomIndex]
+                    const detailItems = room.querySelectorAll(".detail-item")
+                    if (!detailItems.length) return
+
+                    this.isInDetailMode = true
+                    this.currentDetailItems = Array.from(detailItems)
+                    this.currentDetailIndex = 0
+
+                    room.classList.remove("focus-outline")
+                    room.classList.add("room-detail-focus")
+
+                    this.setDetailFocus(0)
+
+                    this.screenReader.announce(
+                        `Detailmodus für ${
+                            room.querySelector("label").textContent
+                        } geöffnet. Verwenden Sie Pfeil links und rechts. Escape zum Verlassen.`
+                    )
+                }
+
+                exitDetailMode() {
+                    if (!this.isInDetailMode) return
+
+                this.currentDetailItems.forEach((item) =>
+                        item.classList.remove("focus-outline")
+                    )
+
+                    const room = this.rooms[this.currentRoomIndex]
+                    room.classList.remove("room-detail-focus")
+
+                    this.isInDetailMode = false
+                    this.currentDetailIndex = -1
+                    this.currentDetailItems = []
+
+                    this.setFocus(this.currentRoomIndex)
+
+                    this.screenReader.announce("Detailmodus geschlossen.")
+                }
+
+                navigateDetails(direction) {
+                    if (!this.isInDetailMode) return
+                    const newIndex = this.currentDetailIndex + direction
+                    if (
+                        newIndex < 0 ||
+                        newIndex >= this.currentDetailItems.length
+                    ) {
+                        this.screenReader.announce(
+                            "Keine weiteren Details in dieser Richtung."
+                        )
+                        return
+                    }
+
+                    this.currentDetailIndex = newIndex
+                    this.setDetailFocus(newIndex)
+                    this.announceDetail(newIndex)
+                }
+
+                setDetailFocus(index) {
+                    this.currentDetailItems.forEach((item) =>
+                        item.classList.remove("focus-outline")
+                    )
+                    const detail = this.currentDetailItems[index]
+                    if (detail) {
+                        detail.classList.add("focus-outline")
+                        detail.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                        })
+                        this.screenReader.focusElement(detail)
+                    }
+                }
+
+                announceRoom(index) {
+                    const room = this.rooms[index]
+                    const label = room.querySelector("label").textContent
+                    const radioCount = this.rooms.length
+                    this.screenReader.announce(
+                        `${label}. Raum ${index + 1} von ${radioCount}. Pfeil rechts öffnet Details.`
+                    )
+                }
+
+                announceDetail(index) {
+                    const detail = this.currentDetailItems[index]
+                    if (!detail) return
+                    const text = detail.textContent.trim()
+                    const total = this.currentDetailItems.length
+                    this.screenReader.announce(
+                        `${text}. Detail ${index + 1} von ${total}.`
+                    )
+                }
+            }
+
+            class TableNavigation {
+                constructor(tableId, screenReader) {
+                    this.table = document.getElementById(tableId)
+                    if (!this.table) {
+                        console.warn(`Table "${tableId}" not found`)
+                        return
+                    }
+
+                    this.screenReader = screenReader
+                    this.rows = Array.from(
+                        this.table.querySelectorAll(".table-row-navigable")
+                    )
+                    this.currentRowIndex = -1
+                    this.currentCellIndex = -1
+                    this.isInCellMode = false
+                    this.currentCells = []
+                    this.isActive = false
+                    this.keyboardHint = document.getElementById(
+                        "table-keyboard-hint"
+                    )
+                    this.hasAnnouncedTitle = false
+
+                    this.init()
+                }
+
+                init() {
+                    if (!this.rows.length) return
+                    this.bindEvents()
+                }
+
+                bindEvents() {
+                    this.rows.forEach((row, index) => {
+                        row.addEventListener("focus", () => {
+                            this.activate()
+                            this.handleRowFocus(index)
+                        })
+
+                        row.addEventListener("blur", () => {
+                            setTimeout(() => {
+                                if (!this.isTableFocused()) {
+                                    this.deactivate()
+                                }
+                            }, 50)
+                        })
+
+                        row.addEventListener("keydown", (e) => {
+                            if (this.isActive) {
+                                this.handleKeyDown(e, index)
+                            }
+                        })
+
+                        row.addEventListener("click", (e) => {
+                            this.activate()
+                            if (e.target.tagName === "TD") {
+                                const cellIndex = Number(
+                                    e.target.getAttribute("data-col-index")
+                                )
+                                this.enterCellMode(index, cellIndex)
+                            }
+                        })
+                    })
+
+                    document.addEventListener("focusin", (e) => {
+                        if (e.target.closest("#list-table")) {
+                            this.activate()
+                        }
+                    })
+                }
+
+                activate() {
+                    if (this.isActive) return
+                    this.isActive = true
+                    this.keyboardHint?.classList.remove("hidden")
+
+                    if (window.roomNavigation) {
+                        window.roomNavigation.deactivate()
+                    }
+                }
+
+                deactivate() {
+                    if (!this.isActive) return
+                    this.isActive = false
+                    this.keyboardHint?.classList.add("hidden")
+
+                    this.rows.forEach((row) => {
+                        row.classList.remove(
+                            "table-row-focus",
+                            "table-row-detail-mode"
+                        )
+                    })
+
+                    if (this.isInCellMode) {
+                        this.currentCells.forEach((cell) =>
+                            cell.classList.remove("table-cell-focus")
+                        )
+                    }
+                }
+
+                isTableFocused() {
+                    const active = document.activeElement
+                    return active.closest("#list-table") !== null
+                }
+
+                handleRowFocus(rowIndex) {
+                    if (this.isInCellMode) return
+                    this.currentRowIndex = rowIndex
+
+                    this.rows.forEach((row) =>
+                        row.classList.remove("table-row-focus")
+                    )
+                    this.rows[rowIndex].classList.add("table-row-focus")
+
+                    if (!this.hasAnnouncedTitle) {
+                        this.announceTableTitle()
+                        this.hasAnnouncedTitle = true
+                        setTimeout(() => this.announceRow(rowIndex), 1200)
+                    } else {
+                        this.announceRow(rowIndex)
+                    }
+                }
+
+                handleKeyDown(e) {
+                    switch (e.key) {
+                        case "ArrowUp":
+                            e.preventDefault()
+                            if (this.isInCellMode) this.exitCellMode()
+                            this.navigateRows(-1)
+                            break
+                        case "ArrowDown":
+                            e.preventDefault()
+                            if (this.isInCellMode) this.exitCellMode()
+                            this.navigateRows(1)
+                            break
+                        case "ArrowRight":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.navigateCells(1)
+                            } else {
+                                this.enterCellMode(this.currentRowIndex, 0)
+                            }
+                            break
+                        case "ArrowLeft":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.navigateCells(-1)
+                            } else {
+                                this.screenReader.announce(
+                                    "Pfeil links: Keine Aktion. Pfeil rechts für Zellenmodus."
+                                )
+                            }
+                            break
+                        case "Enter":
+                            e.preventDefault()
+                            if (!this.isInCellMode) {
+                                this.enterCellMode(this.currentRowIndex, 0)
+                            }
+                            break
+                        case "Escape":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.exitCellMode()
+                            }
+                            break
+                        case "Home":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.jumpToCell(0)
+                            } else {
+                                this.jumpToRow(0)
+                            }
+                            break
+                        case "End":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.jumpToCell(this.currentCells.length - 1)
+                            } else {
+                                this.jumpToRow(this.rows.length - 1)
+                            }
+                            break
+                        default:
+                            break
+                    }
+                }
+
+                navigateRows(direction) {
+                    const newIndex = this.currentRowIndex + direction
+                    if (newIndex < 0 || newIndex >= this.rows.length) {
+                        this.screenReader.announce(
+                            direction < 0
+                                ? "Anfang der Tabelle erreicht."
+                                : "Ende der Tabelle erreicht."
+                        )
+                        return
+                    }
+                    this.rows[newIndex].focus()
+                }
+
+                enterCellMode(rowIndex, cellIndex = 0) {
+                    if (rowIndex < 0) return
+                    const row = this.rows[rowIndex]
+                    this.currentCells = Array.from(row.querySelectorAll("td"))
+                    if (!this.currentCells.length) return
+
+                    this.isInCellMode = true
+                    this.currentRowIndex = rowIndex
+                    this.currentCellIndex = cellIndex
+
+                    row.classList.remove("table-row-focus")
+                    row.classList.add("table-row-detail-mode")
+                    this.setCellFocus(cellIndex)
+
+                    this.screenReader.announce(
+                        `Zellenmodus aktiviert. Verwenden Sie Pfeil links und rechts. Escape beendet den Zellenmodus.`
+                    )
+                }
+
+                exitCellMode() {
+                    if (!this.isInCellMode) return
+                    this.currentCells.forEach((cell) =>
+                        cell.classList.remove("table-cell-focus")
+                    )
+
+                    const row = this.rows[this.currentRowIndex]
+                    row.classList.remove("table-row-detail-mode")
+                    row.classList.add("table-row-focus")
+                    row.focus()
+
+                    this.isInCellMode = false
+                    this.currentCellIndex = -1
+                    this.currentCells = []
+
+                    this.screenReader.announce(
+                        "Zellenmodus beendet. Zurück zur Zeilennavigation."
+                    )
+                    this.announceRow(this.currentRowIndex)
+                }
+
+                navigateCells(direction) {
+                    if (!this.isInCellMode) return
+                    const newIndex = this.currentCellIndex + direction
+                    if (newIndex < 0 || newIndex >= this.currentCells.length) {
+                        this.screenReader.announce(
+                            direction < 0
+                                ? "Erste Zelle erreicht."
+                                : "Letzte Zelle erreicht."
+                        )
+                        return
+                    }
+                    this.setCellFocus(newIndex)
+                }
+
+                setCellFocus(index) {
+                    this.currentCells.forEach((cell) =>
+                        cell.classList.remove("table-cell-focus")
+                    )
+                    const cell = this.currentCells[index]
+                    if (!cell) return
+
+                    cell.classList.add("table-cell-focus")
+                    cell.scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    })
+                    this.currentCellIndex = index
+                    this.announceCell(index)
+                }
+
+                jumpToRow(index) {
+                    if (index >= 0 && index < this.rows.length) {
+                        this.rows[index].focus()
+                        this.screenReader.announce(`Springe zu Zeile ${index + 1}.`)
+                    }
+                }
+
+                jumpToCell(index) {
+                    if (
+                        this.isInCellMode &&
+                        index >= 0 &&
+                        index < this.currentCells.length
+                    ) {
+                        this.setCellFocus(index)
+                        this.screenReader.announce(`Springe zu Zelle ${index + 1}.`)
+                    }
+                }
+
+                announceTableTitle() {
+                    const labelledBy = this.table.getAttribute("aria-labelledby")
+                    let titleText = ""
+                    if (labelledBy) {
+                        const el = document.getElementById(labelledBy)
+                        if (el) titleText = el.textContent.trim()
+                    }
+                    if (!titleText) {
+                        const caption = this.table.querySelector("caption")
+                        if (caption) titleText = caption.textContent.trim()
+                    }
+                    if (!titleText) {
+                        titleText =
+                            this.table.getAttribute("aria-label") || "Tabelle"
+                    }
+
+                    const totalRows = this.rows.length
+                    const totalCols = this.table.querySelectorAll("th").length
+                    this.screenReader.announce(
+                        `${titleText}. Tabelle mit ${totalRows} Zeilen und ${totalCols} Spalten.`
+                    )
+                }
+
+                announceRow(rowIndex) {
+                    const row = this.rows[rowIndex]
+                    if (!row) return
+                    const cells = Array.from(row.querySelectorAll("td"))
+                    const headers = Array.from(
+                        this.table.querySelectorAll("th")
+                    ).map((th) => th.textContent.trim())
+
+                    const parts = cells.map((cell, index) => {
+                        const header = headers[index] || `Spalte ${index + 1}`
+                        return `${header}: ${cell.textContent.trim()}`
+                    })
+
+                    this.screenReader.announce(
+                        `Zeile ${rowIndex + 1} von ${this.rows.length}. ${parts.join(
+                            ", "
+                        )}. Pfeil rechts für Zellenmodus.`
+                    )
+                }
+
+                announceCell(cellIndex) {
+                    const cell = this.currentCells[cellIndex]
+                    if (!cell) return
+                    const headers = Array.from(
+                        this.table.querySelectorAll("th")
+                    ).map((th) => th.textContent.trim())
+                    const header =
+                        headers[cellIndex] ||
+                        cell.getAttribute("aria-label") ||
+                        `Spalte ${cellIndex + 1}`
+                    const total = this.currentCells.length
+                    this.screenReader.announce(
+                        `${header}: ${cell.textContent.trim()}. Zelle ${
+                            cellIndex + 1
+                        } von ${total}.`
+                    )
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const screenReader = new ScreenReaderSimulator()
+                window.screenReader = screenReader
+
+                window.roomNavigation = new RoomNavigation(screenReader)
+                window.tableNavigation = new TableNavigation(
+                    "list-table",
+                    screenReader
+                )
+
+                const roomForm = document.getElementById("room-selection-form")
+                roomForm.addEventListener("submit", (event) => {
+                    event.preventDefault()
+                    const formData = new FormData(roomForm)
+                    const selected = formData.get("rooms")
+                    if (selected) {
+                        screenReader.announce(
+                            `Formular gesendet. Gewählter Raum: ${selected}.`
+                        )
+                        alert(`Ausgewählter Raum: ${selected}`)
+                    } else {
+                        screenReader.announce(
+                            "Bitte wählen Sie einen Raum bevor Sie das Formular absenden."
+                        )
+                    }
+                })
+            })
+        </script>
+    </body>
+</html>

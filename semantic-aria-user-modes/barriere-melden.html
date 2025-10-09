@@ -9,6 +9,7 @@
         <title>Axe Accessibility – Vollständige Seite testen</title>
     </head>
     <body>
+        <header></header>
         <main>
             <h1>Barriere melden</h1>
             <p>
@@ -28,12 +29,15 @@
                         type="email"
                         id="email"
                         name="email"
+                        placeholder="E-Mail"
                     />
                     <button type="submit">Absenden</button>
                 </fieldset>
             </form>
         </main>
+        <footer></footer>
 
+        
         <aside id="axe-core-testing-panel">
             <!-- Test Control Panel  -->
             <section
@@ -173,7 +177,7 @@
                     /* Test-Panel (von Tests ausgeschlossen) */
                     .test-controls {
                         position: fixed;
-                        inset: auto auto 16px 16px;
+                        inset: auto 16px 16px auto;
                         width: 320px;
                         max-width: 90vw;
                         background: #2c3e50;
@@ -455,10 +459,14 @@
                     try {
                         const target = scopeSelector()
                         const results = await axe.run(target, {
+                            include: [
+                                target === document ? ["body"] : ["main"],
+                            ],
                             exclude: [
-                                '[data-exclude="true"]',
-                                ".test-controls",
-                                "#results",
+                                ['[data-exclude="true"]'],
+                                [".test-controls"],
+                                ["#results"],
+                                ["#axe-core-testing-panel"],
                             ],
                         })
                         displayResults(results)
@@ -530,6 +538,7 @@
                                 '[data-exclude="true"]',
                                 ".test-controls",
                                 "#results",
+                                "#axe-core-testing-panel",
                             ],
                             timeout: 6000, // 6 seconds, must be enough
                         })

@@ -12,53 +12,217 @@
             href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap"
             rel="stylesheet"
         />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Icons"
+            rel="stylesheet"
+        />
         <style>
-            html {
-                font-family: Barlow;
-                background: #f5f5f5;
-                padding: 20px;
+            /* ============================================
+               CSS DESIGN TOKENS - Zentrale Variablen
+               ============================================ */
+            :root {
+                /* === FARBEN - Primär === */
+                --color-primary: #007bff;
+                --color-primary-hover: #0056b3;
+                --color-primary-light: #e3f2fd;
+                --color-primary-lighter: #f0f8ff;
+                --color-primary-alpha-66: #007bff66;
+                --color-primary-alpha-10: rgba(52, 152, 219, 0.1);
+
+                /* === FARBEN - Sekundär === */
+                --color-secondary: #6c757d;
+                --color-secondary-light: #f8f9fa;
+
+                /* === FARBEN - Erfolg/Grün === */
+                --color-success: #28a745;
+                --color-success-light: #f8fff9;
+                --color-success-alpha-30: rgba(46, 204, 113, 0.3);
+
+                /* === FARBEN - Warnung/Gelb === */
+                --color-warning: #ffc107;
+                --color-warning-light: #fff3cd;
+                --color-warning-alpha-30: rgba(255, 193, 7, 0.3);
+                --color-warning-alpha-50: rgba(255, 193, 7, 0.5);
+                --color-warning-bright: #f2ec33;
+
+                /* === FARBEN - Info/Cyan === */
+                --color-info: #17a2b8;
+                --color-info-light: #d1ecf1;
+                --color-info-dark: #0c5460;
+                --color-info-bright: #3dd7fd;
+
+                /* === FARBEN - Neutral/Grau === */
+                --color-gray-50: #f5f5f5;
+                --color-gray-100: #fafafa;
+                --color-gray-200: #f0f0f0;
+                --color-gray-300: #e0e0e0;
+                --color-gray-400: #ddd;
+                --color-gray-500: #999;
+                --color-gray-600: #333;
+                --color-gray-700: #2a2a2a;
+                --color-gray-800: #1a1a1a;
+                --color-gray-900: #000;
+
+                /* === FARBEN - Text === */
+                --color-text-primary: #000;
+                --color-text-secondary: #333;
+                --color-text-inverse: #fff;
+                --color-text-success: #00ff00;
+                --color-text-warning: #ffff00;
+
+                /* === FARBEN - Hintergrund === */
+                --color-bg-page: #f5f5f5;
+                --color-bg-card: #fff;
+                --color-bg-input: #fafafa;
+                --color-bg-screenreader: #1a1a1a;
+                --color-bg-keyboard-hint: #333;
+
+                /* === FARBEN - Border === */
+                --color-border-light: #e0e0e0;
+                --color-border-medium: #ddd;
+                --color-border-dark: #333;
+
+                /* === BORDER RADIUS === */
+                --radius-xs: 4px;
+                --radius-sm: 8px;
+                --radius-md: 12px;
+                --radius-lg: 20px;
+                --radius-full: 50%;
+
+                /* === BORDER WIDTH === */
+                --border-thin: 1px;
+                --border-medium: 2px;
+                --border-thick: 3px;
+                --border-extra-thick: 4px;
+
+                /* === SCHATTEN === */
+                --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+                --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+                --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+                --shadow-focus-primary: 0 0 0 2px var(--color-primary);
+                --shadow-focus-primary-light: 0 0 0 4px
+                    var(--color-primary-alpha-66);
+                --shadow-focus-warning: 0 0 0 2px var(--color-warning);
+                --shadow-focus-warning-light: 0 0 0 4px
+                    var(--color-warning-alpha-50);
+                --shadow-focus-warning-ring: 0 0 0 3px
+                    var(--color-warning-alpha-30);
+                --shadow-inset-primary: inset 0 0 0 2px var(--color-primary);
+                --shadow-inset-info: inset 0 0 0 3px var(--color-info-dark);
+                --shadow-inset-success: 0 0 0 3px var(--color-success);
+
+                /* === SPACING === */
+                --spacing-xs: 5px;
+                --spacing-sm: 10px;
+                --spacing-md: 15px;
+                --spacing-lg: 20px;
+                --spacing-xl: 30px;
+
+                /* === TRANSITIONS === */
+                --transition-fast: 0.2s ease;
+                --transition-normal: 0.3s ease;
+                --transition-slow: 0.5s ease;
+                --transition-focus: background 0.05s linear;
+
+                /* === TYPOGRAPHY === */
+                --font-family-base: "Barlow", sans-serif;
+                --font-family-mono: monospace;
+                --font-size-xs: 0.9em;
+                --font-size-base: 1em;
+                --font-size-lg: 1.2em;
+                --font-weight-normal: 400;
+                --font-weight-bold: 700;
+                --line-height-base: 1.4;
+
+                /* === Z-INDEX === */
+                --z-index-base: 1;
+                --z-index-overlay: 997;
+                --z-index-modal: 998;
+                --z-index-screenreader: 1000;
             }
 
-            /* Focus animation */
+            /* ============================================
+               GLOBALE STYLES
+               ============================================ */
+            html {
+                font-family: var(--font-family-base);
+                background: var(--color-bg-page);
+                padding: var(--spacing-lg);
+            }
+
+            /* ============================================
+               FOCUS ANIMATIONS
+               ============================================ */
             @keyframes focusPulse {
                 0% {
-                    box-shadow: 0 0 0 2px #007bff;
+                    box-shadow: var(--shadow-focus-primary);
                 }
                 50% {
-                    box-shadow: 0 0 0 4px #007bff66;
+                    box-shadow: var(--shadow-focus-primary-light);
                 }
                 100% {
-                    box-shadow: 0 0 0 2px #007bff;
+                    box-shadow: var(--shadow-focus-primary);
                 }
             }
 
+            @keyframes focusPulseYellow {
+                0% {
+                    box-shadow: var(--shadow-focus-warning);
+                }
+                50% {
+                    box-shadow: var(--shadow-focus-warning-light);
+                }
+                100% {
+                    box-shadow: var(--shadow-focus-warning);
+                }
+            }
+
+            /* ============================================
+               FOCUS STYLES
+               ============================================ */
+
+            /* Standard Focus Outline - BLAU für Zeilen */
             .focus-outline {
                 outline: none;
-                border-radius: 4px;
+                border-radius: var(--radius-xs);
                 animation: focusPulse 1.5s infinite;
             }
 
-            /* Special focus style for room in detail mode */
-            .room-detail-focus {
-                outline: none;
-                border-radius: 8px;
-                box-shadow: 0 0 0 3px #28a745;
-                border-color: #28a745 !important;
-                background: #f8fff9 !important;
+            /* Detail-Items Focus - GELB wie Tabellen-Zellen */
+            .detail-item.focus-outline {
+                outline: var(--border-medium) solid var(--color-warning);
+                outline-offset: -2px;
+                background-color: var(--color-warning-light) !important;
+                box-shadow: var(--shadow-focus-warning-ring);
+                animation: focusPulseYellow 1.5s infinite;
+                border-color: var(--color-warning) !important;
             }
 
+            /* Special focus style for room in detail mode - GRÜN */
+            .room-detail-focus {
+                outline: none;
+                border-radius: var(--radius-sm);
+                box-shadow: var(--shadow-inset-success);
+                border-color: var(--color-success) !important;
+                background: var(--color-success-light) !important;
+            }
+
+            /* ============================================
+               FORM ELEMENTS
+               ============================================ */
+
             fieldset {
-                border: 2px solid #ddd;
-                border-radius: 8px;
-                padding: 20px;
-                background: white;
+                border: var(--border-medium) solid var(--color-border-medium);
+                border-radius: var(--radius-sm);
+                padding: var(--spacing-lg);
+                background: var(--color-bg-card);
                 max-width: 600px;
             }
 
             legend {
-                font-weight: 700;
-                font-size: 1.2em;
-                padding: 0 10px;
+                font-weight: var(--font-weight-bold);
+                font-size: var(--font-size-lg);
+                padding: 0 var(--spacing-sm);
             }
 
             ul,
@@ -68,76 +232,107 @@
                 margin: 0;
             }
 
+            /* ============================================
+               ROOM ITEMS
+               ============================================ */
+
             .room-item {
-                margin: 10px 0;
-                padding: 15px;
-                border: 2px solid #e0e0e0;
-                border-radius: 8px;
-                background: #fafafa;
+                margin: var(--spacing-sm) 0;
+                padding: var(--spacing-md);
+                border: var(--border-medium) solid var(--color-border-light);
+                border-radius: var(--radius-sm);
+                background: var(--color-bg-input);
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: all var(--transition-normal);
             }
 
             .room-item:hover {
-                background: #f0f0f0;
-                border-color: #007bff;
+                background: var(--color-gray-200);
+                border-color: var(--color-primary);
             }
 
             .room-item.selected {
-                background: #e3f2fd;
-                border-color: #007bff;
+                background: var(--color-primary-light);
+                border-color: var(--color-primary);
             }
 
             .room-header {
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                gap: var(--spacing-sm);
             }
 
             .room-details {
-                margin-top: 15px;
-                padding-left: 30px;
+                margin-top: var(--spacing-md);
+                padding-left: var(--spacing-xl);
             }
 
             .room-details ol {
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
+                gap: var(--spacing-sm);
             }
+
+            /* ============================================
+               DETAIL ITEMS
+               ============================================ */
 
             .detail-item {
                 padding: 8px 12px;
-                background: white;
-                border: 1px solid #ddd;
-                border-radius: 4px;
+                background: var(--color-bg-card);
+                border: var(--border-thin) solid var(--color-border-medium);
+                border-radius: var(--radius-xs);
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: all var(--transition-normal);
             }
 
             .detail-item:hover {
-                background: #f0f8ff;
-                border-color: #007bff;
+                background: var(--color-primary-lighter);
+                border-color: var(--color-primary);
             }
 
-            .numbers {
-                display: flex;
-                gap: 15px;
+            /* Detail-Item mit Fokus - GELB */
+            .detail-item:focus,
+            .detail-item.focus-outline {
+                outline: var(--border-medium) solid var(--color-warning);
+                outline-offset: -2px;
+                background-color: var(--color-warning-light) !important;
+                box-shadow: var(--shadow-focus-warning-ring);
+                border-color: var(--color-warning) !important;
+            }
+
+            /* Numbers innerhalb von Detail-Items */
+            .numbers.focus-outline {
+                background-color: var(--color-warning-light) !important;
             }
 
             .number-item {
                 padding: 8px 16px;
-                background: #007bff;
-                color: white;
-                border-radius: 20px;
-                font-weight: 700;
+                background: var(--color-primary);
+                color: var(--color-text-inverse);
+                border-radius: var(--radius-lg);
+                font-weight: var(--font-weight-bold);
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: all var(--transition-normal);
             }
 
             .number-item:hover {
-                background: #0056b3;
+                background: var(--color-primary-hover);
                 transform: scale(1.05);
             }
+
+            /* Number-Items behalten ihre blaue Farbe auch bei Parent-Focus */
+            .numbers.focus-outline .number-item {
+                background: var(--color-primary);
+            }
+
+            .numbers.focus-outline .number-item:hover {
+                background: var(--color-primary-hover);
+            }
+
+            /* ============================================
+               INPUT ELEMENTS
+               ============================================ */
 
             input[type="radio"] {
                 width: 18px;
@@ -146,418 +341,631 @@
             }
 
             label {
-                font-weight: 700;
+                font-weight: var(--font-weight-bold);
                 cursor: pointer;
                 user-select: none;
             }
+
+            /* ============================================
+               UTILITY CLASSES
+               ============================================ */
 
             .hidden {
                 display: none;
             }
 
-            /* Screenreader simulation */
+            /* ============================================
+               SCREENREADER SIMULATION
+               ============================================ */
+
             .screenreader-output {
                 position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #1a1a1a;
-                color: #00ff00;
-                padding: 15px;
-                border-radius: 8px;
-                font-family: monospace;
-                font-size: 0.9em;
+                top: var(--spacing-lg);
+                right: var(--spacing-lg);
+                background: var(--color-bg-screenreader);
+                color: var(--color-text-success);
+                padding: var(--spacing-md);
+                border-radius: var(--radius-sm);
+                font-family: var(--font-family-mono);
+                font-size: var(--font-size-xs);
                 max-width: 300px;
                 min-height: 100px;
-                border: 2px solid #333;
-                z-index: 1000;
+                border: var(--border-medium) solid var(--color-border-dark);
+                z-index: var(--z-index-screenreader);
             }
 
             .screenreader-title {
-                color: #ffff00;
-                font-weight: bold;
-                margin-bottom: 10px;
-                border-bottom: 1px solid #333;
-                padding-bottom: 5px;
+                color: var(--color-text-warning);
+                font-weight: var(--font-weight-bold);
+                margin-bottom: var(--spacing-sm);
+                border-bottom: var(--border-thin) solid var(--color-border-dark);
+                padding-bottom: var(--spacing-xs);
             }
 
             .screenreader-text {
-                line-height: 1.4;
+                line-height: var(--line-height-base);
                 word-wrap: break-word;
             }
 
-            /* Keyboard navigation indicators */
+            /* ============================================
+               KEYBOARD HINTS
+               ============================================ */
+
             .keyboard-hint {
                 position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: #333;
-                color: white;
-                padding: 10px 15px;
-                border-radius: 8px;
-                font-size: 0.9em;
+                bottom: var(--spacing-lg);
+                right: var(--spacing-lg);
+                background: var(--color-bg-keyboard-hint);
+                color: var(--color-text-inverse);
+                padding: var(--spacing-sm) var(--spacing-md);
+                border-radius: var(--radius-sm);
+                font-size: var(--font-size-xs);
                 opacity: 0.8;
             }
-        </style>
-        <style>
-            @media (min-width: 768px) {
-                .room-item,
-                .room-details ol {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    align-items: center;
-                }
+
+            /* ============================================
+               TABLE STYLES
+               ============================================ */
+
+            #list-table {
+                width: 100%;
+                max-width: 800px;
+                border-collapse: separate;
+                border-spacing: 0;
+                margin: var(--spacing-lg) 0;
+                background: var(--color-bg-card);
+                border-radius: var(--radius-sm);
+                overflow: hidden;
+                box-shadow: var(--shadow-sm);
             }
-        </style>
-        <style>
-            /* HIGH CONTRAST OVERWRITE */
+
+            #list-table th {
+                background: var(--color-primary);
+                color: var(--color-text-inverse);
+                padding: var(--spacing-md);
+                text-align: left;
+                font-weight: var(--font-weight-bold);
+                border: none;
+            }
+
+            #list-table td {
+                padding: 12px var(--spacing-md);
+                border-bottom: var(--border-thin) solid
+                    var(--color-border-light);
+                transition: all var(--transition-fast);
+            }
+
+            #list-table tr:last-child td {
+                border-bottom: none;
+            }
+
+            /* ============================================
+               TABLE NAVIGATION
+               ============================================ */
+
+            /* Zeilen-Navigation (Tab-Fokus) */
+            .table-row-navigable {
+                cursor: pointer;
+                transition: background-color var(--transition-fast);
+            }
+
+            .table-row-navigable:hover {
+                background-color: var(--color-secondary-light);
+            }
+
+            .table-row-navigable:focus {
+                outline: none;
+                background-color: var(--color-primary-light);
+                box-shadow: var(--shadow-inset-primary);
+            }
+
+            /* Zellen-Navigation (Cursor-Fokus) */
+            .table-cell-focus {
+                background-color: var(--color-warning-light) !important;
+                position: relative;
+                outline: var(--border-medium) solid var(--color-warning);
+                outline-offset: -2px;
+                box-shadow: var(--shadow-focus-warning-ring);
+            }
+
+            .table-row-focus {
+                background-color: var(--color-primary-light) !important;
+            }
+
+            /* Aktive Zeile im Detail-Modus */
+            .table-row-detail-mode {
+                background-color: var(--color-info-light) !important;
+                box-shadow: var(--shadow-inset-info);
+            }
+
+            /* ============================================
+               HIGH CONTRAST MODE
+               ============================================ */
+
             @media screen and (prefers-contrast: more) {
-                /* Basis-Reset für alle Elemente */
-                * {
-                    background: black !important;
-                    color: white !important;
-                    border-color: white !important;
-                    animation: none !important;
-                    transition: none !important;
+                :root {
+                    /* Override für High Contrast */
+                    --color-bg-card: #000;
+                    --color-text-primary: #fff;
+                    --color-border-light: #fff;
                 }
 
-                /* Spezifische Zustände */
-                :hover {
-                    background: #333 !important;
-                    border-color: #f2ec33 !important;
-                    color: white !important;
+                #list-table th {
+                    background: var(--color-bg-card) !important;
+                    color: var(--color-text-primary) !important;
+                    border: var(--border-medium) solid var(--color-border-light) !important;
                 }
 
-                :focus {
-                    background: black !important;
-                    color: white !important;
-                    outline: 3px solid #3dd7fd !important;
-                    box-shadow: 0 0 0 3px #3dd7fd !important;
+                #list-table td {
+                    border-color: var(--color-border-light) !important;
                 }
 
-                :disabled {
-                    background: black !important;
-                    color: #666 !important;
-                    border-color: #666 !important;
+                .table-row-navigable:focus {
+                    box-shadow: inset 0 0 0 var(--border-thick)
+                        var(--color-info-bright) !important;
                 }
 
-                /* Ausgewählte Elemente */
-                .selected,
-                :checked {
-                    background: black !important;
-                    color: white !important;
-                    border-color: #3dd7fd !important;
+                .table-cell-focus {
+                    outline-color: var(--color-warning-bright) !important;
+                    box-shadow: 0 0 0 var(--border-extra-thick)
+                        var(--color-warning-bright) !important;
                 }
 
-                /* Spezielle Fokus-Klassen */
-                .focus-outline {
-                    box-shadow: 0 0 0 3px #3dd7fd !important;
+                .table-row-detail-mode {
+                    box-shadow: inset 0 0 0 var(--border-extra-thick)
+                        var(--color-info-bright) !important;
                 }
 
+                /* Room Detail Items - GELB */
+                .detail-item.focus-outline {
+                    outline-color: var(--color-warning-bright) !important;
+                    box-shadow: 0 0 0 var(--border-extra-thick)
+                        var(--color-warning-bright) !important;
+                    background-color: var(--color-bg-card) !important;
+                    border-color: var(--color-warning-bright) !important;
+                }
+
+                /* Room in Detail Mode - CYAN */
                 .room-detail-focus {
-                    box-shadow: 0 0 0 3px #f2ec33 !important;
-                    border-color: #f2ec33 !important;
+                    box-shadow: 0 0 0 var(--border-extra-thick)
+                        var(--color-info-bright) !important;
+                    border-color: var(--color-info-bright) !important;
+                    background: var(--color-bg-card) !important;
                 }
 
-                /* Number Items - invertiert für bessere Sichtbarkeit */
-                .number-item {
-                    background: white !important;
-                    color: black !important;
-                }
-
-                .number-item:hover {
-                    background: #f2ec33 !important;
-                    color: black !important;
-                }
-
-                /* Text-Selektion */
-                ::selection {
-                    background: #3dd7fd !important;
-                    color: black !important;
+                /* Room Normal Focus - CYAN */
+                .room-item.focus-outline {
+                    box-shadow: 0 0 0 var(--border-extra-thick)
+                        var(--color-info-bright) !important;
+                    background: var(--color-bg-card) !important;
                 }
             }
 
-            /* REDUCE MOTION OVERWRITE */
+            /* ============================================
+               REDUCED MOTION
+               ============================================ */
+
             @media screen and (prefers-reduced-motion: reduce) {
-                body {
-                    *,
-                    *::before,
-                    *::after {
-                        scroll-behavior: auto !important;
-                        animation-duration: 0.01s !important;
-                        transition-duration: 0.01s !important;
-                    }
+                *,
+                *::before,
+                *::after {
+                    scroll-behavior: auto !important;
+                    animation-duration: 0.01s !important;
+                    transition-duration: 0.01s !important;
                 }
             }
         </style>
     </head>
 
     <body>
-        <form
-            method="post"
-            action=""
-        >
-            <fieldset>
-                <legend>Räume</legend>
-                <!-- Versteckte Beschreibung für alle Radiobuttons -->
-                <div
-                    id="room-navigation-help"
-                    class="sr-only"
-                >
-                    Zum Erweitern der Details, Pfeil rechts drücken. Escape zum
-                    Verlassen der Details.
-                </div>
-
-                <ul id="room-list">
-                    <li
-                        class="room-item"
-                        data-room="one"
+        <!-- Tabelle mit 3 Zeilen als Listen-Komponenten mit Details -->
+        <article>
+            <h2>Tabellarische Liste</h2>
+            <table
+                id="list-table"
+                role="table"
+                aria-label="Benutzerliste mit Tastaturnavigation"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">Nummer</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Typ</th>
+                        <th scope="col">Ort</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        tabindex="0"
+                        class="table-row-navigable"
+                        data-row-index="0"
                     >
-                        <header class="room-header">
-                            <input
-                                type="radio"
-                                id="room-1"
-                                name="rooms"
-                                value="one"
-                                aria-describedby="room-navigation-help"
-                            />
-                            <label for="room-1">Raum Eins</label>
-                        </header>
-                        <div class="room-details">
-                            <ol>
-                                <li
-                                    class="detail-item numbers"
-                                    tabindex="0"
-                                >
-                                    <span
-                                        class="number-item"
-                                        tabindex="0"
-                                        >12</span
-                                    >
-                                    <span
-                                        class="number-item"
-                                        tabindex="0"
-                                        >5</span
-                                    >
-                                    <span
-                                        class="number-item"
-                                        tabindex="0"
-                                        >8</span
-                                    >
-                                </li>
-                                <li
-                                    class="detail-item"
-                                    tabindex="0"
-                                >
-                                    <p>
-                                        Lorem ipsum dolor sit, amet consectetur
-                                        adipisicing elit. Eaque quibusdam sit
-                                        tenetur modi, nesciunt excepturi quos id
-                                        dolor laudantium voluptatem dolorem.
-                                    </p>
-                                </li>
-                                <li
-                                    class="detail-item"
-                                    tabindex="0"
-                                >
-                                    <i>Check-in verfügbar</i>
-                                </li>
-                            </ol>
-                        </div>
-                    </li>
-
-                    <li
-                        class="room-item"
-                        data-room="two"
+                        <td
+                            data-col-index="0"
+                            aria-label="Nummer"
+                        >
+                            1
+                        </td>
+                        <td
+                            data-col-index="1"
+                            aria-label="Name"
+                        >
+                            Max Mustermann
+                        </td>
+                        <td
+                            data-col-index="2"
+                            aria-label="Typ"
+                        >
+                            Admin
+                        </td>
+                        <td
+                            data-col-index="3"
+                            aria-label="Ort"
+                        >
+                            Berlin
+                        </td>
+                    </tr>
+                    <tr
+                        tabindex="0"
+                        class="table-row-navigable"
+                        data-row-index="1"
                     >
-                        <header class="room-header">
-                            <input
-                                type="radio"
-                                id="room-2"
-                                name="rooms"
-                                value="two"
-                                aria-describedby="room-navigation-help"
-                            />
-                            <label for="room-2">Raum Zwei</label>
-                        </header>
-                        <div class="room-details">
-                            <ol>
-                                <li
-                                    class="detail-item numbers"
-                                    tabindex="0"
-                                >
-                                    <span
-                                        class="number-item"
-                                        tabindex="0"
-                                        >9</span
-                                    >
-                                    <span
-                                        class="number-item"
-                                        tabindex="0"
-                                        >3</span
-                                    >
-                                    <span
-                                        class="number-item"
-                                        tabindex="0"
-                                        >6</span
-                                    >
-                                </li>
-                                <li
-                                    class="detail-item"
-                                    tabindex="0"
-                                >
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur
-                                        adipisicing elit. Voluptatibus, nulla?
-                                        Quos voluptatem repellendus sunt nostrum
-                                        dolores eveniet.
-                                    </p>
-                                </li>
-                                <li
-                                    class="detail-item"
-                                    tabindex="0"
-                                >
-                                    <i>Früher Check-in möglich</i>
-                                </li>
-                            </ol>
-                        </div>
-                    </li>
-
-                    <li
-                        class="room-item"
-                        data-room="three"
+                        <td
+                            data-col-index="0"
+                            aria-label="Nummer"
+                        >
+                            2
+                        </td>
+                        <td
+                            data-col-index="1"
+                            aria-label="Name"
+                        >
+                            Erika Musterfrau
+                        </td>
+                        <td
+                            data-col-index="2"
+                            aria-label="Typ"
+                        >
+                            User
+                        </td>
+                        <td
+                            data-col-index="3"
+                            aria-label="Ort"
+                        >
+                            Hamburg
+                        </td>
+                    </tr>
+                    <tr
+                        tabindex="0"
+                        class="table-row-navigable"
+                        data-row-index="2"
                     >
-                        <header class="room-header">
-                            <input
-                                type="radio"
-                                id="room-3"
-                                name="rooms"
-                                value="three"
-                                aria-describedby="room-navigation-help"
-                            />
-                            <label for="room-3">Raum Drei</label>
-                        </header>
-                        <div class="room-details">
-                            <ol>
-                                <li
-                                    class="detail-item numbers"
-                                    tabindex="0"
-                                >
-                                    <span
-                                        class="number-item"
-                                        tabindex="0"
-                                        >15</span
-                                    >
-                                    <span
-                                        class="number-item"
-                                        tabindex="0"
-                                        >7</span
-                                    >
-                                    <span
-                                        class="number-item"
-                                        tabindex="0"
-                                        >4</span
-                                    >
-                                </li>
-                                <li
-                                    class="detail-item"
-                                    tabindex="0"
-                                >
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur
-                                        adipisicing elit. Earum rerum mollitia
-                                        voluptatem.
-                                    </p>
-                                </li>
-                                <li
-                                    class="detail-item"
-                                    tabindex="0"
-                                >
-                                    <i>Früher Check-in möglich</i>
-                                </li>
-                            </ol>
-                        </div>
-                    </li>
+                        <td
+                            data-col-index="0"
+                            aria-label="Nummer"
+                        >
+                            3
+                        </td>
+                        <td
+                            data-col-index="1"
+                            aria-label="Name"
+                        >
+                            John Doe
+                        </td>
+                        <td
+                            data-col-index="2"
+                            aria-label="Typ"
+                        >
+                            Guest
+                        </td>
+                        <td
+                            data-col-index="3"
+                            aria-label="Ort"
+                        >
+                            München
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-                    <li
-                        class="room-item"
-                        data-room="four"
+            <!-- Tabellen-Hint -->
+            <div
+                id="table-keyboard-hint"
+                class="keyboard-hint hidden"
+                style="bottom: 60px"
+            >
+                Tabelle: Tab für Zeilen, ↑↓ zwischen Zeilen, ←→ zwischen Zellen
+            </div>
+        </article>
+        <!-- /Tabelle mit 3 Zeilen als Listen-Komponenten mit Details -->
+
+        <!-- Radio-Buttons mit Details  -->
+        <article>
+            <h2>Raum-Liste</h2>
+            <form
+                method="post"
+                action=""
+            >
+                <fieldset>
+                    <legend>
+                        Räume (Kombination aus Radiobuttons und Details)
+                    </legend>
+                    <!-- Versteckte Beschreibung für alle Radiobuttons -->
+                    <div
+                        id="room-navigation-help"
+                        class="sr-only"
                     >
-                        <header class="room-header">
-                            <input
-                                type="radio"
-                                id="room-4"
-                                name="rooms"
-                                value="four"
-                                aria-describedby="room-navigation-help"
-                            />
-                            <label for="room-4">Raum Vier</label>
-                        </header>
-                        <div class="room-details">
-                            <ol>
-                                <li
-                                    class="detail-item numbers"
-                                    tabindex="0"
-                                >
-                                    <span
-                                        class="number-item"
+                        Zum Erweitern der Details, Pfeil rechts drücken. Escape
+                        zum Verlassen der Details.
+                    </div>
+
+                    <ul id="room-list">
+                        <li
+                            class="room-item"
+                            data-room="one"
+                        >
+                            <header class="room-header">
+                                <input
+                                    type="radio"
+                                    id="room-1"
+                                    name="rooms"
+                                    value="one"
+                                    aria-describedby="room-navigation-help"
+                                />
+                                <label for="room-1">Raum Eins</label>
+                            </header>
+                            <div class="room-details">
+                                <ol>
+                                    <li
+                                        class="detail-item numbers"
                                         tabindex="0"
-                                        >11</span
                                     >
-                                    <span
-                                        class="number-item"
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >12</span
+                                        >
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >5</span
+                                        >
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >8</span
+                                        >
+                                    </li>
+                                    <li
+                                        class="detail-item"
                                         tabindex="0"
-                                        >2</span
                                     >
-                                    <span
-                                        class="number-item"
+                                        <p>
+                                            Lorem ipsum dolor sit, amet
+                                            consectetur adipisicing elit. Eaque
+                                            quibusdam sit tenetur modi, nesciunt
+                                            excepturi quos id dolor laudantium
+                                            voluptatem dolorem.
+                                        </p>
+                                    </li>
+                                    <li
+                                        class="detail-item"
                                         tabindex="0"
-                                        >9</span
                                     >
-                                </li>
-                                <li
-                                    class="detail-item"
-                                    tabindex="0"
-                                >
-                                    <p>
-                                        Lorem ipsum dolor sit, amet consectetur
-                                        adipisicing elit. Molestiae nobis
-                                        deleniti quas natus non sunt
-                                        praesentium? Id, quaerat reprehenderit.
-                                    </p>
-                                </li>
-                                <li
-                                    class="detail-item"
-                                    tabindex="0"
-                                >
-                                    <i>Später Check-out verfügbar</i>
-                                </li>
-                            </ol>
-                        </div>
-                    </li>
-                </ul>
-            </fieldset>
-        </form>
+                                        <i>Check-in verfügbar</i>
+                                    </li>
+                                </ol>
+                            </div>
+                        </li>
 
-        <h1>Beschreibung</h1>
-        <p>
-            Die Räume sind eine Liste, hier <code>&lt;ul&gt;</code>. Vorteil:
-            der Screenreader liest Struktur und Anzahl der Raumeinträge vor.
-        </p>
+                        <li
+                            class="room-item"
+                            data-room="two"
+                        >
+                            <header class="room-header">
+                                <input
+                                    type="radio"
+                                    id="room-2"
+                                    name="rooms"
+                                    value="two"
+                                    aria-describedby="room-navigation-help"
+                                />
+                                <label for="room-2">Raum Zwei</label>
+                            </header>
+                            <div class="room-details">
+                                <ol>
+                                    <li
+                                        class="detail-item numbers"
+                                        tabindex="0"
+                                    >
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >9</span
+                                        >
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >3</span
+                                        >
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >6</span
+                                        >
+                                    </li>
+                                    <li
+                                        class="detail-item"
+                                        tabindex="0"
+                                    >
+                                        <p>
+                                            Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit.
+                                            Voluptatibus, nulla? Quos voluptatem
+                                            repellendus sunt nostrum dolores
+                                            eveniet.
+                                        </p>
+                                    </li>
+                                    <li
+                                        class="detail-item"
+                                        tabindex="0"
+                                    >
+                                        <i>Früher Check-in möglich</i>
+                                    </li>
+                                </ol>
+                            </div>
+                        </li>
 
-        <p>
-            Ein einzelner Raum ist eine Zusammenstellung von ggf. Überschriften,
-            Listen und Texten. Auch hier liest der Screenreader Struktur und
-            Anzahl, zum Beispiel der Badges (&lt;ol&gt;) vor.
-        </p>
+                        <li
+                            class="room-item"
+                            data-room="three"
+                        >
+                            <header class="room-header">
+                                <input
+                                    type="radio"
+                                    id="room-3"
+                                    name="rooms"
+                                    value="three"
+                                    aria-describedby="room-navigation-help"
+                                />
+                                <label for="room-3">Raum Drei</label>
+                            </header>
+                            <div class="room-details">
+                                <ol>
+                                    <li
+                                        class="detail-item numbers"
+                                        tabindex="0"
+                                    >
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >15</span
+                                        >
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >7</span
+                                        >
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >4</span
+                                        >
+                                    </li>
+                                    <li
+                                        class="detail-item"
+                                        tabindex="0"
+                                    >
+                                        <p>
+                                            Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit. Earum
+                                            rerum mollitia voluptatem.
+                                        </p>
+                                    </li>
+                                    <li
+                                        class="detail-item"
+                                        tabindex="0"
+                                    >
+                                        <i>Früher Check-in möglich</i>
+                                    </li>
+                                </ol>
+                            </div>
+                        </li>
 
-        <p>
-            Bei Erreichen eines Raumes (Pfeiltasten rauf/runter) wird nur der
-            Raumname vorgelesen und die Steuerung angekündigt. Über die
-            programmierte Tastatursteuerung können dann die Inhalte pro Raum
-            angefordert werden (Pfeiltasten links/rechts).
-        </p>
+                        <li
+                            class="room-item"
+                            data-room="four"
+                        >
+                            <header class="room-header">
+                                <input
+                                    type="radio"
+                                    id="room-4"
+                                    name="rooms"
+                                    value="four"
+                                    aria-describedby="room-navigation-help"
+                                />
+                                <label for="room-4">Raum Vier</label>
+                            </header>
+                            <div class="room-details">
+                                <ol>
+                                    <li
+                                        class="detail-item numbers"
+                                        tabindex="0"
+                                    >
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >11</span
+                                        >
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >2</span
+                                        >
+                                        <span
+                                            class="number-item"
+                                            tabindex="0"
+                                            >9</span
+                                        >
+                                    </li>
+                                    <li
+                                        class="detail-item"
+                                        tabindex="0"
+                                    >
+                                        <p>
+                                            Lorem ipsum dolor sit, amet
+                                            consectetur adipisicing elit.
+                                            Molestiae nobis deleniti quas natus
+                                            non sunt praesentium? Id, quaerat
+                                            reprehenderit.
+                                        </p>
+                                    </li>
+                                    <li
+                                        class="detail-item"
+                                        tabindex="0"
+                                    >
+                                        <i>Später Check-out verfügbar</i>
+                                    </li>
+                                </ol>
+                            </div>
+                        </li>
+                    </ul>
+                </fieldset>
+            </form>
 
+            <h1>Beschreibung</h1>
+            <p>
+                Die Räume sind eine Liste, hier <code>&lt;ul&gt;</code>.
+                Vorteil: der Screenreader liest Struktur und Anzahl der
+                Raumeinträge vor.
+            </p>
+
+            <p>
+                Ein einzelner Raum ist eine Zusammenstellung von ggf.
+                Überschriften, Listen und Texten. Auch hier liest der
+                Screenreader Struktur und Anzahl, zum Beispiel der Badges
+                (&lt;ol&gt;) vor.
+            </p>
+
+            <p>
+                Bei Erreichen eines Raumes (Pfeiltasten rauf/runter) wird nur
+                der Raumname vorgelesen und die Steuerung angekündigt. Über die
+                programmierte Tastatursteuerung können dann die Inhalte pro Raum
+                angefordert werden (Pfeiltasten links/rechts).
+            </p>
+
+            <!-- Room-Hint -->
+            <div
+                id="room-keyboard-hint"
+                class="keyboard-hint hidden"
+            >
+                Verwende ↑↓ um Räume zu navigieren, Leertaste zum Auswählen, ←→
+                für Raumdetails
+            </div>
+        </article>
+        <!-- /Radio-Buttons mit Details  -->
+
+        <!-- Screenreader-Ausgabe  -->
         <div class="screenreader-output">
             <div class="screenreader-title">VoiceOver Simulation</div>
             <div
@@ -566,11 +974,6 @@
             >
                 Zimmernavigation bereit
             </div>
-        </div>
-
-        <div class="keyboard-hint">
-            Verwende ↑↓ um Räume zu navigieren, Leertaste zum Auswählen, ←→ für
-            Raumdetails
         </div>
 
         <script>
@@ -910,48 +1313,124 @@
                     liveRegion.textContent = text
                 }
             }
+        </script>
+        <!-- /Screenreader-Ausgabe  -->
 
+        <script>
             // RoomNavigation Klasse anpassen
             class RoomNavigation {
-                constructor() {
+                constructor(screenReader) {
                     this.rooms = document.querySelectorAll(".room-item")
                     this.currentRoomIndex = 0
                     this.currentDetailIndex = -1
                     this.isInDetailMode = false
                     this.currentDetailItems = []
-                    this.screenReader = new ScreenReaderSimulator() // Neue Screenreader-Instanz
+                    this.screenReader = screenReader
+                    this.isActive = false // Neue Eigenschaft
+                    this.keyboardHint =
+                        document.getElementById("room-keyboard-hint")
 
                     this.init()
                 }
 
                 init() {
-                    this.setFocus(0)
                     this.bindEvents()
+                    console.log(
+                        `RoomNavigation initialized with ${this.rooms.length} rooms`
+                    )
                 }
 
                 bindEvents() {
-                    document.addEventListener("keydown", (e) =>
-                        this.handleKeyDown(e)
-                    )
-
-                    // Mouse support
+                    // Focus events für Aktivierung/Deaktivierung
                     this.rooms.forEach((room, index) => {
+                        const radio = room.querySelector('input[type="radio"]')
+
+                        // Bei Focus aktivieren
+                        radio.addEventListener("focus", () => {
+                            this.activate()
+                            this.currentRoomIndex = index
+                            this.setFocus(index)
+                        })
+
+                        // Bei Blur deaktivieren (wenn Focus außerhalb aller Rooms)
+                        radio.addEventListener("blur", (e) => {
+                            setTimeout(() => {
+                                if (!this.isRoomFocused()) {
+                                    this.deactivate()
+                                }
+                            }, 50)
+                        })
+
+                        // Mouse support
                         room.addEventListener("click", () => {
+                            this.activate()
                             this.selectRoom(index)
                         })
                     })
+
+                    // Keyboard events nur wenn aktiv
+                    document.addEventListener("keydown", (e) => {
+                        if (this.isActive) {
+                            this.handleKeyDown(e)
+                        }
+                    })
+
+                    // Detail items Focus tracking
+                    document.addEventListener("focusin", (e) => {
+                        if (e.target.closest(".detail-item")) {
+                            this.activate()
+                        }
+                    })
+                }
+
+                activate() {
+                    if (this.isActive) return
+
+                    this.isActive = true
+                    this.keyboardHint?.classList.remove("hidden")
+
+                    // Deaktiviere andere Komponenten
+                    if (window.tableNavigation) {
+                        window.tableNavigation.deactivate()
+                    }
+
+                    console.log("🎯 RoomNavigation activated")
+                }
+
+                deactivate() {
+                    if (!this.isActive) return
+
+                    this.isActive = false
+                    this.keyboardHint?.classList.add("hidden")
+
+                    // Remove all visual focus indicators
+                    this.rooms.forEach((room) => {
+                        room.classList.remove(
+                            "focus-outline",
+                            "room-detail-focus"
+                        )
+                    })
+
+                    if (this.isInDetailMode) {
+                        this.currentDetailItems.forEach((item) =>
+                            item.classList.remove("focus-outline")
+                        )
+                    }
+
+                    console.log("💤 RoomNavigation deactivated")
+                }
+
+                isRoomFocused() {
+                    const activeElement = document.activeElement
+                    // Check if focus is on any room radio or detail item
+                    return (
+                        activeElement.closest(".room-item") !== null ||
+                        activeElement.closest(".detail-item") !== null
+                    )
                 }
 
                 announceToVoiceOver(text) {
-                    this.voiceoverOutput.textContent = text
-                    // Simulate screen reader announcement timing
-                    setTimeout(() => {
-                        this.voiceoverOutput.style.backgroundColor = "#2a2a2a"
-                        setTimeout(() => {
-                            this.voiceoverOutput.style.backgroundColor =
-                                "#1a1a1a"
-                        }, 200)
-                    }, 100)
+                    this.screenReader.announce(text)
                 }
 
                 getRoomAnnouncement(roomIndex) {
@@ -993,10 +1472,11 @@
                 }
 
                 handleKeyDown(e) {
+                    if (!this.isActive) return
+
                     switch (e.key) {
                         case "ArrowUp":
                             e.preventDefault()
-                            // Always navigate rooms, exit detail mode if necessary
                             if (this.isInDetailMode) {
                                 this.exitDetailMode()
                             }
@@ -1005,7 +1485,6 @@
 
                         case "ArrowDown":
                             e.preventDefault()
-                            // Always navigate rooms, exit detail mode if necessary
                             if (this.isInDetailMode) {
                                 this.exitDetailMode()
                             }
@@ -1077,10 +1556,10 @@
                         block: "nearest",
                     })
 
-                    // Automatically check the radio button when room gets focus
+                    // Automatically check the radio button
                     this.selectRoom(roomIndex)
 
-                    // Use ScreenReaderSimulator instead of manual announcement
+                    // Use ScreenReaderSimulator
                     const radioButton = this.rooms[roomIndex].querySelector(
                         'input[type="radio"]'
                     )
@@ -1132,7 +1611,7 @@
                             block: "nearest",
                         })
 
-                        // Use ScreenReaderSimulator for detail announcements
+                        // Use ScreenReaderSimulator
                         this.screenReader.focusElement(
                             this.currentDetailItems[detailIndex]
                         )
@@ -1156,14 +1635,13 @@
                         // Set detail focus
                         this.setDetailFocus(0)
 
-                        // Announce entering detail mode
+                        // Announce
                         const roomName =
                             currentRoom.querySelector("label").textContent
                         this.announceToVoiceOver(
                             `Betrete Details für ${roomName}. Verwende Pfeil links und rechts um durch Details zu navigieren, Escape zum Verlassen.`
                         )
 
-                        // Announce first detail after a short delay
                         setTimeout(() => {
                             this.announceToVoiceOver(
                                 this.getDetailAnnouncement(0)
@@ -1190,7 +1668,7 @@
                         // Restore normal room focus
                         this.setFocus(this.currentRoomIndex)
 
-                        // Announce exiting detail mode
+                        // Announce
                         this.announceToVoiceOver(
                             `Details verlassen. Zurück zur Zimmernavigation.`
                         )
@@ -1219,10 +1697,447 @@
                     this.currentRoomIndex = roomIndex
                 }
             }
+        </script>
+        <script>
+            // ============================================
+            // TableNavigation Klasse
+            // ============================================
+            class TableNavigation {
+                constructor(tableId, screenReader) {
+                    this.table = document.getElementById(tableId)
+                    if (!this.table) {
+                        console.warn(`Table with id "${tableId}" not found`)
+                        return
+                    }
+
+                    this.screenReader = screenReader
+                    this.rows = Array.from(
+                        this.table.querySelectorAll(".table-row-navigable")
+                    )
+                    this.currentRowIndex = -1
+                    this.currentCellIndex = -1
+                    this.isInCellMode = false
+                    this.currentCells = []
+                    this.isActive = false // Neue Eigenschaft
+                    this.keyboardHint = document.getElementById(
+                        "table-keyboard-hint"
+                    )
+
+                    this.init()
+                }
+
+                init() {
+                    if (this.rows.length === 0) return
+
+                    this.bindEvents()
+                    console.log(
+                        `TableNavigation initialized with ${this.rows.length} rows`
+                    )
+                }
+
+                bindEvents() {
+                    // Keyboard events für jede Zeile
+                    this.rows.forEach((row, index) => {
+                        // Bei Focus aktivieren
+                        row.addEventListener("focus", () => {
+                            this.activate()
+                            this.handleRowFocus(index)
+                        })
+
+                        // Bei Blur deaktivieren (wenn Focus außerhalb der Tabelle)
+                        row.addEventListener("blur", (e) => {
+                            setTimeout(() => {
+                                if (!this.isTableFocused()) {
+                                    this.deactivate()
+                                }
+                            }, 50)
+                        })
+
+                        // Keyboard events nur wenn aktiv
+                        row.addEventListener("keydown", (e) => {
+                            if (this.isActive) {
+                                this.handleKeyDown(e, index)
+                            }
+                        })
+
+                        // Mouse click support
+                        row.addEventListener("click", (e) => {
+                            this.activate()
+                            if (e.target.tagName === "TD") {
+                                const cellIndex = parseInt(
+                                    e.target.getAttribute("data-col-index")
+                                )
+                                this.enterCellMode(index, cellIndex)
+                            }
+                        })
+                    })
+
+                    // Focus tracking für Zellen
+                    document.addEventListener("focusin", (e) => {
+                        if (e.target.closest("#list-table")) {
+                            this.activate()
+                        }
+                    })
+                }
+
+                activate() {
+                    if (this.isActive) return
+
+                    this.isActive = true
+                    this.keyboardHint?.classList.remove("hidden")
+
+                    // Deaktiviere andere Komponenten
+                    if (window.roomNavigation) {
+                        window.roomNavigation.deactivate()
+                    }
+
+                    console.log("📊 TableNavigation activated")
+                }
+
+                deactivate() {
+                    if (!this.isActive) return
+
+                    this.isActive = false
+                    this.keyboardHint?.classList.add("hidden")
+
+                    // Remove all visual focus indicators
+                    this.rows.forEach((row) => {
+                        row.classList.remove(
+                            "table-row-focus",
+                            "table-row-detail-mode"
+                        )
+                    })
+
+                    if (this.isInCellMode) {
+                        this.currentCells.forEach((cell) => {
+                            cell.classList.remove("table-cell-focus")
+                        })
+                    }
+
+                    console.log("💤 TableNavigation deactivated")
+                }
+
+                isTableFocused() {
+                    const activeElement = document.activeElement
+                    // Check if focus is within the table
+                    return activeElement.closest("#list-table") !== null
+                }
+
+                handleRowFocus(rowIndex) {
+                    if (this.isInCellMode) return
+
+                    this.currentRowIndex = rowIndex
+
+                    // Remove focus from all rows
+                    this.rows.forEach((row) => {
+                        row.classList.remove("table-row-focus")
+                    })
+
+                    // Add focus to current row
+                    this.rows[rowIndex].classList.add("table-row-focus")
+
+                    // Announce row
+                    this.announceRow(rowIndex)
+                }
+
+                handleKeyDown(e, rowIndex) {
+                    if (!this.isActive) return
+
+                    switch (e.key) {
+                        case "ArrowUp":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.exitCellMode()
+                                this.navigateRows(-1)
+                            } else {
+                                this.navigateRows(-1)
+                            }
+                            break
+
+                        case "ArrowDown":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.exitCellMode()
+                                this.navigateRows(1)
+                            } else {
+                                this.navigateRows(1)
+                            }
+                            break
+
+                        case "ArrowLeft":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.navigateCells(-1)
+                            } else {
+                                this.screenReader.announce(
+                                    "Pfeil links: Keine Aktion. Pfeil rechts drücken um in Zellen-Modus zu wechseln."
+                                )
+                            }
+                            break
+
+                        case "ArrowRight":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.navigateCells(1)
+                            } else {
+                                this.enterCellMode(rowIndex, 0)
+                            }
+                            break
+
+                        case "Enter":
+                            e.preventDefault()
+                            if (!this.isInCellMode) {
+                                this.enterCellMode(rowIndex, 0)
+                            } else {
+                                this.screenReader.announce(
+                                    "Enter: Keine Aktion im Zellen-Modus. Escape drücken um zu verlassen."
+                                )
+                            }
+                            break
+
+                        case "Escape":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.exitCellMode()
+                            } else {
+                                this.screenReader.announce(
+                                    "Escape: Kein Zellen-Modus zum Verlassen."
+                                )
+                            }
+                            break
+
+                        case "Home":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.jumpToCell(0)
+                            } else {
+                                this.jumpToRow(0)
+                            }
+                            break
+
+                        case "End":
+                            e.preventDefault()
+                            if (this.isInCellMode) {
+                                this.jumpToCell(this.currentCells.length - 1)
+                            } else {
+                                this.jumpToRow(this.rows.length - 1)
+                            }
+                            break
+                    }
+                }
+
+                navigateRows(direction) {
+                    const newIndex = this.currentRowIndex + direction
+
+                    if (newIndex >= 0 && newIndex < this.rows.length) {
+                        this.rows[newIndex].focus()
+                    } else {
+                        if (newIndex < 0) {
+                            this.screenReader.announce(
+                                "Anfang der Tabelle erreicht"
+                            )
+                        } else {
+                            this.screenReader.announce(
+                                "Ende der Tabelle erreicht"
+                            )
+                        }
+                    }
+                }
+
+                navigateCells(direction) {
+                    if (!this.isInCellMode || this.currentCells.length === 0)
+                        return
+
+                    const newIndex = this.currentCellIndex + direction
+
+                    if (newIndex >= 0 && newIndex < this.currentCells.length) {
+                        this.setCellFocus(newIndex)
+                    } else {
+                        if (newIndex < 0) {
+                            this.screenReader.announce(
+                                "Erste Zelle erreicht. Pfeil links erneut drücken um Zellen-Modus zu verlassen."
+                            )
+                            if (this.currentCellIndex === 0) {
+                                this.exitCellMode()
+                            }
+                        } else {
+                            this.screenReader.announce(
+                                "Letzte Zelle erreicht. Pfeil rechts erneut drücken um Zellen-Modus zu verlassen."
+                            )
+                            if (
+                                this.currentCellIndex ===
+                                this.currentCells.length - 1
+                            ) {
+                                this.exitCellMode()
+                            }
+                        }
+                    }
+                }
+
+                enterCellMode(rowIndex, cellIndex = 0) {
+                    this.currentRowIndex = rowIndex
+                    const row = this.rows[rowIndex]
+                    this.currentCells = Array.from(row.querySelectorAll("td"))
+
+                    if (this.currentCells.length === 0) {
+                        this.screenReader.announce("Keine Zellen verfügbar")
+                        return
+                    }
+
+                    this.isInCellMode = true
+                    this.currentCellIndex = cellIndex
+
+                    row.classList.remove("table-row-focus")
+                    row.classList.add("table-row-detail-mode")
+
+                    this.setCellFocus(cellIndex)
+
+                    this.screenReader.announce(
+                        `Zellen-Modus aktiviert für Zeile ${
+                            rowIndex + 1
+                        }. Verwende Pfeil links und rechts um zwischen Zellen zu navigieren, Escape zum Verlassen.`
+                    )
+
+                    setTimeout(() => {
+                        this.announceCell(cellIndex)
+                    }, 800)
+                }
+
+                exitCellMode() {
+                    if (!this.isInCellMode) return
+
+                    this.currentCells.forEach((cell) => {
+                        cell.classList.remove("table-cell-focus")
+                    })
+
+                    const row = this.rows[this.currentRowIndex]
+                    row.classList.remove("table-row-detail-mode")
+                    row.classList.add("table-row-focus")
+
+                    this.isInCellMode = false
+                    this.currentCellIndex = -1
+                    this.currentCells = []
+
+                    row.focus()
+
+                    this.screenReader.announce(
+                        `Zellen-Modus verlassen. Zurück zur Zeilen-Navigation.`
+                    )
+
+                    setTimeout(() => {
+                        this.announceRow(this.currentRowIndex)
+                    }, 800)
+                }
+
+                setCellFocus(cellIndex) {
+                    this.currentCells.forEach((cell) => {
+                        cell.classList.remove("table-cell-focus")
+                    })
+
+                    const cell = this.currentCells[cellIndex]
+                    if (cell) {
+                        cell.classList.add("table-cell-focus")
+                        cell.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                            inline: "nearest",
+                        })
+
+                        this.currentCellIndex = cellIndex
+                        this.announceCell(cellIndex)
+                    }
+                }
+
+                jumpToRow(rowIndex) {
+                    if (rowIndex >= 0 && rowIndex < this.rows.length) {
+                        this.rows[rowIndex].focus()
+                        this.screenReader.announce(
+                            `Springe zu Zeile ${rowIndex + 1}`
+                        )
+                    }
+                }
+
+                jumpToCell(cellIndex) {
+                    if (
+                        this.isInCellMode &&
+                        cellIndex >= 0 &&
+                        cellIndex < this.currentCells.length
+                    ) {
+                        this.setCellFocus(cellIndex)
+                        this.screenReader.announce(
+                            `Springe zu Zelle ${cellIndex + 1}`
+                        )
+                    }
+                }
+
+                getRowData(rowIndex) {
+                    const row = this.rows[rowIndex]
+                    const cells = row.querySelectorAll("td")
+                    return Array.from(cells).map((cell) =>
+                        cell.textContent.trim()
+                    )
+                }
+
+                announceRow(rowIndex) {
+                    const rowData = this.getRowData(rowIndex)
+                    const totalRows = this.rows.length
+                    const headers = Array.from(
+                        this.table.querySelectorAll("th")
+                    ).map((th) => th.textContent.trim())
+
+                    // Build announcement
+                    const rowDescription = rowData
+                        .map((data, index) => {
+                            const header =
+                                headers[index] || `Spalte ${index + 1}`
+                            return `${header}: ${data}`
+                        })
+                        .join(", ")
+
+                    const announcement = `Zeile ${
+                        rowIndex + 1
+                    } von ${totalRows}. ${rowDescription}. Pfeil rechts drücken um in Zellen-Modus zu wechseln.`
+
+                    this.screenReader.announce(announcement)
+                }
+
+                announceCell(cellIndex) {
+                    const cell = this.currentCells[cellIndex]
+                    if (!cell) return
+
+                    const cellContent = cell.textContent.trim()
+                    const cellLabel = cell.getAttribute("aria-label") || ""
+                    const totalCells = this.currentCells.length
+
+                    const headers = Array.from(
+                        this.table.querySelectorAll("th")
+                    ).map((th) => th.textContent.trim())
+                    const columnHeader =
+                        headers[cellIndex] ||
+                        cellLabel ||
+                        `Spalte ${cellIndex + 1}`
+
+                    const announcement = `${columnHeader}: ${cellContent}. Zelle ${
+                        cellIndex + 1
+                    } von ${totalCells}`
+
+                    this.screenReader.announce(announcement)
+                }
+            }
 
             // Initialize navigation when page loads
             document.addEventListener("DOMContentLoaded", () => {
-                new RoomNavigation()
+                // Create shared screenreader instance
+                const screenReader = new ScreenReaderSimulator()
+
+                // Initialize navigations and store globally
+                window.roomNavigation = new RoomNavigation(screenReader)
+                window.tableNavigation = new TableNavigation(
+                    "list-table",
+                    screenReader
+                )
+
+                console.log("✅ All navigations initialized")
             })
 
             // Handle form submission

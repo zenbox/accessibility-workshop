@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+        <title>Beispielformular – Barrierefreie Fehlerausgabe</title>
+        <style>
+            :root {
+                --color-primary: #005fb8;
+                --color-primary-dark: #00427f;
+                --color-error: #b00020;
+                --color-error-bg: #fde8eb;
+                --color-bg: #f4f6f8;
+                --color-surface: #ffffff;
+                --color-border: #cbd3dd;
+                --color-text: #1b1b1b;
+                --color-muted: #4a5568;
+                --color-focus: #ffbf47;
+                --radius: 12px;
+                --radius-sm: 8px;
+                --spacing-xs: 0.5rem;
+                --spacing-sm: 0.75rem;
+                --spacing-md: 1rem;
+                --spacing-lg: 1.5rem;
+                --spacing-xl: 2rem;
+                --font-base: "Barlow", system-ui, sans-serif;
+            }
+
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: var(--font-base);
+                background: var(--color-bg);
+                color: var(--color-text);
+                line-height: 1.6;
+            }
+
+            a.skip-link {
+                position: absolute;
+                left: -999px;
+                top: 0;
+                background: var(--color-primary);
+                color: #fff;
+                padding: var(--spacing-xs) var(--spacing-md);
+                border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+                z-index: 10;
+            }
+
+            a.skip-link:focus {
+                left: var(--spacing-md);
+            }
+
+            header {
+                background: var(--color-primary);
+                color: #fff;
+                padding: var(--spacing-xl) var(--spacing-lg);
+            }
+
+            header h1 {
+                margin: 0;
+                font-size: 2.1rem;
+            }
+
+            header p {
+                max-width: 55ch;
+                margin-top: var(--spacing-sm);
+            }
+
+            main {
+                max-width: 720px;
+                margin: 0 auto;
+                padding: var(--spacing-xl) var(--spacing-lg);
+                display: grid;
+                gap: var(--spacing-lg);
+            }
+
+            form {
+                background: var(--color-surface);
+                border-radius: var(--radius);
+                padding: var(--spacing-xl);
+                box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
+                display: grid;
+                gap: var(--spacing-lg);
+            }
+
+            .field {
+                display: grid;
+                gap: var(--spacing-xs);
+            }
+
+            label {
+                font-weight: 600;
+            }
+
+            .hint {
+                font-size: 0.95rem;
+                color: var(--color-muted);
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+                font: inherit;
+                min-height: 3rem;
+                padding: 0.75rem;
+                border-radius: var(--radius-sm);
+                border: 2px solid var(--color-border);
+                background: #fff;
+            }
+
+            input:focus-visible {
+                outline: 3px solid var(--color-focus);
+                outline-offset: 3px;
+                border-color: var(--color-primary);
+            }
+
+            .checkbox-field {
+                display: grid;
+                gap: var(--spacing-xs);
+                align-items: start;
+            }
+
+            .checkbox-field > div {
+                display: flex;
+                gap: var(--spacing-sm);
+                align-items: flex-start;
+            }
+
+            .checkbox-field input {
+                width: 1.3rem;
+                height: 1.3rem;
+                margin-top: 0.2rem;
+            }
+
+            .error-summary {
+                border-radius: var(--radius);
+                border: 3px solid var(--color-error);
+                background: var(--color-error-bg);
+                padding: var(--spacing-lg);
+                display: grid;
+                gap: var(--spacing-sm);
+            }
+
+            .error-summary h2 {
+                margin: 0;
+                font-size: 1.35rem;
+            }
+
+            .error-summary ul {
+                margin: 0;
+                padding-left: 1.25rem;
+                display: grid;
+                gap: var(--spacing-xs);
+            }
+
+            .error-msg {
+                color: var(--color-error);
+                font-size: 0.95rem;
+            }
+
+            .error-input {
+                border-color: var(--color-error);
+            }
+
+            button {
+                min-height: 3rem;
+                border-radius: var(--radius-sm);
+                border: none;
+                background: var(--color-primary-dark);
+                color: #fff;
+                font-weight: 700;
+                font-size: 1.05rem;
+                padding: 0 var(--spacing-lg);
+                cursor: pointer;
+                justify-self: start;
+            }
+
+            button:focus-visible,
+            button:hover {
+                background: #003a66;
+            }
+
+            button:focus-visible {
+                outline: 3px solid var(--color-focus);
+                outline-offset: 4px;
+            }
+
+            footer {
+                text-align: center;
+                padding: var(--spacing-lg);
+                color: var(--color-muted);
+                font-size: 0.95rem;
+            }
+
+            @media (max-width: 640px) {
+                header,
+                main {
+                    padding: var(--spacing-lg);
+                }
+
+                form {
+                    padding: var(--spacing-lg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <a
+            class="skip-link"
+            href="#main-content"
+        >
+            Zum Formular springen
+        </a>
+
+        <header>
+            <h1 id="page-title">Registrierung mit Fehlerrückmeldung</h1>
+            <p>
+                Beispielseite für serverseitig erzeugte Fehlermeldungen: Die
+                Zusammenfassung verweist auf die fehlerhaften Felder, während
+                Screenreader sofort informiert werden.
+            </p>
+        </header>
+
+        <main id="main-content">
+            <div
+                id="error-summary"
+                class="error-summary"
+                role="alert"
+                aria-labelledby="error-summary-title"
+            >
+                <h2 id="error-summary-title">
+                    Bitte korrigieren Sie die folgenden Angaben:
+                </h2>
+                <ul>
+                    <li>
+                        <a href="#email"
+                            >E-Mail: Bitte im Format name@domain.tld
+                            eingeben.</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#password"
+                            >Passwort: Mindestens 8 Zeichen erforderlich.</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#agb"
+                            >AGB: Bitte bestätigen Sie die
+                            Nutzungsbedingungen.</a
+                        >
+                    </li>
+                </ul>
+            </div>
+
+            <form
+                method="post"
+                action="/registrieren"
+                novalidate
+                aria-labelledby="page-title"
+            >
+                <div class="field">
+                    <label for="name">Name</label>
+                    <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        autocomplete="name"
+                        value="Maxine Muster"
+                    />
+                    <span class="hint">Ihr vollständiger Name.</span>
+                </div>
+
+                <div class="field">
+                    <label for="email">E-Mail</label>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        inputmode="email"
+                        value="maxine.example.com"
+                        aria-invalid="true"
+                        aria-describedby="email-error"
+                        class="error-input"
+                    />
+                    <span
+                        id="email-error"
+                        class="error-msg"
+                        >Bitte geben Sie eine gültige Adresse im Format
+                        name@domain.tld ein.</span
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="password">Passwort</label>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        aria-invalid="true"
+                        aria-describedby="password-error password-hint"
+                        class="error-input"
+                    />
+                    <span
+                        id="password-hint"
+                        class="hint"
+                        >Mindestens 8 Zeichen, am besten Zahlen und Buchstaben
+                        kombiniert.</span
+                    >
+                    <span
+                        id="password-error"
+                        class="error-msg"
+                        >Das Passwort ist zu kurz.</span
+                    >
+                </div>
+
+                <div class="checkbox-field">
+                    <div>
+                        <input
+                            id="agb"
+                            name="agb"
+                            type="checkbox"
+                            aria-invalid="true"
+                            aria-describedby="agb-error"
+                        />
+                        <label for="agb">Ich stimme den AGB zu</label>
+                    </div>
+                    <span
+                        id="agb-error"
+                        class="error-msg"
+                        >Bitte bestätigen Sie die AGB.</span
+                    >
+                </div>
+
+                <button type="submit">Absenden</button>
+            </form>
+        </main>
+
+        <footer>
+            <p>
+                Vorführformular – zeigt serverseitige Fehlermeldungen mit
+                barrierefreiem Fokusmanagement.
+            </p>
+        </footer>
+
+        <script>
+            ;(() => {
+                const summary = document.getElementById("error-summary")
+                if (!summary) return
+
+                summary.setAttribute("tabindex", "-1")
+                summary.focus()
+
+                summary.addEventListener("click", (event) => {
+                    const target = event.target.closest("a")
+                    if (!target) return
+                    const id = target.getAttribute("href").slice(1)
+                    const element = document.getElementById(id)
+                    if (!element) return
+                    setTimeout(() => element.focus(), 0)
+                })
+            })()
+        </script>
+    </body>
+</html>
