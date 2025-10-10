@@ -1,46 +1,102 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="utf-8" />
-  <title>Seminarphase · Begleitbot</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="assets/css/base.css" rel="stylesheet" />
-</head>
-<body>
-  <a class="skip-link" href="#chat-form">Zum Eingabefeld springen</a>
+    <head>
+        <meta charset="utf-8" />
+        <title>Seminarphase · Begleitbot</title>
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+        <link
+            rel="stylesheet"
+            href="../assets/css/style.css"
+        />
+        <link
+            href="assets/css/base.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <a
+            class="skip-link"
+            href="#chat-form"
+            >Zum Eingabefeld springen</a
+        >
 
-  <header class="app-header">
-    <h1 id="phase-title">Seminarphase</h1>
-    <p class="subtitle" id="phase-subtitle">Begleitender Chat – barrierearme Unterstützung</p>
-    <nav aria-label="Navigation">
-      <a class="nav-link" href="index.html">← Zur Übersicht</a>
-    </nav>
-  </header>
+        <header class="app-header">
+            <h1 id="phase-title">Seminarphase</h1>
+            <p
+                class="subtitle"
+                id="phase-subtitle"
+            >
+                Begleitender Chat – barrierearme Unterstützung
+            </p>
+            <nav aria-label="Navigation">
+                <a
+                    class="nav-link"
+                    href="index.html"
+                    >← Zur Übersicht</a
+                >
+            </nav>
+        </header>
 
-  <main id="main" class="container">
-    <section class="card">
-      <h2 class="sr-only">Chat</h2>
+        <main
+            id="main"
+            class="container"
+        >
+            <section class="card">
+                <h2 class="sr-only">Chat</h2>
 
-      <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-relevant="additions"></div>
+                <div
+                    id="chat-log"
+                    class="chat-log"
+                    role="log"
+                    aria-live="polite"
+                    aria-relevant="additions"
+                ></div>
 
-      <form id="chat-form" class="chat-form" aria-labelledby="chat-label">
-        <label id="chat-label" for="user-input">Deine Nachricht</label>
-        <textarea id="user-input" name="message" rows="3" required
-                  placeholder="Schreibe hier… (Shift+Enter für Zeilenumbruch)"></textarea>
+                <form
+                    id="chat-form"
+                    class="chat-form"
+                    aria-labelledby="chat-label"
+                >
+                    <label
+                        id="chat-label"
+                        for="user-input"
+                        >Deine Nachricht</label
+                    >
+                    <textarea
+                        id="user-input"
+                        name="message"
+                        rows="3"
+                        required
+                        placeholder="Schreibe hier… (Shift+Enter für Zeilenumbruch)"
+                    ></textarea>
 
-        <div class="chat-actions">
-          <button type="submit" class="btn">Senden</button>
-          <button type="button" id="reset-thread" class="btn btn-secondary">Neuer Thread</button>
-        </div>
-      </form>
-    </section>
-  </main>
+                    <div class="chat-actions">
+                        <button
+                            type="submit"
+                            class="btn"
+                        >
+                            Senden
+                        </button>
+                        <button
+                            type="button"
+                            id="reset-thread"
+                            class="btn btn-secondary"
+                        >
+                            Neuer Thread
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </main>
 
-  <footer class="app-footer">
-    <small id="footnote"></small>
-  </footer>
-
-  <script src="assets/js/prompts.js"></script>
-  <script src="assets/js/app.js"></script>
-</body>
+        <footer class="app-footer">
+            <small id="footnote"></small>
+        </footer>
+        <script src="../assets/js/scaffold.js"></script>
+        <script src="assets/js/prompts.js"></script>
+        <script src="assets/js/app.js"></script>
+    </body>
 </html>

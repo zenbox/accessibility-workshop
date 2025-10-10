@@ -1,81 +1,164 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="utf-8" />
-  <title>A11y Seminar – Begleitbot</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="assets/css/base.css" rel="stylesheet" />
-</head>
-<body>
-  <header class="app-header">
-    <h1>TrainingAssist - Barrierefreiheit im Web-UI</h1>
-    <p class="subtitle">Wähle deine Rolle und starte mit einer Seminarphase.</p>
-  </header>
+    <head>
+        <meta charset="utf-8" />
+        <title>A11y Seminar – Begleitbot</title>
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+        <link
+            rel="stylesheet"
+            href="../assets/css/style.css"
+        />
+        <link
+            href="assets/css/base.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <header class="app-header">
+            <h1>TrainingAssist - Barrierefreiheit im Web-UI</h1>
+            <p class="subtitle">
+                Wähle deine Rolle und starte mit einer Seminarphase.
+            </p>
+        </header>
 
-  <main id="main" class="container">
-    <section aria-labelledby="role-heading" class="card">
-      <h2 id="role-heading">Rolle festlegen</h2>
-      <form id="role-form">
-        <fieldset>
-          <legend class="sr-only">Rolle</legend>
+        <main
+            id="main"
+            class="container"
+        >
+            <section
+                aria-labelledby="role-heading"
+                class="card"
+            >
+                <h2 id="role-heading">Rolle festlegen</h2>
+                <form id="role-form">
+                    <fieldset>
+                        <legend class="sr-only">Rolle</legend>
 
-          <label class="radio">
-            <input type="radio" name="role" value="pm" required />
-            <span>Projektmanager:in</span>
-          </label>
+                        <label class="radio">
+                            <input
+                                type="radio"
+                                name="role"
+                                value="pm"
+                                required
+                            />
+                            <span>Projektmanager:in</span>
+                        </label>
 
-          <label class="radio">
-            <input type="radio" name="role" value="designer" />
-            <span>Designer:in</span>
-          </label>
+                        <label class="radio">
+                            <input
+                                type="radio"
+                                name="role"
+                                value="designer"
+                            />
+                            <span>Designer:in</span>
+                        </label>
 
-          <label class="radio">
-            <input type="radio" name="role" value="dev" />
-            <span>Entwickler:in</span>
-          </label>
+                        <label class="radio">
+                            <input
+                                type="radio"
+                                name="role"
+                                value="dev"
+                            />
+                            <span>Entwickler:in</span>
+                        </label>
 
-          <label class="radio">
-            <input type="radio" name="role" value="editor" />
-            <span>Redakteur:in</span>
-          </label>
-        </fieldset>
-        <button type="submit" class="btn">Rolle speichern</button>
-        <p id="role-status" class="form-hint" aria-live="polite"></p>
-      </form>
-    </section>
+                        <label class="radio">
+                            <input
+                                type="radio"
+                                name="role"
+                                value="editor"
+                            />
+                            <span>Redakteur:in</span>
+                        </label>
+                    </fieldset>
+                    <button
+                        type="submit"
+                        class="btn"
+                    >
+                        Rolle speichern
+                    </button>
+                    <p
+                        id="role-status"
+                        class="form-hint"
+                        aria-live="polite"
+                    ></p>
+                </form>
+            </section>
 
-    <section aria-labelledby="phase-heading" class="card">
-      <h2 id="phase-heading">Seminarphase starten</h2>
-      <nav class="phase-grid" aria-label="Phasen">
-        <a class="phase-link" href="phase.html?phase=einstieg">Phase 1: Einstieg</a>
-        <a class="phase-link" href="phase.html?phase=grundlagen">Phase 2: Grundlagen</a>
-        <a class="phase-link" href="phase.html?phase=leittext">Phase 3: Leittext</a>
-        <a class="phase-link" href="phase.html?phase=praxis">Phase 4: Praxis</a>
-        <a class="phase-link" href="phase.html?phase=projekt">Phase 5: Projekt</a>
-        <a class="phase-link" href="phase.html?phase=reflexion">Phase 6: Reflexion</a>
-      </nav>
-    </section>
-  </main>
+            <section
+                aria-labelledby="phase-heading"
+                class="card"
+            >
+                <h2 id="phase-heading">Seminarphase starten</h2>
+                <nav
+                    class="phase-grid"
+                    aria-label="Phasen"
+                >
+                    <a
+                        class="phase-link"
+                        href="phase.html?phase=einstieg"
+                        >Phase 1: Einstieg</a
+                    >
+                    <a
+                        class="phase-link"
+                        href="phase.html?phase=grundlagen"
+                        >Phase 2: Grundlagen</a
+                    >
+                    <a
+                        class="phase-link"
+                        href="phase.html?phase=leittext"
+                        >Phase 3: Leittext</a
+                    >
+                    <a
+                        class="phase-link"
+                        href="phase.html?phase=praxis"
+                        >Phase 4: Praxis</a
+                    >
+                    <a
+                        class="phase-link"
+                        href="phase.html?phase=projekt"
+                        >Phase 5: Projekt</a
+                    >
+                    <a
+                        class="phase-link"
+                        href="phase.html?phase=reflexion"
+                        >Phase 6: Reflexion</a
+                    >
+                </nav>
+            </section>
+        </main>
 
-  <footer class="app-footer">
-    <small>WCAG 2.2 / BITV-orientiertes Lernsetup. Tastatur- und Screenreader-freundlich.</small>
-  </footer>
+        <footer class="app-footer">
+            <small
+                >WCAG 2.2 / BITV-orientiertes Lernsetup. Tastatur- und
+                Screenreader-freundlich.</small
+            >
+        </footer>
 
-  <script>
-    // Rollenpersistenz
-    const saved = localStorage.getItem('a11y.role');
-    if (saved) {
-      const input = document.querySelector(`input[name="role"][value="${saved}"]`);
-      if (input) input.checked = true;
-    }
-    document.getElementById('role-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const role = new FormData(e.currentTarget).get('role');
-      localStorage.setItem('a11y.role', role);
-      const status = document.getElementById('role-status');
-      status.textContent = 'Rolle gespeichert: ' + role;
-      status.focus?.();
-    });
-  </script>
-</body>
+        <script src="../assets/js/scaffold.js"></script>
+
+        <script>
+            // Rollenpersistenz
+            const saved = localStorage.getItem("a11y.role")
+            if (saved) {
+                const input = document.querySelector(
+                    `input[name="role"][value="${saved}"]`
+                )
+                if (input) input.checked = true
+            }
+            document
+                .getElementById("role-form")
+                .addEventListener("submit", (e) => {
+                    e.preventDefault()
+                    const role = new FormData(e.currentTarget).get("role")
+                    localStorage.setItem("a11y.role", role)
+                    const status = document.getElementById("role-status")
+                    status.textContent = "Rolle gespeichert: " + role
+                    status.focus?.()
+                })
+        </script>
+    </body>
 </html>

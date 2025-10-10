@@ -1,10 +1,21 @@
 {
-  "dependencies": {
-    "express": "^5.1.0",
-    "randomcolor": "^0.6.2",
-    "ws": "^8.18.0"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.54.1"
-  }
+    "name": "a11y-chatbot-server",
+    "version": "1.0.0",
+    "description": "Proxy-Server für HybridAI Chatbot",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js"
+    },
+    "dependencies": {
+        "express": "^5.1.0",
+        "cors": "^2.8.5",
+        "node-fetch": "^2.7.0",
+        "randomcolor": "^0.6.2",
+        "ws": "^8.18.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1",
+        "@playwright/test": "^1.54.1"
+    }
 }

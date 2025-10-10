@@ -4937,6 +4937,354 @@ section.details h3::before {
   font-size: 0.85rem;
 }
 
+#hai-bot {
+  --gradient-color-1: #667eea 0%;
+  --gradient-color-2: #1543d8 100%;
+  --error-color: #ef4444;
+  --success-color: #4ade80;
+  --status-color: var(--success-color);
+  /* Debug Panel */
+  /* Markdown Styling */
+  /* Scoreboard Styling */
+}
+#hai-bot.chat-container {
+  width: 90%;
+  max-width: 800px;
+  height: 70vh;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#hai-bot .chat-header {
+  background: linear-gradient(135deg, var(--gradient-color-1), var(--gradient-color-2));
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#hai-bot .chat-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+}
+#hai-bot .status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+#hai-bot .status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: pulse 2s infinite;
+}
+#hai-bot .status-dot.error {
+  background: var(--error-color);
+  animation: none;
+}
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+#hai-bot .chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: #f8f9fa;
+}
+#hai-bot .message {
+  margin-bottom: 16px;
+  display: flex;
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+#hai-bot .message.user {
+  justify-content: flex-end;
+}
+#hai-bot .message-bubble {
+  max-width: 70%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  word-wrap: break-word;
+}
+#hai-bot .message.user .message-bubble {
+  background: linear-gradient(135deg, var(--gradient-color-1), var(--gradient-color-2));
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+#hai-bot .message.bot .message-bubble {
+  background: white;
+  color: #333;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+#hai-bot .message-time {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+#hai-bot .typing-indicator {
+  display: none;
+  padding: 12px 16px;
+  background: white;
+  border-radius: 18px;
+  width: fit-content;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+#hai-bot .typing-indicator.active {
+  display: block;
+  animation: slideIn 0.3s ease;
+}
+#hai-bot .typing-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 2px;
+  background: #999;
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite;
+}
+#hai-bot .typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+#hai-bot .typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+@keyframes typingBounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+}
+#hai-bot .chat-input-container {
+  padding: 20px;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+}
+#hai-bot .chat-input-wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+#hai-bot .chat-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 25px;
+  font-size: 15px;
+  resize: none;
+  max-height: 120px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+#hai-bot .chat-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+#hai-bot .send-button {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+  background: black;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+#hai-bot .send-button:hover {
+  transform: scale(1.05);
+}
+#hai-bot .send-button:active {
+  transform: scale(0.95);
+}
+#hai-bot .send-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+#hai-bot .debug-panel {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.95);
+  color: #0f0;
+  padding: 15px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 10px;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  display: none;
+  z-index: 10000;
+}
+#hai-bot .debug-panel.active {
+  display: block;
+}
+#hai-bot .debug-line {
+  margin: 3px 0;
+  padding: 2px 0;
+}
+#hai-bot .debug-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  z-index: 9999;
+}
+#hai-bot .message-bubble code {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+#hai-bot .message-bubble pre {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+#hai-bot .message-bubble pre code {
+  background: none;
+  padding: 0;
+}
+#hai-bot .message-bubble a {
+  color: inherit;
+  text-decoration: underline;
+}
+#hai-bot aside {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  max-width: 300px;
+  width: 100%;
+  z-index: 10001;
+}
+#hai-bot aside h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  font-weight: 500;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 8px;
+}
+#hai-bot #scoreBoard {
+  position: fixed;
+  top: 15rem;
+  left: 1rem;
+  width: 280px;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+#hai-bot #scoreBoard h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  color: #333;
+}
+#hai-bot .score-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--gradient-color-1), var(--gradient-color-2));
+  color: white;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+#hai-bot .score-label {
+  font-weight: 600;
+}
+#hai-bot .score-value {
+  font-size: 24px;
+  font-weight: bold;
+}
+@keyframes scoreUpdate {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+#hai-bot .results-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+#hai-bot .result-item {
+  display: grid;
+  grid-template-columns: 30px 1fr auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  animation: slideIn 0.3s ease;
+}
+#hai-bot .result-item.correct {
+  background: #d1fae5;
+  border-left: 3px solid #10b981;
+}
+#hai-bot .result-item.incorrect {
+  background: #fee2e2;
+  border-left: 3px solid var(--error-color);
+}
+#hai-bot .result-icon {
+  font-size: 18px;
+  font-weight: bold;
+}
+#hai-bot .result-item.correct .result-icon {
+  color: #10b981;
+}
+#hai-bot .result-item.incorrect .result-icon {
+  color: var(--error-color);
+}
+#hai-bot .result-points {
+  font-weight: 600;
+}
+#hai-bot .result-time {
+  font-size: 11px;
+  color: #666;
+}
+
 a.icon {
   color: var(--on-primary);
   background-color: var(--primary);
@@ -5034,16 +5382,17 @@ body > nav[id=main-navigation] li {
 }
 body > nav[id=main-navigation] a:link,
 body > nav[id=main-navigation] a:visited {
-  color: var(--dark);
+  color: var(--dark) !important;
   text-decoration: none;
   display: inline-block;
   width: 100%;
   height: 100%;
 }
-body > nav[id=main-navigation] li:has(a:hover) {
+body > nav[id=main-navigation] a:hover {
+  color: var(--bright) !important;
   background: var(--dark);
 }
-body > nav[id=main-navigation] li:has(a:hover) a {
+body > nav[id=main-navigation]:has(a:hover) a {
   color: var(--bright);
 }
 body > nav[id=main-navigation] + * {

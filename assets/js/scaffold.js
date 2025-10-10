@@ -244,7 +244,6 @@ function createAxeCoreUI() {
     return { fab, overlay }
 }
 
-// Globale Funktionen für Overlay-Steuerung
 function openAxeOverlay() {
     const overlay = document.getElementById("axe-overlay")
     overlay.style.display = "flex"
@@ -276,7 +275,6 @@ function closeAxeOverlay() {
     if (fab) fab.focus()
 }
 
-// Helper function to calculate relative path to root
 function getRelativePathToRoot() {
     // Get current path
     const path = window.location.pathname
@@ -384,30 +382,62 @@ function createMainNavigationWithSubmenu() {
 
     const navigation = [
         { file: "index.html", text: "Startseite" },
-        { file: "treemap/v3/index.html", text: "Kriterien (v3)" },
-        { file: "wcag-test.html", text: "WCAG Test" },
-        { file: "checklists.html", text: "Checklisten" },
-        { file: "semantic.html", text: "Semantik" },
-        { file: "aria.html", text: "ARIA" },
-        { file: "typography.html", text: "Typografie" },
-        { file: "contrast.html", text: "Kontrast" },
-        { file: "color.html", text: "Farbe" },
-        { file: "keyboard.html", text: "Tastatur" },
         {
-            file: "screenreader-simulation/",
-            text: "Screenreader",
+            file: "wcag/index.html",
+            text: "WCAG",
+            children: [
+                { file: "treemap/v3/index.html", text: "Kriterien (v3)" },
+                { file: "wcag-test.html", text: "WCAG Test" },
+                { file: "checklists.html", text: "Checklisten" },
+            ],
         },
         {
-            file: "non-text-content.html",
-            text: "Nicht-Text",
+            file: "techniques/index.html",
+            text: "Techniken",
+            children: [
+                { file: "techniques/semantic.html", text: "Semantik" },
+                { file: "techniques/aria.html", text: "ARIA" },
+                { file: "techniques/keyboard.html", text: "Tastatur" },
+                {
+                    file: "screenreader-simulation/",
+                    text: "Screenreader",
+                },
+                {
+                    file: "techniques/user-settings.html",
+                    text: "Benutzereinstellungen",
+                },
+            ],
         },
         {
-            file: "user-settings.html",
-            text: "Benutzereinstellungen",
+            file: "design/index.html",
+            text: "Gestaltung",
+            children: [
+                { file: "design/typography.html", text: "Typografie" },
+                { file: "design/contrast.html", text: "Kontrast" },
+                { file: "design/color.html", text: "Farbe" },
+            ],
         },
         {
-            file: "text-level/index.html",
-            text: "Text-Level",
+            file: "content/index.html",
+            text: "Redaktion",
+            children: [
+                {
+                    file: "content/non-text-content.html",
+                    text: "Nicht-Text",
+                },
+                {
+                    file: "text-level/index.html",
+                    text: "Text-Level",
+                },
+                {
+                    file: "text-level/payment.html",
+                    text: "Mit Kreditkarte bezahlen",
+                },
+                {
+                    file: "text-level/ticket.html",
+                    text: "Fahrkarte kaufen",
+                },
+            ],
         },
         {
             file: "components/index.html",
@@ -531,9 +561,6 @@ function createMainNavigationWithSubmenu() {
     document.body.prepend(nav)
 }
 
-// - - - - - - - - - - -
-// FOOTER
-// - - - - - - - - - - -
 function createFooter() {
     const footer = document.createElement("footer")
     const address = document.createElement("address")
@@ -564,9 +591,6 @@ function createFooter() {
     document.body.appendChild(footer)
 }
 
-// - - - - - - - - - -
-// BRAND IN HEADER
-// - - - - - - - - - -
 function createBrand() {
     const brand = document.createElement("p")
     brand.classList.add("brand")
@@ -582,294 +606,39 @@ function setTabindizes() {
     })
 }
 
-// PRESENTER MODE
-// Ersetze die createPresentationModeButton-Funktion komplett:
+function createAccessibilitySettingsButton() {
+    if (document.getElementById("accessibility-settings-btn")) return
 
-// Präsentationsmodus-Funktionalität (ohne Button)
-let presentationModeActive = false
-let presentationModeOverlay = null
-let presentationModeLabel = null
-let presentationModeEventHandler = null
-
-function initPresentationMode() {
-    // Verhindere doppelte Initialisierung
-    if (presentationModeOverlay) return
-
-    // CSS-Styles dynamisch hinzufügen
-    createPresentationModeStyles()
-
-    // Overlay-Element erstellen
-    presentationModeOverlay = document.createElement("div")
-    presentationModeOverlay.id = "presentation-mode-overlay"
-    presentationModeOverlay.style.cssText = `
-        position: fixed;
-        pointer-events: none;
-        z-index: 999999;
-        border: 4px solid #ff4444;
-        box-shadow: 
-            0 0 20px rgba(255, 68, 68, 0.8),
-            inset 0 0 20px rgba(255, 68, 68, 0.3);
-        border-radius: 12px;
-        transition: all 0.2s ease;
-        display: none;
+    const relativePathToRoot = getRelativePathToRoot()
+    const btn = document.createElement("button")
+    btn.id = "accessibility-settings-btn"
+    btn.className = "accessibility-settings-btn"
+    btn.type = "button"
+    btn.setAttribute("aria-label", "Barrierefreiheitseinstellungen öffnen")
+    btn.title = "Barrierefreiheitseinstellungen"
+    btn.innerHTML = `
+        <img src="${relativePathToRoot}assets/figures/icons/accessibility_new.svg" alt="" width="28" height="28" />
     `
-    document.body.appendChild(presentationModeOverlay)
-
-    // Label-Element erstellen
-    presentationModeLabel = document.createElement("div")
-    presentationModeLabel.id = "presentation-mode-label"
-    presentationModeLabel.style.cssText = `
-        position: fixed;
-        pointer-events: none;
-        z-index: 1000000;
-        background: #ff4444;
-        color: white;
-        padding: 8px 12px;
-        border-radius: 6px;
-        font-family: monospace;
-        font-size: 14px;
-        font-weight: bold;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        display: none;
-        max-width: 300px;
-        word-break: break-all;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-    `
-    document.body.appendChild(presentationModeLabel)
-
-    // Event-Handler erstellen
-    presentationModeEventHandler = (event) => {
-        const target = event.target
-
-        // Eigene Overlay-Elemente ignorieren
-        if (
-            target === presentationModeOverlay ||
-            target === presentationModeLabel
-        ) {
-            return
-        }
-
-        // Navigation und Buttons ignorieren
-        if (
-            target.closest("#main-navigation") ||
-            target.closest("#skip-links")
-        ) {
-            hidePresentationMode()
-            return
-        }
-
-        showPresentationMode(target)
-    }
-
-    // Event-Listener hinzufügen
-    document.addEventListener("mouseover", presentationModeEventHandler, true)
-    document.addEventListener("mouseout", hidePresentationMode)
-
-    console.log("🎯 Präsentationsmodus initialisiert")
-}
-
-function showPresentationMode(element) {
-    if (!presentationModeOverlay || !presentationModeLabel) return
-
-    const rect = element.getBoundingClientRect()
-    const scrollX = window.pageXOffset || document.documentElement.scrollLeft
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop
-
-    // Overlay positionieren mit mehr Abstand (16px statt 4px)
-    const padding = 16
-    presentationModeOverlay.style.display = "block"
-    presentationModeOverlay.style.left = `${rect.left + scrollX - padding}px`
-    presentationModeOverlay.style.top = `${rect.top + scrollY - padding}px`
-    presentationModeOverlay.style.width = `${rect.width + padding * 2}px`
-    presentationModeOverlay.style.height = `${rect.height + padding * 2}px`
-
-    // Label-Text erstellen
-    const tagName = element.tagName.toLowerCase()
-    const className = element.className
-        ? `.${element.className.split(" ").join(".")}`
-        : ""
-    const id = element.id ? `#${element.id}` : ""
-    const textContent = element.textContent
-        ? element.textContent.trim().substring(0, 50)
-        : ""
-
-    let labelText = `<${tagName}${id}${className}>`
-    if (textContent) {
-        labelText += ` "${textContent}${textContent.length > 50 ? "..." : ""}"`
-    }
-
-    // Zusätzliche Info für wichtige Attribute
-    const role = element.getAttribute("role")
-    const ariaLabel = element.getAttribute("aria-label")
-    const alt = element.getAttribute("alt")
-
-    if (role) labelText += ` [role="${role}"]`
-    if (ariaLabel) labelText += ` [aria-label="${ariaLabel.substring(0, 30)}"]`
-    if (alt) labelText += ` [alt="${alt.substring(0, 30)}"]`
-
-    presentationModeLabel.textContent = labelText
-
-    // Label positionieren (oberhalb des Elements, falls möglich)
-    const labelHeight = 40 // Geschätzte Höhe
-    let labelTop = rect.top + scrollY - labelHeight - 20 // Mehr Abstand
-    let labelLeft = rect.left + scrollX
-
-    // Grenzwerte prüfen
-    if (labelTop < scrollY + 10) {
-        labelTop = rect.bottom + scrollY + 20 // Unterhalb positionieren mit mehr Abstand
-    }
-    if (labelLeft + 300 > window.innerWidth) {
-        labelLeft = window.innerWidth - 320 // Rechts beschneiden
-    }
-    if (labelLeft < 10) {
-        labelLeft = 10 // Links beschneiden
-    }
-
-    presentationModeLabel.style.display = "block"
-    presentationModeLabel.style.left = `${labelLeft}px`
-    presentationModeLabel.style.top = `${labelTop}px`
-}
-
-function hidePresentationMode() {
-    if (presentationModeOverlay) {
-        presentationModeOverlay.style.display = "none"
-    }
-    if (presentationModeLabel) {
-        presentationModeLabel.style.display = "none"
-    }
-}
-
-function destroyPresentationMode() {
-    // Nur die Hover-Event-Listener entfernen (NICHT den Keyboard-Handler!)
-    if (presentationModeEventHandler) {
-        document.removeEventListener(
-            "mouseover",
-            presentationModeEventHandler,
-            true
-        )
-        document.removeEventListener("mouseout", hidePresentationMode)
-        presentationModeEventHandler = null
-    }
-
-    // Overlay-Elemente entfernen
-    if (presentationModeOverlay) {
-        presentationModeOverlay.remove()
-        presentationModeOverlay = null
-    }
-    if (presentationModeLabel) {
-        presentationModeLabel.remove()
-        presentationModeLabel = null
-    }
-
-    // CSS-Styles entfernen
-    removePresentationModeStyles()
-
-    console.log("🗑️ Präsentationsmodus beendet (Keyboard-Handler bleibt aktiv)")
-}
-
-function createPresentationModeStyles() {
-    // Minimale CSS-Styles (nur für Animationen)
-    const style = document.createElement("style")
-    style.id = "presentation-mode-styles"
-    style.textContent = `
-        #presentation-mode-overlay {
-            animation: presentation-pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes presentation-pulse {
-            0%, 100% { 
-                border-color: #ff4444;
-                box-shadow: 0 0 20px rgba(255, 68, 68, 0.8);
-            }
-            50% { 
-                border-color: #ff6666;
-                box-shadow: 0 0 30px rgba(255, 68, 68, 1.0);
-            }
-        }
-    `
-    document.head.appendChild(style)
-}
-
-function removePresentationModeStyles() {
-    const style = document.getElementById("presentation-mode-styles")
-    if (style) {
-        style.remove()
-    }
-}
-
-// Globaler Tastatur-Handler für Control+P (Mac)
-function initPresentationModeKeyboard() {
-    // Initialen Zustand aus localStorage laden
-    const savedMode = localStorage.getItem("presentationMode")
-    if (savedMode === "on") {
-        presentationModeActive = true
-        initPresentationMode()
-        console.log("🎯 Präsentationsmodus beim Laden aktiviert")
-    }
-
-    // Tastatur-Shortcut (Control + P für Mac) - EINMALIG und PERSISTENT
-    document.addEventListener("keydown", handlePresentationModeKeydown)
-
-    console.log("⌨️ Präsentationsmodus Tastatur-Handler registriert")
-}
-
-// NEU: Separater Event-Handler der NICHT entfernt wird
-function handlePresentationModeKeydown(event) {
-    // Mac: Control + P, Windows/Linux: Ctrl + P (zur Sicherheit beide)
-    if ((event.ctrlKey || event.metaKey) && event.key === "p") {
-        event.preventDefault()
-
-        presentationModeActive = !presentationModeActive
-
-        if (presentationModeActive) {
-            localStorage.setItem("presentationMode", "on")
-            initPresentationMode()
-            console.log("🎯 Präsenxtationsmodus aktiviert (Control+P)")
-        } else {
-            localStorage.setItem("presentationMode", "off")
-            destroyPresentationMode()
-            console.log("❌ Präsentationsmodus deaktiviert (Control+P)")
-        }
-    }
-}
-
-// Füge diese Debug-Funktion hinzu (für Konsolen-Tests):
-
-function debugPresentationMode() {
-    console.log("🔍 Präsentationsmodus Debug:", {
-        active: presentationModeActive,
-        overlay: !!presentationModeOverlay,
-        label: !!presentationModeLabel,
-        eventHandler: !!presentationModeEventHandler,
-        localStorage: localStorage.getItem("presentationMode"),
+    btn.addEventListener("click", () => {
+        alert("Barrierefreiheitseinstellungen öffnen (Demo)")
     })
 
-    return {
-        active: presentationModeActive,
-        canToggle: true,
-        elements: {
-            overlay: !!presentationModeOverlay,
-            label: !!presentationModeLabel,
-        },
-    }
+    // Button möglichst weit oben einfügen (z.B. in die Navigation oder an den Body)
+    document.body.appendChild(btn)
 }
 
 // AUFRUF
-// - - - - - - - - - -
 document.addEventListener("DOMContentLoaded", () => {
     createMainNavigationWithSubmenu()
-    createAccessibilitySettingsButton()
-    createDeveloperButton()
-    // createDarkModeButton()
-    createThemeModeButton()
-    //initPresentationModeKeyboard()
-    createBrand()
-    createFooter()
-    createSkipLinks()
-    setTabindizes()
-
-    createAxeCoreTestScripts()
-    createAxeCoreUI()
-
+    // createAccessibilitySettingsButton()
+    if (typeof createDeveloperButton === "function") createDeveloperButton()
+    if (typeof createThemeModeButton === "function") createThemeModeButton()
+    if (typeof createBrand === "function") createBrand()
+    if (typeof createFooter === "function") createFooter()
+    if (typeof createSkipLinks === "function") createSkipLinks()
+    if (typeof setTabindizes === "function") setTabindizes()
+    if (typeof createAxeCoreTestScripts === "function")
+        createAxeCoreTestScripts()
+    if (typeof createAxeCoreUI === "function") createAxeCoreUI()
     document.querySelector("html").setAttribute("lang", "de")
 })

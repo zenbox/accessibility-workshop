@@ -1,5 +1,5 @@
 /* import Material Icons */
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons+Outlined");
 * {
   box-sizing: border-box;
 }
@@ -11,33 +11,38 @@ html {
 
 .info,
 [data-message-type="info"] {
+  background: none;
   color: hsl(200, 90%, 70%);
 }
 .error,
 [data-message-type="error"] {
+  background: none;
   color: hsl(0, 100%, 50%);
 }
 .warning,
 [data-message-type="warning"] {
+  background: none;
+  background: none;
   color: hsl(45, 100%, 50%);
 }
 .success,
 [data-message-type="success"] {
+  background: none;
   color: hsl(120, 100%, 40%);
 }
 
 [data-message-type]::before {
-  font-family: "Material Icons";
+  font-family: "Material Icons Outlined";
   font-size: 1.5rem;
 }
 [data-message-type="success"]::before {
-  content: "check ";
+  content: "check_circle ";
 }
 [data-message-type="error"]::before {
   content: "error ";
 }
 [data-message-type="warning"]::before {
-  content: "warning ";
+  content: "warning_amber ";
 }
 [data-message-type="info"]::before {
   content: "info ";

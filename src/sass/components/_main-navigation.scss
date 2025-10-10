@@ -30,14 +30,19 @@ body > nav[id="main-navigation"] {
 
     a:link,
     a:visited {
-        color: var(--dark);
+        color: var(--dark) !important;
         text-decoration: none;
         display: inline-block;
         width: 100%;
         height: 100%;
     }
-    li:has(a:hover) {
+    a:hover {
+        color: var(--bright) !important;
         background: var(--dark);
+    }
+
+    &:has(a:hover) {
+        // background: var(--dark);
         a {
             color: var(--bright);
         }
