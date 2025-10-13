@@ -167,7 +167,7 @@ class RemoteChatController {
         })
 
         // Begrenze History auf letzte 20 Nachrichten (10 Paare)
-        let l = 50
+        let l = 10
         if (this.conversationHistory.length > l) {
             this.conversationHistory = this.conversationHistory.slice(-l)
         }

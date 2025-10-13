@@ -8,14 +8,16 @@
         "dev": "nodemon server.js"
     },
     "dependencies": {
-        "express": "^5.1.0",
         "cors": "^2.8.5",
+        "dotenv": "^17.2.3",
+        "express": "^5.1.0",
         "node-fetch": "^2.7.0",
         "randomcolor": "^0.6.2",
-        "ws": "^8.18.0"
+        "ws": "^8.18.0",
+
     },
     "devDependencies": {
-        "nodemon": "^3.0.1",
-        "@playwright/test": "^1.54.1"
+        "@playwright/test": "^1.54.1",
+        "nodemon": "^3.0.1"
     }
 }
