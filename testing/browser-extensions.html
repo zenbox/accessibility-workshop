@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testen mit Browser-Erweiterungen – Barrierefreiheit im Überblick</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Barrierefreiheit testen mit Browser-Erweiterungen</h1>
+      <p>Wie Browser-Erweiterungen beim Prüfen von Barrierefreiheit helfen – von umfassenden Accessibility-Test-Suiten bis zu spezialisierten Werkzeugen für Struktur, Farben und Fokus.</p>
+    </header>
+
+    <main>
+      <article>
+        <h2>Warum Browser-Erweiterungen?</h2>
+        <p>
+          Browser-Erweiterungen bieten eine schnelle und anschauliche Möglichkeit, Webseiten auf Barrierefreiheit zu überprüfen. Sie führen automatisierte Tests durch, heben problematische Stellen visuell hervor und helfen beim Verständnis der zugrunde liegenden WCAG-Kriterien. Je nach Art des Tools reichen die Funktionen von kompletten Accessibility-Audits bis zu spezifischen Analysen einzelner Aspekte.
+        </p>
+
+        <h2>Umfangreiche Accessibility-Testtools</h2>
+        <p>
+          Diese Erweiterungen decken viele Prüfkriterien der Web Content Accessibility Guidelines (WCAG) ab und bieten detaillierte Erklärungen, Codeverweise und Handlungsempfehlungen.
+        </p>
+
+        <ul>
+          <li>
+            <strong><a href="https://www.deque.com/axe/devtools/" target="_blank" rel="noopener noreferrer">axe DevTools</a></strong><br />
+            Entwickelt von <em>Deque Systems</em>, ist axe DevTools eines der meistgenutzten Accessibility-Tools. Es prüft automatisch auf Verstöße gegen WCAG 2.1 und zeigt die betroffenen DOM-Elemente im Inspektor an. Für jedes Problem liefert es eine Beschreibung, den genauen Regelbezug und Vorschläge zur Behebung.
+          </li>
+
+          <li>
+            <strong><a href="https://accessibilityinsights.io/docs/web/overview/" target="_blank" rel="noopener noreferrer">Accessibility Insights for Web</a></strong><br />
+            Von Microsoft entwickelt, bietet diese Erweiterung zwei Hauptmodi: den <em>FastPass</em> für einen schnellen Check und das <em>Assessment</em> für eine geführte, schrittweise Prüfung nach WCAG. Besonders nützlich sind die visualisierten Tastatur-Tabstopps und die klaren Schritt-für-Schritt-Anleitungen.
+          </li>
+
+          <li>
+            <strong><a href="https://wave.webaim.org/extension/" target="_blank" rel="noopener noreferrer">WAVE</a></strong><br />
+            Das Tool von <em>WebAIM</em> zeigt Verstöße direkt auf der Webseite an. Es markiert problematische Elemente visuell und erklärt deren Bedeutung in einer Seitenleiste. WAVE eignet sich hervorragend für Schulungszwecke, da es Barrieren unmittelbar sichtbar macht.
+          </li>
+
+          <li>
+            <strong><a href="https://developer.chrome.com/docs/lighthouse/accessibility/" target="_blank" rel="noopener noreferrer">Lighthouse</a></strong><br />
+            In Chrome und Edge integriert, liefert Lighthouse automatisierte Berichte zur Performance, SEO und Barrierefreiheit. Der Accessibility-Score basiert auf automatisierten Checks – gut für eine schnelle Einschätzung, aber nicht vollständig.
+          </li>
+
+          <li>
+            <strong><a href="https://chrome.google.com/webstore/detail/arc-toolkit/chdkkkccnljaholdmjphmfgkadmapbpe" target="_blank" rel="noopener noreferrer">ARC Toolkit</a></strong><br />
+            Von <em>TPGi</em> entwickelt, konzentriert sich ARC Toolkit auf strukturierte WCAG-Tests mit klaren Referenzen zu den Richtlinien. Es ist ideal für Entwickler:innen, die direkt im DOM-Kontext arbeiten möchten.
+          </li>
+        </ul>
+
+        <h2>Spezialisierte Tools für einzelne Aspekte</h2>
+        <p>
+          Neben den umfassenden Test-Suiten gibt es spezialisierte Erweiterungen, die sich auf bestimmte Bereiche konzentrieren. Sie eignen sich besonders, um gezielt einzelne Dimensionen von Barrierefreiheit zu analysieren.
+        </p>
+
+        <ul>
+          <li>
+            <strong><a href="https://chrome.google.com/webstore/detail/headingsmap/flbjommegcjonpdmenkdiocclhjacmbi" target="_blank" rel="noopener noreferrer">HeadingsMap</a></strong><br />
+            Zeigt die gesamte Überschriftenstruktur einer Seite als interaktive Baumansicht an. So lässt sich leicht überprüfen, ob Überschriften korrekt verschachtelt sind (H1 → H2 → H3) und die logische Gliederung der Inhalte stimmt.
+          </li>
+
+          <li>
+            <strong><a href="https://chrome.google.com/webstore/detail/color-contrast-analyzer/dagdlcijhfbmgkjokkjicnnfimlebcll" target="_blank" rel="noopener noreferrer">Color Contrast Analyzer</a></strong><br />
+            Misst Farbkontraste zwischen Text und Hintergrund. Zeigt an, ob die Kontraste den WCAG-Mindestanforderungen (AA oder AAA) entsprechen. Ideal, um visuelle Lesbarkeit zu bewerten.
+          </li>
+
+          <li>
+            <strong><a href="https://chrome.google.com/webstore/detail/focus-indicator/dlpeegjmlmehhbjefcbbeelckknbcknh" target="_blank" rel="noopener noreferrer">Focus Indicator</a></strong><br />
+            Hebt das aktuell fokussierte Element visuell hervor und hilft dabei, die Tastaturnavigation zu prüfen. Nützlich für Entwickler:innen, um Fokusverlust oder fehlende <code>:focus</code>-Stile zu erkennen.
+          </li>
+
+          <li>
+            <strong><a href="https://chrome.google.com/webstore/detail/alt-text-tester/pbicldkbfemomajcdflkdiolbkdbpccp" target="_blank" rel="noopener noreferrer">Alt Text Tester</a></strong><br />
+            Zeigt alle <code>alt</code>-Attribute auf einer Seite an. Praktisch, um schnell zu erkennen, wo Alternativtexte fehlen oder unpassend sind.
+          </li>
+
+          <li>
+            <strong><a href="https://chrome.google.com/webstore/detail/tota11y/kefjpfngnndepjbopdmoebkipbgkggaa" target="_blank" rel="noopener noreferrer">tota11y</a></strong><br />
+            Fügt eine kleine Toolbar hinzu, die verschiedene Checks (Landmarks, Labels, Kontrast, Alt-Texte) direkt im Seitenkontext anzeigt. Besonders geeignet, um Barrieren visuell im Layout sichtbar zu machen.
+          </li>
+        </ul>
+
+        <h2>Vorteile</h2>
+        <ul>
+          <li>Schnelle, visuelle Erkennung technischer Probleme</li>
+          <li>Gute Lern- und Erklärhilfen – ideal für Schulungen</li>
+          <li>Kombination mehrerer Tools deckt viele Aspekte ab</li>
+        </ul>
+
+        <h2>Nachteile</h2>
+        <ul>
+          <li>Keine vollständige WCAG-Abdeckung – nur automatisierbare Kriterien</li>
+          <li>Teilweise widersprüchliche Ergebnisse zwischen Tools</li>
+          <li>Erfordert Interpretation: nicht jeder gemeldete Fehler ist tatsächlich eine Barriere</li>
+        </ul>
+
+        <h2>Fazit</h2>
+        <p>
+          Browser-Erweiterungen sind unverzichtbare Helfer für alle, die Barrierefreiheit in der Praxis umsetzen wollen. Sie liefern schnelle Ergebnisse und fördern das Verständnis für technische Anforderungen. Dennoch ersetzen sie keine manuellen Tests – vor allem dann nicht, wenn es um Nutzererfahrung, Verständlichkeit und Interaktion geht.
+        </p>
+      </article>
+    </main>
+
+    <script src="../assets/js/scaffold.js"></script>
+  </body>
+</html>

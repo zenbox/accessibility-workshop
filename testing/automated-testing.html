@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Automatisiertes Testen – Accessibility mit axe Core</title>
+        <link
+            rel="stylesheet"
+            href="../assets/css/style.css"
+        />
+    </head>
+    <body>
+        <header>
+            <h1>Automatisiertes Testen mit axe Core</h1>
+            <p>
+                Wie man Accessibility automatisiert prüft, welche Vorteile und
+                Grenzen es gibt, und wie man axe Core installiert und einsetzt.
+            </p>
+        </header>
+
+        <main>
+            <article>
+                <h2>Was ist automatisiertes Testen?</h2>
+                <p>
+                    Automatisierte Accessibility-Tests prüfen Webseiten auf
+                    technische Verstöße gegen die
+                    <em>Web Content Accessibility Guidelines (WCAG)</em>. Sie
+                    verwenden Programme, die den HTML-Code und das Verhalten von
+                    Webseiten analysieren und auf bekannte Muster für Barrieren
+                    testen – zum Beispiel fehlende Labels, zu geringe Kontraste
+                    oder unzulässige ARIA-Attribute.
+                </p>
+
+                <h2>Wann macht automatisiertes Testen Sinn?</h2>
+                <ul>
+                    <li>
+                        Bei großen Webseiten, um wiederkehrende Muster
+                        systematisch zu prüfen
+                    </li>
+                    <li>
+                        In Design-Systemen oder Komponentenbibliotheken, um
+                        Standards sicherzustellen
+                    </li>
+                    <li>
+                        In CI/CD-Pipelines, um Barrieren frühzeitig zu erkennen
+                        und dauerhaft zu vermeiden
+                    </li>
+                    <li>
+                        Als schneller Einstieg, bevor ein manuelles oder
+                        nutzerbasiertes Audit erfolgt
+                    </li>
+                </ul>
+
+                <h2>Was kann automatisiertes Testen?</h2>
+                <ul>
+                    <li>
+                        Fehlende oder falsche <code>alt</code>-Attribute
+                        erkennen
+                    </li>
+                    <li>
+                        Farbkontrast-Fehler zwischen Text und Hintergrund
+                        aufzeigen
+                    </li>
+                    <li>Formulare auf fehlende Labels prüfen</li>
+                    <li>
+                        Fehlerhafte ARIA-Attribute oder Landmark-Strukturen
+                        identifizieren
+                    </li>
+                    <li>
+                        Strukturelle Probleme wie mehrere
+                        <code>&lt;main&gt;</code>-Elemente erkennen
+                    </li>
+                </ul>
+
+                <h2>Was kann automatisiertes Testen nicht?</h2>
+                <ul>
+                    <li>
+                        Die Qualität von Alternativtexten oder Linktexten
+                        bewerten
+                    </li>
+                    <li>
+                        Die Verständlichkeit von Inhalten oder Fehlermeldungen
+                        einschätzen
+                    </li>
+                    <li>
+                        Tastaturbedienung, Fokusverhalten und dynamische
+                        Zustände umfassend prüfen
+                    </li>
+                    <li>
+                        Erfahrungen mit Screenreadern oder Assistive
+                        Technologies realistisch simulieren
+                    </li>
+                </ul>
+
+                <h2>Vorteile</h2>
+                <ul>
+                    <li>
+                        Schnell und reproduzierbar – ideal für kontinuierliche
+                        Überwachung
+                    </li>
+                    <li>
+                        Automatisierbar – Integration in Entwicklungsprozesse
+                        möglich
+                    </li>
+                    <li>
+                        Erkennt viele technische Verstöße, bevor sie produktiv
+                        gehen
+                    </li>
+                    <li>Ergebnisberichte sind messbar und vergleichbar</li>
+                </ul>
+
+                <h2>Nachteile</h2>
+                <ul>
+                    <li>
+                        Begrenzt auf automatisierbare Kriterien (ca. 20–30 % der
+                        WCAG)
+                    </li>
+                    <li>Erfordert Interpretation durch Fachleute</li>
+                    <li>Keine Bewertung der Benutzererfahrung</li>
+                </ul>
+
+                <h2>Einführung in axe Core</h2>
+                <p>
+                    <a
+                        href="https://www.deque.com/axe/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >axe Core</a
+                    >
+                    ist eine Open-Source-JavaScript-Bibliothek des Unternehmens
+                    <em>Deque Systems</em>. Sie analysiert Webseiten und
+                    Webanwendungen automatisiert auf Barrierefreiheitsprobleme
+                    und gibt Ergebnisse im JSON-Format zurück. axe Core ist die
+                    Grundlage vieler Tools – darunter die
+                    <em>axe DevTools</em> Browser-Erweiterung und Integrationen
+                    in Testframeworks wie Jest, Cypress oder Playwright.
+                </p>
+
+                <h3>Installation (Node.js)</h3>
+                <ol>
+                    <li>Node.js (ab Version 18) installieren</li>
+                    <li>
+                        Neues Projekt anlegen:
+                        <pre><code>mkdir axe-demo && cd axe-demo
+npm init -y
+npm install axe-core puppeteer</code></pre>
+                    </li>
+                    <li>
+                        Neue Datei <code>run-axe.js</code> anlegen und
+                        Beispielcode einfügen:
+                    </li>
+                </ol>
+
+                <pre><code>import axe from 'axe-core';
+import puppeteer from 'puppeteer';
+
+(async () =&gt; {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('https://example.com', { waitUntil: 'networkidle2' });
+  await page.addScriptTag({ content: axe.source });
+
+  const results = await page.evaluate(async () =&gt; {
+    return await window.axe.run(document, {
+      runOnly: ['wcag2a', 'wcag2aa']
+    });
+  });
+
+  console.log(JSON.stringify(results, null, 2));
+  await browser.close();
+})();</code></pre>
+
+                <p>
+                    Dieser Code öffnet eine Seite im Headless-Chromium-Browser,
+                    injiziert axe Core und führt einen automatisierten WCAG-Test
+                    aus. Das Ergebnis enthält Listen von
+                    <code>violations</code>, <code>passes</code> und
+                    <code>incomplete</code> Checks.
+                </p>
+
+                <h3>Auswertung der Ergebnisse</h3>
+                <p>
+                    Die JSON-Ausgabe von axe Core kann direkt in der Konsole
+                    oder mit Visualisierungstools weiterverarbeitet werden.
+                    Typischerweise enthält sie folgende Schlüssel:
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>violations:</strong> Bestätigte Verstöße gegen
+                        WCAG-Regeln
+                    </li>
+                    <li>
+                        <strong>incomplete:</strong> Fälle, bei denen eine
+                        manuelle Prüfung notwendig ist
+                    </li>
+                    <li><strong>passes:</strong> Bestandene Prüfungen</li>
+                </ul>
+
+                <p>
+                    Jeder Verstoß enthält Details zur Regel-ID, eine
+                    Beschreibung, betroffene HTML-Knoten und den Schweregrad
+                    (<code>impact</code>). Entwickler:innen können diese
+                    Informationen nutzen, um gezielt Verbesserungen im Code
+                    umzusetzen.
+                </p>
+
+                <h3>Integration in den Entwicklungsprozess</h3>
+                <ul>
+                    <li>
+                        <strong>Continuous Integration (CI):</strong> axe Core
+                        kann in GitHub Actions, GitLab CI oder Jenkins
+                        integriert werden, um Accessibility bei jedem Commit zu
+                        prüfen.
+                    </li>
+                    <li>
+                        <strong>Unit-Tests:</strong> Über Tools wie
+                        <code>jest-axe</code> lassen sich Accessibility-Tests
+                        direkt in Komponententests einbauen.
+                    </li>
+                    <li>
+                        <strong>UI-Tests:</strong> Mit
+                        <code>cypress-axe</code> oder
+                        <code>playwright-axe</code> lassen sich komplette
+                        Userflows prüfen.
+                    </li>
+                </ul>
+
+                <h3>Fazit</h3>
+                <p>
+                    Automatisiertes Testen mit axe Core ist ein zentraler
+                    Bestandteil moderner Barrierefreiheitsprüfungen. Es spart
+                    Zeit, erkennt häufige technische Probleme frühzeitig und
+                    lässt sich gut in Entwicklungsprozesse integrieren. Trotzdem
+                    bleibt es ein Werkzeug zur Unterstützung – keine
+                    vollständige Lösung. Ein kompletter Accessibility-Workflow
+                    kombiniert automatisierte Tests mit manuellen Prüfungen und
+                    Nutzertests.
+                </p>
+            </article>
+        </main>
+
+        <script src="../assets/js/scaffold.js"></script>
+    </body>
+</html>

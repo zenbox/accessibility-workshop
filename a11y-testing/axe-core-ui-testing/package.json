@@ -1,0 +1,22 @@
+{
+    "name": "axe-core-ui-testing",
+    "version": "1.0.0",
+    "description": "A project to test accessibility using axe-core with a user interface.",
+    "main": "src/run-axe.js",
+    "type": "module",
+    "scripts": {
+        "test": "node src/run-axe.js"
+    },
+    "dependencies": {
+        "axe-core": "^4.0.0",
+        "puppeteer": "^24.24.1"
+    },
+    "keywords": [
+        "accessibility",
+        "axe-core",
+        "puppeteer",
+        "testing"
+    ],
+    "author": "Your Name",
+    "license": "MIT"
+}

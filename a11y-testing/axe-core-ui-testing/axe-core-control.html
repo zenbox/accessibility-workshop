@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Axe Core Control</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            button {
+                margin: 5px;
+                padding: 10px;
+                font-size: 16px;
+            }
+            #results {
+                margin-top: 20px;
+                border: 1px solid #ccc;
+                padding: 10px;
+                max-height: 70vh;
+                overflow-y: auto;
+            }
+            .summary {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+                margin-bottom: 8px;
+            }
+            .badge {
+                display: inline-block;
+                padding: 2px 8px;
+                border-radius: 12px;
+                font-size: 12px;
+                color: #fff;
+            }
+            .b-viol {
+                background: #d32f2f;
+            }
+            .b-incomp {
+                background: #f57c00;
+            }
+            .b-pass {
+                background: #388e3c;
+            }
+            .b-na {
+                background: #616161;
+            }
+            .impact {
+                font-weight: 600;
+                margin-left: 6px;
+            }
+            .i-critical {
+                color: #b71c1c;
+            }
+            .i-serious {
+                color: #e65100;
+            }
+            .i-moderate {
+                color: #fbc02d;
+            }
+            .i-minor {
+                color: #1565c0;
+            }
+            details {
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                padding: 8px;
+                margin: 8px 0;
+                background: #fafafa;
+            }
+            details > summary {
+                cursor: pointer;
+                font-weight: 600;
+            }
+            .node {
+                margin: 8px 0 0 12px;
+                border-left: 3px solid #eee;
+                padding-left: 8px;
+            }
+            .target {
+                font-family: monospace;
+                background: #f1f1f1;
+                padding: 2px 6px;
+                border-radius: 4px;
+                display: inline-block;
+            }
+            .controls {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                margin-bottom: 8px;
+            }
+            pre.raw {
+                white-space: pre-wrap;
+                word-break: break-word;
+                background: #0b1021;
+                color: #cbe3ff;
+                padding: 8px;
+                border-radius: 6px;
+                display: none;
+            }
+            .hint {
+                color: #555;
+                font-size: 12px;
+            }
+            .help {
+                font-size: 12px;
+            }
+            .tag {
+                display: inline-block;
+                font-size: 11px;
+                background: #e8f1ff;
+                color: #174ea6;
+                padding: 2px 6px;
+                border-radius: 10px;
+                margin-right: 4px;
+            }
+            .outline-hl {
+                outline: 3px solid #ff5722 !important;
+                outline-offset: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Axe Core Accessibility Testing</h1>
+        <button id="run-a11y-tests">Run Accessibility Tests</button>
+
+        <fieldset style="margin-top: 12px">
+            <legend>Externe Seite scannen (Server)</legend>
+            <div style="margin-bottom: 8px">
+                <label for="scan-url">URL:</label>
+                <input
+                    id="scan-url"
+                    type="url"
+                    placeholder="https://example.com"
+                    size="50"
+                />
+                <button id="run-server-scan">URL scannen (Server)</button>
+            </div>
+            <div class="hint">
+                Voraussetzung: Server läuft auf http://localhost:3001
+            </div>
+        </fieldset>
+
+        <fieldset style="margin-top: 12px">
+            <legend>Gezielte Checks</legend>
+
+            <div style="margin-bottom: 8px">
+                <label for="rule-id">Einzelne Regel-ID:</label>
+                <input
+                    id="rule-id"
+                    placeholder="z. B. target-size"
+                />
+                <button id="run-rule">Regel ausführen</button>
+            </div>
+
+            <div style="margin-bottom: 8px">
+                <button
+                    id="run-alt-group"
+                    title="Führt Alt-bezogene Regeln aus"
+                >
+                    Alt-Attribute Regeln ausführen
+                </button>
+            </div>
+
+            <div>
+                <label for="tag-id">Nach Tag ausführen:</label>
+                <input
+                    id="tag-id"
+                    placeholder="z. B. wcag2a, wcag2aa oder cat.text-alternatives"
+                />
+                <button id="run-tag">Tag ausführen</button>
+            </div>
+        </fieldset>
+
+        <fieldset style="margin-top: 12px">
+            <legend>Alle axe-core Regeln</legend>
+            <div style="margin-bottom: 8px">
+                <input
+                    id="rule-filter"
+                    type="search"
+                    placeholder="Regeln filtern (ID, Beschreibung, Tag) …"
+                    size="50"
+                />
+            </div>
+            <div class="hint">
+                Klicke „Auswählen“, um die ID ins Eingabefeld zu übernehmen,
+                oder „Starten“, um nur diese Regel zu prüfen.
+            </div>
+            <div
+                id="rule-list"
+                style="margin-top: 8px"
+            ></div>
+        </fieldset>
+
+        <div id="results"></div>
+
+        <!-- axe CDN und dein Modul -->
+        <script src="https://cdn.jsdelivr.net/npm/axe-core@latest/axe.min.js"></script>
+        <script
+            type="module"
+            src="./run-axe-with-ui.js"
+        ></script>
+    </body>
+</html>

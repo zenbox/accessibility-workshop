@@ -1960,10 +1960,10 @@
                         "bitvId": "",
                         "wcagId": "3.2.5",
                         "bitInklusivId": "",
-                        "title": "Änderungen auf Anfrage (Benutzerkontext)",
+                        "title": "Hilfe",
                         "conformanceLevel": "AAA",
                         "details": {
-                            "description": "Änderungen des Kontexts werden nur auf Anforderung des Benutzers ausgelöst oder ein Mechanismus ist verfügbar, um solche Änderungen zu deaktivieren.",
+                            "description": "Änderungen des Kontexts werden nur auf Anforderung des Benutzers ausgelöst oder ein Mechanismus ist verfügbar, um solche Änderungen zu deaktivieren. (Zugriff auf kontextbezogene Hilfe.)",
                             "who": [""]
                         }
                     },
@@ -2078,7 +2078,7 @@
                         "bitvId": "",
                         "wcagId": "3.3.6",
                         "bitInklusivId": "",
-                        "title": "Fehlervermeidung (Allgemein)",
+                        "title": "Fehlervermeidung (Alle)",
                         "conformanceLevel": "AAA",
                         "details": {
                             "description": "Für Webseiten, auf denen Benutzer Informationen übermitteln müssen, trifft mindestens eine der folgenden Bedingungen zu: ...",

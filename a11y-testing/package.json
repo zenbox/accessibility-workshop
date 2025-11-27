@@ -1,0 +1,18 @@
+{
+  "name": "a11y-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Michael Reichart",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "axe-core": "^4.11.0",
+    "axe-html-reporter": "^2.2.11",
+    "puppeteer": "^24.24.1"
+  }
+}

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Barrierefreiheit testen</title>
+        <link
+            rel="stylesheet"
+            href="../assets/css/style.css"
+        />
+    </head>
+    <body>
+        <header>
+            <h1>
+                Barrierefreiheit testen – manuell, mit Erweiterungen und
+                automatisiert
+            </h1>
+
+            <p>
+                Barrierefreiheit in einem Browser-UI testen ist eine mehr oder
+                weniger langwierige, mindestens aber fortwährende Aufgabe. UIs
+                können sich jeden Tag ändern, daher ist es wichtig, regelmäßig
+                Tests durchzuführen, die Ergebnisse zu dokumentieren und vor
+                allem geeignete Prozesse und Vorgehensweisen zu entwickeln.
+            </p>
+            <p>Es gibt im Wesentlichen 3 Ansätze für das Testen von Barrierefreiheit:</p>
+            <ul>
+                <li><a href="#manual-testing">Manuelles Testen im Browser</a></li>
+                <li><a href="#browser-extensions">Testen mit Browser-Erweiterungen</a></li>
+                <li><a href="#automated-testing">Automatisiertes Testen (z. B. mit axe-core)</a></li>
+            </ul>
+            <p>Jeder dieser Ansätze hat seine eigenen Stärken und Schwächen, und oft ist eine Kombination aus mehreren Methoden am effektivsten.</p>
+        </header>
+        <main>
+            <article>
+                <h2 id="manual-testing">Manuelles Testen im Browser</h2>
+
+                <p><strong>Was kann man ohne Erweiterungen prüfen?</strong></p>
+                <ul>
+                    <li>
+                        <strong>Tastaturbedienbarkeit (ohne Maus):</strong> Mit
+                        <kbd>Tab</kbd>, <kbd>Shift+Tab</kbd>,
+                        <kbd>Enter</kbd> und den Pfeiltasten durch die Seite
+                        navigieren. Prüfen, ob alle interaktiven Elemente
+                        erreichbar sind (Links, Buttons, Formulare, Menüs,
+                        Dialoge), ob der Fokus sichtbar bleibt und die
+                        Reihenfolge logisch ist.
+                    </li>
+                    <li>
+                        <strong>Struktur & Orientierung:</strong> Erkennbarer
+                        Seitentitel, klare Überschriften-Hierarchie,
+                        verständliche Linktexte, gut beschriftete Formulare mit
+                        sichtbaren Fehlermeldungen.
+                    </li>
+                    <li>
+                        <strong>Inhalte & Medien:</strong> Prüfen, ob Videos
+                        Untertitel haben, ob sie steuerbar sind und ob keine
+                        Informationen nur über Farbe vermittelt werden.
+                    </li>
+                    <li>
+                        <strong>Zoom & Reflow:</strong> Funktioniert die Seite
+                        bei 200–400 % Zoom ohne horizontales Scrollen?
+                    </li>
+                    <li>
+                        <strong>Bewegung & Ablenkung:</strong> Lassen sich
+                        automatisch rotierende Slider oder Animationen
+                        pausieren?
+                    </li>
+                    <li>
+                        <strong>Zeitverhalten:</strong> Gibt es klare Hinweise
+                        bei Timeout-Situationen oder ablaufenden
+                        Formularsitzungen?
+                    </li>
+                </ul>
+
+                <p><strong>Vorteile:</strong></p>
+                <ul>
+                    <li>Realitätsnahes Testen aus Nutzersicht</li>
+                    <li>Kein technisches Setup nötig</li>
+                    <li>
+                        Deckt Nutzbarkeitsprobleme ab, die Tools nicht erkennen
+                        (Verständlichkeit, Kontext, Lesefluss)
+                    </li>
+                </ul>
+
+                <p><strong>Nachteile:</strong></p>
+                <ul>
+                    <li>Subjektiv und nicht standardisiert</li>
+                    <li>Zeitaufwändig bei größeren Websites</li>
+                    <li>Technische Barrieren im Code schwer erkennbar</li>
+                </ul>
+
+                <h2 id="browser-extensions">Testen mit Browser-Erweiterungen</h2>
+
+                <p><strong>Welche Erweiterungen gibt es?</strong></p>
+                <ul>
+                    <li>
+                        <strong>axe DevTools (Deque):</strong> Erkennt viele
+                        technische WCAG-Verstöße und erklärt sie mit Beispielen.
+                    </li>
+                    <li>
+                        <strong
+                            >Accessibility Insights for Web (Microsoft):</strong
+                        >
+                        Enthält geführte Assessments, visuelle Prüfungen und
+                        Tabstop-Overlays.
+                    </li>
+                    <li>
+                        <strong>WAVE (WebAIM):</strong> Markiert Verstöße direkt
+                        auf der Seite, besonders anschaulich für Lernzwecke.
+                    </li>
+                    <li>
+                        <strong>Lighthouse (Google Chrome):</strong> Fester
+                        Bestandteil der DevTools, liefert einen
+                        Accessibility-Score.
+                    </li>
+                    <li>
+                        <strong>ARC Toolkit (TPGi):</strong> Prüft WCAG-Muster
+                        mit Fokus auf Semantik und ARIA.
+                    </li>
+                </ul>
+
+                <p><strong>Was machen sie?</strong></p>
+                <ul>
+                    <li>
+                        Automatische Erkennung technischer Probleme wie fehlende
+                        Labels, Kontrastfehler oder fehlerhafte ARIA-Attribute
+                    </li>
+                    <li>
+                        Darstellung der Fehlerstellen im DOM mit Erklärung und
+                        Lösungsvorschlägen
+                    </li>
+                    <li>
+                        Visualisierung der Tastatur-Navigation
+                        (Fokusreihenfolge) bei manchen Tools
+                    </li>
+                </ul>
+
+                <p><strong>Vorteile:</strong></p>
+                <ul>
+                    <li>Schnelle Ergebnisse bei häufigen Fehlern</li>
+                    <li>Erklärungen und Lernhilfen integriert</li>
+                    <li>Ideal zur Schulung und Sensibilisierung</li>
+                </ul>
+
+                <p><strong>Nachteile:</strong></p>
+                <ul>
+                    <li>
+                        Deckt nur einen Teil der WCAG-Kriterien ab
+                        (automatisierbare Checks)
+                    </li>
+                    <li>Kontextabhängige Ergebnisse (Fehlalarme möglich)</li>
+                    <li>
+                        Kann die Verständlichkeit und Nutzbarkeit nicht bewerten
+                    </li>
+                </ul>
+
+                <h2 id="automated-testing">Automatisiertes Testen (z. B. mit axe-core)</h2>
+
+                <p><strong>Wann macht es Sinn?</strong></p>
+                <ul>
+                    <li>
+                        In kontinuierlichen Integrationsprozessen (CI/CD) für
+                        automatische Prüfungen bei Code-Änderungen
+                    </li>
+                    <li>
+                        In großen Websites oder Design-Systemen zur Regelprüfung
+                        wiederkehrender Komponenten
+                    </li>
+                    <li>
+                        Zur Qualitätssicherung von UI-Bibliotheken und
+                        Komponenten in Storybook oder Unit-Tests
+                    </li>
+                    <li>Für schnelle Scans vor manuellen Audits</li>
+                </ul>
+
+                <p><strong>Was kann es?</strong></p>
+                <ul>
+                    <li>
+                        Erkennt technische Muster wie fehlende Labels,
+                        ARIA-Fehler, Kontrastprobleme oder Landmark-Strukturen
+                    </li>
+                    <li>Ergebnisse sind reproduzierbar und messbar</li>
+                    <li>
+                        Eignet sich für skalierbare Tests über viele Seiten
+                        hinweg
+                    </li>
+                </ul>
+
+                <p><strong>Was kann es nicht?</strong></p>
+                <ul>
+                    <li>
+                        Inhaltliche Qualität und Verständlichkeit beurteilen
+                    </li>
+                    <li>
+                        Tastaturbedienung und Fokusfallen in dynamischen
+                        Interfaces erkennen
+                    </li>
+                    <li>
+                        Screenreader-Verhalten und semantischen Lesefluss
+                        realistisch prüfen
+                    </li>
+                </ul>
+
+                <p><strong>Vorteile:</strong></p>
+                <ul>
+                    <li>Schnell, automatisierbar und skalierbar</li>
+                    <li>Einheitliche, messbare Ergebnisse</li>
+                    <li>Frühzeitige Erkennung technischer Barrieren</li>
+                </ul>
+
+                <p><strong>Nachteile:</strong></p>
+                <ul>
+                    <li>
+                        Nur automatisierbare Regeln werden erkannt (ca. 20–30 %
+                        aller Kriterien)
+                    </li>
+                    <li>Gefahr falscher Sicherheit („0 Fehler = alles gut“)</li>
+                    <li>Benötigt Pflege und Tests verschiedener UI-Zustände</li>
+                </ul>
+
+                <h2>Empfohlener kombinierter Workflow</h2>
+
+                <ol>
+                    <li>
+                        <strong>Schnellscan automatisiert:</strong> axe oder
+                        Lighthouse ausführen, offensichtliche technische
+                        Probleme beheben.
+                    </li>
+                    <li>
+                        <strong>Manuelle Prüfung:</strong> Tastatur, Fokus,
+                        Formulare, Menüs, Zoom und Bewegung testen.
+                    </li>
+                    <li>
+                        <strong>Inhaltliche Qualität:</strong> Alt-Texte,
+                        Linktexte, Sprache und Lesbarkeit bewerten.
+                    </li>
+                    <li>
+                        <strong>Vertiefung:</strong> Screenreader-Tests und
+                        Nutzerfeedback einholen.
+                    </li>
+                    <li>
+                        <strong>Absicherung:</strong> axe-core in CI/CD
+                        integrieren, um Barrierefreiheit langfristig
+                        sicherzustellen.
+                    </li>
+                </ol>
+
+                <p>
+                    <em>Merksatz:</em> Automatisierte Tests sind die
+                    <strong>Frühwarnanlage</strong>, manuelle Tests die
+                    <strong>Inspektion</strong>, und echte Nutzungstests die
+                    <strong>Realitätsprobe</strong>.
+                </p>
+            </article>
+        </main>
+
+        <script src="../assets/js/scaffold.js"></script>
+    </body>
+</html>

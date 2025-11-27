@@ -333,8 +333,12 @@ function createMainNavigation() {
             text: "Screenreader",
         },
         {
+            file: "writing.html",
+            text: "verständliches Texten",
+        },
+        {
             file: "non-text-content.html",
-            text: "Nicht-Text",
+            text: "Nicht-Text-Inhalte",
         },
         {
             file: "user-settings.html",
@@ -418,12 +422,20 @@ function createMainNavigationWithSubmenu() {
             ],
         },
         {
-            file: "content/index.html",
+            file: "writing.html",
             text: "Redaktion",
             children: [
                 {
+                    file: "writing.html",
+                    text: "verständliches Texten",
+                },
+                {
+                    file: "content/language-level.html",
+                    text: "Sprachlevel",
+                },
+                {
                     file: "content/non-text-content.html",
-                    text: "Nicht-Text",
+                    text: "Nicht-Text-Inhalte",
                 },
                 {
                     file: "text-level/index.html",
@@ -465,6 +477,24 @@ function createMainNavigationWithSubmenu() {
                 {
                     file: "components/error-with-server.html",
                     text: "Fehlermeldung nach Serverauswertung",
+                },
+            ],
+        },
+        {
+            file: "testing/index.html",
+            text: "Testen",
+            children: [
+                {
+                    file: "testing/manual-testing.html",
+                    text: "Manuelles Testen",
+                },
+                {
+                    file: "testing/browser-extensions.html",
+                    text: "Browser-Erweiterungen",
+                },
+                {
+                    file: "testing/automated-testing.html",
+                    text: "Testautomatisierung",
                 },
             ],
         },
@@ -561,6 +591,34 @@ function createMainNavigationWithSubmenu() {
     document.body.prepend(nav)
 }
 
+function createChatbotAssistButton() {
+    /*
+    <script>
+        window.chatbotConfig = {
+            chatbotId: "37632ee5-1dd3-4152-b364-6746f8dc8953", 
+            chatbotServer: "https://hybridai.one"
+        };
+    </script>
+    <script src="https://hybridai.one/hai_embed.js?chatbotId=37632ee5-1dd3-4152-b364-6746f8dc8953"></script>  
+*/
+    const scriptConfig = document.createElement("script")
+    scriptConfig.type = "text/javascript"
+    scriptConfig.innerHTML = `
+        window.chatbotConfig = {
+            chatbotId: "37632ee5-1dd3-4152-b364-6746f8dc8953", 
+            chatbotServer: "https://hybridai.one"
+        };
+    `
+
+    const scriptEmbed = document.createElement("script")
+    scriptEmbed.type = "text/javascript"
+    scriptEmbed.src =
+        "https://hybridai.one/hai_embed.js?chatbotId=37632ee5-1dd3-4152-b364-6746f8dc8953"
+
+    document.body.appendChild(scriptConfig)
+    document.body.appendChild(scriptEmbed)
+}
+
 function createFooter() {
     const footer = document.createElement("footer")
     const address = document.createElement("address")
@@ -637,8 +695,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof createFooter === "function") createFooter()
     if (typeof createSkipLinks === "function") createSkipLinks()
     if (typeof setTabindizes === "function") setTabindizes()
-    if (typeof createAxeCoreTestScripts === "function")
-        createAxeCoreTestScripts()
-    if (typeof createAxeCoreUI === "function") createAxeCoreUI()
+    // if (typeof createAxeCoreTestScripts === "function")
+    //     createAxeCoreTestScripts()
+    // if (typeof createAxeCoreUI === "function") createAxeCoreUI()
     document.querySelector("html").setAttribute("lang", "de")
+    createChatbotAssistButton()
 })
