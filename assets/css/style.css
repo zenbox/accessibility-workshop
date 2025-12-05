@@ -7537,7 +7537,7 @@ body > nav[id=main-navigation] .main-nav-item[aria-expanded=true] > .submenu {
 .axe-fab {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 70px;
   width: 56px;
   height: 56px;
   border-radius: 50%;

@@ -168,206 +168,205 @@
         outline-offset: 2px;
     }
 }
-    /* Floating Action Button (FAB) */
-    .axe-fab {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        background: #1976d2;
-        color: white;
-        border: none;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        transition: all 0.3s ease;
-    }
+/* Floating Action Button (FAB) */
+.axe-fab {
+    position: fixed;
+    bottom: 20px;
+    right: 70px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #1976d2;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
 
-    .axe-fab:hover {
-        background: #1565c0;
-        transform: scale(1.1);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-    }
+.axe-fab:hover {
+    background: #1565c0;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
 
-    .axe-fab:focus {
-        outline: 3px solid #4fc3f7;
-        outline-offset: 2px;
-    }
+.axe-fab:focus {
+    outline: 3px solid #4fc3f7;
+    outline-offset: 2px;
+}
 
-    /* Overlay */
-    .axe-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.7);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 2000;
-        backdrop-filter: blur(4px);
-    }
+/* Overlay */
+.axe-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px);
+}
 
+.axe-dialog {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    max-height: 80vh;
+    width: 90%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.axe-dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    background: #1976d2;
+    color: white;
+}
+
+.axe-dialog-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.axe-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.axe-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.axe-dialog-content {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.axe-test-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.axe-test-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.axe-test-btn:hover {
+    border-color: #1976d2;
+    background: #f3f8ff;
+    color: #1976d2;
+}
+
+.axe-test-btn:focus {
+    outline: 2px solid #1976d2;
+    outline-offset: 2px;
+}
+
+.axe-dialog-footer {
+    padding: 16px 24px;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.axe-close-btn-text {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    color: #666;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.axe-close-btn-text:hover {
+    border-color: #999;
+    color: #333;
+}
+
+/* Results Panel im Overlay */
+.axe-overlay .results-panel {
+    margin-top: 20px;
+    border-top: 2px solid #e0e0e0;
+    padding-top: 20px;
+}
+
+.axe-overlay .results-panel h3 {
+    margin: 0 0 16px 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.axe-overlay .status-bar {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.axe-overlay .status-bar.success {
+    background: #e8f5e8;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.axe-overlay .status-bar.error {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 768px) {
     .axe-dialog {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        max-width: 600px;
-        max-height: 80vh;
-        width: 90%;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
+        width: 95%;
+        max-height: 90vh;
     }
 
-    .axe-dialog-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 24px;
-        background: #1976d2;
-        color: white;
+    .axe-fab {
+        bottom: 16px;
+        right: 16px;
+        width: 48px;
+        height: 48px;
     }
-
-    .axe-dialog-header h2 {
-        margin: 0;
-        font-size: 1.25rem;
-        font-weight: 600;
-    }
-
-    .axe-close-btn {
-        background: none;
-        border: none;
-        color: white;
-        cursor: pointer;
-        padding: 8px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.2s ease;
-    }
-
-    .axe-close-btn:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .axe-dialog-content {
-        padding: 24px;
-        overflow-y: auto;
-        flex: 1;
-    }
-
-    .axe-test-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin-bottom: 24px;
-    }
-
-    .axe-test-btn {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 16px 20px;
-        border: 2px solid #e0e0e0;
-        border-radius: 8px;
-        background: white;
-        color: #333;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .axe-test-btn:hover {
-        border-color: #1976d2;
-        background: #f3f8ff;
-        color: #1976d2;
-    }
-
-    .axe-test-btn:focus {
-        outline: 2px solid #1976d2;
-        outline-offset: 2px;
-    }
-
-    .axe-dialog-footer {
-        padding: 16px 24px;
-        background: #f5f5f5;
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .axe-close-btn-text {
-        padding: 10px 20px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        background: white;
-        color: #666;
-        cursor: pointer;
-        font-size: 0.9rem;
-        transition: all 0.2s ease;
-    }
-
-    .axe-close-btn-text:hover {
-        border-color: #999;
-        color: #333;
-    }
-
-    /* Results Panel im Overlay */
-    .axe-overlay .results-panel {
-        margin-top: 20px;
-        border-top: 2px solid #e0e0e0;
-        padding-top: 20px;
-    }
-
-    .axe-overlay .results-panel h3 {
-        margin: 0 0 16px 0;
-        color: #333;
-        font-size: 1.1rem;
-    }
-
-    .axe-overlay .status-bar {
-        padding: 12px 16px;
-        border-radius: 6px;
-        margin-bottom: 16px;
-        font-weight: 500;
-    }
-
-    .axe-overlay .status-bar.success {
-        background: #e8f5e8;
-        color: #2e7d32;
-        border: 1px solid #c8e6c9;
-    }
-
-    .axe-overlay .status-bar.error {
-        background: #ffebee;
-        color: #c62828;
-        border: 1px solid #ffcdd2;
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-        main {
-            grid-template-columns: 1fr;
-        }
-    }
-    @media (max-width: 768px) {
-        .axe-dialog {
-            width: 95%;
-            max-height: 90vh;
-        }
-
-        .axe-fab {
-            bottom: 16px;
-            right: 16px;
-            width: 48px;
-            height: 48px;
-        }
-    }
-
+}
