@@ -171,10 +171,10 @@
 /* Floating Action Button (FAB) */
 .axe-fab {
     position: fixed;
-    bottom: 20px;
-    right: 70px;
-    width: 56px;
-    height: 56px;
+    bottom: 80px;
+    right: 15px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: #1976d2;
     color: white;
@@ -364,9 +364,9 @@
     }
 
     .axe-fab {
-        bottom: 16px;
-        right: 16px;
-        width: 48px;
-        height: 48px;
+    bottom: 80px;
+    right: 15px;
+    width: 44px;
+    height: 44px;
     }
 }

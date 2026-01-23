@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benutzereinstellungen</title>
+</head>
+<body>
+    
+    <main>
+        <h1>Benutzereinstellungen   </h1>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat, voluptate! Veniam id quos placeat corporis reiciendis adipisci fugit voluptates. Blanditiis dolor ad neque, minus eveniet cum ex voluptatem quidem itaque earum ea.</p>
+        <div id="moving-box"></div>
+    </main>
+
+    <style>
+        #moving-box {
+            width: 100px;
+            height: 100px;
+            background-color: coral;
+            margin-top: 20px;
+            animation: moveBox 2s infinite alternate;
+        }
+        @keyframes moveBox {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(200px);
+            }
+        }
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+                color: #e0e0e0;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #ffffff;
+                color: #000000;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                transition-duration: 0.0001s !important;
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+
+        @media (prefers-contrast: more) {
+      body {
+                background-color: #121212;
+                color: #e0e0e0;
+            }
+        }   
+    </style>
+
+</body>
+</html>

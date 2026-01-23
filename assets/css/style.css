@@ -7536,10 +7536,10 @@ body > nav[id=main-navigation] .main-nav-item[aria-expanded=true] > .submenu {
 /* Floating Action Button (FAB) */
 .axe-fab {
   position: fixed;
-  bottom: 20px;
-  right: 70px;
-  width: 56px;
-  height: 56px;
+  bottom: 80px;
+  right: 15px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: #1976d2;
   color: white;
@@ -7728,10 +7728,10 @@ body > nav[id=main-navigation] .main-nav-item[aria-expanded=true] > .submenu {
     max-height: 90vh;
   }
   .axe-fab {
-    bottom: 16px;
-    right: 16px;
-    width: 48px;
-    height: 48px;
+    bottom: 80px;
+    right: 15px;
+    width: 44px;
+    height: 44px;
   }
 }
 .hybridai-chat-window {
@@ -7916,7 +7916,7 @@ body > footer {
   color: var(--on-accred);
   font-size: 0.8em;
 }
-body > footer:active, body > footer:hover {
+body > footer:active, body > footer:focus, body > footer:focus-within, body > footer:hover {
   opacity: 1;
 }
 body > footer a:link,

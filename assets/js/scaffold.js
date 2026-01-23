@@ -404,7 +404,11 @@ function createMainNavigationWithSubmenu() {
                 { file: "techniques/keyboard.html", text: "Tastatur" },
                 {
                     file: "screenreader-simulation/",
-                    text: "Screenreader",
+                    text: "Screenreader Simulation",
+                },
+                {
+                    file: "screenreader-examples.html",
+                    text: "Screenreader Beispiele",
                 },
                 {
                     file: "techniques/user-settings.html",
@@ -655,6 +659,55 @@ function createBrand() {
     brand.textContent = "accessibility workshop"
 
     document.querySelector("header").prepend(brand)
+}
+
+function createSkipLinks() {
+    // Create skiplinks for the major page landmarks.
+    // Works on main pages and subpages by adding IDs when missing.
+    if (document.getElementById("skip-links")) return
+
+    const header = document.querySelector("header")
+    const main = document.querySelector("main")
+    const footer = document.querySelector("footer")
+
+    const ensureId = (el, fallbackId) => {
+        if (!el) return null
+        if (!el.id) el.id = fallbackId
+        return el.id
+    }
+
+    const headerId = ensureId(header, "page-header")
+    const mainId = ensureId(main, "main-content")
+    const footerId = ensureId(footer, "page-footer")
+
+    const nav = document.createElement("nav")
+    nav.id = "skip-links"
+    nav.className = "skip-links"
+    nav.setAttribute("aria-label", "Sprungmarken")
+
+    const links = []
+    if (headerId) links.push({ href: `#${headerId}`, text: "Zum Header" })
+    if (mainId) links.push({ href: `#${mainId}`, text: "Zum Inhalt" })
+    if (footerId) links.push({ href: `#${footerId}`, text: "Zum Footer" })
+
+    if (links.length === 0) return
+
+    const ul = document.createElement("ul")
+    ul.className = "skip-links__list"
+
+    links.forEach((l) => {
+        const li = document.createElement("li")
+        li.className = "skip-links__item"
+        const a = document.createElement("a")
+        a.className = "skip-links__link"
+        a.href = l.href
+        a.textContent = l.text
+        li.appendChild(a)
+        ul.appendChild(li)
+    })
+
+    nav.appendChild(ul)
+    document.body.prepend(nav)
 }
 
 function setTabindizes() {

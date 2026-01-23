@@ -11,6 +11,8 @@ body {
     > footer {
         transition: opacity 0.5s;
         &:active,
+        &:focus,
+        &:focus-within,
         &:hover {
             opacity: 1;
         }
