@@ -482,6 +482,10 @@ function createMainNavigationWithSubmenu() {
                     file: "components/error-with-server.html",
                     text: "Fehlermeldung nach Serverauswertung",
                 },
+                {
+                    file: "components/ng-gallery-component.md",
+                    text: "Angular Image-Slider Komponente",
+                },
             ],
         },
         {
