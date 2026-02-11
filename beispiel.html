@@ -6,22 +6,122 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0"
         />
-        <title>Document</title>
+        <title>Table example</title>
+        <style>
+            table,
+            tr,
+            th,
+            td {
+                border: 2px dotted red;
+            }
+            thead,
+            tbody,
+            tfoot {
+                border: 2px dotted green;
+            }
+            .visually-hidden {
+                position: absolute !important;
+                height: 1px;
+                width: 1px;
+                overflow: hidden;
+                clip: rect(1px, 1px, 1px, 1px);
+                white-space: nowrap;
+            }
+            .contrast {
+                background: hsla(0, 100%, 80%, 1);
+                color: hsla(0, 0%, 10%, 1);
+            }
+            .uppercase {
+                text-transform: uppercase;
+            }
+        </style>
     </head>
     <body>
-        <div>
-            <img
-                src="images.jpg"
-                alt="Berater im Gespräch mit einem Kunden."
-            />
-        </div>
+        <nav class="visually-hidden">
+            <a href="">skiplink 1</a>
+            <a href="">skiplink 2</a>
+            <a href="">skiplink 3</a>
+            <a href="">skiplink 4</a>
+            <a href="">skiplink 5</a>
+        </nav>
 
-        <button
 
-        >
-           Themen
+Seminar 26-mal gebucht
 
-                Unternavigation aufklappen und zuklappen
-        </button>
+<abbr title="pro Person" class="uppercase">p.p.</abbr>
+<abbr title="zuzüglich" class="uppercase">zzgl.</abbr>
+<abbr title="Mehrwertsteuer" class="uppercase">mwst.</abbr>
+P. P. ZZGL. MWST.
+
+
+        <main>
+            <h1>Table example</h1>
+
+            <h2
+                role="heading"
+                aria-level="2"
+            >
+                Eine fantastische Überschrift
+            </h2>
+
+            <nav id="main-navigation">
+                <ul
+                    role="navigation"
+                    aria-labelledby="main-navigation"
+                >
+                    <li><a href="">link 1</a></li>
+                    <li><a href="">link 2</a></li>
+                    <li><a href="">link 3</a></li>
+                </ul>
+            </nav>
+
+            <table class="contrast">
+                <caption class="visually-hidden">
+                    caption 1
+                </caption>
+
+                <thead>
+                    <tr>
+                        <th scope="col">title 1</th>
+                        <th scope="col">title 2</th>
+                        <th scope="col">title 3</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <th scope="row">field 1</th>
+                        <td>field 2</td>
+                        <td>field 3</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">field 1</th>
+                        <td>field 2</td>
+                        <td>field 3</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">field 1</th>
+                        <td>field 2</td>
+                        <td>field 3</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">field 1</th>
+                        <td>field 2</td>
+                        <td>field 3</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">field 1</th>
+                        <td>field 2</td>
+                        <td>field 3</td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="3">footer 1</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </main>
     </body>
 </html>

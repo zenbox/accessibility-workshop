@@ -150,7 +150,8 @@ input[type="button"] {
     cursor: pointer;
     font-weight: 400;
     text-align: center;
-    transition: background-color var(--transition-standard),
+    transition:
+        background-color var(--transition-standard),
         transform var(--transition-standard);
     font-family: inherit;
     font-size: 0.8rem; /* Verkleinert von 1rem */
@@ -339,6 +340,99 @@ label.button {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+}
+
+/* Kriterien-Info Dialog (Modal) */
+.dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 1100;
+}
+
+.dialog {
+    width: min(900px, 100%);
+    max-height: min(85vh, 900px);
+    background-color: var(--card-background);
+    color: var(--text-primary);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.dialog-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dialog-title {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.dialog-close {
+    appearance: none;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    line-height: 1;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.dialog-close:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.dialog-close:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.dialog-content {
+    padding: 16px;
+    overflow: auto;
+}
+
+.dialog-footer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    background-color: var(--surface);
+}
+
+.markdown-content :is(h1, h2, h3) {
+    margin-top: 0.75rem;
+}
+
+.markdown-content p {
+    margin: 0.5rem 0;
+}
+
+@media (max-width: 576px) {
+    .dialog-backdrop {
+        padding: 12px;
+    }
+
+    .dialog-title {
+        font-size: 0.95rem;
+    }
 }
 
 /* ============= TABS-NAVIGATION ============= */

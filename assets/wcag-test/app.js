@@ -916,13 +916,13 @@ class WcagTestApp extends HTMLElement {
                                         <div class="criteria-header">
                                             <div>
                                                 <strong>${criteria.id} ${
-                                        criteria.name
-                                    }</strong> (${criteria.level})
+                                                    criteria.name
+                                                }</strong> (${criteria.level})
                                                 <div><small>${
                                                     criteria.principle
                                                 }: ${
-                                        criteria.guideline
-                                    }</small></div>
+                                                    criteria.guideline
+                                                }</small></div>
                                             </div>
                                             <div>
                                                 ${
@@ -947,8 +947,8 @@ class WcagTestApp extends HTMLElement {
                                                 <select class="result-select" data-criteria-id="${
                                                     criteria.id
                                                 }" data-page-id="${
-                                        this.currentPageId
-                                    }">
+                                                    this.currentPageId
+                                                }">
 
 
                                         <option value="">-- Bitte wählen --</option>
@@ -958,13 +958,11 @@ class WcagTestApp extends HTMLElement {
                                                         <option value="${
                                                             type.id
                                                         }" ${
-                                                                resultType ===
-                                                                type.id
-                                                                    ? "selected"
-                                                                    : ""
-                                                            }>${
-                                                                type.name
-                                                            }</option>
+                                                            resultType ===
+                                                            type.id
+                                                                ? "selected"
+                                                                : ""
+                                                        }>${type.name}</option>
                                                     `
                                                         )
                                                         .join("")}
@@ -996,13 +994,13 @@ class WcagTestApp extends HTMLElement {
                                                         <textarea class="new-comment-text" data-criteria-id="${
                                                             criteria.id
                                                         }" data-page-id="${
-                                        this.currentPageId
-                                    }" rows="3" placeholder="Neue Bemerkung eingeben..."></textarea>
+                                                            this.currentPageId
+                                                        }" rows="3" placeholder="Neue Bemerkung eingeben..."></textarea>
                                                         <button type="button" class="add-comment" data-criteria-id="${
                                                             criteria.id
                                                         }" data-page-id="${
-                                        this.currentPageId
-                                    }">Hinzufügen</button>
+                                                            this.currentPageId
+                                                        }">Hinzufügen</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1012,8 +1010,8 @@ class WcagTestApp extends HTMLElement {
                                                 <div class="images-container" data-criteria-id="${
                                                     criteria.id
                                                 }" data-page-id="${
-                                        this.currentPageId
-                                    }">
+                                                    this.currentPageId
+                                                }">
                                                     ${
                                                         result &&
                                                         result.images &&
@@ -1031,30 +1029,30 @@ class WcagTestApp extends HTMLElement {
                                                                     <img src="${
                                                                         image.data
                                                                     }" alt="${
-                                                                          image.description ||
-                                                                          "Screenshot"
-                                                                      }" />
+                                                                        image.description ||
+                                                                        "Screenshot"
+                                                                    }" />
                                                                 </div>
                                                                 <div class="image-controls">
                                                                     <input type="text" class="image-description" value="${
                                                                         image.description ||
                                                                         ""
                                                                     }" placeholder="Bildbeschreibung eingeben..." data-image-id="${
-                                                                          image.id
-                                                                      }" data-criteria-id="${
-                                                                          criteria.id
-                                                                      }" data-page-id="${
-                                                                          this
-                                                                              .currentPageId
-                                                                      }">
+                                                                        image.id
+                                                                    }" data-criteria-id="${
+                                                                        criteria.id
+                                                                    }" data-page-id="${
+                                                                        this
+                                                                            .currentPageId
+                                                                    }">
                                                                     <button type="button" class="delete-image" data-image-id="${
                                                                         image.id
                                                                     }" data-criteria-id="${
-                                                                          criteria.id
-                                                                      }" data-page-id="${
-                                                                          this
-                                                                              .currentPageId
-                                                                      }">Bild löschen</button>
+                                                                        criteria.id
+                                                                    }" data-page-id="${
+                                                                        this
+                                                                            .currentPageId
+                                                                    }">Bild löschen</button>
                                                                 </div>
                                                             </div>
                                                         `
@@ -1067,18 +1065,18 @@ class WcagTestApp extends HTMLElement {
                                                         <button type="button" class="paste-image-btn" data-criteria-id="${
                                                             criteria.id
                                                         }" data-page-id="${
-                                        this.currentPageId
-                                    }">Screenshot aus Zwischenablage einfügen</button>
+                                                            this.currentPageId
+                                                        }">Screenshot aus Zwischenablage einfügen</button>
                                                         <button type="button" class="upload-image-btn" data-criteria-id="${
                                                             criteria.id
                                                         }" data-page-id="${
-                                        this.currentPageId
-                                    }">Bild hochladen</button>
+                                                            this.currentPageId
+                                                        }">Bild hochladen</button>
                                                         <input type="file" class="image-upload-input" style="display: none;" accept="image/*" data-criteria-id="${
                                                             criteria.id
                                                         }" data-page-id="${
-                                        this.currentPageId
-                                    }">
+                                                            this.currentPageId
+                                                        }">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1317,6 +1315,15 @@ class WcagTestApp extends HTMLElement {
         const criteria = allWcagCriteria.find((c) => c.id === criteriaId)
         if (!criteria) return
 
+        // Verhindere mehrfach geöffnete Dialoge
+        document
+            .querySelectorAll(".dialog-backdrop")
+            .forEach((el) => el.remove())
+
+        const previouslyFocusedElement = document.activeElement
+        const previousOverflow = document.body.style.overflow
+        document.body.style.overflow = "hidden"
+
         // Dialog-Element erstellen
         const dialogBackdrop = document.createElement("div")
         dialogBackdrop.className = "dialog-backdrop"
@@ -1324,11 +1331,17 @@ class WcagTestApp extends HTMLElement {
         const dialog = document.createElement("div")
         dialog.className = "dialog"
 
+        const titleId = `criteria-dialog-title-${criteria.id.replace(/[^a-z0-9_-]/gi, "-")}`
+        dialog.setAttribute("role", "dialog")
+        dialog.setAttribute("aria-modal", "true")
+        dialog.setAttribute("aria-labelledby", titleId)
+        dialog.tabIndex = -1
+
         const dialogHeader = document.createElement("div")
         dialogHeader.className = "dialog-header"
         dialogHeader.innerHTML = `
-                    <h2 class="dialog-title">${criteria.id} ${criteria.name} (${criteria.level})</h2>
-                    <button class="dialog-close">&times;</button>
+                    <h2 class="dialog-title" id="${titleId}">${criteria.id} ${criteria.name} (${criteria.level})</h2>
+                    <button class="dialog-close" type="button" aria-label="Dialog schließen">&times;</button>
                 `
 
         const dialogContent = document.createElement("div")
@@ -1355,7 +1368,7 @@ class WcagTestApp extends HTMLElement {
         const dialogFooter = document.createElement("div")
         dialogFooter.className = "dialog-footer"
         dialogFooter.innerHTML = `
-                    <button class="dialog-close-btn">Schließen</button>
+                    <button class="dialog-close-btn" type="button">Schließen</button>
                 `
 
         dialog.appendChild(dialogHeader)
@@ -1367,7 +1380,60 @@ class WcagTestApp extends HTMLElement {
 
         // Event-Listener für das Schließen des Dialogs
         const closeDialog = () => {
-            document.body.removeChild(dialogBackdrop)
+            dialogBackdrop.removeEventListener("keydown", onKeyDown)
+            if (dialogBackdrop.parentNode) {
+                document.body.removeChild(dialogBackdrop)
+            }
+            document.body.style.overflow = previousOverflow
+            if (previouslyFocusedElement && previouslyFocusedElement.focus) {
+                previouslyFocusedElement.focus()
+            }
+        }
+
+        const getFocusableElements = () => {
+            const focusableSelector =
+                'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            return Array.from(
+                dialog.querySelectorAll(focusableSelector)
+            ).filter((el) => {
+                const style = window.getComputedStyle(el)
+                return style.display !== "none" && style.visibility !== "hidden"
+            })
+        }
+
+        const onKeyDown = (event) => {
+            if (event.key === "Escape") {
+                event.preventDefault()
+                closeDialog()
+                return
+            }
+
+            if (event.key !== "Tab") return
+
+            const focusable = getFocusableElements()
+            if (focusable.length === 0) {
+                event.preventDefault()
+                dialog.focus()
+                return
+            }
+
+            const first = focusable[0]
+            const last = focusable[focusable.length - 1]
+
+            if (event.shiftKey) {
+                if (
+                    document.activeElement === first ||
+                    document.activeElement === dialog
+                ) {
+                    event.preventDefault()
+                    last.focus()
+                }
+            } else {
+                if (document.activeElement === last) {
+                    event.preventDefault()
+                    first.focus()
+                }
+            }
         }
 
         dialogBackdrop.addEventListener("click", (event) => {
@@ -1376,12 +1442,23 @@ class WcagTestApp extends HTMLElement {
             }
         })
 
+        // Key handling (ESC, Fokus im Dialog halten)
+        dialogBackdrop.addEventListener("keydown", onKeyDown)
+
         dialogHeader
             .querySelector(".dialog-close")
             .addEventListener("click", closeDialog)
         dialogFooter
             .querySelector(".dialog-close-btn")
             .addEventListener("click", closeDialog)
+
+        // Initialer Fokus
+        const closeButton = dialogHeader.querySelector(".dialog-close")
+        if (closeButton && closeButton.focus) {
+            closeButton.focus()
+        } else {
+            dialog.focus()
+        }
     }
 
     // Lade Markdown-Datei
@@ -2227,9 +2304,8 @@ ${this.getCriteriaExamples(criteria.id)}
                                     )
 
                                     // Bild aus Zwischenablage holen
-                                    const blob = await clipboardItem.getType(
-                                        imageType
-                                    )
+                                    const blob =
+                                        await clipboardItem.getType(imageType)
 
                                     // Bild in Base64 konvertieren
                                     const reader = new FileReader()
