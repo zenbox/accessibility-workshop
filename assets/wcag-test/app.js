@@ -14,6 +14,467 @@ const prinzipienUebersetzer = {
     Robust: "Robust",
 }
 
+function isHexDigit(char) {
+    return (
+        (char >= "0" && char <= "9") ||
+        (char >= "a" && char <= "f") ||
+        (char >= "A" && char <= "F")
+    )
+}
+
+// Repariert häufige JSON-Probleme mit Backslashes in Strings, z.B. Windows-Pfade wie "C:\users".
+// Hintergrund: In JSON ist "\u" ein Unicode-Escape und muss genau 4 Hex-Zeichen haben.
+function repairJsonEscapes(jsonText) {
+    if (typeof jsonText !== "string" || jsonText.length === 0) return jsonText
+
+    let inString = false
+    let escaped = false
+    let output = ""
+
+    for (let index = 0; index < jsonText.length; index++) {
+        const char = jsonText[index]
+
+        if (!inString) {
+            if (char === '"') {
+                inString = true
+            }
+            output += char
+            continue
+        }
+
+        // inString === true
+        if (escaped) {
+            // Der aktuelle char gehört zu einem Escape, wir übernehmen ihn.
+            output += char
+            escaped = false
+            continue
+        }
+
+        if (char === "\\") {
+            const next = jsonText[index + 1]
+
+            // Backslash am Ende -> als Literal reparieren
+            if (next === undefined) {
+                output += "\\\\"
+                continue
+            }
+
+            // Gültige JSON-Escapes: " \\ / b f n r t u
+            if (
+                next === '"' ||
+                next === "\\" ||
+                next === "/" ||
+                next === "b" ||
+                next === "f" ||
+                next === "n" ||
+                next === "r" ||
+                next === "t"
+            ) {
+                output += char
+                escaped = true
+                continue
+            }
+
+            if (next === "u") {
+                const h1 = jsonText[index + 2]
+                const h2 = jsonText[index + 3]
+                const h3 = jsonText[index + 4]
+                const h4 = jsonText[index + 5]
+
+                // Nur akzeptieren, wenn genau 4 Hex-Zeichen folgen
+                if (
+                    h1 !== undefined &&
+                    h2 !== undefined &&
+                    h3 !== undefined &&
+                    h4 !== undefined &&
+                    isHexDigit(h1) &&
+                    isHexDigit(h2) &&
+                    isHexDigit(h3) &&
+                    isHexDigit(h4)
+                ) {
+                    output += char
+                    escaped = true
+                    continue
+                }
+
+                // Ungültiges Unicode-Escape: Backslash als Literal escapen
+                output += "\\\\"
+                continue
+            }
+
+            // Unbekanntes Escape -> Backslash als Literal escapen
+            output += "\\\\"
+            continue
+        }
+
+        if (char === '"') {
+            inString = false
+            output += char
+            continue
+        }
+
+        output += char
+    }
+
+    return output
+}
+
+function parseJsonWithRepair(jsonText) {
+    try {
+        return { data: JSON.parse(jsonText), repaired: false }
+    } catch (error) {
+        const repairedText = repairJsonEscapes(jsonText)
+        if (repairedText !== jsonText) {
+            return { data: JSON.parse(repairedText), repaired: true }
+        }
+        throw error
+    }
+}
+
+// ---------------------------------------------------------------------------
+// WCAG-Test Kollaboration (Multiuser) – lokaler WebSocket Sync (localhost)
+
+function getUrlParam(name) {
+    try {
+        return new URLSearchParams(window.location.search).get(name)
+    } catch {
+        return null
+    }
+}
+
+function createClientId() {
+    return (
+        typeof crypto !== "undefined" && crypto.randomUUID
+            ? crypto.randomUUID()
+            : `client-${Date.now()}-${Math.random().toString(16).slice(2)}`
+    ).toString()
+}
+
+class WcagCollaborationClient {
+    constructor({ wsUrl, sessionId, username, clientId, onMessage, onStatus }) {
+        this.wsUrl = wsUrl
+        this.sessionId = sessionId
+        this.username = username
+        this.clientId = clientId
+        this.onMessage = onMessage
+        this.onStatus = onStatus
+        this.socket = null
+        this.connected = false
+    }
+
+    connect() {
+        if (!this.wsUrl) throw new Error("WS URL fehlt")
+        if (!this.sessionId) throw new Error("Session-ID fehlt")
+
+        this.onStatus?.({ state: "connecting" })
+        this.socket = new WebSocket(this.wsUrl)
+
+        this.socket.addEventListener("open", () => {
+            this.connected = true
+            this.onStatus?.({ state: "connected" })
+            this.send({
+                type: "wcag-join",
+                sessionId: this.sessionId,
+                username: this.username,
+                clientId: this.clientId,
+            })
+        })
+
+        this.socket.addEventListener("message", (event) => {
+            let msg
+            try {
+                msg = JSON.parse(event.data)
+            } catch {
+                return
+            }
+            this.onMessage?.(msg)
+        })
+
+        this.socket.addEventListener("close", () => {
+            this.connected = false
+            this.onStatus?.({ state: "disconnected" })
+        })
+
+        this.socket.addEventListener("error", () => {
+            this.onStatus?.({ state: "error" })
+        })
+    }
+
+    disconnect() {
+        try {
+            this.socket?.close()
+        } catch {
+            // ignore
+        }
+        this.connected = false
+        this.socket = null
+        this.onStatus?.({ state: "disconnected" })
+    }
+
+    send(payload) {
+        if (!this.socket || this.socket.readyState !== WebSocket.OPEN) return
+        this.socket.send(JSON.stringify(payload))
+    }
+}
+
+class WcagCollaborationController {
+    constructor(app) {
+        this.app = app
+        this.model = app.model
+
+        this.clientId =
+            localStorage.getItem("wcagCollabClientId") || createClientId()
+        localStorage.setItem("wcagCollabClientId", this.clientId)
+
+        this.sessionId = localStorage.getItem("wcagCollabSessionId") || ""
+        this.username = localStorage.getItem("wcagCollabUsername") || ""
+        this.wsUrl =
+            localStorage.getItem("wcagCollabWsUrl") ||
+            `ws://${window.location.hostname || "localhost"}:21665`
+
+        this.rev = 0
+        this.isApplyingRemoteState = false
+        this.broadcastTimeout = null
+        this.client = null
+
+        this.userByClientId = new Map()
+        this.hasSeenInitialState = false
+        this.lastToastAt = 0
+        this.lastAppliedRev = 0
+
+        // Als Observer am Model: jede Änderung kann (debounced) synchronisiert werden.
+        this.model.addObserver(this)
+    }
+
+    update() {
+        if (!this.isConnected()) return
+        if (this.isApplyingRemoteState) return
+        this.scheduleBroadcast()
+    }
+
+    isConnected() {
+        return !!(this.client && this.client.connected)
+    }
+
+    getStatusText() {
+        return this.isConnected()
+            ? `Verbunden (Session: ${this.sessionId})`
+            : "Nicht verbunden"
+    }
+
+    connect({ wsUrl, sessionId, username } = {}) {
+        this.wsUrl = (wsUrl ?? this.wsUrl ?? "").trim()
+        this.sessionId = (sessionId ?? this.sessionId ?? "").trim()
+        this.username = (username ?? this.username ?? "").trim() || "Anonym"
+
+        localStorage.setItem("wcagCollabWsUrl", this.wsUrl)
+        localStorage.setItem("wcagCollabSessionId", this.sessionId)
+        localStorage.setItem("wcagCollabUsername", this.username)
+
+        if (this.client) this.client.disconnect()
+
+        this.hasSeenInitialState = false
+        this.lastAppliedRev = this.rev
+
+        this.client = new WcagCollaborationClient({
+            wsUrl: this.wsUrl,
+            sessionId: this.sessionId,
+            username: this.username,
+            clientId: this.clientId,
+            onMessage: (msg) => this.handleMessage(msg),
+            onStatus: () => this.updateUiStatus(),
+        })
+
+        this.client.connect()
+        this.updateUiStatus()
+    }
+
+    toastOncePerSecond(message, isError = false) {
+        const now = Date.now()
+        if (now - this.lastToastAt < 900) return
+        this.lastToastAt = now
+        showNotification(message, isError)
+    }
+
+    getUserName(clientId) {
+        if (!clientId) return ""
+        const user = this.userByClientId.get(clientId)
+        return user?.username || ""
+    }
+
+    disconnect() {
+        this.client?.disconnect()
+        this.updateUiStatus()
+    }
+
+    requestState() {
+        if (!this.isConnected()) return
+        this.client.send({
+            type: "wcag-request-state",
+            sessionId: this.sessionId,
+            clientId: this.clientId,
+        })
+    }
+
+    scheduleBroadcast() {
+        clearTimeout(this.broadcastTimeout)
+        this.broadcastTimeout = setTimeout(() => {
+            this.broadcastState()
+        }, 300)
+    }
+
+    broadcastState() {
+        if (!this.isConnected()) return
+        const state = this.model.toJSON()
+        this.client.send({
+            type: "wcag-update",
+            sessionId: this.sessionId,
+            clientId: this.clientId,
+            baseRev: this.rev,
+            state,
+        })
+    }
+
+    hasMeaningfulLocalData() {
+        try {
+            const hasMeta = !!(
+                (this.model.title || "").trim() ||
+                (this.model.mainUrl || "").trim() ||
+                (this.model.reportPreface || "").trim()
+            )
+            const hasPages = Array.isArray(this.model.pages)
+                ? this.model.pages.length > 0
+                : false
+            const hasResults = this.model.results?.size
+                ? this.model.results.size > 0
+                : false
+            return hasMeta || hasPages || hasResults
+        } catch {
+            return false
+        }
+    }
+
+    handleMessage(msg) {
+        if (!msg || typeof msg !== "object") return
+
+        if (msg.type === "wcag-error") {
+            showNotification(msg.message || "Kollaboration: Fehler", true)
+            return
+        }
+
+        if (msg.type === "wcag-state") {
+            // Initial/Update State
+            if (!msg.sessionId || msg.sessionId !== this.sessionId) return
+            if (typeof msg.rev === "number" && msg.rev <= this.rev) return
+
+            const isInitial = !this.hasSeenInitialState
+            this.hasSeenInitialState = true
+
+            this.rev = typeof msg.rev === "number" ? msg.rev : this.rev
+            this.lastAppliedRev = this.rev
+            if (msg.state) {
+                // Server hat einen Zustand -> Server gewinnt (Source of Truth)
+                this.applyRemoteState(msg.state)
+
+                const updatedBy = String(msg.updatedBy || "").trim()
+                const isOwnUpdate = updatedBy && updatedBy === this.clientId
+                const updatedByName = this.getUserName(updatedBy)
+
+                if (isInitial) {
+                    this.toastOncePerSecond(
+                        `Initialer Abgleich: Server-Stand übernommen (rev ${this.rev})`
+                    )
+                } else if (!isOwnUpdate) {
+                    const byText = updatedByName
+                        ? ` (von ${updatedByName})`
+                        : updatedBy
+                          ? " (von Team)"
+                          : ""
+                    this.toastOncePerSecond(
+                        `Remote-Update übernommen (rev ${this.rev})${byText}`
+                    )
+                }
+            } else {
+                // Server ist (noch) leer -> erster Client seedet seine lokalen Daten
+                if (this.hasMeaningfulLocalData()) {
+                    if (isInitial) {
+                        this.toastOncePerSecond(
+                            "Initialer Abgleich: Session ist leer – lokaler Stand wird als Startwert gesetzt"
+                        )
+                    }
+                    this.broadcastState()
+                } else if (isInitial) {
+                    this.toastOncePerSecond(
+                        "Initialer Abgleich: Session ist leer – keine lokalen Daten zum Senden"
+                    )
+                }
+            }
+            this.updateUiStatus()
+            return
+        }
+
+        if (msg.type === "wcag-user-list") {
+            // Optional: aktuell nur Status/Debug – UI minimal halten
+            this.userByClientId.clear()
+            if (Array.isArray(msg.users)) {
+                msg.users.forEach((u) => {
+                    if (u && u.clientId) {
+                        this.userByClientId.set(u.clientId, {
+                            username: u.username,
+                            color: u.color,
+                        })
+                    }
+                })
+            }
+            this.updateUiStatus(msg.users)
+        }
+    }
+
+    applyRemoteState(state) {
+        // UI-Kontext konservieren
+        const currentView = this.app.currentView
+        const currentPageId = this.app.currentPageId
+        const activeElements = Array.isArray(this.app.activeElements)
+            ? [...this.app.activeElements]
+            : []
+
+        this.isApplyingRemoteState = true
+        try {
+            this.model.fromJSON(state)
+
+            // Kontext wiederherstellen, soweit möglich
+            this.app.currentView = currentView
+            this.app.currentPageId = currentPageId
+            this.app.activeElements = activeElements
+            this.app.renderApp()
+
+            // Optional: lokalen Cache aktualisieren
+            try {
+                localStorage.setItem(
+                    "wcagTestData",
+                    JSON.stringify(this.model.toJSON())
+                )
+            } catch {
+                // ignore
+            }
+        } finally {
+            this.isApplyingRemoteState = false
+        }
+    }
+
+    // UI helpers
+    updateUiStatus(users = null) {
+        const statusEl = document.getElementById("collab-status")
+        if (!statusEl) return
+
+        let text = this.getStatusText()
+        if (Array.isArray(users) && users.length > 0) {
+            text += ` – Teilnehmende: ${users.length}`
+        }
+        statusEl.textContent = text
+    }
+}
+
 // Funktion zum Laden der WCAG-Kriterien aus der JSON-Datei
 async function loadWcagCriteriaFromJson() {
     try {
@@ -23,8 +484,17 @@ async function loadWcagCriteriaFromJson() {
             throw new Error(`HTTP-Fehler! Status: ${response.status}`)
         }
 
-        const data = await response.json()
+        // Robuster als response.json(): kann typische Escape-Probleme (z.B. "C:\\users") reparieren,
+        // die sonst als "Bad Unicode escape" im Browser landen würden.
+        const jsonText = await response.text()
+        const parsed = parseJsonWithRepair(jsonText)
+        const data = parsed.data
         console.log("JSON-Daten geladen:", data)
+        if (parsed.repaired) {
+            console.warn(
+                "⚠️ criterias.json enthielt ungültige Escapes – wurden automatisch repariert."
+            )
+        }
 
         // Speichere die Rohdaten für den direkten Zugriff
         rawCriteriaData = data
@@ -624,8 +1094,17 @@ class TestModel {
         try {
             const savedData = localStorage.getItem("wcagTestData")
             if (savedData) {
-                const data = JSON.parse(savedData)
+                const parsed = parseJsonWithRepair(savedData)
+                const data = parsed.data
                 this.fromJSON(data)
+
+                // Normalisieren, falls wir reparieren mussten (verhindert Folgeschäden bei erneutem Laden)
+                if (parsed.repaired) {
+                    localStorage.setItem(
+                        "wcagTestData",
+                        JSON.stringify(this.toJSON())
+                    )
+                }
                 return true
             }
         } catch (error) {
@@ -711,6 +1190,9 @@ class WcagTestApp extends HTMLElement {
         this.criteriaDialogContent = null
         this.activeElements = [] // Speichert die IDs von geöffneten criteria-Elementen
 
+        // Kollaboration (lokaler WebSocket Sync)
+        this.collaboration = new WcagCollaborationController(this)
+
         // Laden der WCAG-Kriterien aus der JSON-Datei
         this.initializeApp()
     }
@@ -736,6 +1218,21 @@ class WcagTestApp extends HTMLElement {
 
         this.renderApp()
         this.attachEventListeners()
+
+        // Optional: Auto-Join über URL, z.B. ?wcagSession=team-1&wcagName=Alex
+        const urlSession = getUrlParam("wcagSession")
+        if (urlSession) {
+            const urlName = getUrlParam("wcagName")
+            const urlWs = getUrlParam("wcagWs")
+            // Keine Notifications spammen: nur verbinden.
+            this.collaboration.connect({
+                sessionId: urlSession,
+                username: urlName || this.collaboration.username,
+                wsUrl: urlWs || this.collaboration.wsUrl,
+            })
+        } else {
+            this.collaboration.updateUiStatus()
+        }
     }
 
     // Render-Funktionen
@@ -773,6 +1270,7 @@ class WcagTestApp extends HTMLElement {
                     </div>
                 `
         this.attachEventListeners()
+        this.applyCriteriaFilters()
     }
 
     renderSetupView() {
@@ -844,6 +1342,39 @@ class WcagTestApp extends HTMLElement {
                             `
                                 )
                                 .join("")}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Team-Kollaboration (localhost)</h2>
+                        <p style="margin-top: 0.25rem">
+                            Mehrere Teilnehmende können gemeinsam am gleichen Prüfbericht arbeiten. Starten Sie dazu den lokalen WebSocket-Server auf dem Host und verbinden Sie alle Clients mit der gleichen Session-ID.
+                        </p>
+                        <div class="form-group">
+                            <label for="collab-username">Name</label>
+                            <input type="text" id="collab-username" value="${
+                                this.collaboration.username
+                            }" placeholder="z.B. Alex">
+                        </div>
+                        <div class="form-group">
+                            <label for="collab-session">Session-ID</label>
+                            <input type="text" id="collab-session" value="${
+                                this.collaboration.sessionId
+                            }" placeholder="z.B. team-2026-02-21">
+                        </div>
+                        <div class="form-group">
+                            <label for="collab-ws-url">WebSocket URL</label>
+                            <input type="text" id="collab-ws-url" value="${
+                                this.collaboration.wsUrl
+                            }" placeholder="ws://localhost:8080">
+                        </div>
+
+                        <div class="button-group" style="margin-top: 12px">
+                            <button id="collab-connect">Verbinden</button>
+                            <button id="collab-disconnect" class="secondary">Trennen</button>
+                        </div>
+                        <div style="margin-top: 10px">
+                            <strong>Status:</strong> <span id="collab-status">${this.collaboration.getStatusText()}</span>
                         </div>
                     </div>
                 `
@@ -1724,9 +2255,15 @@ ${this.getCriteriaExamples(criteria.id)}
 
     // Observer-Methode
     update() {
-        // Aktuelle Filtertext speichern
+        // Aktuelle Filter speichern
         const filterInput = document.getElementById("criteria-filter")
         const currentFilter = filterInput ? filterInput.value : ""
+        const statusFilterSelect = document.getElementById(
+            "criteria-status-filter"
+        )
+        const currentStatusFilter = statusFilterSelect
+            ? statusFilterSelect.value
+            : "all"
 
         // Scrollposition merken
         const scrollPosition = window.scrollY
@@ -1734,28 +2271,83 @@ ${this.getCriteriaExamples(criteria.id)}
         this.renderApp()
 
         // Filter nach dem Rendering wieder anwenden
-        if (currentFilter && currentFilter.trim() !== "") {
-            // Stelle sicher, dass der Filtertext erhalten bleibt
-            const newFilterInput = document.getElementById("criteria-filter")
-            if (newFilterInput) {
-                newFilterInput.value = currentFilter
-
-                // Filter erneut anwenden
-                const criteriaItems = this.querySelectorAll(".criteria-item")
-                criteriaItems.forEach((item) => {
-                    const criteriaText = item.textContent.toLowerCase()
-                    const shouldShow =
-                        currentFilter === "" ||
-                        criteriaText.includes(currentFilter.toLowerCase())
-                    item.style.display = shouldShow ? "" : "none"
-                })
-            }
+        const newFilterInput = document.getElementById("criteria-filter")
+        if (newFilterInput) {
+            newFilterInput.value = currentFilter
         }
+        const newStatusFilterSelect = document.getElementById(
+            "criteria-status-filter"
+        )
+        if (newStatusFilterSelect) {
+            newStatusFilterSelect.value = currentStatusFilter
+        }
+        this.applyCriteriaFilters()
 
         // Scrollposition wiederherstellen
         setTimeout(() => {
             window.scrollTo(0, scrollPosition)
         }, 10)
+    }
+
+    // Kombinierter Filter: Stichwort + Status (ausgefüllt/offen)
+    applyCriteriaFilters() {
+        const searchTerm = (
+            document.getElementById("criteria-filter")?.value || ""
+        )
+            .toLowerCase()
+            .trim()
+        const status =
+            document.getElementById("criteria-status-filter")?.value || "all"
+
+        // Nur sinnvoll, wenn wir Kriterien im DOM haben
+        const criteriaItems = this.querySelectorAll(".criteria-item")
+        if (!criteriaItems || criteriaItems.length === 0) return
+
+        const pageId = this.currentPageId
+
+        criteriaItems.forEach((item) => {
+            const criteriaId = item.dataset.criteriaId
+            const criteriaText = item.textContent.toLowerCase()
+
+            const matchesKeyword =
+                searchTerm === "" || criteriaText.includes(searchTerm)
+
+            let matchesStatus = true
+            if (status !== "all") {
+                const result =
+                    pageId && criteriaId
+                        ? this.model.getResult(pageId, criteriaId)
+                        : null
+
+                const hasResultType = !!(
+                    result &&
+                    result.resultType &&
+                    result.resultType.trim()
+                )
+                const hasComments = !!(
+                    result &&
+                    Array.isArray(result.comments) &&
+                    result.comments.some(
+                        (comment) => (comment || "").trim() !== ""
+                    )
+                )
+                const hasImages = !!(
+                    result &&
+                    Array.isArray(result.images) &&
+                    result.images.length > 0
+                )
+                const isFilled = hasResultType || hasComments || hasImages
+
+                matchesStatus =
+                    status === "filled"
+                        ? isFilled
+                        : status === "unfilled"
+                          ? !isFilled
+                          : true
+            }
+
+            item.style.display = matchesKeyword && matchesStatus ? "" : "none"
+        })
     }
 
     // Event-Listener
@@ -1770,6 +2362,49 @@ ${this.getCriteriaExamples(criteria.id)}
 
         // Setup-View Event Listener
         if (this.currentView === "setup") {
+            // Kollaboration UI
+            this.querySelector("#collab-connect")?.addEventListener(
+                "click",
+                () => {
+                    const username =
+                        this.querySelector("#collab-username")?.value ||
+                        this.collaboration.username
+                    const sessionId =
+                        this.querySelector("#collab-session")?.value ||
+                        this.collaboration.sessionId
+                    const wsUrl =
+                        this.querySelector("#collab-ws-url")?.value ||
+                        this.collaboration.wsUrl
+
+                    try {
+                        this.collaboration.connect({
+                            wsUrl,
+                            sessionId,
+                            username,
+                        })
+                        showNotification(
+                            "Kollaboration: Verbindung wird hergestellt"
+                        )
+                    } catch (e) {
+                        showNotification(
+                            "Kollaboration: " + (e?.message || "Fehler"),
+                            true
+                        )
+                    }
+                }
+            )
+
+            this.querySelector("#collab-disconnect")?.addEventListener(
+                "click",
+                () => {
+                    this.collaboration.disconnect()
+                    showNotification("Kollaboration: Verbindung getrennt")
+                }
+            )
+
+            // Status initial setzen (nach Render)
+            this.collaboration.updateUiStatus()
+
             const titleInput = this.querySelector("#test-title")
             const dateInput = this.querySelector("#test-date")
             const urlInput = this.querySelector("#main-url")
@@ -1780,6 +2415,8 @@ ${this.getCriteriaExamples(criteria.id)}
                 this.model.title = e.target.value
                 console.log("📝 Titel aktualisiert:", e.target.value)
                 this.model.autoSaveIfEnabled()
+                // Realtime Sync (debounced) für Kollaboration
+                this.collaboration?.update()
             })
 
             // Datum-Input mit AutoSave
@@ -1787,6 +2424,7 @@ ${this.getCriteriaExamples(criteria.id)}
                 this.model.date = e.target.value
                 console.log("📅 Datum aktualisiert:", e.target.value)
                 this.model.autoSaveIfEnabled()
+                this.collaboration?.update()
             })
 
             // URL-Input mit AutoSave
@@ -1794,6 +2432,7 @@ ${this.getCriteriaExamples(criteria.id)}
                 this.model.mainUrl = e.target.value
                 console.log("🌐 URL aktualisiert:", e.target.value)
                 this.model.autoSaveIfEnabled()
+                this.collaboration?.update()
             })
 
             // Präambel-Input mit AutoSave
@@ -1805,6 +2444,7 @@ ${this.getCriteriaExamples(criteria.id)}
                     "Zeichen"
                 )
                 this.model.autoSaveIfEnabled()
+                this.collaboration?.update()
             })
 
             // Grunddaten speichern (bestehender Code bleibt)
@@ -1861,6 +2501,11 @@ ${this.getCriteriaExamples(criteria.id)}
                     textarea.focus()
                     textarea.selectionStart = startPos + replacement.length
                     textarea.selectionEnd = startPos + replacement.length
+
+                    // Model + Sync aktualisieren (Toolbar setzt sonst nur das DOM)
+                    this.model.reportPreface = textarea.value
+                    this.model.autoSaveIfEnabled()
+                    this.collaboration?.update()
 
                     // Preview aktualisieren
                     const preview = this.querySelector(".editor-preview")
@@ -1955,42 +2600,6 @@ ${this.getCriteriaExamples(criteria.id)}
                                 (id) => id !== criteriaId
                             )
                         }
-                    }
-                })
-            })
-
-            // Event-Listener für fokusbasiertes Schließen der Kriterien
-            this.querySelectorAll(".criteria-item").forEach((criteriaItem) => {
-                criteriaItem.addEventListener("focusout", (event) => {
-                    // Prüfen, ob der neue Fokus außerhalb des aktuellen criteria-item liegt
-                    if (!criteriaItem.contains(event.relatedTarget)) {
-                        // Verzögerung hinzufügen, um sicherzustellen, dass es sich um ein echtes focusout handelt
-                        // und nicht nur um einen Fokuswechsel innerhalb des Elements
-                        setTimeout(() => {
-                            // Erneut prüfen, ob ein Element innerhalb des criteria-item den Fokus hat
-                            const hasFocusWithin = Array.from(
-                                criteriaItem.querySelectorAll("*")
-                            ).some((el) => el === document.activeElement)
-
-                            // Nur schließen, wenn kein Element innerhalb fokussiert ist
-                            if (!hasFocusWithin) {
-                                const criteriaId =
-                                    criteriaItem.dataset.criteriaId
-                                const content =
-                                    criteriaItem.querySelector(
-                                        ".criteria-content"
-                                    )
-
-                                if (content) {
-                                    content.classList.remove("active")
-                                    // Auch aus dem Array entfernen
-                                    this.activeElements =
-                                        this.activeElements.filter(
-                                            (id) => id !== criteriaId
-                                        )
-                                }
-                            }
-                        }, 100)
                     }
                 })
             })
@@ -2236,6 +2845,13 @@ ${this.getCriteriaExamples(criteria.id)}
                 button.addEventListener("click", () => {
                     const pageId = parseInt(button.dataset.pageId)
                     const criteriaId = button.dataset.criteriaId
+                    // Criteria offen halten (manuelles Schließen)
+                    if (
+                        criteriaId &&
+                        !this.activeElements.includes(criteriaId)
+                    ) {
+                        this.activeElements.push(criteriaId)
+                    }
                     const textareaElem = this.querySelector(
                         `.new-comment-text[data-criteria-id="${criteriaId}"][data-page-id="${pageId}"]`
                     )
@@ -2273,6 +2889,13 @@ ${this.getCriteriaExamples(criteria.id)}
                 button.addEventListener("click", () => {
                     const pageId = parseInt(button.dataset.pageId)
                     const criteriaId = button.dataset.criteriaId
+                    // Criteria offen halten (manuelles Schließen)
+                    if (
+                        criteriaId &&
+                        !this.activeElements.includes(criteriaId)
+                    ) {
+                        this.activeElements.push(criteriaId)
+                    }
                     const result = this.model.getResult(pageId, criteriaId)
 
                     if (!result) {
@@ -2347,6 +2970,13 @@ ${this.getCriteriaExamples(criteria.id)}
                 button.addEventListener("click", () => {
                     const pageId = parseInt(button.dataset.pageId)
                     const criteriaId = button.dataset.criteriaId
+                    // Criteria offen halten (manuelles Schließen)
+                    if (
+                        criteriaId &&
+                        !this.activeElements.includes(criteriaId)
+                    ) {
+                        this.activeElements.push(criteriaId)
+                    }
                     const fileInput = this.querySelector(
                         `.image-upload-input[data-criteria-id="${criteriaId}"][data-page-id="${pageId}"]`
                     )
@@ -2362,6 +2992,13 @@ ${this.getCriteriaExamples(criteria.id)}
                 input.addEventListener("change", (event) => {
                     const pageId = parseInt(input.dataset.pageId)
                     const criteriaId = input.dataset.criteriaId
+                    // Criteria offen halten (manuelles Schließen)
+                    if (
+                        criteriaId &&
+                        !this.activeElements.includes(criteriaId)
+                    ) {
+                        this.activeElements.push(criteriaId)
+                    }
                     const file = event.target.files[0]
                     const result = this.model.getResult(pageId, criteriaId)
 
@@ -2409,6 +3046,14 @@ ${this.getCriteriaExamples(criteria.id)}
                     const pageId = parseInt(button.dataset.pageId)
                     const criteriaId = button.dataset.criteriaId
                     const imageId = button.dataset.imageId
+
+                    // Criteria offen halten (manuelles Schließen)
+                    if (
+                        criteriaId &&
+                        !this.activeElements.includes(criteriaId)
+                    ) {
+                        this.activeElements.push(criteriaId)
+                    }
 
                     if (confirm("Möchten Sie dieses Bild wirklich löschen?")) {
                         this.model.deleteImage(pageId, criteriaId, imageId)
@@ -2655,13 +3300,24 @@ function importData(file) {
     const reader = new FileReader()
     reader.onload = (event) => {
         try {
-            const data = JSON.parse(event.target.result)
+            const parsed = parseJsonWithRepair(event.target.result)
+            const data = parsed.data
             const app = document.querySelector("wcag-test-app")
             app.model.fromJSON(data)
-            showNotification("Daten erfolgreich importiert")
+
+            if (parsed.repaired) {
+                showNotification(
+                    "Daten importiert (JSON-Escapes wurden automatisch repariert)"
+                )
+            } else {
+                showNotification("Daten erfolgreich importiert")
+            }
         } catch (error) {
             console.error("Fehler beim Importieren der Daten:", error)
-            showNotification("Fehler beim Importieren der Daten", true)
+            showNotification(
+                'Fehler beim Importieren der Daten: Ungültiges JSON (häufige Ursache: Backslashes wie \\"C:\\users\\" müssen in JSON als \\"C:\\\\users\\" geschrieben sein).',
+                true
+            )
         }
     }
     reader.readAsText(file)
@@ -2817,21 +3473,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // Stichwortfilter einrichten
     const filterInput = document.getElementById("criteria-filter")
     if (filterInput) {
-        filterInput.addEventListener("input", (e) => {
-            const searchTerm = e.target.value.toLowerCase().trim()
+        filterInput.addEventListener("input", () => {
             const app = document.querySelector("wcag-test-app")
+            app?.applyCriteriaFilters()
+        })
+    }
 
-            if (app) {
-                const criteriaItems = app.querySelectorAll(".criteria-item")
-
-                criteriaItems.forEach((item) => {
-                    const criteriaText = item.textContent.toLowerCase()
-                    const shouldShow =
-                        searchTerm === "" || criteriaText.includes(searchTerm)
-
-                    item.style.display = shouldShow ? "" : "none"
-                })
-            }
+    // Statusfilter (ausgefüllt/offen) einrichten
+    const statusFilterSelect = document.getElementById("criteria-status-filter")
+    if (statusFilterSelect) {
+        statusFilterSelect.addEventListener("change", () => {
+            const app = document.querySelector("wcag-test-app")
+            app?.applyCriteriaFilters()
         })
     }
 

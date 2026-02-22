@@ -575,3 +575,18 @@ label.button {
     outline: 2px solid var(--primary);
     outline-offset: 1px;
 }
+
+#criteria-status-filter {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--card-background);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+#criteria-status-filter:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+}
