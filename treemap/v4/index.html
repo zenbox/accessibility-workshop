@@ -927,11 +927,11 @@
                 if (!tooltip) return
 
                 const rect = card.getBoundingClientRect()
-                const containerRect = (treeContainerEl || document.body)
-                    .getBoundingClientRect()
+                const containerRect = (
+                    treeContainerEl || document.body
+                ).getBoundingClientRect()
 
-                const rightSpace =
-                    containerRect.right - (rect.right + 10 + 300) // 300px max width
+                const rightSpace = containerRect.right - (rect.right + 10 + 300) // 300px max width
                 const leftPosition = rightSpace < 0
 
                 if (leftPosition) {
