@@ -1,0 +1,1788 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+        <title>Treemap v4 – Baumstruktur</title>
+
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+        <link
+            rel="stylesheet"
+            href="../../assets/css/style.css"
+        />
+        <link
+            rel="stylesheet"
+            href="../../assets/css/treemap.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+
+        <style>
+            body {
+                overflow-x: hidden;
+            }
+
+            :root {
+                --v4-connbar-h: 1.5rem;
+            }
+
+            .v4-btn {
+                display: inline-flex;
+                align-items: center;
+                text-decoration: none;
+            }
+            .v4-btn[disabled] {
+                opacity: 0.5;
+                cursor: not-allowed;
+                transform: translateY(1px);
+            }
+
+            .v4-btn:focus-visible {
+                outline: 2px solid rgba(255, 255, 255, 0.9);
+                outline-offset: 2px;
+            }
+
+            .v4-whiteboard-btn:link,
+            .v4-whiteboard-btn:visited {
+                color: #fff;
+            }
+
+            .v4-status {
+                font-size: 0.95rem;
+                opacity: 0.95;
+            }
+
+            /* Connection bar (sticky, one-line) */
+            .v4-connbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 2000;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 0.35rem;
+                align-items: center;
+                justify-content: center;
+                height: var(--v4-connbar-h);
+                padding: 0 0.4rem;
+                background: rgba(0, 0, 0, 0.85);
+                color: white;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+                overflow: hidden;
+                box-sizing: border-box;
+                line-height: 1;
+                font-size: 0.85rem;
+            }
+
+            .v4-connbar__group {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                white-space: nowrap;
+                flex: 0 1 auto;
+                min-width: 0;
+            }
+
+            .v4-connbar__sep {
+                width: 1px;
+                height: 0.9rem;
+                background: rgba(255, 255, 255, 0.25);
+                flex: 0 0 auto;
+                opacity: 0.9;
+            }
+
+            .v4-connbar__label {
+                font-size: inherit;
+                opacity: 0.95;
+            }
+
+            .v4-connbar input {
+                height: var(--v4-connbar-h);
+                padding: 0 0.35rem;
+                border-radius: 0.3rem;
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                background: rgba(255, 255, 255, 0.08);
+                color: inherit;
+                font: inherit;
+                flex: 1 1 auto;
+                min-width: 6ch;
+                width: clamp(8ch, 12vw, 18ch);
+            }
+
+            .v4-connbar__group[data-group="ws"] input {
+                width: clamp(14ch, 22vw, 30ch);
+            }
+
+            .v4-connbar__dot {
+                width: 0.6rem;
+                height: 0.6rem;
+                border-radius: 999px;
+                border: 1px solid rgba(255, 255, 255, 0.35);
+                background: rgba(255, 255, 255, 0.15);
+                box-sizing: border-box;
+            }
+            .v4-connbar__dot[data-state="connected"] {
+                background: rgba(255, 255, 255, 0.9);
+            }
+            .v4-connbar__dot[data-state="connecting"] {
+                background: rgba(255, 255, 255, 0.5);
+            }
+
+            .v4-connbar__icon-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: var(--v4-connbar-h);
+                height: var(--v4-connbar-h);
+                border-radius: 0.3rem;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.08);
+                color: inherit;
+                cursor: pointer;
+            }
+
+            .v4-connbar .material-icons {
+                font-size: 1rem;
+                line-height: 1;
+            }
+
+            .v4-connbar .v4-btn {
+                height: var(--v4-connbar-h);
+                padding: 0 0.4rem;
+                border-radius: 0.3rem;
+                font: inherit;
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .v4-connbar__group[data-group="info"] .v4-status {
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .v4-connbar__group[data-group="info"] #status {
+                flex: 0 1 auto;
+            }
+
+            .v4-connbar__group[data-group="info"] #summary {
+                flex: 1 1 auto;
+            }
+
+            .v4-connbar__group[data-size="compact"] .v4-connbar__label {
+                display: none;
+            }
+
+            .v4-connbar__group[data-size="compact"] input {
+                width: clamp(6ch, 10vw, 12ch);
+            }
+            .v4-connbar__group[data-size="compact"][data-group="ws"] input {
+                width: clamp(10ch, 16vw, 18ch);
+            }
+            .v4-connbar__group[data-size="compact"][data-group="info"]
+                #summary {
+                display: none;
+            }
+
+            /* Central cluster UI */
+            .v4-cluster-panel {
+                width: min(100vw, 48rem);
+                max-width: 48rem;
+                margin: 1.25rem auto;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: rgba(0, 0, 0, 0.35);
+                box-sizing: border-box;
+            }
+
+            .v4-cluster-panel h2 {
+                margin: 0 0 0.75rem;
+                font-size: 1.25rem;
+            }
+
+            .v4-cluster-input {
+                display: grid;
+                grid-template-columns: minmax(16rem, 32rem) auto;
+                gap: 0.5rem;
+                align-items: end;
+                justify-content: center;
+            }
+
+            @media (max-width: 520px) {
+                .v4-cluster-input {
+                    grid-template-columns: 1fr;
+                }
+                .v4-cluster-input button {
+                    width: 100%;
+                    justify-content: center;
+                }
+            }
+
+            .v4-cluster-input label {
+                display: block;
+                font-size: 1.05rem;
+                font-weight: 600;
+                margin-bottom: 0.25rem;
+            }
+
+            .v4-cluster-input input {
+                width: 100%;
+                padding: 0.7rem 0.75rem;
+                border-radius: 0.5rem;
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                background: rgba(255, 255, 255, 0.08);
+                color: inherit;
+                font-size: 1.1rem;
+            }
+
+            .v4-cluster-hint {
+                margin: 0.5rem 0 0;
+                opacity: 0.95;
+                max-width: 60rem;
+            }
+
+            .v4-active-theme {
+                margin-top: 0.75rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .v4-active-theme strong {
+                font-size: 1.05rem;
+            }
+
+            .v4-theme-list {
+                margin-top: 0.75rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .v4-theme-btn {
+                padding: 0.25rem 0.45rem;
+                border-radius: 999px;
+                font-size: 0.95rem;
+                white-space: nowrap;
+            }
+
+            .v4-theme-label {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+            }
+
+            .v4-theme-markers {
+                display: inline-flex;
+                gap: 0.25rem;
+                margin-left: 0.35rem;
+                align-items: center;
+            }
+
+            .v4-theme-marker {
+                width: 0.8rem;
+                height: 0.8rem;
+                border-radius: 999px;
+                border: 1px solid rgba(255, 255, 255, 0.35);
+                box-sizing: border-box;
+            }
+
+            .v4-theme-btn[aria-current="true"] {
+                outline: 2px solid rgba(255, 255, 255, 0.85);
+                outline-offset: 2px;
+            }
+
+            .v4-collection {
+                margin-top: 0.75rem;
+            }
+
+            .v4-collection summary {
+                cursor: pointer;
+            }
+
+            .v4-collection-list {
+                list-style: none;
+                padding: 0;
+                margin: 0.5rem 0 0;
+                display: grid;
+                gap: 0.35rem;
+            }
+
+            .v4-collection-item {
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                gap: 0.5rem;
+                align-items: center;
+                padding: 0.35rem 0.5rem;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 0.5rem;
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .v4-collection-marker {
+                display: inline-block;
+                align-self: center;
+            }
+
+            .v4-collection-meta {
+                display: grid;
+                gap: 0.1rem;
+            }
+
+            .v4-collection-ids {
+                font-size: 0.9rem;
+                opacity: 0.95;
+            }
+
+            .v4-collection-title {
+                font-size: 0.95rem;
+                opacity: 0.98;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: 60ch;
+            }
+
+            .v4-mini-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 2rem;
+                height: 2rem;
+                border-radius: 0.5rem;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.08);
+                color: inherit;
+                cursor: pointer;
+            }
+
+            .v4-tree-scroll {
+                width: 100vw;
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding: 0.5rem;
+                box-sizing: border-box;
+            }
+
+            /* Reuse Treemap v3 card design; only small layout tweaks */
+            .pruefschritt-card {
+                min-height: 180px;
+            }
+            .pruefschritt-card .add-to-collection-button {
+                opacity: 0.7;
+            }
+        </style>
+    </head>
+    <body>
+        <a
+            href="#main-content"
+            class="skip-link"
+            >Zum Hauptinhalt springen</a
+        >
+
+        <header
+            id="v4-connbar"
+            class="v4-connbar"
+            aria-label="Verbindung"
+        >
+            <div
+                class="v4-connbar__group"
+                data-group="status"
+                data-size="full"
+            >
+                <span
+                    id="conn-status-dot"
+                    class="v4-connbar__dot"
+                    data-state="disconnected"
+                    aria-hidden="true"
+                ></span>
+                <span
+                    id="conn-status-text"
+                    class="v4-connbar__label"
+                    >Getrennt</span
+                >
+            </div>
+
+            <span
+                class="v4-connbar__sep"
+                aria-hidden="true"
+            ></span>
+
+            <div
+                class="v4-connbar__group"
+                data-group="ws"
+                data-size="compact"
+            >
+                <label
+                    class="v4-connbar__label"
+                    for="ws-url"
+                    >WS</label
+                >
+                <input
+                    id="ws-url"
+                    type="url"
+                    placeholder="wss://example.org/services/ws"
+                />
+            </div>
+
+            <span
+                class="v4-connbar__sep"
+                aria-hidden="true"
+            ></span>
+
+            <div
+                class="v4-connbar__group"
+                data-group="session"
+                data-size="compact"
+            >
+                <label
+                    class="v4-connbar__label"
+                    for="session-id"
+                    >Session</label
+                >
+                <input
+                    id="session-id"
+                    type="text"
+                    placeholder="team-1"
+                />
+            </div>
+
+            <span
+                class="v4-connbar__sep"
+                aria-hidden="true"
+            ></span>
+
+            <div
+                class="v4-connbar__group"
+                data-group="user"
+                data-size="compact"
+            >
+                <label
+                    class="v4-connbar__label"
+                    for="username"
+                    >Name</label
+                >
+                <input
+                    id="username"
+                    type="text"
+                    placeholder="z.B. Michael"
+                />
+            </div>
+
+            <span
+                class="v4-connbar__sep"
+                aria-hidden="true"
+            ></span>
+
+            <div
+                class="v4-connbar__group"
+                data-group="actions"
+                data-size="full"
+            >
+                <button
+                    id="connect"
+                    class="v4-btn"
+                    type="button"
+                >
+                    Verbinden
+                </button>
+                <button
+                    id="disconnect"
+                    class="v4-btn"
+                    type="button"
+                    hidden
+                >
+                    Trennen
+                </button>
+            </div>
+
+            <span
+                class="v4-connbar__sep"
+                aria-hidden="true"
+            ></span>
+
+            <div
+                class="v4-connbar__group"
+                data-group="info"
+                data-size="full"
+            >
+                <span
+                    class="v4-status"
+                    id="status"
+                    aria-live="polite"
+                ></span>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <h1>Alle Kriterien aus WCAG und BITV / EN 301 549</h1>
+
+            <section
+                class="v4-cluster-panel"
+                aria-label="Clusterthema und Sammlung"
+            >
+                <h2>Clusterthema festlegen</h2>
+
+                <div class="v4-cluster-input">
+                    <div>
+                        <label for="theme"
+                            >Thema (z.B. „Screenreaderunterstützung“)</label
+                        >
+                        <input
+                            id="theme"
+                            type="text"
+                            autocomplete="off"
+                            placeholder="Thema eingeben …"
+                            list="theme-suggestions"
+                        />
+                        <datalist id="theme-suggestions"></datalist>
+                    </div>
+                    <button
+                        id="activate-theme"
+                        class="v4-btn"
+                        type="button"
+                    >
+                        Thema starten
+                    </button>
+                </div>
+
+                <p class="v4-cluster-hint">
+                    Erst Thema starten, dann passende Kriterien per
+                    <span
+                        class="material-icons"
+                        aria-hidden="true"
+                        >add</span
+                    >
+                    sammeln. <br />Du kannst später weitere Themen starten und
+                    zwischen Themen wechseln.
+                </p>
+
+                <div
+                    class="v4-active-theme"
+                    aria-label="Aktives Thema"
+                >
+                    <span>Aktiv:</span>
+                    <strong id="active-theme-name">–</strong>
+                    <a
+                        class="v4-btn v4-whiteboard-btn"
+                        href="whiteboard.html"
+                        >Zum Whiteboard</a
+                    >
+                </div>
+
+                <div
+                    class="v4-theme-list"
+                    id="theme-list"
+                    aria-label="Themen"
+                ></div>
+
+                <details
+                    class="v4-collection"
+                    id="collection-details"
+                >
+                    <summary id="collection-summary">Gesammelt: 0</summary>
+                    <ul
+                        class="v4-collection-list"
+                        id="collection-list"
+                        aria-label="Gesammelte Kriterien"
+                    ></ul>
+                </details>
+            </section>
+
+            <div
+                class="v4-tree-scroll"
+                aria-label="Kriterienbaum (horizontal scroll)"
+            >
+                <div
+                    class="tree-container"
+                    role="tablist"
+                    aria-label="Barrierefreiheitskriterien nach Kategorien"
+                    aria-live="polite"
+                ></div>
+            </div>
+
+            <dialog
+                id="sectionModal"
+                class="modal"
+                aria-labelledby="modalTitle"
+            >
+                <div class="modal-content">
+                    <h2
+                        id="modalTitle"
+                        class="visually-hidden"
+                    >
+                        Details
+                    </h2>
+                    <button
+                        class="close-button"
+                        aria-label="Schließen"
+                    >
+                        &times;
+                    </button>
+                    <div id="modalContent"></div>
+                </div>
+            </dialog>
+        </main>
+
+        <script type="module">
+            import {
+                WorkspaceSync,
+                getQueryParam,
+                guessDefaultWsUrl,
+                setQueryParams,
+            } from "./assets/js/workspace-sync.js"
+            import { loadPruefschritte } from "./assets/js/criteria-loader.js"
+
+            const wsUrlEl = document.querySelector("#ws-url")
+            const sessionEl = document.querySelector("#session-id")
+            const usernameEl = document.querySelector("#username")
+            const connectBtn = document.querySelector("#connect")
+            const disconnectBtn = document.querySelector("#disconnect")
+            const statusEl = document.querySelector("#status")
+            const themeEl = document.querySelector("#theme")
+            const activateThemeBtn = document.querySelector("#activate-theme")
+            const activeThemeNameEl =
+                document.querySelector("#active-theme-name")
+            const themeListEl = document.querySelector("#theme-list")
+            const themeSuggestionsEl =
+                document.querySelector("#theme-suggestions")
+            const collectionDetailsEl = document.querySelector(
+                "#collection-details"
+            )
+            const collectionSummaryEl = document.querySelector(
+                "#collection-summary"
+            )
+            const collectionListEl = document.querySelector("#collection-list")
+            const summaryEl = document.querySelector("#summary")
+            const treeContainerEl = document.querySelector(".tree-container")
+
+            const connbarEl = document.querySelector("#v4-connbar")
+            const connStatusDotEl = document.querySelector("#conn-status-dot")
+            const connStatusTextEl = document.querySelector("#conn-status-text")
+
+            const STORAGE_PREFIX = "a11y-workshop:treemap:v4"
+
+            function safeStorageGet(key) {
+                try {
+                    return globalThis.localStorage.getItem(key)
+                } catch {
+                    return null
+                }
+            }
+
+            function safeSessionGet(key) {
+                try {
+                    return globalThis.sessionStorage.getItem(key)
+                } catch {
+                    return null
+                }
+            }
+
+            function safeStorageSet(key, value) {
+                try {
+                    globalThis.localStorage.setItem(key, value)
+                } catch {
+                    // ignore
+                }
+            }
+
+            function safeSessionSet(key, value) {
+                try {
+                    globalThis.sessionStorage.setItem(key, value)
+                } catch {
+                    // ignore
+                }
+            }
+
+            function safeStorageGetJson(key) {
+                const text = safeStorageGet(key)
+                if (!text) return null
+                try {
+                    return JSON.parse(text)
+                } catch {
+                    return null
+                }
+            }
+
+            function safeStorageSetJson(key, value) {
+                try {
+                    safeStorageSet(key, JSON.stringify(value))
+                } catch {
+                    // ignore
+                }
+            }
+
+            function debounce(fn, waitMs) {
+                let timeout = null
+                return (...args) => {
+                    if (timeout) globalThis.clearTimeout(timeout)
+                    timeout = globalThis.setTimeout(() => fn(...args), waitMs)
+                }
+            }
+
+            function sessionScopedKey(suffix, sessionId = sessionEl.value) {
+                const sid = String(sessionId || "default").trim() || "default"
+                return `${STORAGE_PREFIX}:session:${sid}:${suffix}`
+            }
+
+            function initialValue(paramName, storageKey, fallback) {
+                const fromQuery = getQueryParam(paramName, "")
+                if (String(fromQuery || "").trim() !== "") return fromQuery
+                const fromStorage = safeStorageGet(storageKey)
+                if (String(fromStorage || "").trim() !== "") return fromStorage
+                return fallback
+            }
+
+            function workspaceStateHasContent(state) {
+                if (!state || typeof state !== "object") return false
+                const collections = state.collections || {}
+                const hasCollections = Object.keys(collections).some((k) => {
+                    const arr = collections[k]
+                    return Array.isArray(arr) && arr.length
+                })
+                const items = state.whiteboard?.items || {}
+                const hasWhiteboard = Object.keys(items).length > 0
+                return Boolean(hasCollections || hasWhiteboard)
+            }
+
+            let lastNotifyAt = 0
+            let lastNotifyText = ""
+
+            function notify(text) {
+                if (!statusEl) return
+                const next = String(text || "").trim()
+                statusEl.textContent = next
+                lastNotifyText = next
+                lastNotifyAt = Date.now()
+            }
+
+            function notifySaved() {
+                const now = Date.now()
+                if (
+                    lastNotifyText &&
+                    lastNotifyText !== "Gespeichert" &&
+                    now - lastNotifyAt < 1500
+                ) {
+                    return
+                }
+                notify("Gespeichert")
+            }
+
+            function setConnectionStatus({ connected, message }) {
+                const msg = String(message || "").trim()
+                if (connStatusTextEl) {
+                    connStatusTextEl.textContent =
+                        msg || (connected ? "Verbunden" : "Getrennt")
+                }
+                if (connectBtn) {
+                    connectBtn.hidden = !!connected
+                    connectBtn.disabled = !!connected
+                }
+                if (disconnectBtn) {
+                    disconnectBtn.hidden = !connected
+                    disconnectBtn.disabled = !connected
+                }
+                if (connStatusDotEl) {
+                    if (connected) {
+                        connStatusDotEl.dataset.state = "connected"
+                    } else if (msg.toLowerCase().includes("verbinde")) {
+                        connStatusDotEl.dataset.state = "connecting"
+                    } else {
+                        connStatusDotEl.dataset.state = "disconnected"
+                    }
+                }
+            }
+
+            const persistWorkspaceState = debounce((state) => {
+                safeStorageSetJson(sessionScopedKey("workspaceState"), state)
+                notifySaved()
+            }, 250)
+
+            const TAB_CLIENT_ID_KEY = `${STORAGE_PREFIX}:clientId:tab`
+            const persistedClientId = safeSessionGet(TAB_CLIENT_ID_KEY)
+            const generatedClientId =
+                globalThis.crypto &&
+                typeof globalThis.crypto.randomUUID === "function"
+                    ? globalThis.crypto.randomUUID()
+                    : String(Date.now()) +
+                      "-" +
+                      Math.random().toString(16).slice(2)
+            const clientId = persistedClientId || generatedClientId
+            safeSessionSet(TAB_CLIENT_ID_KEY, clientId)
+
+            {
+                const defaultWsUrl = guessDefaultWsUrl()
+                const initialWsUrl = initialValue(
+                    "ws",
+                    `${STORAGE_PREFIX}:wsUrl`,
+                    defaultWsUrl
+                )
+                const pageHost = globalThis.location?.hostname || ""
+                const isLocalHost =
+                    pageHost === "localhost" || pageHost === "127.0.0.1"
+                wsUrlEl.value =
+                    !isLocalHost && /wss?:\/\/localhost\b/i.test(initialWsUrl)
+                        ? defaultWsUrl
+                        : initialWsUrl
+            }
+            sessionEl.value = initialValue(
+                "session",
+                `${STORAGE_PREFIX}:sessionId`,
+                "default"
+            )
+            usernameEl.value = initialValue(
+                "name",
+                `${STORAGE_PREFIX}:username`,
+                ""
+            )
+            themeEl.value = initialValue(
+                "theme",
+                sessionScopedKey("themeInput", sessionEl.value),
+                ""
+            )
+
+            const savedActiveTheme = safeStorageGet(
+                sessionScopedKey("activeTheme", sessionEl.value)
+            )
+            if (!String(themeEl.value || "").trim() && savedActiveTheme) {
+                themeEl.value = savedActiveTheme
+            }
+
+            // Restore per-participant UI state
+            const savedCollectionOpen = safeStorageGetJson(
+                sessionScopedKey("collectionOpen")
+            )
+            if (
+                collectionDetailsEl &&
+                typeof savedCollectionOpen === "boolean"
+            ) {
+                collectionDetailsEl.open = savedCollectionOpen
+            }
+
+            // Persist current inputs (so reload works even without URL params)
+            safeStorageSet(`${STORAGE_PREFIX}:wsUrl`, wsUrlEl.value)
+            safeStorageSet(`${STORAGE_PREFIX}:sessionId`, sessionEl.value)
+            safeStorageSet(`${STORAGE_PREFIX}:username`, usernameEl.value)
+            safeStorageSet(
+                sessionScopedKey("themeInput", sessionEl.value),
+                themeEl.value
+            )
+
+            let activeThemeName = ""
+
+            let criteria = []
+
+            // ------------------------------------------------------------
+            // Hover-Infos (Tooltips) wie in Treemap v3
+            let activeTooltip = null
+            let tooltipTimeout = null
+
+            function createTooltip(description) {
+                const text = String(description || "").trim()
+                if (!text) return null
+                const tooltip = document.createElement("div")
+                tooltip.className = "tooltip"
+                tooltip.textContent = text
+                return tooltip
+            }
+
+            function hideAllTooltips() {
+                document
+                    .querySelectorAll(".tooltip.visible")
+                    .forEach((tooltip) => {
+                        tooltip.classList.remove("visible")
+                        globalThis.setTimeout(() => {
+                            tooltip.remove()
+                        }, 300)
+                    })
+
+                if (tooltipTimeout) {
+                    globalThis.clearTimeout(tooltipTimeout)
+                    tooltipTimeout = null
+                }
+                activeTooltip = null
+            }
+
+            function showTooltip(card) {
+                hideAllTooltips()
+                if (tooltipTimeout) {
+                    globalThis.clearTimeout(tooltipTimeout)
+                    tooltipTimeout = null
+                }
+
+                const tooltip = card?.tooltipElement
+                if (!tooltip) return
+
+                const rect = card.getBoundingClientRect()
+                const containerRect = (treeContainerEl || document.body)
+                    .getBoundingClientRect()
+
+                const rightSpace =
+                    containerRect.right - (rect.right + 10 + 300) // 300px max width
+                const leftPosition = rightSpace < 0
+
+                if (leftPosition) {
+                    tooltip.classList.add("left-position")
+                } else {
+                    tooltip.classList.remove("left-position")
+                }
+
+                card.appendChild(tooltip)
+                activeTooltip = tooltip
+
+                tooltipTimeout = globalThis.setTimeout(() => {
+                    tooltip.classList.add("visible")
+                }, 100)
+            }
+
+            function hideTooltip(card) {
+                if (tooltipTimeout) {
+                    globalThis.clearTimeout(tooltipTimeout)
+                    tooltipTimeout = null
+                }
+                const tooltip = card?.tooltipElement
+                if (!tooltip) return
+                tooltip.classList.remove("visible")
+                tooltipTimeout = globalThis.setTimeout(() => {
+                    if (tooltip.parentNode === card) {
+                        tooltip.remove()
+                    }
+                }, 300)
+            }
+
+            // Mapping der Sektionen zu WCAG-Kategorien und EN 301 549 Addons (wie in v3)
+            const sectionCategoryMapping = {
+                "Textalternativen": {
+                    type: "wcag",
+                    category: "perceivable",
+                    title: "Wahrnehmbar",
+                },
+                "Zeitbasierte Medien": {
+                    type: "wcag",
+                    category: "perceivable",
+                    title: "Wahrnehmbar",
+                },
+                "Anpassbar": {
+                    type: "wcag",
+                    category: "perceivable",
+                    title: "Wahrnehmbar",
+                },
+                "Unterscheidbar": {
+                    type: "wcag",
+                    category: "perceivable",
+                    title: "Wahrnehmbar",
+                },
+                "Tastaturbedienbar": {
+                    type: "wcag",
+                    category: "operable",
+                    title: "Bedienbar",
+                },
+                "Ausreichend Zeit": {
+                    type: "wcag",
+                    category: "operable",
+                    title: "Bedienbar",
+                },
+                "Anfälle": {
+                    type: "wcag",
+                    category: "operable",
+                    title: "Bedienbar",
+                },
+                "Navigierbar": {
+                    type: "wcag",
+                    category: "operable",
+                    title: "Bedienbar",
+                },
+                "Eingabemodalitäten": {
+                    type: "wcag",
+                    category: "operable",
+                    title: "Bedienbar",
+                },
+                "Lesbar": {
+                    type: "wcag",
+                    category: "understandable",
+                    title: "Verständlich",
+                },
+                "Vorhersehbar": {
+                    type: "wcag",
+                    category: "understandable",
+                    title: "Verständlich",
+                },
+                "Eingabeunterstützung": {
+                    type: "wcag",
+                    category: "understandable",
+                    title: "Verständlich",
+                },
+                "Kompatibel": {
+                    type: "wcag",
+                    category: "robust",
+                    title: "Robust",
+                },
+                "Allgemeine Anforderungen": {
+                    type: "en301549",
+                    category: "addon1",
+                    title: "EN 301 549 Addons I",
+                },
+                "Zwei-Wege-Sprachkommunikation": {
+                    type: "en301549",
+                    category: "addon2",
+                    title: "EN 301 549 Addons II",
+                },
+                "Videofähigkeiten": {
+                    type: "en301549",
+                    category: "addon2",
+                    title: "EN 301 549 Addons II",
+                },
+                "Benutzerpräferenzen": {
+                    type: "en301549",
+                    category: "addon3",
+                    title: "EN 301 549 Addons III",
+                },
+                "Autorenwerkzeuge": {
+                    type: "en301549",
+                    category: "addon3",
+                    title: "EN 301 549 Addons III",
+                },
+                "Dokumentation und Support": {
+                    type: "en301549",
+                    category: "addon4",
+                    title: "EN 301 549 Addons IV",
+                },
+            }
+
+            // Restore last known synced state from localStorage (works before reconnect)
+            const savedWorkspaceState = safeStorageGetJson(
+                sessionScopedKey("workspaceState")
+            )
+            const localSeedState = workspaceStateHasContent(savedWorkspaceState)
+                ? savedWorkspaceState
+                : null
+
+            let isConnected = false
+            let didInitialSeedCheck = false
+
+            let knownUsers = new Map()
+            let didInitUsers = false
+            let lastTotalCollected = 0
+
+            function totalCollected(state) {
+                const collections = (state && state.collections) || {}
+                let total = 0
+                for (const arr of Object.values(collections)) {
+                    if (Array.isArray(arr)) total += arr.length
+                }
+                return total
+            }
+
+            function nameForClientId(id) {
+                return knownUsers.get(String(id || "")) || ""
+            }
+
+            const sync = new WorkspaceSync({
+                wsUrl: wsUrlEl.value,
+                sessionId: sessionEl.value,
+                clientId,
+                username: usernameEl.value || "Anonym",
+                onStatus: ({ connected, message }) => {
+                    isConnected = Boolean(connected)
+                    setConnectionStatus({ connected, message })
+                },
+                onUsers: (users) => {
+                    const next = new Map(
+                        (users || []).map((u) => [
+                            String(u.clientId || ""),
+                            String(u.username || "").trim(),
+                        ])
+                    )
+                    if (!didInitUsers) {
+                        knownUsers = next
+                        didInitUsers = true
+                        return
+                    }
+                    if (isConnected && next.size > knownUsers.size) {
+                        for (const [cid, uname] of next.entries()) {
+                            if (!knownUsers.has(cid)) {
+                                notify(
+                                    uname
+                                        ? `Neuer Teilnehmer: ${uname}`
+                                        : "Neuer Teilnehmer"
+                                )
+                                break
+                            }
+                        }
+                    }
+                    knownUsers = next
+                },
+                onState: ({ state, updatedBy }) => {
+                    // Server is the source of truth. Exception: new session (server state is empty)
+                    // -> seed once from localStorage.
+                    if (isConnected && !didInitialSeedCheck) {
+                        didInitialSeedCheck = true
+                        if (
+                            localSeedState &&
+                            !workspaceStateHasContent(state)
+                        ) {
+                            sync.updateState((next) => {
+                                Object.assign(next, localSeedState)
+                            })
+                            return
+                        }
+                    }
+
+                    const nextTotal = totalCollected(state)
+                    if (lastTotalCollected && nextTotal > lastTotalCollected) {
+                        const by = String(updatedBy || "").trim()
+                        if (by && by !== clientId) {
+                            const uname = nameForClientId(by)
+                            notify(
+                                uname
+                                    ? `Neues Kriterium hinzugefügt (${uname})`
+                                    : "Neues Kriterium hinzugefügt"
+                            )
+                        }
+                    }
+                    lastTotalCollected = nextTotal
+
+                    persistWorkspaceState(state)
+                    render(state)
+                },
+            })
+
+            if (localSeedState) {
+                sync.state = localSeedState
+            }
+
+            function ensureThemeCollections(state) {
+                state.collections = state.collections || {}
+            }
+
+            function normalizedThemeName() {
+                return String(themeEl.value || "").trim()
+            }
+
+            function getActiveThemeName() {
+                return String(activeThemeName || "").trim()
+            }
+
+            function setActiveTheme(nextTheme) {
+                const next = String(nextTheme || "").trim()
+                activeThemeName = next
+                if (activeThemeNameEl) {
+                    activeThemeNameEl.textContent = next || "–"
+                }
+
+                safeStorageSet(sessionScopedKey("activeTheme"), next)
+
+                // Keep input in sync (helps when switching themes via buttons)
+                if (themeEl && next) themeEl.value = next
+                safeStorageSet(sessionScopedKey("themeInput"), themeEl.value)
+                setQueryParams({
+                    ws: wsUrlEl.value,
+                    session: sessionEl.value,
+                    name: usernameEl.value,
+                    theme: next,
+                })
+                render(sync.state)
+            }
+
+            function isSelected(state, themeName, criteriaId) {
+                const arr =
+                    (state.collections && state.collections[themeName]) || []
+                return arr.includes(criteriaId)
+            }
+
+            function toggleSelection(themeName, criteriaId) {
+                if (!themeName) return
+                const wasSelected = isSelected(
+                    sync.state,
+                    themeName,
+                    criteriaId
+                )
+                sync.sendOp({
+                    type: "collections.toggle",
+                    theme: themeName,
+                    criteriaId,
+                })
+
+                notify(
+                    wasSelected ? "Kriterium entfernt" : "Kriterium hinzugefügt"
+                )
+            }
+
+            function themeNamesFromState(state) {
+                const collections = (state && state.collections) || {}
+                return Object.keys(collections).filter((name) => {
+                    const arr = collections[name]
+                    return Array.isArray(arr) && arr.length > 0
+                })
+            }
+
+            function populateThemeSuggestions(unique) {
+                if (!themeSuggestionsEl) return
+                themeSuggestionsEl.innerHTML = ""
+                for (const name of unique) {
+                    const opt = document.createElement("option")
+                    opt.value = name
+                    themeSuggestionsEl.appendChild(opt)
+                }
+            }
+
+            function populateThemeList(state, unique, active) {
+                if (!themeListEl) return
+                themeListEl.innerHTML = ""
+
+                for (const name of unique) {
+                    const count =
+                        (state.collections && state.collections[name]
+                            ? state.collections[name].length
+                            : 0) || 0
+                    const btn = document.createElement("button")
+                    btn.type = "button"
+                    btn.className = "v4-btn v4-theme-btn"
+
+                    const label = document.createElement("span")
+                    label.className = "v4-theme-label"
+
+                    const labelText = document.createElement("span")
+                    labelText.textContent = `${name} (${count})`
+                    label.appendChild(labelText)
+
+                    btn.appendChild(label)
+                    btn.setAttribute(
+                        "aria-current",
+                        name === active ? "true" : "false"
+                    )
+                    btn.addEventListener("click", () => setActiveTheme(name))
+                    themeListEl.appendChild(btn)
+                }
+            }
+
+            function renderThemeSuggestionsAndList(state) {
+                const active = getActiveThemeName()
+                const names = themeNamesFromState(state)
+                const unique = Array.from(new Set([active, ...names]))
+                    .map((x) => String(x || "").trim())
+                    .filter(Boolean)
+                    .sort((a, b) => a.localeCompare(b))
+
+                populateThemeSuggestions(unique)
+                populateThemeList(state, unique, active)
+            }
+
+            function findCriteriaById(id) {
+                return criteria.find((c) => c.id === id) || null
+            }
+
+            function renderCollectionList(state) {
+                if (!collectionListEl) return
+                const active = getActiveThemeName()
+
+                const selectedCandidate =
+                    active && state.collections
+                        ? state.collections[active]
+                        : null
+                const selectedIds = Array.isArray(selectedCandidate)
+                    ? selectedCandidate
+                    : []
+
+                const count = selectedIds.length
+
+                if (collectionSummaryEl) {
+                    collectionSummaryEl.textContent = active
+                        ? `Gesammelt in „${active}“: ${count}`
+                        : "Gesammelt: 0"
+                }
+
+                collectionListEl.innerHTML = ""
+
+                function addStatusRow(text) {
+                    const li = document.createElement("li")
+                    li.className = "v4-status"
+                    li.textContent = text
+                    collectionListEl.appendChild(li)
+                }
+
+                function addCollectionRow(id) {
+                    const c = findCriteriaById(id)
+                    const item = document.createElement("li")
+                    item.className = "v4-collection-item"
+
+                    const idx = Number(c?.sectionIndex || 0)
+                    if (idx) {
+                        const marker = document.createElement("span")
+                        marker.className =
+                            "v4-collection-marker v4-theme-marker"
+                        marker.setAttribute("aria-hidden", "true")
+                        marker.style.backgroundColor = `var(--section-${idx})`
+                        item.appendChild(marker)
+                    } else {
+                        const spacer = document.createElement("span")
+                        spacer.className = "v4-collection-marker"
+                        spacer.setAttribute("aria-hidden", "true")
+                        spacer.style.width = "0.8rem"
+                        spacer.style.height = "0.8rem"
+                        item.appendChild(spacer)
+                    }
+
+                    const meta = document.createElement("div")
+                    meta.className = "v4-collection-meta"
+
+                    const idsLine = document.createElement("div")
+                    idsLine.className = "v4-collection-ids"
+                    const wcag = c?.wcagId ? `WCAG ${c.wcagId}` : ""
+                    const bitv = c?.bitvId ? `BITV ${c.bitvId}` : `ID ${id}`
+                    idsLine.textContent = [wcag, bitv]
+                        .filter(Boolean)
+                        .join(" · ")
+                    meta.appendChild(idsLine)
+
+                    const titleLine = document.createElement("div")
+                    titleLine.className = "v4-collection-title"
+                    titleLine.textContent = c?.title ? c.title : id
+                    meta.appendChild(titleLine)
+
+                    const removeBtn = document.createElement("button")
+                    removeBtn.type = "button"
+                    removeBtn.className = "v4-mini-btn"
+                    removeBtn.setAttribute("aria-label", "Entfernen")
+                    removeBtn.innerHTML =
+                        '<span class="material-icons" aria-hidden="true">close</span>'
+                    removeBtn.addEventListener("click", () => {
+                        toggleSelection(active, id)
+                    })
+
+                    item.appendChild(meta)
+                    item.appendChild(removeBtn)
+                    collectionListEl.appendChild(item)
+                }
+
+                if (!active) {
+                    addStatusRow("Erst ein Thema starten.")
+                    return
+                }
+
+                if (!count) {
+                    addStatusRow("Noch keine Kriterien gesammelt.")
+                    return
+                }
+
+                const limit = 30
+
+                for (const id of selectedIds.slice(0, limit)) {
+                    addCollectionRow(id)
+                }
+
+                if (count > limit) {
+                    addStatusRow(`… und ${count - limit} weitere.`)
+                }
+            }
+
+            function applySectionColors(el, sectionIndex) {
+                if (!sectionIndex) return
+                const rootStyle = getComputedStyle(document.documentElement)
+                const bg = rootStyle.getPropertyValue(
+                    `--section-${sectionIndex}`
+                )
+                const fg = rootStyle.getPropertyValue(
+                    `--onSection-${sectionIndex}`
+                )
+                if (bg) el.style.backgroundColor = bg
+                if (fg) el.style.color = fg
+            }
+
+            function isInteractiveTarget(target) {
+                return Boolean(
+                    target &&
+                    target.closest("button, a, input, select, textarea, label")
+                )
+            }
+
+            function closeModal() {
+                const modal = document.getElementById("sectionModal")
+                if (!modal) return
+
+                if (typeof modal.close === "function") {
+                    try {
+                        modal.close()
+                        return
+                    } catch {
+                        // ignore
+                    }
+                }
+
+                // Fallback
+                modal.removeAttribute("open")
+            }
+
+            async function openDetails(pruefschritt) {
+                if (!pruefschritt?.id) return
+                const modal = document.getElementById("sectionModal")
+                const modalContent = document.getElementById("modalContent")
+                if (!modal || !modalContent) return
+
+                hideAllTooltips()
+
+                modalContent.innerHTML = "<p>Lade Details …</p>"
+
+                if (typeof modal.showModal === "function") {
+                    modal.showModal()
+                } else {
+                    modal.setAttribute("open", "")
+                }
+
+                try {
+                    const response = await fetch(
+                        `../../assets/data/docs/${pruefschritt.id}.md`
+                    )
+                    const markdown = await response.text()
+                    // marked wird per Script-Tag geladen
+                    modalContent.innerHTML = globalThis.marked
+                        ? globalThis.marked.parse(markdown)
+                        : markdown
+                } catch (err) {
+                    console.error(err)
+                    modalContent.innerHTML =
+                        "<p>Fehler beim Laden der Details.</p>"
+                }
+            }
+
+            function sectionGroupsFromCriteria(items) {
+                const groups = new Map()
+                for (const c of items) {
+                    const idx = Number(c.sectionIndex || 0)
+                    const title = String(c.sectionTitle || "").trim()
+                    const key = `${idx}|${title}`
+                    if (!groups.has(key)) {
+                        groups.set(key, {
+                            sectionIndex: idx,
+                            sectionTitle: title,
+                            items: [],
+                        })
+                    }
+                    groups.get(key).items.push(c)
+                }
+                return Array.from(groups.values()).sort(
+                    (a, b) => a.sectionIndex - b.sectionIndex
+                )
+            }
+
+            function renderPruefschrittCard({
+                state,
+                themeName,
+                pruefschritt,
+            }) {
+                const selected = themeName
+                    ? isSelected(state, themeName, pruefschritt.id)
+                    : false
+
+                const card = document.createElement("div")
+                card.className = "card pruefschritt-card"
+                card.dataset.criteriaId = pruefschritt.id
+                card.setAttribute("role", "button")
+                card.setAttribute("tabindex", "0")
+                card.pruefschrittData = pruefschritt
+                if (selected) card.classList.add("collecting-active")
+                applySectionColors(card, pruefschritt.sectionIndex)
+
+                const addBtn = document.createElement("button")
+                addBtn.type = "button"
+                addBtn.className = "add-to-collection-button"
+                addBtn.disabled = !themeName
+                let ariaLabel = "Bitte zuerst ein Thema eingeben"
+                if (themeName) {
+                    ariaLabel = selected
+                        ? `Aus Thema entfernen: ${themeName}`
+                        : `Zu Thema hinzufügen: ${themeName}`
+                }
+                addBtn.setAttribute("aria-label", ariaLabel)
+                addBtn.innerHTML = `<span class="material-icons" aria-hidden="true">${selected ? "remove" : "add"}</span>`
+                addBtn.addEventListener("click", (event) => {
+                    event.stopPropagation()
+                    toggleSelection(themeName, pruefschritt.id)
+                })
+                card.appendChild(addBtn)
+
+                if (pruefschritt.wcagId) {
+                    const wcagIdElement = document.createElement("div")
+                    wcagIdElement.className = "wcag-id"
+                    wcagIdElement.textContent = `WCAG ${pruefschritt.wcagId}`
+                    card.appendChild(wcagIdElement)
+                }
+
+                const bitv = pruefschritt.bitvId || pruefschritt.id
+                if (bitv) {
+                    const bitvIdElement = document.createElement("div")
+                    bitvIdElement.className = "bitv-id"
+                    bitvIdElement.textContent = `BITV ${bitv}`
+                    card.appendChild(bitvIdElement)
+                    card.classList.add("is-bitv")
+                }
+
+                const titleElement = document.createElement("div")
+                titleElement.className = "pruefschritt-title"
+                titleElement.textContent = pruefschritt.title
+                card.appendChild(titleElement)
+
+                if (pruefschritt.conformanceLevel) {
+                    const levelElement = document.createElement("div")
+                    levelElement.className = pruefschritt.conformanceLevel
+                    levelElement.textContent = pruefschritt.conformanceLevel
+                    card.appendChild(levelElement)
+                }
+
+                // Tooltip (Hover-Infos) wie in v3
+                if (pruefschritt.details?.description) {
+                    const tooltip = createTooltip(
+                        pruefschritt.details.description
+                    )
+                    if (tooltip) {
+                        card.tooltipElement = tooltip
+                        card.dataset.hasTooltip = "true"
+
+                        card.addEventListener("mouseenter", () => {
+                            showTooltip(card)
+                        })
+                        card.addEventListener("mouseleave", () => {
+                            hideTooltip(card)
+                        })
+                        card.addEventListener("focus", () => {
+                            showTooltip(card)
+                        })
+                        card.addEventListener("blur", () => {
+                            hideTooltip(card)
+                        })
+                    }
+                }
+
+                return card
+            }
+
+            function renderTree(state) {
+                if (!treeContainerEl) return
+
+                const themeName = getActiveThemeName()
+
+                treeContainerEl.innerHTML = ""
+                if (!criteria.length) {
+                    treeContainerEl.innerHTML = "<p>Lade Prüfschritte …</p>"
+                    return
+                }
+
+                const groups = sectionGroupsFromCriteria(criteria)
+                let lastCategoryKey = null
+
+                for (const group of groups) {
+                    const column = document.createElement("div")
+                    column.className = "section-column"
+
+                    const categoryInfo =
+                        sectionCategoryMapping[group.sectionTitle]
+                    if (categoryInfo) {
+                        const currentKey = `${categoryInfo.type}-${categoryInfo.category}`
+                        if (currentKey !== lastCategoryKey) {
+                            const categoryHeader = document.createElement("div")
+                            categoryHeader.className = `${categoryInfo.type}-category-header ${categoryInfo.category}`
+                            categoryHeader.textContent = categoryInfo.title
+                            categoryHeader.setAttribute("role", "heading")
+                            categoryHeader.setAttribute("aria-level", "2")
+                            column.appendChild(categoryHeader)
+                            lastCategoryKey = currentKey
+                        }
+                    }
+
+                    const categoryCard = document.createElement("div")
+                    categoryCard.className = "card category-card"
+                    categoryCard.textContent = " "
+                    column.appendChild(categoryCard)
+
+                    const sectionCard = document.createElement("div")
+                    sectionCard.className = `card section-card section-${group.sectionIndex}`
+                    sectionCard.textContent = group.sectionTitle
+                    column.appendChild(sectionCard)
+
+                    for (const step of group.items) {
+                        column.appendChild(
+                            renderPruefschrittCard({
+                                state,
+                                themeName,
+                                pruefschritt: step,
+                            })
+                        )
+                    }
+
+                    treeContainerEl.appendChild(column)
+                }
+            }
+
+            function render(state) {
+                renderTree(state)
+                renderThemeSuggestionsAndList(state)
+                renderCollectionList(state)
+            }
+
+            function connectNow({ updateUrl = true } = {}) {
+                sync.setIdentity({
+                    wsUrl: wsUrlEl.value,
+                    sessionId: sessionEl.value,
+                    username: usernameEl.value || "Anonym",
+                })
+
+                safeStorageSet(`${STORAGE_PREFIX}:wsUrl`, wsUrlEl.value)
+                safeStorageSet(`${STORAGE_PREFIX}:sessionId`, sessionEl.value)
+                safeStorageSet(`${STORAGE_PREFIX}:username`, usernameEl.value)
+                safeStorageSet(sessionScopedKey("themeInput"), themeEl.value)
+
+                if (updateUrl) {
+                    setQueryParams({
+                        ws: wsUrlEl.value,
+                        session: sessionEl.value,
+                        name: usernameEl.value,
+                        clientId,
+                        theme: getActiveThemeName() || normalizedThemeName(),
+                    })
+                }
+
+                sync.connect()
+            }
+
+            connectBtn.addEventListener("click", () => {
+                connectNow({ updateUrl: true })
+            })
+
+            disconnectBtn.addEventListener("click", () => sync.disconnect())
+
+            // Auto-reconnect after reload using persisted session settings.
+            connectNow({ updateUrl: true })
+
+            // Persist local inputs (per participant)
+            if (wsUrlEl) {
+                wsUrlEl.addEventListener("input", () => {
+                    safeStorageSet(`${STORAGE_PREFIX}:wsUrl`, wsUrlEl.value)
+                })
+            }
+            if (sessionEl) {
+                sessionEl.addEventListener("input", () => {
+                    safeStorageSet(
+                        `${STORAGE_PREFIX}:sessionId`,
+                        sessionEl.value
+                    )
+                })
+            }
+            if (usernameEl) {
+                usernameEl.addEventListener("input", () => {
+                    safeStorageSet(
+                        `${STORAGE_PREFIX}:username`,
+                        usernameEl.value
+                    )
+                })
+            }
+            if (themeEl) {
+                themeEl.addEventListener("input", () => {
+                    safeStorageSet(
+                        sessionScopedKey("themeInput"),
+                        themeEl.value
+                    )
+                })
+            }
+
+            if (collectionDetailsEl) {
+                collectionDetailsEl.addEventListener("toggle", () => {
+                    safeStorageSetJson(
+                        sessionScopedKey("collectionOpen"),
+                        Boolean(collectionDetailsEl.open)
+                    )
+                })
+            }
+
+            if (activateThemeBtn) {
+                activateThemeBtn.addEventListener("click", () => {
+                    const next = normalizedThemeName()
+                    if (!next) return
+                    setActiveTheme(next)
+                    if (collectionDetailsEl) collectionDetailsEl.open = true
+                })
+            }
+
+            if (themeEl) {
+                themeEl.addEventListener("keydown", (event) => {
+                    if (event.key !== "Enter") return
+                    event.preventDefault()
+                    const next = normalizedThemeName()
+                    if (!next) return
+                    setActiveTheme(next)
+                    if (collectionDetailsEl) collectionDetailsEl.open = true
+                })
+            }
+
+            // Modal close handlers
+            const closeButton = document.querySelector(
+                "#sectionModal .close-button"
+            )
+            if (closeButton) closeButton.addEventListener("click", closeModal)
+
+            const modalEl = document.getElementById("sectionModal")
+            if (modalEl) {
+                modalEl.addEventListener("cancel", (event) => {
+                    event.preventDefault()
+                    closeModal()
+                })
+
+                // Click on backdrop closes
+                modalEl.addEventListener("click", (event) => {
+                    if (event.target === modalEl) closeModal()
+                })
+            }
+
+            if (treeContainerEl) {
+                treeContainerEl.addEventListener("click", async (event) => {
+                    if (event.target.closest(".add-to-collection-button")) {
+                        return
+                    }
+                    const card = event.target.closest(".pruefschritt-card")
+                    if (card && card.pruefschrittData) {
+                        await openDetails(card.pruefschrittData)
+                    }
+                })
+
+                treeContainerEl.addEventListener("keydown", async (event) => {
+                    if (event.key !== "Enter" && event.key !== " ") return
+                    if (event.target.closest(".add-to-collection-button")) {
+                        return
+                    }
+                    const card = event.target.closest(".pruefschritt-card")
+                    if (card && card.pruefschrittData) {
+                        event.preventDefault()
+                        await openDetails(card.pruefschrittData)
+                    }
+                })
+            }
+
+            // Initial render + Daten laden
+            setActiveTheme(themeEl.value)
+            render(sync.state)
+            try {
+                const items = await loadPruefschritte()
+                criteria = items
+                render(sync.state)
+            } catch (err) {
+                console.error(err)
+                if (treeContainerEl) {
+                    treeContainerEl.innerHTML =
+                        "<p>Fehler beim Laden der Prüfschritte.</p>"
+                }
+            }
+        </script>
+    </body>
+</html>

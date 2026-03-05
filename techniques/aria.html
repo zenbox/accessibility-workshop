@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -12,7 +12,7 @@
             href="../assets/css/style.css"
         />
     </head>
-    <body>
+    <body class="page-aria">
         <header>
             <h1>ARIA und Landmarks</h1>
             <p>
@@ -65,7 +65,7 @@
                     hinzufügen
                 </h2>
                 <p>
-                    Die folgenden Rollen können Textinformationen für
+                    Die folgenden Attribute können Textinformationen für
                     Screenreader hinzufügen:
                 </p>
                 <dl>
@@ -87,9 +87,10 @@
                         für das aktuelle Element verwendet wird.
                         <samp>
                             <code
-                                >&lt;label id="label"&gt;Fenster
-                                schließen&lt;/label&gt;<br />
-                                &lt;button aria-labelledby="label"&gt;</code
+                                >&lt;span id="dialog-title"&gt;Fenster
+                                schließen&lt;/span&gt;<br />
+                                &lt;button aria-labelledby="dialog-title"
+                                type="button"&gt;×&lt;/button&gt;</code
                             >
                         </samp>
                     </dd>
@@ -99,15 +100,13 @@
                         Beschreibung für das aktuelle Element verwendet wird.
                         <samp>
                             <code
-                                >&lt;p class="sr-only visually-hidden"
-                                id="description"&gt;Schließt das
-                                Fenster.&lt;/p&gt;<br /><br />
-                                &lt;button
-                                aria-describedby="description"&gt;Schließen&lt;/button&gt;</code
+                                >&lt;p class="sr-only"
+                                id="close-help"&gt;Schließt das
+                                Fenster.&lt;/p&gt;<br />
+                                &lt;button type="button"
+                                aria-describedby="close-help"&gt;Schließen&lt;/button&gt;</code
                             >
                         </samp>
-                        <!-- <p style="cursor: default">Default Cursor</p>
-                    <p style="cursor: pointer">Pointer Cursor</p> -->
                     </dd>
                 </dl>
             </article>
@@ -117,7 +116,7 @@
                     ARIA-Attribute, die den Zustand von Elementen beschreiben
                 </h2>
                 <p>
-                    Die folgenden Rollen können den Zustand von Elementen
+                    Die folgenden Attribute können den Zustand von Elementen
                     beschreiben:
                 </p>
                 <dl>
@@ -125,7 +124,10 @@
                     <dd>
                         Gibt an, ob ein Element deaktiviert ist.
                         <samp>
-                            <code>&lt;button aria-disabled="true"&gt;</code>
+                            <code
+                                >&lt;div role="button" aria-disabled="true"
+                                tabindex="0"&gt;Speichern&lt;/div&gt;</code
+                            >
                         </samp>
                     </dd>
                     <dt><code>aria-hidden</code></dt>
@@ -141,8 +143,8 @@
                         Gibt an, ob ein Element ausgewählt ist.
                         <samp>
                             <code
-                                >&lt;input type="checkbox"
-                                aria-checked="true"&gt;</code
+                                >&lt;div role="checkbox" aria-checked="true"
+                                tabindex="0"&gt;Newsletter&lt;/div&gt;</code
                             >
                         </samp>
                     </dd>
@@ -157,7 +159,119 @@
                     <dd>
                         Gibt an, ob ein Element erweitert ist.
                         <samp>
-                            <code>&lt;li aria-expanded="true"&gt;</code>
+                            <code
+                                >&lt;button aria-expanded="true"
+                                aria-controls="details"
+                                type="button"&gt;Details&lt;/button&gt;<br />
+                                &lt;div id="details"&gt;…&lt;/div&gt;</code
+                            >
+                        </samp>
+                    </dd>
+
+                    <dt><code>aria-selected</code></dt>
+                    <dd>
+                        Gibt an, ob ein Element innerhalb eines Auswahl-Widgets
+                        ausgewählt ist (z.B. in <code>listbox</code>,
+                        <code>tabs</code>).
+                        <samp>
+                            <code
+                                >&lt;div role="tablist"
+                                aria-label="Ansichten"&gt;<br />
+                                &nbsp;&nbsp;&lt;button role="tab"
+                                aria-selected="true" aria-controls="panel-a"
+                                id="tab-a"
+                                type="button"&gt;Übersicht&lt;/button&gt;<br />
+                                &nbsp;&nbsp;&lt;button role="tab"
+                                aria-selected="false" aria-controls="panel-b"
+                                id="tab-b"
+                                type="button"&gt;Details&lt;/button&gt;<br />
+                                &lt;/div&gt;<br />
+                                &lt;section role="tabpanel" id="panel-a"
+                                aria-labelledby="tab-a"&gt;…&lt;/section&gt;<br />
+                                &lt;section role="tabpanel" id="panel-b"
+                                aria-labelledby="tab-b"
+                                hidden&gt;…&lt;/section&gt;</code
+                            >
+                        </samp>
+                    </dd>
+
+                    <dt><code>aria-current</code></dt>
+                    <dd>
+                        Markiert das „aktuelle“ Element in einer Menge
+                        verwandter Elemente (z.B. aktuelle Seite, aktueller
+                        Schritt).
+                        <samp>
+                            <code
+                                >&lt;nav aria-label="Brotkrumen"&gt;<br />
+                                &nbsp;&nbsp;&lt;ol&gt;<br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a
+                                href="/"&gt;Start&lt;/a&gt;&lt;/li&gt;<br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a
+                                href="/konto"
+                                aria-current="page"&gt;Konto&lt;/a&gt;&lt;/li&gt;<br />
+                                &nbsp;&nbsp;&lt;/ol&gt;<br />
+                                &lt;/nav&gt;</code
+                            >
+                        </samp>
+                    </dd>
+
+                    <dt><code>aria-required</code></dt>
+                    <dd>
+                        Kennzeichnet ein Eingabefeld als erforderlich. (Hinweis:
+                        In HTML ist <code>required</code> oft die bessere Wahl.)
+                        <samp>
+                            <code
+                                >&lt;label
+                                for="email"&gt;E‑Mail&lt;/label&gt;<br />
+                                &lt;input id="email" name="email" type="email"
+                                aria-required="true"
+                                autocomplete="email"&gt;</code
+                            >
+                        </samp>
+                    </dd>
+
+                    <dt><code>aria-invalid</code></dt>
+                    <dd>
+                        Markiert ein Feld als ungültig.
+                        <samp>
+                            <code
+                                >&lt;label for="zip"&gt;PLZ&lt;/label&gt;<br />
+                                &lt;input id="zip" name="zip"
+                                inputmode="numeric" aria-invalid="true"
+                                aria-describedby="zip-error"&gt;<br />
+                                &lt;p id="zip-error" class="error"&gt;Bitte eine
+                                gültige PLZ eingeben.&lt;/p&gt;</code
+                            >
+                        </samp>
+                    </dd>
+
+                    <dt><code>aria-errormessage</code></dt>
+                    <dd>
+                        Verknüpft ein ungültiges Feld mit einem Element, das die
+                        Fehlermeldung enthält. Wird typischerweise zusammen mit
+                        <code>aria-invalid="true"</code> eingesetzt.
+                        <samp>
+                            <code
+                                >&lt;label
+                                for="password"&gt;Passwort&lt;/label&gt;<br />
+                                &lt;input id="password" name="password"
+                                type="password" aria-invalid="true"
+                                aria-errormessage="pw-error"&gt;<br />
+                                &lt;p id="pw-error" class="error"&gt;Mindestens
+                                12 Zeichen.&lt;/p&gt;</code
+                            >
+                        </samp>
+                    </dd>
+
+                    <dt><code>aria-modal</code></dt>
+                    <dd>
+                        Kennzeichnet einen Dialog als modal, d.h. der Fokus
+                        bleibt im Dialog, bis er geschlossen wird.
+                        <samp>
+                            <code
+                                >&lt;div role="dialog" aria-modal="true"
+                                aria-labelledby="dialog-title"&gt;…&lt;/div&gt;</code
+                            >
                         </samp>
                     </dd>
                 </dl>
@@ -170,7 +284,7 @@
                     gibt:
                 </h2>
                 <p>
-                    Die folgenden Rollen können beobachten, ob es am DOM
+                    Die folgenden Attribute können beobachten, ob es am DOM
                     Veränderungen gibt:
                 </p>
                 <dl>
@@ -189,18 +303,25 @@
                         >
                     </dd>
                     <dt><code>aria-busy</code></dt>
-                    <dd>Gibt an, ob ein Element gerade beschäftigt ist.</dd>
+                    <dd>
+                        Gibt an, ob ein Element gerade beschäftigt ist.
+                        <samp>
+                            <code
+                                >&lt;section aria-busy="true"
+                                aria-label="Suchergebnisse"&gt;…&lt;/section&gt;</code
+                            >
+                        </samp>
+                    </dd>
                     <dt><code>aria-live</code></dt>
                     <dd>
                         Gibt an, ob Änderungen an einem Element sofort
                         vorgelesen werden sollen.
                         <samp
                             ><code>
-                                &lt;form aria-live="assertive"&gt;<br />
-                                &lt;input type="text"&gt;...<br />
-                                &lt;p&gt;Bitte geben Sie Ihren Namen
-                                ein.&lt;/p&gt;<br />
-                                &lt;/form&gt;
+                                &lt;div role="status" aria-live="polite"
+                                aria-atomic="true"&gt;<br />
+                                &nbsp;&nbsp;0 Treffer<br />
+                                &lt;/div&gt;
                             </code></samp
                         >
                     </dd>
@@ -210,11 +331,10 @@
                         vorgelesen werden sollen.
                         <samp
                             ><code>
-                                &lt;form aria-relevant="additions"&gt;<br />
-                                &lt;input type="text"&gt;...<br />
-                                &lt;p&gt;Bitte geben Sie Ihren Namen
-                                ein.&lt;/p&gt;<br />
-                                &lt;/form&gt;
+                                &lt;div role="status" aria-live="polite"
+                                aria-relevant="additions"&gt;<br />
+                                &nbsp;&nbsp;…<br />
+                                &lt;/div&gt;
                             </code></samp
                         >
                     </dd>
@@ -226,31 +346,124 @@
                     ARIA-Attribute, die ein Verhalten von Elementen beschreiben
                 </h2>
                 <p>
-                    Die folgenden Rollen können das Verhalten von Elementen
-                    beschreiben:
+                    Die folgenden Attribute können Verhalten/Beziehungen von
+                    Elementen beschreiben:
                 </p>
                 <dl>
                     <dt><code>aria-haspopup</code></dt>
-                    <dd>Gibt an, ob ein Element ein Popup-Menü enthält.</dd>
+                    <dd>
+                        Gibt an, ob ein Element ein Popup (z.B.
+                        <code>menu</code>, <code>listbox</code> oder
+                        <code>dialog</code>) öffnet.
+                        <samp>
+                            <code
+                                >&lt;button aria-haspopup="menu"
+                                aria-expanded="false" aria-controls="user-menu"
+                                type="button"&gt;Profil&lt;/button&gt;<br />
+                                &lt;div id="user-menu"
+                                role="menu"&gt;…&lt;/div&gt;</code
+                            >
+                        </samp>
+                    </dd>
                     <dt><code>aria-owns</code></dt>
                     <dd>
                         Die ID eines anderen Elements, das von diesem Element
                         besessen wird.
+                        <samp>
+                            <code
+                                >&lt;div role="listbox" aria-owns="opt-1
+                                opt-2"&gt;…&lt;/div&gt;<br />
+                                &lt;div id="opt-1" role="option"&gt;Option
+                                1&lt;/div&gt;<br />
+                                &lt;div id="opt-2" role="option"&gt;Option
+                                2&lt;/div&gt;</code
+                            >
+                        </samp>
                     </dd>
                     <dt><code>aria-controls</code></dt>
                     <dd>
                         Die ID eines anderen Elements, das von diesem Element
                         kontrolliert wird.
+                        <samp>
+                            <code
+                                >&lt;button aria-controls="filters"
+                                aria-expanded="false"
+                                type="button"&gt;Filter&lt;/button&gt;<br />
+                                &lt;section
+                                id="filters"&gt;…&lt;/section&gt;</code
+                            >
+                        </samp>
                     </dd>
                     <dt><code>aria-flowto</code></dt>
                     <dd>
                         Die ID eines anderen Elements, das von diesem Element
                         fokussiert wird.
+                        <samp>
+                            <code
+                                >&lt;p id="step-1"
+                                aria-flowto="step-2"&gt;Schritt 1…&lt;/p&gt;<br />
+                                &lt;p id="step-2"&gt;Schritt 2…&lt;/p&gt;</code
+                            >
+                        </samp>
                     </dd>
                     <dt><code>aria-activedescendant</code></dt>
                     <dd>
                         Die ID eines anderen Elements, das von diesem Element
                         aktiviert wird.
+                        <samp>
+                            <code
+                                >&lt;div role="listbox" tabindex="0"
+                                aria-activedescendant="opt-2"&gt;…&lt;/div&gt;<br />
+                                &lt;div id="opt-1" role="option"&gt;Option
+                                1&lt;/div&gt;<br />
+                                &lt;div id="opt-2" role="option"
+                                aria-selected="true"&gt;Option
+                                2&lt;/div&gt;</code
+                            >
+                        </samp>
+                    </dd>
+
+                    <dt><code>aria-valuenow</code></dt>
+                    <dd>
+                        Der aktuelle numerische Wert eines Widgets (z.B.
+                        <code>slider</code>).
+                        <samp>
+                            <code
+                                >&lt;div role="slider" tabindex="0"
+                                aria-label="Lautstärke" aria-valuemin="0"
+                                aria-valuemax="100"
+                                aria-valuenow="30"&gt;…&lt;/div&gt;</code
+                            >
+                        </samp>
+                    </dd>
+
+                    <dt>
+                        <code>aria-valuemin</code>, <code>aria-valuemax</code>
+                    </dt>
+                    <dd>
+                        Untere und obere Grenze eines numerischen Widgets.
+                        <samp>
+                            <code
+                                >&lt;div role="spinbutton" tabindex="0"
+                                aria-label="Anzahl" aria-valuemin="1"
+                                aria-valuemax="10"
+                                aria-valuenow="1"&gt;1&lt;/div&gt;</code
+                            >
+                        </samp>
+                    </dd>
+
+                    <dt><code>aria-valuetext</code></dt>
+                    <dd>
+                        Textuelle Beschreibung des aktuellen Werts (wenn
+                        <code>aria-valuenow</code> alleine nicht ausreicht).
+                        <samp>
+                            <code
+                                >&lt;div role="slider" tabindex="0"
+                                aria-label="Zoom" aria-valuemin="0"
+                                aria-valuemax="4" aria-valuenow="2"
+                                aria-valuetext="200%"&gt;…&lt;/div&gt;</code
+                            >
+                        </samp>
                     </dd>
                 </dl>
                 <p>und so weiter.</p>
@@ -265,24 +478,54 @@
                     <code>div</code>-Elemente eine semantische Bedeutung geben.
                     Sie können auch die Semantik eines HTML-Elements ändern.
                 </p>
+                <p>
+                    In HTML gilt: Wenn ein passendes semantisches Element
+                    existiert (<code>&lt;header&gt;</code>,
+                    <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>,
+                    <code>&lt;aside&gt;</code>, <code>&lt;footer&gt;</code>),
+                    ist das meistens die bessere Wahl als ein zusätzliches
+                    <code>role</code> auf einem <code>&lt;div&gt;</code>.
+                </p>
+                <p>
+                    Wenn es mehrere Bereiche mit derselben Landmark-Rolle gibt
+                    (z.B. mehrere Navigationsbereiche), sollten sie eindeutig
+                    benannt werden (z.B. mit <code>aria-label</code> oder
+                    <code>aria-labelledby</code>), damit Screenreader sie gut
+                    unterscheiden können.
+                </p>
                 <dl>
                     <dt><code>role="banner"</code></dt>
                     <dd>
                         Ein Bereich, der den Kopf einer Webseite enthält. Er
                         kann mehrere Elemente enthalten, wie z.B. ein Logo, eine
                         Überschrift, eine Suchfunktion und eine Navigation.
+                        <samp>
+                            <code
+                                >&lt;header
+                                role="banner"&gt;…&lt;/header&gt;</code
+                            >
+                        </samp>
                     </dd>
                     <dt><code>role="navigation"</code></dt>
                     <dd>
                         Ein Bereich, der eine Navigation enthält. Er kann
                         mehrere Elemente enthalten, wie z.B. eine Liste von
                         Links oder eine Suchfunktion.
+                        <samp>
+                            <code
+                                >&lt;nav
+                                aria-label="Hauptnavigation"&gt;…&lt;/nav&gt;</code
+                            >
+                        </samp>
                     </dd>
                     <dt><code>role="main"</code></dt>
                     <dd>
                         Der Hauptinhalt einer Webseite. Er kann mehrere Elemente
                         enthalten, wie z.B. Artikel, Abschnitte und
                         Nebeninhalte.
+                        <samp>
+                            <code>&lt;main&gt;…&lt;/main&gt;</code>
+                        </samp>
                     </dd>
                     <dt><code>role="complementary"</code></dt>
                     <dd>
@@ -290,6 +533,12 @@
                         nicht zum Hauptinhalt gehören. Er kann mehrere Elemente
                         enthalten, wie z.B. eine Sidebar, eine Werbung oder
                         verwandte Links.
+                        <samp>
+                            <code
+                                >&lt;aside aria-label="Weiterführende
+                                Links"&gt;…&lt;/aside&gt;</code
+                            >
+                        </samp>
                     </dd>
                     <dt><code>role="contentinfo"</code></dt>
                     <dd>
@@ -297,18 +546,47 @@
                         enthält. Er kann mehrere Elemente enthalten, wie z.B.
                         ein Impressum, eine Datenschutzerklärung und eine
                         Kontaktadresse.
+                        <samp>
+                            <code>&lt;footer&gt;…&lt;/footer&gt;</code>
+                        </samp>
                     </dd>
                     <dt><code>role="search"</code></dt>
                     <dd>
                         Ein Bereich, der eine Suchfunktion enthält. Er kann
                         mehrere Elemente enthalten, wie z.B. ein Eingabefeld,
                         eine Schaltfläche und eine Ergebnisliste.
+                        <samp>
+                            <code
+                                >&lt;form role="search" aria-label="Website
+                                durchsuchen"&gt;…&lt;/form&gt;</code
+                            >
+                        </samp>
                     </dd>
                     <dt><code>role="form"</code></dt>
                     <dd>
                         Ein Bereich, der ein Formular enthält. Er kann mehrere
                         Elemente enthalten, wie z.B. Eingabefelder,
                         Schaltflächen und Auswahllisten.
+                        <samp>
+                            <code
+                                >&lt;form role="form"
+                                aria-labelledby="contact-title"&gt;…&lt;/form&gt;</code
+                            >
+                        </samp>
+                    </dd>
+
+                    <dt><code>role="region"</code></dt>
+                    <dd>
+                        Ein wichtiger Abschnitt der Seite, der als Landmark
+                        auftauchen soll. Regionen sollten immer benannt werden
+                        (z.B. per <code>aria-label</code>), sonst ist der
+                        Landmark-Eintrag für Nutzer:innen wenig hilfreich.
+                        <samp>
+                            <code
+                                >&lt;section role="region" aria-label="Aktuelle
+                                Hinweise"&gt;…&lt;/section&gt;</code
+                            >
+                        </samp>
                     </dd>
                 </dl>
                 <p>und so weiter.</p>

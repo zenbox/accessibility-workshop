@@ -1,12 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
     <head>
         <meta charset="utf-8" />
         <title>Raumliste mit Tastaturnavigation und VoiceOver Simulation</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
         <link
-            href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap"
             rel="stylesheet"
+            href="../assets/css/style.css"
         />
         <style>
             :root {
@@ -64,10 +67,13 @@
                 --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
                 --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
                 --shadow-focus-primary: 0 0 0 2px var(--color-primary);
-                --shadow-focus-primary-light: 0 0 0 4px var(--color-primary-alpha-66);
+                --shadow-focus-primary-light: 0 0 0 4px
+                    var(--color-primary-alpha-66);
                 --shadow-focus-warning: 0 0 0 2px var(--color-warning);
-                --shadow-focus-warning-light: 0 0 0 4px var(--color-warning-alpha-50);
-                --shadow-focus-warning-ring: 0 0 0 3px var(--color-warning-alpha-30);
+                --shadow-focus-warning-light: 0 0 0 4px
+                    var(--color-warning-alpha-50);
+                --shadow-focus-warning-ring: 0 0 0 3px
+                    var(--color-warning-alpha-30);
                 --shadow-inset-primary: inset 0 0 0 2px var(--color-primary);
                 --shadow-inset-success: inset 0 0 0 3px var(--color-success);
                 --shadow-inset-info: inset 0 0 0 3px var(--color-info-dark);
@@ -81,12 +87,10 @@
                 --transition-fast: 0.2s ease;
                 --transition-normal: 0.3s ease;
 
-                --font-family-base: "Barlow", sans-serif;
-                --font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono",
-                    monospace;
+                --font-family-mono:
+                    "SFMono-Regular", Consolas, "Liberation Mono", monospace;
                 --font-weight-normal: 400;
                 --font-weight-bold: 700;
-                --line-height-base: 1.5;
 
                 --z-index-screenreader: 1000;
             }
@@ -123,16 +127,16 @@
             body {
                 margin: 0;
                 padding: 0;
-                font-family: var(--font-family-base);
                 background: var(--color-bg-page);
                 color: var(--color-text-primary);
-                line-height: var(--line-height-base);
             }
 
             main {
                 padding: var(--spacing-lg);
                 display: grid;
                 gap: var(--spacing-xl);
+                max-width: 1200px;
+                margin: 0 auto;
             }
 
             article {
@@ -337,7 +341,8 @@
 
             #list-table td {
                 padding: 14px var(--spacing-md);
-                border-bottom: var(--border-thin) solid var(--color-border-light);
+                border-bottom: var(--border-thin) solid
+                    var(--color-border-light);
             }
 
             .table-row-navigable {
@@ -392,7 +397,8 @@
 
                 .room-detail-focus,
                 .room-item.focus-outline {
-                    box-shadow: 0 0 0 var(--border-thick) var(--color-info-bright) !important;
+                    box-shadow: 0 0 0 var(--border-thick)
+                        var(--color-info-bright) !important;
                 }
             }
 
@@ -416,7 +422,7 @@
                 class="screenreader-text"
                 aria-live="polite"
             >
-VoiceOver Simulation geladen.
+                VoiceOver Simulation geladen.
             </div>
         </div>
 
@@ -424,8 +430,8 @@ VoiceOver Simulation geladen.
             id="room-keyboard-hint"
             class="keyboard-hint hidden"
         >
-            Räume: Tab wechselt zwischen Räumen, ↑↓ für Räume, → für Details, Escape
-            zum Verlassen.
+            Räume: Tab wechselt zwischen Räumen, ↑↓ für Räume, → für Details,
+            Escape zum Verlassen.
         </div>
 
         <div
@@ -433,17 +439,17 @@ VoiceOver Simulation geladen.
             class="keyboard-hint hidden"
             style="bottom: 120px"
         >
-            Tabelle: Tab für Zeilen, ↑↓ zwischen Zeilen, ←→ zwischen Zellen, Escape
-            zum Verlassen.
+            Tabelle: Tab für Zeilen, ↑↓ zwischen Zeilen, ←→ zwischen Zellen,
+            Escape zum Verlassen.
         </div>
 
         <main>
             <header>
                 <h1>Interaktive Raum- und Tabellen-Navigation</h1>
                 <p>
-                    Diese Demo zeigt Tastaturnavigation mit einer VoiceOver-Simulation
-                    für Räume und Tabellen. Verwenden Sie die Hinweise unten rechts,
-                    um sich zu orientieren.
+                    Diese Demo zeigt Tastaturnavigation mit einer
+                    VoiceOver-Simulation für Räume und Tabellen. Verwenden Sie
+                    die Hinweise unten rechts, um sich zu orientieren.
                 </p>
             </header>
 
@@ -454,10 +460,13 @@ VoiceOver Simulation geladen.
                     aria-labelledby="room-legend"
                 >
                     <fieldset>
-                        <legend id="room-legend">Räume und Detailinformationen</legend>
+                        <legend id="room-legend">
+                            Räume und Detailinformationen
+                        </legend>
                         <p>
-                            Navigieren Sie mit Tab zu den einzelnen Räumen. Pfeil rechts
-                            öffnet die Details, Pfeil links/Escape schließt sie wieder.
+                            Navigieren Sie mit Tab zu den einzelnen Räumen.
+                            Pfeil rechts öffnet die Details, Pfeil links/Escape
+                            schließt sie wieder.
                         </p>
 
                         <ol class="room-list">
@@ -472,7 +481,9 @@ VoiceOver Simulation geladen.
                                         name="rooms"
                                         value="alpha"
                                     />
-                                    <label for="room-alpha">Konferenzraum Alpha</label>
+                                    <label for="room-alpha"
+                                        >Konferenzraum Alpha</label
+                                    >
                                 </div>
                                 <div class="room-details">
                                     <ol>
@@ -480,12 +491,19 @@ VoiceOver Simulation geladen.
                                             Kapazität: 12 Personen
                                         </li>
                                         <li class="detail-item">
-                                            Ausstattung: Videokonferenz, Whiteboard
+                                            Ausstattung: Videokonferenz,
+                                            Whiteboard
                                         </li>
                                         <li class="detail-item numbers">
-                                            <span class="number-item">09:00</span>
-                                            <span class="number-item">11:30</span>
-                                            <span class="number-item">15:45</span>
+                                            <span class="number-item"
+                                                >09:00</span
+                                            >
+                                            <span class="number-item"
+                                                >11:30</span
+                                            >
+                                            <span class="number-item"
+                                                >15:45</span
+                                            >
                                         </li>
                                     </ol>
                                 </div>
@@ -502,7 +520,9 @@ VoiceOver Simulation geladen.
                                         name="rooms"
                                         value="beta"
                                     />
-                                    <label for="room-beta">Projektlabor Beta</label>
+                                    <label for="room-beta"
+                                        >Projektlabor Beta</label
+                                    >
                                 </div>
                                 <div class="room-details">
                                     <ol>
@@ -513,7 +533,9 @@ VoiceOver Simulation geladen.
                                             Ausstattung: 3D-Drucker, Werkbank
                                         </li>
                                         <li class="detail-item numbers">
-                                            <span class="number-item">WLAN</span>
+                                            <span class="number-item"
+                                                >WLAN</span
+                                            >
                                             <span class="number-item">IoT</span>
                                             <span class="number-item">VR</span>
                                         </li>
@@ -532,7 +554,9 @@ VoiceOver Simulation geladen.
                                         name="rooms"
                                         value="gamma"
                                     />
-                                    <label for="room-gamma">Atelier Gamma</label>
+                                    <label for="room-gamma"
+                                        >Atelier Gamma</label
+                                    >
                                 </div>
                                 <div class="room-details">
                                     <ol>
@@ -540,12 +564,19 @@ VoiceOver Simulation geladen.
                                             Kapazität: 20 Personen
                                         </li>
                                         <li class="detail-item">
-                                            Ausstattung: Galeriebeleuchtung, Staffeleien
+                                            Ausstattung: Galeriebeleuchtung,
+                                            Staffeleien
                                         </li>
                                         <li class="detail-item numbers">
-                                            <span class="number-item">Malerei</span>
-                                            <span class="number-item">Skulptur</span>
-                                            <span class="number-item">Mixed Media</span>
+                                            <span class="number-item"
+                                                >Malerei</span
+                                            >
+                                            <span class="number-item"
+                                                >Skulptur</span
+                                            >
+                                            <span class="number-item"
+                                                >Mixed Media</span
+                                            >
                                         </li>
                                     </ol>
                                 </div>
@@ -563,14 +594,16 @@ VoiceOver Simulation geladen.
                 <h2 id="table-title">Titel: Tabellarische Raumübersicht</h2>
                 <p>
                     Bewegen Sie sich mit Tab in die Tabelle und nutzen Sie die
-                    Pfeiltasten zur Navigation. Die VoiceOver-Simulation liest Zeilen
-                    und Zellen automatisch vor.
+                    Pfeiltasten zur Navigation. Die VoiceOver-Simulation liest
+                    Zeilen und Zellen automatisch vor.
                 </p>
                 <table
                     id="list-table"
                     aria-labelledby="table-title"
                 >
-                    <caption>Caption: Besprechungsräume mit Status</caption>
+                    <caption>
+                        Caption: Besprechungsräume mit Status
+                    </caption>
                     <thead>
                         <tr>
                             <th scope="col">Nummer</th>
@@ -585,12 +618,7 @@ VoiceOver Simulation geladen.
                             tabindex="0"
                             data-row-index="0"
                         >
-                            <td
-                                data-col-index="0"
-                              
-                            >
-                                1
-                            </td>
+                            <td data-col-index="0">1</td>
                             <td
                                 data-col-index="1"
                                 aria-label="Name"
@@ -748,7 +776,9 @@ VoiceOver Simulation geladen.
                     if (element.checked) state.push("ausgewählt")
                     if (element.disabled) state.push("deaktiviert")
 
-                    const stateText = state.length ? ` (${state.join(", ")})` : ""
+                    const stateText = state.length
+                        ? ` (${state.join(", ")})`
+                        : ""
                     return label ? `${label} – ${role}${stateText}` : role
                 }
 
@@ -767,9 +797,11 @@ VoiceOver Simulation geladen.
             }
 
             function varFallback(varName, fallback) {
-                return getComputedStyle(document.documentElement)
-                    .getPropertyValue(varName)
-                    .trim() || fallback
+                return (
+                    getComputedStyle(document.documentElement)
+                        .getPropertyValue(varName)
+                        .trim() || fallback
+                )
             }
 
             class RoomNavigation {
@@ -781,9 +813,8 @@ VoiceOver Simulation geladen.
                     this.currentDetailItems = []
                     this.screenReader = screenReader
                     this.isActive = false
-                    this.keyboardHint = document.getElementById(
-                        "room-keyboard-hint"
-                    )
+                    this.keyboardHint =
+                        document.getElementById("room-keyboard-hint")
 
                     this.init()
                 }
@@ -850,7 +881,10 @@ VoiceOver Simulation geladen.
                     this.keyboardHint?.classList.add("hidden")
 
                     this.rooms.forEach((room) => {
-                        room.classList.remove("focus-outline", "room-detail-focus")
+                        room.classList.remove(
+                            "focus-outline",
+                            "room-detail-focus"
+                        )
                     })
 
                     if (this.isInDetailMode) {
@@ -932,7 +966,10 @@ VoiceOver Simulation geladen.
 
                 setFocus(roomIndex) {
                     this.rooms.forEach((room) => {
-                        room.classList.remove("focus-outline", "room-detail-focus")
+                        room.classList.remove(
+                            "focus-outline",
+                            "room-detail-focus"
+                        )
                     })
 
                     const currentRoom = this.rooms[roomIndex]
@@ -943,7 +980,9 @@ VoiceOver Simulation geladen.
                     })
 
                     this.selectRoom(roomIndex, false)
-                    const radio = currentRoom.querySelector('input[type="radio"]')
+                    const radio = currentRoom.querySelector(
+                        'input[type="radio"]'
+                    )
                     this.screenReader.focusElement(radio)
                     this.announceRoom(roomIndex)
                 }
@@ -987,7 +1026,7 @@ VoiceOver Simulation geladen.
                 exitDetailMode() {
                     if (!this.isInDetailMode) return
 
-                this.currentDetailItems.forEach((item) =>
+                    this.currentDetailItems.forEach((item) =>
                         item.classList.remove("focus-outline")
                     )
 
@@ -1327,7 +1366,9 @@ VoiceOver Simulation geladen.
                 jumpToRow(index) {
                     if (index >= 0 && index < this.rows.length) {
                         this.rows[index].focus()
-                        this.screenReader.announce(`Springe zu Zeile ${index + 1}.`)
+                        this.screenReader.announce(
+                            `Springe zu Zeile ${index + 1}.`
+                        )
                     }
                 }
 
@@ -1338,12 +1379,15 @@ VoiceOver Simulation geladen.
                         index < this.currentCells.length
                     ) {
                         this.setCellFocus(index)
-                        this.screenReader.announce(`Springe zu Zelle ${index + 1}.`)
+                        this.screenReader.announce(
+                            `Springe zu Zelle ${index + 1}.`
+                        )
                     }
                 }
 
                 announceTableTitle() {
-                    const labelledBy = this.table.getAttribute("aria-labelledby")
+                    const labelledBy =
+                        this.table.getAttribute("aria-labelledby")
                     let titleText = ""
                     if (labelledBy) {
                         const el = document.getElementById(labelledBy)
@@ -1432,5 +1476,7 @@ VoiceOver Simulation geladen.
                 })
             })
         </script>
+
+        <script src="../assets/js/scaffold.js"></script>
     </body>
 </html>

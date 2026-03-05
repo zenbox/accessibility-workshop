@@ -277,7 +277,7 @@ function closeAxeOverlay() {
 
 function getRelativePathToRoot() {
     // Get current path
-    const path = window.location.pathname
+    const path = location.pathname
     const onlineProjectRoot = "/accessibility-workshop/"
     let pathAfterRoot = ""
 
@@ -351,6 +351,14 @@ function createMainNavigation() {
         {
             file: "components/accordion.html",
             text: "Komponenten",
+        },
+        {
+            file: "components/mega-flyout-menu.html",
+            text: "Mega Flyout Menü",
+        },
+        {
+            file: "components/content-slider.html",
+            text: "Content-Slider",
         },
     ]
 
@@ -460,11 +468,18 @@ function createMainNavigationWithSubmenu() {
             text: "Komponenten",
             children: [
                 { file: "components/accordion.html", text: "Accordion" },
-                { file: "components/dialog.html", text: "Dialog" },
-                { file: "components/flyout.html", text: "Flyout" },
                 {
-                    file: "components/jquery-datepicker-example.html",
-                    text: "jQuery Datepicker",
+                    file: "components/mega-flyout-menu.html",
+                    text: "Mega Flyout Menü",
+                },
+                {
+                    file: "components/content-slider.html",
+                    text: "Content-Slider",
+                },
+                { file: "components/dialog.html", text: "Dialog" },
+                {
+                    file: "components/app-menu-flyout.html",
+                    text: "App-Menü (Flyout)",
                 },
                 {
                     file: "components/form-with-dependencies.html",
@@ -481,10 +496,6 @@ function createMainNavigationWithSubmenu() {
                 {
                     file: "components/error-with-server.html",
                     text: "Fehlermeldung nach Serverauswertung",
-                },
-                {
-                    file: "components/ng-gallery-component.md",
-                    text: "Angular Image-Slider Komponente",
                 },
             ],
         },
@@ -508,6 +519,26 @@ function createMainNavigationWithSubmenu() {
         },
     ]
 
+    // Disclosure state management (keep behavior predictable)
+    let submenuIdCounter = 0
+    const submenuControllers = []
+
+    const closeAllSubmenus = (exceptToggleBtn = null) => {
+        submenuControllers.forEach(({ li, toggleBtn, submenu }) => {
+            if (exceptToggleBtn && toggleBtn === exceptToggleBtn) return
+            toggleBtn.setAttribute("aria-expanded", "false")
+            li.setAttribute("aria-expanded", "false")
+            submenu.hidden = true
+        })
+    }
+
+    const openSubmenu = ({ li, toggleBtn, submenu }) => {
+        closeAllSubmenus(toggleBtn)
+        toggleBtn.setAttribute("aria-expanded", "true")
+        li.setAttribute("aria-expanded", "true")
+        submenu.hidden = false
+    }
+
     navigation.forEach((entry) => {
         const li = document.createElement("li")
         li.classList.add("main-nav-item")
@@ -526,10 +557,13 @@ function createMainNavigationWithSubmenu() {
             toggleBtn.type = "button"
             toggleBtn.classList.add("submenu-toggle")
             toggleBtn.setAttribute("aria-expanded", "false")
+            const submenuId = `submenu-${submenuIdCounter++}`
+            toggleBtn.setAttribute("aria-controls", submenuId)
             toggleBtn.innerHTML = `<span class="sr-only">${entry.text} Untermenü</span>`
 
             const submenu = document.createElement("ul")
             submenu.classList.add("submenu")
+            submenu.id = submenuId
             submenu.hidden = true
 
             entry.children.forEach((child) => {
@@ -544,51 +578,49 @@ function createMainNavigationWithSubmenu() {
             li.appendChild(toggleBtn)
             li.appendChild(submenu)
 
-            const openSubmenu = () => {
-                toggleBtn.setAttribute("aria-expanded", "true")
-                li.setAttribute("aria-expanded", "true")
-                submenu.hidden = false
-            }
-
-            const closeSubmenu = () => {
-                toggleBtn.setAttribute("aria-expanded", "false")
-                li.setAttribute("aria-expanded", "false")
-                submenu.hidden = true
-            }
-
-            let hoverTimeout = null
+            const controller = { li, toggleBtn, submenu }
+            submenuControllers.push(controller)
 
             toggleBtn.addEventListener("click", (event) => {
                 event.preventDefault()
-                const expanded =
-                    toggleBtn.getAttribute("aria-expanded") === "true"
-                if (expanded) {
-                    closeSubmenu()
+                const expanded = toggleBtn.getAttribute("aria-expanded")
+                if (expanded === "true") {
+                    closeAllSubmenus()
                 } else {
-                    openSubmenu()
+                    openSubmenu(controller)
                 }
             })
 
-            li.addEventListener("mouseenter", () => {
-                clearTimeout(hoverTimeout)
-                openSubmenu()
-            })
+            toggleBtn.addEventListener("keydown", (event) => {
+                if (event.altKey || event.ctrlKey || event.metaKey) return
+                if (event.key === "Escape") {
+                    event.preventDefault()
+                    closeAllSubmenus()
+                    toggleBtn.focus()
+                    return
+                }
 
-            li.addEventListener("mouseleave", () => {
-                hoverTimeout = setTimeout(() => closeSubmenu(), 120)
-            })
-
-            li.addEventListener("focusin", () => {
-                clearTimeout(hoverTimeout)
-                openSubmenu()
-            })
-
-            li.addEventListener("focusout", (event) => {
-                hoverTimeout = setTimeout(() => {
-                    if (!li.contains(document.activeElement)) {
-                        closeSubmenu()
+                if (event.key === "ArrowDown") {
+                    const expanded = toggleBtn.getAttribute("aria-expanded")
+                    if (expanded !== "true") {
+                        event.preventDefault()
+                        openSubmenu(controller)
                     }
-                }, 120)
+                    const firstLink = submenu.querySelector("a")
+                    if (firstLink) {
+                        event.preventDefault()
+                        firstLink.focus()
+                    }
+                }
+            })
+
+            submenu.addEventListener("keydown", (event) => {
+                if (event.altKey || event.ctrlKey || event.metaKey) return
+                if (event.key === "Escape") {
+                    event.preventDefault()
+                    closeAllSubmenus()
+                    toggleBtn.focus()
+                }
             })
         }
 
@@ -597,6 +629,28 @@ function createMainNavigationWithSubmenu() {
 
     nav.appendChild(ul)
     document.body.prepend(nav)
+
+    // Close open submenus on outside interaction
+    document.addEventListener("click", (event) => {
+        const target = event.target
+        if (!(target instanceof Node)) return
+        if (nav.contains(target)) return
+        closeAllSubmenus()
+    })
+
+    document.addEventListener("focusin", (event) => {
+        const target = event.target
+        if (!(target instanceof Node)) return
+        if (nav.contains(target)) return
+        closeAllSubmenus()
+    })
+
+    nav.addEventListener("keydown", (event) => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return
+        if (event.key === "Escape") {
+            closeAllSubmenus()
+        }
+    })
 }
 
 function createChatbotAssistButton() {
@@ -658,11 +712,14 @@ function createFooter() {
 }
 
 function createBrand() {
+    const header = document.querySelector("header")
+    if (!header) return
+
     const brand = document.createElement("p")
     brand.classList.add("brand")
     brand.textContent = "accessibility workshop"
 
-    document.querySelector("header").prepend(brand)
+    header.prepend(brand)
 }
 
 function createSkipLinks() {
@@ -715,6 +772,9 @@ function createSkipLinks() {
 }
 
 function setTabindizes() {
+    // Opt-in only: setting tabindex on headings changes focus order and can
+    // interfere with component demos.
+    if (!document.body?.hasAttribute("data-scaffold-heading-tabindex")) return
     const all = document.querySelectorAll("h1, h2")
     all.forEach((el) => {
         el.tabIndex = 0
@@ -755,6 +815,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof createAxeCoreTestScripts === "function")
         createAxeCoreTestScripts()
     if (typeof createAxeCoreUI === "function") createAxeCoreUI()
-    document.querySelector("html").setAttribute("lang", "de")
+    const html = document.querySelector("html")
+    if (html && !html.hasAttribute("lang")) html.setAttribute("lang", "de")
     createChatbotAssistButton()
 })

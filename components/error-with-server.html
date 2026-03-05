@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
     <head>
         <meta charset="utf-8" />
@@ -7,6 +7,11 @@
             content="width=device-width, initial-scale=1"
         />
         <title>Beispielformular – Barrierefreie Fehlerausgabe</title>
+
+        <link
+            rel="stylesheet"
+            href="../assets/css/style.css"
+        />
         <style>
             :root {
                 --color-primary: #005fb8;
@@ -26,7 +31,6 @@
                 --spacing-md: 1rem;
                 --spacing-lg: 1.5rem;
                 --spacing-xl: 2rem;
-                --font-base: "Barlow", system-ui, sans-serif;
             }
 
             *,
@@ -37,10 +41,8 @@
 
             body {
                 margin: 0;
-                font-family: var(--font-base);
                 background: var(--color-bg);
                 color: var(--color-text);
-                line-height: 1.6;
             }
 
             a.skip-link {
@@ -368,5 +370,7 @@
                 })
             })()
         </script>
+
+        <script src="../assets/js/scaffold.js"></script>
     </body>
 </html>

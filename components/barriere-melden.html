@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
     <head>
         <meta charset="UTF-8" />
@@ -7,10 +7,16 @@
             content="width=device-width, initial-scale=1.0"
         />
         <title>Axe Accessibility – Vollständige Seite testen</title>
+
+        <link
+            rel="stylesheet"
+            href="../assets/css/style.css"
+        />
     </head>
     <body>
         <header></header>
         <main>
+            <a href="../">zurück zu den Erläuterungen</a>
             <h1>Barriere melden</h1>
             <p>
                 Alle sollen diese Website gut benutzen können. Haben sie eine
@@ -37,7 +43,6 @@
         </main>
         <footer></footer>
 
-        
         <aside id="axe-core-testing-panel">
             <!-- Test Control Panel  -->
             <section
@@ -168,8 +173,6 @@
             <!-- Axe Core Styles -->
             <style>
                 #axe-core-testing-panel {
-                    font-family: Arial, sans-serif;
-
                     * {
                         box-sizing: border-box;
                     }
@@ -348,8 +351,8 @@
                     div.className = `violation-item ${violation.impact || ""}`
                     div.innerHTML = `
         <div class="violation-header">${escapeHtml(violation.id)} ${(
-                        violation.impact || ""
-                    ).toUpperCase()}</div>
+            violation.impact || ""
+        ).toUpperCase()}</div>
         <div class="violation-help">
           ${escapeHtml(violation.help)}
           <a href="${

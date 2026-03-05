@@ -1,0 +1,1105 @@
+<!doctype html>
+<html lang="de-CH">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Mega-Flyout Navigation (barrierefrei)</title>
+
+        <link
+            rel="stylesheet"
+            href="../assets/css/style.css"
+        />
+
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0"
+        />
+
+        <style>
+            :root {
+                --nav-bg: #0b1320;
+                --nav-fg: #ffffff;
+                --nav-muted: rgba(255, 255, 255, 0.75);
+                --panel-bg: #111b2e;
+                --panel-border: rgba(255, 255, 255, 0.15);
+                --focus: #9bd1ff;
+
+                /* Fokus-Rahmen: per Transition ein-/ausblenden */
+                --focus-ring-width: 3px;
+                --focus-ring-duration: 220ms;
+                --focus-ring-ease: ease-out;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                :root {
+                    --focus-ring-duration: 0ms;
+                }
+            }
+
+            body {
+                margin: 0;
+            }
+
+            main {
+                padding: 1.25rem;
+                max-width: 78rem;
+                margin: 0 auto;
+            }
+
+            /* Skip link */
+            .skip-link {
+                position: absolute;
+                left: 0.5rem;
+                top: 0.5rem;
+                transform: translateY(-200%);
+                background: #fff;
+                color: #000;
+                padding: 0.5rem 0.75rem;
+                border-radius: 0.5rem;
+                z-index: 9999;
+
+                box-shadow: 0 0 0 0 transparent;
+                transition:
+                    transform var(--focus-ring-duration) var(--focus-ring-ease),
+                    box-shadow var(--focus-ring-duration) var(--focus-ring-ease);
+            }
+
+            .skip-link:focus {
+                transform: translateY(0);
+                outline: none;
+                box-shadow: 0 0 0 var(--focus-ring-width) var(--focus);
+            }
+
+            /* Mega nav */
+            .mega-nav {
+                background: var(--nav-bg);
+                color: var(--nav-fg);
+                position: relative;
+            }
+
+            .mega-nav__inner {
+                max-width: 78rem;
+                margin: 0 auto;
+                padding: 0 1rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                min-height: 3.5rem;
+            }
+
+            .mega-nav__brand {
+                font-weight: 700;
+                letter-spacing: 0.02em;
+                white-space: nowrap;
+            }
+
+            .mega-nav__list {
+                list-style: none;
+                display: flex;
+                gap: 0.25rem;
+                margin: 0;
+                padding: 0;
+                flex-wrap: wrap;
+            }
+
+            .mega-nav__item {
+                position: relative;
+            }
+
+            .mega-nav__toggle {
+                appearance: none;
+                border: 0;
+                background: transparent;
+                color: inherit;
+                font: inherit;
+                padding: 0.75rem 0.9rem;
+                border-radius: 0.5rem;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+
+                box-shadow: 0 0 0 0 transparent;
+                transition:
+                    background-color var(--focus-ring-duration)
+                        var(--focus-ring-ease),
+                    box-shadow var(--focus-ring-duration) var(--focus-ring-ease);
+            }
+
+            .material-symbols-rounded {
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 400,
+                    "GRAD" 0,
+                    "opsz" 24;
+            }
+
+            .mega-nav__icon {
+                display: inline-block;
+                font-size: 1.25rem;
+                line-height: 1;
+                color: var(--nav-muted);
+                flex: 0 0 auto;
+            }
+
+            .mega-nav__toggle[aria-expanded="true"] .mega-nav__icon {
+                color: var(--nav-fg);
+            }
+
+            .mega-nav__toggle:hover {
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            .mega-nav__toggle:focus-visible {
+                outline: none;
+                box-shadow: 0 0 0 var(--focus-ring-width) var(--focus);
+            }
+
+            .mega-nav__chev {
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 6px solid var(--nav-muted);
+                transform: translateY(1px);
+            }
+
+            .mega-nav__toggle[aria-expanded="true"] .mega-nav__chev {
+                transform: rotate(180deg) translateY(-1px);
+            }
+
+            .mega-nav__panel {
+                display: none;
+                position: absolute;
+                left: 0;
+                top: calc(100% + 0.25rem);
+                background: var(--panel-bg);
+                border: 1px solid var(--panel-border);
+                border-radius: 0.75rem;
+                padding: 1rem;
+                min-width: min(56rem, calc(100vw - 2rem));
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+                z-index: 50;
+            }
+
+            .mega-nav__item.is-open > .mega-nav__panel {
+                display: block;
+            }
+
+            .mega-nav__panel:focus {
+                outline: none;
+            }
+
+            .mega-nav__grid {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(12rem, 1fr));
+                gap: 1rem;
+            }
+
+            .mega-nav__section-title {
+                margin: 0 0 0.4rem 0;
+                font-size: 1rem;
+            }
+
+            .mega-nav__links {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: grid;
+                gap: 0.35rem;
+            }
+
+            .mega-nav__link {
+                display: inline-block;
+                padding: 0.35rem 0.4rem;
+                border-radius: 0.4rem;
+                color: var(--nav-fg);
+                text-decoration: none;
+
+                box-shadow: 0 0 0 0 transparent;
+                transition:
+                    background-color var(--focus-ring-duration)
+                        var(--focus-ring-ease),
+                    box-shadow var(--focus-ring-duration) var(--focus-ring-ease);
+            }
+
+            .mega-nav__link:hover {
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            .mega-nav__link:focus-visible {
+                outline: none;
+                box-shadow: 0 0 0 var(--focus-ring-width) var(--focus);
+            }
+
+            .mega-nav__hint {
+                margin: 0.75rem 0 0 0;
+                font-size: 0.95rem;
+                color: var(--nav-muted);
+            }
+
+            /* Mobile: panel becomes a stacked section below the toggle */
+            @media (max-width: 60rem) {
+                .mega-nav__inner {
+                    align-items: stretch;
+                    flex-direction: column;
+                    padding: 0.75rem 1rem;
+                }
+
+                .mega-nav__list {
+                    width: 100%;
+                    flex-direction: column;
+                }
+
+                .mega-nav__toggle {
+                    width: 100%;
+                    justify-content: space-between;
+                }
+
+                .mega-nav__panel {
+                    position: static;
+                    margin: 0.25rem 0 0.75rem 0;
+                    min-width: unset;
+                }
+
+                .mega-nav__grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <a
+            class="skip-link"
+            href="#main"
+            >Zum Inhalt springen</a
+        >
+
+        <nav
+            id="mega-flyout-nav"
+            class="mega-nav"
+            aria-label="Hauptnavigation"
+        >
+            <div class="mega-nav__inner">
+                <div class="mega-nav__brand">Workshop</div>
+
+                <ul class="mega-nav__list">
+                    <li class="mega-nav__item">
+                        <button
+                            type="button"
+                            class="mega-nav__toggle"
+                            aria-expanded="false"
+                            aria-controls="panel-produkt"
+                            id="toggle-produkt"
+                        >
+                            <span
+                                class="material-symbols-rounded mega-nav__icon"
+                                aria-hidden="true"
+                                >shopping_bag</span
+                            >
+                            Produkt
+                            <span
+                                class="mega-nav__chev"
+                                aria-hidden="true"
+                            ></span>
+                        </button>
+
+                        <section
+                            class="mega-nav__panel"
+                            id="panel-produkt"
+                            aria-labelledby="toggle-produkt"
+                        >
+                            <div class="mega-nav__grid">
+                                <section aria-label="Produkt – Einstieg">
+                                    <h2 class="mega-nav__section-title">
+                                        Einstieg
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Überblick</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Roadmap</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Preise</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                                <section aria-label="Produkt – Funktionen">
+                                    <h2 class="mega-nav__section-title">
+                                        Funktionen
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Features</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Integrationen</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Sicherheit</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                                <section aria-label="Produkt – Hilfe">
+                                    <h2 class="mega-nav__section-title">
+                                        Hilfe
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Dokumentation</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Support</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >FAQ</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                            </div>
+
+                            <p class="mega-nav__hint">
+                                Tastatur: <strong>Tab</strong> navigiert,
+                                <strong>Enter/Leertaste</strong>
+                                öffnet/schließt,
+                                <strong>Pfeil links/rechts</strong> wechselt
+                                Hauptpunkte, <strong>Esc</strong> schließt.
+                            </p>
+                        </section>
+                    </li>
+
+                    <li class="mega-nav__item">
+                        <button
+                            type="button"
+                            class="mega-nav__toggle"
+                            aria-expanded="false"
+                            aria-controls="panel-lernen"
+                            id="toggle-lernen"
+                        >
+                            <span
+                                class="material-symbols-rounded mega-nav__icon"
+                                aria-hidden="true"
+                                >school</span
+                            >
+                            Lernen
+                            <span
+                                class="mega-nav__chev"
+                                aria-hidden="true"
+                            ></span>
+                        </button>
+                        <section
+                            class="mega-nav__panel"
+                            id="panel-lernen"
+                            aria-labelledby="toggle-lernen"
+                        >
+                            <div class="mega-nav__grid">
+                                <section aria-label="Lernen – Grundlagen">
+                                    <h2 class="mega-nav__section-title">
+                                        Grundlagen
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >WCAG Überblick</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >BITV / EN 301 549</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Semantik</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                                <section aria-label="Lernen – Praxis">
+                                    <h2 class="mega-nav__section-title">
+                                        Praxis
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Formulare</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Keyboard-Tests</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Screenreader</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                                <section aria-label="Lernen – Ressourcen">
+                                    <h2 class="mega-nav__section-title">
+                                        Ressourcen
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="https://www.w3.org/WAI/standards-guidelines/wcag/"
+                                                target="_blank"
+                                                rel="noopener"
+                                                >W3C WCAG</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="https://www.w3.org/WAI/ARIA/apg/"
+                                                target="_blank"
+                                                rel="noopener"
+                                                >WAI-ARIA APG</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="https://www.w3.org/WAI/tutorials/"
+                                                target="_blank"
+                                                rel="noopener"
+                                                >WAI Tutorials</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                            </div>
+                        </section>
+                    </li>
+
+                    <li class="mega-nav__item">
+                        <button
+                            type="button"
+                            class="mega-nav__toggle"
+                            aria-expanded="false"
+                            aria-controls="panel-tools"
+                            id="toggle-tools"
+                        >
+                            <span
+                                class="material-symbols-rounded mega-nav__icon"
+                                aria-hidden="true"
+                                >build</span
+                            >
+                            Tools
+                            <span
+                                class="mega-nav__chev"
+                                aria-hidden="true"
+                            ></span>
+                        </button>
+                        <section
+                            class="mega-nav__panel"
+                            id="panel-tools"
+                            aria-labelledby="toggle-tools"
+                        >
+                            <div class="mega-nav__grid">
+                                <section aria-label="Tools – Testen">
+                                    <h2 class="mega-nav__section-title">
+                                        Testen
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Axe</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Lighthouse</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Manual Checks</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                                <section aria-label="Tools – Entwickeln">
+                                    <h2 class="mega-nav__section-title">
+                                        Entwickeln
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >ARIA Cheatsheet</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Komponenten</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Design Tokens</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                                <section aria-label="Tools – Dokumentieren">
+                                    <h2 class="mega-nav__section-title">
+                                        Dokumentieren
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Checklisten</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Reports</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Vorlagen</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                            </div>
+                        </section>
+                    </li>
+
+                    <li class="mega-nav__item">
+                        <button
+                            type="button"
+                            class="mega-nav__toggle"
+                            aria-expanded="false"
+                            aria-controls="panel-unternehmen"
+                            id="toggle-unternehmen"
+                        >
+                            <span
+                                class="material-symbols-rounded mega-nav__icon"
+                                aria-hidden="true"
+                                >apartment</span
+                            >
+                            Unternehmen
+                            <span
+                                class="mega-nav__chev"
+                                aria-hidden="true"
+                            ></span>
+                        </button>
+                        <section
+                            class="mega-nav__panel"
+                            id="panel-unternehmen"
+                            aria-labelledby="toggle-unternehmen"
+                        >
+                            <div class="mega-nav__grid">
+                                <section aria-label="Unternehmen – Über uns">
+                                    <h2 class="mega-nav__section-title">
+                                        Über uns
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Mission</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Team</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Kontakt</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                                <section aria-label="Unternehmen – Rechtliches">
+                                    <h2 class="mega-nav__section-title">
+                                        Rechtliches
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Impressum</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Datenschutz</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Barrierefreiheit</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                                <section aria-label="Unternehmen – Arbeiten">
+                                    <h2 class="mega-nav__section-title">
+                                        Arbeiten
+                                    </h2>
+                                    <ul class="mega-nav__links">
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Jobs</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Presse</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                class="mega-nav__link"
+                                                href="#"
+                                                >Partner</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </section>
+                            </div>
+                        </section>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <script>
+            ;(() => {
+                const nav = document.getElementById("mega-flyout-nav")
+                if (!nav) return
+
+                const items = Array.from(
+                    nav.querySelectorAll(".mega-nav__item")
+                )
+                const toggles = items.map((li) =>
+                    li.querySelector(".mega-nav__toggle")
+                )
+
+                function isOpen(li) {
+                    return li.classList.contains("is-open")
+                }
+
+                function setOpen(li, open) {
+                    const btn = li.querySelector(".mega-nav__toggle")
+                    if (!btn) return
+                    li.classList.toggle("is-open", open)
+                    btn.setAttribute("aria-expanded", open ? "true" : "false")
+                }
+
+                function closeAll(exceptLi = null) {
+                    for (const li of items) {
+                        if (exceptLi && li === exceptLi) continue
+                        setOpen(li, false)
+                    }
+                }
+
+                function openItem(li) {
+                    closeAll(li)
+                    setOpen(li, true)
+                }
+
+                function firstLinkIn(li) {
+                    return li.querySelector(".mega-nav__panel a")
+                }
+
+                function moveToggleFocus(currentIndex, delta) {
+                    const nextIndex =
+                        (currentIndex + delta + toggles.length) % toggles.length
+                    toggles[nextIndex]?.focus()
+                }
+
+                // Click to toggle
+                for (const li of items) {
+                    const btn = li.querySelector(".mega-nav__toggle")
+                    const panel = li.querySelector(".mega-nav__panel")
+
+                    btn?.addEventListener("click", () => {
+                        const next = !isOpen(li)
+                        closeAll(li)
+                        setOpen(li, next)
+                    })
+
+                    // Keyboard on top level toggles
+                    btn?.addEventListener("keydown", (e) => {
+                        const idx = toggles.indexOf(btn)
+                        if (e.key === "ArrowRight") {
+                            e.preventDefault()
+                            moveToggleFocus(idx, 1)
+                            return
+                        }
+                        if (e.key === "ArrowLeft") {
+                            e.preventDefault()
+                            moveToggleFocus(idx, -1)
+                            return
+                        }
+                        if (e.key === "Home") {
+                            e.preventDefault()
+                            toggles[0]?.focus()
+                            return
+                        }
+                        if (e.key === "End") {
+                            e.preventDefault()
+                            toggles[toggles.length - 1]?.focus()
+                            return
+                        }
+                        if (e.key === "Escape") {
+                            e.preventDefault()
+                            setOpen(li, false)
+                            btn.focus()
+                            return
+                        }
+                        if (e.key === "ArrowDown") {
+                            e.preventDefault()
+                            openItem(li)
+                            firstLinkIn(li)?.focus()
+                            return
+                        }
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault()
+                            const next = !isOpen(li)
+                            closeAll(li)
+                            setOpen(li, next)
+                        }
+                    })
+
+                    // Escape inside panel
+                    panel?.addEventListener("keydown", (e) => {
+                        if (e.key === "Escape") {
+                            e.preventDefault()
+                            setOpen(li, false)
+                            btn?.focus()
+                        }
+                    })
+
+                    // Optional hover for pointer users (doesn't interfere with keyboard)
+                    let hoverCloseTimer = null
+                    li.addEventListener("pointerenter", () => {
+                        if (hoverCloseTimer) {
+                            clearTimeout(hoverCloseTimer)
+                            hoverCloseTimer = null
+                        }
+                        openItem(li)
+                    })
+                    li.addEventListener("pointerleave", () => {
+                        // Don't auto-close while focus is inside
+                        hoverCloseTimer = setTimeout(() => {
+                            if (!li.contains(document.activeElement))
+                                setOpen(li, false)
+                        }, 150)
+                    })
+                }
+
+                // Close on click outside
+                document.addEventListener("pointerdown", (e) => {
+                    if (!nav.contains(e.target)) closeAll()
+                })
+
+                // Close when focus moves outside the nav
+                document.addEventListener(
+                    "focusin",
+                    (e) => {
+                        if (!nav.contains(e.target)) closeAll()
+                    },
+                    true
+                )
+            })()
+        </script>
+
+        <main>
+            <div
+                id="main"
+                tabindex="-1"
+            ></div>
+            <a href="../">zurück zu den Erläuterungen</a>
+            <h1>Mega-Flyout Navigation, barrierefrei</h1>
+            <p>
+                Ein Beispiel für eine barrierefreie Mega-Flyout Navigation. Die
+                Umsetzung orientiert sich an den
+                <a
+                    href="https://www.w3.org/WAI/ARIA/apg/"
+                    target="_blank"
+                    rel="noopener"
+                    >WAI-ARIA Authoring Practices (APG)</a
+                >
+                – hier konkret am
+                <a
+                    href="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/"
+                    target="_blank"
+                    rel="noopener"
+                    >Disclosure-Pattern</a
+                >
+                (Auf-/Zuklappen per Button) statt an der ARIA-
+                <code>menu</code>-Rolle.
+            </p>
+            <h2>Semantische Struktur</h2>
+            <p>
+                Die Navigation ist semantisch korrekt aufgebaut, mit einem
+                <code>&lt;nav&gt;</code> Element, das die Hauptnavigation
+                enthält. Die Untermenüs sind in <code>&lt;ul&gt;</code> Listen
+                organisiert, was die Struktur klar und verständlich macht.
+            </p>
+            <h2>Keyboard-Navigation</h2>
+            <p>
+                Die Navigation ist vollständig mit der Tastatur bedienbar.
+                Benutzer erreichen die Hauptpunkte mit <strong>Tab</strong>. Mit
+                <strong>Enter</strong> oder <strong>Leertaste</strong>
+                wird das Flyout geöffnet bzw. geschlossen.
+                <strong>Pfeil links/rechts</strong> wechselt zwischen den
+                Hauptpunkten, <strong>Pfeil runter</strong> springt in den
+                ersten Link des geöffneten Flyouts,
+                <strong>Esc</strong> schließt. Das entspricht WCAG
+                <a
+                    href="https://www.w3.org/TR/WCAG22/#keyboard"
+                    target="_blank"
+                    rel="noopener"
+                    >2.1.1 Keyboard</a
+                >
+                und unterstützt eine sinnvolle Fokusreihenfolge (WCAG
+                <a
+                    href="https://www.w3.org/TR/WCAG22/#focus-order"
+                    target="_blank"
+                    rel="noopener"
+                    >2.4.3 Focus Order</a
+                >). Der Artikel
+                <a
+                    href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/"
+                    >Keyboard Interface Practices</a
+                >
+                bietet weitere Informationen, wie ein gutes Keyboard-Verhalten
+                umgesetzt werden kann.
+            </p>
+
+            <h2>Menubar vs. Disclosure: Pfeiltasten im Untermenü?</h2>
+            <p>
+                Ob Pfeiltasten innerhalb des geöffneten Flyouts die einzelnen
+                Links „durchschalten“ sollten, hängt stark davon ab,
+                <em>welches Interaktionsmuster</em> du umsetzt:
+            </p>
+            <p>
+                <strong>Disclosure-Navigation (Website-typisch)</strong>: Das
+                Panel ist inhaltlich ein Bereich mit normalen Links. Die
+                Standard-Erwartung ist: <strong>Tab</strong> /
+                <strong>Shift+Tab</strong>
+                bewegen den Fokus von Link zu Link; Pfeiltasten sind fürs
+                <em>Scrollen</em> da. Deshalb ist es meist
+                <em>nicht sinnvoll</em>, Pfeiltasten im Panel umzubelegen – das
+                kann inkonsistent wirken und Nutzer:innen überraschen (u. a.
+                WCAG
+                <a
+                    href="https://www.w3.org/TR/WCAG22/#consistent-navigation"
+                    target="_blank"
+                    rel="noopener"
+                    >3.2.3 Consistent Navigation</a
+                >).
+            </p>
+            <p>
+                <strong>Menubar/Menu (anwendungsartig)</strong>: Das ist ein
+                echtes „Anwendungsmenü“, bei dem Pfeiltasten typischerweise die
+                Navigation <em>innerhalb</em> der Menüeinträge steuern
+                (Roving-Tabindex, definierte Arrow-Key-Regeln,
+                <strong>Tab</strong>
+                verlässt das Menü). Wenn du dieses Verhalten willst, solltest du
+                es konsequent nach dem WAI-ARIA APG
+                <a
+                    href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/"
+                    target="_blank"
+                    rel="noopener"
+                    >Menubar-Pattern</a
+                >
+                umsetzen – inklusive passender Rollen, States und Keyboard-
+                Regeln.
+            </p>
+            <p>
+                Dieses Beispiel bleibt bewusst beim
+                <a
+                    href="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/"
+                    target="_blank"
+                    rel="noopener"
+                    >Disclosure-Pattern</a
+                >: Pfeiltasten sind nur für komfortable Sprünge auf der
+                <em>Top-Level</em>-Ebene (links/rechts) und für den Sprung in
+                den ersten Link (runter) vorgesehen – im Flyout selbst bleibt
+                die Standard-Tab-Navigation erhalten.
+            </p>
+            <h2>ARIA-Rollen und -Attribute</h2>
+            <p>
+                Für Website-Navigation sind ARIA-<code>menu</code>/<code
+                    >menuitem</code
+                >
+                meist <em>nicht</em> passend (sie sind eher für Anwendungs-Menüs
+                gedacht). Stattdessen nutzt dieses Beispiel einen echten
+                <code>&lt;button&gt;</code> als Trigger mit
+                <code>aria-expanded</code> und <code>aria-controls</code>. Das
+                Flyout selbst ist eine semantische
+                <code>&lt;section&gt;</code> mit <code>aria-labelledby</code>,
+                damit Screenreader die Beziehung klar ankündigen können. Das
+                unterstützt WCAG
+                <a
+                    href="https://www.w3.org/TR/WCAG22/#name-role-value"
+                    target="_blank"
+                    rel="noopener"
+                    >4.1.2 Name, Role, Value</a
+                >
+                und WCAG
+                <a
+                    href="https://www.w3.org/TR/WCAG22/#info-and-relationships"
+                    target="_blank"
+                    rel="noopener"
+                    >1.3.1 Info and Relationships</a
+                >.
+            </p>
+            <h2>Visuelles Design</h2>
+            <p>
+                Das visuelle Design der Navigation ist klar und kontrastreich,
+                um die Lesbarkeit zu verbessern. Die Menüpunkte haben
+                ausreichend großen Text und genügend Abstand, um die Navigation
+                auch für Benutzer mit motorischen Einschränkungen zu
+                erleichtern.
+            </p>
+            <p>
+                Die Fokusanzeige ist deutlich sichtbar, sodass Benutzer leicht
+                erkennen können, welcher Menüpunkt gerade aktiv ist. Der
+                Fokusrahmen blendet dabei weich ein/aus (Transition über
+                <code>box-shadow</code>), damit Veränderungen leichter
+                wahrgenommen werden. Die Dauer ist über
+                <code>--focus-ring-duration</code> konfigurierbar; bei
+                <code>prefers-reduced-motion: reduce</code> wird sie automatisch
+                auf <code>0ms</code> gesetzt. (WCAG
+                <a
+                    href="https://www.w3.org/TR/WCAG22/#focus-visible"
+                    target="_blank"
+                    rel="noopener"
+                    >2.4.7 Focus Visible</a
+                >)
+            </p>
+
+            <h2>Hover/Fokus Verhalten</h2>
+            <p>
+                Das Flyout bleibt sichtbar, solange es per Fokus oder Pointer
+                genutzt wird und kann jederzeit mit
+                <strong>Esc</strong> geschlossen werden. Das unterstützt WCAG
+                <a
+                    href="https://www.w3.org/TR/WCAG22/#content-on-hover-or-focus"
+                    target="_blank"
+                    rel="noopener"
+                    >1.4.13 Content on Hover or Focus</a
+                >.
+            </p>
+
+            <p>
+                Die Hauptmenüpunkte haben zusätzlich unterstützende Icons aus
+                <a
+                    href="https://fonts.google.com/icons"
+                    target="_blank"
+                    rel="noopener"
+                    >Material Icons</a
+                >
+                (hier: Material Symbols Rounded). Die Icons sind rein dekorativ:
+                Sie ergänzen den Text, ersetzen ihn aber nicht und werden per
+                <code>aria-hidden="true"</code> aus dem Accessibility Tree
+                ausgeschlossen. Dadurch bleibt der zugängliche Name der Buttons
+                der sichtbare Text und das Interface erfüllt WCAG
+                <a
+                    href="https://www.w3.org/TR/WCAG22/#non-text-content"
+                    target="_blank"
+                    rel="noopener"
+                    >1.1.1 Non-text Content</a
+                >.
+            </p>
+        </main>
+    </body>
+</html>

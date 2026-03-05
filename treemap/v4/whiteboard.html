@@ -1,0 +1,3513 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+        <title>Whiteboard – Treemap v4</title>
+
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+        <link
+            rel="stylesheet"
+            href="../../assets/css/style.css"
+        />
+        <link
+            rel="stylesheet"
+            href="../../assets/css/treemap.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+            rel="stylesheet"
+        />
+
+        <style>
+            html,
+            body {
+                height: 100%;
+                margin: 0;
+            }
+
+            body {
+                overflow: hidden;
+            }
+
+            #main-content:focus,
+            #canvas:focus {
+                outline: none;
+            }
+
+            :root {
+                --v4-connbar-h: 1.5rem;
+            }
+
+            .v4-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+                padding: 0.35rem 0.5rem;
+                border-radius: 0.375rem;
+                border: 1px solid currentColor;
+                background: transparent;
+                color: inherit;
+                cursor: pointer;
+                text-decoration: none;
+            }
+
+            .v4-btn:hover {
+                background: rgba(255, 255, 255, 0.12);
+            }
+
+            .v4-btn:active {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(1px);
+            }
+
+            .v4-btn:focus-visible {
+                outline: 2px solid rgba(255, 255, 255, 0.9);
+                outline-offset: 2px;
+            }
+
+            .v4-btn:focus {
+                outline: 2px solid rgba(255, 255, 255, 0.9);
+                outline-offset: 2px;
+            }
+
+            .v4-status {
+                font-size: inherit;
+                opacity: 0.95;
+            }
+
+            /* Connection bar (sticky, one-line) */
+            .v4-connbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 2000;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 0.35rem;
+                align-items: center;
+                justify-content: center;
+                height: var(--v4-connbar-h);
+                padding: 0 0.4rem;
+                background: rgba(0, 0, 0, 0.85);
+                color: white;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+                overflow: hidden;
+                box-sizing: border-box;
+                line-height: 1;
+                font-size: 0.85rem;
+            }
+
+            .v4-connbar__group {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                white-space: nowrap;
+                flex: 0 1 auto;
+                min-width: 0;
+            }
+
+            .v4-connbar__sep {
+                width: 1px;
+                height: 0.9rem;
+                background: rgba(255, 255, 255, 0.25);
+                flex: 0 0 auto;
+                opacity: 0.9;
+            }
+
+            .v4-connbar__label {
+                font-size: inherit;
+                opacity: 0.95;
+            }
+
+            .v4-connbar input {
+                height: var(--v4-connbar-h);
+                padding: 0 0.35rem;
+                border-radius: 0.3rem;
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                background: rgba(255, 255, 255, 0.08);
+                color: inherit;
+                font: inherit;
+                flex: 1 1 auto;
+                min-width: 6ch;
+                width: clamp(8ch, 12vw, 18ch);
+            }
+
+            .v4-connbar__group[data-group="ws"] input {
+                width: clamp(14ch, 22vw, 30ch);
+            }
+
+            .v4-connbar__dot {
+                width: 0.6rem;
+                height: 0.6rem;
+                border-radius: 999px;
+                border: 1px solid rgba(255, 255, 255, 0.35);
+                background: rgba(255, 255, 255, 0.15);
+                box-sizing: border-box;
+            }
+            .v4-connbar__dot[data-state="connected"] {
+                background: rgba(255, 255, 255, 0.9);
+            }
+            .v4-connbar__dot[data-state="connecting"] {
+                background: rgba(255, 255, 255, 0.5);
+            }
+
+            .v4-connbar__icon-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: var(--v4-connbar-h);
+                height: var(--v4-connbar-h);
+                border-radius: 0.3rem;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.08);
+                color: inherit;
+                cursor: pointer;
+            }
+
+            .v4-connbar__icon-btn:focus,
+            .v4-connbar__icon-btn:focus-visible {
+                outline: 2px solid rgba(255, 255, 255, 0.9);
+                outline-offset: 2px;
+            }
+
+            .v4-connbar .material-icons {
+                font-size: 1rem;
+                line-height: 1;
+            }
+
+            .v4-connbar .v4-btn {
+                height: var(--v4-connbar-h);
+                padding: 0 0.4rem;
+                border-radius: 0.3rem;
+                font: inherit;
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .v4-connbar__group[data-group="info"] .v4-status {
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .v4-connbar__group[data-group="info"] #status {
+                flex: 0 1 auto;
+            }
+
+            .v4-connbar__group[data-group="info"] #summary {
+                flex: 1 1 auto;
+            }
+
+            .v4-connbar__group[data-group="info"] #themes {
+                flex: 1 1 auto;
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .v4-connbar__group[data-size="compact"] .v4-connbar__label {
+                display: none;
+            }
+
+            .v4-connbar__group[data-size="compact"] input {
+                width: clamp(6ch, 10vw, 12ch);
+            }
+            .v4-connbar__group[data-size="compact"][data-group="ws"] input {
+                width: clamp(10ch, 16vw, 18ch);
+            }
+            .v4-connbar__group[data-size="compact"][data-group="info"]
+                #summary {
+                display: none;
+            }
+            .v4-connbar__group[data-size="compact"][data-group="info"] #themes {
+                display: none;
+            }
+
+            #wb-centerbar {
+                position: absolute;
+                left: 50%;
+                top: 12px;
+                transform: translateX(-50%);
+                z-index: 3;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                padding: 0.25rem 0.5rem;
+                border-radius: 0.375rem;
+                backdrop-filter: blur(2px);
+                max-width: min(92vw, 60rem);
+                box-sizing: border-box;
+            }
+
+            #wb-centerbar #themes {
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            #wb-toolbar {
+                position: absolute;
+                right: 12px;
+                top: 12px;
+                z-index: 3;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                padding: 0.25rem;
+                border-radius: 0.375rem;
+                backdrop-filter: blur(2px);
+                box-sizing: border-box;
+            }
+
+            #align-menu {
+                display: none;
+                align-items: center;
+                gap: 0.25rem;
+                flex: 0 0 auto;
+            }
+
+            #align-menu[data-visible="true"] {
+                display: inline-flex;
+            }
+
+            #wb-selection-box {
+                position: absolute;
+                border: 2px dashed rgba(255, 255, 255, 0.6);
+                background: rgba(255, 255, 255, 0.06);
+                pointer-events: none;
+                z-index: 10001;
+                display: none;
+            }
+
+            #wb-contextmenu {
+                position: fixed;
+                z-index: 5000;
+                min-width: 12rem;
+                background: rgba(0, 0, 0, 0.92);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                border-radius: 0.375rem;
+                padding: 0.25rem;
+                display: none;
+                box-sizing: border-box;
+            }
+
+            #wb-contextmenu button {
+                width: 100%;
+                text-align: left;
+                background: transparent;
+                color: inherit;
+                border: none;
+                padding: 0.4rem 0.5rem;
+                border-radius: 0.25rem;
+                cursor: pointer;
+                font: inherit;
+            }
+
+            #wb-contextmenu button:hover,
+            #wb-contextmenu button:focus-visible {
+                background: rgba(255, 255, 255, 0.12);
+                outline: none;
+            }
+
+            #wb-contextmenu button:focus {
+                background: rgba(255, 255, 255, 0.12);
+                outline: none;
+            }
+
+            .board-item.is-selected .card,
+            .board-item.is-selected .wb-text-frame {
+                outline: none;
+            }
+
+            .board-item.is-selected .wb-text-frame {
+                position: relative;
+            }
+
+            .board-item.is-selected .card::before,
+            .board-item.is-selected .wb-text-frame::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                border-radius: inherit;
+                background: rgba(255, 255, 255, 0.25);
+                opacity: 0.75;
+                pointer-events: none;
+            }
+
+            #canvas .card:focus,
+            #canvas .card:focus-visible {
+                outline: none;
+            }
+
+            #wb-selection-overlays {
+                position: absolute;
+                inset: 0;
+                z-index: 10000;
+                pointer-events: none;
+            }
+
+            .wb-selection-overlay {
+                position: absolute;
+                border: 3px solid var(--primary-focus-color);
+                border-radius: 0.5rem;
+                box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+                box-sizing: border-box;
+                pointer-events: none;
+                will-change: transform, width, height;
+            }
+
+            .board-item.is-locked {
+                opacity: 0.55;
+            }
+
+            .board-item.is-locked textarea {
+                pointer-events: none;
+            }
+            #canvas {
+                position: fixed;
+                inset: 0;
+                top: var(--v4-connbar-h);
+                overflow: hidden;
+            }
+
+            #wb-items {
+                position: absolute;
+                inset: 0;
+                z-index: 2;
+                transform-origin: 0 0;
+                will-change: transform;
+            }
+
+            #wb-connections {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                display: block;
+                z-index: 0;
+                pointer-events: none;
+                overflow: visible;
+            }
+
+            #wb-connections line {
+                stroke: rgba(255, 255, 255, 0.5);
+                stroke-width: 2;
+                vector-effect: non-scaling-stroke;
+            }
+
+            #zoom-label {
+                font-size: 0.85rem;
+                opacity: 0.95;
+                min-width: 5ch;
+                text-align: right;
+            }
+            #board-title {
+                position: absolute;
+                left: 12px;
+                top: 12px;
+                pointer-events: none;
+                z-index: 6;
+                padding: 0.25rem 0.5rem;
+                border-radius: 0.375rem;
+                backdrop-filter: blur(2px);
+                background-color: var(--surface);
+                color: var(--text-primary, white);
+                border: 2px solid rgba(255, 255, 255, 0.5);
+            }
+            .board-item {
+                position: absolute;
+                width: 180px;
+                touch-action: none;
+                user-select: none;
+                z-index: 2;
+            }
+
+            .board-item.board-text {
+                width: 320px;
+                touch-action: auto;
+                user-select: text;
+            }
+
+            .board-item.board-text * {
+                user-select: text;
+            }
+
+            .board-item .card {
+                cursor: grab;
+                hyphens: auto;
+                -webkit-hyphens: auto;
+                overflow-wrap: anywhere;
+                word-break: normal;
+            }
+            .board-item.dragging .card {
+                cursor: grabbing;
+                opacity: 0.9;
+            }
+
+            .wb-theme-card {
+                gap: 0.5rem;
+                padding: 0.75rem;
+                border: 2px solid rgba(255, 255, 255, 0.5);
+                background-color: var(--surface);
+                color: var(--text-primary, white);
+                position: relative;
+            }
+
+            .wb-theme-card-title {
+                font-weight: 700;
+                font-size: 1.45rem;
+                line-height: 1.2;
+                word-break: break-word;
+                text-align: center;
+                position: absolute;
+                inset: 0.9rem 0.75rem 1.65rem 0.75rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .wb-theme-toggle {
+                position: absolute;
+                top: 0.35rem;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 0.15rem 0.35rem;
+                border: none;
+                background: transparent;
+            }
+
+            .wb-theme-toggle .material-icons {
+                font-size: 1.25rem;
+                line-height: 1;
+            }
+
+            .wb-info-btn {
+                position: absolute;
+                top: 0.35rem;
+                right: 0.35rem;
+                width: 1.85rem;
+                height: 1.85rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                border-radius: 999px;
+                border: none;
+                background: transparent;
+                color: inherit;
+                cursor: pointer;
+            }
+
+            .wb-info-btn:hover {
+                background: rgba(255, 255, 255, 0.16);
+            }
+
+            .wb-info-btn:active {
+                background: rgba(255, 255, 255, 0.22);
+                transform: translateY(1px);
+            }
+
+            .wb-info-btn:focus-visible {
+                outline: 2px solid rgba(255, 255, 255, 0.9);
+                outline-offset: 2px;
+            }
+
+            .wb-info-btn .material-icons,
+            .wb-info-btn .material-icons-outlined {
+                font-size: 1.1rem;
+                line-height: 1;
+            }
+
+            .wb-theme-card [data-role="theme-hint"] {
+                position: absolute;
+                left: 0.75rem;
+                right: 0.75rem;
+                bottom: 0.4rem;
+                text-align: center;
+                font-size: 0.9rem;
+            }
+
+            .wb-text-frame {
+                border: 2px solid rgba(255, 255, 255, 0.5);
+                background-color: var(--surface);
+                color: var(--text-primary, white);
+                border-radius: 0.375rem;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            .wb-text-frame textarea {
+                width: 100%;
+                min-height: 7rem;
+                resize: vertical;
+                overflow-y: hidden;
+                border: none;
+                background-color: var(--surface);
+                color: inherit;
+                font: inherit;
+                border-radius: 0.3rem;
+                padding: 0.5rem;
+                box-sizing: border-box;
+            }
+
+            .board-item.board-text .wb-text-frame {
+                cursor: grab;
+            }
+
+            .board-item.board-text textarea {
+                cursor: text;
+            }
+
+            .board-item.board-text.dragging .wb-text-frame,
+            .board-item.board-text.dragging textarea {
+                cursor: grabbing;
+            }
+
+            .wb-text-frame textarea:focus-visible {
+                outline: 2px solid rgba(255, 255, 255, 0.6);
+                outline-offset: 2px;
+            }
+
+            .wb-text-frame textarea:focus {
+                outline: 2px solid rgba(255, 255, 255, 0.6);
+                outline-offset: 2px;
+            }
+
+            /* Match Treemap responsive card sizing */
+            @media (max-width: 768px) {
+                .board-item {
+                    width: 150px;
+                }
+
+                .board-item.board-text {
+                    width: min(92vw, 320px);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <a
+            href="#main-content"
+            class="skip-link"
+            >Zum Whiteboard springen</a
+        >
+
+        <header
+            id="v4-connbar"
+            class="v4-connbar"
+            aria-label="Verbindung"
+        >
+            <div
+                class="v4-connbar__group"
+                data-group="status"
+                data-size="full"
+            >
+                <span
+                    id="conn-status-dot"
+                    class="v4-connbar__dot"
+                    data-state="disconnected"
+                    aria-hidden="true"
+                ></span>
+                <span
+                    id="conn-status-text"
+                    class="v4-connbar__label"
+                    >Getrennt</span
+                >
+            </div>
+
+            <span
+                class="v4-connbar__sep"
+                aria-hidden="true"
+            ></span>
+
+            <div
+                class="v4-connbar__group"
+                data-group="ws"
+                data-size="compact"
+            >
+                <label
+                    class="v4-connbar__label"
+                    for="ws-url"
+                    >WS</label
+                >
+                <input
+                    id="ws-url"
+                    type="url"
+                    placeholder="wss://example.org/services/ws"
+                />
+            </div>
+
+            <span
+                class="v4-connbar__sep"
+                aria-hidden="true"
+            ></span>
+
+            <div
+                class="v4-connbar__group"
+                data-group="session"
+                data-size="compact"
+            >
+                <label
+                    class="v4-connbar__label"
+                    for="session-id"
+                    >Session</label
+                >
+                <input
+                    id="session-id"
+                    type="text"
+                    placeholder="team-1"
+                />
+            </div>
+
+            <span
+                class="v4-connbar__sep"
+                aria-hidden="true"
+            ></span>
+
+            <div
+                class="v4-connbar__group"
+                data-group="user"
+                data-size="compact"
+            >
+                <label
+                    class="v4-connbar__label"
+                    for="username"
+                    >Name</label
+                >
+                <input
+                    id="username"
+                    type="text"
+                    placeholder="z.B. Michael"
+                />
+            </div>
+
+            <span
+                class="v4-connbar__sep"
+                aria-hidden="true"
+            ></span>
+
+            <div
+                class="v4-connbar__group"
+                data-group="actions"
+                data-size="full"
+            >
+                <button
+                    id="connect"
+                    class="v4-btn"
+                    type="button"
+                >
+                    Verbinden
+                </button>
+                <button
+                    id="disconnect"
+                    class="v4-btn"
+                    type="button"
+                    hidden
+                >
+                    Trennen
+                </button>
+            </div>
+
+            <span
+                class="v4-connbar__sep"
+                aria-hidden="true"
+            ></span>
+
+            <div
+                class="v4-connbar__group"
+                data-group="info"
+                data-size="full"
+            >
+                <span
+                    class="v4-status"
+                    id="status"
+                    aria-live="polite"
+                ></span>
+            </div>
+        </header>
+
+        <main
+            id="main-content"
+            tabindex="-1"
+        >
+            <div
+                id="canvas"
+                aria-label="Whiteboard Canvas"
+            >
+                <div
+                    id="wb-centerbar"
+                    aria-label="Themen und Navigation"
+                >
+                    <span
+                        class="v4-status"
+                        id="themes"
+                        aria-live="polite"
+                    ></span>
+                    <a
+                        class="v4-btn"
+                        href="index.html"
+                        >Zur Treemap</a
+                    >
+                </div>
+                <div id="board-title"></div>
+
+                <div
+                    id="wb-toolbar"
+                    aria-label="Werkzeuge"
+                >
+                    <button
+                        id="add-text-frame"
+                        class="v4-btn"
+                        type="button"
+                    >
+                        Text
+                    </button>
+
+                    <span
+                        class="v4-connbar__sep"
+                        aria-hidden="true"
+                    ></span>
+
+                    <button
+                        id="zoom-out"
+                        class="v4-btn"
+                        type="button"
+                        aria-label="Inhalt verkleinern"
+                        title="Zoom -"
+                    >
+                        −
+                    </button>
+                    <button
+                        id="zoom-reset"
+                        class="v4-btn"
+                        type="button"
+                        aria-label="Zoom zurücksetzen"
+                        title="Zoom 100%"
+                    >
+                        100%
+                    </button>
+                    <button
+                        id="zoom-in"
+                        class="v4-btn"
+                        type="button"
+                        aria-label="Inhalt vergrößern"
+                        title="Zoom +"
+                    >
+                        +
+                    </button>
+                    <span
+                        id="zoom-label"
+                        class="v4-status"
+                        aria-hidden="true"
+                    ></span>
+
+                    <span
+                        class="v4-connbar__sep"
+                        aria-hidden="true"
+                    ></span>
+
+                    <div
+                        id="align-menu"
+                        aria-label="Ausrichten"
+                    >
+                        <button
+                            class="v4-btn"
+                            type="button"
+                            id="align-top"
+                        >
+                            Oben
+                        </button>
+                        <button
+                            class="v4-btn"
+                            type="button"
+                            id="align-middle-y"
+                        >
+                            Mitte
+                        </button>
+                        <button
+                            class="v4-btn"
+                            type="button"
+                            id="align-bottom"
+                        >
+                            Unten
+                        </button>
+                        <button
+                            class="v4-btn"
+                            type="button"
+                            id="align-left"
+                        >
+                            Links
+                        </button>
+                        <button
+                            class="v4-btn"
+                            type="button"
+                            id="align-middle-x"
+                        >
+                            Mitte
+                        </button>
+                        <button
+                            class="v4-btn"
+                            type="button"
+                            id="align-right"
+                        >
+                            Rechts
+                        </button>
+                        <button
+                            class="v4-btn"
+                            type="button"
+                            id="distribute-x"
+                        >
+                            Verteilen
+                        </button>
+                        <button
+                            class="v4-btn"
+                            type="button"
+                            id="distribute-y"
+                        >
+                            Verteilen
+                        </button>
+                    </div>
+                </div>
+
+                <svg
+                    id="wb-connections"
+                    aria-hidden="true"
+                    focusable="false"
+                ></svg>
+                <div id="wb-items"></div>
+                <div
+                    id="wb-selection-overlays"
+                    aria-hidden="true"
+                ></div>
+                <div id="wb-selection-box"></div>
+            </div>
+        </main>
+
+        <dialog
+            id="sectionModal"
+            class="modal"
+            aria-labelledby="modalTitle"
+        >
+            <div class="modal-content">
+                <h2
+                    id="modalTitle"
+                    class="visually-hidden"
+                >
+                    Details
+                </h2>
+                <button
+                    class="close-button"
+                    aria-label="Schließen"
+                >
+                    &times;
+                </button>
+                <div id="modalContent"></div>
+            </div>
+        </dialog>
+
+        <div
+            id="wb-contextmenu"
+            role="menu"
+            aria-label="Kontextmenü"
+        >
+            <button
+                type="button"
+                role="menuitem"
+                data-action="bring-front"
+            >
+                Nach vorne
+            </button>
+            <button
+                type="button"
+                role="menuitem"
+                data-action="bring-forward"
+            >
+                Eins nach vorne
+            </button>
+            <button
+                type="button"
+                role="menuitem"
+                data-action="send-backward"
+            >
+                Eins nach hinten
+            </button>
+            <button
+                type="button"
+                role="menuitem"
+                data-action="send-back"
+            >
+                Nach hinten
+            </button>
+        </div>
+
+        <script type="module">
+            import {
+                WorkspaceSync,
+                getQueryParam,
+                guessDefaultWsUrl,
+                setQueryParams,
+            } from "./assets/js/workspace-sync.js"
+            import { loadPruefschritte } from "./assets/js/criteria-loader.js"
+
+            const wsUrlEl = document.querySelector("#ws-url")
+            const sessionEl = document.querySelector("#session-id")
+            const usernameEl = document.querySelector("#username")
+            const connectBtn = document.querySelector("#connect")
+            const disconnectBtn = document.querySelector("#disconnect")
+            const statusEl = document.querySelector("#status")
+            const canvasEl = document.querySelector("#canvas")
+            const themesEl = document.querySelector("#themes")
+            const boardTitleEl = document.querySelector("#board-title")
+            const addTextFrameBtn = document.querySelector("#add-text-frame")
+            const itemsLayerEl = document.querySelector("#wb-items")
+            const connectionsEl = document.querySelector("#wb-connections")
+            const selectionOverlaysEl = document.querySelector(
+                "#wb-selection-overlays"
+            )
+            const zoomOutBtn = document.querySelector("#zoom-out")
+            const zoomInBtn = document.querySelector("#zoom-in")
+            const zoomResetBtn = document.querySelector("#zoom-reset")
+            const zoomLabelEl = document.querySelector("#zoom-label")
+
+            const alignMenuEl = document.querySelector("#align-menu")
+            const alignTopBtn = document.querySelector("#align-top")
+            const alignMiddleYBtn = document.querySelector("#align-middle-y")
+            const alignBottomBtn = document.querySelector("#align-bottom")
+            const alignLeftBtn = document.querySelector("#align-left")
+            const alignMiddleXBtn = document.querySelector("#align-middle-x")
+            const alignRightBtn = document.querySelector("#align-right")
+            const distributeXBtn = document.querySelector("#distribute-x")
+            const distributeYBtn = document.querySelector("#distribute-y")
+
+            const selectionBoxEl = document.querySelector("#wb-selection-box")
+            const contextMenuEl = document.querySelector("#wb-contextmenu")
+
+            const connbarEl = document.querySelector("#v4-connbar")
+            const connStatusDotEl = document.querySelector("#conn-status-dot")
+            const connStatusTextEl = document.querySelector("#conn-status-text")
+
+            const STORAGE_PREFIX = "a11y-workshop:treemap:v4"
+
+            function safeStorageGet(key) {
+                try {
+                    return globalThis.localStorage.getItem(key)
+                } catch {
+                    return null
+                }
+            }
+
+            function safeSessionGet(key) {
+                try {
+                    return globalThis.sessionStorage.getItem(key)
+                } catch {
+                    return null
+                }
+            }
+
+            function safeStorageSet(key, value) {
+                try {
+                    globalThis.localStorage.setItem(key, value)
+                } catch {
+                    // ignore
+                }
+            }
+
+            function safeSessionSet(key, value) {
+                try {
+                    globalThis.sessionStorage.setItem(key, value)
+                } catch {
+                    // ignore
+                }
+            }
+
+            function safeStorageGetJson(key) {
+                const text = safeStorageGet(key)
+                if (!text) return null
+                try {
+                    return JSON.parse(text)
+                } catch {
+                    return null
+                }
+            }
+
+            function safeStorageSetJson(key, value) {
+                try {
+                    safeStorageSet(key, JSON.stringify(value))
+                } catch {
+                    // ignore
+                }
+            }
+
+            function debounce(fn, waitMs) {
+                let timeout = null
+                return (...args) => {
+                    if (timeout) globalThis.clearTimeout(timeout)
+                    timeout = globalThis.setTimeout(() => fn(...args), waitMs)
+                }
+            }
+
+            function sessionScopedKey(suffix, sessionId = sessionEl.value) {
+                const sid = String(sessionId || "default").trim() || "default"
+                return `${STORAGE_PREFIX}:session:${sid}:${suffix}`
+            }
+
+            function initialValue(paramName, storageKey, fallback) {
+                const fromQuery = getQueryParam(paramName, "")
+                if (String(fromQuery || "").trim() !== "") return fromQuery
+                const fromStorage = safeStorageGet(storageKey)
+                if (String(fromStorage || "").trim() !== "") return fromStorage
+                return fallback
+            }
+
+            function workspaceStateHasContent(state) {
+                if (!state || typeof state !== "object") return false
+                const collections = state.collections || {}
+                const hasCollections = Object.keys(collections).some((k) => {
+                    const arr = collections[k]
+                    return Array.isArray(arr) && arr.length
+                })
+                const items = state.whiteboard?.items || {}
+                const hasWhiteboard = Object.keys(items).length > 0
+                return Boolean(hasCollections || hasWhiteboard)
+            }
+
+            let lastNotifyAt = 0
+            let lastNotifyText = ""
+
+            function notify(text) {
+                if (!statusEl) return
+                const next = String(text || "").trim()
+                statusEl.textContent = next
+                lastNotifyText = next
+                lastNotifyAt = Date.now()
+            }
+
+            function notifySaved() {
+                const now = Date.now()
+                if (
+                    lastNotifyText &&
+                    lastNotifyText !== "Gespeichert" &&
+                    now - lastNotifyAt < 1500
+                ) {
+                    return
+                }
+                notify("Gespeichert")
+            }
+
+            function setConnectionStatus({ connected, message }) {
+                const msg = String(message || "").trim()
+                if (connStatusTextEl) {
+                    connStatusTextEl.textContent =
+                        msg || (connected ? "Verbunden" : "Getrennt")
+                }
+                if (connectBtn) {
+                    connectBtn.hidden = !!connected
+                    connectBtn.disabled = !!connected
+                }
+                if (disconnectBtn) {
+                    disconnectBtn.hidden = !connected
+                    disconnectBtn.disabled = !connected
+                }
+                if (connStatusDotEl) {
+                    if (connected) {
+                        connStatusDotEl.dataset.state = "connected"
+                    } else if (msg.toLowerCase().includes("verbinde")) {
+                        connStatusDotEl.dataset.state = "connecting"
+                    } else {
+                        connStatusDotEl.dataset.state = "disconnected"
+                    }
+                }
+            }
+
+            let lastPersistedState = null
+            let persistIdleHandle = 0
+            let persistTimeout = 0
+            let persistSeq = 0
+
+            function persistWorkspaceStateNow(state) {
+                lastPersistedState = state
+                safeStorageSetJson(sessionScopedKey("workspaceState"), state)
+                notifySaved()
+            }
+
+            function scheduleWorkspacePersist(state, { source } = {}) {
+                const s = source === "state" ? "state" : "op"
+                persistSeq += 1
+                const mySeq = persistSeq
+
+                // For full snapshots, persist quickly.
+                if (s === "state") {
+                    if (persistTimeout) globalThis.clearTimeout(persistTimeout)
+                    persistTimeout = globalThis.setTimeout(() => {
+                        if (mySeq !== persistSeq) return
+                        persistTimeout = 0
+                        persistWorkspaceStateNow(state)
+                    }, 150)
+                    return
+                }
+
+                // For ops (high frequency), persist only after the UI is idle.
+                if (persistTimeout) globalThis.clearTimeout(persistTimeout)
+                persistTimeout = globalThis.setTimeout(() => {
+                    persistTimeout = 0
+                    if (mySeq !== persistSeq) return
+                    if (isTypingInTextFrame() || isTypingGracePeriod()) {
+                        scheduleWorkspacePersist(state, { source: "op" })
+                        return
+                    }
+                    if (persistIdleHandle) return
+                    const run = () => {
+                        persistIdleHandle = 0
+                        if (mySeq !== persistSeq) return
+                        persistWorkspaceStateNow(state)
+                    }
+                    if (typeof globalThis.requestIdleCallback === "function") {
+                        persistIdleHandle = globalThis.requestIdleCallback(
+                            run,
+                            {
+                                timeout: 2000,
+                            }
+                        )
+                    } else {
+                        persistIdleHandle = globalThis.setTimeout(run, 0)
+                    }
+                }, 1200)
+            }
+
+            const TAB_CLIENT_ID_KEY = `${STORAGE_PREFIX}:clientId:tab`
+            const persistedClientId = safeSessionGet(TAB_CLIENT_ID_KEY)
+            const generatedClientId =
+                globalThis.crypto &&
+                typeof globalThis.crypto.randomUUID === "function"
+                    ? globalThis.crypto.randomUUID()
+                    : String(Date.now()) +
+                      "-" +
+                      Math.random().toString(16).slice(2)
+            const clientId = persistedClientId || generatedClientId
+            safeSessionSet(TAB_CLIENT_ID_KEY, clientId)
+
+            {
+                const defaultWsUrl = guessDefaultWsUrl()
+                const initialWsUrl = initialValue(
+                    "ws",
+                    `${STORAGE_PREFIX}:wsUrl`,
+                    defaultWsUrl
+                )
+                const pageHost = globalThis.location?.hostname || ""
+                const isLocalHost =
+                    pageHost === "localhost" || pageHost === "127.0.0.1"
+                wsUrlEl.value =
+                    !isLocalHost && /wss?:\/\/localhost\b/i.test(initialWsUrl)
+                        ? defaultWsUrl
+                        : initialWsUrl
+            }
+            sessionEl.value = initialValue(
+                "session",
+                `${STORAGE_PREFIX}:sessionId`,
+                "default"
+            )
+            usernameEl.value = initialValue(
+                "name",
+                `${STORAGE_PREFIX}:username`,
+                ""
+            )
+
+            safeStorageSet(`${STORAGE_PREFIX}:wsUrl`, wsUrlEl.value)
+            safeStorageSet(`${STORAGE_PREFIX}:sessionId`, sessionEl.value)
+            safeStorageSet(`${STORAGE_PREFIX}:username`, usernameEl.value)
+
+            let criteriaById = new Map()
+
+            function closeDetailsModal() {
+                const modal = document.getElementById("sectionModal")
+                if (!modal) return
+
+                if (typeof modal.close === "function") {
+                    try {
+                        modal.close()
+                        return
+                    } catch {
+                        // ignore
+                    }
+                }
+
+                modal.removeAttribute("open")
+            }
+
+            async function openDetailsByCriteriaId(criteriaId) {
+                const id = String(criteriaId || "").trim()
+                if (!id) return
+
+                const modal = document.getElementById("sectionModal")
+                const modalContent = document.getElementById("modalContent")
+                const modalTitle = document.getElementById("modalTitle")
+                if (!modal || !modalContent) return
+
+                const meta = criteriaById.get(id)
+                if (modalTitle) {
+                    modalTitle.textContent = meta?.title
+                        ? `Details: ${meta.title}`
+                        : "Details"
+                }
+
+                modalContent.innerHTML = "<p>Lade Details …</p>"
+
+                if (typeof modal.showModal === "function") {
+                    modal.showModal()
+                } else {
+                    modal.setAttribute("open", "")
+                }
+
+                try {
+                    const response = await fetch(
+                        `../../assets/data/docs/${id}.md`
+                    )
+                    const markdown = await response.text()
+                    // marked wird per Script-Tag geladen
+                    modalContent.innerHTML = globalThis.marked
+                        ? globalThis.marked.parse(markdown)
+                        : markdown
+                } catch (err) {
+                    console.error(err)
+                    modalContent.innerHTML =
+                        "<p>Fehler beim Laden der Details.</p>"
+                }
+            }
+
+            let latestConnectionPairs = []
+            let rafConnectionsHandle = 0
+
+            const savedWorkspaceState = safeStorageGetJson(
+                sessionScopedKey("workspaceState")
+            )
+            const localSeedState = workspaceStateHasContent(savedWorkspaceState)
+                ? savedWorkspaceState
+                : null
+
+            let isConnected = false
+            let didInitialSeedCheck = false
+
+            let knownUsers = new Map()
+            let didInitUsers = false
+            let lastTotalCollected = 0
+
+            function totalCollected(state) {
+                const collections = (state && state.collections) || {}
+                let total = 0
+                for (const arr of Object.values(collections)) {
+                    if (Array.isArray(arr)) total += arr.length
+                }
+                return total
+            }
+
+            function nameForClientId(id) {
+                return knownUsers.get(String(id || "")) || ""
+            }
+
+            function findBoardItemNodeByKey(key) {
+                const k = String(key || "")
+                if (!k) return null
+                const root = itemsLayerEl || canvasEl
+                if (!root) return null
+                try {
+                    return root.querySelector(
+                        `.board-item[data-key="${CSS.escape(k)}"]`
+                    )
+                } catch {
+                    return null
+                }
+            }
+
+            function applyMoveToDom(key, x, y) {
+                const el = findBoardItemNodeByKey(key)
+                if (!el) return false
+                const nx = Math.round(Math.max(0, Number(x) || 0))
+                const ny = Math.round(Math.max(0, Number(y) || 0))
+                el.style.left = `${nx}px`
+                el.style.top = `${ny}px`
+                return true
+            }
+
+            function applyZOrderToDom(state) {
+                const root = itemsLayerEl || canvasEl
+                if (!root) return
+                let fallbackZ = 0
+                root.querySelectorAll(".board-item").forEach((el) => {
+                    const key = String(el.dataset.key || "")
+                    if (!key) return
+                    el.style.zIndex = String(
+                        zIndexForKey(state, key, fallbackZ++)
+                    )
+                })
+            }
+
+            const OP_DOM_HANDLERS = {
+                "wb.item.move": (op) => {
+                    const ok = applyMoveToDom(op.key, op.x, op.y)
+                    if (ok) {
+                        scheduleConnectionsRender()
+                        scheduleSelectionOverlaysRender()
+                    }
+                    return ok
+                },
+                "wb.items.batch": (op) => {
+                    const updates = Array.isArray(op.updates) ? op.updates : []
+                    let touched = false
+                    for (const u of updates) {
+                        const ok = applyMoveToDom(u?.key, u?.x, u?.y)
+                        touched = touched || ok
+                    }
+                    if (touched) {
+                        scheduleConnectionsRender()
+                        scheduleSelectionOverlaysRender()
+                    }
+                    return touched
+                },
+                "wb.text.create": (op, state) => {
+                    const id = String(op.id || "")
+                    if (!id) return false
+                    let item = findBoardItemNodeByKey(id)
+                    if (!item) item = createTextFrameNode(id)
+                    const frame = state?.whiteboard?.textFrames?.[id] || {}
+                    updateTextFrameNode(item, id, frame, state)
+                    if (!(isTypingInTextFrame() || isTypingGracePeriod())) {
+                        scheduleSelectionOverlaysRender()
+                    }
+                    return true
+                },
+                "wb.text.set": (op, state) => {
+                    const id = String(op.id || "")
+                    if (!id) return false
+                    const item = findBoardItemNodeByKey(id)
+                    if (!item) return false
+                    const frame = state?.whiteboard?.textFrames?.[id] || {}
+                    updateTextFrameNode(item, id, frame, state)
+                    if (!(isTypingInTextFrame() || isTypingGracePeriod())) {
+                        scheduleSelectionOverlaysRender()
+                    }
+                    return true
+                },
+                "wb.lock": (op, state) => {
+                    const id = String(op.id || "")
+                    if (!id) return false
+                    const item = findBoardItemNodeByKey(id)
+                    if (!item) return false
+                    const frame = state?.whiteboard?.textFrames?.[id] || {}
+                    updateTextFrameNode(item, id, frame, state)
+                    if (!(isTypingInTextFrame() || isTypingGracePeriod())) {
+                        scheduleSelectionOverlaysRender()
+                    }
+                    return true
+                },
+                "wb.zorder.set": (_op, state) => {
+                    applyZOrderToDom(state)
+                    return true
+                },
+            }
+
+            function applyOpToDom(op, state) {
+                if (!op || typeof op !== "object") return false
+                const t = String(op.type || "")
+                const handler = OP_DOM_HANDLERS[t]
+                if (!handler) return false
+                return Boolean(handler(op, state))
+            }
+
+            function maybeSeedLocalStateOnFirstConnect(state) {
+                if (!isConnected || didInitialSeedCheck) return false
+                didInitialSeedCheck = true
+                if (localSeedState && !workspaceStateHasContent(state)) {
+                    sync.updateState((next) => {
+                        Object.assign(next, localSeedState)
+                    })
+                    return true
+                }
+                return false
+            }
+
+            function maybeNotifyNewCriteria(state, updatedBy) {
+                const nextTotal = totalCollected(state)
+                if (lastTotalCollected && nextTotal > lastTotalCollected) {
+                    const by = String(updatedBy || "").trim()
+                    if (by && by !== clientId) {
+                        const uname = nameForClientId(by)
+                        notify(
+                            uname
+                                ? `Neues Kriterium hinzugefügt (${uname})`
+                                : "Neues Kriterium hinzugefügt"
+                        )
+                    }
+                }
+                lastTotalCollected = nextTotal
+            }
+
+            const sync = new WorkspaceSync({
+                wsUrl: wsUrlEl.value,
+                sessionId: sessionEl.value,
+                clientId,
+                username: usernameEl.value || "Anonym",
+                onStatus: ({ connected, message }) => {
+                    isConnected = Boolean(connected)
+                    setConnectionStatus({ connected, message })
+                },
+                onUsers: (users) => {
+                    const next = new Map(
+                        (users || []).map((u) => [
+                            String(u.clientId || ""),
+                            String(u.username || "").trim(),
+                        ])
+                    )
+                    if (!didInitUsers) {
+                        knownUsers = next
+                        didInitUsers = true
+                        return
+                    }
+                    if (isConnected && next.size > knownUsers.size) {
+                        for (const [cid, uname] of next.entries()) {
+                            if (!knownUsers.has(cid)) {
+                                notify(
+                                    uname
+                                        ? `Neuer Teilnehmer: ${uname}`
+                                        : "Neuer Teilnehmer"
+                                )
+                                break
+                            }
+                        }
+                    }
+                    knownUsers = next
+                },
+                onState: ({ state, updatedBy, source, op }) => {
+                    if (maybeSeedLocalStateOnFirstConnect(state)) return
+                    maybeNotifyNewCriteria(state, updatedBy)
+                    scheduleWorkspacePersist(state, { source })
+
+                    if (source === "op" && op && applyOpToDom(op, state)) {
+                        return
+                    }
+                    scheduleRender(state)
+                },
+            })
+
+            if (localSeedState) {
+                sync.state = localSeedState
+            }
+
+            let rafRenderHandle = 0
+            let latestStateForRender = null
+            let pendingFullRenderAfterTyping = false
+
+            let lastDragEndedAt = 0
+
+            let rafSelectionOverlayHandle = 0
+
+            // Local-only selection (not synced).
+            let selectedKeys = new Set()
+            let lastSelectedKey = ""
+
+            const SELECTION_STORAGE_KEY = "whiteboardSelection"
+            const persistSelectionState = debounce(() => {
+                safeStorageSetJson(sessionScopedKey(SELECTION_STORAGE_KEY), {
+                    keys: Array.from(selectedKeys),
+                    lastSelectedKey: String(lastSelectedKey || ""),
+                    updatedAt: new Date().toISOString(),
+                })
+            }, 120)
+
+            function restoreSelectionStateFromStorage() {
+                const saved = safeStorageGetJson(
+                    sessionScopedKey(SELECTION_STORAGE_KEY)
+                )
+                const keys = Array.isArray(saved?.keys) ? saved.keys : []
+                selectedKeys = new Set(
+                    keys.map((k) => String(k || "")).filter(Boolean)
+                )
+                lastSelectedKey = String(saved?.lastSelectedKey || "")
+                applySelectionToDom()
+            }
+
+            let isMarqueeSelecting = false
+            let marqueeStartClientX = 0
+            let marqueeStartClientY = 0
+            let marqueeHasMoved = false
+
+            let contextMenuKey = ""
+
+            let zoom = 1
+            const MIN_ZOOM = 0.5
+            const MAX_ZOOM = 2.5
+            const ZOOM_STORAGE_KEY = `${STORAGE_PREFIX}:whiteboardZoom`
+
+            function clampZoom(next) {
+                const v = Number(next)
+                if (!Number.isFinite(v)) return zoom
+                return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, v))
+            }
+
+            function applyZoom() {
+                if (!itemsLayerEl) return
+                itemsLayerEl.style.transform = `scale(${zoom})`
+                const pct = Math.round(zoom * 100)
+                if (zoomResetBtn) zoomResetBtn.textContent = `${pct}%`
+                if (zoomLabelEl) zoomLabelEl.textContent = `${pct}%`
+                scheduleConnectionsRender()
+            }
+
+            function setZoom(next) {
+                zoom = clampZoom(next)
+                applyZoom()
+                safeStorageSet(ZOOM_STORAGE_KEY, String(zoom))
+            }
+
+            function getZoom() {
+                return zoom || 1
+            }
+
+            function isToggleSelectionModifier(e) {
+                return Boolean(e && (e.ctrlKey || e.metaKey))
+            }
+
+            function isAddSelectionModifier(e) {
+                return Boolean(e && (e.shiftKey || e.ctrlKey || e.metaKey))
+            }
+
+            function setAlignMenuVisible(visible) {
+                if (!alignMenuEl) return
+                alignMenuEl.dataset.visible = visible ? "true" : "false"
+            }
+
+            function applySelectionToDom() {
+                const root = itemsLayerEl || canvasEl
+                if (!root) return
+                root.querySelectorAll(".board-item.is-selected").forEach(
+                    (n) => {
+                        n.classList.remove("is-selected")
+                    }
+                )
+                for (const key of selectedKeys) {
+                    const el = root.querySelector(
+                        `.board-item[data-key="${CSS.escape(String(key))}"]`
+                    )
+                    if (el) el.classList.add("is-selected")
+                }
+                setAlignMenuVisible(selectedKeys.size >= 2)
+                scheduleSelectionOverlaysRender()
+            }
+
+            function renderSelectionOverlays() {
+                if (!selectionOverlaysEl) return
+                if (!itemsLayerEl) return
+                if (!canvasEl) return
+                const root = itemsLayerEl
+
+                const canvasRect = canvasEl.getBoundingClientRect()
+
+                const PAD = 10
+                selectionOverlaysEl.replaceChildren()
+                for (const key of selectedKeys) {
+                    const k = String(key || "")
+                    if (!k) continue
+                    const el = root.querySelector(
+                        `.board-item[data-key="${CSS.escape(k)}"]`
+                    )
+                    if (!el) continue
+
+                    const overlay = document.createElement("div")
+                    overlay.className = "wb-selection-overlay"
+                    overlay.dataset.key = k
+
+                    const r = el.getBoundingClientRect()
+                    const rawW = r.width
+                    const rawH = r.height
+                    if (rawW <= 0 || rawH <= 0) {
+                        continue
+                    }
+
+                    const x = Math.round(r.left - canvasRect.left - PAD)
+                    const y = Math.round(r.top - canvasRect.top - PAD)
+                    const w = Math.round(rawW + PAD * 2)
+                    const h = Math.round(rawH + PAD * 2)
+                    if (w <= 0 || h <= 0) continue
+
+                    overlay.style.left = `0px`
+                    overlay.style.top = `0px`
+                    overlay.style.width = `${w}px`
+                    overlay.style.height = `${h}px`
+                    overlay.style.transform = `translate3d(${x}px, ${y}px, 0)`
+                    selectionOverlaysEl.appendChild(overlay)
+                }
+            }
+
+            function scheduleSelectionOverlaysRender() {
+                if (!selectionOverlaysEl) return
+                if (rafSelectionOverlayHandle) return
+                rafSelectionOverlayHandle = globalThis.requestAnimationFrame(
+                    () => {
+                        rafSelectionOverlayHandle = 0
+                        renderSelectionOverlays()
+                    }
+                )
+            }
+
+            function setSelectedKeys(next) {
+                selectedKeys = new Set(next || [])
+                applySelectionToDom()
+                persistSelectionState()
+            }
+
+            function selectSingle(key) {
+                const k = String(key || "")
+                if (!k) return
+                lastSelectedKey = k
+                setSelectedKeys([k])
+            }
+
+            function toggleSelection(key) {
+                const k = String(key || "")
+                if (!k) return
+                const next = new Set(selectedKeys)
+                if (next.has(k)) next.delete(k)
+                else next.add(k)
+                lastSelectedKey = k
+                setSelectedKeys(next)
+            }
+
+            function addToSelection(key) {
+                const k = String(key || "")
+                if (!k) return
+                const next = new Set(selectedKeys)
+                next.add(k)
+                lastSelectedKey = k
+                setSelectedKeys(next)
+            }
+
+            function clearSelection() {
+                if (!selectedKeys.size) return
+                setSelectedKeys([])
+            }
+
+            function boardRectToClientRect(x, y, w, h) {
+                const canvasRect = canvasEl.getBoundingClientRect()
+                return {
+                    left: canvasRect.left + x,
+                    top: canvasRect.top + y,
+                    width: w,
+                    height: h,
+                }
+            }
+
+            function clientPointToBoard(e) {
+                const canvasRect = canvasEl.getBoundingClientRect()
+                const scale = getZoom()
+                const x = (e.clientX - canvasRect.left) / scale
+                const y = (e.clientY - canvasRect.top) / scale
+                return { x, y }
+            }
+
+            function getItemBoundsInBoard(el) {
+                const x = Number.parseFloat(el.style.left || "0") || 0
+                const y = Number.parseFloat(el.style.top || "0") || 0
+                const w = el.offsetWidth || 0
+                const h = el.offsetHeight || 0
+                return { x, y, w, h }
+            }
+
+            function rectsIntersect(a, b) {
+                return !(
+                    a.x + a.w < b.x ||
+                    b.x + b.w < a.x ||
+                    a.y + a.h < b.y ||
+                    b.y + b.h < a.y
+                )
+            }
+
+            function beginMarqueeSelection(e) {
+                if (!selectionBoxEl || !canvasEl) return
+                isMarqueeSelecting = true
+                marqueeHasMoved = false
+                marqueeStartClientX = e.clientX
+                marqueeStartClientY = e.clientY
+                selectionBoxEl.style.display = "none"
+                selectionBoxEl.style.left = "0px"
+                selectionBoxEl.style.top = "0px"
+                selectionBoxEl.style.width = "0px"
+                selectionBoxEl.style.height = "0px"
+            }
+
+            function updateMarqueeSelection(e) {
+                if (!isMarqueeSelecting || !selectionBoxEl || !canvasEl) return
+                const canvasRect = canvasEl.getBoundingClientRect()
+                const x1 = marqueeStartClientX - canvasRect.left
+                const y1 = marqueeStartClientY - canvasRect.top
+                const x2 = e.clientX - canvasRect.left
+                const y2 = e.clientY - canvasRect.top
+                const left = Math.min(x1, x2)
+                const top = Math.min(y1, y2)
+                const width = Math.abs(x2 - x1)
+                const height = Math.abs(y2 - y1)
+
+                const SHOW_THRESHOLD_PX = 4
+                if (!marqueeHasMoved) {
+                    if (Math.max(width, height) < SHOW_THRESHOLD_PX) {
+                        selectionBoxEl.style.display = "none"
+                        return
+                    }
+                    marqueeHasMoved = true
+                    selectionBoxEl.style.display = "block"
+                }
+                selectionBoxEl.style.left = `${left}px`
+                selectionBoxEl.style.top = `${top}px`
+                selectionBoxEl.style.width = `${width}px`
+                selectionBoxEl.style.height = `${height}px`
+            }
+
+            function endMarqueeSelection(e, { additive }) {
+                if (!isMarqueeSelecting || !selectionBoxEl || !canvasEl) return
+                isMarqueeSelecting = false
+                selectionBoxEl.style.display = "none"
+
+                // Treat a click (no drag) as a no-op.
+                if (!marqueeHasMoved) return
+
+                const scale = getZoom()
+                const canvasRect = canvasEl.getBoundingClientRect()
+                const x1 = (marqueeStartClientX - canvasRect.left) / scale
+                const y1 = (marqueeStartClientY - canvasRect.top) / scale
+                const x2 = (e.clientX - canvasRect.left) / scale
+                const y2 = (e.clientY - canvasRect.top) / scale
+                const sel = {
+                    x: Math.min(x1, x2),
+                    y: Math.min(y1, y2),
+                    w: Math.abs(x2 - x1),
+                    h: Math.abs(y2 - y1),
+                }
+
+                const root = itemsLayerEl || canvasEl
+                const hits = []
+                root.querySelectorAll(".board-item").forEach((node) => {
+                    const key = String(node.dataset.key || "")
+                    if (!key) return
+                    const b = getItemBoundsInBoard(node)
+                    if (rectsIntersect(sel, b)) hits.push(key)
+                })
+
+                const next = additive ? new Set(selectedKeys) : new Set()
+                hits.forEach((k) => next.add(k))
+                setSelectedKeys(next)
+            }
+
+            function hideContextMenu() {
+                if (!contextMenuEl) return
+                contextMenuEl.style.display = "none"
+                contextMenuKey = ""
+            }
+
+            function showContextMenuAt(x, y, key) {
+                if (!contextMenuEl) return
+                contextMenuKey = String(key || "")
+                contextMenuEl.style.display = "block"
+
+                // Clamp within viewport.
+                const pad = 8
+                const rect = contextMenuEl.getBoundingClientRect()
+                const vw = globalThis.innerWidth || 0
+                const vh = globalThis.innerHeight || 0
+                const left = Math.max(pad, Math.min(x, vw - rect.width - pad))
+                const top = Math.max(pad, Math.min(y, vh - rect.height - pad))
+                contextMenuEl.style.left = `${left}px`
+                contextMenuEl.style.top = `${top}px`
+            }
+
+            function ensureZOrder(state) {
+                ensureWhiteboard(state)
+                if (!Array.isArray(state.whiteboard.zOrder)) {
+                    state.whiteboard.zOrder = []
+                }
+            }
+
+            function zIndexForKey(state, key, fallbackIndex) {
+                const zOrder = state?.whiteboard?.zOrder
+                if (Array.isArray(zOrder)) {
+                    const idx = zOrder.indexOf(String(key || ""))
+                    if (idx >= 0) return 20 + idx
+                }
+                return 20 + (Number(fallbackIndex) || 0)
+            }
+
+            function getRenderedKeysInDomOrder() {
+                const root = itemsLayerEl || canvasEl
+                if (!root) return []
+                const keys = []
+                root.querySelectorAll(".board-item").forEach((node) => {
+                    const key = String(node.dataset.key || "")
+                    if (key) keys.push(key)
+                })
+                return keys
+            }
+
+            function applyZOrderAction(action, key) {
+                const k = String(key || "")
+                if (!k) return
+
+                const domKeys = getRenderedKeysInDomOrder()
+                const current = Array.isArray(sync.state?.whiteboard?.zOrder)
+                    ? [...sync.state.whiteboard.zOrder]
+                    : []
+
+                // Ensure all currently rendered keys exist in zOrder.
+                for (const dk of domKeys) {
+                    if (!current.includes(dk)) current.push(dk)
+                }
+                if (!current.includes(k)) current.push(k)
+
+                const idx = current.indexOf(k)
+                if (idx < 0) return
+
+                if (action === "bring-front") {
+                    current.splice(idx, 1)
+                    current.push(k)
+                } else if (action === "send-back") {
+                    current.splice(idx, 1)
+                    current.unshift(k)
+                } else if (action === "bring-forward") {
+                    if (idx < current.length - 1) {
+                        const tmp = current[idx + 1]
+                        current[idx + 1] = current[idx]
+                        current[idx] = tmp
+                    }
+                } else if (action === "send-backward") {
+                    if (idx > 0) {
+                        const tmp = current[idx - 1]
+                        current[idx - 1] = current[idx]
+                        current[idx] = tmp
+                    }
+                }
+
+                sync.sendOp({ type: "wb.zorder.set", zOrder: current })
+            }
+
+            // Restore zoom from localStorage (per participant).
+            const savedZoom = Number.parseFloat(
+                safeStorageGet(ZOOM_STORAGE_KEY) || ""
+            )
+            if (Number.isFinite(savedZoom)) {
+                zoom = clampZoom(savedZoom)
+            }
+
+            let lastCaret = null
+            let lastCaretAt = 0
+            let lastTextInputAt = 0
+            let lastPointerDownAt = 0
+
+            // Per-textframe local activity markers to avoid disabling/blurring
+            // the active textarea due to momentary lock-state churn.
+            const localTextFrameActivity = new Map()
+
+            function isTypingGracePeriod() {
+                if (!lastCaret || !lastCaret.frameId) return false
+                return Date.now() - lastTextInputAt < 900
+            }
+
+            function captureCaret(frameId, textarea) {
+                if (!textarea) return
+                try {
+                    lastCaret = {
+                        frameId: String(frameId || ""),
+                        start: textarea.selectionStart,
+                        end: textarea.selectionEnd,
+                        direction: textarea.selectionDirection || "none",
+                    }
+                    lastCaretAt = Date.now()
+                } catch {
+                    // ignore
+                }
+            }
+
+            function markTextInput(frameId, textarea) {
+                lastTextInputAt = Date.now()
+                const fid = String(frameId || "")
+                if (fid) {
+                    const prev = localTextFrameActivity.get(fid) || {}
+                    localTextFrameActivity.set(fid, {
+                        ...prev,
+                        lastInputAt: lastTextInputAt,
+                    })
+                }
+                captureCaret(frameId, textarea)
+            }
+
+            // Used to avoid refocusing when the user intentionally clicks elsewhere.
+            document.addEventListener(
+                "pointerdown",
+                () => {
+                    lastPointerDownAt = Date.now()
+                },
+                true
+            )
+
+            function restoreCaretIfRecent(frameId, textarea) {
+                if (!textarea) return
+                if (!lastCaret) return
+                if (String(frameId || "") !== String(lastCaret.frameId || "")) {
+                    return
+                }
+                if (Date.now() - lastCaretAt > 1500) return
+
+                // Only restore if the user likely still types here.
+                if (document.activeElement === textarea) return
+                try {
+                    textarea.focus({ preventScroll: true })
+                    if (
+                        Number.isFinite(lastCaret.start) &&
+                        Number.isFinite(lastCaret.end)
+                    ) {
+                        textarea.setSelectionRange(
+                            lastCaret.start,
+                            lastCaret.end,
+                            lastCaret.direction
+                        )
+                    }
+                } catch {
+                    // ignore
+                }
+            }
+
+            function isTypingInTextFrame() {
+                const el = document.activeElement
+                if (!el) return false
+                if (String(el.tagName || "").toUpperCase() !== "TEXTAREA") {
+                    return false
+                }
+                return Boolean(
+                    el.closest && el.closest(".board-item.board-text")
+                )
+            }
+
+            function scheduleRender(state) {
+                latestStateForRender = state
+                if (rafRenderHandle) return
+                rafRenderHandle = globalThis.requestAnimationFrame(() => {
+                    rafRenderHandle = 0
+                    if (isTypingInTextFrame() || isTypingGracePeriod()) {
+                        pendingFullRenderAfterTyping = true
+                        return
+                    }
+                    const s = latestStateForRender
+                    latestStateForRender = null
+                    render(s)
+                })
+            }
+
+            // Zoom: scale only the board contents (items layer), not the UI.
+            if (zoomOutBtn) {
+                zoomOutBtn.addEventListener("click", () => {
+                    setZoom(getZoom() / 1.1)
+                })
+            }
+            if (zoomInBtn) {
+                zoomInBtn.addEventListener("click", () => {
+                    setZoom(getZoom() * 1.1)
+                })
+            }
+            if (zoomResetBtn) {
+                zoomResetBtn.addEventListener("click", () => {
+                    setZoom(1)
+                })
+            }
+            applyZoom()
+
+            if (canvasEl) {
+                canvasEl.addEventListener(
+                    "wheel",
+                    (e) => {
+                        // Use Ctrl/trackpad pinch gesture to zoom the contents.
+                        if (!e.ctrlKey) return
+                        // Prevent browser/page zoom.
+                        e.preventDefault()
+                        const current = getZoom()
+                        const factor = Math.exp(-e.deltaY * 0.001)
+                        setZoom(current * factor)
+                    },
+                    { passive: false }
+                )
+            }
+
+            // While typing, do lightweight renders only; on blur, catch up.
+            if (canvasEl) {
+                canvasEl.addEventListener("focusout", (e) => {
+                    const tag = String(e.target?.tagName || "").toUpperCase()
+                    if (tag !== "TEXTAREA") return
+                    globalThis.setTimeout(() => {
+                        if (isTypingInTextFrame()) return
+                        if (!pendingFullRenderAfterTyping) return
+                        pendingFullRenderAfterTyping = false
+                        const s = latestStateForRender || sync.state
+                        latestStateForRender = null
+                        render(s)
+                    }, 0)
+                })
+            }
+
+            function ensureWhiteboard(state) {
+                state.whiteboard = state.whiteboard || {}
+                state.whiteboard.items = state.whiteboard.items || {}
+            }
+
+            function ensureHiddenThemes(state) {
+                ensureWhiteboard(state)
+                state.whiteboard.hiddenThemes =
+                    state.whiteboard.hiddenThemes || {}
+            }
+
+            function ensureTextFrames(state) {
+                ensureWhiteboard(state)
+                state.whiteboard.textFrames = state.whiteboard.textFrames || {}
+            }
+
+            function ensurePosition(state, key) {
+                ensureWhiteboard(state)
+                if (!state.whiteboard.items[key]) {
+                    state.whiteboard.items[key] = { x: 30, y: 30 }
+                }
+            }
+
+            function ensurePositionAt(state, key, x, y) {
+                ensureWhiteboard(state)
+                if (!state.whiteboard.items[key]) {
+                    state.whiteboard.items[key] = {
+                        x: Number.isFinite(x) ? x : 30,
+                        y: Number.isFinite(y) ? y : 30,
+                    }
+                }
+            }
+
+            function isThemeHidden(state, themeName) {
+                return Boolean(state?.whiteboard?.hiddenThemes?.[themeName])
+            }
+
+            function isLockedByOther(state, id) {
+                const lock = state?.whiteboard?.locks?.[String(id || "")]
+                if (!lock) return false
+                const by = String(lock.clientId || "")
+                if (!by) return false
+                return by !== String(clientId || "")
+            }
+
+            function toggleThemeHidden(themeName) {
+                const t = String(themeName || "").trim()
+                if (!t) return
+                const nextHidden = !isThemeHidden(sync.state, t)
+                sync.sendOp({
+                    type: "wb.hidden.set",
+                    theme: t,
+                    hidden: nextHidden,
+                })
+            }
+
+            function getThemeSelection(state, themeName) {
+                const arr =
+                    (state.collections && state.collections[themeName]) || []
+                return Array.isArray(arr) ? arr : []
+            }
+
+            function allThemes(state) {
+                const themes = state.collections
+                    ? Object.keys(state.collections)
+                    : []
+                themes.sort((a, b) => a.localeCompare(b, "de"))
+                return themes
+            }
+
+            function applySectionColors(el, sectionIndex) {
+                if (!sectionIndex) return
+                const rootStyle = getComputedStyle(document.documentElement)
+                const bg = rootStyle.getPropertyValue(
+                    `--section-${sectionIndex}`
+                )
+                const fg = rootStyle.getPropertyValue(
+                    `--onSection-${sectionIndex}`
+                )
+                if (bg) el.style.backgroundColor = bg
+                if (fg) el.style.color = fg
+            }
+
+            const SVG_NS = "http://www.w3.org/2000/svg"
+
+            function ensureSvgChild(parent, tag, id) {
+                if (!parent) return null
+                const existing = parent.querySelector(
+                    `#${CSS.escape(String(id || ""))}`
+                )
+                if (existing) return existing
+                const node = document.createElementNS(SVG_NS, tag)
+                node.setAttribute("id", id)
+                parent.appendChild(node)
+                return node
+            }
+
+            function ensureConnectionsStructure() {
+                if (!connectionsEl) {
+                    return {
+                        linesRoot: null,
+                        maskRectsRoot: null,
+                        maskBg: null,
+                    }
+                }
+
+                // Keep explicit sizing; otherwise SVG defaults (e.g. 300x150)
+                // can clip lines to the bottom/right.
+                connectionsEl.setAttribute(
+                    "preserveAspectRatio",
+                    "xMinYMin meet"
+                )
+
+                const defs = ensureSvgChild(
+                    connectionsEl,
+                    "defs",
+                    "wb-connections-defs"
+                )
+                const mask = ensureSvgChild(defs, "mask", "wb-lines-mask")
+                mask.setAttribute("maskUnits", "userSpaceOnUse")
+
+                const maskBg = ensureSvgChild(mask, "rect", "wb-lines-mask-bg")
+                maskBg.setAttribute("fill", "white")
+
+                const maskRectsRoot = ensureSvgChild(
+                    mask,
+                    "g",
+                    "wb-lines-mask-rects"
+                )
+
+                const linesRoot = ensureSvgChild(connectionsEl, "g", "wb-lines")
+                linesRoot.setAttribute("mask", "url(#wb-lines-mask)")
+
+                return { linesRoot, maskRectsRoot, maskBg }
+            }
+
+            function updateConnectionsViewport() {
+                if (!connectionsEl) return { w: 0, h: 0 }
+                const canvasRect = canvasEl
+                    ? canvasEl.getBoundingClientRect()
+                    : { width: 0, height: 0 }
+                const w = Math.max(0, Number(canvasRect.width) || 0)
+                const h = Math.max(0, Number(canvasRect.height) || 0)
+                if (!(w > 0 && h > 0)) return { w: 0, h: 0 }
+
+                connectionsEl.setAttribute("width", String(w))
+                connectionsEl.setAttribute("height", String(h))
+                connectionsEl.setAttribute("viewBox", `0 0 ${w} ${h}`)
+                return { w, h }
+            }
+
+            function updateConnectionsMask(maskRectsRoot, maskBg, dims) {
+                if (!itemsLayerEl || !maskRectsRoot || !maskBg) return
+
+                const w = Number(dims?.w) || 0
+                const h = Number(dims?.h) || 0
+                maskBg.setAttribute("x", "0")
+                maskBg.setAttribute("y", "0")
+                maskBg.setAttribute("width", String(w))
+                maskBg.setAttribute("height", String(h))
+
+                const PAD = 6
+                const existing = new Map()
+                maskRectsRoot
+                    .querySelectorAll("rect[data-key]")
+                    .forEach((r) => {
+                        const k = String(r.dataset.key || "")
+                        if (k) existing.set(k, r)
+                    })
+
+                const desired = new Set()
+                const canvasRect = canvasEl
+                    ? canvasEl.getBoundingClientRect()
+                    : null
+
+                itemsLayerEl.querySelectorAll(".board-item").forEach((el) => {
+                    const k = String(el.dataset.key || "")
+                    if (!k) return
+                    desired.add(k)
+
+                    let rect = existing.get(k)
+                    if (!rect) {
+                        rect = document.createElementNS(SVG_NS, "rect")
+                        rect.dataset.key = k
+                        rect.setAttribute("fill", "black")
+                        maskRectsRoot.appendChild(rect)
+                        existing.set(k, rect)
+                    }
+
+                    const r = el.getBoundingClientRect()
+                    const x =
+                        (canvasRect ? r.left - canvasRect.left : r.left) - PAD
+                    const y =
+                        (canvasRect ? r.top - canvasRect.top : r.top) - PAD
+                    const rw = (r.width || 0) + PAD * 2
+                    const rh = (r.height || 0) + PAD * 2
+                    rect.setAttribute("x", String(x))
+                    rect.setAttribute("y", String(y))
+                    rect.setAttribute("width", String(rw))
+                    rect.setAttribute("height", String(rh))
+                })
+
+                for (const [k, rect] of existing.entries()) {
+                    if (!desired.has(k)) rect.remove()
+                }
+            }
+
+            function getItemCenterInCanvas(key, canvasRect) {
+                if (!itemsLayerEl) return null
+                const k = String(key || "")
+                if (!k) return null
+                const el = itemsLayerEl.querySelector(
+                    `.board-item[data-key="${CSS.escape(k)}"]`
+                )
+                if (!el) return null
+
+                const r = el.getBoundingClientRect()
+                const base =
+                    canvasRect || (canvasEl && canvasEl.getBoundingClientRect())
+                const left = base ? r.left - base.left : r.left
+                const top = base ? r.top - base.top : r.top
+                const w = r.width || 0
+                const h = r.height || 0
+                return {
+                    x: left + w / 2,
+                    y: top + h / 2,
+                }
+            }
+
+            function renderConnections(pairs) {
+                if (!connectionsEl) return
+                const list = Array.isArray(pairs) ? pairs : []
+
+                const dims = updateConnectionsViewport()
+                const canvasRect = canvasEl
+                    ? canvasEl.getBoundingClientRect()
+                    : null
+
+                const { linesRoot, maskRectsRoot, maskBg } =
+                    ensureConnectionsStructure()
+                if (!linesRoot) return
+                updateConnectionsMask(maskRectsRoot, maskBg, dims)
+
+                const existing = new Map()
+                linesRoot.querySelectorAll("line[data-key]").forEach((l) => {
+                    const k = String(l.dataset.key || "")
+                    if (k) existing.set(k, l)
+                })
+
+                const desired = new Set()
+                for (const p of list) {
+                    const from = String(p?.from || "")
+                    const to = String(p?.to || "")
+                    if (!from || !to) continue
+                    const key = `${from}=>${to}`
+                    desired.add(key)
+
+                    const a = getItemCenterInCanvas(from, canvasRect)
+                    const b = getItemCenterInCanvas(to, canvasRect)
+                    if (!a || !b) continue
+
+                    let line = existing.get(key)
+                    if (!line) {
+                        line = document.createElementNS(SVG_NS, "line")
+                        line.dataset.key = key
+                        linesRoot.appendChild(line)
+                        existing.set(key, line)
+                    }
+                    line.setAttribute("x1", String(a.x))
+                    line.setAttribute("y1", String(a.y))
+                    line.setAttribute("x2", String(b.x))
+                    line.setAttribute("y2", String(b.y))
+                }
+
+                for (const [k, line] of existing.entries()) {
+                    if (!desired.has(k)) {
+                        line.remove()
+                    }
+                }
+            }
+
+            function scheduleConnectionsRender() {
+                if (!connectionsEl) return
+                if (rafConnectionsHandle) return
+                rafConnectionsHandle = globalThis.requestAnimationFrame(() => {
+                    rafConnectionsHandle = 0
+                    renderConnections(latestConnectionPairs)
+                })
+            }
+
+            // Keep the SVG at least fullscreen when the window changes size.
+            const onConnectionsResize = debounce(() => {
+                updateConnectionsViewport()
+                scheduleConnectionsRender()
+            }, 50)
+            globalThis.addEventListener("resize", onConnectionsResize)
+
+            // Initial sizing (fullscreen/min canvas) on first load.
+            updateConnectionsViewport()
+
+            function collectExistingTextFrameNodes() {
+                const existing = new Map()
+                ;(itemsLayerEl || canvasEl)
+                    .querySelectorAll(".board-item.board-text")
+                    .forEach((el) => {
+                        const key = String(el.dataset.key || "")
+                        if (key) existing.set(key, el)
+                    })
+                return existing
+            }
+
+            function pruneDeletedTextFrames(existing, frames) {
+                for (const [key, el] of existing.entries()) {
+                    if (
+                        isTypingGracePeriod() &&
+                        lastCaret &&
+                        String(key) === String(lastCaret.frameId)
+                    ) {
+                        continue
+                    }
+                    if (!Object.hasOwn(frames, key)) {
+                        el.remove()
+                    }
+                }
+            }
+
+            function autoGrowTextarea(textarea) {
+                if (!textarea) return
+                const prevHeight = textarea.style.height
+                try {
+                    const cs = getComputedStyle(textarea)
+                    const fontSize = Number.parseFloat(cs.fontSize || "")
+                    const rawLineHeight = cs.lineHeight
+                    const lineHeight =
+                        rawLineHeight && rawLineHeight !== "normal"
+                            ? Number.parseFloat(rawLineHeight)
+                            : Number.isFinite(fontSize)
+                              ? fontSize * 1.2
+                              : 16 * 1.2
+
+                    const padTop = Number.parseFloat(cs.paddingTop || "") || 0
+                    const padBottom =
+                        Number.parseFloat(cs.paddingBottom || "") || 0
+                    const borderTop =
+                        Number.parseFloat(cs.borderTopWidth || "") || 0
+                    const borderBottom =
+                        Number.parseFloat(cs.borderBottomWidth || "") || 0
+
+                    const MIN_ROWS = 5
+                    const minHeight =
+                        lineHeight * MIN_ROWS +
+                        padTop +
+                        padBottom +
+                        borderTop +
+                        borderBottom
+
+                    // Measure needed height.
+                    textarea.style.height = "auto"
+                    const needed =
+                        (Number(textarea.scrollHeight) || 0) +
+                        borderTop +
+                        borderBottom
+
+                    const target = Math.max(minHeight, needed)
+                    textarea.style.height = `${Math.ceil(target)}px`
+                } catch {
+                    try {
+                        textarea.style.height = prevHeight
+                    } catch {
+                        // ignore
+                    }
+                }
+            }
+
+            function installTextFrameTextareaBehavior(id, textarea) {
+                let unlockTimeout = 0
+                let didAcquireLock = false
+
+                const ensureLocalLock = () => {
+                    if (!textarea || textarea.disabled) return
+                    if (didAcquireLock) return
+                    // If a remote lock already exists, don't let the user edit.
+                    if (isLockedByOther(sync.state, id)) return
+                    didAcquireLock = true
+                    const fid = String(id || "")
+                    if (fid) {
+                        const prev = localTextFrameActivity.get(fid) || {}
+                        localTextFrameActivity.set(fid, {
+                            ...prev,
+                            didAcquireLock: true,
+                            lockAcquiredAt: Date.now(),
+                        })
+                    }
+                    sync.sendOp({ type: "wb.lock", id, locked: true })
+                }
+
+                const persistText = debounce((value) => {
+                    if (!textarea || textarea.disabled) return
+                    sync.sendOp({
+                        type: "wb.text.set",
+                        id,
+                        text: String(value || ""),
+                    })
+                }, 250)
+
+                const rememberCaret = () => {
+                    captureCaret(id, textarea)
+                }
+
+                // Lock only once the user actually starts editing.
+                textarea.addEventListener("beforeinput", () => {
+                    ensureLocalLock()
+                })
+
+                textarea.addEventListener("compositionstart", () => {
+                    ensureLocalLock()
+                })
+
+                textarea.addEventListener("paste", () => {
+                    ensureLocalLock()
+                })
+
+                textarea.addEventListener("input", () => {
+                    if (textarea.disabled) return
+                    ensureLocalLock()
+                    markTextInput(id, textarea)
+                    autoGrowTextarea(textarea)
+                    persistText(textarea.value)
+                })
+                textarea.addEventListener("keyup", rememberCaret)
+                textarea.addEventListener("mouseup", rememberCaret)
+                textarea.addEventListener("select", rememberCaret)
+                textarea.addEventListener("compositionend", () =>
+                    markTextInput(id, textarea)
+                )
+
+                textarea.addEventListener("focus", () => {
+                    if (unlockTimeout) {
+                        globalThis.clearTimeout(unlockTimeout)
+                        unlockTimeout = 0
+                    }
+                    // No lock-on-focus: keep clicking into the textarea interruption-free.
+                })
+
+                textarea.addEventListener("blur", () => {
+                    if (unlockTimeout) globalThis.clearTimeout(unlockTimeout)
+                    unlockTimeout = globalThis.setTimeout(() => {
+                        unlockTimeout = 0
+                        if (document.activeElement === textarea) return
+                        if (didAcquireLock) {
+                            didAcquireLock = false
+                            const fid = String(id || "")
+                            if (fid) {
+                                const prev =
+                                    localTextFrameActivity.get(fid) || {}
+                                localTextFrameActivity.set(fid, {
+                                    ...prev,
+                                    didAcquireLock: false,
+                                    lockReleasedAt: Date.now(),
+                                })
+                            }
+                            sync.sendOp({ type: "wb.lock", id, locked: false })
+                        }
+                    }, 350)
+                })
+
+                textarea.addEventListener("blur", () => {
+                    const snapshotAt = lastTextInputAt
+                    globalThis.setTimeout(() => {
+                        // If the user clicked elsewhere intentionally, don't steal focus back.
+                        if (isTypingInTextFrame()) return
+                        if (Date.now() - snapshotAt > 400) return
+                        if (Date.now() - lastPointerDownAt < 250) return
+                        const active = document.activeElement
+                        if (
+                            active &&
+                            active !== document.body &&
+                            active !== document.documentElement
+                        ) {
+                            return
+                        }
+                        restoreCaretIfRecent(id, textarea)
+                    }, 0)
+                })
+            }
+
+            function createTextFrameNode(id) {
+                const item = document.createElement("div")
+                item.className = "board-item board-text"
+                item.dataset.key = id
+
+                const frameEl = document.createElement("div")
+                frameEl.className = "wb-text-frame"
+
+                const textarea = document.createElement("textarea")
+                textarea.setAttribute("aria-label", "Textfeld")
+                frameEl.appendChild(textarea)
+                item.appendChild(frameEl)
+
+                installTextFrameTextareaBehavior(id, textarea)
+                autoGrowTextarea(textarea)
+
+                makeDraggable(item, (x, y) => {
+                    sync.sendOp({ type: "wb.item.move", key: id, x, y })
+                })
+                ;(itemsLayerEl || canvasEl).appendChild(item)
+                return item
+            }
+
+            function updateTextFrameNode(item, id, frame, state) {
+                const pos = (state.whiteboard &&
+                    state.whiteboard.items &&
+                    state.whiteboard.items[id]) || { x: 220, y: 60 }
+
+                item.style.left = `${Math.max(0, pos.x)}px`
+                item.style.top = `${Math.max(0, pos.y)}px`
+                item.style.zIndex = String(zIndexForKey(state, id, 5000))
+
+                const textarea = item.querySelector("textarea")
+                if (!textarea) return
+
+                const isActive = document.activeElement === textarea
+                const lockedByOther = isLockedByOther(state, id)
+
+                // Never disable/blur the active textarea while the user is typing.
+                // This prevents "full reload"-like interruptions caused by transient lock-state churn.
+                const fid = String(id || "")
+                const activity = fid ? localTextFrameActivity.get(fid) : null
+                const recentlyTypedHere = Boolean(
+                    (isTypingGracePeriod() &&
+                        lastCaret &&
+                        String(lastCaret.frameId || "") === fid) ||
+                    (activity &&
+                        Number.isFinite(activity.lastInputAt) &&
+                        Date.now() - activity.lastInputAt < 1500)
+                )
+                const recentlyAcquiredLocalLock = Boolean(
+                    activity &&
+                    activity.didAcquireLock &&
+                    Number.isFinite(activity.lockAcquiredAt) &&
+                    Date.now() - activity.lockAcquiredAt < 2500
+                )
+                const deferLockEnforcement =
+                    lockedByOther &&
+                    isActive &&
+                    (recentlyTypedHere || recentlyAcquiredLocalLock)
+
+                const effectiveLockedByOther =
+                    lockedByOther && !deferLockEnforcement
+                item.classList.toggle("is-locked", effectiveLockedByOther)
+                if (!isActive) {
+                    textarea.disabled = effectiveLockedByOther
+                } else if (effectiveLockedByOther) {
+                    // Active but locked: keep enabled to avoid blur; user can finish the current keystroke.
+                    textarea.disabled = false
+                } else {
+                    textarea.disabled = false
+                }
+
+                const nextText = String(frame?.text || "")
+                if (
+                    !effectiveLockedByOther &&
+                    document.activeElement !== textarea
+                ) {
+                    textarea.value = nextText
+                    autoGrowTextarea(textarea)
+                }
+                if (!effectiveLockedByOther) restoreCaretIfRecent(id, textarea)
+            }
+
+            function renderTextFrames(state) {
+                const frames =
+                    (state.whiteboard && state.whiteboard.textFrames) || {}
+                const existing = collectExistingTextFrameNodes()
+                pruneDeletedTextFrames(existing, frames)
+
+                let fallbackZ = 5000
+                for (const [id, frame] of Object.entries(frames)) {
+                    let item = existing.get(id)
+                    if (!item) {
+                        item = createTextFrameNode(id)
+                    }
+                    item.style.zIndex = String(
+                        zIndexForKey(state, id, fallbackZ++)
+                    )
+                    updateTextFrameNode(item, id, frame, state)
+                }
+            }
+
+            function render(state) {
+                // Only treat an actually focused textarea as "typing" here.
+                // The grace period is handled in scheduleRender to prevent focus/caret churn.
+                const typing = isTypingInTextFrame()
+                const themes = allThemes(state)
+                boardTitleEl.textContent = "Alle Themen"
+                themesEl.textContent = themes.length
+                    ? `Themen: ${themes.join(" · ")}`
+                    : "Themen: –"
+
+                renderTextFrames(state)
+
+                if (typing) {
+                    // Keep typing smooth: don't rebuild the full board while a text frame is focused.
+                    pendingFullRenderAfterTyping = true
+                    return
+                }
+
+                const itemsRoot = itemsLayerEl || canvasEl
+                const existingNonText = new Map()
+                itemsRoot
+                    .querySelectorAll(".board-item:not(.board-text)")
+                    .forEach((el) => {
+                        const key = String(el.dataset.key || "")
+                        if (key) existingNonText.set(key, el)
+                    })
+
+                const desiredKeys = new Set()
+                const connectionPairs = []
+
+                if (!criteriaById.size) {
+                    boardTitleEl.textContent = "Lade Prüfschritte …"
+                    latestConnectionPairs = []
+                    renderConnections([])
+                    return
+                }
+
+                let fallbackZ = 0
+
+                const ensureThemeHeaderNode = (tName) => {
+                    const headerKey = `themeHeader::${tName}`
+                    let item = existingNonText.get(headerKey)
+                    if (item) return item
+
+                    item = document.createElement("div")
+                    item.className = "board-item board-theme"
+                    item.dataset.key = headerKey
+
+                    const card = document.createElement("div")
+                    card.className = "card section-card wb-theme-card"
+
+                    const titleEl = document.createElement("div")
+                    titleEl.className = "wb-theme-card-title"
+                    titleEl.textContent = tName
+                    card.appendChild(titleEl)
+
+                    const toggleBtn = document.createElement("button")
+                    toggleBtn.type = "button"
+                    toggleBtn.className = "v4-btn wb-theme-toggle"
+                    toggleBtn.dataset.role = "theme-toggle"
+
+                    const iconEl = document.createElement("span")
+                    iconEl.className = "material-icons"
+                    iconEl.setAttribute("aria-hidden", "true")
+                    iconEl.textContent = "visibility"
+                    toggleBtn.appendChild(iconEl)
+
+                    toggleBtn.addEventListener("click", (e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        toggleThemeHidden(tName)
+                    })
+                    card.appendChild(toggleBtn)
+
+                    const hintEl = document.createElement("div")
+                    hintEl.className = "wcag-id"
+                    hintEl.dataset.role = "theme-hint"
+                    card.appendChild(hintEl)
+
+                    item.appendChild(card)
+
+                    makeDraggable(item, (x, y) => {
+                        sync.sendOp({
+                            type: "wb.item.move",
+                            key: headerKey,
+                            x,
+                            y,
+                        })
+                    })
+
+                    itemsRoot.appendChild(item)
+                    existingNonText.set(headerKey, item)
+                    return item
+                }
+
+                const ensureCriteriaCardNode = (tName, criteriaId, meta) => {
+                    const key = `${tName}::${criteriaId}`
+                    let item = existingNonText.get(key)
+                    if (item) return item
+
+                    item = document.createElement("div")
+                    item.className = "board-item"
+                    item.dataset.key = key
+
+                    const card = document.createElement("div")
+                    card.className = "card pruefschritt-card"
+                    applySectionColors(card, meta.sectionIndex)
+
+                    const themeLabel = document.createElement("div")
+                    themeLabel.className = "wcag-id"
+                    themeLabel.textContent = tName
+                    card.appendChild(themeLabel)
+
+                    const infoBtn = document.createElement("button")
+                    infoBtn.type = "button"
+                    infoBtn.className = "wb-info-btn"
+                    infoBtn.setAttribute("aria-label", "Details anzeigen")
+                    const infoTitleParts = []
+                    if (meta?.wcagId) infoTitleParts.push(`WCAG ${meta.wcagId}`)
+                    if (meta?.bitvId) infoTitleParts.push(`BITV ${meta.bitvId}`)
+                    infoBtn.title = infoTitleParts.length
+                        ? `Details anzeigen (${infoTitleParts.join(", ")})`
+                        : "Details anzeigen"
+
+                    const infoIcon = document.createElement("span")
+                    infoIcon.className = "material-icons-outlined"
+                    infoIcon.setAttribute("aria-hidden", "true")
+                    infoIcon.textContent = "info"
+                    infoBtn.appendChild(infoIcon)
+
+                    const suppressDragStart = (e) => {
+                        e.stopPropagation()
+                    }
+                    infoBtn.addEventListener("pointerdown", suppressDragStart)
+                    infoBtn.addEventListener("mousedown", suppressDragStart)
+                    infoBtn.addEventListener("touchstart", suppressDragStart, {
+                        passive: true,
+                    })
+
+                    infoBtn.addEventListener("click", (e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        void openDetailsByCriteriaId(meta?.id || criteriaId)
+                    })
+                    card.appendChild(infoBtn)
+
+                    if (meta.wcagId) {
+                        const wcagIdEl = document.createElement("div")
+                        wcagIdEl.className = "wcag-id"
+                        wcagIdEl.textContent = `WCAG ${meta.wcagId}`
+                        card.appendChild(wcagIdEl)
+                    }
+
+                    if (meta.bitvId) {
+                        const bitvIdEl = document.createElement("div")
+                        bitvIdEl.className = "bitv-id"
+                        bitvIdEl.textContent = `BITV ${meta.bitvId}`
+                        card.appendChild(bitvIdEl)
+                        card.classList.add("is-bitv")
+                    }
+
+                    const titleEl = document.createElement("div")
+                    titleEl.className = "pruefschritt-title"
+                    titleEl.textContent = meta.title
+                    card.appendChild(titleEl)
+
+                    if (meta.conformanceLevel) {
+                        const levelEl = document.createElement("div")
+                        levelEl.className = meta.conformanceLevel
+                        levelEl.textContent = meta.conformanceLevel
+                        card.appendChild(levelEl)
+                    }
+
+                    item.appendChild(card)
+
+                    makeDraggable(item, (x, y) => {
+                        sync.sendOp({ type: "wb.item.move", key, x, y })
+                    })
+
+                    itemsRoot.appendChild(item)
+                    existingNonText.set(key, item)
+                    return item
+                }
+
+                const updatePosition = (item, pos) => {
+                    const x = Math.max(0, Number(pos?.x) || 0)
+                    const y = Math.max(0, Number(pos?.y) || 0)
+                    item.style.left = `${x}px`
+                    item.style.top = `${y}px`
+                }
+
+                const updateThemeHeader = (item, tName, tSelection, index) => {
+                    const headerKey = `themeHeader::${tName}`
+                    const storedPos =
+                        state.whiteboard &&
+                        state.whiteboard.items &&
+                        state.whiteboard.items[headerKey]
+                    const fallbackPos = {
+                        x: 12,
+                        y: 60 + Math.max(0, Number(index) || 0) * 140,
+                    }
+                    updatePosition(item, storedPos || fallbackPos)
+                    item.style.zIndex = String(
+                        zIndexForKey(state, headerKey, fallbackZ++)
+                    )
+
+                    const hidden = isThemeHidden(state, tName)
+                    const toggleBtn = item.querySelector(
+                        'button[data-role="theme-toggle"]'
+                    )
+                    if (toggleBtn) {
+                        const label = hidden
+                            ? "Thema einblenden"
+                            : "Thema ausblenden"
+                        toggleBtn.setAttribute("aria-label", label)
+                        toggleBtn.setAttribute("title", label)
+
+                        const icon = toggleBtn.querySelector(".material-icons")
+                        if (icon) {
+                            icon.textContent = hidden
+                                ? "visibility_off"
+                                : "visibility"
+                        }
+                    }
+                    const hintEl = item.querySelector(
+                        'div[data-role="theme-hint"]'
+                    )
+                    if (hintEl) {
+                        hintEl.textContent = hidden
+                            ? `Karten: ${tSelection.length} (aus)`
+                            : `Karten: ${tSelection.length}`
+                    }
+                }
+
+                const updateCriteriaCard = (item, key, hidden) => {
+                    const pos = (state.whiteboard &&
+                        state.whiteboard.items &&
+                        state.whiteboard.items[key]) || { x: 30, y: 30 }
+                    updatePosition(item, pos)
+                    item.style.zIndex = String(
+                        zIndexForKey(state, key, fallbackZ++)
+                    )
+                    item.style.display = hidden ? "none" : "block"
+                }
+
+                for (const [i, t] of themes.entries()) {
+                    const selection = getThemeSelection(state, t)
+                    const headerKey = `themeHeader::${t}`
+                    desiredKeys.add(headerKey)
+                    const headerNode = ensureThemeHeaderNode(t)
+                    updateThemeHeader(headerNode, t, selection, i)
+
+                    const hidden = isThemeHidden(state, t)
+
+                    for (const criteriaId of selection) {
+                        const meta = criteriaById.get(criteriaId) || {
+                            id: criteriaId,
+                            title: criteriaId,
+                            sectionIndex: 0,
+                            wcagId: "",
+                            bitvId: "",
+                            conformanceLevel: "",
+                        }
+                        const key = `${t}::${criteriaId}`
+                        desiredKeys.add(key)
+                        const node = ensureCriteriaCardNode(t, criteriaId, meta)
+                        updateCriteriaCard(node, key, hidden)
+                        if (!hidden) {
+                            connectionPairs.push({ from: headerKey, to: key })
+                        }
+                    }
+                }
+
+                // Remove stale nodes that are no longer part of the current state.
+                for (const [key, el] of existingNonText.entries()) {
+                    if (!desiredKeys.has(key)) {
+                        el.remove()
+                        existingNonText.delete(key)
+                    }
+                }
+
+                // Lines: theme title <-> card connections (behind items).
+                latestConnectionPairs = connectionPairs
+                renderConnections(connectionPairs)
+
+                // Re-apply local selection after content updates.
+                applySelectionToDom()
+            }
+
+            function makeDraggable(el, onMove) {
+                if (el && el.dataset && el.dataset.draggableAttached === "1") {
+                    return
+                }
+                if (el && el.dataset) {
+                    el.dataset.draggableAttached = "1"
+                }
+                let dragging = false
+                let pendingDrag = false
+                let pendingPointerId = -1
+                let pendingFromTextarea = false
+                let startX = 0
+                let startY = 0
+                let originLeft = 0
+                let originTop = 0
+
+                const DRAG_THRESHOLD_PX = 6
+
+                const startDrag = (e) => {
+                    dragging = true
+                    pendingDrag = false
+                    pendingPointerId = -1
+                    el.classList.add("dragging")
+                    try {
+                        el.setPointerCapture(e.pointerId)
+                    } catch {
+                        // ignore
+                    }
+                }
+
+                const canPromotePendingDrag = (e) => {
+                    if (!pendingDrag) return false
+                    if (e.pointerId !== pendingPointerId) return false
+                    const dx0 = e.clientX - startX
+                    const dy0 = e.clientY - startY
+                    return Math.hypot(dx0, dy0) >= DRAG_THRESHOLD_PX
+                }
+
+                const stopEditingIfNeeded = () => {
+                    if (!pendingFromTextarea) return
+                    const ta = el.querySelector("textarea")
+                    if (ta && document.activeElement === ta) {
+                        try {
+                            ta.blur()
+                        } catch {
+                            // ignore
+                        }
+                    }
+                }
+
+                const promotePendingToDrag = (e) => {
+                    pendingDrag = false
+                    pendingPointerId = -1
+                    stopEditingIfNeeded()
+                    pendingFromTextarea = false
+                    e.preventDefault()
+                    startDrag(e)
+                }
+
+                const onPointerDown = (e) => {
+                    if (el.classList && el.classList.contains("is-locked")) {
+                        return
+                    }
+
+                    const card = el.querySelector(".card")
+                    const textFrame = el.querySelector(".wb-text-frame")
+                    if (!card && !textFrame) return
+
+                    const interactive =
+                        e.target &&
+                        e.target.closest &&
+                        e.target.closest(
+                            "button, a, input, textarea, select, option, label"
+                        )
+
+                    const textareaTarget =
+                        e.target && e.target.closest
+                            ? e.target.closest("textarea")
+                            : null
+                    const allowTextareaDrag =
+                        textareaTarget && el.classList.contains("board-text")
+
+                    // For normal interactive elements, don't start dragging.
+                    // For text frames, allow "full-surface" dragging from the textarea
+                    // but only after a small movement threshold so clicks still edit.
+                    if (interactive && !allowTextareaDrag) return
+
+                    pendingFromTextarea = Boolean(allowTextareaDrag)
+
+                    startX = e.clientX
+                    startY = e.clientY
+                    originLeft = Number.parseFloat(el.style.left || "0")
+                    originTop = Number.parseFloat(el.style.top || "0")
+
+                    if (pendingFromTextarea) {
+                        pendingDrag = true
+                        pendingPointerId = e.pointerId
+                        return
+                    }
+
+                    startDrag(e)
+                }
+
+                const onPointerMove = (e) => {
+                    if (!dragging) {
+                        if (!canPromotePendingDrag(e)) return
+                        promotePendingToDrag(e)
+                    }
+
+                    const scale = getZoom()
+                    const dx = (e.clientX - startX) / scale
+                    const dy = (e.clientY - startY) / scale
+                    const x = Math.max(0, originLeft + dx)
+                    const y = Math.max(0, originTop + dy)
+                    el.style.left = `${x}px`
+                    el.style.top = `${y}px`
+                    scheduleConnectionsRender()
+                    scheduleSelectionOverlaysRender()
+                }
+
+                const onPointerUp = (e) => {
+                    if (pendingDrag && e.pointerId === pendingPointerId) {
+                        pendingDrag = false
+                        pendingPointerId = -1
+                        pendingFromTextarea = false
+                        return
+                    }
+                    if (!dragging) return
+                    dragging = false
+                    el.classList.remove("dragging")
+                    lastDragEndedAt = Date.now()
+                    try {
+                        el.releasePointerCapture(e.pointerId)
+                    } catch {
+                        // ignore
+                    }
+
+                    const x = Number.parseFloat(el.style.left || "0")
+                    const y = Number.parseFloat(el.style.top || "0")
+                    onMove(Math.round(x), Math.round(y))
+                    scheduleConnectionsRender()
+                    scheduleSelectionOverlaysRender()
+                }
+
+                el.addEventListener("pointerdown", onPointerDown)
+                el.addEventListener("pointermove", onPointerMove)
+                el.addEventListener("pointerup", onPointerUp)
+                el.addEventListener("pointercancel", onPointerUp)
+            }
+
+            // Selection: click to select; Shift/Ctrl/Cmd for multi-select.
+            function isPrimaryBoardClick(e) {
+                if (!e) return false
+                if (Date.now() - lastDragEndedAt < 250) return false
+                if (e.button && e.button !== 0) return false
+                return true
+            }
+
+            function isInteractiveBoardTarget(target) {
+                return Boolean(
+                    target &&
+                    target.closest &&
+                    target.closest(
+                        "button, a, input, textarea, select, option, label"
+                    )
+                )
+            }
+
+            function keyFromBoardTarget(target) {
+                const item =
+                    target && target.closest
+                        ? target.closest(".board-item")
+                        : null
+                return item ? String(item.dataset.key || "") : ""
+            }
+
+            function clearSelectionFromBoardClick(e) {
+                if (selectionBoxEl) selectionBoxEl.style.display = "none"
+                hideContextMenu()
+                if (!isAddSelectionModifier(e)) clearSelection()
+            }
+
+            if (itemsLayerEl) {
+                itemsLayerEl.addEventListener("click", (e) => {
+                    if (!isPrimaryBoardClick(e)) return
+                    const target = e.target
+                    if (isInteractiveBoardTarget(target)) return
+
+                    const key = keyFromBoardTarget(target)
+                    if (!key) return clearSelectionFromBoardClick(e)
+
+                    if (isToggleSelectionModifier(e)) {
+                        toggleSelection(key)
+                    } else if (e.shiftKey) {
+                        addToSelection(key)
+                    } else {
+                        selectSingle(key)
+                    }
+                })
+
+                // Context menu for z-order operations.
+                itemsLayerEl.addEventListener("contextmenu", (e) => {
+                    const item =
+                        e.target && e.target.closest
+                            ? e.target.closest(".board-item")
+                            : null
+                    const key = item ? String(item.dataset.key || "") : ""
+                    if (!key) return
+                    e.preventDefault()
+                    showContextMenuAt(e.clientX, e.clientY, key)
+                })
+            }
+
+            // Marquee selection on empty canvas area.
+            if (canvasEl) {
+                canvasEl.addEventListener("pointerdown", (e) => {
+                    if (e.button !== 0) return
+                    const inUi =
+                        e.target &&
+                        e.target.closest &&
+                        e.target.closest(
+                            "#wb-toolbar, #wb-centerbar, #v4-connbar"
+                        )
+                    if (inUi) return
+
+                    const onItem =
+                        e.target &&
+                        e.target.closest &&
+                        e.target.closest(".board-item")
+                    if (onItem) return
+
+                    // Require a modifier so normal clicks don't surprise.
+                    if (!isAddSelectionModifier(e)) return
+
+                    hideContextMenu()
+                    beginMarqueeSelection(e)
+                })
+
+                canvasEl.addEventListener("pointermove", (e) => {
+                    updateMarqueeSelection(e)
+                })
+
+                canvasEl.addEventListener("pointerup", (e) => {
+                    if (!isMarqueeSelecting) return
+                    endMarqueeSelection(e, {
+                        additive: isAddSelectionModifier(e),
+                    })
+                })
+
+                canvasEl.addEventListener("pointercancel", (e) => {
+                    if (!isMarqueeSelecting) return
+                    isMarqueeSelecting = false
+                    if (selectionBoxEl) selectionBoxEl.style.display = "none"
+                })
+            }
+
+            // Hide context menu on outside click / Escape.
+            document.addEventListener("click", (e) => {
+                if (!contextMenuEl) return
+                if (contextMenuEl.style.display !== "block") return
+                const inside =
+                    e.target && e.target.closest
+                        ? e.target.closest("#wb-contextmenu")
+                        : null
+                if (!inside) hideContextMenu()
+            })
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") {
+                    hideContextMenu()
+                    if (isMarqueeSelecting) {
+                        isMarqueeSelecting = false
+                        if (selectionBoxEl)
+                            selectionBoxEl.style.display = "none"
+                    }
+                    // Optional: clear selection with Escape if no context menu.
+                    if (!isTypingInTextFrame()) clearSelection()
+                }
+            })
+
+            if (contextMenuEl) {
+                contextMenuEl.addEventListener("click", (e) => {
+                    const btn =
+                        e.target && e.target.closest
+                            ? e.target.closest("button[data-action]")
+                            : null
+                    if (!btn) return
+                    const action = String(btn.dataset.action || "")
+                    if (!action || !contextMenuKey) return
+                    applyZOrderAction(action, contextMenuKey)
+                    hideContextMenu()
+                })
+            }
+
+            function getSelectedItemsForLayout() {
+                const keys = Array.from(selectedKeys)
+                if (keys.length < 2) return []
+                const root = itemsLayerEl || canvasEl
+                return keys
+                    .map((k) => {
+                        const el = root.querySelector(
+                            `.board-item[data-key="${CSS.escape(String(k))}"]`
+                        )
+                        if (!el) return null
+                        const b = getItemBoundsInBoard(el)
+                        return { key: String(k), ...b }
+                    })
+                    .filter(Boolean)
+            }
+
+            function computeGroupMetrics(items) {
+                const minX = Math.min(...items.map((i) => i.x))
+                const minY = Math.min(...items.map((i) => i.y))
+                const maxR = Math.max(...items.map((i) => i.x + i.w))
+                const maxB = Math.max(...items.map((i) => i.y + i.h))
+                return {
+                    minX,
+                    minY,
+                    maxR,
+                    maxB,
+                    centerX: (minX + maxR) / 2,
+                    centerY: (minY + maxB) / 2,
+                }
+            }
+
+            function distributeAlong(items, axis) {
+                const sorted = [...items].sort((a, b) =>
+                    axis === "x" ? a.x - b.x : a.y - b.y
+                )
+                if (sorted.length <= 2) return new Map()
+
+                const first = sorted[0]
+                const last = sorted[sorted.length - 1]
+                const span = axis === "x" ? last.x - first.x : last.y - first.y
+                if (span <= 0) return new Map()
+
+                const step = span / (sorted.length - 1)
+                const updates = new Map()
+                sorted.forEach((i, idx) => {
+                    updates.set(i.key, {
+                        x: axis === "x" ? first.x + step * idx : i.x,
+                        y: axis === "y" ? first.y + step * idx : i.y,
+                    })
+                })
+                return updates
+            }
+
+            function computeAlignmentUpdates(mode, items, metrics) {
+                const updates = new Map()
+                if (mode === "top") {
+                    items.forEach((i) =>
+                        updates.set(i.key, { x: i.x, y: metrics.minY })
+                    )
+                    return updates
+                }
+                if (mode === "middle-y") {
+                    items.forEach((i) =>
+                        updates.set(i.key, {
+                            x: i.x,
+                            y: metrics.centerY - i.h / 2,
+                        })
+                    )
+                    return updates
+                }
+                if (mode === "bottom") {
+                    items.forEach((i) =>
+                        updates.set(i.key, { x: i.x, y: metrics.maxB - i.h })
+                    )
+                    return updates
+                }
+                if (mode === "left") {
+                    items.forEach((i) =>
+                        updates.set(i.key, { x: metrics.minX, y: i.y })
+                    )
+                    return updates
+                }
+                if (mode === "middle-x") {
+                    items.forEach((i) =>
+                        updates.set(i.key, {
+                            x: metrics.centerX - i.w / 2,
+                            y: i.y,
+                        })
+                    )
+                    return updates
+                }
+                if (mode === "right") {
+                    items.forEach((i) =>
+                        updates.set(i.key, { x: metrics.maxR - i.w, y: i.y })
+                    )
+                    return updates
+                }
+                if (mode === "distribute-x") return distributeAlong(items, "x")
+                if (mode === "distribute-y") return distributeAlong(items, "y")
+                return updates
+            }
+
+            function commitPositionUpdates(updates) {
+                if (!updates || !updates.size) return
+                const batch = []
+                for (const [key, pos] of updates.entries()) {
+                    batch.push({
+                        key: String(key || ""),
+                        x: Math.round(Math.max(0, pos.x)),
+                        y: Math.round(Math.max(0, pos.y)),
+                    })
+                }
+                sync.sendOp({ type: "wb.items.batch", updates: batch })
+            }
+
+            function alignSelected(mode) {
+                const items = getSelectedItemsForLayout()
+                if (items.length < 2) return
+                const metrics = computeGroupMetrics(items)
+                const updates = computeAlignmentUpdates(
+                    String(mode || ""),
+                    items,
+                    metrics
+                )
+                commitPositionUpdates(updates)
+            }
+
+            if (alignTopBtn)
+                alignTopBtn.addEventListener("click", () =>
+                    alignSelected("top")
+                )
+            if (alignMiddleYBtn)
+                alignMiddleYBtn.addEventListener("click", () =>
+                    alignSelected("middle-y")
+                )
+            if (alignBottomBtn)
+                alignBottomBtn.addEventListener("click", () =>
+                    alignSelected("bottom")
+                )
+            if (alignLeftBtn)
+                alignLeftBtn.addEventListener("click", () =>
+                    alignSelected("left")
+                )
+            if (alignMiddleXBtn)
+                alignMiddleXBtn.addEventListener("click", () =>
+                    alignSelected("middle-x")
+                )
+            if (alignRightBtn)
+                alignRightBtn.addEventListener("click", () =>
+                    alignSelected("right")
+                )
+            if (distributeXBtn)
+                distributeXBtn.addEventListener("click", () =>
+                    alignSelected("distribute-x")
+                )
+            if (distributeYBtn)
+                distributeYBtn.addEventListener("click", () =>
+                    alignSelected("distribute-y")
+                )
+
+            function connectNow({ updateUrl = true } = {}) {
+                sync.setIdentity({
+                    wsUrl: wsUrlEl.value,
+                    sessionId: sessionEl.value,
+                    username: usernameEl.value || "Anonym",
+                })
+
+                // Switching sessions should also switch local selection.
+                restoreSelectionStateFromStorage()
+
+                safeStorageSet(`${STORAGE_PREFIX}:wsUrl`, wsUrlEl.value)
+                safeStorageSet(`${STORAGE_PREFIX}:sessionId`, sessionEl.value)
+                safeStorageSet(`${STORAGE_PREFIX}:username`, usernameEl.value)
+
+                if (updateUrl) {
+                    setQueryParams({
+                        ws: wsUrlEl.value,
+                        session: sessionEl.value,
+                        name: usernameEl.value,
+                    })
+                }
+
+                sync.connect()
+            }
+
+            connectBtn.addEventListener("click", () => {
+                connectNow({ updateUrl: true })
+            })
+
+            disconnectBtn.addEventListener("click", () => sync.disconnect())
+
+            // Modal close handlers (same behavior as treemap/v4/index.html)
+            const closeButton = document.querySelector(
+                "#sectionModal .close-button"
+            )
+            if (closeButton) {
+                closeButton.addEventListener("click", closeDetailsModal)
+            }
+
+            const modalEl = document.getElementById("sectionModal")
+            if (modalEl) {
+                modalEl.addEventListener("cancel", (event) => {
+                    event.preventDefault()
+                    closeDetailsModal()
+                })
+
+                // Click on backdrop closes
+                modalEl.addEventListener("click", (event) => {
+                    if (event.target === modalEl) closeDetailsModal()
+                })
+            }
+
+            // Auto-connect on load (same behavior as treemap/v4/index.html)
+            // so the persisted workspace state is loaded immediately.
+            connectNow({ updateUrl: true })
+
+            if (addTextFrameBtn) {
+                addTextFrameBtn.addEventListener("click", () => {
+                    const newId =
+                        globalThis.crypto &&
+                        typeof globalThis.crypto.randomUUID === "function"
+                            ? `text::${globalThis.crypto.randomUUID()}`
+                            : `text::${Date.now()}-${Math.random()
+                                  .toString(16)
+                                  .slice(2)}`
+
+                    sync.sendOp({
+                        type: "wb.text.create",
+                        id: newId,
+                        x: 220,
+                        y: 60,
+                        text: "",
+                    })
+                })
+            }
+
+            // Auto-reconnect after reload using persisted session settings.
+            connectNow({ updateUrl: true })
+
+            // Persist local inputs (per participant)
+            if (wsUrlEl) {
+                wsUrlEl.addEventListener("input", () => {
+                    safeStorageSet(`${STORAGE_PREFIX}:wsUrl`, wsUrlEl.value)
+                })
+            }
+            if (sessionEl) {
+                sessionEl.addEventListener("input", () => {
+                    safeStorageSet(
+                        `${STORAGE_PREFIX}:sessionId`,
+                        sessionEl.value
+                    )
+                })
+            }
+            if (usernameEl) {
+                usernameEl.addEventListener("input", () => {
+                    safeStorageSet(
+                        `${STORAGE_PREFIX}:username`,
+                        usernameEl.value
+                    )
+                })
+            }
+
+            // Initial render + Daten laden
+            scheduleRender(sync.state)
+            try {
+                const items = await loadPruefschritte()
+                criteriaById = new Map(items.map((c) => [c.id, c]))
+                scheduleRender(sync.state)
+            } catch (err) {
+                console.error(err)
+                boardTitleEl.textContent = "Fehler beim Laden der Prüfschritte."
+            }
+        </script>
+    </body>
+</html>
