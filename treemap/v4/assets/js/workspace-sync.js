@@ -178,12 +178,18 @@ function applyWorkspaceOp(state, op, { clientId, username } = {}) {
         const prefixTo = `${to}::`
 
         const renameKey = (oldKey, newKey) => {
-            if (Object.hasOwn(wb.items, oldKey) && !Object.hasOwn(wb.items, newKey)) {
+            if (
+                Object.hasOwn(wb.items, oldKey) &&
+                !Object.hasOwn(wb.items, newKey)
+            ) {
                 wb.items[newKey] = wb.items[oldKey]
             }
             if (Object.hasOwn(wb.items, oldKey)) delete wb.items[oldKey]
 
-            if (Object.hasOwn(wb.locks, oldKey) && !Object.hasOwn(wb.locks, newKey)) {
+            if (
+                Object.hasOwn(wb.locks, oldKey) &&
+                !Object.hasOwn(wb.locks, newKey)
+            ) {
                 wb.locks[newKey] = wb.locks[oldKey]
             }
             if (Object.hasOwn(wb.locks, oldKey)) delete wb.locks[oldKey]

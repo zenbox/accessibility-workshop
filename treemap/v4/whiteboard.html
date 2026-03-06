@@ -1606,7 +1606,10 @@
 
                     // Deletions should persist immediately so a fast reload
                     // cannot resurrect stale localSeedState.
-                    if (source === "op" && String(op?.type || "") === "wb.items.delete") {
+                    if (
+                        source === "op" &&
+                        String(op?.type || "") === "wb.items.delete"
+                    ) {
                         persistWorkspaceStateNow(state)
                     } else {
                         scheduleWorkspacePersist(state, { source })
@@ -2268,7 +2271,10 @@
             function renameTheme(themeName) {
                 const from = String(themeName || "").trim()
                 if (!from) return
-                const next = globalThis.prompt("Neuer Name für das Thema:", from)
+                const next = globalThis.prompt(
+                    "Neuer Name für das Thema:",
+                    from
+                )
                 const to = String(next || "").trim()
                 if (!to || to === from) return
 
