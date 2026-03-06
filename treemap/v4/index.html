@@ -279,6 +279,26 @@
                 white-space: nowrap;
             }
 
+            .v4-theme-item {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+            }
+
+            .v4-theme-delete-btn {
+                padding: 0;
+                width: 1.75rem;
+                min-width: 1.75rem;
+                height: 1.75rem;
+                border-radius: 999px;
+                justify-content: center;
+            }
+
+            .v4-theme-delete-btn .material-icons {
+                font-size: 1.1rem;
+                line-height: 1;
+            }
+
             .v4-theme-label {
                 display: inline-flex;
                 align-items: center;
@@ -1221,6 +1241,26 @@
                 )
             }
 
+            function deleteTheme(themeName) {
+                const name = String(themeName || "").trim()
+                if (!name) return
+
+                sync.sendOp({
+                    type: "collections.theme.delete",
+                    theme: name,
+                })
+
+                const active = getActiveThemeName()
+                if (active && active === name) {
+                    if (themeEl) themeEl.value = ""
+                    setActiveTheme("")
+                } else {
+                    render(sync.state)
+                }
+
+                notify(`Thema gelöscht: ${name}`)
+            }
+
             function themeNamesFromState(state) {
                 const collections = (state && state.collections) || {}
                 return Object.keys(collections).filter((name) => {
@@ -1248,6 +1288,9 @@
                         (state.collections && state.collections[name]
                             ? state.collections[name].length
                             : 0) || 0
+                    const item = document.createElement("div")
+                    item.className = "v4-theme-item"
+
                     const btn = document.createElement("button")
                     btn.type = "button"
                     btn.className = "v4-btn v4-theme-btn"
@@ -1265,7 +1308,23 @@
                         name === active ? "true" : "false"
                     )
                     btn.addEventListener("click", () => setActiveTheme(name))
-                    themeListEl.appendChild(btn)
+
+                    const delBtn = document.createElement("button")
+                    delBtn.type = "button"
+                    delBtn.className = "v4-btn v4-theme-btn v4-theme-delete-btn"
+                    delBtn.setAttribute("aria-label", `Thema löschen: ${name}`)
+                    delBtn.setAttribute("title", `Thema löschen: ${name}`)
+                    delBtn.innerHTML =
+                        '<span class="material-icons" aria-hidden="true">remove</span>'
+                    delBtn.addEventListener("click", (event) => {
+                        event.preventDefault()
+                        event.stopPropagation()
+                        deleteTheme(name)
+                    })
+
+                    item.appendChild(btn)
+                    item.appendChild(delBtn)
+                    themeListEl.appendChild(item)
                 }
             }
 

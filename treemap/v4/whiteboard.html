@@ -498,6 +498,42 @@
                 line-height: 1;
             }
 
+            .wb-theme-rename {
+                position: absolute;
+                top: 0.35rem;
+                left: 0.35rem;
+                width: 1.85rem;
+                height: 1.85rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                border-radius: 999px;
+                border: none;
+                background: transparent;
+                color: inherit;
+                cursor: pointer;
+            }
+
+            .wb-theme-rename:hover {
+                background: rgba(255, 255, 255, 0.16);
+            }
+
+            .wb-theme-rename:active {
+                background: rgba(255, 255, 255, 0.22);
+                transform: translateY(1px);
+            }
+
+            .wb-theme-rename:focus-visible {
+                outline: 2px solid rgba(255, 255, 255, 0.9);
+                outline-offset: 2px;
+            }
+
+            .wb-theme-rename .material-icons {
+                font-size: 1.1rem;
+                line-height: 1;
+            }
+
             .wb-info-btn {
                 position: absolute;
                 top: 0.35rem;
@@ -954,6 +990,13 @@
                 data-action="send-back"
             >
                 Nach hinten
+            </button>
+            <button
+                type="button"
+                role="menuitem"
+                data-action="delete"
+            >
+                Löschen
             </button>
         </div>
 
@@ -1420,6 +1463,70 @@
                     applyZOrderToDom(state)
                     return true
                 },
+                "wb.items.delete": (op) => {
+                    const keys = Array.isArray(op.keys)
+                        ? op.keys.map((k) => String(k || "")).filter(Boolean)
+                        : []
+                    if (!keys.length) return false
+
+                    const root = itemsLayerEl || canvasEl
+                    const removeSingle = (key) => {
+                        const node = findBoardItemNodeByKey(key)
+                        if (!node) return false
+                        node.remove()
+                        return true
+                    }
+
+                    const removeTheme = (theme) => {
+                        if (!root) return false
+                        const headerKey = `themeHeader::${theme}`
+                        const prefix = `${theme}::`
+                        let removed = false
+                        root.querySelectorAll(".board-item").forEach((node) => {
+                            const nk = String(node?.dataset?.key || "")
+                            if (
+                                nk === headerKey ||
+                                (prefix && nk.startsWith(prefix))
+                            ) {
+                                node.remove()
+                                removed = true
+                            }
+                        })
+                        return removed
+                    }
+
+                    let removedAny = false
+                    for (const k of keys) {
+                        if (k.startsWith("themeHeader::")) {
+                            const theme = k.slice("themeHeader::".length)
+                            removedAny = removeTheme(theme) || removedAny
+                        } else {
+                            removedAny = removeSingle(k) || removedAny
+                        }
+                    }
+
+                    // Local-only selection cleanup.
+                    if (selectedKeys.size) {
+                        const next = new Set(selectedKeys)
+                        let changed = false
+                        for (const k of keys) {
+                            if (next.has(k)) {
+                                next.delete(k)
+                                changed = true
+                            }
+                        }
+                        if (changed) {
+                            selectedKeys = next
+                            applySelectionToDom()
+                            persistSelectionState()
+                        }
+                    }
+
+                    scheduleConnectionsRender()
+                    scheduleSelectionOverlaysRender()
+
+                    return removedAny
+                },
             }
 
             function applyOpToDom(op, state) {
@@ -1496,10 +1603,21 @@
                 onState: ({ state, updatedBy, source, op }) => {
                     if (maybeSeedLocalStateOnFirstConnect(state)) return
                     maybeNotifyNewCriteria(state, updatedBy)
-                    scheduleWorkspacePersist(state, { source })
 
-                    if (source === "op" && op && applyOpToDom(op, state)) {
-                        return
+                    // Deletions should persist immediately so a fast reload
+                    // cannot resurrect stale localSeedState.
+                    if (source === "op" && String(op?.type || "") === "wb.items.delete") {
+                        persistWorkspaceStateNow(state)
+                    } else {
+                        scheduleWorkspacePersist(state, { source })
+                    }
+
+                    if (source === "op" && op) {
+                        const t = String(op.type || "")
+                        const applied = applyOpToDom(op, state)
+                        // For deletes, we still want a full reconcile render
+                        // (theme deletions affect derived cards + hints).
+                        if (applied && t !== "wb.items.delete") return
                     }
                     scheduleRender(state)
                 },
@@ -1902,6 +2020,33 @@
                 sync.sendOp({ type: "wb.zorder.set", zOrder: current })
             }
 
+            function deleteBoardKeys(keys) {
+                const raw = Array.isArray(keys) ? keys : [keys]
+                const unique = Array.from(
+                    new Set(raw.map((k) => String(k || "")).filter(Boolean))
+                )
+                if (!unique.length) return
+
+                // Clear local selection immediately (selection is not synced).
+                if (selectedKeys.size) {
+                    const next = new Set(selectedKeys)
+                    let changed = false
+                    for (const k of unique) {
+                        if (next.has(k)) {
+                            next.delete(k)
+                            changed = true
+                        }
+                    }
+                    if (changed) {
+                        selectedKeys = next
+                        applySelectionToDom()
+                        persistSelectionState()
+                    }
+                }
+
+                sync.sendOp({ type: "wb.items.delete", keys: unique })
+            }
+
             // Restore zoom from localStorage (per participant).
             const savedZoom = Number.parseFloat(
                 safeStorageGet(ZOOM_STORAGE_KEY) || ""
@@ -2117,6 +2262,20 @@
                     type: "wb.hidden.set",
                     theme: t,
                     hidden: nextHidden,
+                })
+            }
+
+            function renameTheme(themeName) {
+                const from = String(themeName || "").trim()
+                if (!from) return
+                const next = globalThis.prompt("Neuer Name für das Thema:", from)
+                const to = String(next || "").trim()
+                if (!to || to === from) return
+
+                sync.sendOp({
+                    type: "collections.theme.rename",
+                    from,
+                    to,
                 })
             }
 
@@ -2397,12 +2556,12 @@
                     const cs = getComputedStyle(textarea)
                     const fontSize = Number.parseFloat(cs.fontSize || "")
                     const rawLineHeight = cs.lineHeight
-                    const lineHeight =
-                        rawLineHeight && rawLineHeight !== "normal"
-                            ? Number.parseFloat(rawLineHeight)
-                            : Number.isFinite(fontSize)
-                              ? fontSize * 1.2
-                              : 16 * 1.2
+                    let lineHeight = 16 * 1.2
+                    if (rawLineHeight && rawLineHeight !== "normal") {
+                        lineHeight = Number.parseFloat(rawLineHeight)
+                    } else if (Number.isFinite(fontSize)) {
+                        lineHeight = fontSize * 1.2
+                    }
 
                     const padTop = Number.parseFloat(cs.paddingTop || "") || 0
                     const padBottom =
@@ -2709,6 +2868,26 @@
                     titleEl.textContent = tName
                     card.appendChild(titleEl)
 
+                    const renameBtn = document.createElement("button")
+                    renameBtn.type = "button"
+                    renameBtn.className = "v4-btn wb-theme-rename"
+                    renameBtn.dataset.role = "theme-rename"
+                    renameBtn.setAttribute("aria-label", "Thema umbenennen")
+                    renameBtn.setAttribute("title", "Thema umbenennen")
+
+                    const renameIcon = document.createElement("span")
+                    renameIcon.className = "material-icons"
+                    renameIcon.setAttribute("aria-hidden", "true")
+                    renameIcon.textContent = "edit"
+                    renameBtn.appendChild(renameIcon)
+
+                    renameBtn.addEventListener("click", (e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        renameTheme(tName)
+                    })
+                    card.appendChild(renameBtn)
+
                     const toggleBtn = document.createElement("button")
                     toggleBtn.type = "button"
                     toggleBtn.className = "v4-btn wb-theme-toggle"
@@ -2734,14 +2913,101 @@
 
                     item.appendChild(card)
 
-                    makeDraggable(item, (x, y) => {
-                        sync.sendOp({
-                            type: "wb.item.move",
-                            key: headerKey,
-                            x,
-                            y,
-                        })
-                    })
+                    const shiftGroup = {
+                        active: false,
+                        startDx: 0,
+                        startDy: 0,
+                        members: [],
+                    }
+
+                    const initShiftGroupIfNeeded = (dx, dy) => {
+                        if (shiftGroup.active) return
+
+                        const byKey = new Map()
+                        itemsRoot
+                            .querySelectorAll(".board-item")
+                            .forEach((node) => {
+                                const k = String(node?.dataset?.key || "")
+                                if (k) byKey.set(k, node)
+                            })
+
+                        const memberKeys = (latestConnectionPairs || [])
+                            .filter((p) => p && p.from === headerKey)
+                            .map((p) => p.to)
+
+                        const members = []
+                        for (const key of memberKeys) {
+                            const el = byKey.get(String(key))
+                            if (!el) continue
+                            const left = Number.parseFloat(el.style.left || "0")
+                            const top = Number.parseFloat(el.style.top || "0")
+                            members.push({
+                                key,
+                                el,
+                                originLeft: left,
+                                originTop: top,
+                            })
+                        }
+
+                        shiftGroup.active = true
+                        shiftGroup.startDx = dx
+                        shiftGroup.startDy = dy
+                        shiftGroup.members = members
+                    }
+
+                    const applyShiftGroupMove = (dx, dy) => {
+                        if (!shiftGroup.active) return
+                        const gdx = dx - shiftGroup.startDx
+                        const gdy = dy - shiftGroup.startDy
+                        for (const m of shiftGroup.members) {
+                            const x = Math.max(0, m.originLeft + gdx)
+                            const y = Math.max(0, m.originTop + gdy)
+                            m.el.style.left = `${x}px`
+                            m.el.style.top = `${y}px`
+                        }
+                    }
+
+                    makeDraggable(
+                        item,
+                        (x, y) => {
+                            sync.sendOp({
+                                type: "wb.item.move",
+                                key: headerKey,
+                                x,
+                                y,
+                            })
+                        },
+                        {
+                            onDragStart: ({ event }) => {
+                                if (!event?.shiftKey) return
+                                initShiftGroupIfNeeded(0, 0)
+                            },
+                            onMoveWhileDragging: ({ event, dx, dy }) => {
+                                if (!event?.shiftKey) return
+                                initShiftGroupIfNeeded(dx, dy)
+                                applyShiftGroupMove(dx, dy)
+                            },
+                            onDrop: () => {
+                                if (!shiftGroup.active) return
+                                for (const m of shiftGroup.members) {
+                                    const x = Number.parseFloat(
+                                        m.el.style.left || "0"
+                                    )
+                                    const y = Number.parseFloat(
+                                        m.el.style.top || "0"
+                                    )
+                                    sync.sendOp({
+                                        type: "wb.item.move",
+                                        key: m.key,
+                                        x: Math.round(x),
+                                        y: Math.round(y),
+                                    })
+                                }
+                                shiftGroup.active = false
+                                shiftGroup.members = []
+                            },
+                        }
+                    )
 
                     itemsRoot.appendChild(item)
                     existingNonText.set(headerKey, item)
@@ -2942,13 +3208,25 @@
                 applySelectionToDom()
             }
 
-            function makeDraggable(el, onMove) {
+            function makeDraggable(el, onMove, opts = {}) {
                 if (el && el.dataset && el.dataset.draggableAttached === "1") {
                     return
                 }
                 if (el && el.dataset) {
                     el.dataset.draggableAttached = "1"
                 }
+
+                const onMoveWhileDragging =
+                    typeof opts?.onMoveWhileDragging === "function"
+                        ? opts.onMoveWhileDragging
+                        : null
+                const onDragStart =
+                    typeof opts?.onDragStart === "function"
+                        ? opts.onDragStart
+                        : null
+                const onDrop =
+                    typeof opts?.onDrop === "function" ? opts.onDrop : null
+
                 let dragging = false
                 let pendingDrag = false
                 let pendingPointerId = -1
@@ -2969,6 +3247,18 @@
                         el.setPointerCapture(e.pointerId)
                     } catch {
                         // ignore
+                    }
+
+                    if (onDragStart) {
+                        try {
+                            onDragStart({
+                                event: e,
+                                originLeft,
+                                originTop,
+                            })
+                        } catch {
+                            // ignore
+                        }
                     }
                 }
 
@@ -3058,6 +3348,23 @@
                     const y = Math.max(0, originTop + dy)
                     el.style.left = `${x}px`
                     el.style.top = `${y}px`
+
+                    if (onMoveWhileDragging) {
+                        try {
+                            onMoveWhileDragging({
+                                event: e,
+                                dx,
+                                dy,
+                                x,
+                                y,
+                                originLeft,
+                                originTop,
+                            })
+                        } catch {
+                            // ignore
+                        }
+                    }
+
                     scheduleConnectionsRender()
                     scheduleSelectionOverlaysRender()
                 }
@@ -3082,6 +3389,19 @@
                     const x = Number.parseFloat(el.style.left || "0")
                     const y = Number.parseFloat(el.style.top || "0")
                     onMove(Math.round(x), Math.round(y))
+
+                    if (onDrop) {
+                        try {
+                            onDrop({
+                                event: e,
+                                x: Math.round(x),
+                                y: Math.round(y),
+                            })
+                        } catch {
+                            // ignore
+                        }
+                    }
+
                     scheduleConnectionsRender()
                     scheduleSelectionOverlaysRender()
                 }
@@ -3151,6 +3471,13 @@
                     const key = item ? String(item.dataset.key || "") : ""
                     if (!key) return
                     e.preventDefault()
+
+                    // If the user right-clicks a non-selected item,
+                    // treat it as the context target.
+                    if (!selectedKeys.has(key)) {
+                        selectSingle(key)
+                    }
+
                     showContextMenuAt(e.clientX, e.clientY, key)
                 })
             }
@@ -3231,7 +3558,15 @@
                     if (!btn) return
                     const action = String(btn.dataset.action || "")
                     if (!action || !contextMenuKey) return
-                    applyZOrderAction(action, contextMenuKey)
+
+                    if (action === "delete") {
+                        const keys = selectedKeys.size
+                            ? Array.from(selectedKeys)
+                            : [contextMenuKey]
+                        deleteBoardKeys(keys)
+                    } else {
+                        applyZOrderAction(action, contextMenuKey)
+                    }
                     hideContextMenu()
                 })
             }

@@ -381,6 +381,84 @@ function applyWorkspaceOp(session, op, { clientId, username }) {
         return true
     }
 
+    if (t === "collections.theme.delete") {
+        const theme = String(op.theme || "").trim()
+        if (!theme) return false
+        session.state.collections = session.state.collections || {}
+        delete session.state.collections[theme]
+        return true
+    }
+
+    if (t === "collections.theme.rename") {
+        const from = String(op.from || "").trim()
+        const to = String(op.to || "").trim()
+        if (!from || !to || from === to) return false
+
+        session.state.collections = session.state.collections || {}
+        const hadFrom = Object.hasOwn(session.state.collections, from)
+        if (hadFrom) {
+            const existing = session.state.collections[from]
+            const targetExisting = Object.hasOwn(session.state.collections, to)
+                ? session.state.collections[to]
+                : null
+            if (Array.isArray(existing) && Array.isArray(targetExisting)) {
+                const merged = [...targetExisting]
+                for (const id of existing) {
+                    if (!merged.includes(id)) merged.push(id)
+                }
+                session.state.collections[to] = merged
+            } else {
+                session.state.collections[to] = existing
+            }
+            delete session.state.collections[from]
+        }
+
+        // hiddenThemes key rename
+        if (wb.hiddenThemes && Object.hasOwn(wb.hiddenThemes, from)) {
+            wb.hiddenThemes[to] = wb.hiddenThemes[from]
+            delete wb.hiddenThemes[from]
+        }
+
+        const headerFrom = `themeHeader::${from}`
+        const headerTo = `themeHeader::${to}`
+        const prefixFrom = `${from}::`
+        const prefixTo = `${to}::`
+
+        const renameKey = (oldKey, newKey) => {
+            if (wb.items && Object.hasOwn(wb.items, oldKey) && !Object.hasOwn(wb.items, newKey)) {
+                wb.items[newKey] = wb.items[oldKey]
+            }
+            if (wb.items && Object.hasOwn(wb.items, oldKey)) delete wb.items[oldKey]
+
+            if (wb.locks && Object.hasOwn(wb.locks, oldKey) && !Object.hasOwn(wb.locks, newKey)) {
+                wb.locks[newKey] = wb.locks[oldKey]
+            }
+            if (wb.locks && Object.hasOwn(wb.locks, oldKey)) delete wb.locks[oldKey]
+        }
+
+        renameKey(headerFrom, headerTo)
+        for (const key of Object.keys(wb.items || {})) {
+            if (!key.startsWith(prefixFrom)) continue
+            const rest = key.slice(prefixFrom.length)
+            renameKey(key, `${prefixTo}${rest}`)
+        }
+
+        if (Array.isArray(wb.zOrder)) {
+            wb.zOrder = wb.zOrder
+                .map((k) => {
+                    const kk = String(k || "")
+                    if (kk === headerFrom) return headerTo
+                    if (kk.startsWith(prefixFrom)) {
+                        return `${prefixTo}${kk.slice(prefixFrom.length)}`
+                    }
+                    return kk
+                })
+                .filter(Boolean)
+        }
+
+        return true
+    }
+
     if (t === "wb.item.move") {
         const key = String(op.key || "")
         const x = Number(op.x)
@@ -407,6 +485,157 @@ function applyWorkspaceOp(session, op, { clientId, username }) {
             }
         }
         return true
+    }
+
+    if (t === "wb.item.delete") {
+        const key = String(op.key || op.id || "")
+        if (!key) return false
+        op = { type: "wb.items.delete", keys: [key] }
+    }
+
+    if (String(op.type || "") === "wb.items.delete") {
+        const keys = Array.isArray(op.keys)
+            ? op.keys.map((k) => String(k || "")).filter(Boolean)
+            : []
+        if (!keys.length) return false
+
+        const removed = new Set()
+
+        const removeKeyFromWhiteboard = (key) => {
+            const k = String(key || "")
+            if (!k) return false
+            let changed = false
+            removed.add(k)
+            if (wb.items && Object.hasOwn(wb.items, k)) {
+                delete wb.items[k]
+                changed = true
+            }
+            if (wb.textFrames && Object.hasOwn(wb.textFrames, k)) {
+                delete wb.textFrames[k]
+                changed = true
+            }
+            if (wb.locks && Object.hasOwn(wb.locks, k)) {
+                delete wb.locks[k]
+                changed = true
+            }
+            return changed
+        }
+
+        let changedAny = false
+        for (const key of keys) {
+            if (key.startsWith("themeHeader::")) {
+                const theme = key.slice("themeHeader::".length)
+                const headerKey = `themeHeader::${theme}`
+
+                // Delete theme collection (removes all connected criteria cards from view).
+                if (
+                    session.state.collections &&
+                    Object.hasOwn(session.state.collections, theme)
+                ) {
+                    delete session.state.collections[theme]
+                    changedAny = true
+                }
+                if (wb.hiddenThemes && Object.hasOwn(wb.hiddenThemes, theme)) {
+                    delete wb.hiddenThemes[theme]
+                    changedAny = true
+                }
+
+                // Remove header + all criteria-card positions for that theme.
+                const prefix = `${theme}::`
+                changedAny = removeKeyFromWhiteboard(headerKey) || changedAny
+                for (const k of Object.keys(wb.items || {})) {
+                    if (k.startsWith(prefix)) {
+                        changedAny = removeKeyFromWhiteboard(k) || changedAny
+                    }
+                }
+
+                // Also purge any zOrder-only keys for this theme.
+                if (Array.isArray(wb.zOrder)) {
+                    for (const zk of wb.zOrder) {
+                        const zkk = String(zk || "")
+                        if (zkk === headerKey || zkk.startsWith(prefix)) {
+                            removed.add(zkk)
+                        }
+                    }
+                }
+                continue
+            }
+
+            if (key.startsWith("text::")) {
+                changedAny = removeKeyFromWhiteboard(key) || changedAny
+                continue
+            }
+
+            if (key.includes("::")) {
+                const parts = key.split("::")
+                const theme = String(parts[0] || "")
+                const criteriaId = parts.slice(1).join("::")
+                if (theme && criteriaId && session.state.collections) {
+                    const existing = Array.isArray(
+                        session.state.collections[theme]
+                    )
+                        ? session.state.collections[theme]
+                        : null
+                    if (existing) {
+                        const nextArr = existing.filter(
+                            (x) => String(x) !== String(criteriaId)
+                        )
+                        if (nextArr.length) {
+                            session.state.collections[theme] = nextArr
+                            changedAny = true
+                        } else {
+                            delete session.state.collections[theme]
+                            if (
+                                wb.hiddenThemes &&
+                                Object.hasOwn(wb.hiddenThemes, theme)
+                            ) {
+                                delete wb.hiddenThemes[theme]
+                            }
+
+                            // Remove theme header + any leftover positions for this theme.
+                            const headerKey = `themeHeader::${theme}`
+                            const prefix = `${theme}::`
+                            changedAny =
+                                removeKeyFromWhiteboard(headerKey) || changedAny
+                            for (const k of Object.keys(wb.items || {})) {
+                                if (k.startsWith(prefix)) {
+                                    changedAny =
+                                        removeKeyFromWhiteboard(k) || changedAny
+                                }
+                            }
+
+                            if (Array.isArray(wb.zOrder)) {
+                                for (const zk of wb.zOrder) {
+                                    const zkk = String(zk || "")
+                                    if (
+                                        zkk === headerKey ||
+                                        zkk.startsWith(prefix)
+                                    ) {
+                                        removed.add(zkk)
+                                    }
+                                }
+                            }
+
+                            changedAny = true
+                        }
+                    }
+                }
+                changedAny = removeKeyFromWhiteboard(key) || changedAny
+                continue
+            }
+
+            changedAny = removeKeyFromWhiteboard(key) || changedAny
+        }
+
+        if (removed.size && Array.isArray(wb.zOrder)) {
+            const before = wb.zOrder.length
+            wb.zOrder = wb.zOrder
+                .map((k) => String(k || ""))
+                .filter((k) => k && !removed.has(k))
+            if (wb.zOrder.length !== before) changedAny = true
+        }
+
+        return changedAny
     }
 
     if (t === "wb.hidden.set") {
