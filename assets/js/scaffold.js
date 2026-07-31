@@ -772,9 +772,6 @@ function createSkipLinks() {
 }
 
 function setTabindizes() {
-    // Opt-in only: setting tabindex on headings changes focus order and can
-    // interfere with component demos.
-    if (!document.body?.hasAttribute("data-scaffold-heading-tabindex")) return
     const all = document.querySelectorAll("h1, h2")
     all.forEach((el) => {
         el.tabIndex = 0

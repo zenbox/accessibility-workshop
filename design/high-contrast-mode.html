@@ -1,0 +1,2085 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Windows Hochkontrastmodus — CSS Referenz</title>
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+        />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            :root {
+                --surface: #0e1117;
+                --surface-raised: #161b22;
+                --surface-overlay: #1c2129;
+                --border: #2d333b;
+                --text-primary: #e6edf3;
+                --text-secondary: #8b949e;
+                --text-muted: #656d76;
+                --accent: #58a6ff;
+                --accent-subtle: #1a3a5c;
+                --code-bg: #0d1117;
+                --code-border: #2a2e34;
+                --radius: 8px;
+                --mono: "JetBrains Mono", monospace;
+                --sans: "Barlow", sans-serif;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                font-family: var(--sans);
+                background: var(--surface);
+                color: var(--text-primary);
+                line-height: 1.65;
+                font-size: 16px;
+                min-height: 100vh;
+            }
+
+            /* ─── LAYOUT ─── */
+            .page-wrapper {
+                max-width: 1120px;
+                margin: 0 auto;
+                padding: 2rem 1.5rem 4rem;
+            }
+
+            /* ─── HERO ─── */
+            .hero {
+                text-align: center;
+                padding: 3rem 0 2.5rem;
+                border-bottom: 1px solid var(--border);
+                margin-bottom: 3rem;
+            }
+
+            .hero-icon {
+                font-size: 48px;
+                color: var(--accent);
+                margin-bottom: 1rem;
+            }
+
+            .hero h1 {
+                font-size: clamp(1.8rem, 4vw, 2.6rem);
+                font-weight: 800;
+                letter-spacing: -0.02em;
+                margin-bottom: 0.5rem;
+                background: linear-gradient(
+                    135deg,
+                    var(--text-primary) 0%,
+                    var(--accent) 100%
+                );
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                color: var(--text-secondary);
+                max-width: 640px;
+                margin: 0 auto;
+            }
+
+            /* ─── SECTION ─── */
+            section {
+                margin-bottom: 3rem;
+            }
+
+            .section-header {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                margin-bottom: 1.25rem;
+                padding-bottom: 0.75rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .section-header .material-symbols-outlined {
+                font-size: 24px;
+                color: var(--accent);
+            }
+
+            .section-header h2 {
+                font-size: 1.35rem;
+                font-weight: 700;
+                letter-spacing: -0.01em;
+            }
+
+            .section-intro {
+                color: var(--text-secondary);
+                margin-bottom: 1.5rem;
+                font-size: 0.95rem;
+                line-height: 1.7;
+            }
+
+            /* ─── THEME CARDS (4 Themes) ─── */
+            .themes-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.25rem;
+                margin-bottom: 2rem;
+            }
+
+            .theme-card {
+                border-radius: var(--radius);
+                overflow: hidden;
+                border: 1px solid var(--border);
+                transition:
+                    transform 0.2s,
+                    box-shadow 0.2s;
+            }
+
+            .theme-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            }
+
+            .theme-card-header {
+                padding: 1rem 1.25rem 0.75rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .theme-card-header h3 {
+                font-size: 1rem;
+                font-weight: 700;
+            }
+
+            .theme-badge {
+                font-size: 0.7rem;
+                padding: 0.15rem 0.5rem;
+                border-radius: 99px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+            }
+
+            .theme-card-preview {
+                padding: 1rem 1.25rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.6rem;
+                font-size: 0.875rem;
+                min-height: 200px;
+            }
+
+            .theme-card-preview a {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+            .theme-card-preview button {
+                align-self: flex-start;
+                padding: 0.4rem 1rem;
+                border-radius: 4px;
+                font-family: var(--sans);
+                font-weight: 600;
+                font-size: 0.8rem;
+                cursor: pointer;
+            }
+
+            .theme-card-preview input[type="text"] {
+                padding: 0.35rem 0.6rem;
+                border-radius: 4px;
+                font-family: var(--sans);
+                font-size: 0.8rem;
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .theme-card-preview .disabled-text {
+                font-style: italic;
+                font-size: 0.8rem;
+            }
+
+            .theme-card-preview .selected-text {
+                display: inline-block;
+                padding: 0.1rem 0.3rem;
+                font-size: 0.8rem;
+            }
+
+            /* ── Aquatic ── */
+            .theme-aquatic .theme-card-header {
+                background: #202020;
+            }
+            .theme-aquatic .theme-card-header h3 {
+                color: #ffffff;
+            }
+            .theme-aquatic .theme-badge {
+                background: #75e9fc22;
+                color: #75e9fc;
+            }
+            .theme-aquatic .theme-card-preview {
+                background: #202020;
+                color: #ffffff;
+            }
+            .theme-aquatic .theme-card-preview a {
+                color: #8ee3f0;
+            }
+            .theme-aquatic .theme-card-preview button {
+                background: #2b4f6f;
+                color: #ffffff;
+                border: 2px solid #ffffff;
+            }
+            .theme-aquatic .theme-card-preview input[type="text"] {
+                background: #202020;
+                color: #ffffff;
+                border: 1px solid #ffffff;
+            }
+            .theme-aquatic .theme-card-preview .disabled-text {
+                color: #a0a0a0;
+            }
+            .theme-aquatic .theme-card-preview .selected-text {
+                background: #75e9fc;
+                color: #202020;
+            }
+
+            /* ── Desert ── */
+            .theme-desert .theme-card-header {
+                background: #fffaef;
+            }
+            .theme-desert .theme-card-header h3 {
+                color: #202020;
+            }
+            .theme-desert .theme-badge {
+                background: #90390922;
+                color: #903909;
+            }
+            .theme-desert .theme-card-preview {
+                background: #fffaef;
+                color: #202020;
+            }
+            .theme-desert .theme-card-preview a {
+                color: #0063b3;
+            }
+            .theme-desert .theme-card-preview button {
+                background: #fffaef;
+                color: #3d3d3d;
+                border: 2px solid #3d3d3d;
+            }
+            .theme-desert .theme-card-preview input[type="text"] {
+                background: #fffaef;
+                color: #202020;
+                border: 1px solid #3d3d3d;
+            }
+            .theme-desert .theme-card-preview .disabled-text {
+                color: #595959;
+            }
+            .theme-desert .theme-card-preview .selected-text {
+                background: #903909;
+                color: #ffffff;
+            }
+
+            /* ── Dusk ── */
+            .theme-dusk .theme-card-header {
+                background: #2d3236;
+            }
+            .theme-dusk .theme-card-header h3 {
+                color: #ffffff;
+            }
+            .theme-dusk .theme-badge {
+                background: #0063b322;
+                color: #70ebde;
+            }
+            .theme-dusk .theme-card-preview {
+                background: #2d3236;
+                color: #ffffff;
+            }
+            .theme-dusk .theme-card-preview a {
+                color: #70ebde;
+            }
+            .theme-dusk .theme-card-preview button {
+                background: #2d3236;
+                color: #b6f6f0;
+                border: 2px solid #b6f6f0;
+            }
+            .theme-dusk .theme-card-preview input[type="text"] {
+                background: #2d3236;
+                color: #ffffff;
+                border: 1px solid #b6f6f0;
+            }
+            .theme-dusk .theme-card-preview .disabled-text {
+                color: #a0a0a0;
+            }
+            .theme-dusk .theme-card-preview .selected-text {
+                background: #0063b3;
+                color: #ffffff;
+            }
+
+            /* ── Night Sky ── */
+            .theme-nightsky .theme-card-header {
+                background: #000000;
+            }
+            .theme-nightsky .theme-card-header h3 {
+                color: #ffffff;
+            }
+            .theme-nightsky .theme-badge {
+                background: #d5b4fd22;
+                color: #d5b4fd;
+            }
+            .theme-nightsky .theme-card-preview {
+                background: #000000;
+                color: #ffffff;
+            }
+            .theme-nightsky .theme-card-preview a {
+                color: #8080ff;
+            }
+            .theme-nightsky .theme-card-preview button {
+                background: #000000;
+                color: #ffee32;
+                border: 2px solid #ffee32;
+            }
+            .theme-nightsky .theme-card-preview input[type="text"] {
+                background: #000000;
+                color: #ffffff;
+                border: 1px solid #ffee32;
+            }
+            .theme-nightsky .theme-card-preview .disabled-text {
+                color: #a0a0a0;
+            }
+            .theme-nightsky .theme-card-preview .selected-text {
+                background: #d5b4fd;
+                color: #000000;
+            }
+
+            /* ─── COLOR MAP TABLE ─── */
+            .color-map {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.85rem;
+                margin-bottom: 2rem;
+                border-radius: var(--radius);
+                overflow: hidden;
+                border: 1px solid var(--border);
+            }
+
+            .color-map thead th {
+                background: var(--surface-overlay);
+                padding: 0.75rem 1rem;
+                text-align: left;
+                font-weight: 700;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: var(--text-secondary);
+                border-bottom: 2px solid var(--border);
+            }
+
+            .color-map tbody td {
+                padding: 0.6rem 1rem;
+                border-bottom: 1px solid var(--border);
+                vertical-align: middle;
+            }
+
+            .color-map tbody tr:last-child td {
+                border-bottom: none;
+            }
+
+            .color-map tbody tr:hover {
+                background: var(--surface-overlay);
+            }
+
+            .color-swatch {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .swatch {
+                width: 20px;
+                height: 20px;
+                border-radius: 4px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                flex-shrink: 0;
+            }
+
+            .color-hex {
+                font-family: var(--mono);
+                font-size: 0.78rem;
+                color: var(--text-secondary);
+            }
+
+            /* ─── SYSTEM COLORS TABLE ─── */
+            .system-colors-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.85rem;
+                margin-bottom: 1.5rem;
+                border-radius: var(--radius);
+                overflow: hidden;
+                border: 1px solid var(--border);
+            }
+
+            .system-colors-table thead th {
+                background: var(--surface-overlay);
+                padding: 0.75rem 1rem;
+                text-align: left;
+                font-weight: 700;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: var(--text-secondary);
+                border-bottom: 2px solid var(--border);
+            }
+
+            .system-colors-table tbody td {
+                padding: 0.6rem 1rem;
+                border-bottom: 1px solid var(--border);
+                vertical-align: top;
+            }
+
+            .system-colors-table tbody tr:last-child td {
+                border-bottom: none;
+            }
+
+            .system-colors-table tbody tr:hover {
+                background: var(--surface-overlay);
+            }
+
+            .keyword {
+                font-family: var(--mono);
+                font-size: 0.82rem;
+                color: #79c0ff;
+                font-weight: 500;
+            }
+
+            .mapping {
+                font-size: 0.82rem;
+                color: var(--text-secondary);
+            }
+
+            /* ─── CSS PROPERTIES TABLE ─── */
+            .props-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.85rem;
+                margin-bottom: 1.5rem;
+                border-radius: var(--radius);
+                overflow: hidden;
+                border: 1px solid var(--border);
+            }
+
+            .props-table thead th {
+                background: var(--surface-overlay);
+                padding: 0.75rem 1rem;
+                text-align: left;
+                font-weight: 700;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: var(--text-secondary);
+                border-bottom: 2px solid var(--border);
+            }
+
+            .props-table tbody td {
+                padding: 0.6rem 1rem;
+                border-bottom: 1px solid var(--border);
+                vertical-align: top;
+            }
+
+            .props-table tbody tr:last-child td {
+                border-bottom: none;
+            }
+
+            .props-table tbody tr:hover {
+                background: var(--surface-overlay);
+            }
+
+            .prop-name {
+                font-family: var(--mono);
+                font-size: 0.82rem;
+                color: #ffa657;
+            }
+
+            /* ─── CODE BLOCKS ─── */
+            .code-block {
+                background: var(--code-bg);
+                border: 1px solid var(--code-border);
+                border-radius: var(--radius);
+                padding: 1.25rem;
+                margin-bottom: 1.25rem;
+                overflow-x: auto;
+                position: relative;
+            }
+
+            .code-block-label {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background: var(--surface-overlay);
+                color: var(--text-muted);
+                font-family: var(--mono);
+                font-size: 0.65rem;
+                padding: 0.25rem 0.6rem;
+                border-bottom-left-radius: var(--radius);
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+            }
+
+            .code-block pre {
+                font-family: var(--mono);
+                font-size: 0.82rem;
+                line-height: 1.7;
+                color: var(--text-primary);
+                white-space: pre;
+                tab-size: 2;
+            }
+
+            .code-block pre .c {
+                color: #8b949e;
+            } /* comment */
+            .code-block pre .s {
+                color: #a5d6ff;
+            } /* selector / string */
+            .code-block pre .p {
+                color: #c9d1d9;
+            } /* property */
+            .code-block pre .v {
+                color: #79c0ff;
+            } /* value / keyword */
+            .code-block pre .f {
+                color: #ffa657;
+            } /* function */
+            .code-block pre .at {
+                color: #ff7b72;
+            } /* at-rule */
+            .code-block pre .u {
+                color: #d2a8ff;
+            } /* unit / number */
+
+            /* ─── INFO BOX ─── */
+            .info-box {
+                background: var(--accent-subtle);
+                border: 1px solid rgba(88, 166, 255, 0.25);
+                border-left: 3px solid var(--accent);
+                border-radius: var(--radius);
+                padding: 1rem 1.25rem;
+                margin-bottom: 1.5rem;
+                display: flex;
+                gap: 0.75rem;
+                align-items: flex-start;
+            }
+
+            .info-box .material-symbols-outlined {
+                color: var(--accent);
+                font-size: 20px;
+                flex-shrink: 0;
+                margin-top: 0.1rem;
+            }
+
+            .info-box p {
+                font-size: 0.88rem;
+                color: var(--text-primary);
+                line-height: 1.6;
+            }
+
+            /* ─── EXAMPLE PANELS ─── */
+            .example-panel {
+                background: var(--surface-raised);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                overflow: hidden;
+                margin-bottom: 1.5rem;
+            }
+
+            .example-panel-header {
+                background: var(--surface-overlay);
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--text-secondary);
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+            }
+
+            .example-panel-header .material-symbols-outlined {
+                font-size: 16px;
+            }
+
+            .example-panel-body {
+                padding: 1.25rem;
+            }
+
+            .demo-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                align-items: center;
+                margin-bottom: 1rem;
+            }
+
+            .demo-row:last-child {
+                margin-bottom: 0;
+            }
+
+            .demo-btn {
+                padding: 0.5rem 1.25rem;
+                border-radius: 6px;
+                font-family: var(--sans);
+                font-weight: 600;
+                font-size: 0.85rem;
+                cursor: pointer;
+                transition: all 0.15s;
+            }
+
+            .demo-btn-primary {
+                background: var(--accent);
+                color: #0e1117;
+                border: 2px solid var(--accent);
+            }
+
+            .demo-btn-secondary {
+                background: transparent;
+                color: var(--text-primary);
+                border: 2px solid var(--border);
+            }
+
+            .demo-btn:hover {
+                opacity: 0.85;
+            }
+
+            .demo-input {
+                padding: 0.5rem 0.75rem;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                color: var(--text-primary);
+                font-family: var(--sans);
+                font-size: 0.85rem;
+                width: 200px;
+            }
+
+            .demo-checkbox-label {
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                font-size: 0.85rem;
+                cursor: pointer;
+            }
+
+            .demo-link {
+                color: var(--accent);
+                text-decoration: underline;
+                cursor: pointer;
+            }
+            .demo-link:visited {
+                color: #d2a8ff;
+            }
+
+            .demo-disabled {
+                color: var(--text-muted);
+                font-size: 0.85rem;
+            }
+
+            .demo-selection {
+                background: Highlight;
+                color: HighlightText;
+                padding: 0.1rem 0.3rem;
+            }
+
+            /* ─── NAV ─── */
+            .toc {
+                background: var(--surface-raised);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 1.25rem 1.5rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .toc-title {
+                font-size: 0.75rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--text-muted);
+                margin-bottom: 0.75rem;
+            }
+
+            .toc-list {
+                list-style: none;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem 1.5rem;
+            }
+
+            .toc-list a {
+                color: var(--accent);
+                text-decoration: none;
+                font-size: 0.88rem;
+                font-weight: 500;
+                transition: opacity 0.15s;
+            }
+
+            .toc-list a:hover {
+                opacity: 0.75;
+                text-decoration: underline;
+            }
+
+            /* ─── RESPONSIVE ─── */
+            @media (max-width: 700px) {
+                .color-map,
+                .system-colors-table,
+                .props-table {
+                    font-size: 0.75rem;
+                }
+                .color-map thead th,
+                .system-colors-table thead th,
+                .props-table thead th,
+                .color-map tbody td,
+                .system-colors-table tbody td,
+                .props-table tbody td {
+                    padding: 0.5rem 0.6rem;
+                }
+                .themes-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            /* ─── FORCED COLORS (live demo — applied when user activates WHCM) ─── */
+            @media (forced-colors: active) {
+                .demo-btn-primary {
+                    background: ButtonFace;
+                    color: ButtonText;
+                    border: 2px solid ButtonText;
+                }
+                .demo-btn-secondary {
+                    background: ButtonFace;
+                    color: ButtonText;
+                    border: 2px solid ButtonText;
+                }
+                .demo-input {
+                    background: Field;
+                    color: FieldText;
+                    border: 1px solid ButtonText;
+                }
+                .demo-link {
+                    color: LinkText;
+                }
+                .demo-disabled {
+                    color: GrayText;
+                }
+                .theme-card {
+                    border: 2px solid ButtonText;
+                }
+                .info-box {
+                    border: 2px solid Highlight;
+                    background: Canvas;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page-wrapper">
+            <!-- ═══════ HERO ═══════ -->
+            <header class="hero">
+                <div class="hero-icon">
+                    <span
+                        class="material-symbols-outlined"
+                        style="font-size: 48px"
+                        >contrast</span
+                    >
+                </div>
+                <h1>Windows Hochkontrastmodus</h1>
+                <p>
+                    CSS-Referenz für <code>forced-colors</code>,
+                    System-Color-Keywords und die vier Windows 11
+                    Kontrastthemes: Aquatic, Desert, Dusk &amp; Night Sky.
+                </p>
+            </header>
+
+            <!-- ═══════ TOC ═══════ -->
+            <nav class="toc">
+                <div class="toc-title">Inhalt</div>
+                <ol class="toc-list">
+                    <li><a href="#themes">Die 4 Themes</a></li>
+                    <li><a href="#colormap">Farbzuordnung</a></li>
+                    <li><a href="#systemcolors">System-Color-Keywords</a></li>
+                    <li><a href="#mediaquery">Media Query &amp; CSS</a></li>
+                    <li><a href="#properties">Betroffene CSS-Properties</a></li>
+                    <li><a href="#examples">Praxisbeispiele</a></li>
+                    <li><a href="#tips">Best Practices</a></li>
+                </ol>
+            </nav>
+
+            <!-- ═══════ 1 · DIE 4 THEMES ═══════ -->
+            <section id="themes">
+                <div class="section-header">
+                    <span class="material-symbols-outlined">palette</span>
+                    <h2>Die 4 Kontrastthemes in Windows 11</h2>
+                </div>
+                <p class="section-intro">
+                    Unter
+                    <strong
+                        >Einstellungen &rarr; Barrierefreiheit &rarr;
+                        Kontrastdesigns</strong
+                    >
+                    bietet Windows 11 vier vordefinierte Themes an. Jedes Theme
+                    definiert Farben für Hintergrund, Text, Links, markierten
+                    Text, inaktiven Text und Schaltflächenelemente. Nutzer
+                    können die Farben individuell anpassen.
+                </p>
+
+                <div class="themes-grid">
+                    <!-- Aquatic -->
+                    <div class="theme-card theme-aquatic">
+                        <div class="theme-card-header">
+                            <h3>Aquatic</h3>
+                            <span class="theme-badge">Dark</span>
+                        </div>
+                        <div class="theme-card-preview">
+                            <p>Normaler Text auf dunklem Hintergrund</p>
+                            <a>Ein Hyperlink in Aquatic</a>
+                            <span class="selected-text">Markierter Text</span>
+                            <span class="disabled-text">Inaktiver Text</span>
+                            <button>Button</button>
+                            <input
+                                type="text"
+                                value="Eingabefeld"
+                                readonly
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Desert -->
+                    <div class="theme-card theme-desert">
+                        <div class="theme-card-header">
+                            <h3>Desert</h3>
+                            <span class="theme-badge">Light</span>
+                        </div>
+                        <div class="theme-card-preview">
+                            <p>Normaler Text auf hellem Hintergrund</p>
+                            <a>Ein Hyperlink in Desert</a>
+                            <span class="selected-text">Markierter Text</span>
+                            <span class="disabled-text">Inaktiver Text</span>
+                            <button>Button</button>
+                            <input
+                                type="text"
+                                value="Eingabefeld"
+                                readonly
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Dusk -->
+                    <div class="theme-card theme-dusk">
+                        <div class="theme-card-header">
+                            <h3>Dusk</h3>
+                            <span class="theme-badge">Dark</span>
+                        </div>
+                        <div class="theme-card-preview">
+                            <p>Normaler Text auf dunkelgrauem Hintergrund</p>
+                            <a>Ein Hyperlink in Dusk</a>
+                            <span class="selected-text">Markierter Text</span>
+                            <span class="disabled-text">Inaktiver Text</span>
+                            <button>Button</button>
+                            <input
+                                type="text"
+                                value="Eingabefeld"
+                                readonly
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Night Sky -->
+                    <div class="theme-card theme-nightsky">
+                        <div class="theme-card-header">
+                            <h3>Night Sky</h3>
+                            <span class="theme-badge">Dark</span>
+                        </div>
+                        <div class="theme-card-preview">
+                            <p>Normaler Text auf schwarzem Hintergrund</p>
+                            <a>Ein Hyperlink in Night Sky</a>
+                            <span class="selected-text">Markierter Text</span>
+                            <span class="disabled-text">Inaktiver Text</span>
+                            <button>Button</button>
+                            <input
+                                type="text"
+                                value="Eingabefeld"
+                                readonly
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════ 2 · FARBZUORDNUNG ═══════ -->
+            <section id="colormap">
+                <div class="section-header">
+                    <span class="material-symbols-outlined">colorize</span>
+                    <h2>Farbwerte der Themes</h2>
+                </div>
+                <p class="section-intro">
+                    Jedes Theme ordnet den System-Rollen spezifische
+                    Hex-Farbwerte zu. Windows definiert pro Theme sechs
+                    anpassbare Kategorien: <strong>Background</strong>,
+                    <strong>Text</strong>, <strong>Hyperlink</strong>,
+                    <strong>Inactive Text</strong>,
+                    <strong>Selected Text</strong> und
+                    <strong>Button Text</strong>. Diese werden vom Browser als
+                    CSS System-Color-Keywords bereitgestellt. Nutzer können die
+                    Werte individuell anpassen.
+                </p>
+
+                <table class="color-map">
+                    <thead>
+                        <tr>
+                            <th>Rolle / Keyword</th>
+                            <th>Aquatic</th>
+                            <th>Desert</th>
+                            <th>Dusk</th>
+                            <th>Night Sky</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="keyword">Canvas</span><br /><span
+                                    class="mapping"
+                                    >Hintergrund</span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #202020"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#202020</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #fffaef"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#fffaef</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #2d3236"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#2d3236</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #000000"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#000000</span
+                                    ></span
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="keyword">CanvasText</span
+                                ><br /><span class="mapping">Text</span>
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #ffffff"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#ffffff</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #202020"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#202020</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #ffffff"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#ffffff</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #ffffff"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#ffffff</span
+                                    ></span
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="keyword">LinkText</span><br /><span
+                                    class="mapping"
+                                    >Links</span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #8ee3f0"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#8ee3f0</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #0063b3"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#0063b3</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #70ebde"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#70ebde</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #8080ff"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#8080ff</span
+                                    ></span
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="keyword">Highlight</span
+                                ><br /><span class="mapping"
+                                    >Markierung (BG)</span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #75e9fc"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#75e9fc</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #903909"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#903909</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #0063b3"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#0063b3</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #d5b4fd"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#d5b4fd</span
+                                    ></span
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="keyword">HighlightText</span
+                                ><br /><span class="mapping"
+                                    >Markierung (Text)</span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #202020"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#202020</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #ffffff"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#ffffff</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #ffffff"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#ffffff</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #000000"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#000000</span
+                                    ></span
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="keyword">ButtonFace</span
+                                ><br /><span class="mapping"
+                                    >Schaltfläche (BG)</span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #2b4f6f"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#2b4f6f</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #fffaef"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#fffaef</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #2d3236"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#2d3236</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #000000"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#000000</span
+                                    ></span
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="keyword">ButtonText</span
+                                ><br /><span class="mapping"
+                                    >Schaltfläche (Text)</span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #ffffff"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#ffffff</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #3d3d3d"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#3d3d3d</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #b6f6f0"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#b6f6f0</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #ffee32"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#ffee32</span
+                                    ></span
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="keyword">GrayText</span><br /><span
+                                    class="mapping"
+                                    >Inaktiver Text</span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #a0a0a0"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#a0a0a0</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #595959"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#595959</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #a0a0a0"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#a0a0a0</span
+                                    ></span
+                                >
+                            </td>
+                            <td>
+                                <span class="color-swatch"
+                                    ><span
+                                        class="swatch"
+                                        style="background: #a0a0a0"
+                                    ></span
+                                    ><span class="color-hex"
+                                        >#a0a0a0</span
+                                    ></span
+                                >
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ═══════ 3 · SYSTEM COLOR KEYWORDS ═══════ -->
+            <section id="systemcolors">
+                <div class="section-header">
+                    <span class="material-symbols-outlined">token</span>
+                    <h2>CSS System-Color-Keywords</h2>
+                </div>
+                <p class="section-intro">
+                    In <code>forced-colors: active</code> kann der Browser nur
+                    bestimmte System-Farben verwenden. Diese Keywords sind
+                    case-insensitive und repräsentieren jeweils eine Farbrolle
+                    im System-Theme des Nutzers.
+                </p>
+
+                <table class="system-colors-table">
+                    <thead>
+                        <tr>
+                            <th>Keyword</th>
+                            <th>Beschreibung</th>
+                            <th>Typische Verwendung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="keyword">Canvas</span></td>
+                            <td>Hintergrund von Dokumenten und App-Inhalten</td>
+                            <td>
+                                <code>background-color</code> des
+                                <code>&lt;body&gt;</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">CanvasText</span></td>
+                            <td>Textfarbe in Dokumenten und App-Inhalten</td>
+                            <td>
+                                <code>color</code> auf normalen Textelementen
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">LinkText</span></td>
+                            <td>Farbe nicht-besuchter, nicht-aktiver Links</td>
+                            <td>
+                                <code>color</code> auf
+                                <code>&lt;a&gt;</code>-Elementen
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">VisitedText</span></td>
+                            <td>Farbe bereits besuchter Links</td>
+                            <td><code>a:visited { color }</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">ActiveText</span></td>
+                            <td>Farbe aktiver Links (während des Klicks)</td>
+                            <td><code>a:active { color }</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">ButtonFace</span></td>
+                            <td>Hintergrund von Schaltflächen</td>
+                            <td>
+                                <code>background-color</code> auf
+                                <code>&lt;button&gt;</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">ButtonText</span></td>
+                            <td>Textfarbe in Schaltflächen</td>
+                            <td>
+                                <code>color</code> auf
+                                <code>&lt;button&gt;</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">ButtonBorder</span></td>
+                            <td>Rahmen von Schaltflächen</td>
+                            <td>
+                                <code>border-color</code> auf
+                                <code>&lt;button&gt;</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">Field</span></td>
+                            <td>Hintergrund von Eingabefeldern</td>
+                            <td>
+                                <code>background-color</code> auf
+                                <code>&lt;input&gt;</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">FieldText</span></td>
+                            <td>Textfarbe in Eingabefeldern</td>
+                            <td>
+                                <code>color</code> auf
+                                <code>&lt;input&gt;</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">Highlight</span></td>
+                            <td>
+                                Hintergrund markierter/selektierter Elemente
+                            </td>
+                            <td>
+                                <code>::selection { background-color }</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">HighlightText</span></td>
+                            <td>Text in markierten/selektierten Elementen</td>
+                            <td><code>::selection { color }</code></td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">SelectedItem</span></td>
+                            <td>
+                                Hintergrund aktiv ausgewählter Elemente (z.B.
+                                Checkbox)
+                            </td>
+                            <td>Aktive Auswahl in Formularen</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="keyword">SelectedItemText</span>
+                            </td>
+                            <td>Text in aktiv ausgewählten Elementen</td>
+                            <td>Farbe des Häkchens in Checkbox</td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">Mark</span></td>
+                            <td>
+                                Hintergrund für speziell markierten Text
+                                (<code>&lt;mark&gt;</code>)
+                            </td>
+                            <td>
+                                <code>background-color</code> auf
+                                <code>&lt;mark&gt;</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">MarkText</span></td>
+                            <td>Text in speziell markiertem Bereich</td>
+                            <td>
+                                <code>color</code> auf <code>&lt;mark&gt;</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">GrayText</span></td>
+                            <td>Inaktiver/deaktivierter Text</td>
+                            <td>
+                                <code>color</code> auf
+                                <code>:disabled</code> Elementen
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="keyword">AccentColor</span></td>
+                            <td>Akzentfarbe des Systems</td>
+                            <td>Benutzerdefinierte Akzentfarbe</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="keyword">AccentColorText</span>
+                            </td>
+                            <td>Text auf Akzentfarben-Hintergrund</td>
+                            <td>Kontrasttext zur Akzentfarbe</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ═══════ 4 · MEDIA QUERY & CSS ═══════ -->
+            <section id="mediaquery">
+                <div class="section-header">
+                    <span class="material-symbols-outlined">code</span>
+                    <h2>Media Queries &amp; CSS-Erkennung</h2>
+                </div>
+                <p class="section-intro">
+                    Der Forced-Colors-Modus wird über standardisierte Media
+                    Queries erkannt. Die alte proprietäre
+                    <code>-ms-high-contrast</code> Query ist seit Edge 134
+                    deprecated.
+                </p>
+
+                <div class="code-block">
+                    <span class="code-block-label">CSS</span>
+                    <pre><span class="c">/* ── Primäre Erkennung ── */</span>
+<span class="at">@media</span> (<span class="v">forced-colors</span>: <span class="v">active</span>) {
+  <span class="c">/* Styles für den Hochkontrastmodus */</span>
+}
+
+<span class="at">@media</span> (<span class="v">forced-colors</span>: <span class="v">none</span>) {
+  <span class="c">/* Normaler Modus (Standard) */</span>
+}
+
+<span class="c">/* ── Äquivalente Alternative ── */</span>
+<span class="at">@media</span> (<span class="v">prefers-contrast</span>: <span class="v">forced</span>) {
+  <span class="c">/* Gleiches Ergebnis wie forced-colors: active */</span>
+}
+
+<span class="c">/* ── Kontrastpräferenz (nicht forced) ── */</span>
+<span class="at">@media</span> (<span class="v">prefers-contrast</span>: <span class="v">more</span>) {
+  <span class="c">/* Nutzer bevorzugt höheren Kontrast */</span>
+}
+
+<span class="at">@media</span> (<span class="v">prefers-contrast</span>: <span class="v">less</span>) {
+  <span class="c">/* Nutzer bevorzugt geringeren Kontrast */</span>
+}
+
+<span class="c">/* ── DEPRECATED: Nicht mehr verwenden ── */</span>
+<span class="at">@media</span> (<span class="v">-ms-high-contrast</span>: <span class="v">active</span>) {
+  <span class="c">/* Veraltet seit Edge 134 */</span>
+}</pre>
+                </div>
+
+                <div class="info-box">
+                    <span class="material-symbols-outlined">info</span>
+                    <p>
+                        <strong>Hinweis:</strong> Safari unterstützt
+                        <code>forced-colors</code> nicht, da Apple auf
+                        <code>prefers-contrast</code> setzt. Zum Testen im
+                        Browser: Edge/Chrome DevTools &rarr; Rendering &rarr;
+                        <em>Emulate CSS media feature forced-colors</em> &rarr;
+                        <code>active</code>.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ═══════ 5 · BETROFFENE PROPERTIES ═══════ -->
+            <section id="properties">
+                <div class="section-header">
+                    <span class="material-symbols-outlined">tune</span>
+                    <h2>Vom Browser überschriebene CSS-Properties</h2>
+                </div>
+                <p class="section-intro">
+                    Im Forced-Colors-Modus überschreibt der Browser bestimmte
+                    farbrelated CSS-Properties mit System-Farben oder entfernt
+                    sie. Autorenseitige Werte werden ignoriert, sofern nicht
+                    <code>forced-color-adjust: none</code> gesetzt ist.
+                </p>
+
+                <table class="props-table">
+                    <thead>
+                        <tr>
+                            <th>CSS-Property</th>
+                            <th>Verhalten im Forced-Colors-Modus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="prop-name">color</span></td>
+                            <td>
+                                Wird auf System-Farbe gesetzt (z.B.
+                                <code>CanvasText</code>,
+                                <code>ButtonText</code>, <code>LinkText</code>)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="prop-name">background-color</span>
+                            </td>
+                            <td>
+                                Wird auf System-Farbe gesetzt (z.B.
+                                <code>Canvas</code>, <code>ButtonFace</code>,
+                                <code>Field</code>)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="prop-name">border-color</span></td>
+                            <td>
+                                Wird auf System-Farbe gesetzt (z.B.
+                                <code>ButtonText</code>)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="prop-name">outline-color</span>
+                            </td>
+                            <td>Wird auf System-Farbe gesetzt</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="prop-name"
+                                    >text-decoration-color</span
+                                >
+                            </td>
+                            <td>Wird auf System-Farbe gesetzt</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="prop-name">column-rule-color</span>
+                            </td>
+                            <td>Wird auf System-Farbe gesetzt</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="prop-name"
+                                    >-webkit-tap-highlight-color</span
+                                >
+                            </td>
+                            <td>Wird auf System-Farbe gesetzt</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="prop-name">fill</span> /
+                                <span class="prop-name">stroke</span>
+                            </td>
+                            <td>Wird auf System-Farbe gesetzt (SVG)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="prop-name">caret-color</span></td>
+                            <td>Wird auf System-Farbe gesetzt</td>
+                        </tr>
+                        <tr>
+                            <td><span class="prop-name">box-shadow</span></td>
+                            <td>Wird auf <code>none</code> erzwungen</td>
+                        </tr>
+                        <tr>
+                            <td><span class="prop-name">text-shadow</span></td>
+                            <td>Wird auf <code>none</code> erzwungen</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="prop-name">background-image</span>
+                            </td>
+                            <td>
+                                Wird auf <code>none</code> erzwungen (außer
+                                <code>url()</code>)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="prop-name">color-scheme</span></td>
+                            <td>Wird auf <code>light dark</code> erzwungen</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="prop-name">scrollbar-color</span>
+                            </td>
+                            <td>Wird auf <code>auto</code> erzwungen</td>
+                        </tr>
+                        <tr>
+                            <td><span class="prop-name">accent-color</span></td>
+                            <td>Wird auf <code>auto</code> erzwungen</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+                    <span class="code-block-label">CSS</span>
+                    <pre><span class="c">/* forced-color-adjust steuert, ob ein Element
+   vom System überschrieben wird oder nicht */</span>
+
+<span class="s">.custom-widget</span> {
+  <span class="p">forced-color-adjust</span>: <span class="v">none</span>;
+  <span class="c">/* Eigene Farben werden NICHT überschrieben.
+     Vorsicht: Kontrast muss manuell sichergestellt werden! */</span>
+}
+
+<span class="s">.standard-element</span> {
+  <span class="p">forced-color-adjust</span>: <span class="v">auto</span>; <span class="c">/* Standard */</span>
+}</pre>
+                </div>
+            </section>
+
+            <!-- ═══════ 6 · PRAXISBEISPIELE ═══════ -->
+            <section id="examples">
+                <div class="section-header">
+                    <span class="material-symbols-outlined">science</span>
+                    <h2>Praxisbeispiele</h2>
+                </div>
+                <p class="section-intro">
+                    Typische Situationen, in denen Anpassungen für den
+                    Forced-Colors-Modus nötig sind. Aktiviere in den DevTools
+                    <em>Emulate forced-colors: active</em>, um die Wirkung zu
+                    sehen.
+                </p>
+
+                <!-- Example 1: Button mit box-shadow -->
+                <div class="example-panel">
+                    <div class="example-panel-header">
+                        <span class="material-symbols-outlined"
+                            >smart_button</span
+                        >
+                        Beispiel 1: Button mit box-shadow &rarr; Border-Fallback
+                    </div>
+                    <div class="example-panel-body">
+                        <div class="demo-row">
+                            <button class="demo-btn demo-btn-primary">
+                                Primärer Button
+                            </button>
+                            <button class="demo-btn demo-btn-secondary">
+                                Sekundärer Button
+                            </button>
+                        </div>
+                        <div
+                            class="code-block"
+                            style="margin-top: 1rem; margin-bottom: 0"
+                        >
+                            <span class="code-block-label">CSS</span>
+                            <pre><span class="s">.btn</span> {
+  <span class="p">border</span>: <span class="u">0</span>;
+  <span class="p">padding</span>: <span class="u">10px</span> <span class="u">20px</span>;
+  <span class="p">box-shadow</span>: <span class="u">0</span> <span class="u">2px</span> <span class="u">8px</span> <span class="f">rgba</span>(<span class="u">0,0,0,0.2</span>);
+  <span class="p">background</span>: <span class="v">#0078d4</span>;
+  <span class="p">color</span>: <span class="v">white</span>;
+}
+
+<span class="at">@media</span> (<span class="v">forced-colors</span>: <span class="v">active</span>) {
+  <span class="s">.btn</span> {
+    <span class="c">/* box-shadow wird zu none — Border als Ersatz */</span>
+    <span class="p">border</span>: <span class="u">2px</span> solid <span class="v">ButtonText</span>;
+  }
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 2: Custom Checkbox -->
+                <div class="example-panel">
+                    <div class="example-panel-header">
+                        <span class="material-symbols-outlined">check_box</span>
+                        Beispiel 2: Custom Checkbox mit CSS-Indikator
+                    </div>
+                    <div class="example-panel-body">
+                        <div class="demo-row">
+                            <label class="demo-checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    checked
+                                />
+                                Aktivierte Option
+                            </label>
+                            <label class="demo-checkbox-label">
+                                <input type="checkbox" /> Deaktivierte Option
+                            </label>
+                        </div>
+                        <div
+                            class="code-block"
+                            style="margin-top: 1rem; margin-bottom: 0"
+                        >
+                            <span class="code-block-label">CSS</span>
+                            <pre><span class="c">/* Problem: background-color allein ist im
+   Forced-Colors-Modus nicht sichtbar */</span>
+<span class="s">.checkbox-indicator</span> {
+  <span class="p">background-color</span>: <span class="v">#0078d4</span>; <span class="c">/* Wird überschrieben! */</span>
+}
+
+<span class="c">/* Lösung: Border statt background verwenden */</span>
+<span class="at">@media</span> (<span class="v">forced-colors</span>: <span class="v">active</span>) {
+  <span class="s">.checkbox-indicator</span> {
+    <span class="p">border</span>: <span class="u">2px</span> solid <span class="v">SelectedItem</span>;
+    <span class="p">forced-color-adjust</span>: <span class="v">none</span>;
+  }
+  <span class="s">input:checked + .checkbox-indicator</span> {
+    <span class="p">background</span>: <span class="v">SelectedItem</span>;
+    <span class="p">color</span>: <span class="v">SelectedItemText</span>;
+  }
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 3: Link-Farben und States -->
+                <div class="example-panel">
+                    <div class="example-panel-header">
+                        <span class="material-symbols-outlined">link</span>
+                        Beispiel 3: Links und States
+                    </div>
+                    <div class="example-panel-body">
+                        <div class="demo-row">
+                            <a
+                                class="demo-link"
+                                href="#"
+                                >Normaler Link</a
+                            >
+                            <span class="demo-disabled"
+                                >Deaktivierter Text</span
+                            >
+                        </div>
+                        <div
+                            class="code-block"
+                            style="margin-top: 1rem; margin-bottom: 0"
+                        >
+                            <span class="code-block-label">CSS</span>
+                            <pre><span class="at">@media</span> (<span class="v">forced-colors</span>: <span class="v">active</span>) {
+  <span class="s">a</span> {
+    <span class="p">color</span>: <span class="v">LinkText</span>;
+  }
+  <span class="s">a:visited</span> {
+    <span class="p">color</span>: <span class="v">VisitedText</span>;
+  }
+  <span class="s">a:active</span> {
+    <span class="p">color</span>: <span class="v">ActiveText</span>;
+  }
+  <span class="s">.disabled</span> {
+    <span class="p">color</span>: <span class="v">GrayText</span>;
+  }
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 4: SVG currentColor -->
+                <div class="example-panel">
+                    <div class="example-panel-header">
+                        <span class="material-symbols-outlined">draw</span>
+                        Beispiel 4: SVG-Icons mit currentColor
+                    </div>
+                    <div class="example-panel-body">
+                        <div class="demo-row">
+                            <svg
+                                width="32"
+                                height="32"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                />
+                                <path d="M12 6v6l4 2" />
+                            </svg>
+                            <span style="font-size: 0.85rem"
+                                >SVG mit <code>fill="currentColor"</code> /
+                                <code>stroke="currentColor"</code></span
+                            >
+                        </div>
+                        <div
+                            class="code-block"
+                            style="margin-top: 1rem; margin-bottom: 0"
+                        >
+                            <span class="code-block-label">CSS</span>
+                            <pre><span class="c">/* Best Practice: currentColor nutzen,
+   dann erbt das SVG die Forced-Color-Textfarbe */</span>
+<span class="s">.icon</span> {
+  <span class="p">color</span>: <span class="v">currentColor</span>;
+  <span class="p">fill</span>: <span class="v">currentColor</span>;
+}
+
+<span class="c">/* Falls nötig, explizit in forced-colors */</span>
+<span class="at">@media</span> (<span class="v">forced-colors</span>: <span class="v">active</span>) {
+  <span class="s">.icon</span> {
+    <span class="p">color</span>: <span class="v">CanvasText</span>;
+    <span class="p">forced-color-adjust</span>: <span class="v">auto</span>;
+  }
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example 5: Focus-Ring -->
+                <div class="example-panel">
+                    <div class="example-panel-header">
+                        <span class="material-symbols-outlined"
+                            >center_focus_strong</span
+                        >
+                        Beispiel 5: Focus-Indikator
+                    </div>
+                    <div class="example-panel-body">
+                        <div class="demo-row">
+                            <input
+                                class="demo-input"
+                                type="text"
+                                value="Tab hier hin"
+                                style="
+                                    outline: 2px solid var(--accent);
+                                    outline-offset: 2px;
+                                "
+                            />
+                        </div>
+                        <div
+                            class="code-block"
+                            style="margin-top: 1rem; margin-bottom: 0"
+                        >
+                            <span class="code-block-label">CSS</span>
+                            <pre><span class="c">/* Outline wird im Forced-Colors-Modus
+   auf System-Farben gemappt — nutze das! */</span>
+<span class="s">:focus-visible</span> {
+  <span class="p">outline</span>: <span class="u">2px</span> solid <span class="v">currentColor</span>;
+  <span class="p">outline-offset</span>: <span class="u">2px</span>;
+}
+
+<span class="at">@media</span> (<span class="v">forced-colors</span>: <span class="v">active</span>) {
+  <span class="s">:focus-visible</span> {
+    <span class="p">outline-color</span>: <span class="v">Highlight</span>;
+  }
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════ 7 · BEST PRACTICES ═══════ -->
+            <section id="tips">
+                <div class="section-header">
+                    <span class="material-symbols-outlined">lightbulb</span>
+                    <h2>Best Practices</h2>
+                </div>
+
+                <div class="info-box">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <p>
+                        <strong>Verwende semantisches HTML.</strong> Der Browser
+                        weist System-Farben basierend auf der Element-Semantik
+                        zu (<code>&lt;a&gt;</code> bekommt
+                        <code>LinkText</code>,
+                        <code>&lt;button&gt;</code> bekommt
+                        <code>ButtonText</code>). ARIA-Rollen werden dabei
+                        <em>nicht</em> berücksichtigt.
+                    </p>
+                </div>
+
+                <div class="info-box">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <p>
+                        <strong>Nutze <code>transparent</code>-Borders.</strong>
+                        Statt Borders nur im Forced-Colors-Modus hinzuzufügen,
+                        setze im Normalzustand
+                        <code>border: 2px solid transparent</code>. Im
+                        Forced-Colors-Modus wird <code>transparent</code> zur
+                        System-Farbe — kein Layout-Shift.
+                    </p>
+                </div>
+
+                <div class="info-box">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <p>
+                        <strong>System-Colors statt Hex-Werte.</strong> Verwende
+                        innerhalb von
+                        <code>@media (forced-colors: active)</code> immer
+                        System-Color-Keywords wie <code>CanvasText</code>,
+                        <code>ButtonText</code>, <code>Highlight</code>.
+                        Statische Hex-Werte können zu Kontrastproblemen führen.
+                    </p>
+                </div>
+
+                <div class="info-box">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <p>
+                        <strong
+                            >Setze
+                            <code>forced-color-adjust: none</code> sparsam
+                            ein.</strong
+                        >
+                        Dieses Property entzieht ein Element dem
+                        System-Override. Nur verwenden, wenn die eigene
+                        Farbgebung kontrastgeprüft ist (z.B.
+                        Datenvisualisierungen).
+                    </p>
+                </div>
+
+                <div class="info-box">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <p>
+                        <strong>Teste mit echten Themes.</strong> Edge/Chrome
+                        DevTools:
+                        <em
+                            >Rendering &rarr; Emulate CSS media feature
+                            forced-colors: active</em
+                        >. Für ein vollständiges Ergebnis zusätzlich unter
+                        Windows
+                        <code
+                            >Einstellungen &rarr; Barrierefreiheit &rarr;
+                            Kontrastdesigns</code
+                        >
+                        alle vier Themes testen.
+                    </p>
+                </div>
+
+                <div class="code-block">
+                    <span class="code-block-label"
+                        >CSS — Transparent-Border-Trick</span
+                    >
+                    <pre><span class="c">/* Normaler Zustand: unsichtbarer Border */</span>
+<span class="s">.card</span> {
+  <span class="p">border</span>: <span class="u">2px</span> solid <span class="v">transparent</span>;
+  <span class="p">border-radius</span>: <span class="u">8px</span>;
+  <span class="p">background</span>: <span class="v">#1a1a2e</span>;
+}
+
+<span class="c">/* Forced Colors: transparent wird automatisch
+   zur System-Farbe → Border wird sichtbar,
+   kein Layout-Shift, kein zusätzliches CSS nötig! */</span></pre>
+                </div>
+            </section>
+
+            <!-- ═══════ FOOTER ═══════ -->
+            <footer
+                style="
+                    text-align: center;
+                    padding: 2rem 0 1rem;
+                    border-top: 1px solid var(--border);
+                    color: var(--text-muted);
+                    font-size: 0.8rem;
+                "
+            >
+                <p>
+                    Referenz: MDN <code>forced-colors</code> · W3C CSS Color
+                    Level 4 · Microsoft Edge Blog
+                </p>
+                <p style="margin-top: 0.4rem">
+                    Erstellt als Lern- und Nachschlagewerk für Webentwickler
+                </p>
+            </footer>
+        </div>
+    </body>
+</html>

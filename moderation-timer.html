@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moderationsuhr</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:opsz,wght@9..144,300;9..144,600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0f0f12;
+    --surface:   #1a1a22;
+    --ring-bg:   #1e1e28;
+    --text:      #e8e4dc;
+    --muted:     #5a5870;
+    --accent:    #e8a030;
+    --accent2:   #c86820;
+    --green:     #48c890;
+    --warn:      #e8a030;
+    --danger:    #e84830;
+    --radius:    16px;
+  }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    overflow-x: hidden;
+  }
+
+  /* subtle grid texture */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 28px;
+    padding: 40px 36px 36px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 32px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04) inset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .label {
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* ── SVG CLOCK ── */
+  .clock-wrap {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    flex-shrink: 0;
+  }
+
+  .clock-wrap svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .track { fill: none; stroke: var(--ring-bg); stroke-width: 10; }
+
+  #arc {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke .4s ease, stroke-dashoffset .25s linear;
+  }
+
+  .clock-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  #display {
+    font-family: 'Fraunces', serif;
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -.02em;
+    color: var(--text);
+    transition: color .3s;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #phase-label {
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color .3s;
+  }
+
+  /* ── PRESETS ── */
+  .presets {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .preset {
+    background: var(--ring-bg);
+    border: 1px solid rgba(255,255,255,.06);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .18s;
+    letter-spacing: .04em;
+  }
+  .preset:hover { background: #25252f; color: var(--text); border-color: rgba(255,255,255,.12); }
+  .preset.active { background: rgba(232,160,48,.12); border-color: var(--accent); color: var(--accent); }
+
+  /* ── TIME INPUT ── */
+  .time-input-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .stepper {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: var(--ring-bg);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .stepper button {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 18px;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    transition: all .15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+  }
+  .stepper button:hover { color: var(--text); background: rgba(255,255,255,.04); }
+
+  .stepper span {
+    font-size: 14px;
+    min-width: 32px;
+    text-align: center;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sep {
+    font-size: 22px;
+    color: var(--muted);
+    padding: 0 2px;
+    line-height: 1;
+  }
+
+  /* ── BUTTONS ── */
+  .controls {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .btn {
+    flex: 1;
+    border: none;
+    border-radius: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: .06em;
+    height: 48px;
+    cursor: pointer;
+    transition: all .18s;
+    font-weight: 500;
+  }
+
+  #btn-start {
+    background: var(--green);
+    color: #0a1a12;
+  }
+  #btn-start:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  #btn-start:active { transform: translateY(0); }
+  #btn-start.running {
+    background: var(--warn);
+    color: #1a1000;
+  }
+
+  #btn-reset {
+    background: var(--ring-bg);
+    border: 1px solid rgba(255,255,255,.06);
+    color: var(--muted);
+  }
+  #btn-reset:hover { color: var(--text); border-color: rgba(255,255,255,.14); }
+
+  /* ── HAT MODE BADGE ── */
+  .hat-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hat {
+    background: var(--ring-bg);
+    border: 1px solid rgba(255,255,255,.05);
+    border-radius: 20px;
+    padding: 5px 12px 5px 8px;
+    font-size: 11px;
+    letter-spacing: .04em;
+    cursor: pointer;
+    transition: all .18s;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .hat:hover { color: var(--text); }
+  .hat.active { border-color: currentColor; }
+  .hat[data-color="red"]    { --hc: #e84830; }
+  .hat[data-color="green"]  { --hc: #48c890; }
+  .hat[data-color="white"]  { --hc: #d0cfc8; }
+  .hat[data-color="yellow"] { --hc: #e8c830; }
+  .hat[data-color="black"]  { --hc: #888; }
+  .hat[data-color="blue"]   { --hc: #4898e8; }
+  .hat.active { color: var(--hc); background: rgba(255,255,255,.03); }
+
+  .hat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--hc, #555);
+    flex-shrink: 0;
+  }
+
+  /* ── FLASH OVERLAY ── */
+  #flash {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+  }
+  #flash.go {
+    animation: flashAnim 1.6s ease-out forwards;
+  }
+  @keyframes flashAnim {
+    0%   { opacity: .7; background: #fff; }
+    15%  { opacity: .3; background: #48c890; }
+    40%  { opacity: .15; }
+    100% { opacity: 0; }
+  }
+
+  /* ── DONE STATE ── */
+  .card.done #display { color: var(--green); }
+  .card.done #phase-label { color: var(--green); }
+  .card.done #arc { stroke: var(--green); }
+
+  /* warning state */
+  .card.warn-state #display { color: var(--warn); }
+  .card.warn-state #arc { stroke: var(--warn); }
+
+  /* danger state */
+  .card.danger-state #display { color: var(--danger); }
+  .card.danger-state #arc { stroke: var(--danger); }
+
+  /* ── PULSE when running ── */
+  @keyframes pulse-ring {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .6; }
+  }
+  .card.running-state #arc { animation: pulse-ring 2s ease-in-out infinite; }
+  .card.warn-state #arc,
+  .card.danger-state #arc { animation: pulse-ring .8s ease-in-out infinite; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 380px) {
+    .card { padding: 28px 20px 24px; gap: 24px; }
+    .clock-wrap { width: 200px; height: 200px; }
+    #display { font-size: 44px; }
+    .hat { font-size: 10px; padding: 4px 10px 4px 7px; }
+  }
+
+  @media (min-width: 600px) {
+    .clock-wrap { width: 280px; height: 280px; }
+    #display { font-size: 64px; }
+    .card { max-width: 500px; padding: 48px 44px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+  <div class="label">Moderationsuhr</div>
+
+  <!-- Hat selector -->
+  <div class="hat-row" id="hat-row">
+    <div class="hat" data-color="red"    data-min="5">  <span class="hat-dot"></span> Rot    </div>
+    <div class="hat" data-color="green"  data-min="7">  <span class="hat-dot"></span> Grün   </div>
+    <div class="hat" data-color="white"  data-min="5">  <span class="hat-dot"></span> Weiß   </div>
+    <div class="hat" data-color="yellow" data-min="5">  <span class="hat-dot"></span> Gelb   </div>
+    <div class="hat" data-color="black"  data-min="5">  <span class="hat-dot"></span> Schwarz</div>
+    <div class="hat" data-color="blue"   data-min="3">  <span class="hat-dot"></span> Blau   </div>
+  </div>
+
+  <!-- SVG ring clock -->
+  <div class="clock-wrap">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle class="track" cx="50" cy="50" r="44"/>
+      <circle id="arc"      cx="50" cy="50" r="44"
+              stroke-dasharray="276.46"
+              stroke-dashoffset="0"/>
+    </svg>
+    <div class="clock-center">
+      <div id="display">05:00</div>
+      <div id="phase-label">bereit</div>
+    </div>
+  </div>
+
+  <!-- Presets -->
+  <div class="presets" id="presets">
+    <button class="preset" data-sec="60">1 Min</button>
+    <button class="preset" data-sec="120">2 Min</button>
+    <button class="preset active" data-sec="300">5 Min</button>
+    <button class="preset" data-sec="420">7 Min</button>
+    <button class="preset" data-sec="600">10 Min</button>
+    <button class="preset" data-sec="900">15 Min</button>
+  </div>
+
+  <!-- Manual input -->
+  <div class="time-input-row">
+    <div class="stepper">
+      <button id="min-dn" aria-label="Minuten minus">−</button>
+      <span id="min-val">5</span>
+      <button id="min-up" aria-label="Minuten plus">+</button>
+    </div>
+    <span class="sep">:</span>
+    <div class="stepper">
+      <button id="sec-dn" aria-label="Sekunden minus">−</button>
+      <span id="sec-val">00</span>
+      <button id="sec-up" aria-label="Sekunden plus">+</button>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn" id="btn-start">▶ Start</button>
+    <button class="btn" id="btn-reset">↺ Reset</button>
+  </div>
+</div>
+
+<div id="flash"></div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────
+const CIRCUMFERENCE = 2 * Math.PI * 44; // 276.46
+
+let totalSeconds   = 300;
+let remaining      = 300;
+let running        = false;
+let intervalId     = null;
+let audioCtx       = null;
+
+// DOM refs
+const card        = document.getElementById('card');
+const display     = document.getElementById('display');
+const phaseLabel  = document.getElementById('phase-label');
+const arc         = document.getElementById('arc');
+const flash       = document.getElementById('flash');
+const btnStart    = document.getElementById('btn-start');
+const btnReset    = document.getElementById('btn-reset');
+const minVal      = document.getElementById('min-val');
+const secVal      = document.getElementById('sec-val');
+
+// ── Audio ──────────────────────────────────────────────────────────────
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function beep(freq, duration, type = 'sine', vol = 0.4, delay = 0) {
+  const ctx = getAudioCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+  gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+  gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + delay + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+  osc.start(ctx.currentTime + delay);
+  osc.stop(ctx.currentTime + delay + duration + 0.05);
+}
+
+function playDone() {
+  // Three rising tones + warm chord
+  beep(523, 0.18, 'sine', 0.35, 0.00);  // C5
+  beep(659, 0.18, 'sine', 0.35, 0.18);  // E5
+  beep(784, 0.45, 'sine', 0.35, 0.36);  // G5
+  beep(1047,0.55, 'sine', 0.25, 0.36);  // C6 overtone
+}
+
+function playWarn() {
+  beep(440, 0.12, 'triangle', 0.3, 0.00);
+  beep(440, 0.12, 'triangle', 0.3, 0.18);
+}
+
+// ── Display helpers ────────────────────────────────────────────────────
+function fmt(s) {
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return `${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}`;
+}
+
+function updateRing(rem, total) {
+  const pct = total > 0 ? rem / total : 0;
+  const offset = CIRCUMFERENCE * (1 - pct);
+  arc.style.strokeDashoffset = offset;
+}
+
+function updateState() {
+  const pct = totalSeconds > 0 ? remaining / totalSeconds : 0;
+  card.classList.remove('running-state','warn-state','danger-state','done');
+
+  if (!running && remaining === totalSeconds) {
+    // idle
+  } else if (remaining === 0) {
+    card.classList.add('done');
+    phaseLabel.textContent = 'Zeit!';
+  } else if (pct <= 0.1) {
+    card.classList.add('danger-state');
+    phaseLabel.textContent = 'Ende naht';
+  } else if (pct <= 0.25) {
+    card.classList.add('warn-state');
+    phaseLabel.textContent = 'fast fertig';
+  } else if (running) {
+    card.classList.add('running-state');
+    phaseLabel.textContent = 'läuft';
+  }
+}
+
+function setDisplay(s) {
+  display.textContent = fmt(s);
+  updateRing(s, totalSeconds);
+  updateState();
+}
+
+// ── Stepper sync ───────────────────────────────────────────────────────
+function syncSteppers(s) {
+  minVal.textContent = String(Math.floor(s / 60)).padStart(2,'0');
+  secVal.textContent = String(s % 60).padStart(2,'0');
+}
+
+function applyTime(s) {
+  totalSeconds = Math.max(10, Math.min(3600, s));
+  remaining    = totalSeconds;
+  syncSteppers(totalSeconds);
+  setDisplay(totalSeconds);
+  clearPresetActive();
+  // match preset if exact
+  document.querySelectorAll('.preset').forEach(b => {
+    if (parseInt(b.dataset.sec) === totalSeconds) b.classList.add('active');
+  });
+}
+
+function clearPresetActive() {
+  document.querySelectorAll('.preset').forEach(b => b.classList.remove('active'));
+}
+
+// ── Tick ───────────────────────────────────────────────────────────────
+function tick() {
+  if (remaining <= 0) {
+    finish();
+    return;
+  }
+
+  // warn beep at 25%
+  if (remaining === Math.round(totalSeconds * 0.25)) playWarn();
+
+  remaining--;
+  setDisplay(remaining);
+
+  if (remaining === 0) finish();
+}
+
+function finish() {
+  clearInterval(intervalId);
+  running = false;
+  remaining = 0;
+  btnStart.textContent = '▶ Start';
+  btnStart.classList.remove('running');
+  setDisplay(0);
+
+  // Flash
+  flash.classList.remove('go');
+  void flash.offsetWidth; // reflow
+  flash.classList.add('go');
+
+  // Sound
+  playDone();
+}
+
+// ── Start / Pause ──────────────────────────────────────────────────────
+function startPause() {
+  if (remaining === 0) { reset(); return; }
+
+  if (running) {
+    // pause
+    clearInterval(intervalId);
+    running = false;
+    btnStart.textContent = '▶ Weiter';
+    btnStart.classList.remove('running');
+    card.classList.remove('running-state','warn-state','danger-state');
+    phaseLabel.textContent = 'pausiert';
+  } else {
+    // start / resume
+    running = true;
+    btnStart.textContent = '⏸ Pause';
+    btnStart.classList.add('running');
+    updateState();
+    intervalId = setInterval(tick, 1000);
+  }
+}
+
+function reset() {
+  clearInterval(intervalId);
+  running = false;
+  remaining = totalSeconds;
+  btnStart.textContent = '▶ Start';
+  btnStart.classList.remove('running');
+  card.classList.remove('running-state','warn-state','danger-state','done');
+  phaseLabel.textContent = 'bereit';
+  setDisplay(totalSeconds);
+  syncSteppers(totalSeconds);
+}
+
+// ── Preset buttons ─────────────────────────────────────────────────────
+document.getElementById('presets').addEventListener('click', e => {
+  const btn = e.target.closest('.preset');
+  if (!btn || running) return;
+  applyTime(parseInt(btn.dataset.sec));
+  clearPresetActive();
+  btn.classList.add('active');
+  document.querySelectorAll('.hat').forEach(h => h.classList.remove('active'));
+  reset();
+});
+
+// ── Steppers ───────────────────────────────────────────────────────────
+function getStepperValues() {
+  return parseInt(minVal.textContent) * 60 + parseInt(secVal.textContent);
+}
+
+document.getElementById('min-up').addEventListener('click', () => {
+  if (running) return;
+  applyTime(getStepperValues() + 60);
+  reset();
+});
+document.getElementById('min-dn').addEventListener('click', () => {
+  if (running) return;
+  applyTime(Math.max(0, getStepperValues() - 60));
+  reset();
+});
+document.getElementById('sec-up').addEventListener('click', () => {
+  if (running) return;
+  applyTime(getStepperValues() + 30);
+  reset();
+});
+document.getElementById('sec-dn').addEventListener('click', () => {
+  if (running) return;
+  applyTime(Math.max(10, getStepperValues() - 30));
+  reset();
+});
+
+// ── Hat buttons ────────────────────────────────────────────────────────
+document.getElementById('hat-row').addEventListener('click', e => {
+  const hat = e.target.closest('.hat');
+  if (!hat || running) return;
+  document.querySelectorAll('.hat').forEach(h => h.classList.remove('active'));
+  hat.classList.add('active');
+  const min = parseInt(hat.dataset.min);
+  applyTime(min * 60);
+  reset();
+});
+
+// ── Control buttons ────────────────────────────────────────────────────
+btnStart.addEventListener('click', startPause);
+btnReset.addEventListener('click', reset);
+
+// ── Keyboard ───────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space') { e.preventDefault(); startPause(); }
+  if (e.code === 'KeyR')  { reset(); }
+});
+
+// ── Init ───────────────────────────────────────────────────────────────
+setDisplay(totalSeconds);
+syncSteppers(totalSeconds);
+arc.style.strokeDasharray = CIRCUMFERENCE;
+arc.style.strokeDashoffset = 0;
+</script>
+</body>
+</html>

@@ -1,0 +1,2883 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  COLOR PLANNER — Accessible Color & Contrast Planning Tool
+  ============================================================
+  Version:   0.1.0
+  Author:    GFU Cyrus AG / Michael Reichart
+  License:   Internal prototype
+
+  @extractable-to: src/
+  ├── index.html
+  ├── config.js
+  ├── state/appState.js
+  ├── services/ColorService.js
+  ├── services/CSSGenerator.js
+  ├── services/ClipboardService.js
+  ├── validators/colorValidator.js
+  ├── components/PalettePanel.js
+  ├── components/SemanticPanel.js
+  ├── components/ContrastMatrix.js
+  ├── components/CSSPanel.js
+  ├── components/IconDemo.js
+  ├── tests/smoke.test.js
+  └── styles/tokens.css
+
+  QA CHECKLIST:
+  [ ] Alle Farben WCAG-konform berechnet (3:1 / 4.5:1 / 7:1)
+  [ ] Darkmode-Variante rendert korrekt
+  [ ] High-Contrast-Variante rendert korrekt
+  [ ] CSS-Export vollständig und kopierbar
+  [ ] Keine Inline-Eventhandler im HTML
+  [ ] Semantisches HTML: main, section, article, label, button
+  [ ] Fokus-Styles sichtbar
+  [ ] Debug-Modus toggelt vollständige Logs
+  [ ] Smoke-Tests laufen ohne Fehler in der Konsole
+  [ ] Farbpaletten zeigen je 5 Abstufungen
+  [ ] Kontrast-Matrix zeigt 14pt, 14pt bold, 18pt Beispiele
+  [ ] Icon-Verdeutlichungs-Demo vorhanden
+  [ ] Clipboard-Funktion arbeitet in modernen Browsern
+  [ ] Mobile-responsiv ab 375px
+  ============================================================
+-->
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Planner — Accessible Color & Contrast</title>
+
+  <!-- ============================================================
+       GOOGLE FONTS
+       Barlow (UI) + Noto Sans Mono (Code/Numbers)
+       ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Noto+Sans+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- ============================================================
+       MATERIAL SYMBOLS OUTLINED
+       ============================================================ -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — CSS Custom Properties
+       @extractable-to: styles/tokens.css
+       ============================================================ */
+    :root {
+      /* Layout */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+
+      /* Radius */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 20px;
+      --radius-full: 9999px;
+
+      /* Typography */
+      --font-ui: 'Barlow', system-ui, sans-serif;
+      --font-mono: 'Noto Sans Mono', 'Courier New', monospace;
+      --text-xs: 11px;
+      --text-sm: 13px;
+      --text-base: 15px;
+      --text-lg: 18px;
+      --text-xl: 22px;
+      --text-2xl: 28px;
+      --text-3xl: 36px;
+      --fw-light: 300;
+      --fw-normal: 400;
+      --fw-medium: 500;
+      --fw-semibold: 600;
+      --fw-bold: 700;
+      --lh-tight: 1.2;
+      --lh-base: 1.5;
+      --lh-loose: 1.75;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px oklch(0% 0 0 / 0.12), 0 1px 2px oklch(0% 0 0 / 0.08);
+      --shadow-md: 0 4px 12px oklch(0% 0 0 / 0.15), 0 2px 6px oklch(0% 0 0 / 0.1);
+      --shadow-lg: 0 8px 24px oklch(0% 0 0 / 0.18), 0 4px 12px oklch(0% 0 0 / 0.12);
+
+      /* Transitions */
+      --transition-fast: 120ms ease;
+      --transition-base: 200ms ease;
+      --transition-slow: 350ms ease;
+
+      /* App chrome — hellgrauer Hintergrund */
+      --chrome-bg: oklch(96% 0.005 250);
+      --chrome-surface: oklch(100% 0 0);
+      --chrome-border: oklch(88% 0.008 250);
+      --chrome-text: oklch(20% 0.02 250);
+      --chrome-text-muted: oklch(50% 0.015 250);
+      --chrome-accent: oklch(55% 0.18 250);
+      --chrome-accent-hover: oklch(48% 0.2 250);
+
+      /* WCAG Schwellenwerte */
+      --wcag-aa-normal: 4.5;
+      --wcag-aa-large: 3.0;
+      --wcag-aaa-normal: 7.0;
+      --wcag-aaa-large: 4.5;
+    }
+
+    /* ============================================================
+       DARK MODE — App-Chrome-Tokens
+       Wird durch [data-theme="dark"] auf <html> aktiviert
+       ============================================================ */
+    [data-theme="dark"] {
+      --chrome-bg:           oklch(14% 0.015 250);
+      --chrome-surface:      oklch(20% 0.018 250);
+      --chrome-border:       oklch(32% 0.02 250);
+      --chrome-text:         oklch(92% 0.01 250);
+      --chrome-text-muted:   oklch(62% 0.015 250);
+      --chrome-accent:       oklch(68% 0.18 250);
+      --chrome-accent-hover: oklch(75% 0.2 250);
+
+      --shadow-sm: 0 1px 3px oklch(0% 0 0 / 0.4), 0 1px 2px oklch(0% 0 0 / 0.3);
+      --shadow-md: 0 4px 12px oklch(0% 0 0 / 0.5), 0 2px 6px oklch(0% 0 0 / 0.35);
+      --shadow-lg: 0 8px 24px oklch(0% 0 0 / 0.6), 0 4px 12px oklch(0% 0 0 / 0.4);
+    }
+
+    /* ============================================================
+       HIGH CONTRAST MODE — App-Chrome-Tokens
+       Wird durch [data-theme="hc"] auf <html> aktiviert
+       ============================================================ */
+    [data-theme="hc"] {
+      --chrome-bg:           #000000;
+      --chrome-surface:      #000000;
+      --chrome-border:       #ffffff;
+      --chrome-text:         #ffffff;
+      --chrome-text-muted:   #ffff00;
+      --chrome-accent:       #ffff00;
+      --chrome-accent-hover: #ffffff;
+
+      --shadow-sm: none;
+      --shadow-md: none;
+      --shadow-lg: none;
+    }
+
+    /* HC: Badges und Badges-Farben im HC-Modus lesbar halten */
+    [data-theme="hc"] .badge--pass  { background: #000; color: #00ff00; border: 1px solid #00ff00; }
+    [data-theme="hc"] .badge--fail  { background: #000; color: #ff4444; border: 1px solid #ff4444; }
+    [data-theme="hc"] .badge--warn  { background: #000; color: #ffff00; border: 1px solid #ffff00; }
+    [data-theme="hc"] .badge--aa   { background: #000; color: #00ccff; border: 1px solid #00ccff; }
+    [data-theme="hc"] .badge--aaa  { background: #000; color: #00ff00; border: 1px solid #00ff00; }
+
+    /* HC: Tab-Buttons */
+    [data-theme="hc"] .tab-btn[aria-selected="true"] {
+      background: #ffff00;
+      color: #000000;
+      outline: 2px solid #ffffff;
+    }
+    [data-theme="hc"] .tab-btn:hover {
+      outline: 2px solid #ffff00;
+    }
+
+    /* HC: Alle Karten klare Rahmen */
+    [data-theme="hc"] .card,
+    [data-theme="hc"] .swatch,
+    [data-theme="hc"] .semantic-card,
+    [data-theme="hc"] .icon-demo-item,
+    [data-theme="hc"] .corp-color-row,
+    [data-theme="hc"] .neutral-swatch__block,
+    [data-theme="hc"] .contrast-table th,
+    [data-theme="hc"] .contrast-table td {
+      border-color: #ffffff !important;
+    }
+
+    /* HC: Inputs */
+    [data-theme="hc"] input[type="text"],
+    [data-theme="hc"] input[type="number"],
+    [data-theme="hc"] select {
+      background: #000 !important;
+      color: #fff !important;
+      border-color: #fff !important;
+    }
+
+    /* HC: Buttons */
+    [data-theme="hc"] .btn--primary {
+      background: #ffff00 !important;
+      color: #000 !important;
+      border-color: #ffff00 !important;
+    }
+    [data-theme="hc"] .btn--secondary {
+      background: #000 !important;
+      color: #fff !important;
+      border-color: #fff !important;
+    }
+
+    /* HC: Swatch-Info */
+    [data-theme="hc"] .swatch__info {
+      background: #000 !important;
+    }
+
+    /* HC: Debug-Panel */
+    [data-theme="hc"] .debug-panel {
+      background: #000;
+      border: 2px solid #fff;
+    }
+
+    /* ============================================================
+       DARK: zusätzliche Korrekturen für tief verschachtelte Elemente
+       ============================================================ */
+    [data-theme="dark"] .swatch__info {
+      background: oklch(25% 0.015 250);
+      border-top-color: oklch(32% 0.02 250);
+    }
+
+    [data-theme="dark"] .contrast-table th {
+      background: oklch(25% 0.015 250);
+    }
+
+    [data-theme="dark"] .icon-demo-item {
+      background: oklch(25% 0.015 250);
+    }
+
+    [data-theme="dark"] .corp-color-row {
+      background: oklch(25% 0.015 250);
+    }
+
+    [data-theme="dark"] .neutral-swatch__block {
+      border-color: oklch(35% 0.02 250) !important;
+    }
+
+    [data-theme="dark"] .css-output pre {
+      background: oklch(10% 0.01 250);
+      border-color: oklch(28% 0.02 250);
+    }
+
+    [data-theme="dark"] .tab-nav {
+      background: oklch(20% 0.018 250);
+      border-color: oklch(32% 0.02 250);
+    }
+
+    /* ============================================================
+       BASE RESET & GLOBAL
+       ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      font-size: var(--text-base);
+      line-height: var(--lh-base);
+      color: var(--chrome-text);
+      background-color: var(--chrome-bg);
+      min-height: 100vh;
+    }
+
+    /* Focus Styles — sichtbar für Tastaturnutzende */
+    :focus-visible {
+      outline: 3px solid var(--chrome-accent);
+      outline-offset: 2px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .app-header {
+      background: var(--chrome-surface);
+      border-bottom: 1px solid var(--chrome-border);
+      padding: var(--space-4) var(--space-6);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .app-header__brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .app-header__title {
+      font-size: var(--text-lg);
+      font-weight: var(--fw-semibold);
+      letter-spacing: -0.01em;
+    }
+
+    .app-header__subtitle {
+      font-size: var(--text-sm);
+      color: var(--chrome-text-muted);
+    }
+
+    .app-header__controls {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .app-main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-6);
+      display: grid;
+      gap: var(--space-6);
+    }
+
+    /* ============================================================
+       TABS / NAV
+       ============================================================ */
+    .tab-nav {
+      display: flex;
+      gap: var(--space-1);
+      background: var(--chrome-surface);
+      border: 1px solid var(--chrome-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-1);
+      width: fit-content;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      color: var(--chrome-text-muted);
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: var(--space-2) var(--space-4);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--chrome-text);
+      background: var(--chrome-bg);
+    }
+
+    .tab-btn[aria-selected="true"] {
+      color: var(--chrome-surface);
+      background: var(--chrome-accent);
+      font-weight: var(--fw-semibold);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel[aria-hidden="false"] {
+      display: block;
+    }
+
+    /* ============================================================
+       CARDS / SECTIONS
+       ============================================================ */
+    .card {
+      background: var(--chrome-surface);
+      border: 1px solid var(--chrome-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--chrome-border);
+    }
+
+    .card__title {
+      font-size: var(--text-lg);
+      font-weight: var(--fw-semibold);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .card__title .material-symbols-outlined {
+      font-size: 20px;
+      color: var(--chrome-accent);
+    }
+
+    .section-label {
+      font-size: var(--text-xs);
+      font-weight: var(--fw-semibold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--chrome-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    /* ============================================================
+       FORM ELEMENTS
+       ============================================================ */
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      align-items: flex-end;
+      margin-bottom: var(--space-4);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      min-width: 140px;
+    }
+
+    .form-group label {
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      color: var(--chrome-text);
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group select {
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      color: var(--chrome-text);
+      background: var(--chrome-bg);
+      border: 1px solid var(--chrome-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-2) var(--space-3);
+      transition: border-color var(--transition-fast);
+      width: 100%;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="number"]:focus,
+    .form-group select:focus {
+      border-color: var(--chrome-accent);
+      outline: none;
+      box-shadow: 0 0 0 3px oklch(55% 0.18 250 / 0.15);
+    }
+
+    .form-group input[type="color"] {
+      width: 56px;
+      height: 36px;
+      border: 1px solid var(--chrome-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      padding: 2px;
+      background: var(--chrome-bg);
+    }
+
+    .color-input-pair {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .color-input-pair input[type="text"] {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      width: 100px;
+    }
+
+    /* ============================================================
+       BUTTONS
+       ============================================================ */
+    .btn {
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn .material-symbols-outlined { font-size: 18px; }
+
+    .btn--primary {
+      background: var(--chrome-accent);
+      color: white;
+      border-color: var(--chrome-accent);
+    }
+
+    .btn--primary:hover {
+      background: var(--chrome-accent-hover);
+      border-color: var(--chrome-accent-hover);
+    }
+
+    .btn--secondary {
+      background: var(--chrome-surface);
+      color: var(--chrome-text);
+      border-color: var(--chrome-border);
+    }
+
+    .btn--secondary:hover {
+      background: var(--chrome-bg);
+      border-color: oklch(70% 0.02 250);
+    }
+
+    .btn--ghost {
+      background: transparent;
+      color: var(--chrome-text-muted);
+      border-color: transparent;
+    }
+
+    .btn--ghost:hover {
+      background: var(--chrome-bg);
+      color: var(--chrome-text);
+    }
+
+    .btn--sm {
+      font-size: var(--text-xs);
+      padding: var(--space-1) var(--space-3);
+    }
+
+    .btn--icon {
+      padding: var(--space-2);
+      aspect-ratio: 1;
+    }
+
+    /* ============================================================
+       BADGE / TAG
+       ============================================================ */
+    .badge {
+      font-size: var(--text-xs);
+      font-weight: var(--fw-semibold);
+      padding: 2px var(--space-2);
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .badge--pass { background: oklch(92% 0.06 145); color: oklch(30% 0.12 145); }
+    .badge--fail { background: oklch(92% 0.06 25); color: oklch(30% 0.12 25); }
+    .badge--warn { background: oklch(94% 0.08 85); color: oklch(35% 0.12 85); }
+    .badge--aa { background: oklch(88% 0.08 250); color: oklch(30% 0.15 250); }
+    .badge--aaa { background: oklch(85% 0.1 145); color: oklch(28% 0.12 145); }
+
+    /* ============================================================
+       COLOR SWATCH PALETTE
+       @extractable-to: components/PalettePanel.js
+       ============================================================ */
+    .palettes-grid {
+      display: grid;
+      gap: var(--space-5);
+    }
+
+    .palette-entry {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-4);
+      align-items: start;
+    }
+
+    @media (max-width: 700px) {
+      .palette-entry { grid-template-columns: 1fr; }
+    }
+
+    .palette-meta { display: flex; flex-direction: column; gap: var(--space-2); }
+
+    .palette-name {
+      font-weight: var(--fw-semibold);
+      font-size: var(--text-base);
+    }
+
+    .palette-hex {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--chrome-text-muted);
+    }
+
+    .swatches {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .swatch {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      width: 96px;
+    }
+
+    .swatch__color {
+      height: 64px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: var(--space-1) var(--space-2);
+    }
+
+    .swatch__label {
+      font-size: var(--text-xs);
+      font-weight: var(--fw-semibold);
+    }
+
+    .swatch__contrast {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      opacity: 0.9;
+    }
+
+    .swatch__info {
+      background: var(--chrome-bg);
+      padding: var(--space-1) var(--space-2);
+      border-top: 1px solid var(--chrome-border);
+    }
+
+    .swatch__hex {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--chrome-text-muted);
+      display: block;
+    }
+
+    .swatch__step {
+      font-size: 10px;
+      color: var(--chrome-text-muted);
+    }
+
+    /* ============================================================
+       CONTRAST MATRIX
+       @extractable-to: components/ContrastMatrix.js
+       ============================================================ */
+    .contrast-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .contrast-table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: var(--text-sm);
+    }
+
+    .contrast-table th,
+    .contrast-table td {
+      border: 1px solid var(--chrome-border);
+      padding: var(--space-2) var(--space-3);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .contrast-table th {
+      background: var(--chrome-bg);
+      font-weight: var(--fw-semibold);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .contrast-cell {
+      min-width: 120px;
+      padding: var(--space-2) !important;
+    }
+
+    .contrast-sample {
+      border-radius: var(--radius-sm);
+      padding: var(--space-2) var(--space-3);
+      margin-bottom: var(--space-1);
+      line-height: var(--lh-tight);
+    }
+
+    .contrast-ratio-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--chrome-text-muted);
+    }
+
+    /* ============================================================
+       SEMANTIC COLORS PANEL
+       @extractable-to: components/SemanticPanel.js
+       ============================================================ */
+    .semantic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--space-3);
+    }
+
+    .semantic-card {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--chrome-border);
+    }
+
+    .semantic-card__color {
+      height: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: var(--space-2) var(--space-3);
+      gap: var(--space-1);
+    }
+
+    .semantic-card__role {
+      font-size: var(--text-xs);
+      font-weight: var(--fw-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .semantic-card__icon {
+      font-size: 22px;
+    }
+
+    .semantic-card__info {
+      background: var(--chrome-surface);
+      padding: var(--space-2) var(--space-3);
+    }
+
+    .semantic-card__hex {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--chrome-text-muted);
+      display: block;
+    }
+
+    .semantic-card__desc {
+      font-size: var(--text-xs);
+      color: var(--chrome-text-muted);
+    }
+
+    /* ============================================================
+       ICON DEMO — "Use of Color" Regel
+       @extractable-to: components/IconDemo.js
+       ============================================================ */
+    .icon-demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .icon-demo-item {
+      border: 1px solid var(--chrome-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      background: var(--chrome-bg);
+    }
+
+    .icon-demo-item__label {
+      font-size: var(--text-xs);
+      font-weight: var(--fw-semibold);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--chrome-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    .icon-demo-item__row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .icon-demo-item__msg {
+      font-size: var(--text-sm);
+    }
+
+    /* ============================================================
+       CSS PANEL
+       @extractable-to: components/CSSPanel.js
+       ============================================================ */
+    .css-output {
+      position: relative;
+    }
+
+    .css-output pre {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      line-height: 1.6;
+      color: var(--chrome-text);
+      background: oklch(14% 0.015 250);
+      color: oklch(88% 0.03 250);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      overflow-x: auto;
+      max-height: 480px;
+      overflow-y: auto;
+      border: 1px solid oklch(25% 0.02 250);
+    }
+
+    .css-comment { color: oklch(60% 0.05 250); }
+    .css-prop { color: oklch(75% 0.15 200); }
+    .css-value { color: oklch(82% 0.12 70); }
+    .css-selector { color: oklch(80% 0.12 145); }
+
+    .css-copy-btn {
+      position: absolute;
+      top: var(--space-3);
+      right: var(--space-3);
+    }
+
+    .copy-success {
+      display: none;
+      font-size: var(--text-xs);
+      color: oklch(50% 0.15 145);
+      align-items: center;
+      gap: var(--space-1);
+      font-weight: var(--fw-medium);
+    }
+
+    .copy-success.visible { display: flex; }
+
+    /* ============================================================
+       MODE SELECTOR
+       ============================================================ */
+    .mode-selector {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+    }
+
+    .mode-btn {
+      font-family: var(--font-ui);
+      font-size: var(--text-xs);
+      font-weight: var(--fw-medium);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--chrome-border);
+      background: var(--chrome-surface);
+      color: var(--chrome-text-muted);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .mode-btn[aria-pressed="true"] {
+      background: var(--chrome-accent);
+      color: white;
+      border-color: var(--chrome-accent);
+    }
+
+    /* ============================================================
+       GRUNDTÖNE PANEL
+       ============================================================ */
+    .neutral-swatches {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .neutral-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .neutral-swatch__block {
+      width: 72px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--chrome-border);
+    }
+
+    .neutral-swatch__label {
+      font-size: 10px;
+      font-weight: var(--fw-medium);
+      color: var(--chrome-text-muted);
+      text-align: center;
+    }
+
+    .neutral-swatch__hex {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--chrome-text-muted);
+    }
+
+    /* ============================================================
+       DEBUG PANEL
+       ============================================================ */
+    .debug-panel {
+      display: none;
+      background: oklch(12% 0.02 250);
+      color: oklch(85% 0.04 250);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      line-height: 1.6;
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid oklch(25% 0.02 250);
+    }
+
+    .debug-panel.visible { display: block; }
+    .debug-log { color: oklch(70% 0.04 250); }
+    .debug-warn { color: oklch(82% 0.14 80); }
+    .debug-error { color: oklch(72% 0.14 25); }
+    .debug-ok { color: oklch(72% 0.14 145); }
+
+    /* ============================================================
+       NOTIFICATION TOAST
+       ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: var(--space-6);
+      right: var(--space-6);
+      background: var(--chrome-text);
+      color: var(--chrome-surface);
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      box-shadow: var(--shadow-lg);
+      z-index: 9999;
+      transform: translateY(12px);
+      opacity: 0;
+      transition: all var(--transition-base);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      pointer-events: none;
+    }
+
+    .toast.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ============================================================
+       CORPORATE COLOR EDITOR
+       ============================================================ */
+    .corp-colors-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .corp-color-row {
+      display: grid;
+      grid-template-columns: 180px auto 1fr auto auto;
+      gap: var(--space-3);
+      align-items: center;
+      padding: var(--space-3);
+      border: 1px solid var(--chrome-border);
+      border-radius: var(--radius-md);
+      background: var(--chrome-bg);
+      margin-bottom: var(--space-2);
+    }
+
+    @media (max-width: 700px) {
+      .corp-color-row { grid-template-columns: 1fr; }
+    }
+
+    .corp-color-preview {
+      height: 40px;
+      border-radius: var(--radius-md);
+      flex: 1;
+      border: 1px solid var(--chrome-border);
+    }
+
+    /* ============================================================
+       UTILITY
+       ============================================================ */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+      user-select: none;
+    }
+
+    .flex { display: flex; }
+    .flex-wrap { flex-wrap: wrap; }
+    .items-center { align-items: center; }
+    .gap-2 { gap: var(--space-2); }
+    .gap-4 { gap: var(--space-4); }
+    .mt-4 { margin-top: var(--space-4); }
+    .mt-6 { margin-top: var(--space-6); }
+    .mb-4 { margin-bottom: var(--space-4); }
+    .text-muted { color: var(--chrome-text-muted); }
+    .text-sm { font-size: var(--text-sm); }
+    .font-mono { font-family: var(--font-mono); }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       APP HEADER
+       ============================================================ -->
+  <header class="app-header" role="banner">
+    <div class="app-header__brand">
+      <span class="material-symbols-outlined" style="font-size:28px;color:var(--chrome-accent)" aria-hidden="true">palette</span>
+      <div>
+        <div class="app-header__title">Color Planner</div>
+        <div class="app-header__subtitle">Accessible Color & Contrast — WCAG 2.1/2.2</div>
+      </div>
+    </div>
+    <div class="app-header__controls">
+      <div class="mode-selector" role="group" aria-label="Farbmodus">
+        <button class="mode-btn" data-mode="light" aria-pressed="true">Light</button>
+        <button class="mode-btn" data-mode="dark" aria-pressed="false">Dark</button>
+        <button class="mode-btn" data-mode="hc" aria-pressed="false">High Contrast</button>
+      </div>
+      <button class="btn btn--ghost btn--sm" id="btn-debug" aria-pressed="false" title="Debug-Modus">
+        <span class="material-symbols-outlined">bug_report</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN APP
+       ============================================================ -->
+  <main class="app-main" id="app-main" role="main">
+
+    <!-- TAB NAVIGATION -->
+    <nav aria-label="Bereiche" class="tab-nav" role="tablist">
+      <button class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-colors" id="tab-colors">
+        <span class="material-symbols-outlined" aria-hidden="true">color_lens</span>
+        Corporate Farben
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-neutrals" id="tab-neutrals">
+        <span class="material-symbols-outlined" aria-hidden="true">tonality</span>
+        Grundtöne
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-semantic" id="tab-semantic">
+        <span class="material-symbols-outlined" aria-hidden="true">category</span>
+        Semantische Farben
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-contrast" id="tab-contrast">
+        <span class="material-symbols-outlined" aria-hidden="true">contrast</span>
+        Kontrast-Matrix
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-icons" id="tab-icons">
+        <span class="material-symbols-outlined" aria-hidden="true">emergency</span>
+        Icon-Demo
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-css" id="tab-css">
+        <span class="material-symbols-outlined" aria-hidden="true">code</span>
+        CSS Export
+      </button>
+    </nav>
+
+    <!-- PANEL: CORPORATE FARBEN -->
+    <section class="tab-panel" id="panel-colors" role="tabpanel" aria-labelledby="tab-colors" aria-hidden="false">
+      <div class="card">
+        <div class="card__header">
+          <h2 class="card__title">
+            <span class="material-symbols-outlined" aria-hidden="true">color_lens</span>
+            Corporate Farben definieren
+          </h2>
+          <div class="flex gap-2">
+            <button class="btn btn--secondary btn--sm" id="btn-add-color">
+              <span class="material-symbols-outlined" aria-hidden="true">add</span>
+              Farbe hinzufügen
+            </button>
+            <button class="btn btn--primary btn--sm" id="btn-generate">
+              <span class="material-symbols-outlined" aria-hidden="true">auto_awesome</span>
+              Paletten generieren
+            </button>
+          </div>
+        </div>
+        <div id="corp-color-editor" aria-live="polite"></div>
+      </div>
+
+      <div class="card mt-6" id="palette-output-card" style="display:none">
+        <div class="card__header">
+          <h2 class="card__title">
+            <span class="material-symbols-outlined" aria-hidden="true">gradient</span>
+            Farbpaletten (je 5 Abstufungen)
+          </h2>
+        </div>
+        <div id="palettes-output"></div>
+      </div>
+    </section>
+
+    <!-- PANEL: GRUNDTÖNE -->
+    <section class="tab-panel" id="panel-neutrals" role="tabpanel" aria-labelledby="tab-neutrals" aria-hidden="true">
+      <div class="card">
+        <div class="card__header">
+          <h2 class="card__title">
+            <span class="material-symbols-outlined" aria-hidden="true">tonality</span>
+            Grundtöne
+          </h2>
+          <button class="btn btn--primary btn--sm" id="btn-gen-neutrals">
+            <span class="material-symbols-outlined" aria-hidden="true">auto_awesome</span>
+            Generieren
+          </button>
+        </div>
+        <div class="form-row" id="neutral-editor"></div>
+        <div id="neutral-output" class="mt-6"></div>
+      </div>
+    </section>
+
+    <!-- PANEL: SEMANTISCHE FARBEN -->
+    <section class="tab-panel" id="panel-semantic" role="tabpanel" aria-labelledby="tab-semantic" aria-hidden="true">
+      <div class="card">
+        <div class="card__header">
+          <h2 class="card__title">
+            <span class="material-symbols-outlined" aria-hidden="true">category</span>
+            Semantische Farben
+          </h2>
+          <button class="btn btn--primary btn--sm" id="btn-gen-semantic">
+            <span class="material-symbols-outlined" aria-hidden="true">auto_awesome</span>
+            Generieren
+          </button>
+        </div>
+        <div class="form-row mb-4" id="semantic-editor"></div>
+        <div id="semantic-output"></div>
+      </div>
+    </section>
+
+    <!-- PANEL: KONTRAST-MATRIX -->
+    <section class="tab-panel" id="panel-contrast" role="tabpanel" aria-labelledby="tab-contrast" aria-hidden="true">
+      <div class="card">
+        <div class="card__header">
+          <h2 class="card__title">
+            <span class="material-symbols-outlined" aria-hidden="true">contrast</span>
+            Kontrast-Matrix
+          </h2>
+          <div class="flex gap-2 items-center">
+            <span class="text-sm text-muted">Vordergrund vs. Hintergründe</span>
+          </div>
+        </div>
+        <div id="contrast-matrix-output"></div>
+      </div>
+    </section>
+
+    <!-- PANEL: ICON-DEMO -->
+    <section class="tab-panel" id="panel-icons" role="tabpanel" aria-labelledby="tab-icons" aria-hidden="true">
+      <div class="card">
+        <div class="card__header">
+          <h2 class="card__title">
+            <span class="material-symbols-outlined" aria-hidden="true">emergency</span>
+            Icon-Verdeutlichung — "Use of Color"-Regel
+          </h2>
+        </div>
+        <p class="text-sm text-muted mb-4">
+          WCAG 1.4.1 verlangt, dass Informationen nicht <em>nur</em> durch Farbe übermittelt werden.
+          Jedes semantische Signal benötigt ein zusätzliches Merkmal (Icon, Muster, Text, Form).
+        </p>
+        <div id="icon-demo-output"></div>
+      </div>
+    </section>
+
+    <!-- PANEL: CSS EXPORT -->
+    <section class="tab-panel" id="panel-css" role="tabpanel" aria-labelledby="tab-css" aria-hidden="true">
+      <div class="card">
+        <div class="card__header">
+          <h2 class="card__title">
+            <span class="material-symbols-outlined" aria-hidden="true">code</span>
+            CSS Variables &amp; Klassen
+          </h2>
+          <div class="flex gap-2 items-center">
+            <span class="copy-success" id="copy-success-main" aria-live="polite">
+              <span class="material-symbols-outlined" style="font-size:16px;color:oklch(50% 0.15 145)">check_circle</span>
+              Kopiert!
+            </span>
+            <button class="btn btn--primary btn--sm" id="btn-copy-all">
+              <span class="material-symbols-outlined" aria-hidden="true">content_copy</span>
+              Alles kopieren
+            </button>
+          </div>
+        </div>
+        <div id="css-output-root" class="css-output">
+          <button class="btn btn--secondary btn--sm css-copy-btn" id="btn-copy-root">
+            <span class="material-symbols-outlined" aria-hidden="true">content_copy</span>
+          </button>
+          <pre id="css-root-pre" aria-label="CSS :root Variablen"><code id="css-root-code"></code></pre>
+        </div>
+        <div class="css-output mt-4">
+          <button class="btn btn--secondary btn--sm css-copy-btn" id="btn-copy-dark">
+            <span class="material-symbols-outlined" aria-hidden="true">content_copy</span>
+          </button>
+          <pre aria-label="Dark Mode CSS"><code id="css-dark-code"></code></pre>
+        </div>
+        <div class="css-output mt-4">
+          <button class="btn btn--secondary btn--sm css-copy-btn" id="btn-copy-hc">
+            <span class="material-symbols-outlined" aria-hidden="true">content_copy</span>
+          </button>
+          <pre aria-label="High Contrast CSS"><code id="css-hc-code"></code></pre>
+        </div>
+        <div class="css-output mt-4">
+          <button class="btn btn--secondary btn--sm css-copy-btn" id="btn-copy-util">
+            <span class="material-symbols-outlined" aria-hidden="true">content_copy</span>
+          </button>
+          <pre aria-label="Utility-Klassen CSS"><code id="css-util-code"></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEBUG PANEL -->
+    <div class="debug-panel" id="debug-panel" aria-label="Debug-Log" aria-live="polite"></div>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+    <span class="material-symbols-outlined" aria-hidden="true" id="toast-icon">check_circle</span>
+    <span id="toast-msg">Kopiert!</span>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+  /* ============================================================
+     CONFIG — Zentrale Konfiguration (frozen)
+     @extractable-to: config.js
+     ============================================================ */
+  const CONFIG = Object.freeze({
+    version: '0.1.0',
+    debug: false,
+
+    // Maximale Corporate Farben
+    maxCorporateColors: 5,
+    minCorporateColors: 1,
+
+    // Palette steps: L% adjustments von Basis
+    paletteSteps: [
+      { key: '100', lightAdj: +28, label: '100 — Sehr hell' },
+      { key: '300', lightAdj: +14, label: '300 — Hell' },
+      { key: '500', lightAdj:   0, label: '500 — Basis' },
+      { key: '700', lightAdj: -14, label: '700 — Dunkel' },
+      { key: '900', lightAdj: -28, label: '900 — Sehr dunkel' },
+    ],
+
+    // WCAG Schwellenwerte
+    wcag: {
+      aa_normal:  4.5,
+      aa_large:   3.0,
+      aaa_normal: 7.0,
+      aaa_large:  4.5,
+    },
+
+    // Default Corporate Farben
+    defaultColors: [
+      { id: 'primary',   name: 'Primary',   hex: '#2563eb', role: 'primary' },
+      { id: 'secondary', name: 'Secondary',  hex: '#7c3aed', role: 'secondary' },
+    ],
+
+    // Default Grundtöne
+    defaultNeutrals: {
+      black:  '#0f172a',
+      white:  '#ffffff',
+      light:  '#f1f5f9',
+      medium: '#94a3b8',
+      dark:   '#334155',
+      shadow: '#0f172a',
+      border: '#cbd5e1',
+    },
+
+    // Semantische Farben defaults
+    defaultSemantic: {
+      success:  { hex: '#16a34a', icon: 'check_circle',    desc: 'Erfolg, OK' },
+      warning:  { hex: '#d97706', icon: 'warning',          desc: 'Warnung, Achtung' },
+      info:     { hex: '#0284c7', icon: 'info',             desc: 'Information, Hinweis' },
+      error:    { hex: '#dc2626', icon: 'error',            desc: 'Fehler, Kritisch' },
+      hover:    { hex: '#1d4ed8', icon: 'mouse',            desc: 'Hover-Zustand' },
+      active:   { hex: '#1e40af', icon: 'touch_app',        desc: 'Aktiv-Zustand' },
+      focus:    { hex: '#2563eb', icon: 'center_focus_strong', desc: 'Fokus-Zustand' },
+      visited:  { hex: '#7e22ce', icon: 'history',          desc: 'Besuchter Link' },
+      disabled: { hex: '#94a3b8', icon: 'block',            desc: 'Deaktiviert' },
+    },
+
+    // Kontrast-Typo-Beispiele
+    contrastTypoSamples: [
+      { label: '14pt normal', style: 'font-size:14pt;font-weight:normal', min: 4.5, desc: 'AA Normtext' },
+      { label: '14pt bold',   style: 'font-size:14pt;font-weight:bold',   min: 3.0, desc: 'AA Großtext (bold)' },
+      { label: '18pt normal', style: 'font-size:18pt;font-weight:normal', min: 3.0, desc: 'AA Großtext' },
+    ],
+  });
+
+
+  /* ============================================================
+     APP STATE — Zentraler Zustand
+     @extractable-to: state/appState.js
+     ============================================================ */
+  const appState = {
+    mode: 'light',           // 'light' | 'dark' | 'hc'
+    debug: CONFIG.debug,
+
+    corporateColors: CONFIG.defaultColors.map(c => ({ ...c })),
+    neutrals: { ...CONFIG.defaultNeutrals },
+    semantic: Object.fromEntries(
+      Object.entries(CONFIG.defaultSemantic).map(([k, v]) => [k, { ...v }])
+    ),
+
+    // Generierte Paletten (nach Generierung befüllt)
+    generatedPalettes: [],  // [{id, name, role, hex, steps: [{key, hex, contrast_on_white, contrast_on_black}]}]
+    generatedNeutrals: {},
+    generatedSemantic: {},
+
+    activeTab: 'colors',
+  };
+
+
+  /* ============================================================
+     COLOR SERVICE — Farb-Berechnungen, WCAG-Kontrast
+     @extractable-to: services/ColorService.js
+     ============================================================ */
+  const ColorService = (() => {
+
+    /** Hex → {r, g, b} (0–255) */
+    function hexToRgb(hex) {
+      const clean = hex.replace('#', '');
+      const full = clean.length === 3
+        ? clean.split('').map(c => c + c).join('')
+        : clean;
+      return {
+        r: parseInt(full.slice(0, 2), 16),
+        g: parseInt(full.slice(2, 4), 16),
+        b: parseInt(full.slice(4, 6), 16),
+      };
+    }
+
+    /** {r,g,b} → Hex */
+    function rgbToHex({ r, g, b }) {
+      return '#' + [r, g, b].map(v =>
+        Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')
+      ).join('');
+    }
+
+    /** WCAG relative luminance (0–1) */
+    function relativeLuminance({ r, g, b }) {
+      const linearize = v => {
+        const n = v / 255;
+        return n <= 0.04045 ? n / 12.92 : Math.pow((n + 0.055) / 1.055, 2.4);
+      };
+      return 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b);
+    }
+
+    /** WCAG Kontrastverhältnis (1–21) */
+    function contrastRatio(hex1, hex2) {
+      const L1 = relativeLuminance(hexToRgb(hex1));
+      const L2 = relativeLuminance(hexToRgb(hex2));
+      const lighter = Math.max(L1, L2);
+      const darker  = Math.min(L1, L2);
+      return (lighter + 0.05) / (darker + 0.05);
+    }
+
+    /** Bestimmt ob Textfarbe Weiß oder Schwarz (max. Kontrast) */
+    function maxContrastText(hex) {
+      const ratio_white = contrastRatio(hex, '#ffffff');
+      const ratio_black = contrastRatio(hex, '#000000');
+      return ratio_white >= ratio_black ? '#ffffff' : '#000000';
+    }
+
+    /** Hex → HSL */
+    function hexToHsl(hex) {
+      let { r, g, b } = hexToRgb(hex);
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+      if (max === min) {
+        h = s = 0;
+      } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+          case g: h = ((b - r) / d + 2) / 6; break;
+          case b: h = ((r - g) / d + 4) / 6; break;
+        }
+      }
+      return { h: h * 360, s: s * 100, l: l * 100 };
+    }
+
+    /** HSL → Hex */
+    function hslToHex({ h, s, l }) {
+      s /= 100; l /= 100;
+      const a = s * Math.min(l, 1 - l);
+      const f = n => {
+        const k = (n + h / 30) % 12;
+        return l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+      };
+      return rgbToHex({ r: f(0) * 255, g: f(8) * 255, b: f(4) * 255 });
+    }
+
+    /** Generiert 5 Abstufungen einer Basisfarbe */
+    function generatePaletteSteps(baseHex) {
+      const hsl = hexToHsl(baseHex);
+      return CONFIG.paletteSteps.map(step => {
+        const newL = Math.max(3, Math.min(97, hsl.l + step.lightAdj));
+        // Sättigung bei sehr hellen / dunklen Tönen etwas reduzieren
+        const lFactor = Math.abs(newL - 50) / 50;
+        const newS = hsl.s * (1 - lFactor * 0.3);
+        const hex = hslToHex({ h: hsl.h, s: newS, l: newL });
+        const textColor = maxContrastText(hex);
+        const cr_white = contrastRatio(hex, '#ffffff');
+        const cr_black = contrastRatio(hex, '#000000');
+        return {
+          key: step.key,
+          label: step.label,
+          hex,
+          textColor,
+          contrast_on_white: cr_white,
+          contrast_on_black: cr_black,
+        };
+      });
+    }
+
+    /** Dark-Mode Variante einer Farbe (Helligkeit invertieren) */
+    function darkModeVariant(baseHex) {
+      const hsl = hexToHsl(baseHex);
+      const newL = hsl.l > 50
+        ? Math.max(20, hsl.l - 35)
+        : Math.min(80, hsl.l + 35);
+      return hslToHex({ h: hsl.h, s: Math.min(100, hsl.s * 0.9), l: newL });
+    }
+
+    /** High Contrast Variante */
+    function highContrastVariant(baseHex, bgHex = '#ffffff') {
+      const { h, s } = hexToHsl(baseHex);
+      // Stelle mindestens 7:1 sicher
+      for (let l = 5; l <= 95; l++) {
+        const candidate = hslToHex({ h, s, l });
+        if (contrastRatio(candidate, bgHex) >= 7.0) {
+          return candidate;
+        }
+      }
+      return '#000000';
+    }
+
+    /** WCAG-Level für Kontrastverhältnis */
+    function wcagLevel(ratio, isLarge = false) {
+      const aa  = isLarge ? CONFIG.wcag.aa_large  : CONFIG.wcag.aa_normal;
+      const aaa = isLarge ? CONFIG.wcag.aaa_large : CONFIG.wcag.aaa_normal;
+      if (ratio >= aaa) return 'AAA';
+      if (ratio >= aa)  return 'AA';
+      return 'FAIL';
+    }
+
+    return {
+      hexToRgb,
+      rgbToHex,
+      relativeLuminance,
+      contrastRatio,
+      maxContrastText,
+      hexToHsl,
+      hslToHex,
+      generatePaletteSteps,
+      darkModeVariant,
+      highContrastVariant,
+      wcagLevel,
+    };
+  })();
+
+
+  /* ============================================================
+     CSS GENERATOR SERVICE
+     @extractable-to: services/CSSGenerator.js
+     ============================================================ */
+  const CSSGenerator = (() => {
+
+    function generateRoot(state) {
+      const lines = [];
+      lines.push('/* ============================================================');
+      lines.push('   CSS Custom Properties — Light Mode (Default)');
+      lines.push('   Generated by Color Planner v' + CONFIG.version);
+      lines.push('   ============================================================ */');
+      lines.push(':root {');
+
+      // Corporate Farben
+      lines.push('');
+      lines.push('  /* Corporate Farben */');
+      for (const palette of state.generatedPalettes) {
+        lines.push(`  /* ${palette.name} (${palette.role}) */`);
+        for (const step of palette.steps) {
+          lines.push(`  --color-${palette.role}-${step.key}: ${step.hex};`);
+        }
+        lines.push(`  --color-${palette.role}: ${palette.hex};`);
+      }
+
+      // Grundtöne
+      lines.push('');
+      lines.push('  /* Grundtöne */');
+      for (const [key, val] of Object.entries(state.neutrals)) {
+        lines.push(`  --color-${key}: ${val};`);
+      }
+
+      // Semantische Farben
+      lines.push('');
+      lines.push('  /* Semantische Farben */');
+      for (const [key, val] of Object.entries(state.semantic)) {
+        lines.push(`  --color-${key}: ${val.hex};`);
+      }
+
+      lines.push('}');
+      return lines.join('\n');
+    }
+
+    function generateDark(state) {
+      const lines = [];
+      lines.push('/* Dark Mode */');
+      lines.push('@media (prefers-color-scheme: dark) {');
+      lines.push('  :root,');
+      lines.push('  [data-theme="dark"] {');
+      lines.push('');
+      lines.push('    /* Corporate Farben — Dark Mode Varianten */');
+      for (const palette of state.generatedPalettes) {
+        const dark = ColorService.darkModeVariant(palette.hex);
+        lines.push(`    --color-${palette.role}: ${dark};`);
+        const steps = ColorService.generatePaletteSteps(dark);
+        for (const step of steps) {
+          lines.push(`    --color-${palette.role}-${step.key}: ${step.hex};`);
+        }
+      }
+      lines.push('');
+      lines.push('    /* Grundtöne — Dark Mode */');
+      lines.push(`    --color-black: ${state.neutrals.white};`);
+      lines.push(`    --color-white: ${state.neutrals.black};`);
+      lines.push(`    --color-light: ${state.neutrals.dark};`);
+      lines.push(`    --color-dark: ${state.neutrals.light};`);
+      lines.push(`    --color-medium: ${state.neutrals.medium};`);
+      lines.push(`    --color-border: oklch(from var(--color-border) l c h / 0.3);`);
+      lines.push('  }');
+      lines.push('}');
+      return lines.join('\n');
+    }
+
+    function generateHighContrast(state) {
+      const lines = [];
+      lines.push('/* High Contrast Mode */');
+      lines.push('@media (prefers-contrast: more) {');
+      lines.push('  :root,');
+      lines.push('  [data-theme="hc"] {');
+      lines.push('');
+      lines.push('    /* Corporate Farben — High Contrast */');
+      for (const palette of state.generatedPalettes) {
+        const hc = ColorService.highContrastVariant(palette.hex);
+        lines.push(`    --color-${palette.role}: ${hc};`);
+      }
+      lines.push('');
+      lines.push('    /* Semantisch — High Contrast */');
+      for (const [key, val] of Object.entries(state.semantic)) {
+        const hc = ColorService.highContrastVariant(val.hex);
+        lines.push(`    --color-${key}: ${hc};`);
+      }
+      lines.push('');
+      lines.push('    --color-border: #000000;');
+      lines.push('    --focus-ring: 3px solid #000000;');
+      lines.push('  }');
+      lines.push('}');
+      return lines.join('\n');
+    }
+
+    function generateUtilityClasses(state) {
+      const lines = [];
+      lines.push('/* ============================================================');
+      lines.push('   Utility- und Anwendungsklassen');
+      lines.push('   ============================================================ */');
+      lines.push('');
+
+      // Text-Farben
+      lines.push('/* Textfarben */');
+      for (const palette of state.generatedPalettes) {
+        lines.push(`.text-${palette.role} { color: var(--color-${palette.role}); }`);
+        for (const step of palette.steps) {
+          lines.push(`.text-${palette.role}-${step.key} { color: var(--color-${palette.role}-${step.key}); }`);
+        }
+      }
+
+      // Hintergrundfarben
+      lines.push('');
+      lines.push('/* Hintergrundfarben */');
+      for (const palette of state.generatedPalettes) {
+        lines.push(`.bg-${palette.role} { background-color: var(--color-${palette.role}); }`);
+        for (const step of palette.steps) {
+          lines.push(`.bg-${palette.role}-${step.key} { background-color: var(--color-${palette.role}-${step.key}); }`);
+        }
+      }
+
+      // Borders
+      lines.push('');
+      lines.push('/* Border-Farben */');
+      for (const palette of state.generatedPalettes) {
+        lines.push(`.border-${palette.role} { border-color: var(--color-${palette.role}); }`);
+      }
+
+      // Semantische Klassen
+      lines.push('');
+      lines.push('/* Semantische Anwendungsklassen */');
+      for (const [key] of Object.entries(state.semantic)) {
+        lines.push(`.text-${key} { color: var(--color-${key}); }`);
+        lines.push(`.bg-${key} { background-color: var(--color-${key}); }`);
+        lines.push(`.border-${key} { border-color: var(--color-${key}); }`);
+      }
+
+      // States
+      lines.push('');
+      lines.push('/* Zustandsklassen (Button, Link, Form) */');
+      for (const palette of state.generatedPalettes) {
+        lines.push(`.btn-${palette.role} {`);
+        lines.push(`  background-color: var(--color-${palette.role});`);
+        lines.push(`  color: ${ColorService.maxContrastText(palette.hex)};`);
+        lines.push(`  border-color: var(--color-${palette.role});`);
+        lines.push(`}`);
+        lines.push(`.btn-${palette.role}:hover {`);
+        lines.push(`  background-color: var(--color-${palette.role}-700);`);
+        lines.push(`  border-color: var(--color-${palette.role}-700);`);
+        lines.push(`}`);
+        lines.push(`.btn-${palette.role}:focus-visible {`);
+        lines.push(`  outline: 3px solid var(--color-${palette.role}-300);`);
+        lines.push(`  outline-offset: 2px;`);
+        lines.push(`}`);
+        lines.push(`.btn-${palette.role}:active {`);
+        lines.push(`  background-color: var(--color-${palette.role}-900);`);
+        lines.push(`}`);
+        lines.push(`.btn-${palette.role}:disabled,`);
+        lines.push(`.btn-${palette.role}[aria-disabled="true"] {`);
+        lines.push(`  background-color: var(--color-disabled);`);
+        lines.push(`  color: var(--color-dark);`);
+        lines.push(`  cursor: not-allowed;`);
+        lines.push(`  border-color: var(--color-disabled);`);
+        lines.push(`}`);
+      }
+
+      return lines.join('\n');
+    }
+
+    function generateAll(state) {
+      return [
+        generateRoot(state),
+        '',
+        generateDark(state),
+        '',
+        generateHighContrast(state),
+        '',
+        generateUtilityClasses(state),
+      ].join('\n');
+    }
+
+    return { generateRoot, generateDark, generateHighContrast, generateUtilityClasses, generateAll };
+  })();
+
+
+  /* ============================================================
+     CLIPBOARD SERVICE
+     @extractable-to: services/ClipboardService.js
+     ============================================================ */
+  const ClipboardService = (() => {
+
+    async function copy(text) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return { success: true };
+        }
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        return { success: true };
+      } catch (err) {
+        return { success: false, error: err.message };
+      }
+    }
+
+    return { copy };
+  })();
+
+
+  /* ============================================================
+     VALIDATION SERVICE
+     @extractable-to: validators/colorValidator.js
+     ============================================================ */
+  const Validator = (() => {
+
+    function isValidHex(hex) {
+      return /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(hex.trim());
+    }
+
+    function isValidColorName(name) {
+      return typeof name === 'string' && name.trim().length >= 1 && name.trim().length <= 40;
+    }
+
+    function isValidRole(role) {
+      return /^[a-z][a-z0-9-_]*$/.test(role);
+    }
+
+    function validateCorporateColor(color) {
+      const errors = [];
+      if (!isValidHex(color.hex)) errors.push(`Ungültiger Hex-Wert: "${color.hex}"`);
+      if (!isValidColorName(color.name)) errors.push(`Ungültiger Name: "${color.name}"`);
+      if (!isValidRole(color.role)) errors.push(`Ungültige CSS-Rolle (nur Kleinbuchstaben, Zahlen, - _): "${color.role}"`);
+      return { valid: errors.length === 0, errors };
+    }
+
+    return { isValidHex, isValidColorName, isValidRole, validateCorporateColor };
+  })();
+
+
+  /* ============================================================
+     THEME SERVICE — Wendet Light / Dark / HC sofort auf die gesamte
+     App-Oberfläche an, indem:
+       1. data-theme auf <html> gesetzt wird (CSS-Custom-Property-Kaskade)
+       2. Ein dynamischer <style id="theme-palette"> injiziert wird,
+          der die generierten Corporate-Farb-Variablen für den
+          jeweiligen Modus überschreibt.
+     @extractable-to: services/ThemeService.js
+     ============================================================ */
+  const ThemeService = (() => {
+
+    /** Injiziert oder ersetzt den dynamischen Palette-Style-Tag */
+    function _injectPaletteVars(mode, palettes, neutrals, semantic) {
+      let styleEl = document.getElementById('theme-palette');
+      if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = 'theme-palette';
+        document.head.appendChild(styleEl);
+      }
+
+      if (palettes.length === 0) {
+        styleEl.textContent = '';
+        return;
+      }
+
+      const lines = [];
+
+      if (mode === 'light') {
+        // Light: generierte Basis-Variablen (bereits in :root, hier explizit für Sicherheit)
+        lines.push(':root {');
+        for (const p of palettes) {
+          lines.push(`  --color-${p.role}: ${p.hex};`);
+          for (const s of p.steps) {
+            lines.push(`  --color-${p.role}-${s.key}: ${s.hex};`);
+          }
+        }
+        for (const [k, v] of Object.entries(neutrals)) {
+          lines.push(`  --color-neutral-${k}: ${v};`);
+        }
+        for (const [k, v] of Object.entries(semantic)) {
+          lines.push(`  --color-sem-${k}: ${v.hex};`);
+        }
+        lines.push('}');
+      }
+
+      else if (mode === 'dark') {
+        lines.push('[data-theme="dark"] {');
+        for (const p of palettes) {
+          const darkBase = ColorService.darkModeVariant(p.hex);
+          const darkSteps = ColorService.generatePaletteSteps(darkBase);
+          lines.push(`  --color-${p.role}: ${darkBase};`);
+          for (const s of darkSteps) {
+            lines.push(`  --color-${p.role}-${s.key}: ${s.hex};`);
+          }
+        }
+        // Grundtöne invertieren
+        lines.push(`  --color-neutral-black: ${neutrals.white};`);
+        lines.push(`  --color-neutral-white: ${neutrals.black};`);
+        lines.push(`  --color-neutral-light: ${neutrals.dark};`);
+        lines.push(`  --color-neutral-dark: ${neutrals.light};`);
+        lines.push(`  --color-neutral-medium: ${neutrals.medium};`);
+        lines.push(`  --color-neutral-border: ${neutrals.border};`);
+        lines.push(`  --color-neutral-shadow: ${neutrals.shadow};`);
+        // Semantische Farben aufhellen
+        for (const [k, v] of Object.entries(semantic)) {
+          const darkSem = ColorService.darkModeVariant(v.hex);
+          lines.push(`  --color-sem-${k}: ${darkSem};`);
+        }
+        lines.push('}');
+      }
+
+      else if (mode === 'hc') {
+        lines.push('[data-theme="hc"] {');
+        for (const p of palettes) {
+          const hcBase = ColorService.highContrastVariant(p.hex, '#000000');
+          lines.push(`  --color-${p.role}: ${hcBase};`);
+          const hcSteps = ColorService.generatePaletteSteps(hcBase);
+          for (const s of hcSteps) {
+            lines.push(`  --color-${p.role}-${s.key}: ${s.hex};`);
+          }
+        }
+        lines.push(`  --color-neutral-black: #ffffff;`);
+        lines.push(`  --color-neutral-white: #000000;`);
+        lines.push(`  --color-neutral-light: #000000;`);
+        lines.push(`  --color-neutral-dark: #ffffff;`);
+        lines.push(`  --color-neutral-border: #ffffff;`);
+        for (const [k, v] of Object.entries(semantic)) {
+          const hcSem = ColorService.highContrastVariant(v.hex, '#000000');
+          lines.push(`  --color-sem-${k}: ${hcSem};`);
+        }
+        lines.push('}');
+      }
+
+      styleEl.textContent = lines.join('\n');
+    }
+
+    /**
+     * Hauptfunktion — setzt data-theme und injiziert Palette-Vars
+     * @param {'light'|'dark'|'hc'} mode
+     */
+    function apply(mode) {
+      // 1. CSS-Kaskade via data-theme anstoßen
+      document.documentElement.dataset.theme = mode === 'light' ? '' : mode;
+
+      // 2. Dynamische Palette-Variablen für die Vorschau injizieren
+      _injectPaletteVars(
+        mode,
+        appState.generatedPalettes,
+        appState.neutrals,
+        appState.semantic
+      );
+
+      // 3. Alle Render-Funktionen neu aufrufen, damit inline-Styles
+      //    (die noch direkte hex-Werte nutzen) die Modus-Farben bekommen
+      if (appState.generatedPalettes.length > 0) {
+        renderPalettes();
+        renderNeutralOutput();
+        renderSemanticOutput();
+        renderContrastMatrix();
+        renderIconDemo();
+      }
+    }
+
+    return { apply };
+  })();
+
+
+  /* ============================================================
+     DEBUG SERVICE
+     @extractable-to: services/DebugService.js
+     ============================================================ */
+  const Debug = (() => {
+    const logs = [];
+
+    function log(msg, type = 'log') {
+      const entry = { msg, type, ts: new Date().toISOString() };
+      logs.push(entry);
+      if (appState.debug) {
+        _render();
+        console[type === 'error' ? 'error' : type === 'warn' ? 'warn' : 'log'](`[ColorPlanner] ${msg}`);
+      }
+    }
+
+    function _render() {
+      const el = document.getElementById('debug-panel');
+      if (!el) return;
+      el.innerHTML = logs.slice(-50).map(e => {
+        const cls = e.type === 'warn' ? 'debug-warn' : e.type === 'error' ? 'debug-error' : e.type === 'ok' ? 'debug-ok' : 'debug-log';
+        return `<div class="${cls}">[${e.ts.slice(11, 19)}] ${e.msg}</div>`;
+      }).join('');
+      el.scrollTop = el.scrollHeight;
+    }
+
+    function toggle(on) {
+      appState.debug = on;
+      const el = document.getElementById('debug-panel');
+      if (el) el.classList.toggle('visible', on);
+      if (on) _render();
+    }
+
+    return { log, toggle };
+  })();
+
+
+  /* ============================================================
+     TOAST SERVICE
+     ============================================================ */
+  const Toast = (() => {
+    let timer = null;
+
+    function show(msg, icon = 'check_circle', duration = 2200) {
+      const el = document.getElementById('toast');
+      const msgEl = document.getElementById('toast-msg');
+      const iconEl = document.getElementById('toast-icon');
+      if (!el) return;
+      msgEl.textContent = msg;
+      iconEl.textContent = icon;
+      el.classList.add('visible');
+      clearTimeout(timer);
+      timer = setTimeout(() => el.classList.remove('visible'), duration);
+    }
+
+    return { show };
+  })();
+
+
+  /* ============================================================
+     RENDER HILFSFUNKTIONEN — intern
+     ============================================================ */
+
+  /**
+   * Gibt die Hex-Farbe eines Corporate-Palette-Steps
+   * im aktuell aktiven Modus zurück.
+   * Render-Funktionen rufen dies für inline-style-Werte auf.
+   */
+  function _modeHex(baseHex) {
+    if (appState.mode === 'dark')  return ColorService.darkModeVariant(baseHex);
+    if (appState.mode === 'hc')    return ColorService.highContrastVariant(baseHex, '#000000');
+    return baseHex;
+  }
+
+  function _modeSemanticHex(baseHex) {
+    if (appState.mode === 'dark')  return ColorService.darkModeVariant(baseHex);
+    if (appState.mode === 'hc')    return ColorService.highContrastVariant(baseHex, '#000000');
+    return baseHex;
+  }
+
+  function _modeNeutralHex(key) {
+    const map = appState.neutrals;
+    if (appState.mode === 'dark') {
+      const inv = { black: map.white, white: map.black, light: map.dark, dark: map.light,
+                    medium: map.medium, shadow: map.shadow, border: map.border };
+      return inv[key] ?? map[key];
+    }
+    if (appState.mode === 'hc') {
+      const hc = { black: '#ffffff', white: '#000000', light: '#000000', dark: '#ffffff',
+                   medium: '#888888', shadow: '#000000', border: '#ffffff' };
+      return hc[key] ?? map[key];
+    }
+    return map[key];
+  }
+
+  /* ============================================================
+     RENDER: CORPORATE COLOR EDITOR
+     @extractable-to: components/PalettePanel.js (editor part)
+     ============================================================ */
+  function renderCorpColorEditor() {
+    const container = document.getElementById('corp-color-editor');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    appState.corporateColors.forEach((color, idx) => {
+      const row = document.createElement('div');
+      row.className = 'corp-color-row';
+      row.dataset.idx = idx;
+
+      // Vorschau
+      const preview = document.createElement('div');
+      preview.className = 'corp-color-preview';
+      preview.style.background = color.hex;
+      preview.setAttribute('aria-hidden', 'true');
+      preview.title = color.name;
+
+      // Name
+      const nameGroup = _formGroup(`name-${idx}`, 'Name',
+        `<input type="text" id="name-${idx}" value="${_esc(color.name)}" maxlength="40" placeholder="z.B. Primary" data-field="name" data-idx="${idx}">`
+      );
+
+      // Hex + Color Picker
+      const hexGroup = _formGroup(`hex-${idx}`, 'Farbe',
+        `<div class="color-input-pair">
+          <input type="color" id="cp-${idx}" value="${color.hex}" data-field="cp" data-idx="${idx}" aria-label="Farbwähler ${color.name}">
+          <input type="text" id="hex-${idx}" value="${color.hex}" maxlength="7" placeholder="#2563eb" data-field="hex" data-idx="${idx}">
+        </div>`
+      );
+
+      // Role
+      const roleGroup = _formGroup(`role-${idx}`, 'CSS-Rolle',
+        `<input type="text" id="role-${idx}" value="${_esc(color.role)}" maxlength="30" placeholder="primary" data-field="role" data-idx="${idx}">`
+      );
+
+      // Entfernen
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'btn btn--ghost btn--icon';
+      removeBtn.dataset.action = 'remove-color';
+      removeBtn.dataset.idx = idx;
+      removeBtn.title = 'Farbe entfernen';
+      removeBtn.setAttribute('aria-label', `${color.name} entfernen`);
+      removeBtn.innerHTML = `<span class="material-symbols-outlined" aria-hidden="true">delete</span>`;
+      removeBtn.disabled = appState.corporateColors.length <= CONFIG.minCorporateColors;
+
+      row.appendChild(preview);
+      row.appendChild(nameGroup);
+      row.appendChild(hexGroup);
+      row.appendChild(roleGroup);
+      row.appendChild(removeBtn);
+
+      container.appendChild(row);
+    });
+
+    // Max-Hinweis
+    if (appState.corporateColors.length >= CONFIG.maxCorporateColors) {
+      const hint = document.createElement('p');
+      hint.className = 'text-sm text-muted mt-4';
+      hint.textContent = `Maximum von ${CONFIG.maxCorporateColors} Corporate Farben erreicht.`;
+      container.appendChild(hint);
+    }
+
+    const addBtn = document.getElementById('btn-add-color');
+    if (addBtn) addBtn.disabled = appState.corporateColors.length >= CONFIG.maxCorporateColors;
+  }
+
+  function _formGroup(id, labelText, inputHtml) {
+    const div = document.createElement('div');
+    div.className = 'form-group';
+    div.innerHTML = `<label for="${id}">${_esc(labelText)}</label>${inputHtml}`;
+    return div;
+  }
+
+
+  /* ============================================================
+     RENDER: PALETTE OUTPUT (5 Abstufungen)
+     @extractable-to: components/PalettePanel.js
+     ============================================================ */
+  function renderPalettes() {
+    const card = document.getElementById('palette-output-card');
+    const container = document.getElementById('palettes-output');
+    if (!container || !card) return;
+
+    if (appState.generatedPalettes.length === 0) {
+      card.style.display = 'none';
+      return;
+    }
+
+    card.style.display = 'block';
+    container.innerHTML = '';
+
+    const grid = document.createElement('div');
+    grid.className = 'palettes-grid';
+
+    for (const palette of appState.generatedPalettes) {
+      // Im aktiven Modus ggf. andere Basisfarbe
+      const modeBase = _modeHex(palette.hex);
+      const modeSteps = ColorService.generatePaletteSteps(modeBase);
+
+      const entry = document.createElement('div');
+      entry.className = 'palette-entry';
+
+      const meta = document.createElement('div');
+      meta.className = 'palette-meta';
+      meta.innerHTML = `
+        <div class="palette-name">${_esc(palette.name)}</div>
+        <div class="palette-hex font-mono text-sm text-muted">${modeBase}
+          ${modeBase !== palette.hex ? `<span style="color:var(--chrome-text-muted);font-size:10px">(${appState.mode})</span>` : ''}
+        </div>
+        <div class="badge badge--aa">${_esc(palette.role)}</div>
+      `;
+
+      const swatchesRow = document.createElement('div');
+      swatchesRow.className = 'swatches';
+
+      for (const step of modeSteps) {
+        const textCol = step.textColor;
+        const isBasis = step.key === '500';
+        const swatch = document.createElement('div');
+        swatch.className = 'swatch';
+        swatch.innerHTML = `
+          <div class="swatch__color" style="background:${step.hex};color:${textCol}">
+            <span class="swatch__label">${step.key}${isBasis ? ' ★' : ''}</span>
+            <span class="swatch__contrast">${step.contrast_on_white.toFixed(1)}:1</span>
+          </div>
+          <div class="swatch__info">
+            <span class="swatch__hex">${step.hex}</span>
+            <span class="swatch__step">${_wcagBadgeHtml(step.contrast_on_white, false)}</span>
+          </div>
+        `;
+        swatchesRow.appendChild(swatch);
+      }
+
+      entry.appendChild(meta);
+      entry.appendChild(swatchesRow);
+      grid.appendChild(entry);
+    }
+
+    container.appendChild(grid);
+  }
+
+
+  /* ============================================================
+     RENDER: GRUNDTÖNE EDITOR & OUTPUT
+     @extractable-to: components/NeutralsPanel.js
+     ============================================================ */
+  function renderNeutralEditor() {
+    const container = document.getElementById('neutral-editor');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const labels = {
+      black: 'Schwarz', white: 'Weiß', light: 'Hell',
+      medium: 'Mittel', dark: 'Dunkel', shadow: 'Schatten', border: 'Rahmen',
+    };
+
+    for (const [key, hex] of Object.entries(appState.neutrals)) {
+      const group = document.createElement('div');
+      group.className = 'form-group';
+      group.innerHTML = `
+        <label for="neutral-${key}">${labels[key] || key}</label>
+        <div class="color-input-pair">
+          <input type="color" id="ncp-${key}" value="${hex}" data-field="neutral-cp" data-key="${key}" aria-label="Farbwähler ${labels[key] || key}">
+          <input type="text" id="neutral-${key}" value="${hex}" maxlength="7" data-field="neutral-hex" data-key="${key}">
+        </div>
+      `;
+      container.appendChild(group);
+    }
+  }
+
+  function renderNeutralOutput() {
+    const container = document.getElementById('neutral-output');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const labels = {
+      black: 'Schwarz', white: 'Weiß', light: 'Hell',
+      medium: 'Mittel', dark: 'Dunkel', shadow: 'Schatten', border: 'Rahmen',
+    };
+
+    const header = document.createElement('div');
+    header.className = 'section-label';
+    header.textContent = 'Grundton-Vorschau';
+    container.appendChild(header);
+
+    const swatchRow = document.createElement('div');
+    swatchRow.className = 'neutral-swatches';
+
+    for (const [key] of Object.entries(appState.neutrals)) {
+      const hex = _modeNeutralHex(key);
+      const cr_w = ColorService.contrastRatio(hex, '#ffffff').toFixed(1);
+      const item = document.createElement('div');
+      item.className = 'neutral-swatch';
+      const borderStyle = key === 'white' || (appState.mode === 'dark' && key === 'black')
+        ? '2px solid var(--chrome-border)' : 'none';
+      item.innerHTML = `
+        <div class="neutral-swatch__block" style="background:${hex};border:${borderStyle}" title="${labels[key] || key}: ${hex}"></div>
+        <div class="neutral-swatch__label">${labels[key] || key}</div>
+        <div class="neutral-swatch__hex">${hex}</div>
+        <div>${_wcagBadgeHtml(parseFloat(cr_w), false)}</div>
+      `;
+      swatchRow.appendChild(item);
+    }
+
+    container.appendChild(swatchRow);
+  }
+
+
+  /* ============================================================
+     RENDER: SEMANTISCHE FARBEN EDITOR & OUTPUT
+     @extractable-to: components/SemanticPanel.js
+     ============================================================ */
+  function renderSemanticEditor() {
+    const container = document.getElementById('semantic-editor');
+    if (!container) return;
+    container.innerHTML = '';
+
+    for (const [key, val] of Object.entries(appState.semantic)) {
+      const group = document.createElement('div');
+      group.className = 'form-group';
+      group.style.minWidth = '130px';
+      group.innerHTML = `
+        <label for="sem-${key}">${key}</label>
+        <div class="color-input-pair">
+          <input type="color" id="semcp-${key}" value="${val.hex}" data-field="sem-cp" data-key="${key}" aria-label="Farbwähler ${key}">
+          <input type="text" id="sem-${key}" value="${val.hex}" maxlength="7" data-field="sem-hex" data-key="${key}">
+        </div>
+      `;
+      container.appendChild(group);
+    }
+  }
+
+  function renderSemanticOutput() {
+    const container = document.getElementById('semantic-output');
+    if (!container) return;
+
+    const grid = document.createElement('div');
+    grid.className = 'semantic-grid';
+
+    for (const [key, val] of Object.entries(appState.semantic)) {
+      const hex = _modeSemanticHex(val.hex);
+      const textCol = ColorService.maxContrastText(hex);
+      const cr = ColorService.contrastRatio(hex, appState.mode === 'hc' ? '#000000' : '#ffffff').toFixed(1);
+      const card = document.createElement('article');
+      card.className = 'semantic-card';
+      card.innerHTML = `
+        <div class="semantic-card__color" style="background:${hex};color:${textCol}">
+          <span class="material-symbols-outlined semantic-card__icon" aria-hidden="true">${val.icon}</span>
+          <span class="semantic-card__role">${key}</span>
+        </div>
+        <div class="semantic-card__info">
+          <span class="semantic-card__hex">${hex}</span>
+          <span class="semantic-card__desc">${val.desc}</span>
+          <div style="margin-top:4px">${_wcagBadgeHtml(parseFloat(cr), false)}</div>
+        </div>
+      `;
+      grid.appendChild(card);
+    }
+
+    container.innerHTML = '';
+    container.appendChild(grid);
+  }
+
+
+  /* ============================================================
+     RENDER: KONTRAST-MATRIX
+     @extractable-to: components/ContrastMatrix.js
+     ============================================================ */
+  function renderContrastMatrix() {
+    const container = document.getElementById('contrast-matrix-output');
+    if (!container) return;
+    container.innerHTML = '';
+
+    // Neutrals im aktuellen Modus
+    const black  = _modeNeutralHex('black');
+    const white  = _modeNeutralHex('white');
+    const light  = _modeNeutralHex('light');
+    const medium = _modeNeutralHex('medium');
+    const dark   = _modeNeutralHex('dark');
+
+    // Foreground-Farben
+    const fgColors = [
+      { label: 'Schwarz', hex: black },
+      { label: 'Dunkel', hex: dark },
+      ...appState.generatedPalettes.map(p => ({
+        label: p.name + ' 900',
+        hex: ColorService.generatePaletteSteps(_modeHex(p.hex)).find(s => s.key === '900')?.hex || _modeHex(p.hex),
+      })),
+      ...appState.generatedPalettes.map(p => ({ label: p.name, hex: _modeHex(p.hex) })),
+    ];
+
+    // Background-Farben
+    const bgColors = [
+      { label: 'Weiß',  hex: white },
+      { label: 'Hell',  hex: light },
+      { label: 'Mittel', hex: medium },
+      ...appState.generatedPalettes.map(p => ({
+        label: p.name + ' 100',
+        hex: ColorService.generatePaletteSteps(_modeHex(p.hex)).find(s => s.key === '100')?.hex || white,
+      })),
+    ];
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'contrast-table-wrapper';
+
+    const table = document.createElement('table');
+    table.className = 'contrast-table';
+    table.setAttribute('aria-label', 'Kontrast-Matrix');
+
+    // Header
+    const thead = document.createElement('thead');
+    let headerRow = '<tr><th scope="col">Vordergrund \\ Hintergrund</th>';
+    for (const bg of bgColors) {
+      headerRow += `<th scope="col">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:${bg.hex};border:1px solid var(--chrome-border);flex-shrink:0"></span>
+          ${_esc(bg.label)}
+        </div>
+      </th>`;
+    }
+    headerRow += '</tr>';
+    thead.innerHTML = headerRow;
+    table.appendChild(thead);
+
+    // Body
+    const tbody = document.createElement('tbody');
+    for (const fg of fgColors) {
+      const tr = document.createElement('tr');
+      let cells = `<th scope="row">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:${fg.hex};border:1px solid var(--chrome-border);flex-shrink:0"></span>
+          ${_esc(fg.label)}
+        </div>
+      </th>`;
+
+      for (const bg of bgColors) {
+        const ratio = ColorService.contrastRatio(fg.hex, bg.hex);
+        cells += `<td class="contrast-cell">`;
+        for (const typo of CONFIG.contrastTypoSamples) {
+          cells += `<div class="contrast-sample" style="background:${bg.hex};color:${fg.hex};${typo.style}">
+            ${_esc(typo.label)}
+          </div>`;
+        }
+        cells += `<div class="contrast-ratio-label">
+          ${ratio.toFixed(2)}:1 — ${_wcagBadgeHtml(ratio, false)}
+        </div>`;
+        cells += `</td>`;
+      }
+
+      tr.innerHTML = cells;
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    wrapper.appendChild(table);
+    container.appendChild(wrapper);
+  }
+
+
+  /* ============================================================
+     RENDER: ICON-DEMO ("Use of Color" Regel)
+     @extractable-to: components/IconDemo.js
+     ============================================================ */
+  function renderIconDemo() {
+    const container = document.getElementById('icon-demo-output');
+    if (!container) return;
+    container.innerHTML = '';
+
+    // Farben im aktuellen Modus holen
+    const sem = {};
+    for (const [k, v] of Object.entries(appState.semantic)) {
+      sem[k] = { ...v, hex: _modeSemanticHex(v.hex) };
+    }
+
+    const demos = [
+      {
+        label: 'Nur Farbe (FAIL — WCAG 1.4.1)',
+        items: [
+          { color: sem.success.hex, text: 'Vorgang abgeschlossen', icon: null, ok: false },
+          { color: sem.warning.hex, text: 'Bitte überprüfen', icon: null, ok: false },
+          { color: sem.error.hex, text: 'Fehler aufgetreten', icon: null, ok: false },
+        ],
+      },
+      {
+        label: 'Farbe + Icon (PASS — WCAG 1.4.1)',
+        items: [
+          { color: sem.success.hex, text: 'Vorgang abgeschlossen', icon: sem.success.icon, ok: true },
+          { color: sem.warning.hex, text: 'Bitte überprüfen', icon: sem.warning.icon, ok: true },
+          { color: sem.error.hex, text: 'Fehler aufgetreten', icon: sem.error.icon, ok: true },
+        ],
+      },
+      {
+        label: 'Farbe + Textlabel (PASS — WCAG 1.4.1)',
+        items: [
+          { color: sem.success.hex, text: 'Vorgang abgeschlossen', prefix: '[OK]', ok: true },
+          { color: sem.warning.hex, text: 'Bitte überprüfen', prefix: '[!]', ok: true },
+          { color: sem.error.hex, text: 'Fehler aufgetreten', prefix: '[Fehler]', ok: true },
+        ],
+      },
+      {
+        label: 'Hover / Active / Focus / Visited / Disabled',
+        items: [
+          { color: sem.hover.hex, text: 'Hover', icon: sem.hover.icon, ok: true },
+          { color: sem.active.hex, text: 'Aktiv', icon: sem.active.icon, ok: true },
+          { color: sem.focus.hex, text: 'Fokus', icon: sem.focus.icon, ok: true },
+          { color: sem.visited.hex, text: 'Besucht', icon: sem.visited.icon, ok: true },
+          { color: sem.disabled.hex, text: 'Deaktiviert', icon: sem.disabled.icon, ok: true },
+        ],
+      },
+    ];
+
+    const grid = document.createElement('div');
+    grid.className = 'icon-demo-grid';
+
+    for (const demo of demos) {
+      const demoItem = document.createElement('div');
+      demoItem.className = 'icon-demo-item';
+      const passLabel = demo.items[0]?.ok
+        ? '<span class="badge badge--pass"><span class="material-symbols-outlined" style="font-size:12px">check_circle</span> PASS</span>'
+        : '<span class="badge badge--fail"><span class="material-symbols-outlined" style="font-size:12px">cancel</span> FAIL</span>';
+      demoItem.innerHTML = `<div class="icon-demo-item__label" style="display:flex;align-items:center;gap:6px;justify-content:space-between">${_esc(demo.label)}${passLabel}</div>`;
+
+      for (const item of demo.items) {
+        const row = document.createElement('div');
+        row.className = 'icon-demo-item__row';
+
+        let content = '';
+        if (item.icon) {
+          content = `
+            <span class="material-symbols-outlined" style="color:${item.color};font-size:22px" aria-hidden="true">${_esc(item.icon)}</span>
+            <span class="icon-demo-item__msg" style="color:${item.color}">${item.prefix ? item.prefix + ' ' : ''}${_esc(item.text)}</span>
+          `;
+        } else if (item.prefix) {
+          content = `
+            <span class="icon-demo-item__msg" style="color:${item.color};font-weight:700">${item.prefix}</span>
+            <span class="icon-demo-item__msg" style="color:${item.color}">${_esc(item.text)}</span>
+          `;
+        } else {
+          content = `
+            <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:${item.color}" aria-hidden="true"></span>
+            <span class="icon-demo-item__msg" style="color:${item.color}">${_esc(item.text)}</span>
+          `;
+        }
+        row.innerHTML = content;
+        demoItem.appendChild(row);
+      }
+
+      grid.appendChild(demoItem);
+    }
+
+    container.appendChild(grid);
+  }
+
+
+  /* ============================================================
+     RENDER: CSS EXPORT PANEL
+     @extractable-to: components/CSSPanel.js
+     ============================================================ */
+  function renderCSSPanel() {
+    const rootEl  = document.getElementById('css-root-code');
+    const darkEl  = document.getElementById('css-dark-code');
+    const hcEl    = document.getElementById('css-hc-code');
+    const utilEl  = document.getElementById('css-util-code');
+    if (!rootEl) return;
+
+    if (appState.generatedPalettes.length === 0) {
+      const hint = '/* Bitte zuerst Paletten generieren (Tab "Corporate Farben") */';
+      [rootEl, darkEl, hcEl, utilEl].forEach(el => { if (el) el.textContent = hint; });
+      return;
+    }
+
+    rootEl.textContent  = CSSGenerator.generateRoot(appState);
+    darkEl.textContent  = CSSGenerator.generateDark(appState);
+    hcEl.textContent    = CSSGenerator.generateHighContrast(appState);
+    utilEl.textContent  = CSSGenerator.generateUtilityClasses(appState);
+  }
+
+
+  /* ============================================================
+     BUSINESS LOGIC: Paletten generieren
+     @extractable-to: services/PaletteGeneratorService.js
+     ============================================================ */
+  function generateAllPalettes() {
+    Debug.log('generateAllPalettes() called');
+
+    // Validierung
+    const errors = [];
+    for (const color of appState.corporateColors) {
+      const { valid, errors: errs } = Validator.validateCorporateColor(color);
+      if (!valid) errors.push(...errs);
+    }
+
+    if (errors.length > 0) {
+      Toast.show('Fehler: ' + errors[0], 'error', 3500);
+      Debug.log('Validierungsfehler: ' + errors.join('; '), 'error');
+      return false;
+    }
+
+    appState.generatedPalettes = appState.corporateColors.map(color => ({
+      id:    color.id,
+      name:  color.name,
+      role:  color.role,
+      hex:   color.hex,
+      steps: ColorService.generatePaletteSteps(color.hex),
+    }));
+
+    Debug.log('Paletten generiert: ' + appState.generatedPalettes.map(p => p.name).join(', '), 'ok');
+    return true;
+  }
+
+
+  /* ============================================================
+     RENDER: Alle Panels auffrischen
+     ============================================================ */
+  function renderAll() {
+    renderCorpColorEditor();
+    renderPalettes();
+    renderNeutralEditor();
+    renderNeutralOutput();
+    renderSemanticEditor();
+    renderSemanticOutput();
+    renderContrastMatrix();
+    renderIconDemo();
+    renderCSSPanel();
+  }
+
+
+  /* ============================================================
+     TAB SYSTEM
+     ============================================================ */
+  function setupTabs() {
+    const tabs = document.querySelectorAll('[role="tab"]');
+    const panels = document.querySelectorAll('[role="tabpanel"]');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => { t.setAttribute('aria-selected', 'false'); });
+        panels.forEach(p => { p.setAttribute('aria-hidden', 'true'); });
+
+        tab.setAttribute('aria-selected', 'true');
+        const panelId = tab.getAttribute('aria-controls');
+        const panel = document.getElementById(panelId);
+        if (panel) panel.setAttribute('aria-hidden', 'false');
+
+        appState.activeTab = panelId.replace('panel-', '');
+        Debug.log(`Tab gewechselt zu: ${appState.activeTab}`);
+      });
+    });
+
+    // Keyboard navigation
+    tabs.forEach((tab, idx) => {
+      tab.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          tabs[(idx + 1) % tabs.length].focus();
+          tabs[(idx + 1) % tabs.length].click();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          tabs[(idx - 1 + tabs.length) % tabs.length].focus();
+          tabs[(idx - 1 + tabs.length) % tabs.length].click();
+        }
+      });
+    });
+  }
+
+
+  /* ============================================================
+     EVENT-DELEGATION — KEINE Inline-Handler
+     ============================================================ */
+  function setupEvents() {
+
+    // --- Farbe hinzufügen ---
+    document.getElementById('btn-add-color')?.addEventListener('click', () => {
+      if (appState.corporateColors.length >= CONFIG.maxCorporateColors) return;
+      const roles = ['primary', 'secondary', 'tertiary', 'accent', 'highlight'];
+      const nextRole = roles[appState.corporateColors.length] || `color-${appState.corporateColors.length + 1}`;
+      appState.corporateColors.push({
+        id:   nextRole,
+        name: nextRole.charAt(0).toUpperCase() + nextRole.slice(1),
+        hex:  '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0'),
+        role: nextRole,
+      });
+      renderCorpColorEditor();
+      Debug.log('Farbe hinzugefügt');
+    });
+
+    // --- Paletten generieren ---
+    document.getElementById('btn-generate')?.addEventListener('click', () => {
+      if (generateAllPalettes()) {
+        ThemeService.apply(appState.mode);
+        renderPalettes();
+        renderContrastMatrix();
+        renderIconDemo();
+        renderCSSPanel();
+        Toast.show('Paletten generiert!', 'check_circle');
+      }
+    });
+
+    // --- Grundtöne generieren ---
+    document.getElementById('btn-gen-neutrals')?.addEventListener('click', () => {
+      renderNeutralOutput();
+      renderCSSPanel();
+      Toast.show('Grundtöne übernommen', 'check_circle');
+    });
+
+    // --- Semantische Farben generieren ---
+    document.getElementById('btn-gen-semantic')?.addEventListener('click', () => {
+      renderSemanticOutput();
+      renderIconDemo();
+      renderCSSPanel();
+      Toast.show('Semantische Farben übernommen', 'check_circle');
+    });
+
+    // --- Event-Delegation für dynamische Inputs im Editor ---
+    document.getElementById('corp-color-editor')?.addEventListener('input', (e) => {
+      const el = e.target;
+      const idx = parseInt(el.dataset.idx, 10);
+      if (isNaN(idx)) return;
+
+      if (el.dataset.field === 'name') {
+        appState.corporateColors[idx].name = el.value;
+      } else if (el.dataset.field === 'hex') {
+        if (Validator.isValidHex(el.value)) {
+          appState.corporateColors[idx].hex = el.value;
+          const preview = el.closest('.corp-color-row')?.querySelector('.corp-color-preview');
+          if (preview) preview.style.background = el.value;
+          const cp = document.getElementById(`cp-${idx}`);
+          if (cp) cp.value = el.value;
+        }
+      } else if (el.dataset.field === 'cp') {
+        appState.corporateColors[idx].hex = el.value;
+        const hexInput = document.getElementById(`hex-${idx}`);
+        if (hexInput) hexInput.value = el.value;
+        const preview = el.closest('.corp-color-row')?.querySelector('.corp-color-preview');
+        if (preview) preview.style.background = el.value;
+      } else if (el.dataset.field === 'role') {
+        appState.corporateColors[idx].role = el.value;
+        appState.corporateColors[idx].id   = el.value;
+      }
+    });
+
+    // --- Event-Delegation: Farbe entfernen ---
+    document.getElementById('corp-color-editor')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action="remove-color"]');
+      if (!btn) return;
+      const idx = parseInt(btn.dataset.idx, 10);
+      if (isNaN(idx)) return;
+      if (appState.corporateColors.length <= CONFIG.minCorporateColors) return;
+      appState.corporateColors.splice(idx, 1);
+      renderCorpColorEditor();
+      Debug.log('Farbe entfernt');
+    });
+
+    // --- Grundtöne Inputs ---
+    document.getElementById('neutral-editor')?.addEventListener('input', (e) => {
+      const el = e.target;
+      const key = el.dataset.key;
+      if (!key) return;
+      if (el.dataset.field === 'neutral-hex') {
+        if (Validator.isValidHex(el.value)) {
+          appState.neutrals[key] = el.value;
+          const cp = document.getElementById(`ncp-${key}`);
+          if (cp) cp.value = el.value;
+        }
+      } else if (el.dataset.field === 'neutral-cp') {
+        appState.neutrals[key] = el.value;
+        const hex = document.getElementById(`neutral-${key}`);
+        if (hex) hex.value = el.value;
+      }
+    });
+
+    // --- Semantische Inputs ---
+    document.getElementById('semantic-editor')?.addEventListener('input', (e) => {
+      const el = e.target;
+      const key = el.dataset.key;
+      if (!key) return;
+      if (el.dataset.field === 'sem-hex') {
+        if (Validator.isValidHex(el.value)) {
+          appState.semantic[key].hex = el.value;
+          const cp = document.getElementById(`semcp-${key}`);
+          if (cp) cp.value = el.value;
+        }
+      } else if (el.dataset.field === 'sem-cp') {
+        appState.semantic[key].hex = el.value;
+        const hex = document.getElementById(`sem-${key}`);
+        if (hex) hex.value = el.value;
+      }
+    });
+
+    // --- Mode Selector ---
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mode-btn').forEach(b => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        appState.mode = btn.dataset.mode;
+        ThemeService.apply(appState.mode);
+        Debug.log('Modus: ' + appState.mode);
+        Toast.show('Modus: ' + btn.textContent.trim(), 'palette');
+      });
+    });
+
+    // --- Debug Toggle ---
+    document.getElementById('btn-debug')?.addEventListener('click', (e) => {
+      const btn = e.currentTarget;
+      const isOn = btn.getAttribute('aria-pressed') === 'true';
+      btn.setAttribute('aria-pressed', String(!isOn));
+      Debug.toggle(!isOn);
+      Toast.show(isOn ? 'Debug aus' : 'Debug an', 'bug_report');
+    });
+
+    // --- CSS Kopieren: Root ---
+    document.getElementById('btn-copy-root')?.addEventListener('click', async () => {
+      const text = document.getElementById('css-root-code')?.textContent || '';
+      const res = await ClipboardService.copy(text);
+      if (res.success) Toast.show(':root CSS kopiert', 'content_copy');
+    });
+
+    // --- CSS Kopieren: Dark ---
+    document.getElementById('btn-copy-dark')?.addEventListener('click', async () => {
+      const text = document.getElementById('css-dark-code')?.textContent || '';
+      const res = await ClipboardService.copy(text);
+      if (res.success) Toast.show('Dark Mode CSS kopiert', 'content_copy');
+    });
+
+    // --- CSS Kopieren: HC ---
+    document.getElementById('btn-copy-hc')?.addEventListener('click', async () => {
+      const text = document.getElementById('css-hc-code')?.textContent || '';
+      const res = await ClipboardService.copy(text);
+      if (res.success) Toast.show('High Contrast CSS kopiert', 'content_copy');
+    });
+
+    // --- CSS Kopieren: Util ---
+    document.getElementById('btn-copy-util')?.addEventListener('click', async () => {
+      const text = document.getElementById('css-util-code')?.textContent || '';
+      const res = await ClipboardService.copy(text);
+      if (res.success) Toast.show('Utility-Klassen kopiert', 'content_copy');
+    });
+
+    // --- Alles kopieren ---
+    document.getElementById('btn-copy-all')?.addEventListener('click', async () => {
+      const text = CSSGenerator.generateAll(appState);
+      const res = await ClipboardService.copy(text);
+      if (res.success) {
+        Toast.show('Gesamter CSS-Code kopiert!', 'content_copy');
+        const indicator = document.getElementById('copy-success-main');
+        if (indicator) {
+          indicator.classList.add('visible');
+          setTimeout(() => indicator.classList.remove('visible'), 2000);
+        }
+      }
+    });
+  }
+
+
+  /* ============================================================
+     HILFSFUNKTIONEN (intern)
+     ============================================================ */
+  function _esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function _wcagBadgeHtml(ratio, isLarge = false) {
+    const level = ColorService.wcagLevel(ratio, isLarge);
+    const cls   = level === 'FAIL' ? 'fail' : level === 'AAA' ? 'aaa' : 'aa';
+    return `<span class="badge badge--${cls}">${ratio.toFixed(1)}:1 ${level}</span>`;
+  }
+
+
+  /* ============================================================
+     SMOKE TESTS
+     @extractable-to: tests/smoke.test.js
+     ============================================================ */
+  const SmokeTests = (() => {
+    const results = [];
+
+    function _test(name, fn) {
+      try {
+        const result = fn();
+        results.push({ name, ok: !!result, err: null });
+        Debug.log(`[TEST] ${name}: ${result ? 'OK' : 'FAIL'}`, result ? 'ok' : 'warn');
+      } catch (err) {
+        results.push({ name, ok: false, err: err.message });
+        Debug.log(`[TEST] ${name}: ERROR — ${err.message}`, 'error');
+      }
+    }
+
+    function run() {
+      Debug.log('=== SMOKE TESTS ===');
+
+      _test('hexToRgb #ffffff → {255,255,255}', () => {
+        const { r, g, b } = ColorService.hexToRgb('#ffffff');
+        return r === 255 && g === 255 && b === 255;
+      });
+
+      _test('hexToRgb #000000 → {0,0,0}', () => {
+        const { r, g, b } = ColorService.hexToRgb('#000000');
+        return r === 0 && g === 0 && b === 0;
+      });
+
+      _test('contrastRatio black/white = 21:1', () => {
+        const ratio = ColorService.contrastRatio('#000000', '#ffffff');
+        return Math.abs(ratio - 21) < 0.2;
+      });
+
+      _test('contrastRatio same color = 1:1', () => {
+        const ratio = ColorService.contrastRatio('#2563eb', '#2563eb');
+        return Math.abs(ratio - 1) < 0.01;
+      });
+
+      _test('maxContrastText auf Weiß → Schwarz', () => {
+        return ColorService.maxContrastText('#ffffff') === '#000000';
+      });
+
+      _test('maxContrastText auf Schwarz → Weiß', () => {
+        return ColorService.maxContrastText('#000000') === '#ffffff';
+      });
+
+      _test('wcagLevel 1 = FAIL', () => ColorService.wcagLevel(1) === 'FAIL');
+      _test('wcagLevel 4.5 = AA', () => ColorService.wcagLevel(4.5) === 'AA');
+      _test('wcagLevel 7 = AAA', () => ColorService.wcagLevel(7) === 'AAA');
+      _test('wcagLevel 3 large = AA', () => ColorService.wcagLevel(3, true) === 'AA');
+
+      _test('generatePaletteSteps returns 5 steps', () => {
+        const steps = ColorService.generatePaletteSteps('#2563eb');
+        return steps.length === 5;
+      });
+
+      _test('generatePaletteSteps step 500 ≈ base', () => {
+        const steps = ColorService.generatePaletteSteps('#2563eb');
+        const base = steps.find(s => s.key === '500');
+        return base && Validator.isValidHex(base.hex);
+      });
+
+      _test('Validator.isValidHex valid', () => Validator.isValidHex('#2563eb'));
+      _test('Validator.isValidHex invalid', () => !Validator.isValidHex('nope'));
+      _test('Validator.isValidHex shorthand', () => Validator.isValidHex('#fff'));
+
+      _test('Validator.isValidRole valid', () => Validator.isValidRole('primary'));
+      _test('Validator.isValidRole invalid space', () => !Validator.isValidRole('my role'));
+
+      _test('CSSGenerator.generateRoot not empty', () => {
+        if (appState.generatedPalettes.length === 0) {
+          appState.generatedPalettes = [{
+            id: 'primary', name: 'Primary', role: 'primary', hex: '#2563eb',
+            steps: ColorService.generatePaletteSteps('#2563eb'),
+          }];
+        }
+        const css = CSSGenerator.generateRoot(appState);
+        return css.includes(':root') && css.includes('--color-primary');
+      });
+
+      _test('darkModeVariant returns valid hex', () => {
+        const result = ColorService.darkModeVariant('#2563eb');
+        return Validator.isValidHex(result);
+      });
+
+      _test('highContrastVariant ≥ 7:1 on white', () => {
+        const hc = ColorService.highContrastVariant('#2563eb');
+        return ColorService.contrastRatio(hc, '#ffffff') >= 7.0;
+      });
+
+      // Summary
+      const passed = results.filter(r => r.ok).length;
+      const total  = results.length;
+      const allOk  = passed === total;
+      Debug.log(`=== TESTS: ${passed}/${total} bestanden ===`, allOk ? 'ok' : 'warn');
+
+      if (!allOk) {
+        const failed = results.filter(r => !r.ok).map(r => r.name);
+        Debug.log('Fehlgeschlagen: ' + failed.join(', '), 'warn');
+      }
+
+      return { passed, total, allOk };
+    }
+
+    return { run };
+  })();
+
+
+  /* ============================================================
+     INIT
+     ============================================================ */
+  function init() {
+    Debug.log('Color Planner v' + CONFIG.version + ' wird gestartet…');
+
+    setupTabs();
+    setupEvents();
+
+    // Default-Paletten direkt generieren für Demo
+    generateAllPalettes();
+    ThemeService.apply('light');
+    renderAll();
+
+    // Smoke Tests im Debug-Modus
+    const testResult = SmokeTests.run();
+    Debug.log(`Init complete — Tests: ${testResult.passed}/${testResult.total}`, 'ok');
+
+    if (!testResult.allOk) {
+      console.warn('[ColorPlanner] Einige Smoke-Tests fehlgeschlagen — Debug-Modus aktivieren für Details');
+    }
+  }
+
+  // Start
+  document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

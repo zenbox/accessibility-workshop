@@ -10,24 +10,35 @@ html {
 }
 
 .info,
-[data-message-type="info"] {
+[data-message-type="info"],
+.error,
+[data-message-type="error"],
+.warning,
+[data-message-type="warning"],
+.success,
+[data-message-type="success"] {
   background: none;
+  margin-block: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.info,
+[data-message-type="info"] {
   color: hsl(200, 90%, 70%);
 }
 .error,
 [data-message-type="error"] {
-  background: none;
-  color: hsl(0, 100%, 50%);
+  color: hsl(0, 70%, 75%);
 }
 .warning,
 [data-message-type="warning"] {
-  background: none;
-  background: none;
   color: hsl(45, 100%, 50%);
 }
 .success,
 [data-message-type="success"] {
-  background: none;
   color: hsl(120, 100%, 40%);
 }
 
@@ -91,7 +102,7 @@ article {
   background: hsla(0, 0%, 100%, 0.1);
   line-height: 1.45;
 }
-form{
+form {
   max-width: 30rem;
 }
 label {
@@ -137,7 +148,7 @@ body {
   max-width: 800px;
   margin: 2rem auto;
   padding: 1rem;
-  background: #333;
+  background: #0c0b0b;
   color: white;
 }
 
