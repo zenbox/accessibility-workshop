@@ -14,7 +14,10 @@ Interaktive Schnellübersicht aller Erfolgskriterien mit Filterfunktionen.
 Deutsche Übersetzung der WCAG 2.0 von Aktion Mensch.
 
 **[Wie man die WCAG erfüllt](https://www.einfach-fuer-alle.de/wcag2.0/uebersetzungen/How-to-Meet-WCAG-2.0/#qr-text-equiv-all)**  
-Praxisnahe Umsetzungshilfe mit konkreten Techniken für alle Kriterien.
+Praxisnahe Umsetzungshilfe der Aktion Mensch mit konkreten Techniken für alle Kriterien.
+
+**[ACT - Dokumentation und Harmonisierung von WCAG Interpretationen](https://act-rules.github.io/)**
+Die ACT Rules Community Group (ACT-R) bting Personen zusammen, die verschiedene Tools und Methoden zur Prüfung der Barrierefreiheit entwickeln, implementieren und nutzen, um Interpretationen als Testregeln zu dokumentieren.
 
 ### ARIA und Landmarks
 
@@ -106,21 +109,24 @@ Springe zu Landmarks und Überschriften – visualisiert die Struktur.
 **[headingsmap](https://chrome.google.com/webstore/detail/headingsmap/flbjommegcjonpdmenkdiocclhjacmbi?hl=de)**  
 Zeigt die Hierarchie der `<h1>` bis `<h6>`-Struktur an.
 
+**[Landmark Navigation](https://chrome.google.com/webstore/detail/landmark-navigation-via-k/ddpokpbjopmeeiiolheejjpkonlkklgp/related?hl=de)**
+Seitenbereiche gesammelt ausgeben lassen.
+
 **[Accessibility View](https://chrome.google.com/webstore/detail/accessibility-view/ekpmnemcmjcimpnmofmiaeoggjkjohjg?hl=de)**  
 Visualisiert die semantische Struktur (Rollen, Namen, Zustände).
 
 ### Automatisiertes Testen
 
 **[A11y quick check](https://chromewebstore.google.com/detail/a11y-quick-check/jlamgighkcjniljcdfpnhiemcakibepi)**  
-Kleines Tool zur schnellen Erkennung häufiger Barrieren.
+Kleines Tool zur schnellen Erkennung häufiger Barrieren, gut sortiert und direkt auf dee Webseite.
 
 **[WAVE Tool](https://wave.webaim.org/extension/)**  
-Visuelle Fehleranalyse mit Kontextinformationen.
+Visuelle Fehleranalyse mit Kontextinformationen: Icons direkt auf Ihrer Seite – rot für Fehler, gelb für Warnungen und grün für vorhandene Barrierefreiheitsfunktionen.
 
 **[ARC Toolkit](https://chromewebstore.google.com/detail/arc-toolkit/chdkkkccnlfncngelccgbgfmjebmkmce?utm_source=ext_app_menu)**  
 Erweiterte Prüfung auf ARIA, Tastaturnavigation und Struktur.
 
-**[EqualWeb Checker](https://chrome.google.com/webstore/detail/equalweb-accessibility-ch/imemciokfejbnonkkinhcdfigdilcllg?hl=de)**  
+**[IBM EqualWeb Checker](https://chrome.google.com/webstore/detail/equalweb-accessibility-ch/imemciokfejbnonkkinhcdfigdilcllg?hl=de)**  
 Scanner mit WCAG 2.1-Prüfung direkt im Browserfenster.
 
 **[SilkTide Disability Simulator](https://silktide.com/tools/toolbar/)**  
@@ -128,6 +134,13 @@ Simuliert Einschränkungen, prüft Fokus, Farbe, ARIA, Navigation u.a.
 
 **[Google Lighthouse](https://pagespeed.web.dev/)**  
 Zugänglichkeitsanalyse im Kontext von Performance und UX.
+
+**[Accessibility Insights for Web](https://chromewebstore.google.com/detail/accessibility-insights-fo/pbjjkligggfmakdaogkfomddhfmpjeni)**
+Microsoft bietet schnelle automatisierte Prüfungen und Assessment für umfassende manuelle Tests mit angeleiteten Anweisungen.
+
+**[Siteimprove Accessibility Checker](https://chromewebstore.google.com/detail/siteimprove-accessibility/djcglbmbegflehmbfleechkjhmedcopn)**
+Die Erweiterung von Siteimprove bietet detaillierte Erklärungen zu jedem gefundenen Problem. Sie markiert nicht nur Probleme, sondern erklärt, warum sie wichtig sind, und schlägt Lösungen vor.
+
 
 ### Simulation
 
