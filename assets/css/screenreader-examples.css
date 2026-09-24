@@ -1,0 +1,130 @@
+* {
+    box-sizing: border-box;
+}
+fieldset {
+    width: 18rem;
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+legend {
+    font-weight: 600;
+    padding-inline: 1rem;
+}
+label,
+input,
+button {
+    display: block;
+    width: 100% !important;
+    width: 10rem;
+}
+input {
+    border: 1px solid grey;
+    line-height: 1.5;
+    padding: 0.25rem;
+}
+label,
+button {
+    margin-block-start: 1rem;
+}
+.small {
+    font-size: 0.75rem;
+    color: grey;
+}
+hr {
+    margin-block: 2rem;
+    width: 100%;
+    border: 1px solid lightgrey;
+}
+.container {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+}
+
+.container:focus-within {
+    outline: 2px solid #4a90e2;
+    border-radius: 4px;
+}
+
+.draggable {
+    padding: 1rem;
+    border: 2px solid #333;
+    cursor: move;
+    margin: 0.5rem;
+    user-select: none;
+    background: white;
+}
+
+.draggable:focus,
+.drop-target:focus {
+    outline: 3px solid #4a90e2;
+    outline-offset: 2px;
+}
+
+.draggable[aria-selected="true"] {
+    background: #e0e0e0;
+    border-color: #4a90e2;
+}
+
+.drop-target {
+    width: 100px;
+    height: 100px;
+    border: 3px solid #333;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.red-target {
+    background-color: rgba(255, 0, 0, 0.2);
+    border-color: red;
+}
+
+.green-target {
+    background-color: rgba(0, 255, 0, 0.2);
+    border-color: green;
+}
+
+.blue-target {
+    background-color: rgba(0, 0, 255, 0.2);
+    border-color: blue;
+}
+
+.correct {
+    background-color: rgba(0, 255, 0, 0.3);
+}
+
+.wrong {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+.dropped-item {
+    position: absolute;
+    padding: 0.5rem;
+    background: white;
+    border: 2px solid #333;
+    pointer-events: none;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+  .small {
+                font-size: 0.75rem;
+                color: grey;
+                
+                margin-block-end: 2rem;
+                padding-block-start: 0.5rem;
+                
+            }

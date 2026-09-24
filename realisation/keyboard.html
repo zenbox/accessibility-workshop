@@ -1,0 +1,1284 @@
+<!doctype html>
+<!-- generated-by:site-generator - nicht von Hand bearbeiten, wird von build.js überschrieben -->
+<!-- accessibility-workshop wird von build.js durch CONFIG.siteNamespace ersetzt (siehe dort) - so bleiben alle festen Asset-Pfade (CSS/JS/Favicon unten) automatisch im selben Namespace wie der Rest der Seite. -->
+<html
+    lang="de"
+    data-theme="light"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <link
+            rel="icon"
+            href="/accessibility-workshop/assets/icons/sheep.ico"
+            type="image/x-icon"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+        <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="/accessibility-workshop/assets/css/styles.css"
+        />
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/keyboard.css">
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/menubar.css">
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/breadcrumbs.css">
+        <title>Tastatur-Steuerung - Michael Reichart</title>
+        <!--
+            Minimal-Styles für vom Generator eingebundene Assets (siehe
+            assets.js). Gerne nach styles.css übernehmen und hier entfernen,
+            falls dort schon etwas Äquivalentes existiert.
+        -->
+        <style>
+            .md-container .embedded-svg {
+                margin: 1.5em 0;
+            }
+            .md-container .embedded-svg svg {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container img {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container .asset-missing {
+                display: inline-block;
+                padding: 0.2em 0.6em;
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                color: #b00020;
+                background: color-mix(in srgb, #b00020 8%, transparent);
+                font-size: 0.9em;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ══ SKIP LINKS ══════════════════════════════════════════════ -->
+        <nav
+            class="skip-links"
+            aria-label="Sprungnavigation"
+        >
+            <a
+                class="skip-link"
+                href="#main-content"
+                >Zum Hauptinhalt</a
+            >
+            <a
+                class="skip-link"
+                href="#site-footer"
+                >Zum Footer</a
+            >
+        </nav>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
+        <header>
+            <div class="nav-wrapper">
+                <!-- Desktop nav + A11y menu injected by JS -->
+                <button
+                    class="hamburger"
+                    id="hamburgerBtn"
+                    aria-label="Menü öffnen"
+                    aria-expanded="false"
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        id="hamburgerIcon"
+                        >menu</span
+                    >
+                </button>
+            </div>
+            <!-- Mobile nav injected by JS -->
+        </header>
+
+        <!-- ══ PAGE LAYOUT ═════════════════════════════════════════════ -->
+        <div class="page-layout">
+            <!-- ── ARTIKEL ─────────────────────────────────────────── -->
+            <!--
+                Wichtig: dieser Kommentar ist die einzige Markierung, an der
+                der Generator (build.js) den gerenderten Markdown-Inhalt
+                einsetzt. Nicht umbenennen, ohne CONTENT_MARKER in build.js
+                anzupassen.
+            -->
+            <main
+                class="md-container"
+                id="main-content"
+                tabindex="-1"
+            ><h1 tabindex="0">Tastatur-Steuerung</h1>
+<p>Tastatursteuerungen sind gemäß den Web Content Accessibility Guidelines (WCAG) insbesondere hilfreich für:</p>
+<ul>
+<li>Menschen mit motorischen Beeinträchtigungen: Diese Nutzer haben möglicherweise Schwierigkeiten, eine Maus präzise zu bewegen, und sind daher auf die Tastatur angewiesen, um auf Webseiten zu navigieren.</li>
+<li>Sehbehinderte oder blinde Menschen: Diese Nutzer verwenden häufig Screenreader und andere assistive Technologien, die hauptsächlich über die Tastatur gesteuert werden. Eine vollständig per Tastatur steuerbare Webseite ermöglicht es ihnen, Inhalte zu erfassen und zu navigieren. Screenreader bringen selbst eine Tastatursteuerung mit, diese darf durch die Webseite nicht beeinträchtigt werden.</li>
+<li>Menschen ohne Zugang zu einer Maus: Dies schließt Nutzer ein, die temporär oder situativ keine Maus verwenden können, wie etwa bei bestimmten Geräten oder in bestimmten Umgebungen.</li>
+</ul>
+<h2 tabindex="0">Breadcrumbs - Navigation</h2>
+<p>Eine Breadcrumbs-Navigation, die aus Links aufgebaut ist, benötigt keine zusätzliche Tastatursteuerung. Tab und Enter sind browserseitig vorhanden.</p>
+<samp>
+<figure>
+<!-- - - - -->
+<nav
+    class="breadcrumbs"
+    id="breadcrumbs"
+    tabindex="0"
+    aria-label="Du bist jetzt in der Brotkrümel-Navigation."
+    aria-labelledby="breadcrumbs-description"
+>
+    <p
+        id="breadcrumbs-description"
+        class="visually-hidden"
+    >
+        Das ist eine Brotkrümel-Navigation. Das bedeutet, dass du dich in einer Navigation befindest, die dir den Weg durch die Seite zeigt. Du kannst mit der Tab-Taste durch die Links navigieren und mit der Enter-Taste die Links öffnen.
+    </p>
+    <ul>
+        <li>
+            <a href="#" lang="en">Accessibility Workshop</a>
+        </li>
+        <li>
+            <a href="#">Umsetzung</a>
+        </li>
+        <li>
+            <a href="#">Tastatur</a>
+        </li>
+    </ul>
+</nav>
+
+<style>
+.breadcrumbs ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    
+    a {
+        color: black;
+        text-decoration: none;
+        border-bottom: dotted;
+        border-color: grey;
+    }
+}
+.breadcrumbs li::after {
+    content: "/";
+}
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+</style>
+</figure>
+</samp>
+<pre><code class="language-html">&lt;nav
+    class=&quot;breadcrumbs&quot;
+    id=&quot;breadcrumbs&quot;
+    tabindex=&quot;0&quot;
+    aria-label=&quot;Du bist jetzt in der Brotkrümel-Navigation.&quot;
+    aria-labelledby=&quot;breadcrumbs-description&quot;
+&gt;
+    &lt;p
+        id=&quot;breadcrumbs-description&quot;
+        class=&quot;visually-hidden&quot;
+    &gt;
+        Das ist eine Brotkrümel-Navigation. Das bedeutet, dass du dich in einer Navigation befindest, die dir den Weg durch die Seite zeigt. Du kannst mit der Tab-Taste durch die Links navigieren und mit der Enter-Taste die Links öffnen.
+    &lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li&gt;
+            &lt;a href=&quot;#&quot; lang=&quot;en&quot;&gt;Accessibility Workshop&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;a href=&quot;#&quot;&gt;Umsetzung&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;a href=&quot;#&quot;&gt;Tastatur&lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+
+&lt;style&gt;
+.breadcrumbs ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    
+    a {
+        color: black;
+        text-decoration: none;
+        border-bottom: dotted;
+        border-color: grey;
+    }
+}
+.breadcrumbs li::after {
+    content: &quot;/&quot;;
+}
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+&lt;/style&gt;
+</code></pre>
+<hr>
+<h2 tabindex="0">Telefonnummer</h2>
+<p>Telefonnummern können als Link mit hinterlegter Nummer gebaut werden. Eine zusätzliche Tastatursteuerung ist nicht notwendig. Ggf. ist ein erklärender Text hilfreich, der die Funktion &quot;Anrufen&quot; der Enter-Taste beschreibt.</p>
+<samp>
+<figure>
+<!-- - - - -->
+<p>
+    Telefonnummer:
+    <a 
+        href="tel: 0049 221 12 34 56 78-0"
+        aria-describedby="phone-description"
+    >
+        0049 221 12 34 56 78-0
+    </a>
+</p>
+<p id="phone-description" aria-hidden="true"><small>
+    Wenn Du die Nummer anklickst oder mit Enter auslöst, wird direkt angerufen. Das geht nur auf dem Mobiltelefon oder wenn auf dem Computer ein Telefon konfiguriert ist.
+</small></p>
+<!-- - - - -->
+</figure>
+</samp>
+<p>Der Hinweistext ist für alle sichtbar. Er wird über <code>aria-describedby</code> an den Link gebunden. So wird er vorgelesen, wenn der Link aktiv ist. Damit er dann vom Screenreader nicht noch einmal gelesen wird, wird der Absatz selbst mit <code>aria-hidden</code> vom <em>Accessibility Tree</em> ausgeblendet.</p>
+<pre><code class="language-html">&lt;!-- Telefonnummer Beispiel--&gt;
+&lt;p&gt;
+    Telefonnummer:
+    &lt;a 
+        href=&quot;tel: 0049 221 12 34 56 78-0&quot;
+        aria-describedby=&quot;phone-description&quot;
+    &gt;
+        0049 221 12 34 56 78-0
+    &lt;/a&gt;
+&lt;/p&gt;
+&lt;p id=&quot;phone-description&quot; aria-hidden=&quot;true&quot;&gt;&lt;small&gt;
+    Wenn Du die Nummer anklickst oder mit Enter auslöst, wird direkt angerufen. Das geht nur auf dem Mobiltelefon oder wenn auf dem Computer ein Telefon konfiguriert ist.
+&lt;/small&gt;&lt;/p&gt;
+</code></pre>
+<hr>
+<h2 tabindex="0">Tabellen</h2>
+<p>Tabellenbeispiel von <a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/data-grids/">ARIA Authoring Practices Guide (APG) - Data Grid Examples</a>. Die Tabelle besitzt 15 Datenzeilen, von denen 5 als Datenausschnitt angezeigt werden. Der Datenausschnitt wechselt beim rauf- und runterscrollen. (Eine Ausschnitts-Beschreibung fehlt allerdings).</p>
+<h4>Stadt, Land, Fluss</h4>
+<samp>
+    <button
+        type="button"
+        id="toggle_column_btn"
+        name="toggle_columns"
+>
+        Blende Land und Name aus
+    </button>
+
+    <div
+        id="table-example"
+        class="table-wrap"
+>
+        <table
+            id="ex3-grid"
+            role="grid"
+            aria-labelledby="grid3Label"
+            aria-rowcount="16"
+            aria-colcount="6"
+            data-per-page="5"
+            class="data"
+>
+            <thead>
+                <tr data-fixed="true">
+                    <th>Stadt</th>
+                    <th>Land</th>
+                    <th>Fluss</th>
+                    <th>Name</th>
+                    <th>Pflanze</th>
+                    <th>Tier</th>
+                </tr>
+            </thead>
+
+            <!-- <tfoot>
+                <tr>
+                    <td colspan="6">
+                        Die Tabelle enthält vieles.
+                    </td>
+                </tr>
+            </tfoot> -->
+
+            <tbody>
+                <tr>
+                    <td tabindex="-1">Augsburg</td>
+                    <td tabindex="-1">Afghanistan</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Amazonas</a
+>
+                    </td>
+                    <td tabindex="-1">Anna</td>
+                    <td tabindex="-1">Apfelbaum</td>
+                    <td tabindex="-1">Adler</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Berlin</td>
+                    <td tabindex="-1">Belgien</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Brahmaputra</a
+>
+                    </td>
+                    <td tabindex="-1">Bernd</td>
+                    <td tabindex="-1">Basilikum</td>
+                    <td tabindex="-1">Biber</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Chicago</td>
+                    <td tabindex="-1">China</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Colorado</a
+>
+                    </td>
+                    <td tabindex="-1">Christina</td>
+                    <td tabindex="-1">Chrysantheme</td>
+                    <td tabindex="-1">Chamäleon</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Dublin</td>
+                    <td tabindex="-1">Deutschland</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Donau</a
+>
+                    </td>
+                    <td tabindex="-1">Dieter</td>
+                    <td tabindex="-1">Dattel</td>
+                    <td tabindex="-1">Delphin</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Erfurt</td>
+                    <td tabindex="-1">Ecuador</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Elbe</a
+>
+                    </td>
+                    <td tabindex="-1">Eva</td>
+                    <td tabindex="-1">Erdbeere</td>
+                    <td tabindex="-1">Elefant</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Florenz</td>
+                    <td tabindex="-1">Finnland</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Fulda</a
+>
+                    </td>
+                    <td tabindex="-1">Frank</td>
+                    <td tabindex="-1">Flieder</td>
+                    <td tabindex="-1">Forelle</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Glasgow</td>
+                    <td tabindex="-1">Guatemala</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Garonne</a
+>
+                    </td>
+                    <td tabindex="-1">Gitta</td>
+                    <td tabindex="-1">Grünkohl</td>
+                    <td tabindex="-1">Gans</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Hamburg</td>
+                    <td tabindex="-1">Haiti</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Havel</a
+>
+                    </td>
+                    <td tabindex="-1">Hans</td>
+                    <td tabindex="-1">Heidelbeere</td>
+                    <td tabindex="-1">Hamster</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Innsbruck</td>
+                    <td tabindex="-1">Indien</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Isar</a
+>
+                    </td>
+                    <td tabindex="-1">Iris</td>
+                    <td tabindex="-1">Iris</td>
+                    <td tabindex="-1">Igel</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Johannesburg</td>
+                    <td tabindex="-1">Japan</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Jangtsekiang</a
+>
+                    </td>
+                    <td tabindex="-1">Jens</td>
+                    <td tabindex="-1">Johannisbeere</td>
+                    <td tabindex="-1">Junikäfer</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Köln</td>
+                    <td tabindex="-1">Kanada</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Kongo</a
+>
+                    </td>
+                    <td tabindex="-1">Kirsten</td>
+                    <td tabindex="-1">Kaktus</td>
+                    <td tabindex="-1">Kolibri</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">London</td>
+                    <td tabindex="-1">Libyen</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Leine</a
+>
+                    </td>
+                    <td tabindex="-1">Leon</td>
+                    <td tabindex="-1">Lilie</td>
+                    <td tabindex="-1">Leopard</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Mailand</td>
+                    <td tabindex="-1">Mexiko</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Mississippi</a
+>
+                    </td>
+                    <td tabindex="-1">Melanie</td>
+                    <td tabindex="-1">Maiglöckchen</td>
+                    <td tabindex="-1">Möwe</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">New York</td>
+                    <td tabindex="-1">Nigeria</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Neckar</a
+>
+                    </td>
+                    <td tabindex="-1">Norbert</td>
+                    <td tabindex="-1">Nektarine</td>
+                    <td tabindex="-1">Nashorn</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Osaka</td>
+                    <td tabindex="-1">Österreich</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Orinoco</a
+>
+                    </td>
+                    <td tabindex="-1">Olga</td>
+                    <td tabindex="-1">Orchidee</td>
+                    <td tabindex="-1">Ochse</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Paris</td>
+                    <td tabindex="-1">Peru</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Po</a
+>
+                    </td>
+                    <td tabindex="-1">Peter</td>
+                    <td tabindex="-1">Pfingstrose</td>
+                    <td tabindex="-1">Pinguin</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Quickborn</td>
+                    <td tabindex="-1">Quatar</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Quilca</a
+>
+                    </td>
+                    <td tabindex="-1">Quentin</td>
+                    <td tabindex="-1">Quitte</td>
+                    <td tabindex="-1">Qualle</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Rom</td>
+                    <td tabindex="-1">Russland</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Rhein</a
+>
+                    </td>
+                    <td tabindex="-1">Renate</td>
+                    <td tabindex="-1">Rose</td>
+                    <td tabindex="-1">Rabe</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Stockholm</td>
+                    <td tabindex="-1">Schweden</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Sambesi</a
+>
+                    </td>
+                    <td tabindex="-1">Stefan</td>
+                    <td tabindex="-1">Sonnenblume</td>
+                    <td tabindex="-1">Schnecke</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Tokio</td>
+                    <td tabindex="-1">Türkei</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Tiber</a
+>
+                    </td>
+                    <td tabindex="-1">Tanja</td>
+                    <td tabindex="-1">Tulpe</td>
+                    <td tabindex="-1">Tiger</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Ulm</td>
+                    <td tabindex="-1">Ungarn</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Ural</a
+>
+                    </td>
+                    <td tabindex="-1">Ursula</td>
+                    <td tabindex="-1">Ulme</td>
+                    <td tabindex="-1">Uhu</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Venedig</td>
+                    <td tabindex="-1">Venezuela</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Volta</a
+>
+                    </td>
+                    <td tabindex="-1">Vera</td>
+                    <td tabindex="-1">Veilchen</td>
+                    <td tabindex="-1">Vogel</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Wien</td>
+                    <td tabindex="-1">Wales</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Weser</a
+>
+                    </td>
+                    <td tabindex="-1">Werner</td>
+                    <td tabindex="-1">Weide</td>
+                    <td tabindex="-1">Wal</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Xanten</td>
+                    <td tabindex="-1">XXizang</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Xingu</a
+>
+                    </td>
+                    <td tabindex="-1">Xaver</td>
+                    <td tabindex="-1">Xanthium</td>
+                    <td tabindex="-1">Xenopus</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Yokohama</td>
+                    <td tabindex="-1">Yemen</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Yukon</a
+>
+                    </td>
+                    <td tabindex="-1">Yvonne</td>
+                    <td tabindex="-1">Ysop</td>
+                    <td tabindex="-1">Yak</td>
+                </tr>
+                <tr>
+                    <td tabindex="-1">Zürich</td>
+                    <td tabindex="-1">Zypern</td>
+                    <td>
+                        <a
+                            tabindex="-1"
+                            href="#"
+>Zambezi</a
+>
+                    </td>
+                    <td tabindex="-1">Zacharias</td>
+                    <td tabindex="-1">Zypresse</td>
+                    <td tabindex="-1">Zebra</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</samp>
+<h4>Die Tastatursteuerung</h4>
+<p><strong>Pfeiltaste nach rechts</strong></p>
+<p>Verschiebt den Fokus eine Zelle nach rechts. Wenn der Fokus auf der äußersten rechten Zelle in der Zeile liegt, verschiebt sich der Fokus nicht.</p>
+<p><strong>Pfeiltaste nach links</strong></p>
+<p>Verschiebt den Fokus eine Zelle nach links. Wenn der Fokus auf der äußersten linken Zelle in der Zeile liegt, verschiebt sich der Fokus nicht.</p>
+<p><strong>Pfeiltaste nach unten</strong></p>
+<p>Verschiebt den Fokus eine Zelle nach unten. Wenn der Fokus auf der untersten Zelle in der Spalte liegt, wird der Fokus nicht verschoben.</p>
+<p><strong>Pfeiltaste nach oben</strong></p>
+<p>Verschiebt den Fokus eine Zelle nach oben. Wenn der Fokus auf der obersten Zelle in der Spalte liegt, verschiebt sich der Fokus nicht.</p>
+<p><strong>Taste für Seite nach unten</strong></p>
+<p>Der Fokus wird fünf Zeilen nach unten verschoben, wobei ein Bildlauf durchgeführt wird, sodass die unterste Zeile im aktuell sichtbaren Zeilensatz zur ersten sichtbaren Zeile wird.</p>
+<p>Wenn der Fokus in der letzten Zeile liegt, verschiebt sich der Fokus nicht.</p>
+<p><strong>Taste für Seite nach oben</strong></p>
+<p>Der Fokus wird 5 Zeilen nach oben verschoben, wobei so gescrollt wird, dass die oberste Zeile im aktuell sichtbaren Zeilensatz die letzte sichtbare Zeile wird.</p>
+<p>Wenn der Fokus in der ersten Zeile des Rasters liegt, verschiebt sich der Fokus nicht.</p>
+<p><strong>Pos-1 Taste</strong></p>
+<p>verschiebt den Fokus auf die erste Zelle in der Zeile, die den Fokus enthält.</p>
+<p><strong>Ende Taste</strong></p>
+<p>verschiebt den Fokus auf die letzte Zelle in der Zeile, die den Fokus enthält.</p>
+<p><strong>Strg/Ctrl + Pos-1 Taste</strong></p>
+<p>verschiebt den Fokus auf die erste Zelle in der ersten Zeile.</p>
+<p><strong>Strg/Ctrl + Ende Taste</strong></p>
+<p>verschiebt den Fokus auf die letzte Zelle in der letzten Zeile.</p>
+<p>verschiebt den Fokus auf die letzte Zelle in der letzten Zeile.</p>
+<hr>
+<h2 tabindex="0">Menüleiste mit Untermenü</h2>
+<samp>
+    <div
+        id="menubar"
+        class="page"
+>
+        <header role="banner">
+            <div class="title">Mythical University</div>
+            <div class="tagline">
+                Using a Menubar for navigation links
+            </div>
+        </header>
+        <nav aria-label="Mythical University">
+            <ul
+                class="menubar-navigation"
+                role="menubar"
+                aria-label="Mythical University"
+>
+                <li role="none">
+                    <a
+                        role="menuitem"
+                        href="#home"
+>
+                        Home
+                    </a>
+                </li>
+                <li role="none">
+                    <a
+                        role="menuitem"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        href="#about"
+>
+                        About
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="down"
+                            width="12"
+                            height="9"
+                            viewBox="0 0 12 9"
+>
+                            <polygon
+                                points="1 0, 11 0, 6 8"
+></polygon>
+                        </svg>
+                    </a>
+                    <ul
+                        role="menu"
+                        aria-label="About"
+>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#overview"
+>Overview</a
+>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#administration"
+>Administration</a
+>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                href="#facts"
+>
+                                Facts
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="right"
+                                    width="9"
+                                    height="12"
+                                    viewBox="0 0 9 12"
+>
+                                    <polygon
+                                        points="0 1, 0 11, 8 6"
+></polygon>
+                                </svg>
+                            </a>
+                            <ul
+                                role="menu"
+                                aria-label="Facts"
+>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        href="#history"
+>History</a
+>
+                                </li>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        href="#current-statistics"
+>Current Statistics</a
+>
+                                </li>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        href="#awards"
+>Awards</a
+>
+                                </li>
+                            </ul>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                href="#campus-tours"
+>
+                                Campus Tours
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="right"
+                                    width="9"
+                                    height="12"
+                                    viewBox="0 0 9 12"
+>
+                                    <polygon
+                                        points="0 1, 0 11, 8 6"
+></polygon>
+                                </svg>
+                            </a>
+                            <ul
+                                role="menu"
+                                aria-label="Campus Tours"
+>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        href="#for-prospective-students"
+>For prospective
+                                        students</a
+>
+                                </li>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        href="#for-alumni"
+>For alumni</a
+>
+                                </li>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        href="#for-visitors"
+>For visitors</a
+>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li role="none">
+                    <a
+                        role="menuitem"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        href="#admissions"
+>
+                        Admissions
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="down"
+                            width="12"
+                            height="9"
+                            viewBox="0 0 12 9"
+>
+                            <polygon
+                                points="1 0, 11 0, 6 8"
+></polygon>
+                        </svg>
+                    </a>
+                    <ul
+                        role="menu"
+                        aria-label="Admissions"
+>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#apply"
+>Apply</a
+>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                href="#tuition"
+>
+                                Tuition
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="right"
+                                    width="9"
+                                    height="12"
+                                    viewBox="0 0 9 12"
+>
+                                    <polygon
+                                        points="0 1, 0 11, 8 6"
+></polygon>
+                                </svg>
+                            </a>
+                            <ul
+                                role="menu"
+                                aria-label="Tuition"
+>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        href="#undergraduate"
+>Undergraduate</a
+>
+                                </li>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        href="#graduate"
+>Graduate</a
+>
+                                </li>
+                                <li role="none">
+                                    <a
+                                        role="menuitem"
+                                        href="#professional-schools"
+>Professional Schools</a
+>
+                                </li>
+                            </ul>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#sign-up"
+>Sign Up</a
+>
+                        </li>
+                        <li role="separator"></li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#visit"
+>Visit</a
+>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#photo-tour"
+>Photo Tour</a
+>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#connect"
+>Connect</a
+>
+                        </li>
+                    </ul>
+                </li>
+                <li role="none">
+                    <a
+                        role="menuitem"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        href="#academics"
+>
+                        Academics
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="down"
+                            width="12"
+                            height="9"
+                            viewBox="0 0 12 9"
+>
+                            <polygon
+                                points="1 0, 11 0, 6 8"
+></polygon>
+                        </svg>
+                    </a>
+                    <ul
+                        role="menu"
+                        id="sub-menu-academics"
+                        aria-label="Academics"
+>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#colleges-and-schools"
+>Colleges &amp; Schools</a
+>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#programs-of-study"
+>Programs of Study</a
+>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#honors-programs"
+>Honors Programs</a
+>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#online-courses"
+>Online Courses</a
+>
+                        </li>
+                        <li role="separator"></li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#course-explorer"
+>Course Explorer</a
+>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#register-for-class"
+>Register for Class</a
+>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#academic-calendar"
+>Academic Calendar</a
+>
+                        </li>
+                        <li role="none">
+                            <a
+                                role="menuitem"
+                                href="#tanscripts"
+>Transcripts</a
+>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="main">
+            <section aria-labelledby="id-page-title">
+                <h1
+                    id="id-page-title"
+                    class="page_title"
+ tabindex="0">
+                    Mythical University
+                </h1>
+                <div class="content">
+                    <p></p>
+                </div>
+            </section>
+        </div>
+
+        <footer role="contentinfo">
+            Mythical University footer information
+        </footer>
+    </div>
+</samp>
+<h4>Die Tastatursteuerung der Menüleiste</h4>
+<p><strong>Leertaste oder Enter</strong></p>
+<p>Wenn es sich bei dem Element um ein übergeordnetes Menüelement handelt, wird das Untermenü geöffnet und der Fokus auf das erste Element im Untermenü verschoben.</p>
+<p>Andernfalls wird das Menüelement aktiviert, das neuen Inhalt lädt und den Fokus auf die Überschrift setzt, die den Inhalt betitelt.</p>
+<p><strong>Pfeiltaste nach rechts</strong></p>
+<p>Verschiebt den Fokus auf das nächste Element in der Menüleiste. Wenn der Fokus auf dem letzten Element liegt, wird der Fokus auf das erste Element verschoben.</p>
+<p><strong>Pfeiltaste nach links</strong></p>
+<p>Verschiebt den Fokus auf das vorherige Element in der Menüleiste. Wenn der Fokus auf dem ersten Element liegt, wird der Fokus auf das letzte Element verschoben.</p>
+<p><strong>Pfeiltaste nach unten</strong></p>
+<p>Öffnet das Untermenü und verschiebt den Fokus auf das erste Element im Untermenü.</p>
+<p><strong>Pfeiltaste nach oben</strong></p>
+<p>Öffnet das Untermenü und verschiebt den Fokus zum letzten Element im Untermenü.</p>
+<p><strong>Pos-1 Taste</strong></p>
+<p>Verschiebt den Fokus auf das erste Element in der Menüleiste.</p>
+<p><strong>Ende Taste</strong></p>
+<p>Verschiebt den Fokus auf das letzte Element in der Menüleiste.</p>
+<p><strong>Eingabe eines Buchstabens</strong></p>
+<p>Verschiebt den Fokus auf das nächste Element in der Menüleiste, dessen Name mit dem eingegebenen Zeichen beginnt.</p>
+<p>Wenn der Name keines der Elemente mit dem eingegebenen Zeichen beginnt, wird der Fokus nicht verschoben.</p>
+<h4>Die Tastatursteuerung der Untermenüs</h4>
+<p><strong>Leertaste oder Enter</strong></p>
+<p>Wenn es sich bei dem Element um ein übergeordnetes Menüelement handelt, wird das Untermenü geöffnet und der Fokus auf das erste Element im Untermenü verschoben.</p>
+<p>Andernfalls wird das Menüelement aktiviert, das neuen Inhalt lädt und den Fokus auf die Überschrift setzt, die den Inhalt betitelt.</p>
+<p><strong>Escape</strong></p>
+<p>Schließt das Untermenü.</p>
+<p>Verschiebt den Fokus auf das übergeordnete Menüleistenelement.</p>
+<p><strong>Pfeiltaste nach rechts</strong></p>
+<p>Wenn der Fokus auf einem Element mit einem Untermenü liegt, wird das Untermenü geöffnet und der Fokus auf das erste Element gesetzt.</p>
+<p>Wenn der Fokus auf einem Element liegt, das kein Untermenü hat:</p>
+<ul>
+<li>Schließt das Untermenü.</li>
+<li>Verschiebt den Fokus zum nächsten Element in der Menüleiste.</li>
+<li>Öffnet das Untermenü des neu fokussierten Menüleistenelements und behält den Fokus auf dem übergeordneten Menüleistenelement.</li>
+</ul>
+<p><strong>Pfeiltaste nach links</strong></p>
+<p>Schließt das Untermenü und verschiebt den Fokus zum übergeordneten Menüelement.</p>
+<p>Wenn sich das übergeordnete Menüelement in der Menüleiste befindet, gilt außerdem:</p>
+<ul>
+<li>verschiebt den Fokus zum vorherigen Element in der Menüleiste.</li>
+<li>Öffnet das Untermenü des neu fokussierten Menüleistenelements und behält den Fokus auf dem übergeordneten Menüleistenelement.</li>
+</ul>
+<p><strong>Pfeiltaste nach unten</strong></p>
+<p>Verschiebt den Fokus auf das nächste Element im Untermenü.</p>
+<p>Wenn der Fokus auf dem letzten Element liegt, wird der Fokus auf das erste Element verschoben.</p>
+<p><strong>Pfeiltaste nach oben</strong></p>
+<p>Verschiebt den Fokus zum vorherigen Element im Untermenü.</p>
+<p>Wenn der Fokus auf dem ersten Element liegt, wird der Fokus auf das letzte Element verschoben.</p>
+<p><strong>Pos-1 Taste</strong></p>
+<p>Verschiebt den Fokus auf das erste Element im Untermenü.</p>
+<p><strong>Ende Taste</strong></p>
+<p>Verschiebt den Fokus auf das letzte Element im Untermenü.</p>
+<p><strong>Eingabe eines Buchstabens</strong></p>
+<p>erschiebt den Fokus auf das nächste Element, dessen Name mit dem eingegebenen Zeichen beginnt.</p>
+<p>Wenn der Name keines der Elemente mit dem eingegebenen Zeichen beginnt, wird der Fokus nicht verschoben.</p>
+<hr>
+<h2 tabindex="0">Tastatursteuerung für Tabellen der verschiedenen Screenreader</h2>
+<p>Wenn man Tastatursteuerungen mittels Javascript einfügt, sollte man die vorhandenen Tastenkürzel der Screenreader nicht aushebeln!</p>
+<p><strong>NVDA</strong></p>
+<table>
+<thead>
+<tr>
+<th>Befehl</th>
+<th>Tasten-Kombination</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Zur nächsten/vorherigen Tabelle auf der Seite</td>
+<td>t / Shift + t</td>
+</tr>
+<tr>
+<td>Zur nächsten/vorherigen Zelle in einer Zeile</td>
+<td>Ctrl + Alt + Pfeil nach rechts/links</td>
+</tr>
+<tr>
+<td>Zur nächsten/vorherigen Zelle in einer Spalte</td>
+<td>Ctrl + Alt + Pfeil nach unten/oben</td>
+</tr>
+</tbody></table>
+<p><strong>JAWS</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>Befehl</strong></th>
+<th><strong>Tasten-Kombination</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Zur nächsten/vorherigen Tabelle auf der Seite</td>
+<td>t / Shift + t</td>
+</tr>
+<tr>
+<td>Zur nächsten/vorherigen Zelle in einer Zeile</td>
+<td>Ctrl + Alt + Pfeil nach rechts/links</td>
+</tr>
+<tr>
+<td>Zur nächsten/vorherigen Zelle in einer Spalte</td>
+<td>Ctrl + Alt + Pfeil nach unten/oben</td>
+</tr>
+<tr>
+<td>Alle Tabellen listen</td>
+<td>JAWS + Ctrl + T</td>
+</tr>
+</tbody></table>
+<p><strong>Narrator</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>Befehl</strong></th>
+<th><strong>Tasten-Kombination</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Zur nächsten/vorherigen Tabelle auf der Seite</td>
+<td>t / Shift + t (nur im Scan-Modus)</td>
+</tr>
+<tr>
+<td>Zur nächsten/vorherigen Zelle in einer Zeile</td>
+<td>Ctrl + Alt + Pfeil nach rechts/links</td>
+</tr>
+<tr>
+<td>Zur nächsten/vorherigen Zelle in einer Spalte</td>
+<td>Ctrl + Alt + Pfeil nach unten/oben</td>
+</tr>
+<tr>
+<td>Alle Tabellen listen</td>
+<td>Aufruf über <strong>Views</strong> (s. o.)</td>
+</tr>
+</tbody></table>
+<p><strong>VoiceOver</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>Befehl</strong></th>
+<th><strong>Tasten-Kombination</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Zur nächsten/vorherigen Tabelle auf der Seite</td>
+<td>VO + Command + t</td>
+</tr>
+<tr>
+<td>Zur nächsten/vorherigen Zelle in einer Zeile</td>
+<td>VO + Pfeil nach rechts/links</td>
+</tr>
+<tr>
+<td>Zur nächsten/vorherigen Zelle in einer Spalte</td>
+<td>VO + Pfeil nach unten/oben</td>
+</tr>
+<tr>
+<td>Alle Tabellen auflisten</td>
+<td>VO + u (Aufruf Rotor-Inhalte) und Navigation mit Pfeil nach rechts/links zu <strong>Tabellen</strong> (dann Auswahl mit Pfeiltasten nach oben/unten und Bestätigung mit Enter)</td>
+</tr>
+</tbody></table>
+</main>
+
+            <!-- ── TABLE OF CONTENTS ───────────────────────────────── -->
+            <aside
+                class="toc-sidebar"
+                aria-label="Inhaltsverzeichnis"
+                id="toc-sidebar"
+            >
+                <h2>Inhalt</h2>
+                <!-- injected by JS -->
+            </aside>
+        </div>
+        <!-- /.page-layout -->
+
+        <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+        <footer
+            id="site-footer"
+            tabindex="-1"
+        >
+            <!-- injected by JS -->
+        </footer>
+
+        <script
+            src="/accessibility-workshop/assets/js/main.js"
+            type="module"
+        ></script>
+        <script src="/accessibility-workshop/assets/js/keyboard-controls.js"></script>
+        <script src="/accessibility-workshop/assets/js/table-example.js"></script>
+        <script src="/accessibility-workshop/assets/js/menubar.js"></script>
+    </body>
+</html>

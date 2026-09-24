@@ -1,0 +1,1079 @@
+/* ════════════════════════════════════════════════════════════════
+   PRIMITIVE FARBEN
+   Rohwerte — ausschließlich hier definiert.
+   Nirgendwo sonst dürfen Hex-Werte oder rgb()-Literale stehen.
+════════════════════════════════════════════════════════════════ */
+:root {
+
+    /* ── Neutrals ─────────────────────────────────────────────── */
+    --color-black:      #000000;
+    --color-white:      #ffffff;
+
+    --color-grey-50:    #f8f9fa;   /* Seiten-Hintergrund */
+    --color-grey-100:   #f1f3f5;   /* Panel-Hintergrund, Card */
+    --color-grey-150:   #e9ecef;   /* Header-Hintergrund */
+    --color-grey-200:   #dee2e6;   /* Divider, Borders */
+    --color-grey-300:   #ced4da;   /* Subtile Borders */
+    --color-grey-400:   #adb5bd;   /* Placeholder, deaktiviert */
+    --color-grey-500:   #6c757d;   /* Sekundärtext */
+    --color-grey-600:   #495057;   /* Primärtext mittel */
+    --color-grey-700:   #343a40;   /* Primärtext dunkel */
+    --color-grey-800:   #212529;   /* Überschriften */
+    --color-grey-900:   #0d1117;   /* Tiefster Dark-Bg */
+
+    /* ── Rot — Akzentfarbe Light ──────────────────────────────── */
+    --color-red-100:    #fff0f0;   /* Sehr heller Tint */
+    --color-red-200:    #ffd5d5;   /* Heller Tint */
+    --color-red-300:    #ff9999;   /* Mittelhell */
+    --color-red-400:    #e03131;   /* Mitteldunkel */
+    --color-red-500:    #ad0404;   /* Basis — Hauptakzent */
+    --color-red-600:    #7d0303;   /* Dunkel */
+    --color-red-alpha:  rgba(173, 4, 4, 0.10);
+    --color-red-alpha2: rgba(173, 4, 4, 0.06);
+
+    /* ── Blau — Fokus & Links ─────────────────────────────────── */
+    --color-blue-100:   #e7f5ff;
+    --color-blue-200:   #a5d8ff;
+    --color-blue-300:   #74c0fc;
+    --color-blue-400:   #339af0;   /* Links, Fokus Light */
+    --color-blue-500:   #1c7ed6;   /* Hover */
+    --color-blue-600:   #1971c2;   /* Active */
+    --color-blue-alpha: rgba(51, 154, 240, 0.12);
+    --color-blue-alpha2:rgba(51, 154, 240, 0.06);
+
+    /* Blau — Dark Mode */
+    --color-blue-d400:  #58a6ff;
+    --color-blue-d500:  #79b8ff;
+    --color-blue-d-alpha: rgba(88, 166, 255, 0.15);
+
+    /* ── Gelb — High Contrast ─────────────────────────────────── */
+    --color-yellow:         #ffff00;
+    --color-yellow-alpha:   rgba(255, 255, 0, 0.12);
+
+    /* ── Schatten-Raws ────────────────────────────────────────── */
+    --color-shadow-xs:  rgba(0, 0, 0, 0.06);
+    --color-shadow-sm:  rgba(0, 0, 0, 0.10);
+    --color-shadow-md:  rgba(0, 0, 0, 0.15);
+    --color-shadow-lg:  rgba(0, 0, 0, 0.22);
+
+    /* ── Dark-Mode Hintergründe ───────────────────────────────── */
+    --color-dark-50:    #1a1f2e;
+    --color-dark-100:   #161b22;
+    --color-dark-200:   #0d1117;
+    --color-dark-300:   #010409;
+    --color-dark-alpha: rgba(255, 255, 255, 0.04);
+    --color-dark-alpha2:rgba(255, 255, 255, 0.08);
+    --color-dark-alpha3:rgba(255, 255, 255, 0.14);
+    --color-dark-sub:   rgba(0, 0, 0, 0.12);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   KONTRAST-REGLER — CSS Custom Properties
+   Werden per JS auf <html> gesetzt (a11yController.apply).
+   Standardwert 100 % = keine Änderung.
+════════════════════════════════════════════════════════════════ */
+:root {
+    --contrast-level: 100%;
+    --contrast-value: 1;
+}
+
+/* Im High-Contrast-Modus immer auf 100 % zurücksetzen */
+[data-theme="high-contrast"] {
+    --contrast-value: 1;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SHADOWS — als eigene Tokens
+════════════════════════════════════════════════════════════════ */
+:root {
+    --shadow-xs:  0 1px 3px  var(--color-shadow-xs);
+    --shadow-sm:  0 2px 6px  var(--color-shadow-sm);
+    --shadow-md:  0 4px 12px var(--color-shadow-sm),
+                  0 2px 4px  var(--color-shadow-xs);
+    --shadow-lg:  0 6px 20px var(--color-shadow-md),
+                  0 2px 6px  var(--color-shadow-xs);
+    --shadow-header: 0 2px 8px var(--color-shadow-sm);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SEMANTISCHE DESIGN TOKENS — LIGHT (Default)
+   Konsequent helles Theme: Header, Dropdown, Panel, Footer
+   alle auf grau-basierter heller Palette.
+════════════════════════════════════════════════════════════════ */
+:root {
+
+    /* ── Navigation / Header ──────────────────────────────────── */
+    --nav-bg:               var(--color-grey-150);
+    --nav-text:             var(--color-grey-700);
+    --nav-text-hover:       var(--color-grey-900);
+    --nav-hover-bg:         var(--color-grey-200);
+    --nav-accent:           var(--color-red-500);
+    --nav-accent-hover:     var(--color-red-400);
+    --nav-border:           var(--color-grey-200);
+    --nav-shadow:           var(--shadow-header);
+
+    /* ── Dropdown ─────────────────────────────────────────────── */
+    --dropdown-bg:          var(--color-white);
+    --dropdown-text:        var(--color-grey-600);
+    --dropdown-text-hover:  var(--color-grey-800);
+    --dropdown-border:      var(--color-grey-200);
+    --dropdown-divider:     var(--color-grey-200);
+    --dropdown-divider-alt: var(--color-grey-300);
+    --dropdown-hover-bg:    var(--color-red-alpha2);
+    --dropdown-shadow:      var(--shadow-lg);
+
+    /* ── Panel (A11y-Menü) ────────────────────────────────────── */
+    --panel-bg:             var(--color-white);
+    --panel-border:         var(--color-grey-200);
+    --panel-section-bg:     var(--color-grey-50);
+    --panel-row-hover:      var(--color-grey-100);
+    --panel-btn-bg:         var(--color-grey-100);
+    --panel-btn-hover:      var(--color-grey-200);
+
+    /* ── Mobile Nav ───────────────────────────────────────────── */
+    --mobile-divider:       var(--color-grey-200);
+    --mobile-sub-bg:        var(--color-grey-50);
+
+    /* ── Body / Content ───────────────────────────────────────── */
+    --body-bg:              var(--color-grey-50);
+    --body-text:            var(--color-grey-800);
+    --content-text:         var(--color-grey-600);
+    --border-subtle:        var(--color-grey-200);
+
+    /* ── Fokus ────────────────────────────────────────────────── */
+    --focus-ring:           var(--color-blue-400);
+    --focus-ring-alpha:     var(--color-blue-alpha);
+
+    /* ── TOC ──────────────────────────────────────────────────── */
+    --toc-bg:               var(--color-white);
+    --toc-border:           var(--color-grey-200);
+    --toc-text:             var(--color-grey-600);
+    --toc-text-sub:         var(--color-grey-600);
+    --toc-active:           var(--color-red-500);
+    --toc-hover-bg:         var(--color-red-alpha2);
+
+    /* ── Info-Box ─────────────────────────────────────────────── */
+    --info-box-bg:          var(--color-red-alpha2);
+    --info-box-border:      var(--color-red-500);
+
+    /* ── Badge ────────────────────────────────────────────────── */
+    --badge-bg:             var(--color-red-500);
+    --badge-text:           var(--color-white);
+
+    /* ── Toggle ───────────────────────────────────────────────── */
+    --toggle-knob:          var(--color-white);
+    --toggle-track-off:     var(--color-grey-300);
+    --toggle-track-on:      var(--color-red-500);
+    --toggle-border:        var(--color-grey-300);
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    --footer-bg:            var(--color-grey-150);
+    --footer-text:          var(--color-grey-600);
+    --footer-text-hover:    var(--color-grey-800);
+    --footer-heading:       var(--color-red-500);
+    --footer-divider:       var(--color-grey-200);
+    --footer-link:          var(--color-red-500);
+
+    /* ── Skip-Links ───────────────────────────────────────────── */
+    --skip-bg:              var(--color-red-500);
+    --skip-text:            var(--color-white);
+    --skip-outline:         var(--color-white);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   DARK MODE
+════════════════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+    --nav-bg:               var(--color-dark-200);
+    --nav-text:             #c9d1d9;
+    --nav-text-hover:       var(--color-white);
+    --nav-hover-bg:         var(--color-dark-alpha2);
+    --nav-accent:           var(--color-blue-d400);
+    --nav-accent-hover:     var(--color-blue-d500);
+    --nav-border:           rgba(255, 255, 255, 0.08);
+    --nav-shadow:           0 2px 8px var(--color-shadow-lg);
+
+    --dropdown-bg:          var(--color-dark-100);
+    --dropdown-text:        #8b949e;
+    --dropdown-text-hover:  var(--color-white);
+    --dropdown-border:      rgba(255, 255, 255, 0.08);
+    --dropdown-divider:     var(--color-dark-alpha);
+    --dropdown-divider-alt: var(--color-dark-alpha2);
+    --dropdown-hover-bg:    var(--color-blue-d-alpha);
+    --dropdown-shadow:      0 6px 24px rgba(0, 0, 0, 0.5);
+
+    --panel-bg:             var(--color-dark-100);
+    --panel-border:         rgba(255, 255, 255, 0.08);
+    --panel-section-bg:     var(--color-dark-200);
+    --panel-row-hover:      var(--color-dark-alpha2);
+    --panel-btn-bg:         var(--color-dark-alpha);
+    --panel-btn-hover:      var(--color-dark-alpha2);
+
+    --mobile-divider:       var(--color-dark-alpha2);
+    --mobile-sub-bg:        var(--color-dark-sub);
+
+    --body-bg:              var(--color-dark-200);
+    --body-text:            #c9d1d9;
+    --content-text:         #8b949e;
+    --border-subtle:        rgba(255, 255, 255, 0.07);
+
+    --focus-ring:           var(--color-blue-d400);
+    --focus-ring-alpha:     var(--color-blue-d-alpha);
+
+    --toc-bg:               var(--color-dark-100);
+    --toc-border:           rgba(255, 255, 255, 0.08);
+    --toc-text:             #8b949e;
+    --toc-text-sub:         #6e7681;
+    --toc-active:           var(--color-blue-d400);
+    --toc-hover-bg:         var(--color-blue-d-alpha);
+
+    --info-box-bg:          rgba(88, 166, 255, 0.07);
+    --info-box-border:      var(--color-blue-d400);
+
+    --toggle-knob:          var(--color-white);
+    --toggle-track-off:     rgba(255, 255, 255, 0.20);
+    --toggle-track-on:      var(--color-blue-d400);
+    --toggle-border:        rgba(255, 255, 255, 0.25);
+
+    --footer-bg:            var(--color-dark-300);
+    --footer-text:          #8b949e;
+    --footer-text-hover:    var(--color-white);
+    --footer-heading:       var(--color-blue-d400);
+    --footer-divider:       rgba(255, 255, 255, 0.07);
+    --footer-link:          var(--color-blue-d400);
+
+    --skip-bg:              var(--color-blue-d400);
+    --skip-text:            var(--color-dark-200);
+    --skip-outline:         var(--color-dark-200);
+
+    --shadow-xs:  0 1px 3px  rgba(0,0,0,0.30);
+    --shadow-sm:  0 2px 6px  rgba(0,0,0,0.35);
+    --shadow-md:  0 4px 12px rgba(0,0,0,0.40);
+    --shadow-lg:  0 6px 20px rgba(0,0,0,0.50);
+    --shadow-header: 0 2px 8px rgba(0,0,0,0.45);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   HIGH CONTRAST
+════════════════════════════════════════════════════════════════ */
+[data-theme="high-contrast"] {
+    --nav-bg:               var(--color-black);
+    --nav-text:             var(--color-yellow);
+    --nav-text-hover:       var(--color-black);
+    --nav-hover-bg:         var(--color-yellow);
+    --nav-accent:           var(--color-yellow);
+    --nav-accent-hover:     var(--color-yellow);
+    --nav-border:           var(--color-yellow);
+    --nav-shadow:           none;
+
+    --dropdown-bg:          var(--color-black);
+    --dropdown-text:        var(--color-white);
+    --dropdown-text-hover:  var(--color-black);
+    --dropdown-border:      var(--color-yellow);
+    --dropdown-divider:     var(--color-yellow);
+    --dropdown-divider-alt: var(--color-yellow);
+    --dropdown-hover-bg:    var(--color-yellow);
+    --dropdown-shadow:      none;
+
+    --panel-bg:             var(--color-black);
+    --panel-border:         var(--color-yellow);
+    --panel-section-bg:     var(--color-black);
+    --panel-row-hover:      var(--color-yellow);
+    --panel-btn-bg:         var(--color-black);
+    --panel-btn-hover:      var(--color-yellow);
+
+    --mobile-divider:       var(--color-yellow);
+    --mobile-sub-bg:        var(--color-black);
+
+    --body-bg:              var(--color-black);
+    --body-text:            var(--color-white);
+    --content-text:         var(--color-yellow);
+    --border-subtle:        var(--color-yellow);
+
+    --focus-ring:           var(--color-yellow);
+    --focus-ring-alpha:     var(--color-yellow-alpha);
+
+    --toc-bg:               var(--color-black);
+    --toc-border:           var(--color-yellow);
+    --toc-text:             var(--color-white);
+    --toc-text-sub:         var(--color-yellow);
+    --toc-active:           var(--color-yellow);
+    --toc-hover-bg:         var(--color-yellow-alpha);
+
+    --info-box-bg:          var(--color-yellow-alpha);
+    --info-box-border:      var(--color-yellow);
+
+    --badge-bg:             var(--color-yellow);
+    --badge-text:           var(--color-black);
+
+    --toggle-knob:          var(--color-black);
+    --toggle-track-off:     var(--color-white);
+    --toggle-track-on:      var(--color-yellow);
+    --toggle-border:        var(--color-white);
+
+    --footer-bg:            var(--color-black);
+    --footer-text:          var(--color-yellow);
+    --footer-text-hover:    var(--color-black);
+    --footer-heading:       var(--color-yellow);
+    --footer-divider:       var(--color-yellow);
+    --footer-link:          var(--color-yellow);
+
+    --skip-bg:              var(--color-yellow);
+    --skip-text:            var(--color-black);
+    --skip-outline:         var(--color-black);
+
+    --shadow-xs:  none;
+    --shadow-sm:  none;
+    --shadow-md:  none;
+    --shadow-lg:  none;
+    --shadow-header: none;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ANWENDUNG AUF BODY
+════════════════════════════════════════════════════════════════ */
+body {
+    background: var(--body-bg);
+    color:      var(--body-text);
+}
+
+
+/* ALTE FARBEN */
+
+:root {
+    /* // Form factor */
+    --bright: hsla(0, 0%, 100%, 1);
+    --on-bright: hsla(0, 0%, 15%, 1);
+
+    --medium-bright: rgb(237, 237, 237);
+    --on-medium-bright: hsla(0, 0%, 15%, 1);
+
+    --medium: rgb(175, 175, 175);
+    --on-medium: hsla(0, 0%, 15%, 1);
+
+    --dark: hsla(0, 0%, 15%, 1);
+    --on-dark: hsla(0, 0%, 85%, 1);
+
+    --shadow-light: hsla(0, 0%, 0%, 0.1);
+    --shadow: hsla(0, 0%, 0%, 0.25);
+    --shadow-heavy: hsla(0, 0%, 0%, 0.5);
+
+    --dark-high-contrast: hsla(0, 0%, 0%, 1);
+    --on-dark-hight-contrast: hsla(0, 0%, 100%, 1);
+
+    /* // Identity */
+    --primary: hsl(221, 81%, 61%);
+    --on-primary: rgb(250, 204, 250);
+    --secondary: hsla(120, 94%, 33%, 1);
+    --on-secondary: rgb(200, 250, 200);
+    --tertiary: rgb(6, 163, 147);
+    --on-tertiary: rgb(2, 47, 43);
+    --accred: hsl(0, 83%, 50%);
+    --on-accred: var(--bright);
+    --neutral: hsl(0, 0%, 50%);
+    --on-neutral: rgb(26, 1, 1);
+
+    /* // Semantic */
+    --error: hsla(0, 100%, 50%, 1);
+    --on-error: rgb(251, 202, 202);
+    --warning: hsla(50, 100%, 50%, 1);
+    --on-warning: hsl(50, 98%, 23%);
+    --info: hsla(210, 100%, 50%, 1);
+    --on-info: rgb(164, 208, 251);
+    --success: hsla(110, 100%, 50%, 1);
+    --on-success: rgb(21, 124, 1);
+
+    /* // State or element */
+    --disabled: var(--neutral);
+    --on-disabled: var(--on-neutral);
+
+    --link-color: blue;
+    --link-hover: red;
+    --link-visited: purple;
+    --link-active: green;
+
+    --code: hsla(210, 100%, 30%, 1);
+    --on-code: var(--bright);
+
+    --sample: hsla(210, 100%, 50%, 0.2);
+    --sample-dark: hsla(30, 100%, 50%, 0.4);
+    --on-sample: var(--dark);
+
+    --border-color: hsl(0, 1%, 47%);
+    --outline-color: hsla(210, 100%, 50%, 0.8);
+    --focus-ring: 0 0 0 2px var(--outline-color);
+
+    /* // ===== Transition und Animation ===== */
+    --transition-speed: 0.2s;
+    --transition-speed-slow: 0.5s;
+    --animation-scale: 1;
+
+    /* // ===== Media-Handling ===== */
+    --media-data-usage: 100%;
+    --media-transparency: 1;
+}
+
+:root {
+  --bright: hsla(0, 0%, 100%, 1);
+  --on-bright: hsla(0, 0%, 15%, 1);
+  --medium-bright: rgb(237, 237, 237);
+  --on-medium-bright: hsla(0, 0%, 15%, 1);
+  --medium: rgb(175, 175, 175);
+  --on-medium: hsla(0, 0%, 15%, 1);
+  --dark: hsla(0, 0%, 15%, 1);
+  --on-dark: hsla(0, 0%, 85%, 1);
+  --shadow-light: hsla(0, 0%, 0%, 0.1);
+  --shadow: hsla(0, 0%, 0%, 0.25);
+  --shadow-heavy: hsla(0, 0%, 0%, 0.5);
+  --dark-high-contrast: hsla(0, 0%, 0%, 1);
+  --on-dark-hight-contrast: hsla(0, 0%, 100%, 1);
+  --primary: hsl(221, 81%, 61%);
+  --on-primary: rgb(250, 204, 250);
+  --secondary: hsla(120, 94%, 33%, 1);
+  --on-secondary: rgb(200, 250, 200);
+  --tertiary: rgb(6, 163, 147);
+  --on-tertiary: rgb(2, 47, 43);
+  --accred: hsl(0, 83%, 50%);
+  --on-accred: var(--bright);
+  --neutral: hsl(0, 0%, 50%);
+  --on-neutral: rgb(26, 1, 1);
+  --error: hsla(0, 100%, 50%, 1);
+  --on-error: rgb(251, 202, 202);
+  --warning: hsla(50, 100%, 50%, 1);
+  --on-warning: hsl(50, 98%, 23%);
+  --info: hsla(210, 100%, 50%, 1);
+  --on-info: rgb(164, 208, 251);
+  --success: hsla(110, 100%, 50%, 1);
+  --on-success: rgb(21, 124, 1);
+  --disabled: var(--neutral);
+  --on-disabled: var(--on-neutral);
+  --link-color: blue;
+  --link-hover: red;
+  --link-visited: purple;
+  --link-active: green;
+  --code: hsla(210, 100%, 30%, 1);
+  --on-code: var(--bright);
+  --sample: hsla(210, 100%, 50%, 0.2);
+  --sample-dark: hsla(30, 100%, 50%, 0.4);
+  --on-sample: var(--dark);
+  --border-color: hsl(0, 1%, 47%);
+  --outline-color: hsla(210, 100%, 50%, 0.8);
+  --focus-ring: 0 0 0 2px var(--outline-color);
+  --transition-speed: 0.2s;
+  --transition-speed-slow: 0.5s;
+  --animation-scale: 1;
+  --media-data-usage: 100%;
+  --media-transparency: 1;
+}
+
+.bg-bright {
+  background-color: var(--bright);
+}
+
+.text-bright {
+  color: var(--bright);
+}
+
+.bg-on-bright {
+  background-color: var(--on-bright);
+}
+
+.text-on-bright {
+  color: var(--on-bright);
+}
+
+.bg-dark {
+  background-color: var(--dark);
+}
+
+.text-dark {
+  color: var(--dark);
+}
+
+.bg-on-dark {
+  background-color: var(--on-dark);
+}
+
+.text-on-dark {
+  color: var(--on-dark);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.bg-on-primary {
+  background-color: var(--on-primary);
+}
+
+.text-on-primary {
+  color: var(--on-primary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.bg-on-secondary {
+  background-color: var(--on-secondary);
+}
+
+.text-on-secondary {
+  color: var(--on-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--tertiary);
+}
+
+.text-tertiary {
+  color: var(--tertiary);
+}
+
+.bg-on-tertiary {
+  background-color: var(--on-tertiary);
+}
+
+.text-on-tertiary {
+  color: var(--on-tertiary);
+}
+
+.bg-accred {
+  background-color: var(--accred);
+}
+
+.text-accred {
+  color: var(--accred);
+}
+
+.bg-on-accred {
+  background-color: var(--on-accred);
+}
+
+.text-on-accred {
+  color: var(--on-accred);
+}
+
+.bg-neutral {
+  background-color: var(--neutral);
+}
+
+.text-neutral {
+  color: var(--neutral);
+}
+
+.bg-on-neutral {
+  background-color: var(--on-neutral);
+}
+
+.text-on-neutral {
+  color: var(--on-neutral);
+}
+
+.bg-error {
+  background-color: var(--error);
+}
+
+.text-error {
+  color: var(--error);
+}
+
+.bg-on-error {
+  background-color: var(--on-error);
+}
+
+.text-on-error {
+  color: var(--on-error);
+}
+
+.bg-success {
+  background-color: var(--success);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.bg-on-success {
+  background-color: var(--on-success);
+}
+
+.text-on-success {
+  color: var(--on-success);
+}
+
+.bg-info {
+  background-color: var(--info);
+}
+
+.text-info {
+  color: var(--info);
+}
+
+.bg-on-info {
+  background-color: var(--on-info);
+}
+
+.text-on-info {
+  color: var(--on-info);
+}
+
+.bg-warning {
+  background-color: var(--warning);
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+.bg-on-warning {
+  background-color: var(--on-warning);
+}
+
+.text-on-warning {
+  color: var(--on-warning);
+}
+
+.bg-disabled {
+  background-color: var(--disabled);
+}
+
+.text-disabled {
+  color: var(--disabled);
+}
+
+.bg-on-disabled {
+  background-color: var(--on-disabled);
+}
+
+.text-on-disabled {
+  color: var(--on-disabled);
+}
+
+.bg-shadow {
+  background-color: var(--shadow);
+}
+
+.text-shadow {
+  color: var(--shadow);
+}
+
+.bg-link-color {
+  background-color: var(--link-color);
+}
+
+.text-link-color {
+  color: var(--link-color);
+}
+
+.bg-link-visited {
+  background-color: var(--link-visited);
+}
+
+.text-link-visited {
+  color: var(--link-visited);
+}
+
+.bg-link-hover {
+  background-color: var(--link-hover);
+}
+
+.text-link-hover {
+  color: var(--link-hover);
+}
+
+.bg-link-active {
+  background-color: var(--link-active);
+}
+
+.text-link-active {
+  color: var(--link-active);
+}
+
+:root,
+:root.light {
+  --default: 1rem;
+  --big: 2rem;
+  --small: 0.75rem;
+}
+
+:root.dark {
+  background-color: var(--dark);
+  color: var(--on-dark);
+}
+
+:root.high-contrast {
+  background-color: var(--dark-high-contrast);
+  color: var(--on-dark-hight-contrast);
+}
+
+.lighten-100 {
+  filter: brightness(100%);
+}
+
+.lighten-110 {
+  filter: brightness(110%);
+}
+
+.lighten-120 {
+  filter: brightness(120%);
+}
+
+.lighten-130 {
+  filter: brightness(130%);
+}
+
+.lighten-140 {
+  filter: brightness(140%);
+}
+
+.lighten-150 {
+  filter: brightness(150%);
+}
+
+.lighten-160 {
+  filter: brightness(160%);
+}
+
+.lighten-170 {
+  filter: brightness(170%);
+}
+
+.lighten-180 {
+  filter: brightness(180%);
+}
+
+.lighten-190 {
+  filter: brightness(190%);
+}
+
+.lighten-200 {
+  filter: brightness(200%);
+}
+
+.lighten-210 {
+  filter: brightness(210%);
+}
+
+.lighten-220 {
+  filter: brightness(220%);
+}
+
+.lighten-230 {
+  filter: brightness(230%);
+}
+
+.lighten-240 {
+  filter: brightness(240%);
+}
+
+.lighten-250 {
+  filter: brightness(250%);
+}
+
+.lighten-260 {
+  filter: brightness(260%);
+}
+
+.lighten-270 {
+  filter: brightness(270%);
+}
+
+.lighten-280 {
+  filter: brightness(280%);
+}
+
+.lighten-290 {
+  filter: brightness(290%);
+}
+
+.lighten-300 {
+  filter: brightness(300%);
+}
+
+.lighten-310 {
+  filter: brightness(310%);
+}
+
+.lighten-320 {
+  filter: brightness(320%);
+}
+
+.lighten-330 {
+  filter: brightness(330%);
+}
+
+.lighten-340 {
+  filter: brightness(340%);
+}
+
+.lighten-350 {
+  filter: brightness(350%);
+}
+
+.lighten-360 {
+  filter: brightness(360%);
+}
+
+.lighten-370 {
+  filter: brightness(370%);
+}
+
+.lighten-380 {
+  filter: brightness(380%);
+}
+
+.lighten-390 {
+  filter: brightness(390%);
+}
+
+.lighten-400 {
+  filter: brightness(400%);
+}
+
+.lighter {
+  opacity: 50%;
+  background: white;
+}
+
+.darker {
+  filter: brightness(75%);
+}
+
+/* - - - - - - - - - - */
+html.dark-mode {
+  --background: hsla(0, 0%, 12%, 1);
+  --surface: hsla(0, 0%, 18%, 1);
+  --text-primary: hsla(0, 0%, 95%, 1);
+  --text-secondary: hsla(0, 0%, 75%, 1);
+  --border-color: hsla(0, 0%, 40%, 1);
+  --primary-light: hsla(300, 70%, 40%, 1);
+  --primary: hsla(300, 70%, 30%, 1);
+  --primary-dark: hsla(300, 70%, 20%, 1);
+  --on-primary: rgb(250, 204, 250);
+  --secondary-light: hsla(120, 60%, 50%, 1);
+  --secondary: hsla(120, 60%, 40%, 1);
+  --secondary-dark: hsla(120, 60%, 30%, 1);
+  --on-secondary: rgb(200, 250, 200);
+  --tertiary-light: hsla(174, 70%, 50%, 1);
+  --tertiary: hsla(174, 70%, 40%, 1);
+  --tertiary-dark: hsla(174, 70%, 30%, 1);
+  --on-tertiary: rgb(2, 47, 43);
+  --shadow-light: hsla(0, 0%, 0%, 0.2);
+  --shadow: hsla(0, 0%, 0%, 0.4);
+  --shadow-heavy: hsla(0, 0%, 0%, 0.7);
+  --outline-color: hsla(210, 100%, 70%, 0.8);
+  --link-color: hsla(210, 100%, 70%, 1);
+  --link-visited: hsla(270, 70%, 60%, 1);
+  --link-hover: hsla(0, 100%, 70%, 1);
+  --link-active: hsla(120, 100%, 50%, 1);
+}
+
+html.high-contrast-mode {
+  --background: #000000;
+  --surface: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --border-color: #ffffff;
+  --primary: #ffffff;
+  --primary-light: #ffffff;
+  --primary-dark: #ffffff;
+  --on-primary: #000000;
+  --secondary: #ffffff;
+  --secondary-light: #ffffff;
+  --secondary-dark: #ffffff;
+  --on-secondary: #000000;
+  --tertiary: #ffffff;
+  --tertiary-light: #ffffff;
+  --tertiary-dark: #ffffff;
+  --on-tertiary: #000000;
+  --accent: #ffffff;
+  --on-accent: #000000;
+  --error: #ffffff;
+  --on-error: #000000;
+  --warning: #ffffff;
+  --on-warning: #000000;
+  --info: #ffffff;
+  --on-info: #000000;
+  --success: #ffffff;
+  --on-success: #000000;
+  --outline-color: #ffffff;
+  --focus-ring: 0 0 0 3px #ffffff, 0 0 0 5px #000000;
+  --link-color: #ffff00;
+  --link-visited: #ffff00;
+  --link-hover: #ffff00;
+  --link-active: #ffff00;
+}
+
+html.inverted-colors-mode {
+  filter: invert(100%) hue-rotate(180deg);
+}
+html.inverted-colors-mode img,
+html.inverted-colors-mode video,
+html.inverted-colors-mode canvas {
+  filter: invert(100%) hue-rotate(180deg);
+}
+
+html.reduced-motion {
+  --transition-speed: 0.001s;
+  --transition-speed-slow: 0.001s;
+  --animation-scale: 0;
+}
+html.reduced-motion *,
+html.reduced-motion *::before,
+html.reduced-motion *::after {
+  animation-duration: 0.001s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001s !important;
+  scroll-behavior: auto !important;
+}
+
+html.reduced-data {
+  --media-data-usage: 10%;
+}
+html.reduced-data img,
+html.reduced-data video {
+  filter: blur(1px) brightness(0.9);
+  max-width: 50vw;
+  max-height: 50vh;
+}
+
+html.reduced-transparency {
+  --media-transparency: 0;
+}
+html.reduced-transparency *,
+html.reduced-transparency *::before,
+html.reduced-transparency *::after {
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+}
+html.reduced-transparency [class*=transparent],
+html.reduced-transparency [class*=opacity],
+html.reduced-transparency [style*=opacity],
+html.reduced-transparency [style*=rgba] {
+  background-color: var(--surface) !important;
+  box-shadow: none !important;
+}
+
+html.forced-colors {
+  forced-color-adjust: none; /* Explizit die System-Farben verwenden */
+  --background: Canvas;
+  --text-primary: CanvasText;
+  --border-color: CanvasText;
+  --primary: Highlight;
+  --on-primary: HighlightText;
+  --link-color: LinkText;
+  --link-visited: VisitedText;
+  --outline-color: Focus;
+  --focus-ring: 0 0 0 2px Focus;
+}
+html.forced-colors button,
+html.forced-colors input,
+html.forced-colors select,
+html.forced-colors textarea {
+  border-color: ButtonText;
+  color: ButtonText;
+  background-color: ButtonFace;
+}
+html.forced-colors a:link {
+  color: LinkText;
+}
+html.forced-colors a:visited {
+  color: VisitedText;
+}
+html.forced-colors :focus {
+  outline: 2px solid Focus;
+}
+
+.bg-primary {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+  color: var(--on-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--tertiary);
+  color: var(--on-tertiary);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.bg-surface {
+  background-color: var(--surface);
+  color: var(--text-primary);
+}
+
+.bg-error {
+  background-color: var(--error);
+  color: var(--on-error);
+}
+
+.bg-warning {
+  background-color: var(--warning);
+  color: var(--on-warning);
+}
+
+.bg-info {
+  background-color: var(--info);
+  color: var(--on-info);
+}
+
+.bg-success {
+  background-color: var(--success);
+  color: var(--on-success);
+}
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-primary-color {
+  color: var(--primary);
+}
+
+.text-secondary-color {
+  color: var(--secondary);
+}
+
+.text-tertiary {
+  color: var(--tertiary);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-error {
+  color: var(--error);
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+.text-info {
+  color: var(--info);
+}
+
+.text-success {
+  color: var(--success);
+}

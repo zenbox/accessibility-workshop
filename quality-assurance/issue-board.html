@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>GFU Accessibility QA – Issue Board</title>
+        <meta name="description" content="Erfassung, Zuordnung und Nachverfolgung von Accessibility-Issues bei Webprojekten." />
+        <link rel="icon" href="/accessibility-workshop/assets/icons/sheep.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" />
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/styles.css" />
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/issue-board.css" />
+    </head>
+    <body>
+        <!-- ══ SKIP LINKS ══════════════════════════════════════════════ -->
+        <nav class="skip-links" aria-label="Sprungnavigation">
+            <a class="skip-link" href="#main-content">Zum Hauptinhalt</a>
+            <a class="skip-link" href="#site-footer">Zum Footer</a>
+        </nav>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
+        <header>
+            <div class="nav-wrapper">
+                <!-- Desktop nav + A11y menu injected by JS -->
+                <button class="hamburger" id="hamburgerBtn" aria-label="Menü öffnen" aria-expanded="false">
+                    <span class="material-symbols-outlined" id="hamburgerIcon">menu</span>
+                </button>
+            </div>
+            <!-- Mobile nav injected by JS -->
+        </header>
+
+        <!-- =====================================================================
+             MODULE: APPLICATION TOOLBAR (seiteneigen, keine eigene Landmark)
+             Future extraction target: AppShell component
+        ====================================================================== -->
+        <div class="app-toolbar" id="app-toolbar">
+            <div class="brand-lockup">
+                <div class="brand-mark" aria-hidden="true">QA</div>
+                <div class="brand-text">
+                    <div class="brand-kicker">GFU CYRUS AG / ACCESSIBILITY</div>
+                    <h1 class="brand-title">A11y Issue Board</h1>
+                </div>
+            </div>
+            <div class="header-actions">
+                <span class="debug-status" id="debug-status" title="Lokaler Debug-Modus">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    Debug aktiv
+                </span>
+                <button class="button button-quiet" type="button" data-action="toggle-debug" aria-pressed="true">
+                    <span class="material-symbols-outlined" aria-hidden="true">bug_report</span>
+                    Debug
+                </button>
+                <button class="button button-quiet" type="button" data-action="export-json">
+                    <span class="material-symbols-outlined" aria-hidden="true">download</span>
+                    JSON exportieren
+                </button>
+                <button class="button header-button" type="button" data-action="new-issue">
+                    <span class="material-symbols-outlined" aria-hidden="true">add</span>
+                    Neues Issue
+                </button>
+                <input id="import-file" class="sr-only" type="file" accept="application/json,.json" />
+            </div>
+        </div>
+
+        <main class="app-layout" id="main-content" tabindex="-1">
+            <!-- =================================================================
+                 MODULE: ISSUE NAVIGATION
+                 Future extraction target: IssueList component
+            ================================================================== -->
+            <aside class="issue-sidebar" aria-label="Accessibility-Issues">
+                <div class="sidebar-top">
+                    <div class="eyebrow">Issues statt Testbericht</div>
+                    <h2 class="sidebar-title">QA-Arbeitsliste</h2>
+                    <p class="sidebar-intro">Konkrete Befunde erfassen, verantworten und nachverfolgen.</p>
+                    <div class="filter-stack" role="search" aria-label="Issues filtern">
+                        <label class="sidebar-label" for="issue-search">Suchen</label>
+                        <input class="input-dark" id="issue-search" type="search" placeholder="ID, Seite, Beschreibung …" autocomplete="off" />
+                        <label class="sidebar-label" for="status-filter">Status</label>
+                        <select class="select-dark" id="status-filter">
+                            <option value="all">Alle Status</option>
+                            <option value="open">Offen</option>
+                            <option value="in-progress">In Bearbeitung</option>
+                            <option value="resolved">Behoben</option>
+                            <option value="wont-fix">Nicht behoben</option>
+                        </select>
+                        <label class="sidebar-label" for="urgency-filter">Dringlichkeit</label>
+                        <select class="select-dark" id="urgency-filter">
+                            <option value="all">Alle Dringlichkeiten</option>
+                            <option value="sofort">Sofort</option>
+                            <option value="hoch">Hoch</option>
+                            <option value="mittel">Mittel</option>
+                            <option value="niedrig">Niedrig</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="issue-list" id="issue-list" aria-live="polite"></div>
+                <div class="sidebar-footer">
+                    <span class="material-symbols-outlined" aria-hidden="true">database</span>
+                    Lokal gespeichert im Browser. JSON-Export für Übergaben nutzen.
+                </div>
+            </aside>
+
+            <!-- =================================================================
+                 MODULE: ISSUE EDITOR MOUNT
+                 Future extraction target: IssueEditor component
+            ================================================================== -->
+            <section class="workspace" aria-label="Issue bearbeiten">
+                <div id="debug-panel-mount"></div>
+                <div id="editor-mount"></div>
+            </section>
+        </main>
+
+        <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+        <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+        <footer id="site-footer" tabindex="-1">
+            <!-- injected by JS -->
+        </footer>
+
+        <script src="/accessibility-workshop/assets/js/main.js" type="module"></script>
+
+        <script>
+            "use strict";
+
+            /* =====================================================================
+               MODULE: CONFIGURATION
+               Future extraction target: config.js
+               Single source of truth for limits, labels, fallback criteria and defaults.
+               CONFIG.criteria is only the offline fallback used when criterias.json
+               cannot be loaded; the live catalog lives in appState.criteria.
+            ====================================================================== */
+            const CONFIG = Object.freeze({
+                appName: "GFU A11y Issue Board",
+                storageKey: "gfu-a11y-issues-v1",
+                schemaVersion: 1,
+                defaultAuthor: "Michael Reichart",
+                debugDefault: true,
+                maxScreenshotBytes: 3 * 1024 * 1024,
+                maxToastDuration: 4200,
+                criteria: Object.freeze([
+                    {
+                        id: "1.1.1",
+                        name: "Nicht-Text-Inhalte",
+                        level: "A",
+                        summary: "Nicht-Text-Inhalte brauchen eine passende Textalternative.",
+                        howToTest: "Bilder, Icons und grafische Bedienelemente mit Screenreader und DOM-Prüfung kontrollieren."
+                    },
+                    {
+                        id: "1.3.1",
+                        name: "Info und Beziehungen",
+                        level: "A",
+                        summary: "Struktur und Beziehungen müssen programmatisch ermittelbar sein.",
+                        howToTest: "Überschriften, Listen, Tabellen, Labels und Gruppierungen im Accessibility Tree prüfen."
+                    },
+                    {
+                        id: "1.4.3",
+                        name: "Kontrast (Minimum)",
+                        level: "AA",
+                        summary: "Text und Textbilder brauchen ausreichend Kontrast zum Hintergrund.",
+                        howToTest: "Kontrastwerte für normalen Text, großen Text und Zustände mit einem Kontrastwerkzeug prüfen."
+                    },
+                    {
+                        id: "2.1.1",
+                        name: "Tastatur",
+                        level: "A",
+                        summary: "Alle Funktionen müssen mit der Tastatur bedienbar sein.",
+                        howToTest: "Den vollständigen Prozess ohne Maus mit Tab, Shift+Tab, Enter, Space und Pfeiltasten durchlaufen."
+                    },
+                    {
+                        id: "2.4.7",
+                        name: "Fokus sichtbar",
+                        level: "AA",
+                        summary: "Der Tastaturfokus muss visuell erkennbar sein.",
+                        howToTest: "Fokusindikator auf allen interaktiven Elementen und in verschiedenen Zuständen prüfen."
+                    }
+                ]),
+                labels: Object.freeze({
+                    status: { open: "Offen", "in-progress": "In Bearbeitung", resolved: "Behoben", "wont-fix": "Nicht behoben" },
+                    urgency: { sofort: "Sofort", hoch: "Hoch", mittel: "Mittel", niedrig: "Niedrig" },
+                    severity: { critical: "Kritisch", "non-critical": "Unkritisch" }
+                })
+            });
+
+            /* =====================================================================
+               MODULE: CENTRAL APPLICATION STATE
+               Future extraction target: state/app-state.js
+               All mutable UI state lives here. Services do not directly manipulate DOM.
+            ====================================================================== */
+            const appState = {
+                issues: [],
+                currentIssueId: null,
+                draft: null,
+                mode: "new",
+                filters: { search: "", status: "all", urgency: "all" },
+                criteria: CONFIG.criteria,
+                criteriaFilter: "",
+                criteriaSource: "demo",
+                isDirty: false,
+                debug: CONFIG.debugDefault,
+                smokeTests: [],
+                lastSavedAt: null
+            };
+
+            /* =====================================================================
+               MODULE: GENERAL UTILITIES
+               Future extraction target: shared/utils.js
+            ====================================================================== */
+            function nowIso() {
+                return new Date().toISOString();
+            }
+
+            function clone(value) {
+                return JSON.parse(JSON.stringify(value));
+            }
+
+            function escapeHtml(value) {
+                return String(value ?? "")
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            function safeUrl(value) {
+                return /^(https?:\/\/|mailto:)/i.test(String(value || "")) ? value : "#";
+            }
+
+            function formatDateTime(value) {
+                if (!value) return "–";
+                const date = new Date(value);
+                if (Number.isNaN(date.getTime())) return "–";
+                return new Intl.DateTimeFormat("de-DE", { dateStyle: "medium", timeStyle: "short" }).format(date);
+            }
+
+            function formatDate(value) {
+                if (!value) return "–";
+                const date = new Date(`${value}T12:00:00`);
+                if (Number.isNaN(date.getTime())) return "–";
+                return new Intl.DateTimeFormat("de-DE", { dateStyle: "medium" }).format(date);
+            }
+
+            function isOpen(issue) {
+                return issue && !["resolved", "wont-fix"].includes(issue.status);
+            }
+
+            function generateIssueId() {
+                const year = new Date().getFullYear();
+                const numbers = appState.issues
+                    .map((issue) => Number(String(issue.id || "").match(/(\d+)$/)?.[1] || 0))
+                    .filter(Number.isFinite);
+                const next = Math.max(0, ...numbers) + 1;
+                return `A11Y-${year}-${String(next).padStart(3, "0")}`;
+            }
+
+            function criterionById(id) {
+                if (!id) return null;
+                return appState.criteria.find((criterion) => criterion.id === id) || null;
+            }
+
+            function toast(message, type = "info") {
+                const region = document.querySelector("#toast-region");
+                if (!region) return;
+                const element = document.createElement("div");
+                element.className = `toast ${type === "error" ? "error" : ""}`;
+                element.setAttribute("role", type === "error" ? "alert" : "status");
+                element.textContent = message;
+                region.append(element);
+                window.setTimeout(() => element.remove(), CONFIG.maxToastDuration);
+            }
+
+            /* =====================================================================
+               MODULE: DOMAIN FACTORIES AND NORMALIZATION
+               Future extraction target: domain/issue-model.js
+            ====================================================================== */
+            function createEmptyIssue() {
+                const timestamp = nowIso();
+                return {
+                    id: "",
+                    createdAt: timestamp,
+                    updatedAt: timestamp,
+                    author: CONFIG.defaultAuthor,
+                    pageUrl: "",
+                    screen: "",
+                    processStep: "",
+                    isGlobal: false,
+                    criterionId: "",
+                    screenshot: null,
+                    tool: "",
+                    severity: "critical",
+                    urgency: "hoch",
+                    status: "open",
+                    description: "",
+                    rationale: "",
+                    responsibility: "",
+                    dueDate: "",
+                    history: []
+                };
+            }
+
+            function normalizeIssue(raw) {
+                const base = createEmptyIssue();
+                const issue = { ...base, ...(raw || {}) };
+                issue.isGlobal = Boolean(raw?.isGlobal);
+                issue.screenshot = raw?.screenshot && raw.screenshot.dataUrl ? {
+                    dataUrl: String(raw.screenshot.dataUrl),
+                    name: String(raw.screenshot.name || "Screenshot"),
+                    alt: String(raw.screenshot.alt || "Screenshot zum Accessibility-Issue")
+                } : null;
+                issue.history = Array.isArray(raw?.history) ? raw.history.map((entry) => ({
+                    timestamp: String(entry.timestamp || issue.updatedAt || nowIso()),
+                    author: String(entry.author || issue.author || CONFIG.defaultAuthor),
+                    action: String(entry.action || "Änderung"),
+                    summary: String(entry.summary || "")
+                })) : [];
+                return issue;
+            }
+
+            function demoIssues() {
+                const firstCreated = new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString();
+                const secondCreated = new Date(Date.now() - 1000 * 60 * 60 * 7).toISOString();
+                return [
+                    normalizeIssue({
+                        id: "A11Y-2026-001",
+                        createdAt: firstCreated,
+                        updatedAt: firstCreated,
+                        author: "Michael Reichart",
+                        pageUrl: "/seminare/ux-ui",
+                        screen: "Seminardetail",
+                        processStep: "Termin auswählen",
+                        criterionId: "2.4.7",
+                        tool: "NVDA 2025.1 + Chrome 140\nProtokoll: Fokus nach Dialog-Schluss nicht sichtbar.",
+                        severity: "critical",
+                        urgency: "hoch",
+                        status: "open",
+                        description: "Nach dem Schließen des Termin-Dialogs landet der Fokus auf dem Hintergrund. Der sichtbare Fokusindikator ist nicht erkennbar.",
+                        rationale: "Tastaturbedienende Personen verlieren ihre Position im Prozess. Dadurch ist der nächste sinnvolle Schritt nicht auffindbar.",
+                        responsibility: "Frontend / Team Web",
+                        dueDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3).toISOString().slice(0, 10),
+                        history: [{ timestamp: firstCreated, author: "Michael Reichart", action: "Issue erstellt", summary: "Fokusprüfung im Buchungsprozess" }]
+                    }),
+                    normalizeIssue({
+                        id: "A11Y-2026-002",
+                        createdAt: secondCreated,
+                        updatedAt: secondCreated,
+                        author: "QA Team",
+                        pageUrl: "/kontakt",
+                        screen: "Kontaktformular",
+                        processStep: "Formular absenden",
+                        criterionId: "1.3.1",
+                        tool: "axe DevTools 4.10\nErgebnis: Label-Beziehung für Telefonnummer nicht eindeutig.",
+                        severity: "non-critical",
+                        urgency: "mittel",
+                        status: "in-progress",
+                        description: "Das sichtbare Label der Telefonnummer ist nicht programmatisch mit dem Eingabefeld verbunden.",
+                        rationale: "Screenreader-Nutzende erhalten beim Fokus auf das Feld keine zuverlässige Feldbezeichnung.",
+                        responsibility: "Frontend / Formulare",
+                        dueDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 10).toISOString().slice(0, 10),
+                        history: [{ timestamp: secondCreated, author: "QA Team", action: "Issue erstellt", summary: "Formularprüfung mit axe DevTools" }]
+                    })
+                ];
+            }
+
+            /* =====================================================================
+               MODULE: PERSISTENCE SERVICE
+               Future extraction target: services/storage-service.js
+               localStorage is intentionally wrapped so IndexedDB can replace it later.
+            ====================================================================== */
+            const StorageService = {
+                load() {
+                    try {
+                        const raw = window.localStorage.getItem(CONFIG.storageKey);
+                        if (!raw) return demoIssues();
+                        const parsed = JSON.parse(raw);
+                        const list = Array.isArray(parsed) ? parsed : parsed.issues;
+                        return Array.isArray(list) ? list.map(normalizeIssue) : demoIssues();
+                    } catch (error) {
+                        console.warn("Storage konnte nicht gelesen werden.", error);
+                        return demoIssues();
+                    }
+                },
+                save(issues) {
+                    try {
+                        window.localStorage.setItem(CONFIG.storageKey, JSON.stringify(issues));
+                        return true;
+                    } catch (error) {
+                        console.warn("Storage konnte nicht geschrieben werden.", error);
+                        return false;
+                    }
+                },
+                upsert(issue) {
+                    const index = appState.issues.findIndex((entry) => entry.id === issue.id);
+                    const next = [...appState.issues];
+                    if (index === -1) next.unshift(issue);
+                    else next[index] = issue;
+                    appState.issues = next;
+                    return this.save(next);
+                },
+                remove(id) {
+                    appState.issues = appState.issues.filter((issue) => issue.id !== id);
+                    return this.save(appState.issues);
+                }
+            };
+
+            /* =====================================================================
+               MODULE: CRITERIA CATALOG SERVICE
+               Future extraction target: services/criteria-service.js
+               Loads the full WCAG/BITV/EN-301-549 catalog from criterias.json and
+               flattens it into a flat list the editor can search, filter and select
+               from. Falls back to CONFIG.criteria (five entries) when the request
+               fails, so the board keeps working offline or during local file access.
+            ====================================================================== */
+            function flattenCriteriaCatalog(data) {
+                const sections = Array.isArray(data?.sections) ? data.sections : [];
+                const flattened = [];
+                sections.forEach((section) => {
+                    const chapter = section?.chapter;
+                    const steps = Array.isArray(chapter?.pruefschritte) ? chapter.pruefschritte : [];
+                    steps.forEach((step) => {
+                        if (!step?.id) return;
+                        const details = step.details || {};
+                        const testTools = Object.keys(details.tests || {});
+                        flattened.push({
+                            id: step.id,
+                            wcagId: step.wcagId || "",
+                            bitvId: step.bitvId || "",
+                            level: step.conformanceLevel || "",
+                            name: step.title || step.id,
+                            chapterId: chapter?.id || "",
+                            chapterTitle: chapter?.title || "",
+                            summary: details.description || "",
+                            who: Array.isArray(details.who) ? details.who.filter(Boolean) : [],
+                            keywords: Array.isArray(details.keywords) ? details.keywords : [],
+                            howToTest: testTools.length
+                                ? `Automatisiert prüfbar mit: ${testTools.join(", ")}.`
+                                : "Erfordert eine manuelle Prüfung."
+                        });
+                    });
+                });
+                return flattened.sort((a, b) => a.id.localeCompare(b.id, "de", { numeric: true }));
+            }
+
+            async function loadCriteriaCatalog() {
+                appState.criteriaSource = "loading";
+                try {
+                    const response = await fetch("../assets/data/docs/criterias.json", { cache: "no-store" });
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const data = await response.json();
+                    const flattened = flattenCriteriaCatalog(data);
+                    if (!flattened.length) throw new Error("criterias.json enthielt keine Prüfschritte.");
+                    appState.criteria = flattened;
+                    appState.criteriaSource = "remote";
+                } catch (error) {
+                    console.warn("⚠️ criterias.json konnte nicht geladen werden, Fallback auf Demo-Kriterien.", error);
+                    appState.criteria = CONFIG.criteria;
+                    appState.criteriaSource = "error";
+                }
+                runSmokeTests();
+                renderEditor();
+                renderDebugPanel();
+            }
+
+            /* =====================================================================
+               MODULE: MARKDOWN AND CLIPBOARD SERVICE
+               Future extraction target: services/markdown-service.js
+               Renderer accepts a safe Markdown subset. Raw HTML is escaped.
+            ====================================================================== */
+            const Markdown = {
+                render(markdown) {
+                    const source = String(markdown || "").replace(/\r\n/g, "\n");
+                    if (!source.trim()) return "<p class=\"is-empty\">Noch keine Vorschau.</p>";
+                    const lines = source.split("\n");
+                    let html = "";
+                    let paragraph = [];
+                    let listItems = [];
+                    let listType = null;
+                    let quoteLines = [];
+                    let codeLines = [];
+                    let inCode = false;
+
+                    const flushParagraph = () => {
+                        if (paragraph.length) {
+                            html += `<p>${this.inline(paragraph.join(" "))}</p>`;
+                            paragraph = [];
+                        }
+                    };
+                    const flushList = () => {
+                        if (!listItems.length) return;
+                        const tag = listType === "ol" ? "ol" : "ul";
+                        html += `<${tag}>${listItems.map((item) => `<li>${item}</li>`).join("")}</${tag}>`;
+                        listItems = [];
+                        listType = null;
+                    };
+                    const flushQuote = () => {
+                        if (quoteLines.length) {
+                            html += `<blockquote>${quoteLines.map((line) => `<p>${this.inline(line)}</p>`).join("")}</blockquote>`;
+                            quoteLines = [];
+                        }
+                    };
+
+                    lines.forEach((line) => {
+                        if (/^\s*```/.test(line)) {
+                            flushParagraph(); flushList(); flushQuote();
+                            if (inCode) {
+                                html += `<pre><code>${escapeHtml(codeLines.join("\n"))}</code></pre>`;
+                                codeLines = [];
+                                inCode = false;
+                            } else {
+                                inCode = true;
+                            }
+                            return;
+                        }
+                        if (inCode) { codeLines.push(line); return; }
+                        if (!line.trim()) { flushParagraph(); flushList(); flushQuote(); return; }
+
+                        const heading = line.match(/^\s*(#{1,3})\s+(.+)$/);
+                        if (heading) {
+                            flushParagraph(); flushList(); flushQuote();
+                            const level = heading[1].length;
+                            html += `<h${level}>${this.inline(heading[2])}</h${level}>`;
+                            return;
+                        }
+
+                        const quote = line.match(/^\s*>\s?(.*)$/);
+                        if (quote) {
+                            flushParagraph(); flushList();
+                            quoteLines.push(quote[1]);
+                            return;
+                        }
+                        flushQuote();
+
+                        const unordered = line.match(/^\s*[-*]\s+(.+)$/);
+                        const ordered = line.match(/^\s*\d+\.\s+(.+)$/);
+                        if (unordered || ordered) {
+                            flushParagraph();
+                            const type = unordered ? "ul" : "ol";
+                            if (listType && listType !== type) flushList();
+                            listType = type;
+                            listItems.push(this.inline((unordered || ordered)[1]));
+                            return;
+                        }
+                        flushList();
+                        paragraph.push(line.trim());
+                    });
+
+                    if (inCode) html += `<pre><code>${escapeHtml(codeLines.join("\n"))}</code></pre>`;
+                    flushParagraph(); flushList(); flushQuote();
+                    return html || "<p class=\"is-empty\">Noch keine Vorschau.</p>";
+                },
+                inline(value) {
+                    let text = escapeHtml(value);
+                    text = text.replace(/`([^`]+)`/g, "<code>$1</code>");
+                    text = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+                    text = text.replace(/__([^_]+)__/g, "<strong>$1</strong>");
+                    text = text.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+                    text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, url) => {
+                        const href = escapeHtml(safeUrl(url));
+                        return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+                    });
+                    return text;
+                },
+                htmlToMarkdown(html, plainText = "") {
+                    if (!html) return plainText || "";
+                    const parser = new DOMParser();
+                    const documentFragment = parser.parseFromString(html, "text/html").body;
+                    const convert = (node) => {
+                        if (node.nodeType === Node.TEXT_NODE) return node.nodeValue.replace(/\u00a0/g, " ");
+                        if (node.nodeType !== Node.ELEMENT_NODE) return "";
+                        const children = Array.from(node.childNodes).map(convert).join("");
+                        const tag = node.tagName.toLowerCase();
+                        if (tag === "br") return "\n";
+                        if (["strong", "b"].includes(tag)) return `**${children.trim()}**`;
+                        if (["em", "i"].includes(tag)) return `*${children.trim()}*`;
+                        if (tag === "a") {
+                            const href = safeUrl(node.getAttribute("href"));
+                            return `[${children.trim()}](${href})`;
+                        }
+                        if (tag === "li") return `- ${children.trim()}\n`;
+                        if (["h1", "h2", "h3"].includes(tag)) return `${"#".repeat(Number(tag[1]))} ${children.trim()}\n\n`;
+                        if (["p", "div", "section", "article", "blockquote"].includes(tag)) return `${children.trim()}\n\n`;
+                        if (tag === "pre") return `\n\`\`\`\n${node.textContent}\n\`\`\`\n\n`;
+                        return children;
+                    };
+                    return convert(documentFragment).replace(/\n{3,}/g, "\n\n").trim();
+                }
+            };
+
+            /* =====================================================================
+               MODULE: VALIDATION AND BUSINESS RULES
+               Future extraction target: domain/issue-validator.js
+               This module has no DOM dependency and can be unit-tested separately.
+            ====================================================================== */
+            const Validator = {
+                validateIssue(issue) {
+                    const errors = {};
+                    if (!String(issue.author || "").trim()) errors.author = "Autor angeben.";
+                    if (!issue.isGlobal && !String(issue.pageUrl || "").trim() && !String(issue.screen || "").trim() && !String(issue.processStep || "").trim()) {
+                        errors.pageUrl = "Mindestens Seite, Screen oder Prozessschritt angeben – oder „Global“ auswählen.";
+                    }
+                    if (!criterionById(issue.criterionId)) errors.criterionId = "WCAG-Kriterium auswählen.";
+                    if (!String(issue.tool || "").trim()) errors.tool = "Testwerkzeug oder Protokollauszug ergänzen.";
+                    if (!String(issue.description || "").trim()) errors.description = "Befund beschreiben.";
+                    if (!String(issue.rationale || "").trim()) errors.rationale = "Begründung für die Auswirkung ergänzen.";
+                    if (!String(issue.responsibility || "").trim()) errors.responsibility = "Zuständigkeit festlegen.";
+                    if (issue.dueDate && Number.isNaN(new Date(`${issue.dueDate}T12:00:00`).getTime())) errors.dueDate = "Wiedervorlage prüfen.";
+                    return { valid: Object.keys(errors).length === 0, errors };
+                }
+            };
+
+            /* =====================================================================
+               MODULE: ISSUE QUERIES AND BUSINESS OPERATIONS
+               Future extraction target: domain/issue-service.js
+            ====================================================================== */
+            function filteredIssues() {
+                const query = appState.filters.search.trim().toLowerCase();
+                return appState.issues.filter((issue) => {
+                    const criterion = criterionById(issue.criterionId);
+                    const haystack = [issue.id, issue.pageUrl, issue.screen, issue.processStep, issue.description, issue.rationale, issue.responsibility, issue.isGlobal ? "global" : "", criterion?.name].join(" ").toLowerCase();
+                    const matchesSearch = !query || haystack.includes(query);
+                    const matchesStatus = appState.filters.status === "all" || issue.status === appState.filters.status;
+                    const matchesUrgency = appState.filters.urgency === "all" || issue.urgency === appState.filters.urgency;
+                    return matchesSearch && matchesStatus && matchesUrgency;
+                });
+            }
+
+            function criterionMatchesFilter(criterion, term) {
+                if (!term) return true;
+                const parts = term.split(/\s+/).filter(Boolean);
+                const haystack = [
+                    criterion.id,
+                    criterion.wcagId,
+                    criterion.bitvId,
+                    criterion.name,
+                    criterion.chapterTitle,
+                    criterion.level,
+                    ...(criterion.who || []),
+                    ...(criterion.keywords || [])
+                ].join(" ").toLowerCase();
+                return parts.every((part) => haystack.includes(part));
+            }
+
+            function filteredCriteria() {
+                const term = appState.criteriaFilter.trim().toLowerCase();
+                return appState.criteria.filter((criterion) => criterionMatchesFilter(criterion, term));
+            }
+
+            function visibleCriteriaFor(selectedCriterionId) {
+                const visible = filteredCriteria();
+                const selected = criterionById(selectedCriterionId);
+                if (selected && !visible.some((criterion) => criterion.id === selected.id)) return [selected, ...visible];
+                return visible;
+            }
+
+            function metricValues() {
+                const open = appState.issues.filter(isOpen).length;
+                const critical = appState.issues.filter((issue) => isOpen(issue) && issue.severity === "critical").length;
+                const due = appState.issues.filter((issue) => isOpen(issue) && issue.dueDate && issue.dueDate <= new Date().toISOString().slice(0, 10)).length;
+                return { total: appState.issues.length, open, critical, due };
+            }
+
+            function buildChangeSummary(issue, isNew) {
+                if (isNew) return `Erstanlage für ${issue.screen || issue.pageUrl || "neuen Befund"}`;
+                return `Befund aktualisiert · Status: ${CONFIG.labels.status[issue.status] || issue.status}`;
+            }
+
+            function selectIssue(id) {
+                if (appState.isDirty && !window.confirm("Ungespeicherte Änderungen verwerfen?")) return;
+                const issue = appState.issues.find((entry) => entry.id === id);
+                if (!issue) return;
+                appState.currentIssueId = id;
+                appState.mode = "edit";
+                appState.draft = clone(issue);
+                appState.isDirty = false;
+                renderApp();
+            }
+
+            function startNewIssue() {
+                if (appState.isDirty && !window.confirm("Ungespeicherte Änderungen verwerfen?")) return;
+                appState.currentIssueId = null;
+                appState.mode = "new";
+                appState.draft = createEmptyIssue();
+                appState.isDirty = false;
+                renderApp();
+                window.setTimeout(() => document.querySelector("[data-field='author']")?.focus(), 0);
+            }
+
+            function currentDraftFromForm() {
+                const form = document.querySelector("#issue-form");
+                const draft = clone(appState.draft || createEmptyIssue());
+                if (!form) return draft;
+                form.querySelectorAll("[data-field]").forEach((control) => {
+                    draft[control.dataset.field] = control.value;
+                });
+                return draft;
+            }
+
+            function saveCurrentIssue() {
+                const candidate = currentDraftFromForm();
+                const result = Validator.validateIssue(candidate);
+                clearValidationErrors();
+                if (!result.valid) {
+                    showValidationErrors(result.errors);
+                    toast("Bitte die markierten Pflichtfelder ergänzen.", "error");
+                    return;
+                }
+                const isNew = appState.mode === "new";
+                const timestamp = nowIso();
+                candidate.id = candidate.id || generateIssueId();
+                candidate.createdAt = candidate.createdAt || timestamp;
+                candidate.updatedAt = timestamp;
+                candidate.history = Array.isArray(candidate.history) ? candidate.history : [];
+                candidate.history = [
+                    ...candidate.history,
+                    {
+                        timestamp,
+                        author: candidate.author || CONFIG.defaultAuthor,
+                        action: isNew ? "Issue erstellt" : "Issue aktualisiert",
+                        summary: buildChangeSummary(candidate, isNew)
+                    }
+                ];
+                const stored = StorageService.upsert(normalizeIssue(candidate));
+                appState.currentIssueId = candidate.id;
+                appState.mode = "edit";
+                appState.draft = normalizeIssue(candidate);
+                appState.isDirty = false;
+                appState.lastSavedAt = timestamp;
+                renderApp();
+                toast(stored ? "Issue gespeichert." : "Issue erstellt, aber Browser-Speicher ist nicht verfügbar.", stored ? "info" : "error");
+            }
+
+            function deleteCurrentIssue() {
+                if (appState.mode === "new" || !appState.currentIssueId) return startNewIssue();
+                const issue = appState.issues.find((entry) => entry.id === appState.currentIssueId);
+                if (!issue || !window.confirm(`Issue ${issue.id} wirklich löschen?`)) return;
+                StorageService.remove(issue.id);
+                toast("Issue gelöscht.");
+                startNewIssue();
+            }
+
+            /* =====================================================================
+               MODULE: RENDER FUNCTIONS
+               Future extraction target: components/*.js
+               Rendering only: no business decisions are hidden in HTML templates.
+            ====================================================================== */
+            function renderStatusChip(status) {
+                return `<span class="status-chip ${escapeHtml(status)}">${escapeHtml(CONFIG.labels.status[status] || status)}</span>`;
+            }
+
+            function renderPriorityChip(severity) {
+                const className = severity === "critical" ? "critical" : "non-critical";
+                return `<span class="priority-chip ${className}">${escapeHtml(CONFIG.labels.severity[severity] || severity)}</span>`;
+            }
+
+            function renderSidebar() {
+                const mount = document.querySelector("#issue-list");
+                if (!mount) return;
+                const issues = filteredIssues();
+                const countText = `${issues.length} / ${appState.issues.length} Issues`;
+                const cards = issues.map((issue) => {
+                    const criterion = criterionById(issue.criterionId);
+                    const location = [issue.pageUrl, issue.screen].filter(Boolean).join(" · ") || (issue.isGlobal ? "" : "Noch keine Fundstelle");
+                    return `<li>
+                        <button type="button" class="issue-card ${issue.id === appState.currentIssueId ? "is-selected" : ""}" data-action="select-issue" data-issue-id="${escapeHtml(issue.id)}" aria-current="${issue.id === appState.currentIssueId ? "true" : "false"}">
+                            <span class="issue-card-top">
+                                <span class="issue-card-id">${escapeHtml(issue.id || "NEU")}</span>
+                                ${renderPriorityChip(issue.severity)}
+                            </span>
+                            <span class="issue-card-title">${escapeHtml(issue.screen || issue.processStep || issue.pageUrl || "Unbenanntes Issue")}</span>
+                            <span class="issue-card-meta">
+                                ${issue.isGlobal ? `<span class="global-chip">Global</span>` : ""}
+                                ${location ? `<span class="issue-card-location">${escapeHtml(location)}</span>` : ""}
+                                ${criterion ? `<span class="criterion-chip">${escapeHtml(criterion.id)}</span>` : ""}
+                            </span>
+                        </button>
+                    </li>`;
+                }).join("");
+                mount.innerHTML = `<div class="issue-list-meta"><span>Arbeitsliste</span><span>${escapeHtml(countText)}</span></div>${cards ? `<ul style="display:grid;gap:8px;margin:0;padding:0;list-style:none;">${cards}</ul>` : `<div class="empty-state"><span class="material-symbols-outlined" aria-hidden="true">search_off</span>Keine passenden Issues gefunden.</div>`}`;
+            }
+
+            function renderMetrics() {
+                const metrics = metricValues();
+                return `<div class="metric-strip" aria-label="Issue-Kennzahlen">
+                    <div class="metric-card"><span class="mono-label">Gesamt</span><strong class="metric-value">${metrics.total}</strong><span class="metric-note">gespeicherte Issues</span></div>
+                    <div class="metric-card"><span class="mono-label">Offen</span><strong class="metric-value">${metrics.open}</strong><span class="metric-note">noch zu bearbeiten</span></div>
+                    <div class="metric-card"><span class="mono-label">Kritisch</span><strong class="metric-value">${metrics.critical}</strong><span class="metric-note">offene kritische Befunde</span></div>
+                    <div class="metric-card"><span class="mono-label">Wiedervorlage</span><strong class="metric-value">${metrics.due}</strong><span class="metric-note">fällig oder überfällig</span></div>
+                </div>`;
+            }
+
+            function renderMarkdownField(field, label, value, rows = 6, required = false, help = "") {
+                const id = `field-${field}`;
+                return `<div class="field field-full">
+                    <label class="${required ? "required" : ""}" for="${id}">${escapeHtml(label)}</label>
+                    ${help ? `<p class="field-help">${escapeHtml(help)}</p>` : ""}
+                    <div class="markdown-editor">
+                        <div class="markdown-toolbar" aria-label="Markdown-Werkzeuge">
+                            <button class="button button-quiet button-small" type="button" data-action="insert-markdown" data-target="${id}" data-token="**Text**"><strong>B</strong> Fett</button>
+                            <button class="button button-quiet button-small" type="button" data-action="insert-markdown" data-target="${id}" data-token="*Text*"><em>I</em> Kursiv</button>
+                            <button class="button button-quiet button-small" type="button" data-action="insert-markdown" data-target="${id}" data-token="- Punkt"><span class="material-symbols-outlined" aria-hidden="true">format_list_bulleted</span> Liste</button>
+                            <button class="button button-quiet button-small" type="button" data-action="insert-markdown" data-target="${id}" data-token="&#96;Code&#96;"><span class="material-symbols-outlined" aria-hidden="true">code</span> Code</button>
+                        </div>
+                        <textarea class="field-control" id="${id}" data-field="${escapeHtml(field)}" data-markdown-input="true" rows="${rows}" ${required ? "required" : ""} aria-describedby="error-${escapeHtml(field)}">${escapeHtml(value)}</textarea>
+                        <div class="markdown-preview" data-preview-for="${escapeHtml(field)}" aria-label="Markdown-Vorschau">${Markdown.render(value)}</div>
+                    </div>
+                    <p class="field-error" data-error-for="${escapeHtml(field)}" id="error-${escapeHtml(field)}"></p>
+                </div>`;
+            }
+
+            function criterionIdLabel(criterion) {
+                return criterion.wcagId ? `WCAG ${criterion.wcagId}` : `BITV ${criterion.bitvId || criterion.id}`;
+            }
+
+            function criterionLevelLabel(criterion) {
+                return criterion.level ? `Level ${criterion.level}` : "EN 301 549";
+            }
+
+            function renderCriterionBox(issue) {
+                const criterion = criterionById(issue.criterionId);
+                if (!criterion) return `<div class="criterion-box"><strong>Noch kein Kriterium ausgewählt.</strong><p>Das Kriterium bestimmt Prüfbezug und Begründung des Issues.</p></div>`;
+                return `<div class="criterion-box"><strong>${escapeHtml(criterionIdLabel(criterion))} · ${escapeHtml(criterionLevelLabel(criterion))} · ${escapeHtml(criterion.name)}</strong><p>${escapeHtml(criterion.summary)}</p><p class="criterion-meta">${escapeHtml(criterion.howToTest)}</p></div>`;
+            }
+
+            function buildCriterionOptionsHtml(selectedCriterionId) {
+                return visibleCriteriaFor(selectedCriterionId)
+                    .map((criterion) => `<option value="${escapeHtml(criterion.id)}" ${selectedCriterionId === criterion.id ? "selected" : ""}>${escapeHtml(criterionIdLabel(criterion))} · ${escapeHtml(criterion.name)} · ${escapeHtml(criterionLevelLabel(criterion))}</option>`)
+                    .join("");
+            }
+
+            function criterionFilterStatusText(selectedCriterionId) {
+                const visibleCount = visibleCriteriaFor(selectedCriterionId).length;
+                return appState.criteriaFilter.trim()
+                    ? `${visibleCount} von ${appState.criteria.length} Kriterien passen zum Filter.`
+                    : `${appState.criteria.length} Kriterien verfügbar.`;
+            }
+
+            function updateCriterionFilterUI() {
+                const select = document.querySelector("[data-field='criterionId']");
+                const status = document.querySelector("#criterion-filter-count");
+                if (!select) return;
+                const currentValue = select.value;
+                select.innerHTML = `<option value="">Kriterium auswählen …</option>${buildCriterionOptionsHtml(currentValue)}`;
+                select.value = currentValue;
+                if (status) status.textContent = criterionFilterStatusText(currentValue);
+            }
+
+            function renderScreenshot(issue) {
+                if (!issue.screenshot?.dataUrl) {
+                    return `<div class="dropzone-empty"><span class="material-symbols-outlined" aria-hidden="true">image_search</span><div><strong>Screenshot einfügen oder ablegen</strong><span>PNG, JPEG, GIF oder WebP bis ${Math.round(CONFIG.maxScreenshotBytes / 1024 / 1024)} MB. Auch aus der Zwischenablage möglich.</span></div></div>`;
+                }
+                return `<div class="screenshot-preview"><div><img src="${escapeHtml(issue.screenshot.dataUrl)}" alt="${escapeHtml(issue.screenshot.alt || "Screenshot zum Issue")}" /><div class="screenshot-meta">${escapeHtml(issue.screenshot.name || "Screenshot")} · lokal gespeichert</div></div><button type="button" class="button button-danger button-small" data-action="remove-screenshot"><span class="material-symbols-outlined" aria-hidden="true">delete</span> Entfernen</button></div>`;
+            }
+
+            function renderHistory(issue) {
+                if (!issue.history?.length) return `<p class="empty-history">Die Historie wird beim ersten Speichern angelegt.</p>`;
+                return `<ol class="history-list">${issue.history.slice().reverse().map((entry) => `<li class="history-item"><span class="history-marker" aria-hidden="true"></span><div class="history-content"><div class="history-main">${escapeHtml(entry.action)}</div><div class="history-meta">${escapeHtml(entry.author)} · ${escapeHtml(formatDateTime(entry.timestamp))}${entry.summary ? ` · ${escapeHtml(entry.summary)}` : ""}</div></div></li>`).join("")}</ol>`;
+            }
+
+            function renderEditor() {
+                const mount = document.querySelector("#editor-mount");
+                if (!mount) return;
+                const issue = appState.draft || createEmptyIssue();
+                const criterionOptions = buildCriterionOptionsHtml(issue.criterionId);
+                const criterionCatalogLabel = appState.criteriaSource === "loading"
+                    ? "Kriterien werden geladen …"
+                    : appState.criteriaSource === "remote"
+                        ? `${appState.criteria.length} Kriterien geladen`
+                        : `${appState.criteria.length} Demo-Kriterien (Fallback)`;
+                const title = appState.mode === "new" ? "Neues Accessibility-Issue" : issue.id;
+                const subtitle = appState.mode === "new" ? "Befund strukturiert erfassen und für die Umsetzung verfolgbar machen." : `${issue.isGlobal ? "Global" : issue.screen || issue.pageUrl || "Ohne Fundstelle"} · zuletzt geändert ${formatDateTime(issue.updatedAt)}`;
+                mount.innerHTML = `<div class="editor-shell">
+                    <div class="editor-top">
+                        <div class="editor-heading">
+                            <div class="eyebrow">${appState.mode === "new" ? "Erfassung" : "Issue-Detail"}</div>
+                            <h2>${escapeHtml(title)}</h2>
+                            <p>${escapeHtml(subtitle)}</p>
+                        </div>
+                        <div class="editor-actions">
+                            ${appState.isDirty ? `<span class="dirty-indicator" id="dirty-indicator">ungespeichert</span>` : ""}
+                            ${appState.mode === "edit" ? renderStatusChip(issue.status) : `<span class="status-chip open">Entwurf</span>`}
+                            <button class="button button-danger button-small" type="button" data-action="delete-issue"><span class="material-symbols-outlined" aria-hidden="true">delete</span> ${appState.mode === "new" ? "Leeren" : "Löschen"}</button>
+                        </div>
+                    </div>
+                    ${renderMetrics()}
+                    <form class="issue-form" id="issue-form" novalidate>
+                        <section class="form-section" aria-labelledby="section-meta-title">
+                            <div class="form-section-header"><div><h3 class="form-section-title" id="section-meta-title">Metadaten und Einordnung</h3><p class="form-section-help">Zeitstempel und Verantwortlichkeit bilden den auditierbaren Kontext des Befunds.</p></div><span class="mono-label">ID: ${escapeHtml(issue.id || "wird beim Speichern vergeben")}</span></div>
+                            <div class="field-grid three">
+                                <div class="field"><label for="field-author" class="required">Autor</label><input class="field-control" id="field-author" data-field="author" value="${escapeHtml(issue.author)}" autocomplete="name" required aria-describedby="error-author" /><p class="field-error" data-error-for="author" id="error-author"></p></div>
+                                <div class="field"><span class="field label" id="created-label">Erfasst am</span><div class="meta-value" aria-labelledby="created-label"><time datetime="${escapeHtml(issue.createdAt)}">${escapeHtml(formatDateTime(issue.createdAt))}</time></div></div>
+                                <div class="field"><span class="field label" id="updated-label">Zuletzt geändert</span><div class="meta-value" aria-labelledby="updated-label"><time datetime="${escapeHtml(issue.updatedAt)}">${escapeHtml(formatDateTime(issue.updatedAt))}</time></div></div>
+                                <div class="field"><label for="field-status">Status</label><select class="field-control" id="field-status" data-field="status"><option value="open" ${issue.status === "open" ? "selected" : ""}>Offen</option><option value="in-progress" ${issue.status === "in-progress" ? "selected" : ""}>In Bearbeitung</option><option value="resolved" ${issue.status === "resolved" ? "selected" : ""}>Behoben</option><option value="wont-fix" ${issue.status === "wont-fix" ? "selected" : ""}>Nicht behoben</option></select></div>
+                                <div class="field"><label for="field-severity">Schweregrad</label><select class="field-control" id="field-severity" data-field="severity"><option value="critical" ${issue.severity === "critical" ? "selected" : ""}>Kritisch</option><option value="non-critical" ${issue.severity === "non-critical" ? "selected" : ""}>Unkritisch</option></select></div>
+                                <div class="field"><label for="field-urgency">Dringlichkeit</label><select class="field-control" id="field-urgency" data-field="urgency"><option value="sofort" ${issue.urgency === "sofort" ? "selected" : ""}>Sofort</option><option value="hoch" ${issue.urgency === "hoch" ? "selected" : ""}>Hoch</option><option value="mittel" ${issue.urgency === "mittel" ? "selected" : ""}>Mittel</option><option value="niedrig" ${issue.urgency === "niedrig" ? "selected" : ""}>Niedrig</option></select></div>
+                            </div>
+                        </section>
+
+                        <section class="form-section" aria-labelledby="section-location-title">
+                            <div class="form-section-header"><div><h3 class="form-section-title" id="section-location-title">Fundstelle</h3><p class="form-section-help">Seite, Screen und Prozessschritt so konkret wie möglich benennen.</p></div><span class="mono-label">Kontext</span></div>
+                            <div class="field-grid three">
+                                <div class="field"><label for="field-pageUrl">Seite / URL</label><input class="field-control" id="field-pageUrl" data-field="pageUrl" value="${escapeHtml(issue.pageUrl)}" placeholder="/seminare/detail oder https://…" aria-describedby="error-pageUrl" /><p class="field-error" data-error-for="pageUrl" id="error-pageUrl"></p></div>
+                                <div class="field"><label for="field-screen">Screen / Komponente</label><input class="field-control" id="field-screen" data-field="screen" value="${escapeHtml(issue.screen)}" placeholder="z. B. Checkout-Dialog" /></div>
+                                <div class="field"><label for="field-processStep">Prozessschritt</label><input class="field-control" id="field-processStep" data-field="processStep" value="${escapeHtml(issue.processStep)}" placeholder="z. B. Formular absenden" /></div>
+                            </div>
+                            <div class="field field-full field-checkbox">
+                                <input type="checkbox" id="field-isGlobal" data-field="isGlobal" ${issue.isGlobal ? "checked" : ""} />
+                                <label for="field-isGlobal">Global – Fehler tritt vermutlich auf allen Seiten/Screens auf, nicht nur an der genannten Fundstelle</label>
+                            </div>
+                        </section>
+
+                        <section class="form-section" aria-labelledby="section-criterion-title">
+                            <div class="form-section-header"><div><h3 class="form-section-title" id="section-criterion-title">WCAG-Bezug</h3><p class="form-section-help">Das Kriterium ist Teil des Befunds und nicht nur Teil eines separaten Testberichts.</p></div><span class="mono-label">${escapeHtml(criterionCatalogLabel)}</span></div>
+                            <div class="field field-full"><label for="criterion-filter">Kriterien filtern</label><input class="field-control" id="criterion-filter" type="search" autocomplete="off" placeholder="ID, Titel, Berufsfeld oder Stichwort …" value="${escapeHtml(appState.criteriaFilter)}" aria-describedby="criterion-filter-count" /><p class="field-help" id="criterion-filter-count" aria-live="polite">${escapeHtml(criterionFilterStatusText(issue.criterionId))}</p></div>
+                            <div class="field"><label class="required" for="field-criterionId">Verstoss gegen welches Kriterium?</label><select class="field-control" id="field-criterionId" data-field="criterionId" required aria-describedby="error-criterionId"><option value="">Kriterium auswählen …</option>${criterionOptions}</select><p class="field-error" data-error-for="criterionId" id="error-criterionId"></p></div>
+                            <div id="criterion-help">${renderCriterionBox(issue)}</div>
+                        </section>
+
+                        <section class="form-section" aria-labelledby="section-evidence-title">
+                            <div class="form-section-header"><div><h3 class="form-section-title" id="section-evidence-title">Belege</h3><p class="form-section-help">Screenshots und technische Auszüge direkt am Issue ablegen.</p></div><span class="mono-label">evidence</span></div>
+                            <div class="field field-full"><span class="field label" id="screenshot-label">Screenshot</span><div class="dropzone" id="screenshot-dropzone" tabindex="0" aria-labelledby="screenshot-label" aria-describedby="screenshot-help">${renderScreenshot(issue)}<div><button class="button button-secondary button-small" type="button" data-action="open-screenshot"><span class="material-symbols-outlined" aria-hidden="true">upload</span> Screenshot auswählen</button>${issue.screenshot?.dataUrl ? `<button class="button button-quiet button-small" type="button" data-action="remove-screenshot"><span class="material-symbols-outlined" aria-hidden="true">delete</span> Entfernen</button>` : ""}</div><p class="field-help" id="screenshot-help">Tipp: Screenshot kopieren, Bereich fokussieren und mit Strg+V einfügen.</p><input id="screenshot-input" class="sr-only" type="file" accept="image/png,image/jpeg,image/gif,image/webp" /></div></div>
+                            ${renderMarkdownField("tool", "Testwerkzeug / Protokollauszug", issue.tool, 6, true, "HTML-Zwischenablagen werden beim Einfügen in Markdown überführt. Rohes HTML wird nicht als HTML ausgeführt.")}
+                        </section>
+
+                        <section class="form-section" aria-labelledby="section-assessment-title">
+                            <div class="form-section-header"><div><h3 class="form-section-title" id="section-assessment-title">Bewertung</h3><p class="form-section-help">Befund, Auswirkung und die nächste Zuständigkeit voneinander trennen.</p></div><span class="mono-label">decision</span></div>
+                            ${renderMarkdownField("description", "Beschreibung", issue.description, 7, true, "Was ist konkret beobachtbar? Eine reproduzierbare Beschreibung bevorzugen.")}
+                            ${renderMarkdownField("rationale", "Begründung", issue.rationale, 6, true, "Warum ist das relevant für Menschen, die den Prozess nutzen?")}
+                            <div class="field-grid">
+                                <div class="field"><label class="required" for="field-responsibility">Zuständigkeit</label><input class="field-control" id="field-responsibility" data-field="responsibility" value="${escapeHtml(issue.responsibility)}" placeholder="Team, Rolle oder Person" aria-describedby="error-responsibility" /><p class="field-error" data-error-for="responsibility" id="error-responsibility"></p></div>
+                                <div class="field"><label for="field-dueDate">Wiedervorlage</label><input class="field-control" id="field-dueDate" data-field="dueDate" type="date" value="${escapeHtml(issue.dueDate)}" aria-describedby="error-dueDate" /><p class="field-error" data-error-for="dueDate" id="error-dueDate"></p></div>
+                            </div>
+                        </section>
+
+                        <section class="form-section" aria-labelledby="section-history-title">
+                            <div class="form-section-header"><div><h3 class="form-section-title" id="section-history-title">Historie</h3><p class="form-section-help">Jede Speicherung erzeugt einen nachvollziehbaren Eintrag.</p></div><span class="mono-label">audit trail</span></div>
+                            ${renderHistory(issue)}
+                        </section>
+
+                        <div class="form-actions">
+                            <div class="form-actions-left"><button class="button button-quiet" type="button" data-action="import-json"><span class="material-symbols-outlined" aria-hidden="true">upload_file</span> JSON importieren</button><button class="button button-quiet" type="button" data-action="discard-changes"><span class="material-symbols-outlined" aria-hidden="true">undo</span> Änderungen verwerfen</button></div>
+                            <div class="form-actions-right"><button class="button button-primary" type="button" data-action="save-issue"><span class="material-symbols-outlined" aria-hidden="true">save</span> Issue speichern</button></div>
+                        </div>
+                    </form>
+                </div>`;
+            }
+
+            function renderDebugPanel() {
+                const mount = document.querySelector("#debug-panel-mount");
+                if (!mount) return;
+                if (!appState.debug) { mount.innerHTML = ""; return; }
+                const passed = appState.smokeTests.filter((test) => test.pass).length;
+                mount.innerHTML = `<details class="debug-panel" open><summary>Debug-Modus · Smoke-Tests ${passed}/${appState.smokeTests.length} bestanden</summary><div class="debug-content">${appState.smokeTests.map((test) => `<div class="debug-test"><span>${escapeHtml(test.name)}</span><span class="${test.pass ? "debug-pass" : "debug-fail"}">${test.pass ? "PASS" : "FAIL"}</span></div>`).join("")}</div></details>`;
+            }
+
+            function renderApp() {
+                renderSidebar();
+                renderEditor();
+                renderDebugPanel();
+                updateHeaderDebugState();
+            }
+
+            /* =====================================================================
+               MODULE: UI STATE, VALIDATION FEEDBACK AND MICRO-INTERACTIONS
+               Future extraction target: ui/editor-controller.js
+            ====================================================================== */
+            function updateHeaderDebugState() {
+                const status = document.querySelector("#debug-status");
+                const toggle = document.querySelector("[data-action='toggle-debug']");
+                if (status) status.hidden = !appState.debug;
+                if (toggle) toggle.setAttribute("aria-pressed", String(appState.debug));
+            }
+
+            function markDirty() {
+                appState.isDirty = true;
+                const indicator = document.querySelector("#dirty-indicator");
+                if (indicator) indicator.textContent = "ungespeichert";
+            }
+
+            function clearValidationErrors() {
+                document.querySelectorAll("[data-error-for]").forEach((element) => { element.textContent = ""; });
+                document.querySelectorAll("[aria-invalid='true']").forEach((element) => element.removeAttribute("aria-invalid"));
+            }
+
+            function showValidationErrors(errors) {
+                Object.entries(errors).forEach(([field, message]) => {
+                    const error = document.querySelector(`[data-error-for='${CSS.escape(field)}']`);
+                    if (error) error.textContent = message;
+                    const control = document.querySelector(`[data-field='${CSS.escape(field)}']`);
+                    if (control) control.setAttribute("aria-invalid", "true");
+                });
+                const firstField = Object.keys(errors)[0];
+                document.querySelector(`[data-field='${CSS.escape(firstField)}']`)?.focus();
+            }
+
+            function updateMarkdownPreview(field) {
+                const input = document.querySelector(`[data-field='${CSS.escape(field)}']`);
+                const preview = document.querySelector(`[data-preview-for='${CSS.escape(field)}']`);
+                if (input && preview) {
+                    preview.innerHTML = Markdown.render(input.value);
+                    preview.classList.toggle("is-empty", !input.value.trim());
+                }
+            }
+
+            function updateCriterionHelp() {
+                const mount = document.querySelector("#criterion-help");
+                const select = document.querySelector("[data-field='criterionId']");
+                if (mount && select) mount.innerHTML = renderCriterionBox({ criterionId: select.value });
+            }
+
+            function insertAtCursor(textarea, text) {
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                textarea.setRangeText(text, start, end, "end");
+                textarea.dispatchEvent(new Event("input", { bubbles: true }));
+            }
+
+            function handleScreenshotFile(file) {
+                if (!file || !file.type.startsWith("image/")) {
+                    toast("Bitte eine Bilddatei auswählen.", "error");
+                    return;
+                }
+                if (file.size > CONFIG.maxScreenshotBytes) {
+                    toast(`Screenshot ist zu groß. Maximal ${Math.round(CONFIG.maxScreenshotBytes / 1024 / 1024)} MB.`, "error");
+                    return;
+                }
+                const reader = new FileReader();
+                reader.addEventListener("load", () => {
+                    if (!appState.draft) appState.draft = createEmptyIssue();
+                    appState.draft.screenshot = { dataUrl: String(reader.result), name: file.name || "Screenshot", alt: "Screenshot zum Accessibility-Issue" };
+                    markDirty();
+                    const preview = document.querySelector("#screenshot-dropzone");
+                    if (preview) {
+                        preview.querySelector(".screenshot-preview, .dropzone-empty")?.replaceWith(document.createRange().createContextualFragment(renderScreenshot(appState.draft)));
+                    }
+                    toast("Screenshot übernommen.");
+                });
+                reader.addEventListener("error", () => toast("Screenshot konnte nicht gelesen werden.", "error"));
+                reader.readAsDataURL(file);
+            }
+
+            /* =====================================================================
+               MODULE: EVENT HANDLERS
+               Future extraction target: ui/event-bus.js and controllers/*.js
+               No inline event handlers are used anywhere in the prototype.
+            ====================================================================== */
+            function handleClick(event) {
+                const actionElement = event.target.closest("[data-action]");
+                if (!actionElement) return;
+                const action = actionElement.dataset.action;
+                if (action === "new-issue") return startNewIssue();
+                if (action === "select-issue") return selectIssue(actionElement.dataset.issueId);
+                if (action === "save-issue") return saveCurrentIssue();
+                if (action === "delete-issue") return deleteCurrentIssue();
+                if (action === "discard-changes") {
+                    if (appState.mode === "new") return startNewIssue();
+                    const issue = appState.issues.find((entry) => entry.id === appState.currentIssueId);
+                    if (issue) {
+                        appState.draft = clone(issue);
+                        appState.isDirty = false;
+                        renderEditor();
+                    }
+                    return;
+                }
+                if (action === "open-screenshot") {
+                    document.querySelector("#screenshot-input")?.click();
+                    return;
+                }
+                if (action === "remove-screenshot") {
+                    if (appState.draft) {
+                        appState.draft.screenshot = null;
+                        markDirty();
+                        const zone = document.querySelector("#screenshot-dropzone");
+                        if (zone) zone.querySelector(".screenshot-preview")?.replaceWith(document.createRange().createContextualFragment(renderScreenshot(appState.draft)));
+                    }
+                    return;
+                }
+                if (action === "export-json") return exportJson();
+                if (action === "import-json") {
+                    document.querySelector("#import-file")?.click();
+                    return;
+                }
+                if (action === "toggle-debug") {
+                    appState.debug = !appState.debug;
+                    renderDebugPanel();
+                    updateHeaderDebugState();
+                    return;
+                }
+                if (action === "insert-markdown") {
+                    const target = document.querySelector(`#${CSS.escape(actionElement.dataset.target)}`);
+                    if (target) {
+                        target.focus();
+                        insertAtCursor(target, actionElement.dataset.token || "");
+                    }
+                }
+            }
+
+            function handleInput(event) {
+                const target = event.target;
+                if (target.matches("#issue-search")) {
+                    appState.filters.search = target.value;
+                    renderSidebar();
+                    return;
+                }
+                if (target.matches("#criterion-filter")) {
+                    appState.criteriaFilter = target.value;
+                    updateCriterionFilterUI();
+                    return;
+                }
+                if (!target.matches("[data-field]")) return;
+                if (!appState.draft) appState.draft = createEmptyIssue();
+                appState.draft[target.dataset.field] = target.type === "checkbox" ? target.checked : target.value;
+                markDirty();
+                target.removeAttribute("aria-invalid");
+                const error = document.querySelector(`[data-error-for='${CSS.escape(target.dataset.field)}']`);
+                if (error) error.textContent = "";
+                if (target.matches("[data-markdown-input]")) updateMarkdownPreview(target.dataset.field);
+                if (target.dataset.field === "criterionId") updateCriterionHelp();
+            }
+
+            function handleChange(event) {
+                const target = event.target;
+                if (target.matches("#status-filter")) { appState.filters.status = target.value; renderSidebar(); return; }
+                if (target.matches("#urgency-filter")) { appState.filters.urgency = target.value; renderSidebar(); return; }
+                if (target.matches("#screenshot-input")) { handleScreenshotFile(target.files?.[0]); target.value = ""; return; }
+            }
+
+            function handlePaste(event) {
+                const target = event.target;
+                const html = event.clipboardData?.getData("text/html") || "";
+                const text = event.clipboardData?.getData("text/plain") || "";
+                if (target.matches("[data-markdown-input]") && html) {
+                    event.preventDefault();
+                    insertAtCursor(target, Markdown.htmlToMarkdown(html, text));
+                    return;
+                }
+                const imageItem = Array.from(event.clipboardData?.items || []).find((item) => item.type.startsWith("image/"));
+                const zone = document.querySelector("#screenshot-dropzone");
+                if (imageItem && zone && (zone.contains(document.activeElement) || document.activeElement === document.body)) {
+                    event.preventDefault();
+                    handleScreenshotFile(imageItem.getAsFile());
+                }
+            }
+
+            function handleKeydown(event) {
+                const zone = event.target.closest("#screenshot-dropzone");
+                if (zone && (event.key === "Enter" || event.key === " ") && event.target === zone) {
+                    event.preventDefault();
+                    document.querySelector("#screenshot-input")?.click();
+                }
+            }
+
+            function handleDragOver(event) {
+                const zone = event.target.closest("#screenshot-dropzone");
+                if (!zone) return;
+                event.preventDefault();
+                zone.classList.add("is-dragover");
+            }
+
+            function handleDragLeave(event) {
+                const zone = event.target.closest("#screenshot-dropzone");
+                if (zone && !zone.contains(event.relatedTarget)) zone.classList.remove("is-dragover");
+            }
+
+            function handleDrop(event) {
+                const zone = event.target.closest("#screenshot-dropzone");
+                if (!zone) return;
+                event.preventDefault();
+                zone.classList.remove("is-dragover");
+                const file = Array.from(event.dataTransfer?.files || []).find((entry) => entry.type.startsWith("image/"));
+                if (file) handleScreenshotFile(file);
+                else toast("Bitte eine Bilddatei ablegen.", "error");
+            }
+
+            function exportJson() {
+                const payload = {
+                    app: CONFIG.appName,
+                    schemaVersion: CONFIG.schemaVersion,
+                    exportedAt: nowIso(),
+                    wcagCriteria: appState.criteria,
+                    issues: appState.issues
+                };
+                const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = `gfu-a11y-issues-${new Date().toISOString().slice(0, 10)}.json`;
+                link.click();
+                URL.revokeObjectURL(url);
+                toast("JSON-Export erstellt.");
+            }
+
+            function importJsonFile(file) {
+                if (!file) return;
+                const reader = new FileReader();
+                reader.addEventListener("load", () => {
+                    try {
+                        const payload = JSON.parse(String(reader.result));
+                        const list = Array.isArray(payload) ? payload : payload.issues;
+                        if (!Array.isArray(list) || !list.length) throw new Error("Keine Issues gefunden.");
+                        const imported = list.map(normalizeIssue).filter((issue) => issue.id);
+                        const merged = [...imported, ...appState.issues.filter((existing) => !imported.some((entry) => entry.id === existing.id))];
+                        appState.issues = merged;
+                        StorageService.save(merged);
+                        appState.currentIssueId = imported[0].id;
+                        appState.mode = "edit";
+                        appState.draft = clone(imported[0]);
+                        appState.isDirty = false;
+                        renderApp();
+                        toast(`${imported.length} Issue(s) importiert.`);
+                    } catch (error) {
+                        toast(`JSON-Import fehlgeschlagen: ${error.message}`, "error");
+                    }
+                });
+                reader.readAsText(file);
+            }
+
+            /* =====================================================================
+               MODULE: DEBUG AND SMOKE TESTS
+               Future extraction target: tests/smoke-tests.js
+               These are lightweight runtime checks, not a replacement for unit tests.
+            ====================================================================== */
+            function runSmokeTests() {
+                const checks = [
+                    { name: "Kriterienkatalog enthält Einträge", pass: Array.isArray(appState.criteria) && appState.criteria.length > 0 },
+                    { name: "Kriterien besitzen ID, Titel und Prüfhinweis", pass: appState.criteria.every((criterion) => criterion.id && criterion.name && criterion.howToTest) },
+                    { name: "Zentraler appState ist initialisiert", pass: Array.isArray(appState.issues) && typeof appState.isDirty === "boolean" },
+                    { name: "Markdown-Renderer erzeugt sichere Überschrift", pass: Markdown.render("# Test").includes("<h1>Test</h1>") },
+                    { name: "Validator erkennt fehlenden Pflichtinhalt", pass: Validator.validateIssue(createEmptyIssue()).valid === false },
+                    { name: "HTML-Escaping verhindert Roh-HTML", pass: escapeHtml("<script>").includes("&lt;script&gt;") },
+                    { name: "Persistenz-Service ist verfügbar", pass: typeof StorageService.save === "function" && typeof StorageService.load === "function" }
+                ];
+                appState.smokeTests = checks;
+                if (appState.debug) console.table(checks);
+            }
+
+            /* =====================================================================
+               MODULE: APPLICATION BOOTSTRAP
+               Future extraction target: app.js
+            ====================================================================== */
+            function init() {
+                appState.issues = StorageService.load();
+                appState.draft = createEmptyIssue();
+                appState.mode = "new";
+                runSmokeTests();
+                renderApp();
+                loadCriteriaCatalog();
+
+                document.addEventListener("click", handleClick);
+                document.addEventListener("input", handleInput);
+                document.addEventListener("change", handleChange);
+                document.addEventListener("paste", handlePaste);
+                document.addEventListener("keydown", handleKeydown);
+                document.addEventListener("dragover", handleDragOver);
+                document.addEventListener("dragleave", handleDragLeave);
+                document.addEventListener("drop", handleDrop);
+                document.querySelector("#import-file")?.addEventListener("change", (event) => importJsonFile(event.target.files?.[0]));
+            }
+
+            /* =====================================================================
+               QA-CHECKLIST FOR FUTURE EXTRACTION AND RELEASE
+               [ ] Keyboard-only: Skiplink, Issue-Auswahl, Formulare, Screenshot-Zone
+               [ ] Focus: sichtbarer Fokus auf allen interaktiven Elementen
+               [ ] Screenreader: Landmarken, Labels, Statusmeldungen und Fehler prüfen
+               [ ] WCAG: Kontrast, Tastatur, Fokus, Struktur und Textalternativen prüfen
+               [ ] Daten: localStorage-Fehler, JSON-Import/Export und große Screenshots testen
+               [ ] Sicherheit: Markdown escapen, URLs begrenzen, keine Roh-HTML-Ausführung
+               [ ] Responsive: Desktop, Tablet und schmale mobile Ansicht prüfen
+               [ ] Regression: alle Features bei Modul-Extraktion beibehalten
+               Feature-Preservation-Contract: Bei späteren Änderungen dürfen Issue-Felder,
+               Screenshot-Paste, HTML-zu-Markdown-Paste, Persistenz, Historie, Import/Export,
+               Debug-Modus und Smoke-Tests nicht ohne Ersatz entfernt werden.
+            ====================================================================== */
+
+            window.addEventListener("DOMContentLoaded", init);
+        </script>
+    </body>
+</html>

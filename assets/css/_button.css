@@ -1,0 +1,10 @@
+button {
+    border: 1px solid var(--color-grey-700);
+    border-radius: 0.25rem;
+    background-color: var(--color-grey-200);
+    color: var(--color-grey-900);
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}

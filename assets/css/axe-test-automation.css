@@ -1,0 +1,338 @@
+/* ════════════════════════════════════════════════════════════════
+   axe-core Testautomatisierung — Bedienfeld + Ergebnis-Dialog
+   Nutzt ausschließlich globale Design-Tokens aus _colors.css,
+   damit Hell-/Dunkel-/Kontrastmodus automatisch funktionieren.
+════════════════════════════════════════════════════════════════ */
+
+.axe-test-panel {
+    margin: 1.5rem 0;
+    padding: 1.25rem 1.5rem;
+    background-color: var(--panel-bg, var(--color-grey-100));
+    border: 1px solid var(--panel-border, var(--border-subtle));
+    border-radius: 8px;
+}
+
+.axe-test-intro {
+    margin: 0 0 1rem;
+    color: var(--content-text);
+}
+
+.axe-test-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.axe-test-all-btn,
+.axe-test-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font: inherit;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.axe-test-all-btn .material-symbols-outlined,
+.axe-test-btn .material-symbols-outlined {
+    font-size: 1.15rem;
+}
+
+.axe-test-all-btn {
+    align-self: flex-start;
+    padding: 0.65rem 1.25rem;
+    background-color: var(--color-red-500);
+    color: var(--color-white);
+    border: 1px solid var(--color-red-500);
+}
+
+.axe-test-all-btn:hover {
+    background-color: var(--color-red-600);
+    border-color: var(--color-red-600);
+}
+
+.axe-test-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.axe-test-btn {
+    width: 100%;
+    padding: 0.55rem 0.85rem;
+    background-color: var(--body-bg);
+    color: var(--body-text);
+    border: 1px solid var(--border-subtle);
+    font-weight: 500;
+}
+
+.axe-test-btn:hover {
+    background-color: var(--panel-btn-hover, var(--color-grey-200));
+}
+
+.axe-test-all-btn:focus-visible,
+.axe-test-btn:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+.axe-test-all-btn:disabled,
+.axe-test-btn:disabled {
+    cursor: progress;
+    opacity: 0.65;
+}
+
+.axe-test-status {
+    margin: 0.85rem 0 0;
+    font-size: 0.9rem;
+    color: var(--content-text);
+    min-height: 1.2em;
+}
+
+/* ── Ergebnis-Dialog (Modal) ──────────────────────────────────── */
+
+.axe-dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 1100;
+}
+
+.axe-dialog {
+    width: min(920px, 100%);
+    max-height: min(85vh, 900px);
+    background-color: var(--body-bg);
+    color: var(--body-text);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.axe-dialog-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    background-color: var(--panel-bg, var(--color-grey-100));
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.axe-dialog-title {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.axe-dialog-close {
+    appearance: none;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--body-text);
+    font-size: 1.4rem;
+    line-height: 1;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.axe-dialog-close:hover {
+    background-color: var(--panel-btn-hover, var(--color-grey-200));
+}
+
+.axe-dialog-close:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+.axe-dialog-content {
+    padding: 18px;
+    overflow: auto;
+}
+
+.axe-dialog-footer {
+    padding: 12px 18px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: flex-end;
+    background-color: var(--panel-bg, var(--color-grey-100));
+}
+
+/* ── Zusammenfassung ──────────────────────────────────────────── */
+
+.axe-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    list-style: none;
+}
+
+.axe-summary-badge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-subtle);
+    background-color: var(--panel-bg, var(--color-grey-100));
+}
+
+.axe-summary-badge strong {
+    font-size: 1.1rem;
+}
+
+.axe-summary-badge--violations {
+    border-color: var(--color-red-400);
+    color: var(--color-red-500);
+}
+
+.axe-summary-badge--passes {
+    border-color: var(--color-blue-400);
+    color: var(--color-blue-500);
+}
+
+.axe-summary-empty {
+    margin: 0 0 1.25rem;
+    padding: 0.85rem 1rem;
+    background-color: var(--color-blue-alpha, rgba(51, 154, 240, 0.12));
+    border: 1px solid var(--color-blue-400);
+    border-radius: 6px;
+}
+
+/* ── Verstoß-Karten ───────────────────────────────────────────── */
+
+.axe-violation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    list-style: none;
+}
+
+.axe-violation-card {
+    border: 1px solid var(--border-subtle);
+    border-left: 4px solid var(--color-red-400);
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    background-color: var(--panel-bg, var(--color-grey-100));
+}
+
+.axe-violation-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.35rem;
+}
+
+.axe-violation-id {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.85rem;
+    /* Der globale `code`-Stil ist im Dark-/High-Contrast-Modus nicht
+       themenfähig (helle Box + heller Text). Hier lokal überschrieben,
+       damit Regel-IDs im Dialog immer lesbar bleiben. */
+    background-color: var(--panel-btn-bg, var(--color-grey-100));
+    color: var(--body-text);
+}
+
+.axe-impact-badge {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border: 1px solid currentColor;
+}
+
+.axe-impact-badge--critical { color: var(--color-red-500); }
+.axe-impact-badge--serious  { color: var(--color-red-400); }
+.axe-impact-badge--moderate { color: var(--color-blue-500); }
+.axe-impact-badge--minor    { color: var(--color-grey-500); }
+
+.axe-violation-help {
+    margin: 0 0 0.5rem;
+}
+
+.axe-violation-help a {
+    color: var(--color-red-500);
+}
+
+.axe-node-list {
+    margin: 0.4rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.axe-node-item {
+    font-size: 0.85rem;
+    background-color: var(--body-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 0.5rem 0.65rem;
+}
+
+.axe-node-selector {
+    display: block;
+    font-family: var(--font-mono, monospace);
+    color: var(--content-text);
+    background-color: var(--panel-btn-bg, var(--color-grey-100));
+    margin-bottom: 0.25rem;
+    word-break: break-word;
+}
+
+.axe-node-summary {
+    margin: 0;
+    white-space: pre-line;
+}
+
+.axe-result-group {
+    margin: 0 0 1rem;
+}
+
+.axe-result-group summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.35rem 0;
+}
+
+.axe-result-group ul {
+    margin: 0.4rem 0 0;
+    padding-left: 1.2rem;
+    color: var(--content-text);
+}
+
+.axe-result-group ul code {
+    background-color: var(--panel-btn-bg, var(--color-grey-100));
+    color: var(--body-text);
+    font-size: 0.85rem;
+}
+
+@media (max-width: 576px) {
+    .axe-dialog-backdrop {
+        padding: 12px;
+    }
+
+    .axe-dialog-title {
+        font-size: 1rem;
+    }
+}

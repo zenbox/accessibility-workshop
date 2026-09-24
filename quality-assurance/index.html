@@ -1,0 +1,229 @@
+<!doctype html>
+<!-- generated-by:site-generator - nicht von Hand bearbeiten, wird von build.js überschrieben -->
+<!-- ./ wird von build.js durch CONFIG.siteNamespace ersetzt (siehe dort) - so bleiben alle festen Asset-Pfade (CSS/JS/Favicon unten) automatisch im selben Namespace wie der Rest der Seite. -->
+<html
+    lang="de"
+    data-theme="light"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <link
+            rel="icon"
+            href="/.//assets/icons/sheep.ico"
+            type="image/x-icon"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+        <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="/.//assets/css/styles.css"
+        />
+        <title>Automatisiertes Testen mit axe Core - Michael Reichart</title>
+        <!--
+            Minimal-Styles für vom Generator eingebundene Assets (siehe
+            assets.js). Gerne nach styles.css übernehmen und hier entfernen,
+            falls dort schon etwas Äquivalentes existiert.
+        -->
+        <style>
+            .md-container .embedded-svg {
+                margin: 1.5em 0;
+            }
+            .md-container .embedded-svg svg {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container img {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container .asset-missing {
+                display: inline-block;
+                padding: 0.2em 0.6em;
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                color: #b00020;
+                background: color-mix(in srgb, #b00020 8%, transparent);
+                font-size: 0.9em;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ══ SKIP LINKS ══════════════════════════════════════════════ -->
+        <nav
+            class="skip-links"
+            aria-label="Sprungnavigation"
+        >
+            <a
+                class="skip-link"
+                href="#main-content"
+                >Zum Hauptinhalt</a
+            >
+            <a
+                class="skip-link"
+                href="#site-footer"
+                >Zum Footer</a
+            >
+        </nav>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
+        <header>
+            <div class="nav-wrapper">
+                <!-- Desktop nav + A11y menu injected by JS -->
+                <button
+                    class="hamburger"
+                    id="hamburgerBtn"
+                    aria-label="Menü öffnen"
+                    aria-expanded="false"
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        id="hamburgerIcon"
+                        >menu</span
+                    >
+                </button>
+            </div>
+            <!-- Mobile nav injected by JS -->
+        </header>
+
+        <!-- ══ PAGE LAYOUT ═════════════════════════════════════════════ -->
+        <div class="page-layout">
+            <!-- ── ARTIKEL ─────────────────────────────────────────── -->
+            <!--
+                Wichtig: dieser Kommentar ist die einzige Markierung, an der
+                der Generator (build.js) den gerenderten Markdown-Inhalt
+                einsetzt. Nicht umbenennen, ohne CONTENT_MARKER in build.js
+                anzupassen.
+            -->
+            <main
+                class="md-container"
+                id="main-content"
+                tabindex="-1"
+            ><h1 tabindex="0">Automatisiertes Testen mit axe Core</h1>
+<p>Wie man Accessibility automatisiert prüft, welche Vorteile und Grenzen es gibt, und wie man axe Core installiert und einsetzt.</p>
+<h2 tabindex="0">Was ist automatisiertes Testen?</h2>
+<p>Automatisierte Accessibility-Tests prüfen Webseiten auf technische Verstöße gegen die <em>Web Content Accessibility Guidelines (WCAG)</em>. Sie verwenden Programme, die den HTML-Code und das Verhalten von Webseiten analysieren und auf bekannte Muster für Barrieren testen – zum Beispiel fehlende Labels, zu geringe Kontraste oder unzulässige ARIA-Attribute.</p>
+<h2 tabindex="0">Wann macht automatisiertes Testen Sinn?</h2>
+<ul>
+<li>Bei großen Webseiten, um wiederkehrende Muster systematisch zu prüfen</li>
+<li>In Design-Systemen oder Komponentenbibliotheken, um Standards sicherzustellen</li>
+<li>In CI/CD-Pipelines, um Barrieren frühzeitig zu erkennen und dauerhaft zu vermeiden</li>
+<li>Als schneller Einstieg, bevor ein manuelles oder nutzerbasiertes Audit erfolgt</li>
+</ul>
+<h2 tabindex="0">Was kann automatisiertes Testen?</h2>
+<ul>
+<li>Fehlende oder falsche <code>alt</code>-Attribute erkennen</li>
+<li>Farbkontrast-Fehler zwischen Text und Hintergrund aufzeigen</li>
+<li>Formulare auf fehlende Labels prüfen</li>
+<li>Fehlerhafte ARIA-Attribute oder Landmark-Strukturen identifizieren</li>
+<li>Strukturelle Probleme wie mehrere <code>&lt;main&gt;</code>-Elemente erkennen</li>
+</ul>
+<h2 tabindex="0">Was kann automatisiertes Testen nicht?</h2>
+<ul>
+<li>Die Qualität von Alternativtexten oder Linktexten bewerten</li>
+<li>Die Verständlichkeit von Inhalten oder Fehlermeldungen einschätzen</li>
+<li>Tastaturbedienung, Fokusverhalten und dynamische Zustände umfassend prüfen</li>
+<li>Erfahrungen mit Screenreadern oder Assistive Technologies realistisch simulieren</li>
+</ul>
+<h2 tabindex="0">Vorteile</h2>
+<ul>
+<li>Schnell und reproduzierbar – ideal für kontinuierliche Überwachung</li>
+<li>Automatisierbar – Integration in Entwicklungsprozesse möglich</li>
+<li>Erkennt viele technische Verstöße, bevor sie produktiv gehen</li>
+<li>Ergebnisberichte sind messbar und vergleichbar</li>
+</ul>
+<h2 tabindex="0">Nachteile</h2>
+<ul>
+<li>Begrenzt auf automatisierbare Kriterien (ca. 20–30 % der WCAG)</li>
+<li>Erfordert Interpretation durch Fachleute</li>
+<li>Keine Bewertung der Benutzererfahrung</li>
+</ul>
+<h2 tabindex="0">Einführung in axe Core</h2>
+<p><a href="https://www.deque.com/axe/">axe Core</a> ist eine Open-Source-JavaScript-Bibliothek des Unternehmens <em>Deque Systems</em>. Sie analysiert Webseiten und Webanwendungen automatisiert auf Barrierefreiheitsprobleme und gibt Ergebnisse im JSON-Format zurück. axe Core ist die Grundlage vieler Tools – darunter die <em>axe DevTools</em> Browser-Erweiterung und Integrationen in Testframeworks wie Jest, Cypress oder Playwright.</p>
+<h3 tabindex="0">Installation (Node.js)</h3>
+<ol>
+<li><p>Node.js (ab Version 18) installieren</p>
+</li>
+<li><p>Neues Projekt anlegen:</p>
+<pre><code class="language-html">mkdir axe-demo &amp;&amp; cd axe-demo
+npm init -y
+npm install axe-core puppeteer
+</code></pre>
+</li>
+<li><p>Neue Datei <code>run-axe.js</code> anlegen und Beispielcode einfügen:</p>
+</li>
+</ol>
+<pre><code class="language-html">import axe from &#39;axe-core&#39;;
+import puppeteer from &#39;puppeteer&#39;;
+
+(async () =&gt; {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto(&#39;https://example.com&#39;, { waitUntil: &#39;networkidle2&#39; });
+  await page.addScriptTag({ content: axe.source });
+
+  const results = await page.evaluate(async () =&gt; {
+    return await window.axe.run(document, {
+      runOnly: [&#39;wcag2a&#39;, &#39;wcag2aa&#39;]
+    });
+  });
+
+  console.log(JSON.stringify(results, null, 2));
+  await browser.close();
+})();
+</code></pre>
+<p>Dieser Code öffnet eine Seite im Headless-Chromium-Browser, injiziert axe Core und führt einen automatisierten WCAG-Test aus. Das Ergebnis enthält Listen von <code>violations</code>, <code>passes</code> und <code>incomplete</code> Checks.</p>
+<h3 tabindex="0">Auswertung der Ergebnisse</h3>
+<p>Die JSON-Ausgabe von axe Core kann direkt in der Konsole oder mit Visualisierungstools weiterverarbeitet werden. Typischerweise enthält sie folgende Schlüssel:</p>
+<ul>
+<li><strong>violations:</strong> Bestätigte Verstöße gegen WCAG-Regeln</li>
+<li><strong>incomplete:</strong> Fälle, bei denen eine manuelle Prüfung notwendig ist</li>
+<li><strong>passes:</strong> Bestandene Prüfungen</li>
+</ul>
+<p>Jeder Verstoß enthält Details zur Regel-ID, eine Beschreibung, betroffene HTML-Knoten und den Schweregrad (<code>impact</code>). Entwickler:innen können diese Informationen nutzen, um gezielt Verbesserungen im Code umzusetzen.</p>
+<h3 tabindex="0">Integration in den Entwicklungsprozess</h3>
+<ul>
+<li><strong>Continuous Integration (CI):</strong> axe Core kann in GitHub Actions, GitLab CI oder Jenkins integriert werden, um Accessibility bei jedem Commit zu prüfen.</li>
+<li><strong>Unit-Tests:</strong> Über Tools wie <code>jest-axe</code> lassen sich Accessibility-Tests direkt in Komponententests einbauen.</li>
+<li><strong>UI-Tests:</strong> Mit <code>cypress-axe</code> oder <code>playwright-axe</code> lassen sich komplette Userflows prüfen.</li>
+</ul>
+<h3 tabindex="0">Fazit</h3>
+<p>Automatisiertes Testen mit axe Core ist ein zentraler Bestandteil moderner Barrierefreiheitsprüfungen. Es spart Zeit, erkennt häufige technische Probleme frühzeitig und lässt sich gut in Entwicklungsprozesse integrieren. Trotzdem bleibt es ein Werkzeug zur Unterstützung – keine vollständige Lösung. Ein kompletter Accessibility-Workflow kombiniert automatisierte Tests mit manuellen Prüfungen und Nutzertests.</p>
+</main>
+
+            <!-- ── TABLE OF CONTENTS ───────────────────────────────── -->
+            <aside
+                class="toc-sidebar"
+                aria-label="Inhaltsverzeichnis"
+                id="toc-sidebar"
+            >
+                <h2>Inhalt</h2>
+                <!-- injected by JS -->
+            </aside>
+        </div>
+        <!-- /.page-layout -->
+
+        <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+        <footer
+            id="site-footer"
+            tabindex="-1"
+        >
+            <!-- injected by JS -->
+        </footer>
+
+        <script
+            src="/.//assets/js/main.js"
+            type="module"
+        ></script>
+    </body>
+</html>

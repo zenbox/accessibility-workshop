@@ -1,0 +1,32 @@
+/* ════════════════════════════════════════════════════════════════
+   SKIP LINKS
+════════════════════════════════════════════════════════════════ */
+.skip-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+}
+
+.skip-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background:      var(--skip-bg);
+    color:           var(--skip-text);
+    font-size:       var(--text-sm);
+    font-weight:     var(--weight-bold);
+    text-decoration: none;
+    border-radius: 0 0 6px 6px;
+    transform: translateY(-100%);
+    transition: transform 0.2s ease;
+    white-space: nowrap;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+    outline: 3px solid var(--skip-outline);
+    outline-offset: 2px;
+}

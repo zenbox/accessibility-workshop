@@ -1,0 +1,28 @@
+/* ════════════════════════════════════════════════════════════════
+   FOCUS
+════════════════════════════════════════════════════════════════ */
+:focus,
+:focus-visible {
+    outline-offset: 5px;
+    outline-width:  5px;
+    outline-color:  var(--focus-ring);
+    animation: focus-animation 1s;
+}
+
+@keyframes focus-animation {
+    0% {
+        outline-offset: 0px;
+        outline-width:  5px;
+        outline-color:  var(--focus-ring);
+    }
+    90% {
+        outline-offset: 5px;
+        outline-width:  5px;
+        outline-color:  var(--focus-ring-alpha);
+    }
+    100% {
+        outline-offset: 0;
+        outline-width:  0;
+        outline-color:  transparent;
+    }
+}

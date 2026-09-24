@@ -1,0 +1,406 @@
+<!doctype html>
+<!-- generated-by:site-generator - nicht von Hand bearbeiten, wird von build.js überschrieben -->
+<!-- accessibility-workshop wird von build.js durch CONFIG.siteNamespace ersetzt (siehe dort) - so bleiben alle festen Asset-Pfade (CSS/JS/Favicon unten) automatisch im selben Namespace wie der Rest der Seite. -->
+<html
+    lang="de"
+    data-theme="light"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <link
+            rel="icon"
+            href="/accessibility-workshop/assets/icons/sheep.ico"
+            type="image/x-icon"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+        <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="/accessibility-workshop/assets/css/styles.css"
+        />
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/user-settings.css">
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/parallax.css">
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/preferences-panel.css">
+        <title>Einstellungen des Benutzers berücksichtigen - Michael Reichart</title>
+        <!--
+            Minimal-Styles für vom Generator eingebundene Assets (siehe
+            assets.js). Gerne nach styles.css übernehmen und hier entfernen,
+            falls dort schon etwas Äquivalentes existiert.
+        -->
+        <style>
+            .md-container .embedded-svg {
+                margin: 1.5em 0;
+            }
+            .md-container .embedded-svg svg {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container img {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container .asset-missing {
+                display: inline-block;
+                padding: 0.2em 0.6em;
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                color: #b00020;
+                background: color-mix(in srgb, #b00020 8%, transparent);
+                font-size: 0.9em;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ══ SKIP LINKS ══════════════════════════════════════════════ -->
+        <nav
+            class="skip-links"
+            aria-label="Sprungnavigation"
+        >
+            <a
+                class="skip-link"
+                href="#main-content"
+                >Zum Hauptinhalt</a
+            >
+            <a
+                class="skip-link"
+                href="#site-footer"
+                >Zum Footer</a
+            >
+        </nav>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
+        <header>
+            <div class="nav-wrapper">
+                <!-- Desktop nav + A11y menu injected by JS -->
+                <button
+                    class="hamburger"
+                    id="hamburgerBtn"
+                    aria-label="Menü öffnen"
+                    aria-expanded="false"
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        id="hamburgerIcon"
+                        >menu</span
+                    >
+                </button>
+            </div>
+            <!-- Mobile nav injected by JS -->
+        </header>
+
+        <!-- ══ PAGE LAYOUT ═════════════════════════════════════════════ -->
+        <div class="page-layout">
+            <!-- ── ARTIKEL ─────────────────────────────────────────── -->
+            <!--
+                Wichtig: dieser Kommentar ist die einzige Markierung, an der
+                der Generator (build.js) den gerenderten Markdown-Inhalt
+                einsetzt. Nicht umbenennen, ohne CONTENT_MARKER in build.js
+                anzupassen.
+            -->
+            <main
+                class="md-container"
+                id="main-content"
+                tabindex="-1"
+            ><h1 tabindex="0">Einstellungen des Benutzers berücksichtigen</h1>
+<p>Der Benutzer kann, zum Beipiel über die Bedienungshilfen seines Betriebssystems verschiedene Einstellungen vorgegeben haben. Die Webseite sollte darauf reagieren oder sie mindestens nicht blockieren. Die Einstellungen können über <code>mediaqueries</code> angesprochen werden.</p>
+<ul>
+<li>prefers-reduced-motion</li>
+<li>prefers-contrast</li>
+<li>prefers-color-scheme</li>
+<li>forced-colors</li>
+<li>prefers-reduced-data</li>
+<li>prefers-reduced-transparency</li>
+<li>inverted-colors</li>
+</ul>
+<p>Unter Windows und MacOS können die Anzeigeeinstellungen über die Bedieungshilfen eingstellt werden, es gibt allerdngs Unterschiede zwischen den Betriebsysteme. Viele Einstellungen wie zum Beispiel <code>forced-color</code> können in Chrome und Edge über Entwicklertools - Weitere Tools - Rendering emuliert werden.</p>
+<p><a href="https://drafts.csswg.org/mediaqueries-5/">Zum aktuellen Entwurf 5 der Mediaqueries</a>.</p>
+<div class="preferences-panel">
+                    <h2 class="preferences-title" tabindex="0">Darstellungspräferenzen</h2>
+
+                    <div class="preference-group">
+                        <h3 class="preference-group-title" tabindex="0">Farbe &amp; Kontrast</h3>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-darkMode">
+                                <span class="slider"></span>
+                            </label>
+                            <label class="preference-label" for="toggle-darkMode">Dunkler Modus</label>
+                            <div class="preference-description">
+                                Zeigt Inhalte mit dunklem Hintergrund und hellem
+                                Text an.
+                            </div>
+                        </div>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-highContrast">
+                                <span class="slider"></span>
+                            </label>
+                            <label class="preference-label" for="toggle-highContrast">Hoher Kontrast</label>
+                            <div class="preference-description">
+                                Maximiert den Kontrast für bessere Lesbarkeit.
+                            </div>
+                        </div>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-invertedColors">
+                                <span class="slider"></span>
+                            </label>
+                            <label class="preference-label" for="toggle-invertedColors">Farben invertieren</label>
+                            <div class="preference-description">
+                                Kehrt alle Farben um.
+                            </div>
+                        </div>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-forcedColors">
+                                <span class="slider"></span>
+                            </label>
+                            <label class="preference-label" for="toggle-forcedColors">Erzwungene Farben</label>
+                            <div class="preference-description">
+                                Verwendet Systemfarben für maximale
+                                Kompatibilität.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preference-group">
+                        <h3 class="preference-group-title" tabindex="0">
+                            Bewegung &amp; Animation
+                        </h3>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-reducedMotion">
+                                <span class="slider"></span>
+                            </label>
+                            <label class="preference-label" for="toggle-reducedMotion">Reduzierte Bewegung</label>
+                            <div class="preference-description">
+                                Minimiert oder entfernt Animationen und
+                                Bewegungen.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preference-group">
+                        <h3 class="preference-group-title" tabindex="0">Leistung &amp; Daten</h3>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-reducedData">
+                                <span class="slider"></span>
+                            </label>
+                            <label class="preference-label" for="toggle-reducedData">Reduzierte Datennutzung</label>
+                            <div class="preference-description">
+                                Optimiert die Inhalte für geringeren
+                                Datenverbrauch.
+                            </div>
+                        </div>
+
+                        <div class="preference-item">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-reducedTransparency">
+                                <span class="slider"></span>
+                            </label>
+                            <label class="preference-label" for="toggle-reducedTransparency">Reduzierte Transparenz</label>
+                            <div class="preference-description">
+                                Entfernt Transparenzeffekte für bessere
+                                Lesbarkeit und Performance.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preference-actions">
+                        <button id="reset-preferences" class="button">
+                            Einstellungen zurücksetzen
+                        </button>
+                    </div>
+                </div>
+<h2 tabindex="0">Vorschau der Einstellungen</h2>
+<p>Diese Seite zeigt, wie sich Ihre Präferenzeinstellungen auf die Darstellung auswirken.</p>
+<samp>
+<figure>
+<!-- - - - -->
+<div class="color-samples">
+    <div class="color-sample bg-primary">Primär</div>
+    <div class="color-sample bg-secondary">
+        Sekundär
+    </div>
+    <div class="color-sample bg-tertiary">Tertiär</div>
+    <div class="color-sample bg-info">Info</div>
+    <div class="color-sample bg-warning">Warnung</div>
+    <div class="color-sample bg-error">Fehler</div>
+</div>
+</figure>
+<!-- - - - -->
+</samp>
+<h3 tabindex="0">Linkbeispiele</h3>
+<samp>
+<figure>
+<!-- - - - -->
+<p>
+    Hier sind verschiedene
+    <a href="#">unbesuchte Links</a> und
+    <a href="#" style="color: var(--link-visited)">besuchte Links</a>. Links können auch
+    <a href="#" style="color: var(--link-hover)">hervorgehoben</a>
+    sein oder
+    <a href="#" style="color: var(--link-active)">aktiv</a>
+    dargestellt werden.
+</p>
+<!-- - - - -->
+</figure>
+</samp>
+<h3 tabindex="0">Transparenzbeispiel</h3>
+<samp>
+<figure>
+<!-- - - - -->
+<div class="transparency-example">
+    <div class="transparency-overlay">
+        Text über Hintergrund
+    </div>
+</div>
+<!-- - - - -->
+</figure>
+</samp>
+<style>
+.transparency-example {
+    position: relative;
+    width: 300px;
+    height: 100px;
+    margin-top: 10px;
+    border: 1px solid grey;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.transparency-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,128);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    opacity: 50%;
+    z-index: 100;
+}
+</style>
+<h2 tabindex="0">prefers-reduced-motion</h2>
+<p>Das Merkmal <code>prefers-reduced-motion</code> (bevorzugt weniger Bewegung) erkennt, ob der Nutzer eine Seite mit allen Animationen und Bewegungen sehen oder eine ruhigere Darstellung wünscht. Das kann zum Beispiel bei Menschen mit Vestibulärer Migräne oder Epilepsie der Fall sein.</p>
+<p>Der Benutzer kann diese Präferenz über eine Einstellung im Betriebssystem oder im User-Agent angeben.</p>
+<ul>
+<li>unter Windows 10: Einstellungen → Erleichterte Bedienung → Anzeige → Animationen in Windows anzeigen</li>
+<li>in Android: Einstellungen → Bedienungshilfen → Animationen entfernen</li>
+<li>Apple iPad: Einstellungen → Bedienungshilfen → Bewegung</li>
+<li>Apple: Systemeinstellungen → Bedienungshilfen → Anzeige → Bewegung reduzieren</li>
+<li>In Firefox about:config: Füge eine Binär-Präferenz (&quot;Number&quot;) namens <code>ui.prefersReducedMotion</code> hinzu und setze deren Wert auf 1. Änderung an dieser Präferenz werden sofort übernommen. Als abgefragten Wert kannst du eines der Schlüsselwörter <code>reduce</code> oder <code>no-preference</code> verwenden.</li>
+</ul>
+<pre><code class="language-html">@media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            scroll-behavior: auto !important;
+            animation-duration: .01s !important;
+            transition-duration: .01s !important;
+        }
+    }
+</code></pre>
+<p>Dieses Beispiel von der Webseite heise.de setzt das <code>scroll-behavior</code> auf <code>auto</code>, damit ein Scrollen unterbunden wird. Animationen und Transitionen erhalten eine Dauer von 0.01s - sie werden dadurch nicht mehr sichtbar, sind aber noch vorhanden für den Fall dass ein JavaScript auf dieses Event zurückgreift.</p>
+<samp>
+<figure>
+<!-- - - - -->
+<div class="parallax">
+            <section class="teaser-1 section">
+                <h1 tabindex="0">eins</h1>
+                <p>zwei</p>
+                <p>drei</p>
+                <p>vier</p>
+            </section>
+
+            <section class="teaser-2 section" section="">
+                <h2 tabindex="0">eins</h2>
+                <p>zwei</p>
+                <p>drei</p>
+                <p>vier</p>
+            </section>
+
+            <section class="teaser-3 section">
+                <h2 tabindex="0">eins</h2>
+                <p>zwei</p>
+                <p>drei</p>
+                <p>vier</p>
+            </section>
+        </div>
+<!-- - - - -->
+</figure>
+</samp>
+<h2 tabindex="0">prefers-contrast</h2>
+<p>Das Medienmerkmal prefers-contrast wird verwendet, um zu erkennen, ob der Benutzer angefordert hat, dass der Webinhalt mit einem höheren (oder niedrigeren) Kontrast dargestellt wird. Das kann zum Beispiel bei Menschen mit Sehschwäche oder Farbenblindheit der Fall sein.</p>
+<p>Die abfragbaren Wert sind:</p>
+<ul>
+<li>no-preference - keine Voreinstellung</li>
+<li>less - der Benutzer wünscht geringeren Kontrast</li>
+<li>more - der Benutzer wünscht stärkeren Kontrast</li>
+<li>custom - der Benutzer hat ein bestimmtes Farbschema ausgewählt, das sich aber nicht als geringerer oder stärkerer Kontrast ausdrücken lässt.</li>
+</ul>
+<pre><code class="language-html">   @media (prefers-contrast: no-preference) {           html {             background-color: #eee;           	color: #333;           }         }                  @media (prefers-contrast: more) {           html {             background-color: white;           	color: #000;           }         }   `
+</code></pre>
+<h2 tabindex="0">forced-color</h2>
+<p>Das Medienmerkmal <code>forced-color</code> ermittelt, ob der Browser feste Farben erzwingt. Werte sind <code>none</code> und <code>active</code>.</p>
+<p><code>  .button {   border: 0;   padding: 10px;   box-shadow: -2px -2px 5px gray, 2px 2px 5px gray; }  @media (forced-colors: active) {   .button {     /* Use a border instead, since box-shadow is forced to &#39;none&#39; in forced-colors mode */     border: 2px ButtonText solid;   } }  </code></p>
+<p>Falls dies so eingestellt ist, werden für folgende Eigenschaften Systemfarben verwendet:</p>
+<p>color, background-color, text-decoration-color, text-emphasis-color, border-color, outline-color, column-rule-color, -webkit-tap-highlight-color, SVG fill, SVG stroke</p>
+<p>Folgende Eigenschaften erhalten fest eingestellte Werte:</p>
+<ul>
+<li>box-shadow: &#39;none&#39;</li>
+<li>text-shadow: &#39;none&#39;</li>
+<li>background-image: &#39;none&#39;, außer bei festen URL-Angaben</li>
+<li>color-scheme: &#39;light dark&#39;</li>
+<li>scrollbar-color: &#39;auto&#39;</li>
+</ul>
+<p><a href="https://polypane.app/blog/forced-colors-explained-a-practical-guide/">Forced colors explained: A practical guide</a></p>
+</main>
+
+            <!-- ── TABLE OF CONTENTS ───────────────────────────────── -->
+            <aside
+                class="toc-sidebar"
+                aria-label="Inhaltsverzeichnis"
+                id="toc-sidebar"
+            >
+                <h2>Inhalt</h2>
+                <!-- injected by JS -->
+            </aside>
+        </div>
+        <!-- /.page-layout -->
+
+        <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+        <footer
+            id="site-footer"
+            tabindex="-1"
+        >
+            <!-- injected by JS -->
+        </footer>
+
+        <script
+            src="/accessibility-workshop/assets/js/main.js"
+            type="module"
+        ></script>
+        <script src="/accessibility-workshop/assets/js/user-settings.js"></script>
+    </body>
+</html>

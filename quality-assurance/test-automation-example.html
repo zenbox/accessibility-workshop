@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Testautomatisierung – Beispiele je axe-Regel - Michael Reichart</title>
+        <meta
+            name="description"
+            content="Für jede der über 100 axe-core-Regeln ein bestandenes und ein fehlerhaftes Beispiel – live per axe-core geprüft."
+        />
+        <link rel="icon" href="/accessibility-workshop/assets/icons/sheep.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" />
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/styles.css" />
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/axe-test-automation.css" />
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/test-automation-example.css" />
+    </head>
+    <body>
+        <!-- ══ SKIP LINKS ══════════════════════════════════════════════ -->
+        <nav class="skip-links" aria-label="Sprungnavigation">
+            <a class="skip-link" href="#main-content">Zum Hauptinhalt</a>
+            <a class="skip-link" href="#site-footer">Zum Footer</a>
+        </nav>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
+        <header>
+            <div class="nav-wrapper">
+                <!-- Desktop nav + A11y menu injected by JS -->
+                <button class="hamburger" id="hamburgerBtn" aria-label="Menü öffnen" aria-expanded="false">
+                    <span class="material-symbols-outlined" id="hamburgerIcon">menu</span>
+                </button>
+            </div>
+            <!-- Mobile nav injected by JS -->
+        </header>
+
+        <!-- ══ PAGE LAYOUT ═════════════════════════════════════════════ -->
+        <div class="page-layout">
+            <main class="md-container axe-examples-page" id="main-content" tabindex="-1">
+                <h1 tabindex="0">Testautomatisierung – Beispiele je axe-Regel</h1>
+                <p>
+                    Diese Seite zeigt für jede der über 100 automatisierten
+                    Prüfregeln von <a href="https://www.deque.com/axe/">axe-core</a>
+                    ein bestandenes und ein fehlerhaftes Beispiel. Jedes Beispiel
+                    läuft isoliert in einem eigenen Testdokument und kann live
+                    geprüft werden – so wird sichtbar, was axe-core konkret
+                    erkennt und was nicht.
+                </p>
+
+                <div class="axe-examples-toolbar">
+                    <button type="button" class="axe-test-all-btn" id="runAllBtn">
+                        <span class="material-symbols-outlined" aria-hidden="true">play_circle</span>
+                        Alle Tests ausführen
+                    </button>
+                    <label class="axe-examples-search-label" for="ruleSearch">Regel suchen</label>
+                    <input
+                        type="search"
+                        id="ruleSearch"
+                        class="axe-examples-search"
+                        placeholder="Regel-ID oder Titel …"
+                        autocomplete="off"
+                    />
+                    <p class="axe-examples-status" id="examplesStatus" role="status" aria-live="polite"></p>
+                </div>
+
+                <ol class="axe-examples-list" id="examplesList" aria-label="axe-core-Regeln">
+                    <!-- wird per JS aus test-automation-example-data.js + axe.getRules() befüllt -->
+                </ol>
+                <p class="axe-examples-empty" id="examplesEmpty" hidden>Keine Regel gefunden.</p>
+            </main>
+
+            <!-- ── TABLE OF CONTENTS (leer, damit Layout mit anderen Seiten konsistent bleibt) ── -->
+            <aside class="toc-sidebar" aria-label="Inhaltsverzeichnis" id="toc-sidebar">
+                <h2>Inhalt</h2>
+                <!-- injected by JS -->
+            </aside>
+        </div>
+        <!-- /.page-layout -->
+
+        <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+        <footer id="site-footer" tabindex="-1">
+            <!-- injected by JS -->
+        </footer>
+
+        <script src="/accessibility-workshop/assets/js/main.js" type="module"></script>
+        <script src="/accessibility-workshop/assets/lib/axe.min.js"></script>
+        <script src="/accessibility-workshop/assets/js/test-automation-example-data.js"></script>
+        <script src="/accessibility-workshop/assets/js/test-automation-example.js"></script>
+    </body>
+</html>

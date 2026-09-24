@@ -1,0 +1,36 @@
+:root {
+    /* Grundfarben */
+    --background: hsla(0, 0%, 100%, 1);
+    --surface: hsla(0, 0%, 97%, 1);
+    --text-primary: hsla(0, 0%, 15%, 1);
+    --text-secondary: hsla(0, 0%, 40%, 1);
+    --border-color: hsla(0, 0%, 80%, 1);
+
+    /* Primärfarbe mit RGB-Variante für Transparenz */
+    --primary: hsla(300, 93%, 12%, 1);
+    --primary-rgb: 31, 2, 31;
+    --on-primary: rgb(250, 204, 250);
+
+    /* Weitere Farben */
+    --secondary: hsla(120, 94%, 33%, 1);
+    --on-secondary: rgb(200, 250, 200);
+    --tertiary: hsla(174, 90%, 37%, 1);
+    --on-tertiary: rgb(2, 47, 43);
+
+    /* UI-Elemente */
+    --shadow-light: hsla(0, 0%, 0%, 0.1);
+    --shadow: hsla(0, 0%, 0%, 0.25);
+
+    /* Transition und Animation */
+    --transition-speed: 0.2s;
+    --animation-scale: 1;
+
+    /* Media-Handling */
+    --media-transparency: 1;
+
+    /* Links */
+    --link-color: hsla(210, 100%, 50%, 1);
+    --link-visited: hsla(270, 70%, 40%, 1);
+    --link-hover: hsla(0, 100%, 50%, 1);
+    --link-active: hsla(120, 100%, 30%, 1);
+}

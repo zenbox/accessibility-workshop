@@ -1,0 +1,105 @@
+fieldset {
+    border: 2px solid black;
+    margin-block: 2rem;
+    padding: 1rem;
+}
+legend {
+    padding-inline: 1rem;
+    font-weight: bold;
+}
+.info,
+[data-message-type="info"] {
+    color: hsl(200, 90%, 70%);
+}
+.error,
+[data-message-type="error"] {
+    color: hsl(0, 70%, 75%);
+}
+.warning,
+[data-message-type="warning"] {
+    color: hsl(45, 100%, 50%);
+}
+.success,
+[data-message-type="success"] {
+    color: hsl(120, 100%, 40%);
+}
+
+output {
+    margin-inline-start: 1em;
+}
+
+[data-message-type]::before {
+    font-family: "Material Icons Outlined";
+    font-size: 1.2em;
+    margin: 0;
+    padding: 0;
+
+    transform: translateY(0.2em);
+
+    display: inline-block;
+}
+[data-message-type="success"]::before {
+    content: "check_circle ";
+}
+[data-message-type="error"]::before {
+    content: "error ";
+}
+[data-message-type="warning"]::before {
+    content: "warning_amber ";
+}
+[data-message-type="info"]::before {
+    content: "info ";
+}
+
+/* Sichtbarkeiten */
+[data-language-level="easy"]
+    [data-language-level]:not([data-language-level="easy"]),
+[data-language-level="simple"]
+    [data-language-level]:not([data-language-level="simple"]),
+[data-language-level="default"]
+    [data-language-level]:not([data-language-level="default"]),
+[data-language-level="expert"]
+    [data-language-level]:not([data-language-level="expert"]) {
+    display: none;
+}
+/* - - - - - - - - - - */
+/* 
+form {
+    margin: 0 auto;
+  max-width: 35rem;
+} */
+
+label {
+  font-weight: 600;
+}
+
+label::before {
+  margin-block-start: 2rem;
+  color: var(--color-text);
+}
+
+label::before,
+label::after {
+  content: "";
+  display: block;
+}
+
+input {
+  display: block;
+  line-height: 1.5;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border: 1px solid black;
+}
+
+form button {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+
+  background: var(--color-background);
+  color: var(--color-text);
+  cursor: pointer;
+}
+

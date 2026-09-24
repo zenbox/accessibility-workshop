@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <!-- Material Symbols -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- - - - - - - - - - - -->
+        <samp>
+            <figure class="cvd-figure" style="text-align: center; padding-top: 1em">
+                <!-- - - - -->
+                <style>
+                    figure.cvd-figure {
+                        position: relative;
+                        margin: 0;
+                        padding-top: 4.5rem;
+                        font-family: Barlow, "Helvetica Neue", Arial, sans-serif;
+                    }
+
+                    figure.cvd-figure > button {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 3rem;
+                        height: 3rem;
+                        margin: 0 0.5rem 1rem 0;
+                        padding: 0;
+                        border: 2px solid #64748b;
+                        border-radius: 50%;
+                        background: #ffffff;
+                        color: #17202a;
+                        cursor: pointer;
+                        font: inherit;
+                        transition:
+                            background-color 160ms ease,
+                            color 160ms ease,
+                            border-color 160ms ease,
+                            box-shadow 160ms ease,
+                            transform 160ms ease;
+                    }
+
+                    figure.cvd-figure > button:nth-of-type(1) {
+                        background: crimson;
+                        color: white;
+                    }
+
+                    figure.cvd-figure > button:nth-of-type(2) {
+                        background: yellowgreen;
+                        color: white;
+                    }
+
+                    figure.cvd-figure > button:nth-of-type(3) {
+                        background: linear-gradient(90deg, lightsteelblue 0%, lightsteelblue 50%, yellow 51%, yellow 100%);
+                        color: black;
+                    }
+
+                    figure.cvd-figure > button:hover {
+                        border-color: #026aa2;
+                        background: #eff8ff;
+                        transform: translateY(-2px);
+                    }
+
+                    figure.cvd-figure > button:focus-visible {
+                        outline: 3px solid #f79009;
+                        outline-offset: 3px;
+                    }
+
+                    figure.cvd-figure > button.is-active {
+                        border-color: #17202a;
+                        background: #17202a;
+                        color: #ffffff;
+                        box-shadow: 0 0 0 4px #dbeafe;
+                    }
+
+                    figure.cvd-figure > button .material-symbols-outlined {
+                        font-size: 1.35rem;
+                        line-height: 1;
+                        font-variation-settings:
+                            "FILL" 0,
+                            "wght" 500,
+                            "GRAD" 0,
+                            "opsz" 24;
+                    }
+
+                    figure.cvd-figure > button.is-active .material-symbols-outlined {
+                        font-variation-settings:
+                            "FILL" 1,
+                            "wght" 600,
+                            "GRAD" 0,
+                            "opsz" 24;
+                    }
+
+                    .cvd-sr-only {
+                        position: absolute;
+                        width: 1px;
+                        height: 1px;
+                        padding: 0;
+                        margin: -1px;
+                        overflow: hidden;
+                        clip: rect(0, 0, 0, 0);
+                        white-space: nowrap;
+                        border: 0;
+                    }
+
+                    figure.cvd-figure svg {
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                        transition: filter 180ms ease;
+                    }
+
+                    @media (prefers-reduced-motion: reduce) {
+                        figure.cvd-figure > button,
+                        figure.cvd-figure svg {
+                            transition: none;
+                        }
+
+                        figure.cvd-figure > button:hover {
+                            transform: none;
+                        }
+                    }
+
+                    main > samp,
+                    samp > figure {
+                        width: 100%;
+                    }
+
+                    main > samp {
+                        margin: 0;
+                        padding: 0;
+                    }
+                </style>
+
+                <p style="line-height: 1em">
+                    <small
+                        >Teste die Farben bei Farbenfehlsichtigkeit:<br />
+                        Rotblind, grünblind, Blau-Gelb-Konfusion und farbenblind</small
+                    >
+                </p>
+                <button>Rotblindheit</button>
+                <button>Grünblindheit</button>
+                <button>Blau-Gelb-Konfusion</button>
+                <button>Farbenblindheitblindheit</button>
+
+                <style>
+                    .a_1-1 {
+                        fill: #5f316e;
+                    }
+                    .a_1-2 {
+                        fill: #9f83a8;
+                    }
+                    .a_1-3 {
+                        fill: #dfd6e2;
+                    }
+                    .a_2-1 {
+                        fill: #c0003c;
+                    }
+                    .a_2-2 {
+                        fill: #d9668a;
+                    }
+                    .a_2-3 {
+                        fill: #f2ccd8;
+                    }
+                    .a_3-1 {
+                        fill: #597c39;
+                    }
+                    .a_3-2 {
+                        fill: #9bb088;
+                    }
+                    .a_3-3 {
+                        fill: #dee5d7;
+                    }
+                    .a_4-1 {
+                        fill: #0077b6;
+                    }
+                    .a_4-2 {
+                        fill: #66add3;
+                    }
+                    .a_4-3 {
+                        fill: #66add3;
+                    }
+                    ._text {
+                        fill: #17202a;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-size: 16px;
+                        font-weight: 700;
+                    }
+                </style>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+                    <title id="title">Corporate Farben in drei Schattierungen</title>
+                    <desc id="desc">Vier Farbfelder für Rot, Grün, Hellblau und Orangegelb. Jede Farbe wird als helle, mittlere und dunkle Schattierung gezeigt.</desc>
+                    <rect width="1200" height="820" fill="transparent" />
+
+                    <!-- Primary -->
+                    <g transform="translate(70 160)" font-family="Arial, Helvetica, sans-serif" font-size="16">
+                        <rect width="510" height="285" rx="2" fill="#FFFFFF" stroke="#DDE2E7" stroke-width="2" />
+                        <circle cx="42" cy="43" r="12" class="a_1-2" />
+                        <text x="70" y="51" font-size="25" font-weight="700">Lila</text>
+                        <text x="34" y="92" font-size="15">1. Farbe, Leitfarbe</text>
+
+                        <rect x="34" y="125" width="140" height="104" class="a_1-1" />
+                        <rect x="185" y="125" width="140" height="104" class="a_1-2" />
+                        <rect x="336" y="125" width="140" height="104" class="a_1-3" />
+
+                        <g text-anchor="middle" class="_text">
+                            <text x="104" y="252">Hell</text>
+                            <text x="255" y="252">Mittel</text>
+                            <text x="406" y="252">Dunkel</text>
+                        </g>
+                    </g>
+
+                    <!-- Secondary -->
+                    <g transform="translate(620 160)" font-family="Arial, Helvetica, sans-serif" font-size="16">
+                        <rect width="510" height="285" rx="2" fill="#FFFFFF" stroke="#DDE2E7" stroke-width="2" />
+                        <circle cx="42" cy="43" r="12" class="a_2-2" />
+                        <text x="70" y="51" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">Rot</text>
+                        <text x="34" y="92" font-family="Arial, Helvetica, sans-serif" font-size="15">2. Farbe, Ergänzungsfarbe</text>
+
+                        <rect x="34" y="125" width="140" height="104" class="a_2-1" />
+                        <rect x="185" y="125" width="140" height="104" class="a_2-2" />
+                        <rect x="336" y="125" width="140" height="104" class="a_2-3" />
+
+                        <g text-anchor="middle" class="_text">
+                            <text x="104" y="252">Hell</text>
+                            <text x="255" y="252">Mittel</text>
+                            <text x="406" y="252">Dunkel</text>
+                        </g>
+                    </g>
+
+                    <!-- Tertiary -->
+                    <g transform="translate(70 490)" font-family="Arial, Helvetica, sans-serif" font-size="16">
+                        <rect width="510" height="285" rx="2" fill="#FFFFFF" stroke="#DDE2E7" stroke-width="2" />
+                        <circle cx="42" cy="43" r="12" class="a_3-2" />
+                        <text x="70" y="51" font-size="25" font-weight="700">Grün</text>
+                        <text x="34" y="92" font-size="15">3. Farbe, Akzentfarbe 1</text>
+
+                        <rect x="34" y="125" width="140" height="104" class="a_3-1" />
+                        <rect x="185" y="125" width="140" height="104" class="a_3-2" />
+                        <rect x="336" y="125" width="140" height="104" class="a_3-3" />
+
+                        <g text-anchor="middle" class="_text">
+                            <text x="104" y="252">Hell</text>
+                            <text x="255" y="252">Mittel</text>
+                            <text x="406" y="252">Dunkel</text>
+                        </g>
+                    </g>
+
+                    <!-- Quarternary -->
+                    <g transform="translate(620 490)" font-family="Arial, Helvetica, sans-serif" font-size="16">
+                        <rect width="510" height="285" rx="2" fill="#FFFFFF" stroke="#DDE2E7" stroke-width="2" />
+                        <circle cx="42" cy="43" r="12" class="a_4-2" />
+                        <text x="70" y="51" font-size="25" font-weight="700">Blau</text>
+                        <text x="34" y="92" font-size="15">4. Farbe, Akzentfarbe 2</text>
+
+                        <rect x="34" y="125" width="140" height="104" class="a_4-1" />
+                        <rect x="185" y="125" width="140" height="104" class="a_4-2" />
+                        <rect x="336" y="125" width="140" height="104" class="a_4-3" />
+
+                        <g text-anchor="middle" class="_text">
+                            <text x="104" y="252">Hell</text>
+                            <text x="255" y="252">Mittel</text>
+                            <text x="406" y="252">Dunkel</text>
+                        </g>
+                    </g>
+                </svg>
+
+                <script>
+                    (() => {
+                        "use strict";
+
+                        const modes = [
+                            {
+                                className: "protanopia",
+                                label: "Rotblindheit",
+                                icon: "visibility",
+                                matrix: [0.152286, 1.052583, -0.204868, 0, 0, 0.114503, 0.786281, 0.099216, 0, 0, -0.003882, -0.048116, 1.051998, 0, 0, 0, 0, 0, 1, 0],
+                            },
+                            {
+                                className: "deuteranopia",
+                                label: "Grünblindheit",
+                                icon: "contrast",
+                                matrix: [0.367322, 0.860646, -0.227968, 0, 0, 0.280085, 0.672501, 0.047413, 0, 0, -0.01182, 0.04294, 0.968881, 0, 0, 0, 0, 0, 1, 0],
+                            },
+                            {
+                                className: "blue-yellow-confusion",
+                                label: "Blau-Gelb-Konfusion",
+                                icon: "gradient",
+                                matrix: [1.255528, -0.076749, -0.178779, 0, 0, -0.078411, 0.930809, 0.147602, 0, 0, 0.004733, 0.691367, 0.3039, 0, 0, 0, 0, 0, 1, 0],
+                            },
+                            {
+                                className: "monochromopsia",
+                                label: "Farbenblindheit",
+                                icon: "tonality",
+                                matrix: [0.299, 0.587, 0.114, 0, 0, 0.299, 0.587, 0.114, 0, 0, 0.299, 0.587, 0.114, 0, 0, 0, 0, 0, 1, 0],
+                            },
+                        ];
+
+                        function createFilterDefinitions(svg, figureIndex) {
+                            let defs = svg.querySelector("defs");
+                            if (!defs) {
+                                defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+                                svg.insertBefore(defs, svg.firstChild);
+                            }
+
+                            const filterIds = {};
+
+                            modes.forEach((mode) => {
+                                const filterId = `cvd-${figureIndex}-${mode.className}`;
+                                const filter = document.createElementNS("http://www.w3.org/2000/svg", "filter");
+                                const colorMatrix = document.createElementNS("http://www.w3.org/2000/svg", "feColorMatrix");
+
+                                filter.setAttribute("id", filterId);
+                                filter.setAttribute("color-interpolation-filters", "sRGB");
+
+                                colorMatrix.setAttribute("type", "matrix");
+                                colorMatrix.setAttribute("values", mode.matrix.join(" "));
+
+                                filter.appendChild(colorMatrix);
+                                defs.appendChild(filter);
+
+                                filterIds[mode.className] = filterId;
+                            });
+                            return filterIds;
+                        }
+
+                        function configureFigure(figure, figureIndex) {
+                            const buttons = Array.from(figure.children).filter((element) => element.tagName.toLowerCase() === "button");
+
+                            const svg = figure.querySelector("svg");
+
+                            if (!svg || buttons.length < modes.length) {
+                                return;
+                            }
+
+                            figure.classList.add("cvd-figure");
+
+                            svg.setAttribute("data-cvd-svg", "");
+
+                            const filterIds = createFilterDefinitions(svg, figureIndex);
+
+                            const originalLabel = svg.getAttribute("aria-label");
+
+                            buttons.slice(0, modes.length).forEach((button, index) => {
+                                const mode = modes[index];
+
+                                button.type = "button";
+
+                                button.dataset.cvdMode = mode.className;
+
+                                button.title = `${mode.label} simulieren`;
+
+                                button.setAttribute("aria-label", `${mode.label} simulieren`);
+
+                                button.setAttribute("aria-pressed", "false");
+
+                                button.innerHTML = `
+
+<span class="material-symbols-outlined" aria-hidden="true">
+
+${mode.icon}
+
+</span>
+
+<span class="cvd-sr-only">${mode.label}</span>
+
+`;
+
+                                button.addEventListener("click", () => {
+                                    const isActive = figure.classList.contains(mode.className);
+
+                                    modes.forEach((otherMode) => {
+                                        figure.classList.remove(otherMode.className);
+
+                                        const otherButton = figure.querySelector(`[data-cvd-mode="${otherMode.className}"]`);
+
+                                        if (otherButton) {
+                                            otherButton.classList.remove("is-active");
+
+                                            otherButton.setAttribute("aria-pressed", "false");
+
+                                            otherButton.title = `${otherMode.label} simulieren`;
+
+                                            otherButton.setAttribute("aria-label", `${otherMode.label} simulieren`);
+                                        }
+                                    });
+
+                                    svg.style.filter = "";
+
+                                    if (!isActive) {
+                                        figure.classList.add(mode.className);
+
+                                        svg.style.filter = `url("#${filterIds[mode.className]}")`;
+
+                                        button.classList.add("is-active");
+
+                                        button.setAttribute("aria-pressed", "true");
+
+                                        button.title = `${mode.label} deaktivieren`;
+
+                                        button.setAttribute("aria-label", `${mode.label} deaktivieren`);
+
+                                        svg.setAttribute("aria-label", `${originalLabel || "Semantische Farben"} – Simulation: ${mode.label}`);
+                                    } else {
+                                        svg.setAttribute("aria-label", originalLabel || "Semantische Farben");
+                                    }
+                                });
+                            });
+                        }
+
+                        function initColorVisionControls() {
+                            document.querySelectorAll("figure").forEach((figure, index) => {
+                                configureFigure(figure, index + 1);
+                            });
+                        }
+
+                        if (document.readyState === "loading") {
+                            document.addEventListener("DOMContentLoaded", initColorVisionControls);
+                        } else {
+                            initColorVisionControls();
+                        }
+                    })();
+                </script>
+            </figure>
+        </samp>
+
+        <!-- - - - - - - - - - - - -->
+
+        <samp>
+            <figure class="cvd-figure" style="text-align: center; padding-top: 1em">
+                <!-- - - - -->
+                <style>
+                    figure.cvd-figure {
+                        position: relative;
+                        margin: 0;
+                        padding-top: 4.5rem;
+                        font-family: Barlow, "Helvetica Neue", Arial, sans-serif;
+                    }
+
+                    figure.cvd-figure > button {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 3rem;
+                        height: 3rem;
+                        margin: 0 0.5rem 1rem 0;
+                        padding: 0;
+                        border: 2px solid #64748b;
+                        border-radius: 50%;
+                        background: #ffffff;
+                        color: #17202a;
+                        cursor: pointer;
+                        font: inherit;
+                        transition:
+                            background-color 160ms ease,
+                            color 160ms ease,
+                            border-color 160ms ease,
+                            box-shadow 160ms ease,
+                            transform 160ms ease;
+                    }
+
+                    figure.cvd-figure > button:nth-of-type(1) {
+                        background: crimson;
+                        color: white;
+                    }
+
+                    figure.cvd-figure > button:nth-of-type(2) {
+                        background: yellowgreen;
+                        color: white;
+                    }
+
+                    figure.cvd-figure > button:nth-of-type(3) {
+                        background: linear-gradient(90deg, lightsteelblue 0%, lightsteelblue 50%, yellow 51%, yellow 100%);
+                        color: black;
+                    }
+
+                    figure.cvd-figure > button:hover {
+                        border-color: #026aa2;
+                        background: #eff8ff;
+                        transform: translateY(-2px);
+                    }
+
+                    figure.cvd-figure > button:focus-visible {
+                        outline: 3px solid #f79009;
+                        outline-offset: 3px;
+                    }
+
+                    figure.cvd-figure > button.is-active {
+                        border-color: #17202a;
+                        background: #17202a;
+                        color: #ffffff;
+                        box-shadow: 0 0 0 4px #dbeafe;
+                    }
+
+                    figure.cvd-figure > button .material-symbols-outlined {
+                        font-size: 1.35rem;
+                        line-height: 1;
+                        font-variation-settings:
+                            "FILL" 0,
+                            "wght" 500,
+                            "GRAD" 0,
+                            "opsz" 24;
+                    }
+
+                    figure.cvd-figure > button.is-active .material-symbols-outlined {
+                        font-variation-settings:
+                            "FILL" 1,
+                            "wght" 600,
+                            "GRAD" 0,
+                            "opsz" 24;
+                    }
+
+                    .cvd-sr-only {
+                        position: absolute;
+                        width: 1px;
+                        height: 1px;
+                        padding: 0;
+                        margin: -1px;
+                        overflow: hidden;
+                        clip: rect(0, 0, 0, 0);
+                        white-space: nowrap;
+                        border: 0;
+                    }
+
+                    figure.cvd-figure svg {
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                        transition: filter 180ms ease;
+                    }
+
+                    @media (prefers-reduced-motion: reduce) {
+                        figure.cvd-figure > button,
+                        figure.cvd-figure svg {
+                            transition: none;
+                        }
+
+                        figure.cvd-figure > button:hover {
+                            transform: none;
+                        }
+                    }
+
+                    main > samp,
+                    samp > figure {
+                        width: 100%;
+                    }
+
+                    main > samp {
+                        margin: 0;
+                        padding: 0;
+                    }
+                </style>
+
+                <p style="line-height: 1em">
+                    <small
+                        >Teste die Farben bei Farbenfehlsichtigkeit:<br />
+                        Rotblind, grünblind, Blau-Gelb-Konfusion und farbenblind</small
+                    >
+                </p>
+                <button>Rotblindheit</button>
+                <button>Grünblindheit</button>
+                <button>Blau-Gelb-Konfusion</button>
+                <button>Farbenblindheitblindheit</button>
+
+                <style>
+                    .b_1-1 {
+                        fill: #fee4e2;
+                    }
+                    .b_1-2 {
+                        fill: #f04438;
+                    }
+                    .b_1-3 {
+                        fill: #b42318;
+                    }
+                    .b_2-1 {
+                        fill: #d1fadf;
+                    }
+                    .b_2-2 {
+                        fill: #12b76a;
+                    }
+                    .b_2-3 {
+                        fill: #027a48;
+                    }
+                    .b_3-1 {
+                        fill: #dff8ff;
+                    }
+                    .b_3-2 {
+                        fill: #29b6d8;
+                    }
+                    .b_3-3 {
+                        fill: #026aa2;
+                    }
+                    .b_4-1 {
+                        fill: #fef9c8;
+                    }
+                    .b_4-2 {
+                        fill: #f7bb08;
+                    }
+                    .b_4-3 {
+                        fill: #b57608;
+                    }
+                    ._text {
+                        fill: #17202a;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-size: 16px;
+                        font-weight: 700;
+                    }
+                </style>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+                    <title id="title">Semantische Farben in drei Schattierungen</title>
+                    <desc id="desc">Vier Farbfelder für Rot, Grün, Hellblau und Orangegelb. Jede Farbe wird als helle, mittlere und dunkle Schattierung gezeigt.</desc>
+                    <rect width="1200" height="820" fill="transparent" />
+
+                    <!-- Rot -->
+                    <g transform="translate(70 160)" font-family="Arial, Helvetica, sans-serif" font-size="16">
+                        <rect width="510" height="285" rx="2" fill="#FFFFFF" stroke="#DDE2E7" stroke-width="2" />
+                        <circle cx="42" cy="43" r="12" class="b_1-2" />
+                        <text x="70" y="51" font-size="25" font-weight="700">Rot</text>
+                        <text x="34" y="92" font-size="15">Fehler · kritisch · stoppen</text>
+
+                        <rect x="34" y="125" width="140" height="104" class="b_1-1" />
+                        <rect x="185" y="125" width="140" height="104" class="b_1-2" />
+                        <rect x="336" y="125" width="140" height="104" class="b_1-3" />
+
+                        <g text-anchor="middle" class="_text">
+                            <text x="104" y="252">Hell</text>
+                            <text x="255" y="252">Mittel</text>
+                            <text x="406" y="252">Dunkel</text>
+                        </g>
+                    </g>
+
+                    <!-- Grün -->
+                    <g transform="translate(620 160)" font-family="Arial, Helvetica, sans-serif" font-size="16">
+                        <rect width="510" height="285" rx="2" fill="#FFFFFF" stroke="#DDE2E7" stroke-width="2" />
+                        <circle cx="42" cy="43" r="12" class="b_2-2" />
+                        <text x="70" y="51" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">Grün</text>
+                        <text x="34" y="92" font-family="Arial, Helvetica, sans-serif" font-size="15">Erfolg · bestätigt · aktiv</text>
+
+                        <rect x="34" y="125" width="140" height="104" class="b_2-1" />
+                        <rect x="185" y="125" width="140" height="104" class="b_2-2" />
+                        <rect x="336" y="125" width="140" height="104" class="b_2-3" />
+
+                        <g text-anchor="middle" class="_text">
+                            <text x="104" y="252">Hell</text>
+                            <text x="255" y="252">Mittel</text>
+                            <text x="406" y="252">Dunkel</text>
+                        </g>
+                    </g>
+
+                    <!-- Hellblau -->
+                    <g transform="translate(70 490)" font-family="Arial, Helvetica, sans-serif" font-size="16">
+                        <rect width="510" height="285" rx="2" fill="#FFFFFF" stroke="#DDE2E7" stroke-width="2" />
+                        <circle cx="42" cy="43" r="12" class="_3-2" />
+                        <text x="70" y="51" font-size="25" font-weight="700">Hellblau</text>
+                        <text x="34" y="92" font-size="15">Information · Hinweis · neutral</text>
+
+                        <rect x="34" y="125" width="140" height="104" class="b_3-1" />
+                        <rect x="185" y="125" width="140" height="104" class="b_3-2" />
+                        <rect x="336" y="125" width="140" height="104" class="b_3-3" />
+
+                        <g text-anchor="middle" class="_text">
+                            <text x="104" y="252">Hell</text>
+                            <text x="255" y="252">Mittel</text>
+                            <text x="406" y="252">Dunkel</text>
+                        </g>
+                    </g>
+
+                    <!-- Orangegelb -->
+                    <g transform="translate(620 490)" font-family="Arial, Helvetica, sans-serif" font-size="16">
+                        <rect width="510" height="285" rx="2" fill="#FFFFFF" stroke="#DDE2E7" stroke-width="2" />
+                        <circle cx="42" cy="43" r="12" class="b_4-2" />
+                        <text x="70" y="51" font-size="25" font-weight="700">Orangegelb</text>
+                        <text x="34" y="92" font-size="15">Warnung · Aufmerksamkeit · prüfen</text>
+
+                        <rect x="34" y="125" width="140" height="104" class="b_4-1" />
+                        <rect x="185" y="125" width="140" height="104" class="b_4-2" />
+                        <rect x="336" y="125" width="140" height="104" class="b_4-3" />
+
+                        <g text-anchor="middle" class="_text">
+                            <text x="104" y="252">Hell</text>
+                            <text x="255" y="252">Mittel</text>
+                            <text x="406" y="252">Dunkel</text>
+                        </g>
+                    </g>
+                </svg>
+
+                <script>
+                    (() => {
+                        "use strict";
+
+                        const modes = [
+                            {
+                                className: "protanopia",
+                                label: "Rotblindheit",
+                                icon: "visibility",
+                                matrix: [0.152286, 1.052583, -0.204868, 0, 0, 0.114503, 0.786281, 0.099216, 0, 0, -0.003882, -0.048116, 1.051998, 0, 0, 0, 0, 0, 1, 0],
+                            },
+                            {
+                                className: "deuteranopia",
+                                label: "Grünblindheit",
+                                icon: "contrast",
+                                matrix: [0.367322, 0.860646, -0.227968, 0, 0, 0.280085, 0.672501, 0.047413, 0, 0, -0.01182, 0.04294, 0.968881, 0, 0, 0, 0, 0, 1, 0],
+                            },
+                            {
+                                className: "blue-yellow-confusion",
+                                label: "Blau-Gelb-Konfusion",
+                                icon: "gradient",
+                                matrix: [1.255528, -0.076749, -0.178779, 0, 0, -0.078411, 0.930809, 0.147602, 0, 0, 0.004733, 0.691367, 0.3039, 0, 0, 0, 0, 0, 1, 0],
+                            },
+                            {
+                                className: "monochromopsia",
+                                label: "Farbenblindheit",
+                                icon: "tonality",
+                                matrix: [0.299, 0.587, 0.114, 0, 0, 0.299, 0.587, 0.114, 0, 0, 0.299, 0.587, 0.114, 0, 0, 0, 0, 0, 1, 0],
+                            },
+                        ];
+
+                        function createFilterDefinitions(svg, figureIndex) {
+                            let defs = svg.querySelector("defs");
+                            if (!defs) {
+                                defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+                                svg.insertBefore(defs, svg.firstChild);
+                            }
+
+                            const filterIds = {};
+
+                            modes.forEach((mode) => {
+                                const filterId = `cvd-${figureIndex}-${mode.className}`;
+                                const filter = document.createElementNS("http://www.w3.org/2000/svg", "filter");
+                                const colorMatrix = document.createElementNS("http://www.w3.org/2000/svg", "feColorMatrix");
+
+                                filter.setAttribute("id", filterId);
+                                filter.setAttribute("color-interpolation-filters", "sRGB");
+
+                                colorMatrix.setAttribute("type", "matrix");
+                                colorMatrix.setAttribute("values", mode.matrix.join(" "));
+
+                                filter.appendChild(colorMatrix);
+                                defs.appendChild(filter);
+
+                                filterIds[mode.className] = filterId;
+                            });
+                            return filterIds;
+                        }
+
+                        function configureFigure(figure, figureIndex) {
+                            const buttons = Array.from(figure.children).filter((element) => element.tagName.toLowerCase() === "button");
+
+                            const svg = figure.querySelector("svg");
+
+                            if (!svg || buttons.length < modes.length) {
+                                return;
+                            }
+
+                            figure.classList.add("cvd-figure");
+
+                            svg.setAttribute("data-cvd-svg", "");
+
+                            const filterIds = createFilterDefinitions(svg, figureIndex);
+
+                            const originalLabel = svg.getAttribute("aria-label");
+
+                            buttons.slice(0, modes.length).forEach((button, index) => {
+                                const mode = modes[index];
+                                button.type = "button";
+                                button.dataset.cvdMode = mode.className;
+                                button.title = `${mode.label} simulieren`;
+                                button.setAttribute("aria-label", `${mode.label} simulieren`);
+                                button.setAttribute("aria-pressed", "false");
+                                button.innerHTML = `
+<span class="material-symbols-outlined" aria-hidden="true">
+${mode.icon}
+</span>
+<span class="cvd-sr-only">${mode.label}</span>
+`;
+
+                                button.addEventListener("click", () => {
+                                    const isActive = figure.classList.contains(mode.className);
+
+                                    modes.forEach((otherMode) => {
+                                        figure.classList.remove(otherMode.className);
+
+                                        const otherButton = figure.querySelector(`[data-cvd-mode="${otherMode.className}"]`);
+
+                                        if (otherButton) {
+                                            otherButton.classList.remove("is-active");
+
+                                            otherButton.setAttribute("aria-pressed", "false");
+
+                                            otherButton.title = `${otherMode.label} simulieren`;
+
+                                            otherButton.setAttribute("aria-label", `${otherMode.label} simulieren`);
+                                        }
+                                    });
+
+                                    svg.style.filter = "";
+
+                                    if (!isActive) {
+                                        figure.classList.add(mode.className);
+
+                                        svg.style.filter = `url("#${filterIds[mode.className]}")`;
+
+                                        button.classList.add("is-active");
+
+                                        button.setAttribute("aria-pressed", "true");
+
+                                        button.title = `${mode.label} deaktivieren`;
+
+                                        button.setAttribute("aria-label", `${mode.label} deaktivieren`);
+
+                                        svg.setAttribute("aria-label", `${originalLabel || "Semantische Farben"} – Simulation: ${mode.label}`);
+                                    } else {
+                                        svg.setAttribute("aria-label", originalLabel || "Semantische Farben");
+                                    }
+                                });
+                            });
+                        }
+
+                        function initColorVisionControls() {
+                            document.querySelectorAll("figure").forEach((figure, index) => {
+                                configureFigure(figure, index + 1);
+                            });
+                        }
+
+                        if (document.readyState === "loading") {
+                            document.addEventListener("DOMContentLoaded", initColorVisionControls);
+                        } else {
+                            initColorVisionControls();
+                        }
+                    })();
+                </script>
+            </figure>
+        </samp>
+    </body>
+</html>

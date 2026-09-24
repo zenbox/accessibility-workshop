@@ -1,0 +1,120 @@
+/* ════════════════════════════════════════════════════════════════
+   OPEN PROPS — nur Typografie-Tokens
+   https://unpkg.com/open-props/open-props.min.css
+   (wird in styles.css vor diesem File importiert)
+════════════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════════════
+   SCHRIFT-FAMILIEN
+════════════════════════════════════════════════════════════════ */
+:root {
+    --font-body: Barlow, system-ui, sans-serif;
+    --font-mono: ui-monospace, "Fira Code", monospace;
+}
+
+[data-atkinson="true"] {
+    --font-body: "Atkinson Hyperlegible", sans-serif;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SCHRIFTGRÖSSEN-SKALIERUNG (Barrierefreiheit)
+   Wird per JS auf <html> gesetzt (a11yController.apply()).
+   Skaliert alle rem-basierten Schriftgrößen proportional, da die
+   Skala unten (--text-*) auf rem basiert.
+   Standardwert 100 % = keine Änderung. Bereich: 75–200 %.
+════════════════════════════════════════════════════════════════ */
+html {
+    font-size: var(--a11y-font-scale, 100%);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SCHRIFTGRÖSSEN — Open Props Skala als Basis
+   var(--font-size-0) = 0.75rem  (~12px)
+   var(--font-size-1) = 0.875rem (~14px)
+   var(--font-size-2) = 1rem     (16px, base)
+   var(--font-size-3) = 1.125rem (~18px)
+   var(--font-size-4) = 1.25rem  (~20px)
+   var(--font-size-5) = 1.5rem   (~24px)
+   var(--font-size-6) = 1.75rem  (~28px)
+   var(--font-size-7) = 2rem     (~32px)
+════════════════════════════════════════════════════════════════ */
+:root {
+    /* Semantische Aliases — in den Partials verwenden */
+    --text-xs: var(--font-size-00, 0.68rem); /* Labels, Badges, TOC-h3 */
+    --text-sm: var(--font-size-0, 0.75rem); /* Footer, TOC */
+    --text-base: var(--font-size-1, 0.875rem); /* Nav-Items, Dropdown */
+    --text-md: var(--font-size-2, 1rem); /* Body */
+    --text-lg: var(--font-size-3, 1.125rem); /* Lead, h3 */
+    --text-xl: var(--font-size-4, 1.35rem); /* h2 */
+    --text-2xl: var(--font-size-6, 2rem); /* h1 */
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SCHRIFTGEWICHTE — Open Props
+════════════════════════════════════════════════════════════════ */
+:root {
+    --weight-light: var(--font-weight-3, 300);
+    --weight-normal: var(--font-weight-4, 400);
+    --weight-medium: var(--font-weight-5, 500);
+    --weight-bold: var(--font-weight-7, 700);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ZEILENABSTAND & ABSTÄNDE
+════════════════════════════════════════════════════════════════ */
+:root {
+    --line-height: var(--font-lineheight-4, 1.7);
+    --letter-spacing: normal;
+    --word-spacing: normal;
+
+    /* WCAG 1.4.12 — wird per data-Attribut aktiviert */
+    --wcag-line-height: 1.5;
+    --wcag-letter-spacing: 0.12em;
+    --wcag-word-spacing: 0.16em;
+}
+
+[data-wcag-spacing="true"] {
+    --line-height: var(--wcag-line-height);
+    --letter-spacing: var(--wcag-letter-spacing);
+    --word-spacing: var(--wcag-word-spacing);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ANWENDUNG AUF BODY
+════════════════════════════════════════════════════════════════ */
+body {
+    font-family: var(--font-body);
+    line-height: var(--line-height);
+    letter-spacing: var(--letter-spacing);
+    word-spacing: var(--word-spacing);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ÜBERSCHRIFTEN
+════════════════════════════════════════════════════════════════ */
+h1 {
+    font-weight: var(--weight-normal);
+}
+h2 {
+    font-weight: var(--weight-normal);
+}
+h3 {
+    font-weight: var(--weight-normal);
+}
+
+h2,
+h3,
+h4 {
+    margin-block-start: 3em;
+}
+h2 {
+    margin-block-end: 1em;
+}
+h3 {
+    margin-block-end: 0.5em;
+}
+ol,
+ul,
+dl {
+    margin-block-start: 1.5em;
+}

@@ -1,0 +1,173 @@
+<!doctype html>
+<!-- generated-by:site-generator - nicht von Hand bearbeiten, wird von build.js überschrieben -->
+<!-- accessibility-workshop wird von build.js durch CONFIG.siteNamespace ersetzt (siehe dort) - so bleiben alle festen Asset-Pfade (CSS/JS/Favicon unten) automatisch im selben Namespace wie der Rest der Seite. -->
+<html
+    lang="de"
+    data-theme="light"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <link
+            rel="icon"
+            href="/accessibility-workshop/assets/icons/sheep.ico"
+            type="image/x-icon"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+        <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="/accessibility-workshop/assets/css/styles.css"
+        />
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/wcag-test-style.css">
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/wcag-test.css">
+        <title>BITV-/WCAG-Tests - Michael Reichart</title>
+        <!--
+            Minimal-Styles für vom Generator eingebundene Assets (siehe
+            assets.js). Gerne nach styles.css übernehmen und hier entfernen,
+            falls dort schon etwas Äquivalentes existiert.
+        -->
+        <style>
+            .md-container .embedded-svg {
+                margin: 1.5em 0;
+            }
+            .md-container .embedded-svg svg {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container img {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container .asset-missing {
+                display: inline-block;
+                padding: 0.2em 0.6em;
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                color: #b00020;
+                background: color-mix(in srgb, #b00020 8%, transparent);
+                font-size: 0.9em;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ══ SKIP LINKS ══════════════════════════════════════════════ -->
+        <nav
+            class="skip-links"
+            aria-label="Sprungnavigation"
+        >
+            <a
+                class="skip-link"
+                href="#main-content"
+                >Zum Hauptinhalt</a
+            >
+            <a
+                class="skip-link"
+                href="#site-footer"
+                >Zum Footer</a
+            >
+        </nav>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
+        <header>
+            <div class="nav-wrapper">
+                <!-- Desktop nav + A11y menu injected by JS -->
+                <button
+                    class="hamburger"
+                    id="hamburgerBtn"
+                    aria-label="Menü öffnen"
+                    aria-expanded="false"
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        id="hamburgerIcon"
+                        >menu</span
+                    >
+                </button>
+            </div>
+            <!-- Mobile nav injected by JS -->
+        </header>
+
+        <!-- ══ PAGE LAYOUT ═════════════════════════════════════════════ -->
+        <div class="page-layout">
+            <!-- ── ARTIKEL ─────────────────────────────────────────── -->
+            <!--
+                Wichtig: dieser Kommentar ist die einzige Markierung, an der
+                der Generator (build.js) den gerenderten Markdown-Inhalt
+                einsetzt. Nicht umbenennen, ohne CONTENT_MARKER in build.js
+                anzupassen.
+            -->
+            <main
+                class="md-container"
+                id="main-content"
+                tabindex="-1"
+            ><h1 tabindex="0">BITV-/WCAG-Tests</h1>
+<div class="card" style="margin-bottom: 20px">
+    <div class="button-group">
+        <button id="save-local-storage">Im Browser speichern</button>
+        <button id="load-local-storage">Aus Browser laden</button>
+        <button id="export-data">Daten exportieren</button>
+        <button id="delete-data" class="danger">Daten löschen</button>
+        <label for="import-file" class="button primary" style="cursor: pointer">Daten importieren</label>
+        <input type="file" id="import-file" accept=".json" style="display: none">
+    </div>
+    <div class="autosave-status">
+        <label class="switch">
+            <input type="checkbox" id="autosave-toggle" checked>
+            <span class="slider round"></span>
+        </label>
+        <span>Automatisches Speichern aktiviert</span>
+    </div>
+    <div class="filter-container" style="margin-top: 16px">
+        <label for="criteria-filter">Nach Stichworten filtern:</label>
+        <input type="text" id="criteria-filter" placeholder="Stichwort eingeben...">
+
+        <label for="criteria-status-filter" style="margin-top: 12px">Nach Status filtern:</label>
+        <select id="criteria-status-filter">
+            <option value="all">Alle Prüfschritte</option>
+            <option value="filled">Ausgefüllt</option>
+            <option value="unfilled">Noch offen</option>
+        </select>
+    </div>
+</div>
+
+<wcag-test-app></wcag-test-app>
+</main>
+
+            <!-- ── TABLE OF CONTENTS ───────────────────────────────── -->
+            <aside
+                class="toc-sidebar"
+                aria-label="Inhaltsverzeichnis"
+                id="toc-sidebar"
+            >
+                <h2>Inhalt</h2>
+                <!-- injected by JS -->
+            </aside>
+        </div>
+        <!-- /.page-layout -->
+
+        <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+        <footer
+            id="site-footer"
+            tabindex="-1"
+        >
+            <!-- injected by JS -->
+        </footer>
+
+        <script
+            src="/accessibility-workshop/assets/js/main.js"
+            type="module"
+        ></script>
+        <script src="/accessibility-workshop/assets/js/wcag-test-app.js"></script>
+    </body>
+</html>

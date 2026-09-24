@@ -1,0 +1,311 @@
+.parallax .section {
+  border: 5px solid white;
+  border-top: none;
+}
+.parallax .section:first-of-type {
+  border-top: 5px solid white;
+}
+.parallax .section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 0.5rem;
+  padding: 0.5rem;
+}
+.parallax .section > * {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: linear-gradient(to right bottom, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0));
+}
+.parallax h1,
+.parallax h2,
+.parallax h3,
+.parallax p {
+  font-size: 1.6667rem;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--bright);
+  text-shadow: 0.125rem 0.125rem 0.25rem var(--shadow);
+}
+.parallax article:nth-child(1) {
+  height: 100vh;
+}
+.parallax .teaser-1 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-2 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-3 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-4 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-5 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-6 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-7 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-8 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-9 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-10 {
+  position: relative;
+  opacity: 0.85;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  perspective: 8px;
+  perspective-origin: 0%;
+  min-width: 100vw;
+}
+.parallax .teaser-1 {
+  background-image: url("./../figures/588-2509x1673.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-2 {
+  background-image: url("./../figures/52-1280x853.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-3 {
+  background-image: url("./../figures/594-2509x1673.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-4 {
+  background-image: url("./../figures/1019-5472x3648.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-5 {
+  background-image: url("./../figures/588-2509x1673.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-6 {
+  background-image: url("./../figures/52-1280x853.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-7 {
+  background-image: url("./../figures/594-2509x1673.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-8 {
+  background-image: url("./../figures/1019-5472x3648.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-9 {
+  background-image: url("./../figures/588-2509x1673.jpg");
+  min-height: 50vh;
+}
+.parallax .teaser-10 {
+  background-image: url("./../figures/52-1280x853.jpg");
+  min-height: 50vh;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .parallax .teaser-1 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-2 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-3 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-4 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-5 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-6 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-7 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-8 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-9 {
+    animation: parallax 2s infinite;
+  }
+  .parallax .teaser-10 {
+    animation: parallax 2s infinite;
+  }
+}
+@keyframes parallax {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parallax .teaser-1 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-2 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-3 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-4 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-5 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-6 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-7 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-8 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-9 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+  .parallax .teaser-10 {
+    animation: parallax 10s infinite;
+    background-attachment: scroll;
+  }
+}
+
+:root.reduced-motion .teaser-1 {
+  animation: parallax 10s infinite;
+  background-attachment: scroll;
+}
+:root.reduced-motion .teaser-2 {
+  animation: parallax 10s infinite;
+  background-attachment: scroll;
+}
+:root.reduced-motion .teaser-3 {
+  animation: parallax 10s infinite;
+  background-attachment: scroll;
+}
+:root.reduced-motion .teaser-4 {
+  animation: parallax 10s infinite;
+  background-attachment: scroll;
+}
+:root.reduced-motion .teaser-5 {
+  animation: parallax 10s infinite;
+  background-attachment: scroll;
+}
+:root.reduced-motion .teaser-6 {
+  animation: parallax 10s infinite;
+  background-attachment: scroll;
+}
+:root.reduced-motion .teaser-7 {
+  animation: parallax 10s infinite;
+  background-attachment: scroll;
+}
+:root.reduced-motion .teaser-8 {
+  animation: parallax 10s infinite;
+  background-attachment: scroll;
+}
+:root.reduced-motion .teaser-9 {
+  animation: parallax 10s infinite;
+  background-attachment: scroll;
+}
+:root.reduced-motion .teaser-10 {
+  animation: parallax 10s infinite;
+  background-attachment: scroll;
+}

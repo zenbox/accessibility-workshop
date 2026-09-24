@@ -1,0 +1,607 @@
+<!doctype html>
+<!-- generated-by:site-generator - nicht von Hand bearbeiten, wird von build.js überschrieben -->
+<!-- accessibility-workshop wird von build.js durch CONFIG.siteNamespace ersetzt (siehe dort) - so bleiben alle festen Asset-Pfade (CSS/JS/Favicon unten) automatisch im selben Namespace wie der Rest der Seite. -->
+<html
+    lang="de"
+    data-theme="light"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <link
+            rel="icon"
+            href="/accessibility-workshop/assets/icons/sheep.ico"
+            type="image/x-icon"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+        <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="/accessibility-workshop/assets/css/styles.css"
+        />
+        <title>ARIA und Landmarks - Michael Reichart</title>
+        <!--
+            Minimal-Styles für vom Generator eingebundene Assets (siehe
+            assets.js). Gerne nach styles.css übernehmen und hier entfernen,
+            falls dort schon etwas Äquivalentes existiert.
+        -->
+        <style>
+            .md-container .embedded-svg {
+                margin: 1.5em 0;
+            }
+            .md-container .embedded-svg svg {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container img {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container .asset-missing {
+                display: inline-block;
+                padding: 0.2em 0.6em;
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                color: #b00020;
+                background: color-mix(in srgb, #b00020 8%, transparent);
+                font-size: 0.9em;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ══ SKIP LINKS ══════════════════════════════════════════════ -->
+        <nav
+            class="skip-links"
+            aria-label="Sprungnavigation"
+        >
+            <a
+                class="skip-link"
+                href="#main-content"
+                >Zum Hauptinhalt</a
+            >
+            <a
+                class="skip-link"
+                href="#site-footer"
+                >Zum Footer</a
+            >
+        </nav>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
+        <header>
+            <div class="nav-wrapper">
+                <!-- Desktop nav + A11y menu injected by JS -->
+                <button
+                    class="hamburger"
+                    id="hamburgerBtn"
+                    aria-label="Menü öffnen"
+                    aria-expanded="false"
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        id="hamburgerIcon"
+                        >menu</span
+                    >
+                </button>
+            </div>
+            <!-- Mobile nav injected by JS -->
+        </header>
+
+        <!-- ══ PAGE LAYOUT ═════════════════════════════════════════════ -->
+        <div class="page-layout">
+            <!-- ── ARTIKEL ─────────────────────────────────────────── -->
+            <!--
+                Wichtig: dieser Kommentar ist die einzige Markierung, an der
+                der Generator (build.js) den gerenderten Markdown-Inhalt
+                einsetzt. Nicht umbenennen, ohne CONTENT_MARKER in build.js
+                anzupassen.
+            -->
+            <main
+                class="md-container"
+                id="main-content"
+                tabindex="-1"
+            ><h1 tabindex="0">ARIA und Landmarks</h1>
+<p>ARIA steht für <em>Accessible Rich Internet Applications</em> und ist eine Spezifikation des W3C, die es ermöglicht, Webseiten und Webanwendungen für Menschen mit Behinderungen, insbesondere für die Interpretation durch Screenreader zugänglicher zu machen.</p>
+<p>ARIA enthält mehrere Hauptkomponenten:</p>
+<ul>
+<li><strong>Properties</strong>: Attribute, die<ol>
+<li><strong>Textinformationen</strong> hinzufügen von Elementen beschreiben.</li>
+<li><strong>States</strong>: Eine weitere Gruppe umfasst das Verhalten bei Änderungen des DOM.</li>
+<li>Schließlich gibt es noch <strong>Relationen</strong>, die Beziehungen zwischen Elementen beschreiben.</li>
+</ol>
+</li>
+<li><strong>Roles</strong>: Rollen, die Elementen zugewiesen werden können, um die semantische Bedeutung eines Elements zu erzeugen oder zu ändern.</li>
+</ul>
+<p>Die folgenden Beispiele sind nicht vollständig. Eine vollständige Beschreibung aller ARIA-Attribute gibt es zum Beispiel bei <a href="https://wiki.selfhtml.org/wiki/HTML/Attribute/aria-*">SELFHTML</a>.</p>
+<h2 tabindex="0">ARIA-Attribute, die Textinformationen für Screenreader hinzufügen</h2>
+<p>Die folgenden Attribute können Textinformationen für Screenreader hinzufügen:</p>
+<h3 tabindex="0"><code>aria-label</code></h3>
+<pre><code class="language-html">&lt;button aria-label=&quot;Schließen&quot; class=&quot;fa fa-close&quot;&gt;&lt;/button&gt;
+</code></pre>
+<p>Ein Label, das den Inhalt eines Elements beschreibt, hier eine Schaltfläche mit einem Schliessen-Icon. Es wird von Screenreadern vorgelesen, wenn das Element fokussiert ist.</p>
+<h3 tabindex="0"><code>aria-labelledby</code></h3>
+<pre><code class="language-html">&lt;span
+    class=&quot;visually-hidden&quot;
+    id=&quot;dialog-title&quot;
+&gt;
+    Fenster schließen
+&lt;/span&gt;
+&lt;button
+    type=&quot;button&quot;
+    aria-labelledby=&quot;dialog-title&quot;
+&gt;
+    ×
+&lt;/button&gt;
+</code></pre>
+<p>Die ID eines anderen Elements, dessen Inhalt als Label für das aktuelle Element verwendet wird.</p>
+<h3 tabindex="0"><code>aria-describedby</code></h3>
+<pre><code class="language-html">&lt;p
+    class=&quot;visually-hidden&quot; 
+    id=&quot;close-help&quot;
+&gt;
+    Schließt das Fenster.
+&lt;/p&gt;
+&lt;button
+    type=&quot;button&quot;
+    aria-describedby=&quot;close-help&quot;
+&gt;
+    Schließen
+&lt;/button&gt;
+</code></pre>
+<p>Die ID eines anderen Elements, dessen Inhalt als Beschreibung für das aktuelle Element verwendet wird.</p>
+<h2 tabindex="0">ARIA-Attribute, die den Zustand von Elementen beschreiben</h2>
+<p>Die folgenden Attribute können den Zustand von Elementen beschreiben:</p>
+<h3 tabindex="0"><code>aria-disabled</code></h3>
+<p>Gibt an, ob ein Element deaktiviert ist.<code>&lt;div role=&quot;button&quot; aria-disabled=&quot;true&quot; tabindex=&quot;0&quot;&gt;Speichern&lt;/div&gt;</code></p>
+<h3 tabindex="0"><code>aria-hidden</code></h3>
+<p>Gibt an, ob ein Element für Screenreader sichtbar ist.<code>&lt;div aria-hidden=&quot;true&quot;&gt;</code></p>
+<h3 tabindex="0"><code>aria-checked</code></h3>
+<p>Gibt an, ob ein Element ausgewählt ist.<code>&lt;div role=&quot;checkbox&quot; aria-checked=&quot;true&quot; tabindex=&quot;0&quot;&gt;Newsletter&lt;/div&gt;</code></p>
+<h3 tabindex="0"><code>aria-pressed</code></h3>
+<p>Gibt an, ob ein Element gedrückt ist.<code>&lt;button aria-pressed=&quot;true&quot;&gt;</code></p>
+<h3 tabindex="0"><code>aria-expanded</code></h3>
+<p>Gibt an, ob ein Element erweitert ist.<code>&lt;button aria-expanded=&quot;true&quot; aria-controls=&quot;details&quot; type=&quot;button&quot;&gt;Details&lt;/button&gt;   &lt;div id=&quot;details&quot;&gt;…&lt;/div&gt;</code></p>
+<h3 tabindex="0"><code>aria-selected</code></h3>
+<p>Gibt an, ob ein Element innerhalb eines Auswahl-Widgets ausgewählt ist (z.B. in <code>listbox</code>, <code>tabs</code>).<code>&lt;div role=&quot;tablist&quot; aria-label=&quot;Ansichten&quot;&gt;     &lt;button role=&quot;tab&quot; aria-selected=&quot;true&quot; aria-controls=&quot;panel-a&quot; id=&quot;tab-a&quot; type=&quot;button&quot;&gt;Übersicht&lt;/button&gt;     &lt;button role=&quot;tab&quot; aria-selected=&quot;false&quot; aria-controls=&quot;panel-b&quot; id=&quot;tab-b&quot; type=&quot;button&quot;&gt;Details&lt;/button&gt;   &lt;/div&gt;   &lt;section role=&quot;tabpanel&quot; id=&quot;panel-a&quot; aria-labelledby=&quot;tab-a&quot;&gt;…&lt;/section&gt;   &lt;section role=&quot;tabpanel&quot; id=&quot;panel-b&quot; aria-labelledby=&quot;tab-b&quot; hidden&gt;…&lt;/section&gt;</code></p>
+<h3 tabindex="0"><code>aria-current</code></h3>
+<p>Markiert das „aktuelle“ Element in einer Menge verwandter Elemente (z.B. aktuelle Seite, aktueller Schritt).<code>&lt;nav aria-label=&quot;Brotkrumen&quot;&gt;     &lt;ol&gt;       &lt;li&gt;&lt;a href=&quot;/&quot;&gt;Start&lt;/a&gt;&lt;/li&gt;       &lt;li&gt;&lt;a href=&quot;/konto&quot; aria-current=&quot;page&quot;&gt;Konto&lt;/a&gt;&lt;/li&gt;     &lt;/ol&gt;   &lt;/nav&gt;</code></p>
+<h3 tabindex="0"><code>aria-required</code></h3>
+<p>Kennzeichnet ein Eingabefeld als erforderlich. (Hinweis: In HTML ist <code>required</code> oft die bessere Wahl.)<code>&lt;label for=&quot;email&quot;&gt;E‑Mail&lt;/label&gt;   &lt;input id=&quot;email&quot; name=&quot;email&quot; type=&quot;email&quot; aria-required=&quot;true&quot; autocomplete=&quot;email&quot;&gt;</code></p>
+<h3 tabindex="0"><code>aria-invalid</code></h3>
+<p>Markiert ein Feld als ungültig.<code>&lt;label for=&quot;zip&quot;&gt;PLZ&lt;/label&gt;   &lt;input id=&quot;zip&quot; name=&quot;zip&quot; inputmode=&quot;numeric&quot; aria-invalid=&quot;true&quot; aria-describedby=&quot;zip-error&quot;&gt;   &lt;p id=&quot;zip-error&quot; class=&quot;error&quot;&gt;Bitte eine gültige PLZ eingeben.&lt;/p&gt;</code></p>
+<h3 tabindex="0"><code>aria-errormessage</code></h3>
+<p>Verknüpft ein ungültiges Feld mit einem Element, das die Fehlermeldung enthält. Wird typischerweise zusammen mit <code>aria-invalid=&quot;true&quot;</code> eingesetzt.<code>&lt;label for=&quot;password&quot;&gt;Passwort&lt;/label&gt;   &lt;input id=&quot;password&quot; name=&quot;password&quot; type=&quot;password&quot; aria-invalid=&quot;true&quot; aria-errormessage=&quot;pw-error&quot;&gt;   &lt;p id=&quot;pw-error&quot; class=&quot;error&quot;&gt;Mindestens 12 Zeichen.&lt;/p&gt;</code></p>
+<h3 tabindex="0"><code>aria-modal</code></h3>
+<p>Kennzeichnet einen Dialog als modal, d.h. der Fokus bleibt im Dialog, bis er geschlossen wird.<code>&lt;div role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;dialog-title&quot;&gt;…&lt;/div&gt;</code></p>
+<p>und so weiter.</p>
+<h2 tabindex="0">ARIA-Attribute, die beobachten, ob es am DOM Veränderungen gibt:</h2>
+<p>Die folgenden Attribute können beobachten, ob es am DOM Veränderungen gibt:</p>
+<h3 tabindex="0"><code>aria-atomic</code></h3>
+<p>Gibt an, ob ein Element atomar ist, d.h. ob es als Ganzes gelesen werden soll.<code>&lt;div role=&quot;alert&quot; aria-atomic=&quot;true&quot;&gt;   &lt;p&gt;Wichtige Nachricht:&lt;/p&gt;   &lt;p&gt;Ihr Profil wurde erfolgreich aktualisiert.&lt;/p&gt;   &lt;/div&gt;</code></p>
+<h3 tabindex="0"><code>aria-busy</code></h3>
+<p>Gibt an, ob ein Element gerade beschäftigt ist.<code>&lt;section aria-busy=&quot;true&quot; aria-label=&quot;Suchergebnisse&quot;&gt;…&lt;/section&gt;</code></p>
+<h3 tabindex="0"><code>aria-live</code></h3>
+<p>Gibt an, ob Änderungen an einem Element sofort vorgelesen werden sollen.</p>
+<p>aria-live: Änderungen ankündigen</p>
+<p>aria-live eignet sich für Inhalte, die sich dynamisch ändern, ohne dass der Fokus dorthin verschoben wird. Screenreader können die Änderung automatisch vorlesen.</p>
+<p>Beispiel 1: Erfolgreiches Speichern</p>
+<p>Wichtig: Die Live-Region sollte bereits im HTML existieren. Nur ihr Inhalt wird später geändert.</p>
+<pre><code class="language-html">&lt;button type=&quot;button&quot; id=&quot;save-button&quot;&gt;
+    Speichern
+&lt;/button&gt;
+
+&lt;p
+    id=&quot;save-status&quot;
+    class=&quot;status-message&quot;
+    aria-live=&quot;polite&quot;
+    aria-atomic=&quot;true&quot;
+&gt;&lt;/p&gt;
+
+&lt;script&gt;
+    const saveButton = document.querySelector(&#39;#save-button&#39;);
+    const saveStatus = document.querySelector(&#39;#save-status&#39;);
+
+    saveButton.addEventListener(&#39;click&#39;, () =&gt; {
+        saveStatus.textContent = &#39;Änderungen wurden gespeichert.&#39;;
+    });
+&lt;/script&gt;
+</code></pre>
+<p>Warum diese Attribute?</p>
+<p>aria-live=&quot;polite&quot;: Die Meldung wird vorgelesen, sobald der Screenreader einen passenden Moment erreicht.</p>
+<p>aria-atomic=&quot;true&quot;: Die gesamte Meldung wird vorgelesen, nicht nur ein einzelnes geändertes Wort.</p>
+<p>Für wichtige, sofortige Meldungen kann aria-live=&quot;assertive&quot; verwendet werden:</p>
+<pre><code class="language-html">&lt;p id=&quot;connection-status&quot; aria-live=&quot;assertive&quot;&gt;&lt;/p&gt;
+
+&lt;script&gt;
+    document.querySelector(&#39;#connection-status&#39;).textContent =
+        &#39;Die Verbindung zum Server wurde unterbrochen.&#39;;
+&lt;/script&gt;
+</code></pre>
+<p>assertive sollte sparsam eingesetzt werden, da die aktuelle Sprachausgabe unterbrochen werden kann.</p>
+<p>Beispiel 2: Warenkorb aktualisieren</p>
+<pre><code class="language-html">&lt;button type=&quot;button&quot; id=&quot;add-to-cart&quot;&gt;
+    In den Warenkorb
+&lt;/button&gt;
+
+&lt;span id=&quot;cart-count&quot; aria-hidden=&quot;true&quot;&gt;0&lt;/span&gt;
+
+&lt;p id=&quot;cart-status&quot; class=&quot;visually-hidden&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
+
+&lt;script&gt;
+    let cartItems = 0;
+
+    document.querySelector(&#39;#add-to-cart&#39;).addEventListener(&#39;click&#39;, () =&gt; {
+        cartItems += 1;
+
+        document.querySelector(&#39;#cart-count&#39;).textContent = cartItems;
+        document.querySelector(&#39;#cart-status&#39;).textContent =
+            Produkt wurde hinzugefügt. ${cartItems} Produkte im Warenkorb.;
+    });
+&lt;/script&gt;
+</code></pre>
+<p>Das sichtbare Zählfeld ist für die visuelle Orientierung zuständig. Die Live-Region liefert zusätzlich eine verständliche Ansage für Screenreader.</p>
+<p>Beispiel 3: Suchergebnisse</p>
+<pre><code class="language-html">&lt;label for=&quot;search&quot;&gt;Seminar suchen&lt;/label&gt;
+&lt;input type=&quot;search&quot; id=&quot;search&quot;&gt;
+
+&lt;p id=&quot;search-status&quot; aria-live=&quot;polite&quot; aria-atomic=&quot;true&quot;&gt;&lt;/p&gt;
+
+&lt;ul id=&quot;results&quot;&gt;&lt;/ul&gt;
+
+&lt;script&gt;
+    const searchInput = document.querySelector(&#39;#search&#39;);
+    const searchStatus = document.querySelector(&#39;#search-status&#39;);
+    const results = document.querySelector(&#39;#results&#39;);
+
+    searchInput.addEventListener(&#39;input&#39;, () =&gt; {
+        const query = searchInput.value.trim();
+
+        if (query === &#39;&#39;) {
+            results.innerHTML = &#39;&#39;;
+            searchStatus.textContent = &#39;&#39;;
+            return;
+        }
+
+        const resultCount = 3;
+
+        results.innerHTML = 
+            &lt;li&gt;JavaScript Grundlagen&lt;/li&gt;
+            &lt;li&gt;JavaScript für Fortgeschrittene&lt;/li&gt;
+            &lt;li&gt;Web Accessibility mit JavaScript&lt;/li&gt;
+        ;
+
+        searchStatus.textContent =
+            ${resultCount} Ergebnisse für ${query}.;
+    });
+&lt;/script&gt;
+</code></pre>
+<p>aria-errormessage: Fehlermeldungen zuordnen</p>
+<p>aria-errormessage verbindet ein Eingabefeld mit der konkreten Fehlermeldung.</p>
+<p>Voraussetzungen:</p>
+<p>Das Eingabefeld hat aria-invalid=&quot;true&quot;.</p>
+<p>aria-errormessage enthält die ID der Fehlermeldung.</p>
+<p>Die Fehlermeldung ist im DOM vorhanden und sichtbar oder zugänglich.</p>
+<p>Der Text beschreibt konkret, wie der Fehler behoben werden kann.</p>
+<p>Beispiel 1: E-Mail-Adresse validieren</p>
+<pre><code class="language-html">&lt;form id=&quot;registration-form&quot; novalidate&gt;
+    &lt;div&gt;
+        &lt;label for=&quot;email&quot;&gt;E-Mail-Adresse&lt;/label&gt;
+
+        &lt;input
+            type=&quot;email&quot;
+            id=&quot;email&quot;
+            name=&quot;email&quot;
+            aria-invalid=&quot;false&quot;
+            aria-errormessage=&quot;email-error&quot;
+
+        &lt;p id=&quot;email-error&quot; class=&quot;error-message&quot; hidden&gt;
+            Bitte geben Sie eine gültige E-Mail-Adresse ein,
+            zum Beispiel name@beispiel.de.
+        &lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;button type=&quot;submit&quot;&gt;Registrieren&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+    const form = document.querySelector(&#39;#registration-form&#39;);
+    const email = document.querySelector(&#39;#email&#39;);
+    const emailError = document.querySelector(&#39;#email-error&#39;);
+
+    form.addEventListener(&#39;submit&#39;, (event) =&gt; {
+        event.preventDefault();
+
+        const isValid = email.validity.valid &amp;&amp; email.value.trim() !== &#39;&#39;;
+
+        email.setAttribute(&#39;aria-invalid&#39;, String(!isValid));
+        emailError.hidden = isValid;
+
+        if (!isValid) {
+            email.focus();
+        }
+    });
+&lt;/script&gt;
+</code></pre>
+<p>Wenn die Eingabe ungültig ist, entsteht sinngemäß folgende Beziehung:</p>
+<pre><code class="language-html">&lt;input
+    id=&quot;email&quot;
+    aria-invalid=&quot;true&quot;
+    aria-errormessage=&quot;email-error&quot;
+
+&lt;p id=&quot;email-error&quot;&gt;
+    Bitte geben Sie eine gültige E-Mail-Adresse ein.
+&lt;/p&gt;
+</code></pre>
+<p>Beispiel 2: Passwortregeln und Fehlermeldung unterscheiden</p>
+<p>Für allgemeine Hinweise ist aria-describedby passend. Für einen konkreten Validierungsfehler wird aria-errormessage verwendet.</p>
+<pre><code class="language-html">&lt;label for=&quot;password&quot;&gt;Passwort&lt;/label&gt;
+
+&lt;input
+    type=&quot;password&quot;
+    id=&quot;password&quot;
+    aria-describedby=&quot;password-hint&quot;
+    aria-invalid=&quot;false&quot;
+    aria-errormessage=&quot;password-error&quot;
+
+&lt;p id=&quot;password-hint&quot;&gt;
+    Mindestens 12 Zeichen, ein Großbuchstabe und eine Zahl.
+&lt;/p&gt;
+
+&lt;p id=&quot;password-error&quot; class=&quot;error-message&quot; hidden&gt;
+    Das Passwort erfüllt noch nicht alle Anforderungen.
+&lt;/p&gt;
+
+
+&lt;script&gt;
+const password = document.querySelector(&#39;#password&#39;);
+const passwordError = document.querySelector(&#39;#password-error&#39;);
+
+password.addEventListener(&#39;blur&#39;, () =&gt; {
+    const value = password.value;
+
+    const isValid =
+        value.length &gt;= 12 &amp;&amp;
+        /[A-Z]/.test(value) &amp;&amp;
+        /\d/.test(value);
+
+    password.setAttribute(&#39;aria-invalid&#39;, String(!isValid));
+    passwordError.hidden = isValid;
+});
+&lt;/script&gt;
+</code></pre>
+<p>Beispiel 3: Mehrere Felder in einem Formular</p>
+<pre><code class="language-html">&lt;form id=&quot;booking-form&quot; novalidate&gt;
+    &lt;div&gt;
+        &lt;label for=&quot;first-name&quot;&gt;Vorname&lt;/label&gt;
+        &lt;input
+            id=&quot;first-name&quot;
+            name=&quot;first-name&quot;
+            aria-invalid=&quot;false&quot;
+            aria-errormessage=&quot;first-name-error&quot;
+        &lt;p id=&quot;first-name-error&quot; class=&quot;error-message&quot; hidden&gt;
+            Bitte geben Sie Ihren Vornamen ein.
+        &lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div&gt;
+        &lt;label for=&quot;participants&quot;&gt;Anzahl der Teilnehmenden&lt;/label&gt;
+        &lt;input
+            id=&quot;participants&quot;
+            name=&quot;participants&quot;
+            type=&quot;number&quot;
+            min=&quot;1&quot;
+            aria-invalid=&quot;false&quot;
+            aria-errormessage=&quot;participants-error&quot;
+        &lt;p id=&quot;participants-error&quot; class=&quot;error-message&quot; hidden&gt;
+            Bitte geben Sie mindestens eine teilnehmende Person an.
+        &lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;button type=&quot;submit&quot;&gt;Anfrage senden&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+    const bookingForm = document.querySelector(&#39;#booking-form&#39;);
+
+    bookingForm.addEventListener(&#39;submit&#39;, (event) =&gt; {
+        event.preventDefault();
+
+        const firstName = document.querySelector(&#39;#first-name&#39;);
+        const participants = document.querySelector(&#39;#participants&#39;);
+
+        const fields = [
+            {
+                input: firstName,
+                error: document.querySelector(&#39;#first-name-error&#39;),
+                valid: firstName.value.trim() !== &#39;&#39;
+            },
+            {
+                input: participants,
+                error: document.querySelector(&#39;#participants-error&#39;),
+                valid: Number(participants.value) &gt;= 1
+            }
+        ];
+
+        let firstInvalidField = null;
+
+        fields.forEach(({ input, error, valid }) =&gt; {
+            input.setAttribute(&#39;aria-invalid&#39;, String(!valid));
+            error.hidden = valid;
+
+            if (!valid &amp;&amp; !firstInvalidField) {
+                firstInvalidField = input;
+            }
+        });
+
+        if (firstInvalidField) {
+            firstInvalidField.focus();
+        }
+    });
+&lt;/script&gt;
+</code></pre>
+<p>aria-live und aria-errormessage gemeinsam verwenden</p>
+<p>Bei einer Formularprüfung kann eine zusätzliche Live-Region die Anzahl der Fehler ankündigen:</p>
+<pre><code class="language-html">&lt;div
+    id=&quot;form-status&quot;
+    role=&quot;status&quot;
+    aria-live=&quot;polite&quot;
+    aria-atomic=&quot;true&quot;
+&gt;&lt;/div&gt;
+
+&lt;script&gt;
+const invalidFields = fields.filter(field =&gt; !field.valid);
+
+document.querySelector(&#39;#form-status&#39;).textContent =
+    invalidFields.length === 0
+        ? &#39;Formular wurde erfolgreich gesendet.&#39;
+        : ${invalidFields.length} Eingabefelder enthalten Fehler.;
+&lt;/script&gt;
+</code></pre>
+<p>role=&quot;status&quot; entspricht in diesem Fall im Wesentlichen einer höflichen Live-Region. Verwende nicht zusätzlich unnötig role=&quot;alert&quot; am gesamten Formular.</p>
+<p>Häufige Fehler</p>
+<p>Fehlermeldung ohne aria-invalid</p>
+<pre><code class="language-html">&lt;!-- Ungünstig --&gt;
+&lt;input aria-errormessage=&quot;email-error&quot;&gt;
+</code></pre>
+<p>Besser:</p>
+<pre><code class="language-html">&lt;input
+    aria-invalid=&quot;true&quot;
+    aria-errormessage=&quot;email-error&quot;
+</code></pre>
+<p>Fehlermeldung mit falscher ID</p>
+<pre><code class="language-html">&lt;input
+    aria-invalid=&quot;true&quot;
+    aria-errormessage=&quot;wrong-id&quot;
+
+&lt;p id=&quot;email-error&quot;&gt;Ungültige E-Mail-Adresse.&lt;/p&gt;
+</code></pre>
+<p>Die ID muss exakt übereinstimmen:</p>
+<pre><code class="language-html">&lt;input
+    aria-invalid=&quot;true&quot;
+    aria-errormessage=&quot;email-error&quot;
+
+&lt;p id=&quot;email-error&quot;&gt;Ungültige E-Mail-Adresse.&lt;/p&gt;
+</code></pre>
+<p>Jede kleine Änderung als assertive ankündigen</p>
+<pre><code class="language-html">&lt;!-- Zu aggressiv für normale Statusänderungen --&gt;
+&lt;div aria-live=&quot;assertive&quot;&gt;
+    Zeichen eingegeben
+&lt;/div&gt;
+</code></pre>
+<p>Für Suchergebnisse, Speichervorgänge oder Warenkorbänderungen ist meistens besser:</p>
+<pre><code class="language-html">&lt;div aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>Inhalt der Live-Region ständig ersetzen</p>
+<p>Ungünstig:</p>
+<pre><code class="language-html">status.innerHTML = 
+    &lt;h2&gt;Erfolg&lt;/h2&gt;
+    &lt;p&gt;Die Daten wurden gespeichert.&lt;/p&gt;
+;
+</code></pre>
+<p>Besser für eine kurze Statusmeldung:</p>
+<pre><code class="language-html">status.textContent = &#39;Die Daten wurden gespeichert.&#39;;
+</code></pre>
+<p>Merksatz</p>
+<p>aria-live: „Bitte kündige diese dynamische Änderung an.“</p>
+<p>aria-errormessage: „Diese konkrete Fehlermeldung gehört zu diesem ungültigen Eingabefeld.“</p>
+<p>aria-describedby: „Diese zusätzliche Beschreibung oder Anleitung gehört zu diesem Element.“</p>
+<pre><code class="language-html">&lt;output
+    role=&quot;status&quot;
+    aria-live=&quot;polite&quot;
+    aria-atomic=&quot;true&quot;
+&gt;
+    0 Treffer
+&lt;/output&gt;
+
+&lt;label for=&quot;&quot;&gt;
+    Name
+&lt;/label&gt;
+&lt;input
+    type=&quot;text&quot;
+    id=&quot;my-name&quot;
+/&gt;
+&lt;p
+    aria-live=&quot;assertive&quot;
+&gt;&lt;/p&gt;
+</code></pre>
+<h3 tabindex="0"><code>aria-relevant</code></h3>
+<p>Gibt an, welche Art von Änderungen an einem Element vorgelesen werden sollen.</p>
+<pre><code class="language-html">&lt;div role=&quot;status&quot; aria-live=&quot;polite&quot; aria-relevant=&quot;additions&quot;&gt;     …   &lt;/div&gt;
+</code></pre>
+<h2 tabindex="0">ARIA-Attribute, die ein Verhalten von Elementen beschreiben</h2>
+<p>Die folgenden Attribute können Verhalten/Beziehungen von Elementen beschreiben:</p>
+<p><code>aria-haspopup</code></p>
+<p>Gibt an, ob ein Element ein Popup (z.B. <code>menu</code>, <code>listbox</code> oder <code>dialog</code>) öffnet.<code>&lt;button aria-haspopup=&quot;menu&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;user-menu&quot; type=&quot;button&quot;&gt;Profil&lt;/button&gt;   &lt;div id=&quot;user-menu&quot; role=&quot;menu&quot;&gt;…&lt;/div&gt;</code></p>
+<p><code>aria-owns</code></p>
+<p>Die ID eines anderen Elements, das von diesem Element besessen wird.<code>&lt;div role=&quot;listbox&quot; aria-owns=&quot;opt-1 opt-2&quot;&gt;…&lt;/div&gt;   &lt;div id=&quot;opt-1&quot; role=&quot;option&quot;&gt;Option 1&lt;/div&gt;   &lt;div id=&quot;opt-2&quot; role=&quot;option&quot;&gt;Option 2&lt;/div&gt;</code></p>
+<p><code>aria-controls</code></p>
+<p>Die ID eines anderen Elements, das von diesem Element kontrolliert wird.<code>&lt;button aria-controls=&quot;filters&quot; aria-expanded=&quot;false&quot; type=&quot;button&quot;&gt;Filter&lt;/button&gt;   &lt;section id=&quot;filters&quot;&gt;…&lt;/section&gt;</code></p>
+<p><code>aria-flowto</code></p>
+<p>Die ID eines anderen Elements, das von diesem Element fokussiert wird.<code>&lt;p id=&quot;step-1&quot; aria-flowto=&quot;step-2&quot;&gt;Schritt 1…&lt;/p&gt;   &lt;p id=&quot;step-2&quot;&gt;Schritt 2…&lt;/p&gt;</code></p>
+<p><code>aria-activedescendant</code></p>
+<p>Die ID eines anderen Elements, das von diesem Element aktiviert wird.<code>&lt;div role=&quot;listbox&quot; tabindex=&quot;0&quot; aria-activedescendant=&quot;opt-2&quot;&gt;…&lt;/div&gt;   &lt;div id=&quot;opt-1&quot; role=&quot;option&quot;&gt;Option 1&lt;/div&gt;   &lt;div id=&quot;opt-2&quot; role=&quot;option&quot; aria-selected=&quot;true&quot;&gt;Option 2&lt;/div&gt;</code></p>
+<p><code>aria-valuenow</code></p>
+<p>Der aktuelle numerische Wert eines Widgets (z.B. <code>slider</code>).<code>&lt;div role=&quot;slider&quot; tabindex=&quot;0&quot; aria-label=&quot;Lautstärke&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot; aria-valuenow=&quot;30&quot;&gt;…&lt;/div&gt;</code></p>
+<p><code>aria-valuemin</code>, <code>aria-valuemax</code></p>
+<p>Untere und obere Grenze eines numerischen Widgets.<code>&lt;div role=&quot;spinbutton&quot; tabindex=&quot;0&quot; aria-label=&quot;Anzahl&quot; aria-valuemin=&quot;1&quot; aria-valuemax=&quot;10&quot; aria-valuenow=&quot;1&quot;&gt;1&lt;/div&gt;</code></p>
+<p><code>aria-valuetext</code></p>
+<p>Textuelle Beschreibung des aktuellen Werts (wenn <code>aria-valuenow</code> alleine nicht ausreicht).<code>&lt;div role=&quot;slider&quot; tabindex=&quot;0&quot; aria-label=&quot;Zoom&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;4&quot; aria-valuenow=&quot;2&quot; aria-valuetext=&quot;200%&quot;&gt;…&lt;/div&gt;</code></p>
+<p>und so weiter.</p>
+<h2 tabindex="0"><em>Landmarks</em> (<code>roles</code>)</h2>
+<p><em>Landmarks</em> sind semantische Rollen, die es Screenreadern ermöglichen, die Struktur einer Webseite zu erkennen. Sie können nicht-semantischen <code>div</code>-Elemente eine semantische Bedeutung geben. Sie können auch die Semantik eines HTML-Elements ändern.</p>
+<p>In HTML gilt: Wenn ein passendes semantisches Element existiert (<code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;footer&gt;</code>), ist das meistens die bessere Wahl als ein zusätzliches <code>role</code> auf einem <code>&lt;div&gt;</code>.</p>
+<p>Wenn es mehrere Bereiche mit derselben Landmark-Rolle gibt (z.B. mehrere Navigationsbereiche), sollten sie eindeutig benannt werden (z.B. mit <code>aria-label</code> oder <code>aria-labelledby</code>), damit Screenreader sie gut unterscheiden können.</p>
+<p><code>role=&quot;banner&quot;</code></p>
+<p>Ein Bereich, der den Kopf einer Webseite enthält. Er kann mehrere Elemente enthalten, wie z.B. ein Logo, eine Überschrift, eine Suchfunktion und eine Navigation.<code>&lt;header role=&quot;banner&quot;&gt;…&lt;/header&gt;</code></p>
+<p><code>role=&quot;navigation&quot;</code></p>
+<p>Ein Bereich, der eine Navigation enthält. Er kann mehrere Elemente enthalten, wie z.B. eine Liste von Links oder eine Suchfunktion.<code>&lt;nav aria-label=&quot;Hauptnavigation&quot;&gt;…&lt;/nav&gt;</code></p>
+<p><code>role=&quot;main&quot;</code></p>
+<p>Der Hauptinhalt einer Webseite. Er kann mehrere Elemente enthalten, wie z.B. Artikel, Abschnitte und Nebeninhalte.<code>&lt;main&gt;…&lt;/main&gt;</code></p>
+<p><code>role=&quot;complementary&quot;</code></p>
+<p>Ein Bereich, der zusätzliche Informationen enthält, die nicht zum Hauptinhalt gehören. Er kann mehrere Elemente enthalten, wie z.B. eine Sidebar, eine Werbung oder verwandte Links.<code>&lt;aside aria-label=&quot;Weiterführende Links&quot;&gt;…&lt;/aside&gt;</code></p>
+<p><code>role=&quot;contentinfo&quot;</code></p>
+<p>Ein Bereich, der Informationen über die Webseite enthält. Er kann mehrere Elemente enthalten, wie z.B. ein Impressum, eine Datenschutzerklärung und eine Kontaktadresse.<code>&lt;footer&gt;…&lt;/footer&gt;</code></p>
+<p><code>role=&quot;search&quot;</code></p>
+<p>Ein Bereich, der eine Suchfunktion enthält. Er kann mehrere Elemente enthalten, wie z.B. ein Eingabefeld, eine Schaltfläche und eine Ergebnisliste.<code>&lt;form role=&quot;search&quot; aria-label=&quot;Website durchsuchen&quot;&gt;…&lt;/form&gt;</code></p>
+<p><code>role=&quot;form&quot;</code></p>
+<p>Ein Bereich, der ein Formular enthält. Er kann mehrere Elemente enthalten, wie z.B. Eingabefelder, Schaltflächen und Auswahllisten.<code>&lt;form role=&quot;form&quot; aria-labelledby=&quot;contact-title&quot;&gt;…&lt;/form&gt;</code></p>
+<p><code>role=&quot;region&quot;</code></p>
+<p>Ein wichtiger Abschnitt der Seite, der als Landmark auftauchen soll. Regionen sollten immer benannt werden (z.B. per <code>aria-label</code>), sonst ist der Landmark-Eintrag für Nutzer:innen wenig hilfreich.<code>&lt;section role=&quot;region&quot; aria-label=&quot;Aktuelle Hinweise&quot;&gt;…&lt;/section&gt;</code></p>
+<p>und so weiter.</p>
+</main>
+
+            <!-- ── TABLE OF CONTENTS ───────────────────────────────── -->
+            <aside
+                class="toc-sidebar"
+                aria-label="Inhaltsverzeichnis"
+                id="toc-sidebar"
+            >
+                <h2>Inhalt</h2>
+                <!-- injected by JS -->
+            </aside>
+        </div>
+        <!-- /.page-layout -->
+
+        <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+        <footer
+            id="site-footer"
+            tabindex="-1"
+        >
+            <!-- injected by JS -->
+        </footer>
+
+        <script
+            src="/accessibility-workshop/assets/js/main.js"
+            type="module"
+        ></script>
+    </body>
+</html>

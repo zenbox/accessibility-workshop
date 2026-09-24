@@ -1,0 +1,110 @@
+/* ════════════════════════════════════════════════════════════════
+   BASE
+════════════════════════════════════════════════════════════════ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    transition:
+        background var(--transition),
+        color var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   KONTRAST-FILTER
+   Wird auf Oberflächen angewendet, nicht auf <html> selbst,
+   damit position:fixed (Skiplinks) nicht beeinträchtigt wird.
+════════════════════════════════════════════════════════════════ */
+/* body, */
+header,
+main,
+footer,
+.dropdown,
+.a11y-panel,
+.toc-sidebar,
+.info-box,
+.theme-btn,
+.a11y-row {
+    filter: contrast(var(--contrast-value, 1));
+}
+
+/* Im High-Contrast-Modus deaktivieren */
+[data-theme="high-contrast"] body,
+[data-theme="high-contrast"] header,
+[data-theme="high-contrast"] main,
+[data-theme="high-contrast"] footer,
+[data-theme="high-contrast"] .dropdown,
+[data-theme="high-contrast"] .a11y-panel,
+[data-theme="high-contrast"] .toc-sidebar,
+[data-theme="high-contrast"] .info-box,
+[data-theme="high-contrast"] .theme-btn,
+[data-theme="high-contrast"] .a11y-row {
+    filter: none;
+}
+
+main {
+    padding-inline: 1rem;
+    max-width: 80ch;
+}
+main ul,
+main ol {
+    margin-inline-start: 2rem;
+    margin-block: 1rem;
+}
+
+pre:has(code),
+code {
+    background: var(--color-grey-200);
+    padding: 2px;
+    white-space: pre-wrap;
+}
+
+samp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--color-grey-100);
+    padding: 1rem;
+}
+
+p,
+li {
+    margin-block-end: 0.5rem;
+}
+
+pre:has(code) {
+    padding: 1rem;
+}
+
+kbd {
+    border: 1px solid black;
+    padding: 0.5em;
+    border-radius: 0.2em;
+}
+
+dl {
+    margin-block: 1rem;
+}
+dt {
+    padding-inline-start: 1rem;
+}
+dt::before {
+    content: "> ";
+}
+dd {
+    padding-inline-start: 2rem;
+}

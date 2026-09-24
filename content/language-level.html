@@ -1,239 +1,211 @@
-<!DOCTYPE html>
-<html lang="de">
+<!doctype html>
+<!-- generated-by:site-generator - nicht von Hand bearbeiten, wird von build.js überschrieben -->
+<!-- accessibility-workshop wird von build.js durch CONFIG.siteNamespace ersetzt (siehe dort) - so bleiben alle festen Asset-Pfade (CSS/JS/Favicon unten) automatisch im selben Namespace wie der Rest der Seite. -->
+<html
+    lang="de"
+    data-theme="light"
+>
     <head>
         <meta charset="UTF-8" />
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
         />
-        <title>Sprachlevel - Verständlichkeit durch einfache Sprache</title>
+        <link
+            rel="icon"
+            href="/accessibility-workshop/assets/icons/sheep.ico"
+            type="image/x-icon"
+        />
         <link
             rel="stylesheet"
-            href="../assets/css/style.css"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         />
+        <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="/accessibility-workshop/assets/css/styles.css"
+        />
+        <title>Sprachlevel - präzise, verständlich, einfach oder leicht? - Michael Reichart</title>
+        <!--
+            Minimal-Styles für vom Generator eingebundene Assets (siehe
+            assets.js). Gerne nach styles.css übernehmen und hier entfernen,
+            falls dort schon etwas Äquivalentes existiert.
+        -->
+        <style>
+            .md-container .embedded-svg {
+                margin: 1.5em 0;
+            }
+            .md-container .embedded-svg svg {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container img {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container .asset-missing {
+                display: inline-block;
+                padding: 0.2em 0.6em;
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                color: #b00020;
+                background: color-mix(in srgb, #b00020 8%, transparent);
+                font-size: 0.9em;
+            }
+        </style>
     </head>
     <body>
+        <!-- ══ SKIP LINKS ══════════════════════════════════════════════ -->
+        <nav
+            class="skip-links"
+            aria-label="Sprungnavigation"
+        >
+            <a
+                class="skip-link"
+                href="#main-content"
+                >Zum Hauptinhalt</a
+            >
+            <a
+                class="skip-link"
+                href="#site-footer"
+                >Zum Footer</a
+            >
+        </nav>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
         <header>
-            <h1>Sprachlevel - präzise, verständlich, einfach oder leicht?</h1>
-            <p>
-                Was ist ein einfacher Text, was ist ein Text in einfacher
-                Sprache und was ist Leichte Sprache? Im folgenden Text gibt es
-                Erklärungen und Beispiele.
-            </p>
-            <p><strong> Das Hamburger Verständlichkeitsmodell: </strong></p>
-            <ul>
-                <li>Will Texte allgemein verständlicher machen.</li>
-                <li>Es richtet sich an alle Leserinnen.</li>
-                <li>
-                    Es optimiert Stil, Struktur, Klarheit. 
-                </li>
-            </ul>
-
-            <p>
-                <strong>Einfache Sprache</strong>
-            </p>
-            <ul>
-                <li>
-                    Will Texte für Menschen mit geringerer Sprach- oder
-                    Lesekompetenz zugänglich machen.
-                </li>
-                <li>
-                    Richtet sich z. B. an Menschen mit Lernschwierigkeiten,
-                    Sprachbarrieren, geringer Bildung.
-                </li>
-                <li>Hat ein inklusives und barrierefreies Ziel.</li>
-            </ul>
-
-            <p><strong>Leichte Sprache</strong></p>
-            <ul>
-                <li>
-                    Will Texte für Menschen mit kognitiven Beeinträchtigungen
-                    zugänglich machen.
-                </li>
-                <li>
-                    Richtet sich an Menschen mit Lernschwierigkeiten, geistigen
-                    Behinderungen oder kognitiven Einschränkungen.
-                </li>
-                <li>
-                    Hat ein sehr spezifisches Ziel, um Barrieren zu minimieren.
-                </li>
-            </ul>
-            <p><strong>Texte für ein Fachpublikum</strong></p>
-            <ul>
-                <li>
-                    Texte für ein Fachpublikum verwenden oft komplexe
-                    Terminologie und detaillierte Erklärungen.
-                </li>
-                <li>
-                    Sie richten sich an Experten oder Personen mit
-                    spezialisiertem Wissen in einem bestimmten Bereich.
-                </li>
-                <li>
-                    Ziel ist es, präzise und umfassende Informationen zu
-                    vermitteln.
-                </li>
-                <li>
-                    Sie müssen nicht von jedem verstanden werden. Sie werden im
-                    Bedarfsfall erklärt.
-                </li>
-            </ul>
+            <div class="nav-wrapper">
+                <!-- Desktop nav + A11y menu injected by JS -->
+                <button
+                    class="hamburger"
+                    id="hamburgerBtn"
+                    aria-label="Menü öffnen"
+                    aria-expanded="false"
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        id="hamburgerIcon"
+                        >menu</span
+                    >
+                </button>
+            </div>
+            <!-- Mobile nav injected by JS -->
         </header>
-        <main>
-            <article>
-                <h2>Das Hamburger Verständlichkeitsmodell</h2>
-                <p>
-                    Das Hamburger Verständlichkeitsmodell ist ein Konzept zur
-                    Beurteilung und Verbesserung der Verständlichkeit von
-                    Texten. Es wurde Anfang der 1970er von den
-                    Sprachwissenschaftlern Langer, Schulz von Thun und Tausch
-                    entwickelt. Es zielt darauf ab, Texte so zu gestalten, dass
-                    sie für die Leser klar, prägnant und leicht verständlich
-                    sind.
-                </p>
-                <p>
-                    Es wird häufig in der Praxis genutzt, um Texte –
-                    insbesondere in der Unternehmenskommunikation, im
-                    Journalismus oder im Bildungsbereich – zu optimieren. Es
-                    bietet eine praktische Orientierung, wie Texte so gestaltet
-                    werden können, dass sie vom Zielpublikum leicht verstanden
-                    und aufgenommen werden.
-                </p>
-                <p>
-                    Das Modell basiert auf vier Hauptdimensionen der
-                    Verständlichkeit:
-                </p>
 
-                <ol>
-                    <li>
-                        <b>Einfachheit</b>:
-                        <i
-                            >Einfachheit Sprache soll klar, konkret und ohne
-                            unnötige Fachbegriffe sein.</i
-                        ><br />Diese Dimension bezieht sich auf die Wortwahl und
-                        den Satzbau. Ein Text ist einfacher zu verstehen, wenn
-                        er kurze, prägnante Sätze und leicht verständliche
-                        Wörter verwendet. Fachbegriffe sollten vermieden oder
-                        zumindest erklärt werden.<br /><br />
-                    </li>
+        <!-- ══ PAGE LAYOUT ═════════════════════════════════════════════ -->
+        <div class="page-layout">
+            <!-- ── ARTIKEL ─────────────────────────────────────────── -->
+            <!--
+                Wichtig: dieser Kommentar ist die einzige Markierung, an der
+                der Generator (build.js) den gerenderten Markdown-Inhalt
+                einsetzt. Nicht umbenennen, ohne CONTENT_MARKER in build.js
+                anzupassen.
+            -->
+            <main
+                class="md-container"
+                id="main-content"
+                tabindex="-1"
+            ><h1 tabindex="0">Sprachlevel - präzise, verständlich, einfach oder leicht?</h1>
+<p>Was ist ein einfacher Text, was ist ein Text in einfacher Sprache und was ist Leichte Sprache? Im folgenden Text gibt es Erklärungen und Beispiele.</p>
+<p><strong>Das Hamburger Verständlichkeitsmodell:</strong></p>
+<ul>
+<li>Will Texte allgemein verständlicher machen.</li>
+<li>Es richtet sich an alle Leserinnen.</li>
+<li>Es optimiert Stil, Struktur, Klarheit.</li>
+</ul>
+<p><strong>Einfache Sprache</strong></p>
+<ul>
+<li>Will Texte für Menschen mit geringerer Sprach- oder Lesekompetenz zugänglich machen.</li>
+<li>Richtet sich z. B. an Menschen mit Lernschwierigkeiten, Sprachbarrieren, geringer Bildung.</li>
+<li>Hat ein inklusives und barrierefreies Ziel.</li>
+</ul>
+<p><strong>Leichte Sprache</strong></p>
+<ul>
+<li>Will Texte für Menschen mit kognitiven Beeinträchtigungen zugänglich machen.</li>
+<li>Richtet sich an Menschen mit Lernschwierigkeiten, geistigen Behinderungen oder kognitiven Einschränkungen.</li>
+<li>Hat ein sehr spezifisches Ziel, um Barrieren zu minimieren.</li>
+</ul>
+<p><strong>Texte für ein Fachpublikum</strong></p>
+<ul>
+<li>Texte für ein Fachpublikum verwenden oft komplexe Terminologie und detaillierte Erklärungen.</li>
+<li>Sie richten sich an Experten oder Personen mit spezialisiertem Wissen in einem bestimmten Bereich.</li>
+<li>Ziel ist es, präzise und umfassende Informationen zu vermitteln.</li>
+<li>Sie müssen nicht von jedem verstanden werden. Sie werden im Bedarfsfall erklärt.</li>
+</ul>
+<h2 tabindex="0">Das Hamburger Verständlichkeitsmodell</h2>
+<p>Das Hamburger Verständlichkeitsmodell ist ein Konzept zur Beurteilung und Verbesserung der Verständlichkeit von Texten. Es wurde Anfang der 1970er von den Sprachwissenschaftlern Langer, Schulz von Thun und Tausch entwickelt. Es zielt darauf ab, Texte so zu gestalten, dass sie für die Leser klar, prägnant und leicht verständlich sind.</p>
+<p>Es wird häufig in der Praxis genutzt, um Texte – insbesondere in der Unternehmenskommunikation, im Journalismus oder im Bildungsbereich – zu optimieren. Es bietet eine praktische Orientierung, wie Texte so gestaltet werden können, dass sie vom Zielpublikum leicht verstanden und aufgenommen werden.</p>
+<p>Das Modell basiert auf vier Hauptdimensionen der Verständlichkeit:</p>
+<ol>
+<li><p><strong>Einfachheit</strong>: <em>Einfachheit Sprache soll klar, konkret und ohne unnötige Fachbegriffe sein.</em><br> Diese Dimension bezieht sich auf die Wortwahl und den Satzbau. Ein Text ist einfacher zu verstehen, wenn er kurze, prägnante Sätze und leicht verständliche Wörter verwendet. Fachbegriffe sollten vermieden oder zumindest erklärt werden.  </p>
+</li>
+<li><p><strong>Gliederung/Ordnung</strong>: <em>Informationen sollen logisch aufgebaut sein.</em><br> Ein klar strukturierter Text ist leichter zu erfassen. Diese Dimension betont die Bedeutung einer logischen und übersichtlichen Gliederung des Textes, die dem Leser hilft, den Inhalt besser zu organisieren und nachzuvollziehen. Absätze, Überschriften und Zwischenüberschriften tragen zur Übersichtlichkeit bei.  </p>
+</li>
+<li><p><strong>Kürze/Prägnanz</strong>: <em>Nicht mehr sagen als nötig – aber auch nicht zu wenig.</em><br> Hier geht es darum, den Text auf das Wesentliche zu konzentrieren. Unnötige Wiederholungen und Ausschweifungen sollten vermieden werden, um den Text nicht zu überladen und die Aufmerksamkeit des Lesers nicht zu verlieren.  </p>
+</li>
+<li><p><strong>Anregende Zusätze</strong>: <em>Elemente, die das Lesen angenehmer machen oder motivieren.</em><br> Diese Dimension betrifft die Einbeziehung von Beispielen, Metaphern oder Bildern, die den Text anschaulicher und interessanter machen. Solche Zusätze können helfen, abstrakte Inhalte greifbarer zu machen und das Interesse des Lesers zu wecken.</p>
+</li>
+</ol>
+<h2 tabindex="0">Praktische Anwendung - Beispiele</h2>
+<h3 tabindex="0">Einfachheit</h3>
+<p><strong>Vorher:</strong> Die Implementierung der neuen Softwarelösung erfordert eine umfassende Schulung der Mitarbeiter, um die Effizienz und Produktivität zu maximieren.</p>
+<p><strong>Nachher:</strong> Wir müssen unsere Mitarbeiter schulen, damit sie die neue Software gut nutzen können.</p>
+<h3 tabindex="0">Gliederung/Ordnung</h3>
+<p><strong>Vorher:</strong> Unser Unternehmen bietet eine Vielzahl von Dienstleistungen an, darunter Webentwicklung, digitales Marketing und IT-Beratung. Wir haben ein erfahrenes Team von Fachleuten, die in der Lage sind, maßgeschneiderte Lösungen für unsere Kunden zu entwickeln.</p>
+<p><strong>Nachher:</strong> Unser Unternehmen bietet drei Hauptdienstleistungen an:  </p>
+<ol>
+<li>Webentwicklung  </li>
+<li>Digitales Marketing  </li>
+<li>IT-Beratung<br>Unser erfahrenes Team entwickelt maßgeschneiderte Lösungen für unsere Kunden.</li>
+</ol>
+<h3 tabindex="0">Kürze/Prägnanz</h3>
+<p><strong>Vorher:</strong> Aufgrund der aktuellen Marktsituation und der zunehmenden Konkurrenz ist es von entscheidender Bedeutung, dass wir unsere Geschäftsstrategie überdenken und anpassen, um wettbewerbsfähig zu bleiben und langfristigen Erfolg zu sichern.</p>
+<p><strong>Nachher:</strong> Wir müssen unsere Geschäftsstrategie an die aktuelle Marktsituation anpassen, um wettbewerbsfähig zu bleiben.</p>
+<h3 tabindex="0">Anregende Zusätze</h3>
+<p><strong>Vorher:</strong> Ein Passwort sollte regelmäßig geändert werden.</p>
+<p><strong>Nachher:</strong> Ein Passwort ist wie eine Zahnbürste: Man benutzt es täglich – und sollte es regelmäßig erneuern.</p>
+<h2 tabindex="0">Einfache Sprache (nach WCAG)</h2>
+<p>Einfache Sprache zielt darauf ab, Texte für Menschen mit unterschiedlichen Sprach- und Lesekompetenzen zugänglich zu machen. Sie verwendet klare, direkte Sprache und vermeidet komplexe Strukturen und Fachbegriffe.<br>Es gibt klare Richtlinien für die Verwendung einfacher Sprache:</p>
+<ul>
+<li>Niedrigschwelliges Niveau (A2 bis frühes B1)</li>
+<li>Kurze Sätze (max. 8–12 Wörter)</li>
+<li>Ein Satz = eine Information</li>
+<li>Alltagswörter statt Fachwörter</li>
+<li>Keine Metaphern</li>
+<li>Verben statt Substantivierungen</li>
+<li>Zahlen ausschreiben</li>
+<li>Viele Absätze</li>
+<li>Direkte Ansprache</li>
+</ul>
+</main>
 
-                    <li>
-                        <b>Gliederung/Ordnung</b>:
-                        <i>Informationen sollen logisch aufgebaut sein. </i
-                        ><br />
-                        Ein klar strukturierter Text ist leichter zu erfassen.
-                        Diese Dimension betont die Bedeutung einer logischen und
-                        übersichtlichen Gliederung des Textes, die dem Leser
-                        hilft, den Inhalt besser zu organisieren und
-                        nachzuvollziehen. Absätze, Überschriften und
-                        Zwischenüberschriften tragen zur Übersichtlichkeit
-                        bei.<br /><br />
-                    </li>
+            <!-- ── TABLE OF CONTENTS ───────────────────────────────── -->
+            <aside
+                class="toc-sidebar"
+                aria-label="Inhaltsverzeichnis"
+                id="toc-sidebar"
+            >
+                <h2>Inhalt</h2>
+                <!-- injected by JS -->
+            </aside>
+        </div>
+        <!-- /.page-layout -->
 
-                    <li>
-                        <b>Kürze/Prägnanz</b>:
-                        <i
-                            >Nicht mehr sagen als nötig – aber auch nicht zu
-                            wenig.</i
-                        ><br />
-                        Hier geht es darum, den Text auf das Wesentliche zu
-                        konzentrieren. Unnötige Wiederholungen und
-                        Ausschweifungen sollten vermieden werden, um den Text
-                        nicht zu überladen und die Aufmerksamkeit des Lesers
-                        nicht zu verlieren.<br /><br />
-                    </li>
+        <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+        <footer
+            id="site-footer"
+            tabindex="-1"
+        >
+            <!-- injected by JS -->
+        </footer>
 
-                    <li>
-                        <b>Anregende Zusätze</b>:
-                        <i
-                            >Elemente, die das Lesen angenehmer machen oder
-                            motivieren. </i
-                        ><br />
-                        Diese Dimension betrifft die Einbeziehung von
-                        Beispielen, Metaphern oder Bildern, die den Text
-                        anschaulicher und interessanter machen. Solche Zusätze
-                        können helfen, abstrakte Inhalte greifbarer zu machen
-                        und das Interesse des Lesers zu wecken.
-                    </li>
-                </ol>
-            </article>
-
-            <article>
-                <h2>Praktische Anwendung - Beispiele</h2>
-                <h3>Einfachheit</h3>
-                <p>
-                    <b>Vorher:</b> Die Implementierung der neuen Softwarelösung
-                    erfordert eine umfassende Schulung der Mitarbeiter, um die
-                    Effizienz und Produktivität zu maximieren.
-                </p>
-                <p>
-                    <b>Nachher:</b> Wir müssen unsere Mitarbeiter schulen, damit
-                    sie die neue Software gut nutzen können.
-                </p>
-
-                <h3>Gliederung/Ordnung</h3>
-                <p>
-                    <b>Vorher:</b> Unser Unternehmen bietet eine Vielzahl von
-                    Dienstleistungen an, darunter Webentwicklung, digitales
-                    Marketing und IT-Beratung. Wir haben ein erfahrenes Team von
-                    Fachleuten, die in der Lage sind, maßgeschneiderte Lösungen
-                    für unsere Kunden zu entwickeln.
-                </p>
-                <p>
-                    <b>Nachher:</b> Unser Unternehmen bietet drei
-                    Hauptdienstleistungen an:<br />
-                    1. Webentwicklung<br />
-                    2. Digitales Marketing<br />
-                    3. IT-Beratung<br />
-                    Unser erfahrenes Team entwickelt maßgeschneiderte Lösungen
-                    für unsere Kunden.
-                </p>
-
-                <h3>Kürze/Prägnanz</h3>
-                <p>
-                    <b>Vorher:</b> Aufgrund der aktuellen Marktsituation und der
-                    zunehmenden Konkurrenz ist es von entscheidender Bedeutung,
-                    dass wir unsere Geschäftsstrategie überdenken und anpassen,
-                    um wettbewerbsfähig zu bleiben und langfristigen Erfolg zu
-                    sichern.
-                </p>
-                <p>
-                    <b>Nachher:</b> Wir müssen unsere Geschäftsstrategie an die
-                    aktuelle Marktsituation anpassen, um wettbewerbsfähig zu
-                    bleiben.
-                </p>
-                <h3>Anregende Zusätze</h3>
-                <p>
-                    <b>Vorher:</b> Ein Passwort sollte regelmäßig geändert
-                    werden.
-                </p>
-                <p>
-                    <b>Nachher:</b> Ein Passwort ist wie eine Zahnbürste: Man
-                    benutzt es täglich – und sollte es regelmäßig erneuern.
-                </p>
-            </article>
-            <article>
-                <h2>Einfache Sprache (nach WCAG)</h2>
-                <p>
-                    Einfache Sprache zielt darauf ab, Texte für Menschen mit
-                    unterschiedlichen Sprach- und Lesekompetenzen zugänglich zu
-                    machen. Sie verwendet klare, direkte Sprache und vermeidet
-                    komplexe Strukturen und Fachbegriffe.<br>
-                    Es gibt klare Richtlinien für die Verwendung einfacher
-                    Sprache:
-                </p>
-                <ul>
-                    <li>Niedrigschwelliges Niveau (A2 bis frühes B1)</li>
-                    <li>Kurze Sätze (max. 8–12 Wörter)</li>
-                    <li>Ein Satz = eine Information</li>
-                    <li>Alltagswörter statt Fachwörter</li>
-                    <li>Keine Metaphern</li>
-                    <li>Verben statt Substantivierungen</li>
-                    <li>Zahlen ausschreiben</li>
-                    <li>Viele Absätze</li>
-                    <li>Direkte Ansprache</li>
-                </ul>
-            </article>
-        </main>
-        <script src="../assets/js/scaffold.js"></script>
+        <script
+            src="/accessibility-workshop/assets/js/main.js"
+            type="module"
+        ></script>
     </body>
 </html>

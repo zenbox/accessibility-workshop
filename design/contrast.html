@@ -1,1077 +1,724 @@
 <!doctype html>
-<html lang="en">
+<!-- generated-by:site-generator - nicht von Hand bearbeiten, wird von build.js überschrieben -->
+<!-- accessibility-workshop wird von build.js durch CONFIG.siteNamespace ersetzt (siehe dort) - so bleiben alle festen Asset-Pfade (CSS/JS/Favicon unten) automatisch im selben Namespace wie der Rest der Seite. -->
+<html
+    lang="de"
+    data-theme="light"
+>
     <head>
         <meta charset="UTF-8" />
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
         />
-        <title>Kontrast</title>
+        <link
+            rel="icon"
+            href="/accessibility-workshop/assets/icons/sheep.ico"
+            type="image/x-icon"
+        />
         <link
             rel="stylesheet"
-            href="../assets/css/style.css"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         />
+        <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="/accessibility-workshop/assets/css/styles.css"
+        />
+        <title>Kontrast - Michael Reichart</title>
+        <!--
+            Minimal-Styles für vom Generator eingebundene Assets (siehe
+            assets.js). Gerne nach styles.css übernehmen und hier entfernen,
+            falls dort schon etwas Äquivalentes existiert.
+        -->
+        <style>
+            .md-container .embedded-svg {
+                margin: 1.5em 0;
+            }
+            .md-container .embedded-svg svg {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container img {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container .asset-missing {
+                display: inline-block;
+                padding: 0.2em 0.6em;
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                color: #b00020;
+                background: color-mix(in srgb, #b00020 8%, transparent);
+                font-size: 0.9em;
+            }
+        </style>
     </head>
-    <body class="#blurred-vision">
+    <body>
+        <!-- ══ SKIP LINKS ══════════════════════════════════════════════ -->
+        <nav
+            class="skip-links"
+            aria-label="Sprungnavigation"
+        >
+            <a
+                class="skip-link"
+                href="#main-content"
+                >Zum Hauptinhalt</a
+            >
+            <a
+                class="skip-link"
+                href="#site-footer"
+                >Zum Footer</a
+            >
+        </nav>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
         <header>
-            <h1>Kontrast</h1>
-            <p>
-                Kontrast bezieht sich auf den Unterschied in Helligkeit oder
-                Farbe zwischen zwei visuellen Elementen. Kontrast ist wichtig,
-                weil er dazu beiträgt, dass Objekte oder Text deutlich erkennbar
-                und unterscheidbar sind.
-                <strong
-                    >Ein höherer Kontrast macht es leichter, Formen, Farben und
-                    Text zu erkennen, während ein niedriger Kontrast dazu führen
-                    kann, dass Inhalte verschwimmen oder schwer zu sehen
-                    sind.</strong
+            <div class="nav-wrapper">
+                <!-- Desktop nav + A11y menu injected by JS -->
+                <button
+                    class="hamburger"
+                    id="hamburgerBtn"
+                    aria-label="Menü öffnen"
+                    aria-expanded="false"
                 >
-            </p>
-            <p>
-                In Design und Typografie ist ausreichender Kontrast besonders
-                wichtig, um sicherzustellen, dass Informationen für alle Nutzer,
-                einschließlich Menschen mit Sehbehinderungen, gut lesbar und
-                zugänglich sind.
-            </p>
-            <p>
-                Etwas fernab von offiziellen Formulierungen kann man sagen, dass
-                egal was mit Bedeutung oder Inhalt, es muss mindestens einen
-                Kontrast von 3:1 haben. Texte 4,5:1.
-            </p>
+                    <span
+                        class="material-symbols-outlined"
+                        id="hamburgerIcon"
+                        >menu</span
+                    >
+                </button>
+            </div>
+            <!-- Mobile nav injected by JS -->
         </header>
-        <main>
-            <article>
-                <h2>Testen von Kontrasten</h2>
-                <p>
-                    Es gibt viele Tools, die den Kontrast von Texten und
-                    Elementen auf einer Webseite überprüfen können. Sie helfen
-                    für einen schnellen Überblick, haben aber auch Schwächen.
-                    Zum Beispiel werden Farbverläufe oder Hintergrundbilder
-                    nicht erfasst. Hier sind einige Beispiele für Chrome
-                    Extensions:
-                </p>
-                <ul>
-                    <li>
-                        <a
-                            href="https://chromewebstore.google.com/detail/colour-contrast-checker/nmmjeclfkgjdomacpcflgdkgpphpmnfe"
-                            >Colour Contrast Checker</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="https://chromewebstore.google.com/detail/wcag-color-contrast-check/plnahcmalebffmaghcpcmpaciebdhgdf"
-                            >WCAG Color contrast Checker</a
-                        >
-                    </li>
-                </ul>
 
-                <div class="contrast-container">
-                    <div class="box green-1">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="font-size: 18px">copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small style="color: white"
-                                >WCAG-Kontrast 4.5:1</small
-                            >
-                        </p>
-                    </div>
-
-                    <div class="box green-2">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="font-size: 18px">copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small>WCAG-Kontrast 4.5:1</small>
-                        </p>
-                    </div>
-
-                    <div class="box green-3">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="font-size: 18px">copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small style="color: white"
-                                >WCAG-Kontrast 3:1</small
-                            >
-                        </p>
-                    </div>
-
-                    <div class="box green-4">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="font-size: 18px">copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small>WCAG-Kontrast 3:1</small>
-                        </p>
-                    </div>
-
-                    <div class="box blue-yellow-1">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="font-size: 18px">copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small style="color: white"
-                                >WCAG-Kontrast 2:1</small
-                            >
-                        </p>
-                    </div>
-
-                    <div class="box blue-yellow-2">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p>copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p
-                            style="font-size: 18px"
-                            class="figcaption"
-                        >
-                            <small style="color: black"
-                                >WCAG-Kontrast 2:1</small
-                            >
-                        </p>
-                    </div>
-
-                    <div class="box image">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="font-size: 18px">copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small style="color: white"
-                                >Der Kontrast ist nicht messbar.</small
-                            >
-                        </p>
-                    </div>
-
-                    <div class="box gradient">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="font-size: 18px">copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small style="color: black"
-                                >Der Kontrast ist nicht messbar.</small
-                            >
-                        </p>
-                    </div>
-
-                    <div class="box lightgray-darkgray">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="font-size: 18px">copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small style="color: white"
-                                >WCAG-Kontrast 3:1</small
-                            >
-                        </p>
-                    </div>
-
-                    <div class="box darkgray-lightgray">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="font-size: 18px">copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small style="color: black"
-                                >WCAG-Kontrast 3:1</small
-                            >
-                        </p>
-                    </div>
-
-                    <div class="box lightgray-darkgray-1">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="font-size: 18px">copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small style="color: white"
-                                >WCAG-Kontrast 4.5:1</small
-                            >
-                        </p>
-                    </div>
-
-                    <div class="box darkgray-lightgray-1">
-                        <h3 style="font-size: 24px">headline</h3>
-                        <h3
-                            style="font-size: 24px"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="font-size: 18px">copy</p>
-                        <p style="font-size: 18px"><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small style="color: black"
-                                >WCAG-Kontrast 4.5:1</small
-                            >
-                        </p>
-                    </div>
-                </div>
-            </article>
-
-            <article>
-                <h2>Kontraste von Texten</h2>
-
-                <p>
-                    Text (Überschriften, Fließtexte, Text auf Buttons etc.)
-                    müssen zum Hintergrund einen Mindestkontrast von 4,5:1
-                    haben. Das gilt für Texte, die kleiner als 18pt (24px) sind.
-                    Texte, die größer sind, dürfen einen Kontrast von 3:1 haben.
-                </p>
-
-                <figure aria-hidden="true">
-                    <div
-                        style="
-                            border: 2px solid #000000;
-                            background-color: white;
-                            color: hsl(0, 0%, 0%);
-                            padding: 0.5rem;
-                            margin-block-end: 0.5rem;
-                        "
-                    >
-                        Luminanz 0: Text mit ausreichend Kontrast (21 : 1)
-                    </div>
-                    <div
-                        style="
-                            border: 2px solid hsl(0, 0%, 46%);
-
-                            background-color: white;
-                            color: hsl(0, 0%, 46%);
-                            padding: 0.5rem;
-                            margin-block-end: 0.5rem;
-                        "
-                    >
-                        Luminanz 46%: Text mit ausreichend Kontrast (4,5 : 1)
-                    </div>
-                    <div
-                        style="
-                            border: 2px solid hsl(0, 0%, 46%);
-
-                            background-color: white;
-                            color: hsl(0, 0%, 58%);
-                            padding: 0.5rem;
-                            margin-block-end: 0.5rem;
-                        "
-                    >
-                        <b>Luminanz 58%: fetter Text</b>
-                        <big>und grosser Text</big>
-                        <b>mit ausreichend Kontrast (3 : 1)</b>
-                    </div>
-                    <div
-                        style="
-                            border: 2px solid hsl(0, 0%, 46%);
-
-                            background-color: white;
-                            color: hsl(0, 0%, 83%);
-                            padding: 0.5rem;
-                            margin-block-end: 0.5rem;
-                        "
-                    >
-                        Luminanz 83%: Text mit zu wenig Kontrast (1,5 : 1)
-                    </div>
-                </figure>
-
-                <h2>Kontraste von Texten in Grafiken</h2>
-
-                <p>
-                    Text in oder auf Bildern müssen die Kontrastanforderungen
-                    von 4,5:1 erfüllen. Ab einer Schriftgröße von 18pt (24px)
-                    darf der Kontrast 3:1 betragen.
-                </p>
-                <p>
-                    Da der Hintergrund in Bildern nicht immer vorhersehbar ist,
-                    kann eine Textkontur oder eine Fläche den Kontrast
-                    unterstützen. Die Messung des Kontrasts ist ebenfalls
-                    schwierig.
-                </p>
-
-                <figure aria-hidden="true">
-                    <div
-                        class="box image"
-                        style="display: inline-block; color: white"
-                    >
-                        <h3>headline</h3>
-                        <h3 class="not-bold">not bold</h3>
-                        <p>copy</p>
-                        <p><strong>bold</strong></p>
-                        <p class="figcaption"><small>weißer Text</small></p>
-                    </div>
-                    <div
-                        class="box image"
-                        style="display: inline-block; color: black"
-                    >
-                        <h3>headline</h3>
-                        <h3 class="not-bold">not bold</h3>
-                        <p>copy</p>
-                        <p><strong>bold</strong></p>
-                        <p class="figcaption"><small>schwarzer Text</small></p>
-                    </div>
-                    <div
-                        class="box image"
-                        style="
-                            display: inline-block;
-                            color: white;
-                            -webkit-text-stroke: 1px #000;
-                        "
-                    >
-                        <h3>headline</h3>
-                        <h3 class="not-bold">not bold</h3>
-                        <p>copy</p>
-                        <p><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small>weißer Text mit Outline</small>
-                        </p>
-                    </div>
-                    <div
-                        class="box image"
-                        style="
-                            display: inline-block;
-                            color: black;
-                            text-shadow: 0px 0px 3px #fff;
-                        "
-                    >
-                        <h3>headline</h3>
-                        <h3 class="not-bold">not bold</h3>
-                        <p>copy</p>
-                        <p><strong>bold</strong></p>
-                        <p class="figcaption">
-                            <small>Text mit weissem Schatten</small>
-                        </p>
-                    </div>
-                    <div
-                        class="box image"
-                        style="display: inline-block; color: white"
-                    >
-                        <h3 style="background: #0004">headline</h3>
-                        <h3
-                            style="background: #0004"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="background: #0004">copy</p>
-                        <p style="background: #0004"><strong>bold</strong></p>
-                        <p class="figcaption"><small>Text mit Fläche</small></p>
-                    </div>
-                    <div
-                        class="box image"
-                        style="display: inline-block; color: black"
-                    >
-                        <h3 style="background: #fff4">headline</h3>
-                        <h3
-                            style="background: #fff4"
-                            class="not-bold"
-                        >
-                            not bold
-                        </h3>
-                        <p style="background: #fff4">copy</p>
-                        <p style="background: #fff4"><strong>bold</strong></p>
-                        <p class="figcaption"><small>Text mit Fläche</small></p>
-                    </div>
-                    <figcaption>
-                        Verschiedene Kontraste von Text auf Grafik: Schwarz und
-                        Weiss auf Bild, Text mit Outline, Text mit Schatten,
-                        Text mit Fläche.
-                    </figcaption>
-                </figure>
-
-                <h2>Kontraste von Elementen in Infografiken</h2>
-
-                <p>
-                    Die Kontraste von Elemente in Infografiken müssen mindestens
-                    3:1 sein – soweit sie für das Verständnis der Grafik nötig
-                    sind. Und auch die Elemente zueinander müssen einen Kontrast
-                    von 3:1 haben.
-                </p>
-
-                <h2>Kontraste von Bedienelementen</h2>
-
-                <p>
-                    Bedienelemente (Buttons, klickbare Icons, Inputfelder)
-                    müssen einen Kontrast von 3:1 zum Hintergrund haben.
-                </p>
-
-                <figure
-                    style="
-                        display: flex;
-                        flex-directino: row;
-                        justify-content: flex-start;
-                        gap: 1rem;
-                        align-items: center;
-                        border: 2px solid black;
-                        padding: 0.5rem;
-                    "
-                >
-                    <span class="wcag-3-1 outset">klick mich!</span>
-                    <span
-                        class="wcag-3-1-1 inset"
-                        contenteditable
-                        >schreib was hinein!</span
-                    >
-
-                    <span
-                        class="wcag-3-1"
-                        style="
-                            display: inline-block;
-                            width: 2.5rem;
-                            height: 2.5rem;
-                            border-radius: 50%;
-                        "
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            style="width: 28px; height: 28px"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                fill="#7d7d7d"
-                                d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"
-                            />
-                        </svg>
-                    </span>
-                </figure>
-
-                <h2>Kontraste von Bedienelementen mit Text</h2>
-
-                <p>
-                    Wenn der Text eines Bedienelements (z. B. Button) die
-                    Kontrastanforderung (4,5:1) zum Hintergrund schon erfüllt,
-                    muss es das Bedienelement selbst nicht tun.
-                </p>
-
-                <figure aria-hidden="true">
-                    <div
-                        style="
-                            border: 2px solid hsl(0, 0%, 46%);
-                            background-color: white;
-                            color: hsl(0, 0%, 0%);
-                            padding: 0.5rem;
-                            margin-block-end: 0.5rem;
-                        "
-                    >
-                        <button>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                style="width: 24px; height: 24px"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    fill="#898989"
-                                    d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"
-                                />
-                            </svg>
-                        </button>
-                        <span class="figcaption">
-                            <small
-                                >Bedienelement nur Icon, ohne Text: Kontrast
-                                3:1.</small
-                            >
-                        </span>
-                    </div>
-                    <div
-                        style="
-                            border: 2px solid hsl(0, 0%, 46%);
-                            background-color: white;
-                            color: hsl(0, 0%, 46%);
-                            padding: 0.5rem;
-                            margin-block-end: 0.5rem;
-                        "
-                    >
-                        <button>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                style="width: 24px; height: 24px"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    fill="lightgrey"
-                                    d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"
-                                />
-                            </svg>
-                            Suchen
-                        </button>
-                        <span class="figcaption">
-                            <small
-                                >Bedienelement mit Icon und Text: Text mit
-                                4,5:1.</small
-                            >
-                        </span>
-                    </div>
-                </figure>
-
-                <h2>Kontraste von Links</h2>
-
-                <p>
-                    Linktexte benötigen einen Kontrast von 4,5:1 zum
-                    Hintergrund, in all ihren Zuständen (Hover, Aktiv, Fokus
-                    etc.)
-                </p>
-
-                <figure>
-                    <div
-                        style="
-                            border: 2px solid hsl(0, 0%, 46%);
-                            background-color: white;
-                            padding: 0.5rem;
-                            margin-block-end: 0.5rem;
-                        "
-                    >
-                        <p>
-                            <span style="color: blue; text-decoration: none">
-                                &gt;&gt; Link, noch nicht besucht</span
-                            >
-                            (Farbwert "blue", WCAG-Kontrast 8.6)
-                        </p>
-                        <p>
-                            <span style="color: purple; text-decoration: none">
-                                &gt;&gt; Link, bereits besucht</span
-                            >
-                            (Farbwert "purple", WCAG-Kontrast 9.4)
-                        </p>
-                        <p>
-                            <span
-                                style="
-                                    color: darkorange;
-                                    text-decoration: underline;
-                                "
-                            >
-                                &gt;&gt; Link, im Mouseover-Zustand</span
-                            >
-                            (Farbwert "darkorange", WCAG-Kontrast 2.3)
-                        </p>
-                        <p>
-                            <span
-                                style="color: red; text-decoration: underline"
-                            >
-                                &gt;&gt; Link, im Gedrückt-Zustand</span
-                            >
-                            (Farbwert "red", WCAG-Kontrast 4.0)
-                        </p>
-                    </div>
-                </figure>
-
-                <h2>Kontraste von Links in Texten</h2>
-
-                <p>
-                    Links, die sich in Texten (Fließtexten, Labels etc.)
-                    befinden, müssen einen Mindestkontrast von 3:1 zu den
-                    anderen Texten drumherum aufweisen, wenn der Link nur durch
-                    Farbe gekennzeichnet ist.
-                </p>
-
-                <p>
-                    Ein unterstrichener Link erfüllt die
-                    Mehr-als-ein-Merkmal-Forderung und benötigt keinen
-                    zusätzlichen Kontrast.
-                </p>
-
-                <figure>
-                    <div
-                        style="
-                            border: 2px solid hsl(0, 0%, 46%);
-                            background-color: white;
-                            padding: 0.5rem;
-                            margin-block-end: 0.5rem;
-                        "
-                    >
-                        <p>
-                            Lorem ipsum dolor sit
-                            <span style="color: blue; text-decoration: none">
-                                &gt;&gt; amet consectetur</span
-                            >
-                            ad piscit (Farbwert "blue", WCAG-Kontrast 8.6) elit.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit
-                            <span style="color: purple; text-decoration: none">
-                                &gt;&gt; Link, bereits besucht</span
-                            >
-                            ad piscit (Farbwert "purple", WCAG-Kontrast 9.4)
-                            elit.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit
-                            <span
-                                style="
-                                    color: darkorange;
-                                    text-decoration: underline;
-                                "
-                            >
-                                &gt;&gt; Link, im Mouseover-Zustand</span
-                            >
-                            ad piscit (Farbwert "darkorange", WCAG-Kontrast 2.3)
-                            elit.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit
-                            <span
-                                style="color: red; text-decoration: underline"
-                            >
-                                &gt;&gt; Link, im Gedrückt-Zustand</span
-                            >
-                            ad piscit (Farbwert "red", WCAG-Kontrast 4.0) elit.
-                        </p>
-                    </div>
-                </figure>
-
-                <h2>Kontraste von Fokusrahmen</h2>
-
-                <p>
-                    Der Kontrast von Fokusrahmen um Bedienelemente muss
-                    mindestens 3:1 zu seinem Hintergrund haben.
-                </p>
-
-                <p>
-                    Um dem Problem wechselnder Hintergrundfarben zu begegnen,
-                    ist ein doppelter Fokusrahmen mit dunkler und heller
-                    Linienfarbe eine gute Lösung.
-                </p>
-
-                <p>
-                    <a
-                        href="https://www.sarasoueidan.com/blog/focus-indicators/"
-                        >Sara Soueidan: A guide to designing accessible,
-                        WCAG-conformant focus indicators
-                    </a>
-                </p>
-
-                <h2>Kontraste von disabled oder inaktiven Elemente</h2>
-
-                <p>
-                    Bedienelemente (Buttons, Icons etc.), die nicht klickbar
-                    sind, müssen keine Kontrastanforderungen erfüllen.
-                </p>
-                <p>
-                    Wenn ein inaktives Element für das Verständnis des Kontextes
-                    wichtig ist, so ist ein Mindestkontrast von 3:1
-                    empfehlenswert. Das ist zum Beipiel der Fall, wenn ein
-                    Button deaktiviert ist, weil ein Pflichtfeld noch nicht
-                    ausgefüllt wurde.
-                </p>
-
-                <h2>Kontraste von Logos</h2>
-
-                <p>Logos müssen keine Kontrastanforderungen erfüllen.</p>
-                <p>
-                    Wenn sie allerdings als Schaltfläche, etwa als Verlinkung
-                    zur Startseite verwendet werden und es keine Alternative
-                    gibt, dann müssen sie einen Kontrast von 3:1 zum Hintergrund
-                    haben.
-                </p>
-
-                <h2>Relevante Prüfschritte</h2>
-                <ul>
-                    <li>
-                        <a
-                            href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-3-kontraste-von-texten-ausreichend"
-                            >Prüfschritt Kontraste von Texten</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-11-kontraste-von-grafiken-und-grafischen-bedienelementen-ausreichend"
-                        >
-                            Prüfschritt Kontraste von Grafiken und grafischen
-                            Bedienelementen.
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-1-ohne-farben-nutzbar"
-                            >Prüfschritt Ohne Farbe nutzbar</a
-                        >
-                    </li>
-                </ul>
-            </article>
-        </main>
-
-        <script src="../assets/js/scaffold.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                // - - - - -
-                // ColorContrastPicker.js
-                const ColorContrastPicker = (function () {
-                    class ColorContrastPicker {
-                        // Constructor, cleanup, initialize und andere Methoden bleiben unverändert...
-                        constructor() {
-                            this.cleanup()
-                            this.isActive = false
-                            this.tooltip = null
-                            this.initialize()
-                        }
-
-                        cleanup() {
-                            const oldButton =
-                                document.getElementById("colorPickerButton")
-                            const oldTooltip =
-                                document.getElementById("colorPickerTooltip")
-                            if (oldButton) oldButton.remove()
-                            if (oldTooltip) oldTooltip.remove()
-                        }
-
-                        initialize() {
-                            const button = document.createElement("button")
-                            button.innerHTML = "◑"
-                            button.id = "colorPickerButton"
-                            button.style.cssText = `
-                position: fixed;
-                bottom: 130px;
-                right: 15px;
-                
-                width: 44px;
-                height: 44px;
-                border-radius: 50%;
-                background: white;
-                border: 2px solid #333;
-                cursor: pointer;
-                z-index: 10000;
-            `
-                            document.body.appendChild(button)
-
-                            const tooltip = document.createElement("div")
-                            tooltip.id = "colorPickerTooltip"
-                            tooltip.style.cssText = `
-                position: fixed !important;
-                visibility: hidden;
-                background-color: rgba(0, 0, 0, 0.8) !important;
-                color: white !important;
-                padding: 12px !important;
-                border-radius: 6px !important;
-                font-size: 14px !important;
-                pointer-events: none !important;
-                z-index: 2147483647 !important;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
-                min-width: 250px !important;
-                opacity: 1 !important;
-                transform: none !important;
-                left: 0px;
-                top: 0px;
-            `
-                            document.body.appendChild(tooltip)
-                            this.tooltip = tooltip
-
-                            button.addEventListener("click", () =>
-                                this.togglePicker()
-                            )
-                            document.addEventListener("mousemove", (e) => {
-                                if (this.isActive) {
-                                    this.handleMouseMove(e)
-                                }
-                            })
-                            document.addEventListener("click", (e) => {
-                                if (e.target !== button && this.isActive) {
-                                    e.preventDefault()
-                                    this.deactivatePicker()
-                                }
-                            })
-                            document.addEventListener("keydown", (e) => {
-                                if (e.key === "Escape") this.deactivatePicker()
-                            })
-                        }
-
-                        handleMouseMove(e) {
-                            if (!this.isActive) return
-
-                            const element = document.elementFromPoint(
-                                e.clientX,
-                                e.clientY
-                            )
-                            if (!element || element.id === "colorPickerTooltip")
-                                return
-
-                            const styles = window.getComputedStyle(element)
-                            const textColor = styles.color
-                            const bgInfo = this.getBackgroundInfo(element)
-
-                            // Hole Schrifteigenschaften
-                            const fontSize = styles.fontSize
-                            const fontWeight = styles.fontWeight
-                            const fontFamily = styles.fontFamily
-                                .split(",")[0]
-                                .replace(/['"]/g, "")
-
-                            let contrastHtml = ""
-                            let bgPreviewHtml = ""
-
-                            // Erstelle Background-Preview und Kontrast-Info
-                            if (bgInfo.type === "color") {
-                                const contrast = this.calculateWCAGContrast(
-                                    this.parseColor(textColor),
-                                    this.parseColor(bgInfo.color)
-                                )
-                                contrastHtml = `
-                    <div style="margin-bottom: 4px;">
-                        <strong>Contrast:</strong> ${contrast.toFixed(2)}:1
-                    </div>
-                    <div>
-                        <strong>WCAG 2.1:</strong> ${this.getWCAGLevel(
-                            contrast
-                        )}
-                    </div>
-                `
-                                bgPreviewHtml = this.createColorPreview(
-                                    bgInfo.color,
-                                    "square"
-                                )
-                            } else {
-                                bgPreviewHtml = "⚠️"
-                                contrastHtml = `
-                    <div style="margin-bottom: 4px; color: #ffaa00;">
-                        Background ist ein ${
-                            bgInfo.type === "gradient" ? "Farbverlauf" : "Bild"
-                        }
-                        <br>Kontrast kann nicht berechnet werden
-                    </div>
-                `
-                            }
-
-                            // Aktualisiere Tooltip-Position und Inhalt
-                            const tooltipX = e.clientX + 15
-                            const tooltipY = e.clientY + 15
-
-                            this.tooltip.style.left = `${tooltipX}px`
-                            this.tooltip.style.top = `${tooltipY}px`
-                            this.tooltip.style.visibility = "visible"
-
-                            this.tooltip.innerHTML = `
-                <div style="margin-bottom: 8px;">
-                    <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        ${this.createColorPreview(textColor)}
-                        <strong>Text:</strong> ${textColor}
-                    </div>
-                    <div style="display: flex; align-items: center; margin-bottom: 4px;">
-                        ${bgPreviewHtml}
-                        <strong>Background:</strong> ${bgInfo.value}
-                    </div>
-                    <div style="margin-bottom: 4px;">
-                        <strong>Font Size:</strong> ${fontSize}
-                    </div>
-                    <div style="margin-bottom: 4px;">
-                        <strong>Font Weight:</strong> ${this.getFontWeightName(
-                            fontWeight
-                        )}
-                    </div>
-                    <div style="margin-bottom: 4px;">
-                        <strong>Font Family:</strong> ${fontFamily}
-                    </div>
-                </div>
-                ${contrastHtml}
-            `
-                        }
-
-                        getFontWeightName(weight) {
-                            const weights = {
-                                100: "Thin",
-                                200: "Extra Light",
-                                300: "Light",
-                                400: "Regular",
-                                500: "Medium",
-                                600: "Semi Bold",
-                                700: "Bold",
-                                800: "Extra Bold",
-                                900: "Black",
-                            }
-                            return `${weight} (${weights[weight] || "Custom"})`
-                        }
-
-                        // Alle anderen Methoden bleiben gleich...
-                        togglePicker() {
-                            this.isActive = !this.isActive
-                            document.body.style.cursor = this.isActive
-                                ? "crosshair"
-                                : "default"
-
-                            if (!this.isActive) {
-                                this.tooltip.style.visibility = "hidden"
-                            }
-
-                            const button =
-                                document.getElementById("colorPickerButton")
-                            if (button) {
-                                button.style.backgroundColor = this.isActive
-                                    ? "#e0e0e0"
-                                    : "white"
-                                button.style.borderColor = this.isActive
-                                    ? "#666"
-                                    : "#333"
-                            }
-                        }
-
-                        deactivatePicker() {
-                            this.isActive = false
-                            document.body.style.cursor = "default"
-                            if (this.tooltip) {
-                                this.tooltip.style.visibility = "hidden"
-                            }
-                            const button =
-                                document.getElementById("colorPickerButton")
-                            if (button) {
-                                button.style.backgroundColor = "white"
-                                button.style.borderColor = "#333"
-                            }
-                        }
-
-                        createColorPreview(color, type = "circle") {
-                            return `
-                <div style="
-                    width: 20px;
-                    height: 20px;
-                    ${type === "circle" ? "border-radius: 50%;" : ""}
-                    background-color: ${color};
-                    border: 1px solid rgba(255,255,255,0.3);
-                    display: inline-block;
-                    vertical-align: middle;
-                    margin-right: 8px;
-                "></div>
-            `
-                        }
-
-                        getBackgroundInfo(element) {
-                            const style = window.getComputedStyle(element)
-                            const bgColor = style.backgroundColor
-                            const bgImage = style.backgroundImage
-
-                            if (bgImage !== "none") {
-                                if (bgImage.includes("gradient")) {
-                                    return {
-                                        type: "gradient",
-                                        value: bgImage,
-                                        color: null,
-                                    }
-                                } else if (bgImage.includes("url")) {
-                                    return {
-                                        type: "image",
-                                        value: bgImage,
-                                        color: null,
-                                    }
-                                }
-                            }
-
-                            if (
-                                bgColor === "rgba(0, 0, 0, 0)" ||
-                                bgColor === "transparent"
-                            ) {
-                                if (element.parentElement) {
-                                    return this.getBackgroundInfo(
-                                        element.parentElement
-                                    )
-                                }
-                                return {
-                                    type: "color",
-                                    value: "rgb(255, 255, 255)",
-                                    color: "rgb(255, 255, 255)",
-                                }
-                            }
-
-                            return {
-                                type: "color",
-                                value: bgColor,
-                                color: bgColor,
-                            }
-                        }
-
-                        parseColor(color) {
-                            const rgb = color.match(/\d+/g)
-                            return rgb ? rgb.map(Number) : [0, 0, 0]
-                        }
-
-                        calculateWCAGContrast(foreground, background) {
-                            const getLuminance = (r, g, b) => {
-                                const [rs, gs, bs] = [r, g, b].map((c) => {
-                                    c = c / 255
-                                    return c <= 0.03928
-                                        ? c / 12.92
-                                        : Math.pow((c + 0.055) / 1.055, 2.4)
-                                })
-                                return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs
-                            }
-
-                            const l1 = getLuminance(...foreground)
-                            const l2 = getLuminance(...background)
-
-                            const lighter = Math.max(l1, l2)
-                            const darker = Math.min(l1, l2)
-
-                            return (lighter + 0.05) / (darker + 0.05)
-                        }
-
-                        getWCAGLevel(contrast) {
-                            if (contrast >= 7)
-                                return '<span style="color:lightgreen;">✔</span> AAA'
-                            if (contrast >= 4.5)
-                                return '<span style="color:lightgreen;">✔</span> AA'
-                            if (contrast >= 3)
-                                return '<span style="color:lightgreen;">✔</span> AA Large Text'
-                            return '<span style="color:red;">⛌</span> Fail'
-                        }
-                    }
-
-                    return new ColorContrastPicker()
-                })()
-                // - - - - -
-            })
-        </script>
+        <!-- ══ PAGE LAYOUT ═════════════════════════════════════════════ -->
+        <div class="page-layout">
+            <!-- ── ARTIKEL ─────────────────────────────────────────── -->
+            <!--
+                Wichtig: dieser Kommentar ist die einzige Markierung, an der
+                der Generator (build.js) den gerenderten Markdown-Inhalt
+                einsetzt. Nicht umbenennen, ohne CONTENT_MARKER in build.js
+                anzupassen.
+            -->
+            <main
+                class="md-container"
+                id="main-content"
+                tabindex="-1"
+            ><h1 tabindex="0">Kontrast</h1>
+<p>Kontrast bezieht sich auf den Unterschied in Helligkeit oder Farbe zwischen zwei visuellen Elementen. Kontrast ist wichtig, weil er dazu beiträgt, dass Objekte oder Text deutlich erkennbar und unterscheidbar sind. <strong>Ein höherer Kontrast macht es leichter, Formen, Farben und Text zu erkennen, während ein niedriger Kontrast dazu führen kann, dass Inhalte verschwimmen oder schwer zu sehen sind.</strong></p>
+<p>In Design und Typografie ist ausreichender Kontrast besonders wichtig, um sicherzustellen, dass Informationen für alle Nutzer, einschließlich Menschen mit Sehbehinderungen, gut lesbar und zugänglich sind.</p>
+<p>Etwas fernab von offiziellen Formulierungen kann man sagen, dass egal was mit Bedeutung oder Inhalt, es muss mindestens einen Kontrast von 3:1 haben. Texte 4,5:1.</p>
+<p>Es gibt im Wesentlichen 4 WCAG-Kriterien zur Kontrasten:</p>
+<ol>
+<li>Kriterium 1.4.1 - Ohne Farben nutzbar</li>
+<li>Kriterium 1.4.3 - Kontraste von Texten ausreichend</li>
+<li>Kriterium 1.4.6 - Kontrast erweitert</li>
+<li>Kriterium 1.4.11 - Kontraste von Grafiken und Bedienelemente ausreichend</li>
+</ol>
+<h2 tabindex="0">Testen von Kontrasten</h2>
+<p>Es gibt viele Tools, die den Kontrast von Texten und Elementen auf einer Webseite überprüfen können. Sie helfen für einen schnellen Überblick, haben aber auch Schwächen. Zum Beispiel werden Farbverläufe oder Hintergrundbilder nicht erfasst. Hier sind einige Beispiele für Chrome Extensions:</p>
+<ul>
+<li><a href="https://chromewebstore.google.com/detail/colour-contrast-checker/nmmjeclfkgjdomacpcflgdkgpphpmnfe">Colour Contrast Checker</a></li>
+<li><a href="https://chromewebstore.google.com/detail/wcag-color-contrast-check/plnahcmalebffmaghcpcmpaciebdhgdf">WCAG Color contrast Checker</a></li>
+</ul>
+<samp>
+<style>
+:root {
+    --lightgreen: #a4c355;
+    --darkgreen: #255234;
+    --lightgreen-1: #a5c157;
+    --darkgreen-1: #326e46;
+    --yellow: #fdbd00;
+    --blue: #1190eb;
+    --lightgray: rgb(158, 158, 157);
+    --darkgray: rgb(79, 79, 79);
+    --lightgray-1: rgb(192, 192, 192);
+    --darkgray-1: rgb(79, 79, 79);
+}
+
+.contrast-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
+    padding: 0;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 10rem;
+    height: 10rem;
+    margin: 1rem;
+    padding: 1rem;
+    text-align: center;
+    font-family: Barlow;
+    font-size: 18px;
+
+    .figcaption {
+        display: block;
+        width: 100%;
+    }
+    small {
+        font-size: 0.8rem;
+    }
+}
+.box h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 2em;
+    line-height: 1;
+}
+.box p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5em;
+    line-height: 1;
+}
+.green-1 {
+    color: var(--lightgreen) !important;
+    background: var(--darkgreen) !important;
+}
+.green-2 {
+    color: var(--darkgreen) !important;
+    background: var(--lightgreen) !important;
+}
+.green-3 {
+    color: var(--lightgreen-1) !important;
+    background: var(--darkgreen-1) !important;
+}
+.green-4 {
+    color: var(--darkgreen-1) !important;
+    background: var(--lightgreen-1) !important;
+}
+.blue-yellow-1 {
+    color: var(--yellow) !important;
+    background: var(--blue) !important;
+}
+.blue-yellow-2 {
+    color: var(--blue) !important;
+    background: var(--yellow) !important;
+}
+.lightgray-darkgray {
+    color: var(--lightgray) !important;
+    background: var(--darkgray) !important;
+}
+.darkgray-lightgray {
+    color: var(--darkgray) !important;
+    background: var(--lightgray) !important;
+}
+.lightgray-darkgray-1 {
+    color: var(--lightgray-1) !important;
+    background: var(--darkgray) !important;
+}
+.darkgray-lightgray-1 {
+    color: var(--darkgray) !important;
+    background: var(--lightgray-1) !important;
+}
+
+.image {
+    color: var(--yellow);
+    background: url("https://picsum.photos/id/92/200/200");
+    background-size: cover;
+}
+.gradient {
+    color: var(--blue);
+    background: linear-gradient(45deg, var(--yellow) 0%, var(--darkgreen) 100%);
+}
+.not-bold {
+    font-weight: 400;
+}
+.wcag-3-1 {
+    --darkgray: #7d7d7d;
+    --lightgray: #dcdcdc;
+
+    background-color: var(--lightgray);
+    color: var(--darkgray);
+    padding: 0.5rem;
+}
+.wcag-3-1-1 {
+    --lightgray: #ffffff;
+    --darkgray: #959595;
+
+    background-color: var(--lightgray);
+    color: var(--darkgray);
+    padding: 0.5rem;
+}
+
+.outset {
+    border: 2px outset;
+    border-radius: 0.2rem;
+}
+.inset {
+    border: 2px inset;
+    border-radius: 0rem;
+}
+</style>
+
+<figure aria-hidden="true" style="width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); justify-items: center;">
+<div data-toc-exclude="true" class="box green-1">
+<h3 style="font-size: 24px" tabindex="0">headline</h3>
+<h3
+style="font-size: 24px"
+class="not-bold"
+ tabindex="0">
+not bold
+</h3>
+<p style="font-size: 18px">copy</p>
+<p style="font-size: 18px"><strong>bold</strong></p>
+<p class="figcaption">
+<small>WCAG-Kontrast 4.5:1</small>
+</p>
+</div>
+
+<div class="box green-2">
+<h3 style="font-size: 24px" tabindex="0">headline</h3>
+<h3
+style="font-size: 24px"
+class="not-bold"
+ tabindex="0">
+not bold
+</h3>
+<p style="font-size: 18px">copy</p>
+<p style="font-size: 18px"><strong>bold</strong></p>
+<p class="figcaption">
+<small>WCAG-Kontrast 4.5:1</small>
+</p>
+</div>
+
+<div class="box green-3">
+    <h3 style="font-size: 24px" tabindex="0">headline</h3>
+    <h3 style="font-size: 24px" class="not-bold" tabindex="0">
+        not bold
+    </h3>
+    <p style="font-size: 18px">copy</p>
+    <p style="font-size: 18px"><strong>bold</strong></p>
+    <p class="figcaption">
+        <small>WCAG-Kontrast 3:1</small>
+    </p>
+</div>
+
+<div class="box green-4">
+    <h3 style="font-size: 24px" tabindex="0">headline</h3>
+    <h3 style="font-size: 24px" class="not-bold" tabindex="0">
+        not bold
+    </h3>
+    <p style="font-size: 18px">copy</p>
+    <p style="font-size: 18px"><strong>bold</strong></p>
+    <p class="figcaption">
+        <small>WCAG-Kontrast 3:1</small>
+    </p>
+</div>
+
+<div class="box blue-yellow-1">
+    <h3 style="font-size: 24px" tabindex="0">headline</h3>
+    <h3 style="font-size: 24px" class="not-bold" tabindex="0">
+        not bold
+    </h3>
+    <p style="font-size: 18px">copy</p>
+    <p style="font-size: 18px"><strong>bold</strong></p>
+    <p class="figcaption">
+        <small>WCAG-Kontrast 2:1</small>
+    </p>
+</div>
+
+<div class="box blue-yellow-2">
+    <h3 style="font-size: 24px" tabindex="0">headline</h3>
+    <h3 style="font-size: 24px" class="not-bold" tabindex="0">
+        not bold
+    </h3>
+    <p style="font-size: 18px">copy</p>
+    <p style="font-size: 18px"><strong>bold</strong></p>
+    <p class="figcaption">
+        <small>WCAG-Kontrast 2:1</small>
+    </p>
+</div>
+
+<div class="box image">
+    <h3 style="font-size: 24px" tabindex="0">headline</h3>
+    <h3 style="font-size: 24px" class="not-bold" tabindex="0">
+        not bold
+    </h3>
+    <p style="font-size: 18px">copy</p>
+    <p style="font-size: 18px"><strong>bold</strong></p>
+    <p class="figcaption">
+        <small>Der Kontrast ist nicht messbar.</small>
+    </p>
+</div>
+
+<div class="box gradient">
+    <h3 style="font-size: 24px" tabindex="0">headline</h3>
+    <h3 style="font-size: 24px" class="not-bold" tabindex="0">
+        not bold
+    </h3>
+    <p style="font-size: 18px">copy</p>
+    <p style="font-size: 18px"><strong>bold</strong></p>
+    <p class="figcaption">
+        <small style="color: black">Der Kontrast ist nicht messbar.</small>
+    </p>
+</div>
+
+<div class="box lightgray-darkgray">
+    <h3 style="font-size: 24px" tabindex="0">headline</h3>
+    <h3 style="font-size: 24px" class="not-bold" tabindex="0">
+        not bold
+    </h3>
+    <p style="font-size: 18px">copy</p>
+    <p style="font-size: 18px"><strong>bold</strong></p>
+    <p class="figcaption">
+        <small style="color: white">WCAG-Kontrast 3:1</small>
+    </p>
+</div>
+
+<div class="box darkgray-lightgray">
+    <h3 style="font-size: 24px" tabindex="0">headline</h3>
+    <h3 style="font-size: 24px" class="not-bold" tabindex="0">
+        not bold
+    </h3>
+    <p style="font-size: 18px">copy</p>
+    <p style="font-size: 18px"><strong>bold</strong></p>
+    <p class="figcaption">
+        <small style="color: black">WCAG-Kontrast 3:1</small>
+    </p>
+</div>
+
+<div class="box lightgray-darkgray-1">
+    <h3 style="font-size: 24px" tabindex="0">headline</h3>
+    <h3 style="font-size: 24px" class="not-bold" tabindex="0">
+        not bold
+    </h3>
+    <p style="font-size: 18px">copy</p>
+    <p style="font-size: 18px"><strong>bold</strong></p>
+    <p class="figcaption">
+        <small style="color: white">WCAG-Kontrast 4.5:1</small>
+    </p>
+</div>
+
+<div class="box darkgray-lightgray-1">
+    <h3 style="font-size: 24px" tabindex="0">headline</h3>
+    <h3 style="font-size: 24px" class="not-bold" tabindex="0">
+        not bold
+    </h3>
+    <p style="font-size: 18px">copy</p>
+    <p style="font-size: 18px"><strong>bold</strong></p>
+    <p class="figcaption">
+        <small style="color: black">WCAG-Kontrast 4.5:1</small>
+    </p>
+</div>
+</figure>
+</samp>
+<h2 tabindex="0">Kontraste von Texten</h2>
+<p>Text (Überschriften, Fließtexte, Text auf Buttons etc.) müssen zum Hintergrund einen Mindestkontrast von 4,5:1 haben. Das gilt für Texte, die kleiner als 18pt (24px) sind. Texte, die größer sind, dürfen einen Kontrast von 3:1 haben.</p>
+<samp>
+<figure aria-hidden="true">
+    <div style="
+            border: 2px solid #000000;
+            background-color: white;
+            color: hsl(0, 0%, 0%);
+            padding: 0.5rem;
+            margin-block-end: 0.5rem;
+        ">
+        Luminanz 0: Text mit ausreichend Kontrast (21 : 1)
+    </div>
+    <div style="
+            border: 2px solid hsl(0, 0%, 46%);
+
+            background-color: white;
+            color: hsl(0, 0%, 46%);
+            padding: 0.5rem;
+            margin-block-end: 0.5rem;
+        ">
+        Luminanz 46%: Text mit ausreichend Kontrast (4,5 : 1)
+    </div>
+    <div style="
+            border: 2px solid hsl(0, 0%, 46%);
+
+            background-color: white;
+            color: hsl(0, 0%, 58%);
+            padding: 0.5rem;
+            margin-block-end: 0.5rem;
+        ">
+        <b>Luminanz 58%: fetter Text</b>
+        <big>und grosser Text</big>
+        <b>mit ausreichend Kontrast (3 : 1)</b>
+    </div>
+    <div style="
+            border: 2px solid hsl(0, 0%, 46%);
+
+            background-color: white;
+            color: hsl(0, 0%, 83%);
+            padding: 0.5rem;
+            margin-block-end: 0.5rem;
+        ">
+        Luminanz 83%: Text mit zu wenig Kontrast (1,5 : 1)
+    </div>
+</figure>
+</samp>
+<h2 tabindex="0">Kontraste von Texten in Grafiken</h2>
+<p>Text in oder auf Bildern müssen die Kontrastanforderungen von 4,5:1 erfüllen. Ab einer Schriftgröße von 18pt (24px) darf der Kontrast 3:1 betragen.</p>
+<p>Da der Hintergrund in Bildern nicht immer vorhersehbar ist, kann eine Textkontur oder eine Fläche den Kontrast unterstützen. Die Messung des Kontrasts ist ebenfalls schwierig.</p>
+<samp>
+<figure aria-hidden="true" style="width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); justify-items: center;">
+    <div class="box image" style="display: inline-block; color: white">
+        <h3 tabindex="0">headline</h3>
+        <h3 class="not-bold" tabindex="0">not bold</h3>
+        <p>copy</p>
+        <p><strong>bold</strong></p>
+        <p class="figcaption"><small>weißer Text</small></p>
+    </div>
+    <div class="box image" style="display: inline-block; color: black">
+        <h3 tabindex="0">headline</h3>
+        <h3 class="not-bold" tabindex="0">not bold</h3>
+        <p>copy</p>
+        <p><strong>bold</strong></p>
+        <p class="figcaption"><small>schwarzer Text</small></p>
+    </div>
+    <div class="box image" style="
+            display: inline-block;
+            color: white;
+            -webkit-text-stroke: 1px #000;
+        ">
+        <h3 tabindex="0">headline</h3>
+        <h3 class="not-bold" tabindex="0">not bold</h3>
+        <p>copy</p>
+        <p><strong>bold</strong></p>
+        <p class="figcaption">
+            <small>weißer Text mit Outline</small>
+        </p>
+    </div>
+    <div class="box image" style="
+            display: inline-block;
+            color: black;
+            text-shadow: 0px 0px 3px #fff;
+        ">
+        <h3 tabindex="0">headline</h3>
+        <h3 class="not-bold" tabindex="0">not bold</h3>
+        <p>copy</p>
+        <p><strong>bold</strong></p>
+        <p class="figcaption">
+            <small>Text mit weissem Schatten</small>
+        </p>
+    </div>
+    <div class="box image" style="display: inline-block; color: white">
+        <h3 style="background: #0004" tabindex="0">headline</h3>
+        <h3 style="background: #0004" class="not-bold" tabindex="0">
+            not bold
+        </h3>
+        <p style="background: #0004">copy</p>
+        <p style="background: #0004"><strong>bold</strong></p>
+        <p class="figcaption"><small>Text mit Fläche</small></p>
+    </div>
+    <div class="box image" style="display: inline-block; color: black">
+        <h3 style="background: #fff4" tabindex="0">headline</h3>
+        <h3 style="background: #fff4" class="not-bold" tabindex="0">
+            not bold
+        </h3>
+        <p style="background: #fff4">copy</p>
+        <p style="background: #fff4"><strong>bold</strong></p>
+        <p class="figcaption"><small>Text mit Fläche</small></p>
+    </div>
+    <figcaption>
+        Verschiedene Kontraste von Text auf Grafik: Schwarz und
+        Weiss auf Bild, Text mit Outline, Text mit Schatten,
+        Text mit Fläche.
+    </figcaption>
+</figure>
+</samp>
+<h2 tabindex="0">Kontraste von Elementen in Infografiken</h2>
+<p>Die Kontraste von Elemente in Infografiken müssen mindestens 3:1 sein – soweit sie für das Verständnis der Grafik nötig sind. Und auch die Elemente zueinander müssen einen Kontrast von 3:1 haben.</p>
+<h2 tabindex="0">Kontraste von Bedienelementen</h2>
+<p>Bedienelemente (Buttons, klickbare Icons, Inputfelder) müssen einen Kontrast von 3:1 zum Hintergrund haben.</p>
+<samp>
+<figure style="
+        display: flex;
+        flex-directino: row;
+        justify-content: flex-start;
+        gap: 1rem;
+        align-items: center;
+        border: 2px solid black;
+        padding: 0.5rem;
+    ">
+    <span class="wcag-3-1 outset">klick mich!</span>
+    <span class="wcag-3-1-1 inset" contenteditable="">schreib was hinein!</span>
+
+    <span class="wcag-3-1" style="
+            display: inline-block;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+        ">
+        <svg xmlns="http://www.w3.org/2000/svg" style="width: 28px; height: 28px" viewBox="0 0 24 24">
+            <path fill="#7d7d7d" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path>
+        </svg>
+    </span>
+</figure>
+</samp>
+<h2 tabindex="0">Kontraste von Bedienelementen mit Text</h2>
+<p>Wenn der Text eines Bedienelements (z. B. Button) die Kontrastanforderung (4,5:1) zum Hintergrund schon erfüllt, muss es das Bedienelement selbst nicht tun.</p>
+<samp>
+<figure aria-hidden="true">
+    <div style="
+            border: 2px solid hsl(0, 0%, 46%);
+            background-color: white;
+            color: hsl(0, 0%, 0%);
+            padding: 0.5rem;
+            margin-block-end: 0.5rem;
+        ">
+        <button>
+            <svg xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                <path fill="#898989" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path>
+            </svg>
+        </button>
+        <span class="figcaption">
+            <small>Bedienelement nur Icon, ohne Text: Kontrast
+                3:1.</small>
+        </span>
+    </div>
+    <div style="
+            border: 2px solid hsl(0, 0%, 46%);
+            background-color: white;
+            color: hsl(0, 0%, 46%);
+            padding: 0.5rem;
+            margin-block-end: 0.5rem;
+        ">
+        <button>
+            <svg xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                <path fill="lightgrey" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path>
+            </svg>
+            Suchen
+        </button>
+        <span class="figcaption">
+            <small>Bedienelement mit Icon und Text: Text mit
+                4,5:1.</small>
+        </span>
+    </div>
+</figure>
+</samp>
+<h2 tabindex="0">Kontraste von Links</h2>
+<p>Linktexte benötigen einen Kontrast von 4,5:1 zum Hintergrund, in all ihren Zuständen (Hover, Aktiv, Fokus etc.)</p>
+<samp>
+<figure>
+    <div style="
+            border: 2px solid hsl(0, 0%, 46%);
+            background-color: white;
+            padding: 0.5rem;
+            margin-block-end: 0.5rem;
+        ">
+        <p>
+            <span style="color: blue; text-decoration: none">
+                &gt;&gt; Link, noch nicht besucht</span>
+            (Farbwert "blue", WCAG-Kontrast 8.6)
+        </p>
+        <p>
+            <span style="color: purple; text-decoration: none">
+                &gt;&gt; Link, bereits besucht</span>
+            (Farbwert "purple", WCAG-Kontrast 9.4)
+        </p>
+        <p>
+            <span style="
+                    color: darkorange;
+                    text-decoration: underline;
+                ">
+                &gt;&gt; Link, im Mouseover-Zustand</span>
+            (Farbwert "darkorange", WCAG-Kontrast 2.3)
+        </p>
+        <p>
+            <span style="color: red; text-decoration: underline">
+                &gt;&gt; Link, im Gedrückt-Zustand</span>
+            (Farbwert "red", WCAG-Kontrast 4.0)
+        </p>
+    </div>
+</figure>
+</samp>
+<h2 tabindex="0">Kontraste von Links in Texten</h2>
+<p>Links, die sich in Texten (Fließtexten, Labels etc.) befinden, müssen einen Mindestkontrast von 3:1 zu den anderen Texten drumherum aufweisen, wenn der Link nur durch Farbe gekennzeichnet ist.</p>
+<p>Ein unterstrichener Link erfüllt die Mehr-als-ein-Merkmal-Forderung und benötigt keinen zusätzlichen Kontrast.</p>
+<samp>
+<figure>
+    <div style="
+            border: 2px solid hsl(0, 0%, 46%);
+            background-color: white;
+            padding: 0.5rem;
+            margin-block-end: 0.5rem;
+        ">
+        <p>
+            Lorem ipsum dolor sit
+            <span style="color: blue; text-decoration: none">
+                &gt;&gt; amet consectetur</span>
+            ad piscit (Farbwert "blue", WCAG-Kontrast 8.6) elit.
+        </p>
+        <p>
+            Lorem ipsum dolor sit
+            <span style="color: purple; text-decoration: none">
+                &gt;&gt; Link, bereits besucht</span>
+            ad piscit (Farbwert "purple", WCAG-Kontrast 9.4)
+            elit.
+        </p>
+        <p>
+            Lorem ipsum dolor sit
+            <span style="
+                    color: darkorange;
+                    text-decoration: underline;
+                ">
+                &gt;&gt; Link, im Mouseover-Zustand</span>
+            ad piscit (Farbwert "darkorange", WCAG-Kontrast 2.3)
+            elit.
+        </p>
+        <p>
+            Lorem ipsum dolor sit
+            <span style="color: red; text-decoration: underline">
+                &gt;&gt; Link, im Gedrückt-Zustand</span>
+            ad piscit (Farbwert "red", WCAG-Kontrast 4.0) elit.
+        </p>
+    </div>
+</figure>
+</samp>
+<h2 tabindex="0">Kontraste von Fokusrahmen</h2>
+<p>Der Kontrast von Fokusrahmen um Bedienelemente muss mindestens 3:1 zu seinem Hintergrund haben.</p>
+<p>Um dem Problem wechselnder Hintergrundfarben zu begegnen, ist ein doppelter Fokusrahmen mit dunkler und heller Linienfarbe eine gute Lösung.</p>
+<p><a href="https://www.sarasoueidan.com/blog/focus-indicators/">Sara Soueidan: A guide to designing accessible, WCAG-conformant focus indicators</a></p>
+<h2 tabindex="0">Kontraste von disabled oder inaktiven Elemente</h2>
+<p>Bedienelemente (Buttons, Icons etc.), die nicht klickbar sind, müssen keine Kontrastanforderungen erfüllen.</p>
+<p>Wenn ein inaktives Element für das Verständnis des Kontextes wichtig ist, so ist ein Mindestkontrast von 3:1 empfehlenswert. Das ist zum Beipiel der Fall, wenn ein Button deaktiviert ist, weil ein Pflichtfeld noch nicht ausgefüllt wurde.</p>
+<h2 tabindex="0">Kontraste von Logos</h2>
+<p>Logos müssen keine Kontrastanforderungen erfüllen.</p>
+<p>Wenn sie allerdings als Schaltfläche, etwa als Verlinkung zur Startseite verwendet werden und es keine Alternative gibt, dann müssen sie einen Kontrast von 3:1 zum Hintergrund haben.</p>
+<h2 tabindex="0">Relevante Prüfschritte</h2>
+<ul>
+<li><a href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-3-kontraste-von-texten-ausreichend">Prüfschritt Kontraste von Texten</a></li>
+<li> <a href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-11-kontraste-von-grafiken-und-grafischen-bedienelementen-ausreichend">Prüfschritt Kontraste von Grafiken und grafischen Bedienelementen.</a></li>
+<li><a href="https://bitvtest.de/pruefschritt/bitv-20-web/bitv-20-web-9-1-4-1-ohne-farben-nutzbar">Prüfschritt Ohne Farbe nutzbar</a></li>
+</ul>
+</main>
+
+            <!-- ── TABLE OF CONTENTS ───────────────────────────────── -->
+            <aside
+                class="toc-sidebar"
+                aria-label="Inhaltsverzeichnis"
+                id="toc-sidebar"
+            >
+                <h2>Inhalt</h2>
+                <!-- injected by JS -->
+            </aside>
+        </div>
+        <!-- /.page-layout -->
+
+        <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+        <footer
+            id="site-footer"
+            tabindex="-1"
+        >
+            <!-- injected by JS -->
+        </footer>
+
+        <script
+            src="/accessibility-workshop/assets/js/main.js"
+            type="module"
+        ></script>
     </body>
 </html>

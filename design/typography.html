@@ -1,566 +1,508 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<!-- generated-by:site-generator - nicht von Hand bearbeiten, wird von build.js überschrieben -->
+<!-- accessibility-workshop wird von build.js durch CONFIG.siteNamespace ersetzt (siehe dort) - so bleiben alle festen Asset-Pfade (CSS/JS/Favicon unten) automatisch im selben Namespace wie der Rest der Seite. -->
+<html
+    lang="de"
+    data-theme="light"
+>
     <head>
         <meta charset="UTF-8" />
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
         />
-        <title>Schrift und Absatz</title>
+        <link
+            rel="icon"
+            href="/accessibility-workshop/assets/icons/sheep.ico"
+            type="image/x-icon"
+        />
         <link
             rel="stylesheet"
-            href="../assets/css/style.css"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         />
+        <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="/accessibility-workshop/assets/css/styles.css"
+        />
+        <title>Barrierefreie Typografie - Michael Reichart</title>
+        <!--
+            Minimal-Styles für vom Generator eingebundene Assets (siehe
+            assets.js). Gerne nach styles.css übernehmen und hier entfernen,
+            falls dort schon etwas Äquivalentes existiert.
+        -->
+        <style>
+            .md-container .embedded-svg {
+                margin: 1.5em 0;
+            }
+            .md-container .embedded-svg svg {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container img {
+                max-width: 100%;
+                height: auto;
+            }
+            .md-container .asset-missing {
+                display: inline-block;
+                padding: 0.2em 0.6em;
+                border: 1px solid currentColor;
+                border-radius: 4px;
+                color: #b00020;
+                background: color-mix(in srgb, #b00020 8%, transparent);
+                font-size: 0.9em;
+            }
+        </style>
     </head>
     <body>
+        <!-- ══ SKIP LINKS ══════════════════════════════════════════════ -->
+        <nav
+            class="skip-links"
+            aria-label="Sprungnavigation"
+        >
+            <a
+                class="skip-link"
+                href="#main-content"
+                >Zum Hauptinhalt</a
+            >
+            <a
+                class="skip-link"
+                href="#site-footer"
+                >Zum Footer</a
+            >
+        </nav>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
         <header>
-            <h1>Typografie</h1>
-
-            <p>
-                Die Auswahl einer geeigneten, leserlichen Schrift ist für
-                Menschen mit Beeinträchtigungen im Lesevermögen sehr wichtig.
-                Geradlinigkeit, Deutlichkeit, Unterscheidbarkeit ähnlicher
-                Zeichen sind wichtige Eigenschaften, um Text leserich
-                anzubieten.
-            </p>
-            <p>
-                Für Menschen mit Legasthenie/Dyslexie stehen optimierte
-                Schriften zur besseren Leserlichkeit zur Verfügung. Eine solche
-                Schrift ist die <i>Atkinson Hyperlegible</i>. Sie wurde
-                entwickelt, um Menschen mit Dyslexie das Erkennen der einzelnen
-                Buchstaben zu erleichtern. Zeichen mit sonst ähnlichem Aussehen
-                haben hier eine unterscheidbare Form, zum Beispiel
-                <big>g</big> und <big>q</big> oder <big>0</big> (Null) und das
-                große <big>O</big>.
-            </p>
-            <p>
+            <div class="nav-wrapper">
+                <!-- Desktop nav + A11y menu injected by JS -->
                 <button
-                    class="_key"
-                    id="set-dyslexie-font"
+                    class="hamburger"
+                    id="hamburgerBtn"
+                    aria-label="Menü öffnen"
+                    aria-expanded="false"
                 >
-                    Schriftart "Atkinson Hyperlegible" einstellen
+                    <span
+                        class="material-symbols-outlined"
+                        id="hamburgerIcon"
+                        >menu</span
+                    >
                 </button>
-            </p>
-            <p>
-                Im folgenden findest Du die wichtigsten typografischen
-                HTML-Elemente und deren Anwendung. Die Datei
-                <code>src/sass/typography.scss</code> zeigt meine Umsetzung.
-            </p>
-            <p>
-                Alle verwendeten Schriftfamilien stehen über den Schriftenserver
-                von Google frei zur Verfügung. (<a
-                    href="https://fonts.google.com/"
-                    >https://fonts.google.com/</a
-                >).
-            </p>
+            </div>
+            <!-- Mobile nav injected by JS -->
         </header>
-        <main>
-            <article>
-                <h2>Die Schriftarten</h2>
-                <p>
-                    Ohne zu sehr in die Tiefe zu gehen, unterscheidet man drei
-                    wesentliche Schriftarten:
-                </p>
-                <ul>
-                    <li>
-                        Serifenlose Schriften
-                        <samp
-                            style="
-                                display: inline-block;
-                                padding: 0;
-                                margin: 0 1rem;
-                            "
-                            class="sans-serif"
-                            ><abbr title="zum Beispiel">z. B.</abbr>
-                            Barlow</samp
-                        >
-                    </li>
-                    <li>
-                        Serifenschriften
-                        <samp
-                            style="
-                                display: inline-block;
-                                padding: 0;
-                                margin: 0 1rem;
-                            "
-                            class="serif"
-                            ><abbr title="zum Beispiel">z. B.</abbr>
-                            Playfair</samp
-                        >
-                    </li>
-                    <li>
-                        Schreibmaschinenschriften
-                        <samp
-                            style="
-                                display: inline-block;
-                                padding: 0;
-                                margin: 0 1rem;
-                            "
-                            class="monospace"
-                            ><abbr title="zum Beispiel">z. B.</abbr> Noto Sans
-                            Mono</samp
-                        >
-                    </li>
-                </ul>
-                <p class="sans-serif">
-                    Als <em>serifenlose Schrift</em> setze ich hier Barlow für
-                    den Mengentext ein. Serifenlose Schriften eignen sich
-                    aufgrund ihrer gleichmäßigen Strichstärke gut zur
-                    Darstellung auf Bildschirmen, deren Pixel am besten
-                    gleichmäßige gerade Linien abbilden können. Die Barlow, die
-                    ich hier verwende, ist eine der besten Schriften für
-                    Bildschirme, die ich kenne. In Punkto
-                    Barrierefreiheit/Leserlichkeit für Dyslexie ist sie
-                    allerdings nicht optimal.
-                </p>
-                <p>
-                    Menschen mit Dyslexie/Legasthenie müssen die Möglichkeit
-                    haben, die Schriftart auf einer Webseite zu ändern. So
-                    können sie für sich eine Schrift einstellen, die für sie
-                    besser zu lesen ist.
-                </p>
-                <p class="serif">
-                    <big
-                        ><em>Serifenschrift</em> taucht in meinen Entwürfen nur
-                        gelegentlich auf. Ich verwende sie gerne für größere
-                        Formate wie Überschriften.</big
-                    >
-                    Serifenschriften lassen sich auf hochauflösenden
-                    Bildschirmen (Retina- oder 4K-Displays) gut einsetzen. Eine
-                    geeignete Darstellungsgröße variiert je nach Auflösung,
-                    Schriftgröße und Schriftart. Ich verwende hier die Playfair
-                    Display. Ich mag deren Nähe zu einer klassischen Bodoni und
-                    die schmal laufende Geometrie.
-                </p>
-                <p class="monospace">
-                    Die <em>Schreibmaschinenschrift</em> wird üblicherweise für
-                    Quelltexte oder Tasten-Angaben verwendet. Sie ist aber auch
-                    für viele andere Gestaltungsideen gut. Die immer gleich
-                    breiten Buchstaben sind ursprünglich der Mechanik einer
-                    Schreibmaschine geschuldet. Seit ich die Schriftfamilie Noto
-                    entdeckt habe, gehört deren Noto Sans Mono zu meinen
-                    Favoriten.
-                </p>
-                <h3>Leserlichkeit für Menschen mit Dyslexie/Legasthenie</h3>
-                <p class="dyslexic">
-                    Eine <em>Schrift zur Unterstützung bei Dylexie</em> sollte
-                    vom Benutzer eingestellt werden können. Zum Beispiel die
-                    <i>Atkinson Hyperlegible</i>. Sie wurde entwickelt, um
-                    Menschen mit Dylexie das Erkennen der einzelnen Buchstaben
-                    zu erleichtern. Zeichen mit sonst ähnlichem Aussehen haben
-                    hier eine unterscheidbare Form, zum Beispiel
-                    <big>g</big> und <big>q</big> oder <big>0</big> (Null) und
-                    das große <big>O</big>.
-                </p>
-                <p>
-                    Weitere Schriften sind die <em>Lexend</em>, oder auch die
-                    <em>Frutiger 1450</em>. 1450 verweist auf die DIN Norm 1450
-                    zur Leserlichkeit von Schriften.
-                </p>
-            </article>
-            <article>
-                <h2>Grundlegende Styles für den Text</h2>
-                <p>
-                    Neben der Schriftfamilie sind die Schriftgröße und der
-                    Zeilenabstand die wichtigsten Größen.
-                </p>
-                <samp>
-                    <pre><code>html {
-   font-size : 16px; /* rem-Basis */
-}
-                    
-body {
-    font-family : Barlow, sans-serif;
-    line-height : 1.5;
-    font-weight : 400;
-}
 
-/* Fluide oder adaptive Schriftgrößen sind hilfreich, denn 
-sie passen sich an Bildschirmgrößen oder Vergrößerungsstufen
-an. Browser-Erweiterungen, die Schriften und deren 
-Eigenschaften für Menschen mit Lese-Schwierigkeiten 
-umkonfigurieren können, müssen allerdings getestet werden
-- lässt sich die CSS Einstellung durch die Erweiterung 
-überschreiben? */
+        <!-- ══ PAGE LAYOUT ═════════════════════════════════════════════ -->
+        <div class="page-layout">
+            <!-- ── ARTIKEL ─────────────────────────────────────────── -->
+            <!--
+                Wichtig: dieser Kommentar ist die einzige Markierung, an der
+                der Generator (build.js) den gerenderten Markdown-Inhalt
+                einsetzt. Nicht umbenennen, ohne CONTENT_MARKER in build.js
+                anzupassen.
+            -->
+            <main
+                class="md-container"
+                id="main-content"
+                tabindex="-1"
+            ><h1 tabindex="0">Barrierefreie Typografie</h1>
+<p>Barrierefreie Typografie soll Texte <strong>erkennbar, lesbar und verständlich</strong> machen. Die Schrift ist dabei nur ein Teil der Lösung. Auch Schriftgröße, Zeilenabstand, Textbreite, Kontrast, Sprache und Struktur beeinflussen, wie gut Menschen einen Text erfassen können.</p>
+<p>Eine gute Schrift sollte:</p>
+<ul>
+<li>klare und gut unterscheidbare Zeichen besitzen,</li>
+<li>auch bei kleiner Darstellung lesbar bleiben,</li>
+<li>ähnliche Zeichen deutlich voneinander unterscheiden,</li>
+<li>in verschiedenen Größen funktionieren,</li>
+<li>sich bei Bedarf durch die Nutzerinnen und Nutzer anpassen lassen.</li>
+</ul>
+<h2 tabindex="0">Leserlichkeit, Lesbarkeit und Verständlichkeit</h2>
+<p>Die drei Begriffe beschreiben unterschiedliche Eigenschaften:</p>
+<h3 tabindex="0">Leserlichkeit</h3>
+<p>Leserlichkeit beschreibt, wie gut einzelne Zeichen erkennbar sind. Können Buchstaben und Zahlen eindeutig unterschieden werden? Sind beispielsweise I, l und 1 oder O und 0 klar voneinander zu unterscheiden?</p>
+<h3 tabindex="0">Lesbarkeit</h3>
+<p>Lesbarkeit beschreibt, wie leicht ein zusammenhängender Text gelesen werden kann. Dabei spielen unter anderem Schriftgröße, Zeilenabstand, Textbreite und Absatzstruktur eine Rolle.</p>
+<h3 tabindex="0">Verständlichkeit</h3>
+<p>Verständlichkeit beschreibt, wie leicht der Inhalt eines Textes verstanden werden kann. Klare Überschriften, kurze Sätze, bekannte Begriffe und erklärter Fachwortschatz unterstützen die Verständlichkeit.</p>
+<p>Eine gut lesbare Schrift kann einen kompliziert formulierten Text nicht vollständig ausgleichen. Barrierefreie Typografie muss deshalb mit einer verständlichen Sprache und einer klaren Struktur verbunden werden.</p>
+<h2 tabindex="0">Unterschiedliche Leseerschwernisse</h2>
+<p>Nicht alle Menschen haben dieselben Schwierigkeiten beim Lesen. Besonders wichtig ist die Unterscheidung zwischen <strong>geringer Literalität</strong> und <strong>Dyslexie beziehungsweise Legasthenie</strong>.</p>
+<h2 tabindex="0">Geringe Literalität</h2>
+<p>Geringe Literalität bedeutet, dass Menschen Schwierigkeiten mit dem Lesen und Schreiben zusammenhängender Texte haben. Das ist nicht dasselbe wie vollständiger Analphabetismus.</p>
+<p>Nach der LEO-Studie aus dem Jahr 2018 lesen 12,1 Prozent der Menschen zwischen 16 und 65 Jahren höchstens auf dem Niveau einfacher, grundschulnaher Texte.</p>
+<p>Typische Merkmale sind:</p>
+<ul>
+<li>Einzelne Sätze können häufig gelesen und verstanden werden.</li>
+<li>Zusammenhängende Texte bereiten deutlich größere Schwierigkeiten.</li>
+<li>Es handelt sich in der Regel nicht um vollständigen Analphabetismus.</li>
+<li>Mehr als die Hälfte der Betroffenen hat Deutsch als Erstsprache.</li>
+<li>Die Mehrheit steht im Arbeitsleben.</li>
+<li>Viele Betroffene besitzen einen Haupt- oder Realschulabschluss.</li>
+</ul>
+<p>Für Menschen mit geringer Literalität sind vor allem folgende Maßnahmen hilfreich:</p>
+<ul>
+<li>kurze und verständliche Sätze,</li>
+<li>aussagekräftige Überschriften,</li>
+<li>kurze Absätze,</li>
+<li>Aufzählungen,</li>
+<li>Erklärungen für Fachbegriffe,</li>
+<li>ausgeschriebene Abkürzungen,</li>
+<li>eine klare visuelle Struktur,</li>
+<li>gegebenenfalls eine Version in einfacher oder Leichter Sprache.</li>
+</ul>
+<p>Das folgende Diagramm kann den Anteil der Menschen mit geringer Literalität veranschaulichen. Die Information sollte zusätzlich immer als Text angegeben werden, damit sie nicht nur über eine Grafik vermittelt wird.</p>
+<h2 tabindex="0">Dyslexie und Legasthenie</h2>
+<p>Dyslexie, auch Legasthenie genannt, bezeichnet spezifische Schwierigkeiten beim Lesen und Schreiben. Betroffen sein können zum Beispiel:</p>
+<ul>
+<li>die Zuordnung von Lauten und Buchstaben,</li>
+<li>die Lesegeschwindigkeit,</li>
+<li>die Leseflüssigkeit,</li>
+<li>die Rechtschreibung,</li>
+<li>das Zusammensetzen von Buchstaben zu Wörtern.</li>
+</ul>
+<p>Die Wirkung einer Schrift ist individuell. Es gibt keine Schrift, die für alle Menschen mit Dyslexie gleichermaßen geeignet ist. Deshalb sollte eine Website möglichst nicht auf eine einzige Schrift festgelegt sein. Eine Möglichkeit zur Anpassung der Schriftfamilie kann hilfreich sein.</p>
+<p>Die Schrift <strong>Atkinson Hyperlegible</strong> wurde entwickelt, um Zeichen besonders klar voneinander unterscheidbar zu machen. Sie kann dadurch auch für Menschen mit Dyslexie hilfreich sein. Ähnliche Ziele verfolgen beispielsweise <strong>Lexend</strong> oder <strong>Frutiger 1450</strong>. Die konkrete Wirkung sollte jedoch immer mit tatsächlichen Nutzerinnen und Nutzern geprüft werden.</p>
+<p>Besonders wichtig ist die Unterscheidbarkeit ähnlicher Zeichen, zum Beispiel:</p>
+<ul>
+<li>g und q,</li>
+<li>I, l und 1,</li>
+<li>O und 0,</li>
+<li>b und d,</li>
+<li>p und q.</li>
+</ul>
+<h2 tabindex="0">Grundregeln für barrierefreie Typografie</h2>
+<h3 tabindex="0">1. Eine klare Schrift verwenden</h3>
+<p>Geeignet sind klare, geradlinige und gut ausgebaute Schriften. Dekorative oder sehr stark stilisierte Schriften sollten nicht für längere Texte verwendet werden.</p>
+<p>Wichtig ist nicht, ob eine Schrift als „barrierefreie Schrift“ bezeichnet wird. Entscheidend ist, ob sie:</p>
+<ul>
+<li>gut erkennbare Zeichen besitzt,</li>
+<li>ausreichende Abstände bietet,</li>
+<li>in verschiedenen Größen funktioniert,</li>
+<li>auch bei Vergrößerung stabil bleibt.</li>
+</ul>
+<h3 tabindex="0">2. Schriftgröße anpassbar machen</h3>
+<p>Die Schriftgröße sollte nicht fest auf eine bestimmte Bildschirmgröße beschränkt werden. Nutzerinnen und Nutzer müssen Texte vergrößern können, ohne dass Inhalte abgeschnitten werden oder sich überlagern.</p>
+<p>Relative Einheiten wie rem, em und vw sind dafür besser geeignet als ausschließlich feste Pixelwerte.</p>
+<h3 tabindex="0">3. Ausreichenden Zeilenabstand verwenden</h3>
+<p>Für Fließtext ist ein Zeilenabstand von mindestens 1.5 sinnvoll. Auch zwischen Absätzen sollte ausreichend Abstand bestehen. Dadurch verrutschen Leserinnen und Leser weniger leicht in den Zeilen.</p>
+<h3 tabindex="0">4. Kurze Zeilen verwenden</h3>
+<p>Sehr lange Zeilen erschweren das Verfolgen des Textes. Für längere Texte sind etwa 60 bis 80 Zeichen pro Zeile ein guter Richtwert.</p>
+<h3 tabindex="0">5. Blocksatz vermeiden</h3>
+<p>Fließtext sollte linksbündig und nicht im Blocksatz gesetzt werden. Beim Blocksatz entstehen häufig ungleichmäßige Abstände zwischen den Wörtern. Diese sogenannten „Löcher“ können den Lesefluss stören.</p>
+<h3 tabindex="0">6. Kontrast und Farben beachten</h3>
+<p>Text und Hintergrund müssen ausreichend kontrastreich sein. Informationen dürfen außerdem nicht ausschließlich über Farbe vermittelt werden. Ein Fehler sollte beispielsweise nicht nur durch rote Schrift erkennbar sein, sondern zusätzlich durch einen verständlichen Hinweis oder ein Symbol.</p>
+<h3 tabindex="0">7. Textabstände zulassen</h3>
+<p>Eine Website sollte auch dann vollständig nutzbar bleiben, wenn Nutzerinnen und Nutzer folgende Abstände vergrößern:</p>
+<ul>
+<li>Zeilenabstand,</li>
+<li>Abstand zwischen Absätzen,</li>
+<li>Buchstabenabstand,</li>
+<li>Wortabstand.</li>
+</ul>
+<p>Inhalte dürfen dabei nicht abgeschnitten werden, sich nicht überlagern und nicht unlesbar werden.</p>
+<h2 tabindex="0">Relevante WCAG-Kriterien</h2>
+<p>Die folgenden Kriterien betreffen nicht nur die Schrift, sondern auch Sprache, Struktur und Bedienung. Einige Kriterien gehören zur Konformitätsstufe AAA und sind deshalb nicht in jedem Projekt verpflichtend. Sie sind trotzdem wichtige Orientierungspunkte für eine möglichst gute Zugänglichkeit.</p>
+<p>Tabelle</p>
+<table>
+<thead>
+<tr>
+<th>Kriterium</th>
+<th>Stufe</th>
+<th>Praktische Bedeutung</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>WCAG 1.4.8: Visuelle Präsentation</strong></td>
+<td>AAA</td>
+<td>Text sollte nicht zu breit sein. Zeilen- und Absatzabstände müssen ausreichend sein. Blocksatz sollte vermieden werden. Nutzerinnen und Nutzer sollten Farben und Darstellung anpassen können.</td>
+</tr>
+<tr>
+<td><strong>WCAG 1.4.12: Textabstände</strong></td>
+<td>AA</td>
+<td>Inhalte müssen auch bei vergrößerten Zeilen-, Absatz-, Buchstaben- und Wortabständen nutzbar bleiben.</td>
+</tr>
+<tr>
+<td><strong>WCAG 3.1.3: Unübliche Wörter</strong></td>
+<td>AAA</td>
+<td>Fachbegriffe, ungewöhnliche Wörter und Redewendungen sollten erklärt oder definiert werden.</td>
+</tr>
+<tr>
+<td><strong>WCAG 3.1.4: Abkürzungen</strong></td>
+<td>AAA</td>
+<td>Abkürzungen sollten erklärt oder mit ihrer ausgeschriebenen Form versehen werden.</td>
+</tr>
+<tr>
+<td><strong>WCAG 3.1.5: Leseniveau</strong></td>
+<td>AAA</td>
+<td>Für schwierige Inhalte sollte zusätzlich eine verständlichere Fassung oder eine Erklärung auf niedrigerem Leseniveau angeboten werden.</td>
+</tr>
+<tr>
+<td><strong>WCAG 2.4.4: Linkzweck im Kontext</strong></td>
+<td>A</td>
+<td>Links müssen erkennen lassen, wohin sie führen. „Seminarprogramm herunterladen“ ist verständlicher als „Hier klicken“.</td>
+</tr>
+<tr>
+<td><strong>WCAG 2.4.6: Überschriften und Beschriftungen</strong></td>
+<td>AA</td>
+<td>Überschriften und Formularbeschriftungen müssen klar, aussagekräftig und eindeutig sein.</td>
+</tr>
+<tr>
+<td><strong>WCAG 3.3.2: Beschriftungen oder Anweisungen</strong></td>
+<td>A</td>
+<td>Formulare müssen verständliche Beschriftungen und Hinweise enthalten.</td>
+</tr>
+</tbody></table>
+<h2 tabindex="0">Grundlegende CSS-Regeln</h2>
+<p>Die folgenden Regeln bilden eine gute Ausgangsbasis:</p>
+<p>Kopieren</p>
+<p>css</p>
+<p>html {</p>
+<pre><code>font-size: 100%;
+</code></pre>
+<p>}</p>
+<p>body {</p>
+<pre><code>font-family: Barlow, &quot;Helvetica Neue&quot;, Arial, sans-serif;
 
-body {
-    font-size: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem)
+font-size: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem);
+
+line-height: 1.5;
+
+font-weight: 400;
+</code></pre>
+<p>}</p>
+<p>main {</p>
+<pre><code>max-inline-size: 70ch;
+</code></pre>
+<p>}</p>
+<p>p,</p>
+<p>li {</p>
+<pre><code>max-inline-size: 70ch;
+</code></pre>
+<p>}</p>
+<p>p {</p>
+<pre><code>margin-block: 0 1.5em;
+</code></pre>
+<p>}</p>
+<p>h1 {</p>
+<pre><code>font-size: 3rem;
+
+line-height: 1.1;
+
+font-weight: 700;
+</code></pre>
+<p>}</p>
+<p>h2 {</p>
+<pre><code>font-size: 2rem;
+
+line-height: 1.2;
+
+font-weight: 700;
+</code></pre>
+<p>}</p>
+<p>h3 {</p>
+<pre><code>font-size: 1.5rem;
+
+line-height: 1.3;
+
+font-weight: 700;
+</code></pre>
+<p>}</p>
+<p>rem bezieht sich auf die Schriftgröße des html-Elements. Bei einer üblichen Grundeinstellung von 16 Pixeln entsprechen 3rem daher 48 Pixeln. Die Schriftgröße sollte nicht ausschließlich über feste Pixelwerte definiert werden.</p>
+<p>Die Verwendung von clamp() ermöglicht eine flexible Schriftgröße. Sie muss aber mit Browser-Zoom, Betriebssystem-Vergrößerung und individuellen Nutzer-Styles getestet werden.</p>
+<h2 tabindex="0">Die typografische Organisation von HTML</h2>
+<p>HTML-Elemente sollten nicht nur nach ihrer optischen Wirkung, sondern nach ihrer Bedeutung ausgewählt werden. Eine Überschrift sollte zum Beispiel nicht einfach deshalb als <h2 tabindex="0"> ausgezeichnet werden, weil sie größer erscheinen soll. Die Überschrift muss auch in der inhaltlichen Hierarchie eine zweite Ebene darstellen.</p>
+<p>Eine einfache Struktur kann so aussehen:</p>
+<p>Kopieren</p>
+<p>html</p>
+<h1 tabindex="0">Barrierefreie Typografie</h1>
+
+<h2 tabindex="0">Lesbarkeit</h2>
+
+<h3 tabindex="0">Schriftwahl</h3>
+
+<p>
+
+<pre><code>Eine klare Schrift unterstützt die Erkennung einzelner Zeichen
+
+und erleichtert das Lesen längerer Texte.
+</code></pre>
+</p>
+
+<h3 tabindex="0">Absätze mit <p></h3>
+<p>Jeder Absatz sollte möglichst einen eigenen Gedanken behandeln. Lange Textblöcke sollten in mehrere Absätze aufgeteilt werden.</p>
+<p>Kopieren</p>
+<p>html</p>
+<p>
+
+<pre><code>Barrierefreie Typografie unterstützt Menschen dabei,
+
+Texte sicher zu erkennen und zu lesen.
+</code></pre>
+</p>
+
+<p>
+
+<pre><code>Eine klare Struktur hilft zusätzlich dabei,
+
+wichtige Informationen schnell zu finden.
+</code></pre>
+</p>
+
+<h3 tabindex="0">Listen mit <ul> und <ol></h3>
+<p>Eine ungeordnete Liste eignet sich für Inhalte ohne feste Reihenfolge:</p>
+<p>Kopieren</p>
+<p>html</p>
+<ul>
+
+<pre><code>&lt;li&gt;klare Überschriften&lt;/li&gt;
+
+&lt;li&gt;kurze Absätze&lt;/li&gt;
+
+&lt;li&gt;ausreichender Zeilenabstand&lt;/li&gt;
+</code></pre>
+</ul>
+
+<p>Eine geordnete Liste eignet sich für eine festgelegte Reihenfolge:</p>
+<p>Kopieren</p>
+<p>html</p>
+<ol>
+
+<pre><code>&lt;li&gt;Text strukturieren&lt;/li&gt;
+
+&lt;li&gt;Schrift auswählen&lt;/li&gt;
+
+&lt;li&gt;Darstellung testen&lt;/li&gt;
+</code></pre>
+</ol>
+
+<h3 tabindex="0">Definitionslisten mit <dl></h3>
+<p>Definitionslisten eignen sich für Begriffe und zugehörige Erklärungen:</p>
+<p>Kopieren</p>
+<p>html</p>
+<dl>
+
+<pre><code>&lt;dt&gt;HTML&lt;/dt&gt;
+
+&lt;dd&gt;Struktursprache für Webseiten&lt;/dd&gt;
+
+&lt;dt&gt;CSS&lt;/dt&gt;
+
+&lt;dd&gt;Stylesheet-Sprache für die Darstellung&lt;/dd&gt;
+
+&lt;dt&gt;JavaScript&lt;/dt&gt;
+
+&lt;dd&gt;Programmiersprache für interaktive Funktionen&lt;/dd&gt;
+</code></pre>
+</dl>
+
+<h3 tabindex="0">Code mit <code> und <pre></h3>
+<p><code> kennzeichnet kurzen Quellcode innerhalb eines Satzes. Für mehrzeiligen Quellcode wird <pre> zusammen mit <code> verwendet:</p>
+<p>Kopieren</p>
+<p>html</p>
+<p>
+
+<pre><code>Mit &lt;code&gt;line-height&lt;/code&gt; wird der Zeilenabstand festgelegt.
+</code></pre>
+</p>
+
+<pre><code>body {
+
+    line-height: 1.5;
+
 }</code></pre>
-                </samp>
-                <p>
-                    Das im Codebeispiel verwendete
-                    <code>&lt;html&gt;</code>-Element legt die Schrift für das
-                    gesamte Dokument fest. Alle anderen Elemente erben davon.
-                    Das ist besonders bei der Schriftgröße relevant. Für die
-                    Überschriften kann jetzt zum Beispiel mit Root-EM
-                    (<code>rem</code>) gearbeitet werden.
-                </p>
-                <samp>
-                    <pre><code>h1 {
-    font-size   : 3rem; /* 3 x 22px */
-    font-weight : 700;
-}
-h2 {
-    font-size   : 2rem; /* 2 x 22px */
-    font-weight : 700;
-}</code></pre>
-                </samp>
-            </article>
-            <article>
-                <h2>Die typografische Organisation der HTML Elemente</h2>
-                <p>
-                    HTML umfasst rund 100 Elemente, die in vier Kategorien
-                    unterteilt werden können: Textabsätze, Überschriften,
-                    Listen, Abbildungen. Zur Darstellung von Absätzen und Listen
-                    stehen zum Beispiel die Elemente <code>p</code>,
-                    <code>h1</code> bis <code>h6</code>, <code>ol</code>,
-                    <code>ul</code>, <code>dl</code> zur Verfügung. Die Elemente
-                    <code>figure</code> und <code>figcaption</code> dienen der
-                    Darstellung von Abbildungen. Alle Elemente müssen gemeinsam
-                    betrachtet werden, um eine konsistente und harmonische
-                    Gestaltung zu erreichen.
-                </p>
-                <h2>Zwei Textabsätze mit <code>&lt;p&gt;</code></h2>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Assumenda dolor, magnam adipisci beatae natus necessitatibus
-                    quia ipsa dignissimos quam molestiae, suscipit iure atque
-                    asperiores itaque nulla, perferendis amet?
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iure corporis velit quis magnam ad cupiditate. Vero
-                    voluptatum quas, suscipit, minus numquam beatae omnis unde
-                    alias odit dolores esse, nihil iure blanditiis quos saepe?
-                    Architecto laudantium id ratione. Modi, animi sequi!
-                </p>
-                <p>
-                    Kleine Schrift mit <code>&lt;small&gt;</code>:
-                    <small
-                        >Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit.</small
-                    >
-                </p>
-            </article>
 
-            <article>
-                <h2>Codezeilen mit <code>&lt;code&gt;&lt;pre&gt;</code></h2>
-                <pre><code>10 REM My first code
-20 PRINT "Hello, World!"
-30 GOTO 40
-40 END
-10000 DATA 12,34,56,67
-10010 DATA 24,35,46,57</code>
-</pre>
-            </article>
+<h3 tabindex="0">Tastatureingaben mit <kbd></h3>
+<p>Tastenkombinationen werden mit <kbd> ausgezeichnet:</p>
+<p>Kopieren</p>
+<p>html</p>
+<p>
 
-            <article>
-                <style>
-                    ._key {
-                        background: hsla(0, 0%, 50%, 0.5);
-                        padding: 0.4rem 0.5rem;
-                        border-radius: 0.2rem;
-                        border: 1px solid hsla(0, 0%, 0%, 0.9);
-                    }
-                </style>
-                <h2>Keyboard mit <code>&lt;kbd&gt;</code></h2>
-                <p><kbd>F11</kbd> <kbd>F12</kbd> <kbd>Strg + A</kbd></p>
-                <p>
-                    <kbd class="_key">F11</kbd> <kbd class="_key">F12</kbd>
-                    <kbd class="_key">Strg + A</kbd>
-                </p>
-            </article>
+<pre><code>Öffnen Sie die Suche mit
 
-            <article>
-                <h2>
-                    Listen mit <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>,
-                    <code>&lt;dl&gt;</code>
-                </h2>
-                <ol>
-                    <li>Lorem, ipsum dolor. Eins.</li>
-                    <li>Lorem, ipsum dolor. Zwei.</li>
-                    <li>Lorem, ipsum dolor. Drei.</li>
-                    <li>Lorem, ipsum dolor. Vier.</li>
-                </ol>
+&lt;kbd&gt;Strg&lt;/kbd&gt; + &lt;kbd&gt;F&lt;/kbd&gt;.
+</code></pre>
+</p>
 
-                <ul>
-                    <li>Lorem, ipsum dolor. Eins.</li>
-                    <li>Lorem, ipsum dolor. Zwei.</li>
-                    <li>Lorem, ipsum dolor. Drei.</li>
-                    <li>Lorem, ipsum dolor. Vier.</li>
-                </ul>
+<h3 tabindex="0">Abbildungen mit <figure>, <img> und <figcaption></h3>
+<p>Eine Abbildung kann mit einer Bildunterschrift versehen werden:</p>
+<p>Kopieren</p>
+<p>html</p>
+<figure>
 
-                <dl>
-                    <dt>HTML</dt>
-                    <dd>HyperText Markup Language</dd>
-                    <dt>CSS</dt>
-                    <dd>Cascading Style Sheets</dd>
-                    <dt>JS</dt>
-                    <dd>JavaScript</dd>
-                </dl>
-            </article>
+<pre><code>&lt;img
 
-            <article>
-                <h2>
-                    Abbildungen mit <code>&lt;figure&gt;</code>,
-                    <code>&lt;img&gt;</code>,
-                    <code>&lt;figcaption&gt;</code>
-                </h2>
-                <figure>
-                    <img
-                        src="../assets/figures/12-400x200.jpg"
-                        alt="Ein Platzhalterbild"
-                    />
-                    <figcaption>
-                        Die Möglichkeit einer semantisch ausgeweisenen
-                        Bildbeschreibung mit <code>&lt;figcaption&gt;</code> ist
-                        zum Beipiel für Screenreader oder Suchmaschinen
-                        sinnvoll.
-                    </figcaption>
-                </figure>
-            </article>
+    src=&quot;../assets/figures/12-400x200.jpg&quot;
 
-            <article>
-                <h2>
-                    Mehrspaltiger Text im Blocksatz mit circa 40 bis 60 Zeichen
-                    pro Spalte - <code>&lt;p&gt;</code> und
-                    <code>column-width: 18rem;</code>
-                </h2>
-                <p
-                    class="multicolumn-40-60"
-                    id="loremipsum"
-                ></p>
-                <script>
-                    let loremIpsum =
-                        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae facilis officia itaque architecto iure labore nam laboriosam ea vitae, ratione, aliquam sunt praesentium adipisci aliquid tempore, ad hic alias? Quo, harum. Cum sed explicabo voluptatum dolore unde similique aperiam autem tenetur natus, blanditiis quos labore cumque modi atque sit sint dolor incidunt temporibus recusandae sequi harum aspernatur cupiditate. Fugit, numquam delectus quod unde odio saepe incidunt provident eos cum, consectetur at dignissimos eligendi nemo aliquam deserunt officia excepturi, aliquid distinctio deleniti vitae ducimus! Ratione nostrum dolores eius, perferendis reiciendis minus magni est sit tempora rerum vero, eveniet nihil, id sed ipsam. Veniam iure ipsam voluptate molestiae, reprehenderit esse architecto commodi non est animi sint provident hic, beatae quos sequi dolor optio. Labore laborum dicta vel quae dolores cumque dolorem saepe qui! Reprehenderit, provident dolor? Quos, vitae dignissimos ratione pariatur aliquid fugiat qui reiciendis omnis natus! Quod, soluta eveniet cumque repudiandae error enim et ipsam repellendus totam accusamus tempora odio iure autem quos pariatur?"
-                    let wrappedText = ""
-                    for (let i = 0; i < loremIpsum.length; i++) {
-                        if ((i + 1) % 10 === 0) {
-                            wrappedText += `<span class='_10'>${loremIpsum[i]}</span>`
-                        } else {
-                            wrappedText += loremIpsum[i]
-                        }
-                    }
-                    document.getElementById("loremipsum").innerHTML =
-                        wrappedText
-                </script>
-            </article>
+    alt=&quot;Beispiel für eine typografische Gestaltung&quot;
 
-            <article>
-                <h2>Überschriften</h2>
+&gt;
 
-                <h1>Überschrift 1 <code>&lt;h1&gt;</code></h1>
-                <h2>Überschrift 2 <code>&lt;h2&gt;</code></h2>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+&lt;figcaption&gt;
 
-                <h3>Überschrift 3 <code>&lt;h3&gt;</code></h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+    Eine klare typografische Gestaltung unterstützt die Orientierung.
 
-                <h4>Überschrift 4 <code>&lt;h4&gt;</code></h4>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+&lt;/figcaption&gt;
+</code></pre>
+</figure>
 
-                <h5>Überschrift 5 <code>&lt;h5&gt;</code></h5>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+<p>Der alt-Text beschreibt das Bild für Menschen, die es nicht sehen können. Die figcaption ergänzt die Abbildung für alle Lesenden. Eine Bildunterschrift ersetzt daher nicht automatisch den alt-Text.</p>
+<h2 tabindex="0">Weitere HTML-Elemente</h2>
+<p>Elemente wie <dialog>, <ruby>, <audio>, <video>, <button>, <details> oder <summary> sollten in eigenen Abschnitten erklärt werden. Eine lange alphabetische Liste aller HTML-Elemente hilft beim Verständnis der Typografie nur wenig und lenkt vom eigentlichen Thema ab.</p>
+<p>Für dieses Kapitel reichen die zentralen Elemente:</p>
+<ul>
+<li>Überschriften: <h1 tabindex="0"> bis <h6></li>
+<li>Absätze: <p></li>
+<li>Listen: <ul>, <ol>, <dl></li>
+<li>Abbildungen: <figure>, <img>, <figcaption></li>
+<li>Hervorhebungen: <strong>, <em>, <mark></li>
+<li>Links: <a></li>
+<li>Code und Tastatureingaben: <code>, <pre>, <kbd></li>
+<li>Zitate: <blockquote>, <q>, <cite></li>
+</ul>
+<h2 tabindex="0">Kurzcheck für barrierefreie Typografie</h2>
+<p>Vor der Veröffentlichung sollte geprüft werden:</p>
+<ul>
+<li>Sind die Zeichen der Schrift eindeutig unterscheidbar?</li>
+<li>Ist der Text auch bei 200 Prozent Vergrößerung nutzbar?</li>
+<li>Beträgt der Zeilenabstand mindestens 1,5?</li>
+<li>Sind die Zeilen nicht zu lang?</li>
+<li>Ist der Fließtext linksbündig?</li>
+<li>Können Nutzerinnen und Nutzer Schriftgröße und Abstände anpassen?</li>
+<li>Sind Überschriften logisch gegliedert?</li>
+<li>Sind Absätze, Listen und Definitionen semantisch korrekt ausgezeichnet?</li>
+<li>Werden Fachbegriffe und Abkürzungen erklärt?</li>
+<li>Sind Links auch ohne „Hier klicken“ verständlich?</li>
+<li>Enthalten Bilder einen passenden Alternativtext?</li>
+<li>Wurde die Darstellung mit tatsächlichen Nutzerinnen und Nutzern getestet?</li>
+</ul>
+</main>
 
-                <h6>Überschrift 6 <code>&lt;h6&gt;</code></h6>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-            </article>
+            <!-- ── TABLE OF CONTENTS ───────────────────────────────── -->
+            <aside
+                class="toc-sidebar"
+                aria-label="Inhaltsverzeichnis"
+                id="toc-sidebar"
+            >
+                <h2>Inhalt</h2>
+                <!-- injected by JS -->
+            </aside>
+        </div>
+        <!-- /.page-layout -->
 
-            <article>
-                <h2>
-                    Ruby Annotation <code>&lt;ruby&gt;</code>,
-                    <code>&lt;rp&gt;</code>,
-                    <code>&lt;rt&gt;</code>
-                </h2>
-                <p>
-                    <big
-                        ><big
-                            ><big
-                                ><ruby>
-                                    漢 <rp>(</rp><rt>kan</rt><rp>)</rp> 字
-                                    <rp>(</rp><rt>ji</rt><rp>)</rp>
-                                </ruby></big
-                            >
-                        </big>
-                    </big>
-                </p>
-            </article>
+        <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+        <footer
+            id="site-footer"
+            tabindex="-1"
+        >
+            <!-- injected by JS -->
+        </footer>
 
-            <article>
-                <h2>Dialog <code>&lt;dialog&gt;</code></h2>
-                <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                        // - - - - -
-                        const dialog = document.querySelector("dialog")
-                        const dialogButton =
-                            document.querySelector("#dialog-button")
-                        let dialogState = false
-
-                        dialogButton.addEventListener("click", () => {
-                            if (dialogState) {
-                                dialog.removeAttribute("open")
-                                dialogButton.textContent = "Dialog öffnen"
-                                dialogState = false
-                                return
-                            } else {
-                                dialog.setAttribute("open", "")
-                                dialogButton.textContent = "Dialog schließen"
-                                dialogState = true
-                            }
-                        })
-                        // - - - - -
-                    })
-                </script>
-                <button id="dialog-button">Dialog öffnen</button>
-                <dialog id="dialog">
-                    <p>Dialog</p>
-                    <button>OK</button>
-                    <button>Abbrechen</button>
-                </dialog>
-            </article>
-
-            <article>
-                <h2>
-                    Zitate <code>&lt;blockquote&gt;</code>,
-                    <code>&lt;cite&gt;</code>,<code>&lt;q&gt;</code>
-                </h2>
-                <blockquote>
-                    <p>Die Welt ist alles, was der Fall ist.</p>
-                    <cite>Ludwig Wittgenstein</cite>
-                </blockquote>
-                <p>
-                    <q>Die Welt ist alles, was der Fall ist.</q>
-                    <cite>Ludwig Wittgenstein</cite>
-                </p>
-            </article>
-
-            <article>
-                <h2>
-                    Textauszeichnungen <code>&lt;a&gt;</code>,
-                    <code>&lt;abbr&gt;</code>, <code>&lt;del&gt;</code>,
-                    <code>&lt;em&gt;</code>, <code>&lt;i&gt;</code>,
-                    <code>&lt;ins&gt;</code>, <code>&lt;mark&gt;</code>,
-                    <code>&lt;s&gt;</code>,
-                    <code>&lt;u&gt;</code>
-                </h2>
-                <p>
-                    <a href="#">Link</a>,
-                    <abbr title="HyperText Markup Language">HTML</abbr>,
-                    <del>gelöscht</del>, <em>betont</em>, <i>kursiv</i>,
-                    <ins>eingefügt</ins>, <mark>markiert</mark>,
-                    <s>durchgestrichen</s>,
-                    <u>unterstrichen</u>
-                </p>
-            </article>
-
-            <article>
-                <h2>Weitere Elemente</h2>
-                <p>
-                    <code>&lt;address&gt;</code>, <code>&lt;area&gt;</code>,
-                    <code>&lt;audio&gt;</code>, <code>&lt;b&gt;</code>,
-                    <code>&lt;base&gt;</code>, <code>&lt;bdi&gt;</code>,
-                    <code>&lt;bdo&gt;</code>, <code>&lt;button&gt;</code>,
-                    <code>&lt;caption&gt;</code>, <code>&lt;center&gt;</code>,
-                    <code>&lt;col&gt;</code>, <code>&lt;colgroup&gt;</code>,
-                    <code>&lt;data&gt;</code>, <code>&lt;datalist&gt;</code>,
-                    <code>&lt;details&gt;</code>, <code>&lt;dfn&gt;</code>,
-                    <code>&lt;dialog&gt;</code>, <code>&lt;dir&gt;</code>,
-                    <code>&lt;hgroup&gt;</code>, <code>&lt;hr&gt;</code>,
-                    <code>&lt;map&gt;</code>, <code>&lt;math&gt;</code>,
-                    <code>&lt;menu&gt;</code>, <code>&lt;output&gt;</code>,
-                    <code>&lt;picture&gt;</code>, <code>&lt;samp&gt;</code>,
-                    <code>&lt;search&gt;</code>, <code>&lt;slot&gt;</code>,
-                    <code>&lt;source&gt;</code>, <code>&lt;strike&gt;</code>,
-                    <code>&lt;strong&gt;</code>, <code>&lt;sub&gt;</code>,
-                    <code>&lt;summary&gt;</code>, <code>&lt;sup&gt;</code>,
-                    <code>&lt;time&gt;</code>, <code>&lt;track&gt;</code>,
-                    <code>&lt;var&gt;</code>, <code>&lt;video&gt;</code>,
-                    <code>&lt;wbr&gt;</code>
-                </p>
-            </article>
-        </main>
-
-        <script src="../assets/js/scaffold.js"></script>
-
-        <script>
-            function setDylexieFont() {
-                // Style-Element mit @font-face-Regeln für lokale Schriftarten erstellen
-                const style = document.createElement("style")
-                style.textContent = `
-
-  @font-face {
-    font-family: 'Atkinson Hyperlegible';
-    src: url('assets/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Atkinson Hyperlegible';
-    src: url('assets/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Italic.ttf') format('truetype');
-    font-weight: 400;
-    font-style: italic;
-  }
-
-  @font-face {
-    font-family: 'Atkinson Hyperlegible';
-    src: url('assets/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Atkinson Hyperlegible';
-    src: url('assets/fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-BoldItalic.ttf') format('truetype');
-    font-weight: 700;
-    font-style: italic;
-    }
-    body, * {
-      font-family: 'Atkinson Hyperlegible', sans-serif !important;
-      font-size: 1.125rem !important;
-      line-height: 1.6 !important;
-      }
-      h1, h2, h3, h4 {
-        font-size: 1.5rem !important;
-        font-weight: 700 !important;
-`
-
-                // Style dem Dokument hinzufügen
-                document.head.appendChild(style)
-            }
-
-            function unsetDylexieFont() {
-                // Alle @font-face-Regeln entfernen
-                const styleElements = document.querySelectorAll("style")
-                styleElements.forEach((style) => {
-                    if (style.textContent.includes("@font-face")) {
-                        style.remove()
-                    }
-                })
-
-                // Schriftart auf die ursprüngliche Schriftart zurücksetzen
-                document.body.style.fontFamily = ""
-            }
-
-            document.addEventListener("DOMContentLoaded", () => {
-                const dyslexieButton =
-                    document.getElementById("set-dyslexie-font")
-                let isDyslexieFontSet = false
-                dyslexieButton.addEventListener("click", () => {
-                    if (isDyslexieFontSet) {
-                        unsetDylexieFont()
-                        dyslexieButton.textContent =
-                            'Schriftart "Atkinson Hyperlegible" einstellen'
-                    } else {
-                        setDylexieFont()
-                        dyslexieButton.textContent =
-                            "Standardschrift einstellen"
-                    }
-                    isDyslexieFontSet = !isDyslexieFontSet
-                })
-            })
-        </script>
+        <script
+            src="/accessibility-workshop/assets/js/main.js"
+            type="module"
+        ></script>
     </body>
 </html>

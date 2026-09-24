@@ -1,0 +1,406 @@
+/* NICHT MEHR GEBRAUCHT: Der Header ist jetzt fix, ohne Drag/Collapse.
+   .nav-controls, .nav-drag-handle, .nav-toggle-button sowie die
+   .collapsed/.dragging-Zustände existieren im Markup nicht mehr
+   (siehe treemap.html + treemap.js: initNavigationPanel ist auskommentiert).
+   Regeln zur Referenz erhalten:
+
+.nav-controls {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+    z-index: 1001;
+}
+
+.nav-drag-handle,
+.nav-toggle-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-speed) ease,
+        transform var(--transition-speed) ease;
+}
+
+.nav-drag-handle:hover,
+.nav-toggle-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.nav-drag-handle:focus,
+.nav-toggle-button:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+.nav-drag-handle {
+    cursor: move;
+}
+
+.nav-drag-handle:active {
+    cursor: grabbing;
+}
+*/
+
+/* Fixer Header: Link zur Startseite + Filterleiste */
+.header-home-link {
+    /* display: flex;
+    justify-content: flex-start; */
+    width: auto;
+    padding: 0.25rem 0.5rem 0;
+}
+
+.header-home-link .nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+.header-home-link .nav-link:hover,
+.header-home-link .nav-link:focus {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* Nur für Screenreader sichtbar, hält die Dokumentstruktur (h1) intakt,
+   ohne den kompakten fixen Header optisch zu belasten. */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Navigation Panel: dauerhaft fixer Header (kein Collapse/Drag mehr) */
+.top-centered-container {
+    display: block;
+    position: fixed;
+    width: 100vw;
+
+    background-color: rgba(0, 0, 0, 0.85);
+    /* left: 0;
+    top: 0; */
+    /* transform: translateX(-50%); */
+    z-index: 1000;
+    padding: 0.5rem;
+    margin-top: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 5px 5px;
+    min-height: 40px;
+}
+
+.nav-content {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* TODO: experimentell: die Schriftgröße eines Elements stabilisieren */
+@media (max-width: 980px) and (resolution: 192dpi) {
+    .filter-bar {
+        /* border: 4px solid red !important; */
+
+        * {
+            font-size: clamp(16px, 1.1vw, 24px) !important;
+        }
+    }
+}
+
+@media (max-width: 980px) and (resolution: 196dpi) {
+    .filter-bar {
+        /* border: 4px solid red !important; */
+
+        * {
+            font-size: clamp(16px, 1.5vh, 24px) !important;
+        }
+    }
+}
+
+/* Suchfeld */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    min-width: 300px;
+}
+
+.search-container .material-icons {
+    margin-right: 0.5rem;
+    opacity: 0.7;
+}
+
+#searchInput {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+}
+
+#searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#searchInput:focus {
+    outline: var(--focus-outline-width) solid white;
+    outline-offset: var(--focus-outline-offset);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.active-filters {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Filter-Buttons Basisstil */
+.filter-btn,
+.standard-filter-btn,
+.profession-filter-btn {
+    background: none;
+    color: white;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.filter-btn:hover,
+.standard-filter-btn:hover,
+.profession-filter-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.filter-btn:focus,
+.standard-filter-btn:focus,
+.profession-filter-btn:focus,
+.filter-btn:focus-visible,
+.standard-filter-btn:focus-visible,
+.profession-filter-btn:focus-visible {
+    outline: var(--focus-outline-width) solid white;
+    outline-offset: var(--focus-outline-offset);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Spezifische Filter-Button-Stile */
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+}
+
+.filter-btn .material-symbols-outlined {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.filter-btn[aria-pressed="true"] {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: white;
+}
+
+/* Konformitätslevel-Buttons */
+.filter-btn[data-level="A"] {
+    border-color: var(--A);
+}
+
+.filter-btn[data-level="AA"] {
+    border-color: var(--AA);
+}
+
+.filter-btn[data-level="AAA"] {
+    border-color: var(--AAA);
+}
+
+.filter-btn[aria-pressed="true"][data-level="A"] {
+    background: var(--A);
+}
+
+.filter-btn[aria-pressed="true"][data-level="AA"] {
+    background: var(--AA);
+}
+
+.filter-btn[aria-pressed="true"][data-level="AAA"] {
+    background: var(--AAA);
+}
+
+.filter-btn.testable-filter-btn {
+    border-color: hsl(205, 100%, 50%);
+}
+
+.filter-btn.testable-filter-btn[aria-pressed="true"] {
+    background: hsl(205, 100%, 45%);
+    border-color: hsl(205, 100%, 45%);
+}
+
+.collections-slot {
+    display: flex;
+    align-items: center;
+}
+
+/* Standard-Filter-Buttons */
+.standard-filter-btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-right: 5px;
+}
+
+.standard-filter-btn[aria-pressed="true"] {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: white;
+}
+
+/* Berufsgruppen-Filter */
+.profession-filter-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.profession-filter-btn[aria-pressed="true"] {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: white;
+}
+
+/* Berufsfeld-Farben für Buttons */
+.profession-filter-btn.umsetzung {
+    border-color: var(--profession-implementation);
+}
+.profession-filter-btn.ui {
+    border-color: var(--profession-ui);
+}
+.profession-filter-btn.ux {
+    border-color: var(--profession-ux);
+}
+.profession-filter-btn.redaktion {
+    border-color: var(--profession-editorial);
+}
+
+.profession-filter-btn[aria-pressed="true"].umsetzung {
+    background-color: var(--profession-implementation);
+    color: #fff;
+}
+.profession-filter-btn[aria-pressed="true"].ui {
+    background-color: var(--profession-ui);
+    color: #000;
+}
+.profession-filter-btn[aria-pressed="true"].ux {
+    background-color: var(--profession-ux);
+    color: #000;
+}
+.profession-filter-btn[aria-pressed="true"].redaktion {
+    background-color: var(--profession-editorial);
+    color: #000;
+}
+
+/* Filter-Gruppen */
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group-title {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 8px;
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Anzeigeoptionen */
+.display-options {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toggle-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.toggle-option input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* ==============================
+   7. Filter-Leiste und Steuerelemente
+   ============================== */
+/*
+   Reduziertes Filter-UI (Standards BITV/WCAG + Konformitätslevel A/AA/AAA
+   + Suche in einer Zeile). Die frühere 3x3-Grid-Anordnung mit einzeln
+   umrandeten Zellen (für Standards-Titelbox + Anzeigeoptionen-Checkboxen)
+   wird nicht mehr gebraucht, da diese Gruppen aus dem UI entfernt wurden.
+*/
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0 2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    overflow: auto;
+}
+
+.filter-bar > .search-container {
+    display: flex;
+    flex-wrap: nowrap;
+    border: 2px solid hsla(0, 0%, 50%, 0.5);
+    border-radius: 3rem;
+}
+
+.filter-bar > .standard-filters {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-bar > .filter-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-bar > .active-filters {
+    display: none;
+}
+
+/* Berufsgruppen-Filter bleiben ausgeblendet (s. createFilterUI in treemap.js) */

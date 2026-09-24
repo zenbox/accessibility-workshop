@@ -1,0 +1,21 @@
+/* ════════════════════════════════════════════════════════════════
+   HEADER
+════════════════════════════════════════════════════════════════ */
+header {
+    background: var(--nav-bg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--nav-shadow);
+    border-bottom: 1px solid var(--nav-border);
+    transition: background var(--transition);
+}
+
+.nav-wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: stretch;
+    height: 60px;
+    padding: 0 16px;
+}

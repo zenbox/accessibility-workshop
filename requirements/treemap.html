@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html
+    lang="de"
+    style="background: hsla(0, 0%, 0%, 0.85)"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <title>BITV Prüfsektionen - Baumstruktur</title>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <link
+            rel="stylesheet"
+            href="./assets/css/style.css"
+        />
+        <link
+            rel="stylesheet"
+            href="./assets/css/treemap.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+            rel="stylesheet"
+        />
+    </head>
+    <body style="width: 100%; min-width: 100vw; min-height: 100vh">
+        <a
+            href="#main-content"
+            class="skip-link"
+            >Zum Hauptinhalt springen</a
+        >
+        <div
+            class="top-centered-container"
+            id="navigation-panel"
+        >
+            <!--
+                Fixer Header (nicht mehr einklappbar/verschiebbar):
+                Enthält nur noch den Link zurück zur Startseite und die
+                Filterleiste (Suche + Konformitätslevel A/AA/AAA + Testbar
+                + Sammlungen).
+                Die frühere Drag-/Collapse-Steuerung (.nav-controls mit
+                Drag-Handle + Toggle-Button) wurde entfernt, siehe
+                treemap.js: initNavigationPanel() & zugehörige Funktionen
+                sind dort auskommentiert und nicht mehr im Einsatz.
+            -->
+            <div
+                class="nav-content"
+                id="nav-content"
+            >
+                <nav
+                    aria-label="Hauptnavigation"
+                    class="header-home-link"
+                >
+                    <a
+                        href="../"
+                        class="nav-link"
+                        >Zur Startseite</a
+                    >
+                </nav>
+
+                <!-- <h1 class="visually-hidden">
+                    Alle Kriterien aus WCAG und BITV / EN 301 549
+                </h1>
+
+                <aside id="collections"></aside> -->
+
+                <!-- <div
+                    class="filter-bar"
+                    role="region"
+                    aria-label="Filteroptionen"
+                > -->
+                    <div class="search-container">
+                        <span
+                            class="material-icons"
+                            aria-hidden="true"
+                            >search</span
+                        >
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Suche nach Titel, Berufsfeld oder Stichwort ..."
+                            aria-label="Suche nach Titel, Berufsfeld oder Stichwort"
+                        />
+                    </div>
+                    <!--
+                        Reduziertes Filter-UI: Sichtbar sind die Suche, die
+                        Konformitätslevel (A/AA/AAA), der Testbar-Filter und
+                        der Sammlungen-Button.
+                        Die Standard-Buttons "BITV"/"WCAG" und die Checkboxen
+                        "BITV-ID anzeigen" / "WCAG-ID anzeigen" /
+                        "Berufsgruppen-Indikatoren anzeigen" wurden entfernt,
+                        siehe treemap.js (initFilterHandlers/createFilterUI).
+                    -->
+                    <div class="filter-buttons">
+                        <button
+                            class="filter-btn"
+                            data-level="A"
+                            aria-pressed="false"
+                        >
+                            <span class="material-icons"
+                                >check_circle_outline</span
+                            >
+                            <span>A</span>
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-level="AA"
+                            aria-pressed="false"
+                        >
+                            <span class="material-icons">verified</span>
+                            <span>AA</span>
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-level="AAA"
+                            aria-pressed="false"
+                        >
+                            <span class="material-icons">verified_user</span>
+                            <span>AAA</span>
+                        </button>
+                        <button
+                            class="filter-btn testable-filter-btn"
+                            id="testableFilterBtn"
+                            aria-pressed="false"
+                        >
+                            <span
+                                class="material-symbols-outlined"
+                                aria-hidden="true"
+                                >bug_report</span
+                            >
+                            <span>Testbar</span>
+                        </button>
+                    </div>
+                    <div class="active-filters">
+                        <span class="filter-count"></span>
+                    </div>
+                    <!--
+                        Der Sammlungen-Button (bisher als frei schwebender
+                        Floating Action Button per JS an <body> angehängt,
+                        siehe createFloatingCollectionsPanel()) wird jetzt
+                        stattdessen hier in die Filterleiste eingehängt.
+                        Das Panel selbst bleibt ein separates, per JS
+                        erzeugtes und frei verschiebbares Element.
+                    -->
+                    <div
+                        class="collections-slot"
+                        id="collectionsSlot"
+                    ></div>
+                </div>
+            </div>
+        <!-- </div> -->
+        <main id="main-content">
+            <div
+                class="tree-container"
+                role="tablist"
+                aria-label="Barrierefreiheitskriterien nach Kategorien"
+            ></div>
+            <div
+                id="sectionModal"
+                class="modal"
+                role="dialog"
+                aria-labelledby="modalTitle"
+                aria-modal="true"
+                aria-hidden="true"
+            >
+                <div class="modal-content">
+                    <button
+                        class="close-button"
+                        aria-label="Schließen"
+                    >
+                        &times;
+                    </button>
+                    <!-- <h2 id="modalTitle"></h2> -->
+                    <div id="modalContent"></div>
+                </div>
+            </div>
+        </main>
+
+        <script src="./assets/js/treemap.js"></script>
+
+        <script>
+            // Funktion zur Ausgabe der Viewport-Breite
+            function logViewportWidth() {
+                const viewportWidth = window.innerWidth
+                console.log(`Viewport Breite: ${viewportWidth}px`)
+            }
+
+            // Initiale Ausgabe beim Laden der Seite
+            logViewportWidth()
+
+            // Event Listener für Resize-Events
+            window.addEventListener("resize", logViewportWidth)
+
+            // Optional: Kontinuierliche Ausgabe alle 2 Sekunden
+            // setInterval(logViewportWidth, 2000);
+        </script>
+
+    </body>
+</html>

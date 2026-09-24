@@ -1,0 +1,17 @@
+/* ════════════════════════════════════════════════════════════════
+   BEHAVIOUR — Transition & Motion
+════════════════════════════════════════════════════════════════ */
+:root {
+    --transition: 0.22s ease;
+}
+
+* {
+    transition: all var(--transition);
+}
+
+[data-reduce-motion="true"] *,
+[data-reduce-motion="true"] *::before,
+[data-reduce-motion="true"] *::after {
+    transition-duration: 0ms !important;
+    animation-duration:  0ms !important;
+}
