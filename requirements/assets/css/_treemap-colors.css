@@ -4,14 +4,14 @@
 :root {
     --background: #1a202c;
     /* WCAG Hauptkategorien-Farben */
-    --wcag-perceivable: hsl(120, 60%, 35%);
-    --onWcag-perceivable: #fff;
-    --wcag-operable: hsl(30, 80%, 45%);
+    --wcag-perceivable: #d2a34b;
+    --onWcag-perceivable: #000;
+    --wcag-operable: #c44731;
     --onWcag-operable: #fff;
-    --wcag-understandable: hsl(210, 70%, 45%);
-    --onWcag-understandable: #fff;
-    --wcag-robust: hsl(300, 60%, 40%);
-    --onWcag-robust: #fff;
+    --wcag-understandable: #4bbed2;
+    --onWcag-understandable: #000;
+    --wcag-robust: #6c93da;
+    --onWcag-robust: #000;
 
     /* EN 301 549 Addons-Farben */
     --en301549-addon1: hsl(0, 0%, 25%);
@@ -42,18 +42,18 @@
     --onSection-8: #000;
     --section-9: #d2604b; /* Ausreichend Zeit */
     --onSection-9: #000;
-    --section-10: #c44731; /* Anfälle */
+    --section-10: hsl(9, 60%, 48%); /* Anfälle */
     --onSection-10: #fff;
-    --section-11: #a33b29; /* Navigierbar */
+    --section-11: hsl(9, 60%, 40%); /* Navigierbar */
     --onSection-11: #fff;
-    --section-12: #a33b29; /* Eingabemodalitäten */
+    --section-12: hsl(9, 60%, 32%); /* Eingabemodalitäten */
     --onSection-12: #fff;
-    --section-13: #6ccada; /* Lesbar */
+    --section-13: hsl(189, 60%, 64%); /* Lesbar */
     --onSection-13: #000;
-    --section-14: #4bbed2; /* Vorhersehbar */
+    --section-14: hsl(189, 60%, 53%); /* Vorhersehbar */
     --onSection-14: #000;
-    --section-15: #31aec4; /* Eingabeunterstützung */
-    --onSection-15: #000;
+    --section-15: hsl(189, 60%, 42%); /* Eingabeunterstützung */
+    --onSection-15: #fff;
     --section-16: #6c93da; /* Kompatibel */
     --onSection-16: #000;
     --section-17: #31c447; /* Benutzerpräferenzen */

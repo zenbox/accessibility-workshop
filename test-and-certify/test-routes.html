@@ -1,0 +1,3188 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="icon"
+            href="/accessibility-workshop/assets/icons/sheep.ico"
+            type="image/x-icon"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+        <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        />
+        <link rel="stylesheet" href="/accessibility-workshop/assets/css/styles.css" />
+        <title>WCAG Linienplan – Streckenplaner - Michael Reichart</title>
+        <style>
+            /* ================================================================
+               CSS-BEREICH 1/2: DESIGN TOKENS & GRUNDLAGEN
+               Später extrahierbar nach: styles/tokens.css, styles/base.css
+               ================================================================ */
+            /* Tokens auf den App-Container begrenzt, damit sie die Workshop-Variablen nicht überschreiben */
+            .route-planner {
+                color-scheme: light;
+                --ink: #142b3c;
+                --ink-soft: #506575;
+                --muted: #758895;
+                --paper: #f4f7f8;
+                --surface: #ffffff;
+                --surface-soft: #f8fafb;
+                --line: #dce5e9;
+                --line-strong: #b9c8cf;
+                --accent: #116b78;
+                --accent-dark: #0b525d;
+                --accent-pale: #e4f2f2;
+                --warning: #9b4c2b;
+                --warning-pale: #fff1e9;
+                --success: #216b50;
+                --shadow: 0 16px 40px rgba(18, 43, 60, 0.08);
+                --radius-sm: 10px;
+                --radius-md: 16px;
+                --radius-lg: 24px;
+                --focus: #bd4a31;
+
+                /* Farbpalette aus der WCAG-Treemap: vier Prinzipien */
+                --wcag-perceivable: hsl(120, 60%, 35%);
+                --onWcag-perceivable: #fff;
+                --wcag-operable: hsl(30, 80%, 45%);
+                --onWcag-operable: #fff;
+                --wcag-understandable: hsl(210, 70%, 45%);
+                --onWcag-understandable: #fff;
+                --wcag-robust: hsl(300, 60%, 40%);
+                --onWcag-robust: #fff;
+
+                /* WCAG-Richtlinien 1.1 bis 4.1: Kapitel-Hintergrund und Textfarbe */
+                --section-4: #dab46c;
+                --onSection-4: #000; /* Textalternativen */
+                --section-5: #d2a34b;
+                --onSection-5: #000; /* Zeitbasierte Medien */
+                --section-6: #c49031;
+                --onSection-6: #000; /* Anpassbar */
+                --section-7: #a37829;
+                --onSection-7: #000; /* Unterscheidbar */
+                --section-8: #da7d6c;
+                --onSection-8: #000; /* Per Tastatur zugänglich */
+                --section-9: #d2604b;
+                --onSection-9: #000; /* Ausreichend Zeit */
+                --section-10: #c44731;
+                --onSection-10: #fff; /* Anfälle und physische Reaktionen */
+                --section-11: #a33b29;
+                --onSection-11: #fff; /* Navigierbar */
+                --section-12: #a33b29;
+                --onSection-12: #fff; /* Eingabemodalitäten */
+                --section-13: #6ccada;
+                --onSection-13: #000; /* Lesbar */
+                --section-14: #4bbed2;
+                --onSection-14: #000; /* Vorhersehbar */
+                --section-15: #31aec4;
+                --onSection-15: #000; /* Hilfestellung bei der Eingabe */
+                --section-16: #6c93da;
+                --onSection-16: #000; /* Kompatibel */
+
+                /* Konformitätslevel aus der Referenzpalette */
+                --A: hsl(181, 100%, 29%);
+                --onA: #fff;
+                --AA: hsl(59, 100%, 29%);
+                --onAA: #fff;
+                --AAA: hsl(33, 100%, 29%);
+                --onAAA: #fff;
+
+                /*
+                 * Karten-Farb-Aliase nach WCAG-Richtlinie.
+                 * Die Aliasnamen bleiben stabil; für die spätere Umstellung
+                 * auf ../requirements/assets/css/_treemap-colors.css müssen
+                 * nur die lokalen --section-* Fallbacks oben entfallen.
+                 */
+                --criterion-card-bg-1-1: var(--section-4, #dab46c);
+                --criterion-card-text-1-1: var(--onSection-4, #000);
+                --criterion-card-bg-1-2: var(--section-5, #d2a34b);
+                --criterion-card-text-1-2: var(--onSection-5, #000);
+                --criterion-card-bg-1-3: var(--section-6, #c49031);
+                --criterion-card-text-1-3: var(--onSection-6, #000);
+                --criterion-card-bg-1-4: var(--section-7, #a37829);
+                --criterion-card-text-1-4: var(--onSection-7, #000);
+                --criterion-card-bg-2-1: var(--section-8, #da7d6c);
+                --criterion-card-text-2-1: var(--onSection-8, #000);
+                --criterion-card-bg-2-2: var(--section-9, #d2604b);
+                --criterion-card-text-2-2: var(--onSection-9, #000);
+                --criterion-card-bg-2-3: var(--section-10, #c44731);
+                --criterion-card-text-2-3: var(--onSection-10, #fff);
+                --criterion-card-bg-2-4: var(--section-11, #a33b29);
+                --criterion-card-text-2-4: var(--onSection-11, #fff);
+                --criterion-card-bg-2-5: var(--section-12, #a33b29);
+                --criterion-card-text-2-5: var(--onSection-12, #fff);
+                --criterion-card-bg-3-1: var(--section-13, #6ccada);
+                --criterion-card-text-3-1: var(--onSection-13, #000);
+                --criterion-card-bg-3-2: var(--section-14, #4bbed2);
+                --criterion-card-text-3-2: var(--onSection-14, #000);
+                --criterion-card-bg-3-3: var(--section-15, #31aec4);
+                --criterion-card-text-3-3: var(--onSection-15, #000);
+                --criterion-card-bg-4-1: var(--section-16, #6c93da);
+                --criterion-card-text-4-1: var(--onSection-16, #000);
+            }
+
+            /* Kapitelgebundene Kartenfarben: lokal austauschbar gegen treemap-colors */
+            [data-guideline="1.1"] {
+                --criterion-card-background: var(--criterion-card-bg-1-1);
+                --criterion-card-foreground: var(--criterion-card-text-1-1);
+            }
+            [data-guideline="1.2"] {
+                --criterion-card-background: var(--criterion-card-bg-1-2);
+                --criterion-card-foreground: var(--criterion-card-text-1-2);
+            }
+            [data-guideline="1.3"] {
+                --criterion-card-background: var(--criterion-card-bg-1-3);
+                --criterion-card-foreground: var(--criterion-card-text-1-3);
+            }
+            [data-guideline="1.4"] {
+                --criterion-card-background: var(--criterion-card-bg-1-4);
+                --criterion-card-foreground: var(--criterion-card-text-1-4);
+            }
+            [data-guideline="2.1"] {
+                --criterion-card-background: var(--criterion-card-bg-2-1);
+                --criterion-card-foreground: var(--criterion-card-text-2-1);
+            }
+            [data-guideline="2.2"] {
+                --criterion-card-background: var(--criterion-card-bg-2-2);
+                --criterion-card-foreground: var(--criterion-card-text-2-2);
+            }
+            [data-guideline="2.3"] {
+                --criterion-card-background: var(--criterion-card-bg-2-3);
+                --criterion-card-foreground: var(--criterion-card-text-2-3);
+            }
+            [data-guideline="2.4"] {
+                --criterion-card-background: var(--criterion-card-bg-2-4);
+                --criterion-card-foreground: var(--criterion-card-text-2-4);
+            }
+            [data-guideline="2.5"] {
+                --criterion-card-background: var(--criterion-card-bg-2-5);
+                --criterion-card-foreground: var(--criterion-card-text-2-5);
+            }
+            [data-guideline="3.1"] {
+                --criterion-card-background: var(--criterion-card-bg-3-1);
+                --criterion-card-foreground: var(--criterion-card-text-3-1);
+            }
+            [data-guideline="3.2"] {
+                --criterion-card-background: var(--criterion-card-bg-3-2);
+                --criterion-card-foreground: var(--criterion-card-text-3-2);
+            }
+            [data-guideline="3.3"] {
+                --criterion-card-background: var(--criterion-card-bg-3-3);
+                --criterion-card-foreground: var(--criterion-card-text-3-3);
+            }
+            [data-guideline="4.1"] {
+                --criterion-card-background: var(--criterion-card-bg-4-1);
+                --criterion-card-foreground: var(--criterion-card-text-4-1);
+            }
+
+            main.route-planner {
+                flex: 1;
+                width: 100%;
+                max-width: none;
+                min-width: 320px;
+                padding-inline: 0;
+                background: var(--paper);
+                color: var(--ink);
+                font-size: 0.9375rem;
+                line-height: 1.5;
+            }
+            .route-planner h2,
+            .route-planner h3 {
+                margin-block-start: 0;
+                font-weight: 700;
+            }
+            .route-planner button,
+            .route-planner input,
+            .route-planner select {
+                font: inherit;
+            }
+            .route-planner button {
+                color: inherit;
+            }
+            .route-planner button:focus-visible,
+            .route-planner input:focus-visible,
+            .route-planner select:focus-visible,
+            .route-planner a:focus-visible {
+                outline: 3px solid var(--focus);
+                outline-offset: 3px;
+            }
+            .route-planner .material-symbols-outlined {
+                font-size: 20px;
+                line-height: 1;
+                vertical-align: middle;
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 450,
+                    "GRAD" 0,
+                    "opsz" 20;
+            }
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+
+            /* ================================================================
+               CSS-BEREICH 2/2: KOMPONENTEN & RESPONSIVE LAYOUT
+               Später extrahierbar nach: styles/components/*.css
+               ================================================================ */
+            .topbar {
+                min-height: 66px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 18px;
+                padding: 0 clamp(18px, 4vw, 56px);
+                background: #102b3a;
+                color: #fff;
+            }
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+            }
+            .brand-mark {
+                width: 30px;
+                height: 30px;
+                display: grid;
+                place-items: center;
+                border: 1px solid rgba(255, 255, 255, 0.48);
+                border-radius: 50%;
+                color: #bbdfda;
+            }
+            .brand small {
+                display: block;
+                color: #adc0c8;
+                font-size: 11px;
+                font-weight: 500;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+            .topbar-actions {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .topbar-note {
+                color: #c0d1d7;
+                font-size: 12px;
+            }
+            .icon-button,
+            .quiet-button,
+            .primary-button,
+            .outline-button,
+            .text-button {
+                min-height: 40px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                border: 1px solid transparent;
+                border-radius: 9px;
+                padding: 0 13px;
+                cursor: pointer;
+                transition:
+                    background 0.16s ease,
+                    border-color 0.16s ease,
+                    transform 0.16s ease;
+            }
+            .topbar .quiet-button {
+                color: #fff;
+                background: rgba(255, 255, 255, 0.08);
+                border-color: rgba(255, 255, 255, 0.18);
+            }
+            .topbar .quiet-button:hover {
+                background: rgba(255, 255, 255, 0.15);
+            }
+            .primary-button {
+                background: var(--accent);
+                color: #fff;
+                font-weight: 650;
+            }
+            .primary-button:hover {
+                background: var(--accent-dark);
+            }
+            .outline-button {
+                background: #fff;
+                border-color: var(--line-strong);
+                color: var(--ink);
+            }
+            .outline-button:hover,
+            .text-button:hover {
+                background: var(--surface-soft);
+                border-color: #8ca1ab;
+            }
+            .text-button {
+                min-height: 34px;
+                padding: 0 9px;
+                color: var(--ink-soft);
+                background: transparent;
+            }
+            .text-button.danger {
+                color: var(--warning);
+            }
+            .icon-button {
+                width: 36px;
+                min-height: 36px;
+                padding: 0;
+                background: #fff;
+                border-color: var(--line);
+                color: var(--ink-soft);
+            }
+            .icon-button:hover {
+                border-color: var(--line-strong);
+                background: var(--surface-soft);
+            }
+            .route-planner button:disabled {
+                opacity: 0.44;
+                cursor: not-allowed;
+            }
+
+            .page-wrap {
+                max-width: 1480px;
+                margin: 0 auto;
+                padding: 32px clamp(16px, 4vw, 56px) 52px;
+            }
+            .page-heading {
+                display: flex;
+                justify-content: space-between;
+                align-items: end;
+                gap: 24px;
+                margin-bottom: 25px;
+            }
+            .eyebrow {
+                margin: 0 0 7px;
+                color: var(--accent);
+                font-size: 11px;
+                font-weight: 750;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+            }
+            .route-planner h1 {
+                margin: 0;
+                font-size: clamp(28px, 3.2vw, 42px);
+                font-weight: 700;
+                letter-spacing: -0.045em;
+                line-height: 1.08;
+            }
+            .page-heading p:not(.eyebrow) {
+                max-width: 680px;
+                margin: 10px 0 0;
+                color: var(--ink-soft);
+            }
+            .heading-meta {
+                flex: 0 0 auto;
+                padding: 10px 13px;
+                border: 1px solid var(--line);
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.65);
+                color: var(--ink-soft);
+                font-size: 12px;
+            }
+
+            .workspace {
+                display: grid;
+                grid-template-columns: minmax(345px, 420px) minmax(0, 1fr);
+                gap: 22px;
+                align-items: start;
+            }
+            .panel {
+                border: 1px solid var(--line);
+                border-radius: var(--radius-md);
+                background: var(--surface);
+                box-shadow: var(--shadow);
+                overflow: hidden;
+            }
+            .panel-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 18px 20px;
+                border-bottom: 1px solid var(--line);
+            }
+            .panel-header h2 {
+                margin: 0;
+                font-size: 15px;
+                letter-spacing: -0.01em;
+            }
+            .panel-header p {
+                margin: 3px 0 0;
+                color: var(--muted);
+                font-size: 12px;
+            }
+            .panel-body {
+                padding: 20px;
+            }
+            .field-grid {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) 96px;
+                gap: 12px;
+            }
+            .field {
+                display: grid;
+                gap: 6px;
+                margin-bottom: 15px;
+            }
+            .field label,
+            .field-label {
+                color: var(--ink-soft);
+                font-size: 12px;
+                font-weight: 650;
+            }
+            .field input,
+            .field select,
+            .search-input {
+                width: 100%;
+                min-height: 42px;
+                padding: 0 11px;
+                border: 1px solid var(--line-strong);
+                border-radius: 8px;
+                background: #fff;
+                color: var(--ink);
+            }
+            .field input:hover,
+            .field select:hover,
+            .search-input:hover {
+                border-color: #8299a4;
+            }
+            .line-number-row {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+            }
+            .line-number-row input {
+                min-width: 0;
+            }
+            .color-row {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            input[type="color"] {
+                width: 44px;
+                min-width: 44px;
+                height: 40px;
+                padding: 4px;
+                border: 1px solid var(--line-strong);
+                border-radius: 8px;
+                background: #fff;
+                cursor: pointer;
+            }
+            .color-help {
+                color: var(--muted);
+                font-size: 12px;
+            }
+            .form-message {
+                min-height: 18px;
+                margin: -5px 0 12px;
+                color: var(--warning);
+                font-size: 12px;
+            }
+            .route-tabs-wrap {
+                padding: 0 20px 17px;
+                border-bottom: 1px solid var(--line);
+            }
+            .route-tabs-label {
+                display: block;
+                margin-bottom: 9px;
+                color: var(--muted);
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+            .route-tabs {
+                display: flex;
+                gap: 7px;
+                flex-wrap: wrap;
+            }
+            .route-tab {
+                min-height: 34px;
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                padding: 0 10px;
+                border: 1px solid var(--line);
+                border-radius: 999px;
+                background: #fff;
+                cursor: pointer;
+                font-size: 12px;
+            }
+            .route-tab[aria-pressed="true"] {
+                border-color: var(--ink);
+                background: #edf3f5;
+                font-weight: 700;
+            }
+            .route-tab-mark {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--route-color);
+            }
+            .criteria-toolbar {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) 130px;
+                gap: 9px;
+                margin-bottom: 13px;
+            }
+            .search-wrap {
+                position: relative;
+            }
+            .search-wrap .material-symbols-outlined {
+                position: absolute;
+                top: 11px;
+                left: 11px;
+                color: var(--muted);
+                pointer-events: none;
+            }
+            .search-input {
+                padding-left: 38px;
+            }
+            .criteria-toolbar select {
+                min-height: 42px;
+                padding: 0 8px;
+                border: 1px solid var(--line-strong);
+                border-radius: 8px;
+                background: #fff;
+                color: var(--ink);
+            }
+            .results-summary {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                margin: 0 1px 8px;
+                color: var(--muted);
+                font-size: 11px;
+            }
+            .criteria-list {
+                display: grid;
+                gap: 7px;
+                max-height: 420px;
+                overflow: auto;
+                padding: 1px 3px 2px 1px;
+            }
+            .criterion-row {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 10px 10px 12px;
+                border: 1px solid var(--line);
+                border-radius: 10px;
+                background: #fff;
+            }
+            .criterion-row:hover {
+                border-color: #9eb1b8;
+                background: #fcfdfd;
+            }
+            .criterion-row.is-added {
+                border-style: dashed;
+                background: var(--surface-soft);
+            }
+            .criterion-code {
+                display: inline-block;
+                margin-right: 6px;
+                color: var(--accent);
+                font-size: 11px;
+                font-weight: 750;
+                letter-spacing: 0.02em;
+            }
+            .criterion-title {
+                color: var(--ink);
+                font-size: 12px;
+                font-weight: 650;
+            }
+            .criterion-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-top: 4px;
+                color: var(--muted);
+                font-size: 10px;
+            }
+            .level-pill {
+                display: inline-block;
+                padding: 1px 6px;
+                border-radius: 999px;
+                background: #edf2f4;
+                color: #506575;
+                font-size: 10px;
+                font-weight: 700;
+            }
+            .add-criterion {
+                min-height: 32px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 3px;
+                padding: 0 9px;
+                border: 1px solid #bdd8d5;
+                border-radius: 8px;
+                background: #f2f9f8;
+                color: var(--accent-dark);
+                cursor: pointer;
+                font-size: 11px;
+                font-weight: 700;
+            }
+            .add-criterion:hover {
+                background: var(--accent-pale);
+            }
+            .added-label {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                color: var(--success);
+                font-size: 11px;
+                font-weight: 650;
+            }
+            .empty-results {
+                padding: 25px 14px;
+                border: 1px dashed var(--line-strong);
+                border-radius: 10px;
+                text-align: center;
+                color: var(--muted);
+                font-size: 12px;
+            }
+            .backup-tools {
+                margin-top: 16px;
+                padding: 13px;
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                background: var(--surface-soft);
+            }
+            .backup-top {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 12px;
+            }
+            .backup-copy {
+                min-width: 0;
+            }
+            .backup-copy h3 {
+                margin: 0;
+                font-size: 12px;
+            }
+            .backup-copy p {
+                margin: 3px 0 0;
+                color: var(--muted);
+                font-size: 10px;
+                line-height: 1.4;
+            }
+            .backup-actions {
+                display: flex;
+                flex: 0 0 auto;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                gap: 6px;
+            }
+            .backup-actions button {
+                min-height: 34px;
+                padding: 0 9px;
+                font-size: 11px;
+            }
+            .backup-actions .material-symbols-outlined {
+                font-size: 17px;
+            }
+            .backup-status {
+                min-height: 16px;
+                margin: 9px 0 0;
+                color: var(--muted);
+                font-size: 10px;
+                line-height: 1.4;
+            }
+            .backup-status.is-error {
+                color: var(--warning);
+            }
+            .backup-status.is-success {
+                color: var(--success);
+            }
+
+            .map-panel {
+                min-height: 660px;
+            }
+            .map-panel .panel-header {
+                padding: 18px 22px;
+            }
+            .map-title-wrap {
+                min-width: 0;
+            }
+            .map-title-line {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                min-width: 0;
+            }
+            .map-route-badge {
+                flex: 0 0 auto;
+                display: inline-grid;
+                place-items: center;
+                min-width: 37px;
+                height: 29px;
+                padding: 0 9px;
+                border-radius: 7px;
+                color: #fff;
+                font-size: 12px;
+                font-weight: 800;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
+            }
+            .map-title {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .map-subtitle {
+                color: var(--muted);
+                font-size: 12px;
+            }
+            .map-actions {
+                display: flex;
+                gap: 7px;
+            }
+            .map-body {
+                min-height: 570px;
+                padding: 26px clamp(18px, 4vw, 58px) 32px;
+                background-color: #fbfcfc;
+                background-image:
+                    linear-gradient(rgba(217, 228, 232, 0.32) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(217, 228, 232, 0.32) 1px, transparent 1px);
+                background-size: 32px 32px;
+            }
+            .map-intro {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 16px;
+                margin-bottom: 20px;
+            }
+            .map-intro strong {
+                font-size: 12px;
+            }
+            .map-intro span {
+                color: var(--muted);
+                font-size: 11px;
+            }
+            .route-map {
+                position: relative;
+                width: min(100%, 740px);
+                margin: 0 auto;
+                padding: 4px 0 20px;
+            }
+            .station-row {
+                position: relative;
+                display: grid;
+                grid-template-columns: 52px 48px minmax(0, 1fr) 84px;
+                align-items: center;
+                min-height: 82px;
+            }
+            .station-row::before {
+                content: "";
+                position: absolute;
+                z-index: 0;
+                top: 0;
+                bottom: 0;
+                left: 75px;
+                width: 5px;
+                background: var(--route-color);
+                opacity: 0.9;
+            }
+            .station-row:first-child::before {
+                top: 50%;
+            }
+            .station-row:last-child::before {
+                bottom: 50%;
+            }
+            .station-index {
+                position: relative;
+                z-index: 1;
+                color: var(--muted);
+                font-size: 10px;
+                font-weight: 700;
+                text-align: right;
+                padding-right: 11px;
+            }
+            .station-node-wrap {
+                position: relative;
+                z-index: 1;
+                display: grid;
+                place-items: center;
+                height: 100%;
+            }
+            .station-node {
+                width: 20px;
+                height: 20px;
+                border: 5px solid var(--route-color);
+                border-radius: 50%;
+                background: #fff;
+                box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8);
+            }
+            .station-card {
+                min-width: 0;
+                margin: 8px 0;
+                padding: 12px 14px;
+                border: 1px solid var(--line);
+                border-left: 3px solid var(--route-color);
+                border-radius: 10px;
+                background: rgba(255, 255, 255, 0.96);
+                box-shadow: 0 4px 12px rgba(20, 43, 60, 0.05);
+            }
+            .station-topline {
+                display: flex;
+                align-items: baseline;
+                flex-wrap: wrap;
+                gap: 5px 9px;
+            }
+            .station-code {
+                color: var(--accent);
+                font-size: 11px;
+                font-weight: 800;
+            }
+            .station-name {
+                font-size: 13px;
+                font-weight: 700;
+            }
+            .station-details {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 5px 9px;
+                margin-top: 5px;
+                color: var(--muted);
+                font-size: 10px;
+            }
+            .station-actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: 4px;
+                padding-left: 10px;
+            }
+            .station-actions .icon-button {
+                width: 31px;
+                min-height: 31px;
+                height: 31px;
+            }
+            .station-actions .material-symbols-outlined {
+                font-size: 17px;
+            }
+            .map-empty {
+                display: grid;
+                place-items: center;
+                min-height: 390px;
+                padding: 28px;
+                border: 1px dashed var(--line-strong);
+                border-radius: 18px;
+                background: rgba(255, 255, 255, 0.72);
+                text-align: center;
+            }
+            .map-empty-icon {
+                width: 54px;
+                height: 54px;
+                display: grid;
+                place-items: center;
+                margin-bottom: 13px;
+                border-radius: 50%;
+                background: var(--accent-pale);
+                color: var(--accent);
+            }
+            .map-empty h3 {
+                margin: 0 0 5px;
+                font-size: 16px;
+            }
+            .map-empty p {
+                max-width: 340px;
+                margin: 0;
+                color: var(--ink-soft);
+                font-size: 12px;
+            }
+            .map-footer {
+                display: flex;
+                justify-content: space-between;
+                gap: 12px;
+                margin-top: 22px;
+                padding-top: 12px;
+                border-top: 1px solid rgba(185, 200, 207, 0.7);
+                color: var(--muted);
+                font-size: 10px;
+            }
+            .map-footer strong {
+                color: var(--ink-soft);
+            }
+            .network-panel {
+                margin-top: 22px;
+            }
+            .network-body {
+                padding: 20px;
+            }
+            .network-summary {
+                flex: 0 0 auto;
+                padding: 6px 9px;
+                border-radius: 999px;
+                background: #edf2f4;
+                color: var(--ink-soft);
+                font-size: 11px;
+            }
+            .network-legend {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 8px 18px;
+                margin-bottom: 14px;
+                color: var(--ink-soft);
+                font-size: 11px;
+            }
+            .network-legend-item {
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+            }
+            .legend-transfer {
+                width: 15px;
+                height: 15px;
+                border: 4px solid #ad512c;
+                border-radius: 50%;
+                background: #fff;
+            }
+            .network-scroll {
+                position: relative;
+                overflow: auto;
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                background-color: #fbfcfc;
+                background-image:
+                    linear-gradient(rgba(217, 228, 232, 0.28) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(217, 228, 232, 0.28) 1px, transparent 1px);
+                background-size: 32px 32px;
+            }
+            .network-inner {
+                position: relative;
+                min-width: 900px;
+                padding: 18px 18px 22px;
+            }
+            .network-lane {
+                position: relative;
+                display: grid;
+                grid-template-columns: 170px minmax(700px, 1fr);
+                align-items: stretch;
+                min-height: 118px;
+                border-bottom: 1px solid rgba(185, 200, 207, 0.65);
+            }
+            .network-lane:last-child {
+                border-bottom: 0;
+            }
+            .network-line-label {
+                position: relative;
+                z-index: 2;
+                display: flex;
+                align-items: flex-start;
+                gap: 9px;
+                padding: 2px 12px 0 0;
+            }
+            .network-line-badge {
+                flex: 0 0 auto;
+                display: inline-grid;
+                place-items: center;
+                min-width: 31px;
+                height: 24px;
+                padding: 0 6px;
+                border-radius: 6px;
+                color: #fff;
+                font-size: 10px;
+                font-weight: 800;
+            }
+            .network-line-name {
+                display: block;
+                max-width: 128px;
+                color: var(--ink);
+                font-size: 11px;
+                font-weight: 700;
+                line-height: 1.3;
+                overflow-wrap: anywhere;
+            }
+            .network-line-count {
+                display: block;
+                margin-top: 3px;
+                color: var(--muted);
+                font-size: 10px;
+            }
+            .network-no-stops {
+                align-self: center;
+                grid-column: 2;
+                padding: 12px 0;
+                color: var(--muted);
+                font-size: 11px;
+            }
+            .network-stops {
+                position: relative;
+                display: grid;
+                grid-template-columns: repeat(var(--column-count), minmax(132px, 1fr));
+                align-items: start;
+                min-width: 700px;
+                padding-top: 0;
+            }
+            .network-stops::before {
+                content: none;
+            }
+            .network-stop {
+                position: relative;
+                z-index: 2;
+                display: flex;
+                min-width: 0;
+                flex-direction: column;
+                align-items: center;
+                padding: 0 4px 10px;
+                text-align: center;
+            }
+            .network-stop-node {
+                position: relative;
+                display: block;
+                width: 24px;
+                height: 24px;
+                border: 5px solid var(--route-color);
+                border-radius: 50%;
+                background: #fff;
+                box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.88);
+            }
+            .network-stop.is-transfer .network-stop-node {
+                width: 28px;
+                height: 28px;
+                margin-top: -2px;
+                border: 5px solid #ad512c;
+                background: #fff4ed;
+                box-shadow:
+                    0 0 0 4px rgba(255, 255, 255, 0.94),
+                    0 0 0 6px rgba(173, 81, 44, 0.16);
+            }
+            .network-stop-code {
+                margin-top: 8px;
+                color: var(--accent);
+                font-size: 10px;
+                font-weight: 800;
+            }
+            .network-stop-title {
+                display: block;
+                max-width: 140px;
+                margin-top: 2px;
+                color: var(--ink-soft);
+                font-size: 10px;
+                line-height: 1.25;
+                overflow-wrap: anywhere;
+            }
+            .network-transfer-label {
+                display: inline-flex;
+                align-items: center;
+                gap: 2px;
+                margin-top: 5px;
+                padding: 2px 5px;
+                border-radius: 999px;
+                background: #fff0e7;
+                color: #8b3e22;
+                font-size: 9px;
+                font-weight: 750;
+            }
+            .network-transfer-label .material-symbols-outlined {
+                font-size: 13px;
+            }
+            .network-connectors {
+                position: absolute;
+                z-index: 1;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                overflow: visible;
+                pointer-events: none;
+            }
+            .network-connectors path {
+                fill: none;
+                stroke-linecap: round;
+            }
+            .network-connectors path.network-route-link {
+                stroke-width: 5;
+                opacity: 0.78;
+            }
+            .network-connectors path.network-transfer-link {
+                stroke: #ad512c;
+                stroke-width: 2.4;
+                stroke-dasharray: 5 5;
+                opacity: 0.7;
+            }
+            .network-empty {
+                display: grid;
+                min-height: 190px;
+                place-items: center;
+                padding: 24px;
+                border: 1px dashed var(--line-strong);
+                border-radius: 12px;
+                color: var(--ink-soft);
+                text-align: center;
+            }
+
+            /* Vollflächige Richtlinienfarbe nur in der Auswahlliste; in den Plänen nur als Füllung der Stationskreise. */
+            .criterion-row[data-guideline] {
+                background: var(--criterion-card-background, #fff);
+                color: var(--criterion-card-foreground, var(--ink));
+            }
+            .criterion-row[data-guideline] .criterion-code,
+            .criterion-row[data-guideline] .criterion-title,
+            .criterion-row[data-guideline] .criterion-meta {
+                color: var(--criterion-card-foreground, var(--ink));
+            }
+            .station-row[data-guideline] .station-node,
+            .network-stop[data-guideline] .network-stop-node {
+                background: var(--criterion-card-background, #fff);
+            }
+            .criterion-row[data-guideline] .added-label {
+                color: var(--criterion-card-foreground, var(--ink));
+            }
+
+            .transfer-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 3px;
+                padding: 2px 7px;
+                border: 1px solid #e7b79e;
+                border-radius: 999px;
+                background: #fff4ed;
+                color: #8b3e22;
+                font-size: 10px;
+                font-weight: 700;
+            }
+            .transfer-pill .material-symbols-outlined {
+                font-size: 14px;
+            }
+            .transfer-note {
+                color: #8b3e22;
+                font-size: 10px;
+            }
+            .notice {
+                margin-top: 18px;
+                padding: 12px 14px;
+                border-left: 3px solid #91afb1;
+                border-radius: 0 9px 9px 0;
+                background: #edf4f4;
+                color: var(--ink-soft);
+                font-size: 11px;
+            }
+            .debug-panel {
+                margin-top: 20px;
+                border: 1px solid #d7c6a5;
+                border-radius: 12px;
+                background: #fffaf0;
+                overflow: hidden;
+            }
+            .debug-panel[hidden] {
+                display: none;
+            }
+            .debug-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 13px 16px;
+                border-bottom: 1px solid #eadfc9;
+            }
+            .debug-head h2 {
+                margin: 0;
+                font-size: 13px;
+            }
+            .debug-body {
+                padding: 14px 16px;
+            }
+            .debug-results {
+                margin: 0 0 12px;
+                padding: 0;
+                list-style: none;
+                display: grid;
+                gap: 5px;
+                font-size: 11px;
+            }
+            .debug-results li {
+                display: flex;
+                align-items: center;
+                gap: 7px;
+            }
+            .debug-results .material-symbols-outlined {
+                font-size: 16px;
+            }
+            .debug-results .pass {
+                color: var(--success);
+            }
+            .debug-results .fail {
+                color: var(--warning);
+            }
+            .debug-state {
+                max-height: 250px;
+                overflow: auto;
+                margin: 0;
+                padding: 12px;
+                border-radius: 8px;
+                background: #1b2a34;
+                color: #e3ecef;
+                font:
+                    11px/1.5 "JetBrains Mono",
+                    monospace;
+                white-space: pre-wrap;
+                overflow-wrap: anywhere;
+            }
+            .sr-announcer {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+
+            @media (max-width: 900px) {
+                .workspace {
+                    grid-template-columns: minmax(0, 1fr);
+                }
+                .map-panel {
+                    min-height: auto;
+                }
+                .map-body {
+                    min-height: 490px;
+                }
+                .criteria-list {
+                    max-height: 310px;
+                }
+                .page-heading {
+                    align-items: start;
+                }
+                .heading-meta {
+                    display: none;
+                }
+            }
+            @media (max-width: 560px) {
+                .topbar {
+                    padding: 0 14px;
+                }
+                .topbar-note {
+                    display: none;
+                }
+                .topbar .quiet-button {
+                    min-height: 36px;
+                    padding: 0 9px;
+                    font-size: 12px;
+                }
+                .page-wrap {
+                    padding: 23px 12px 34px;
+                }
+                .page-heading {
+                    margin-bottom: 18px;
+                }
+                .page-heading p:not(.eyebrow) {
+                    font-size: 13px;
+                }
+                .panel-header,
+                .panel-body {
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
+                .route-tabs-wrap {
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
+                .criteria-toolbar {
+                    grid-template-columns: 1fr;
+                }
+                .criteria-toolbar select {
+                    width: 100%;
+                }
+                .backup-top {
+                    flex-direction: column;
+                }
+                .backup-actions {
+                    justify-content: flex-start;
+                }
+                .backup-actions button {
+                    flex: 1 1 auto;
+                }
+                .map-panel .panel-header {
+                    align-items: flex-start;
+                    padding: 14px;
+                }
+                .map-actions {
+                    flex-direction: column;
+                }
+                .map-actions button {
+                    min-height: 33px;
+                }
+                .map-body {
+                    padding: 20px 9px 24px;
+                }
+                .network-panel .panel-header {
+                    align-items: flex-start;
+                    padding: 14px;
+                }
+                .network-body {
+                    padding: 13px;
+                }
+                .network-summary {
+                    max-width: 130px;
+                    text-align: center;
+                }
+                .station-row {
+                    grid-template-columns: 28px 32px minmax(0, 1fr) 68px;
+                    min-height: 88px;
+                }
+                .station-row::before {
+                    left: 44px;
+                    width: 4px;
+                }
+                .station-index {
+                    padding-right: 5px;
+                    font-size: 9px;
+                }
+                .station-node {
+                    width: 17px;
+                    height: 17px;
+                    border-width: 4px;
+                }
+                .station-card {
+                    padding: 10px;
+                }
+                .station-name {
+                    font-size: 12px;
+                }
+                .station-actions {
+                    gap: 2px;
+                    padding-left: 4px;
+                }
+                .station-actions .icon-button {
+                    width: 28px;
+                    min-height: 28px;
+                    height: 28px;
+                }
+                .map-intro {
+                    align-items: flex-start;
+                    flex-direction: column;
+                    gap: 3px;
+                }
+                .map-footer {
+                    flex-direction: column;
+                    gap: 4px;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    scroll-behavior: auto !important;
+                    transition-duration: 0.01ms !important;
+                    animation-duration: 0.01ms !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ================================================================
+             HTML-BEREICH: SEMANTISCHER APP-RAHMEN
+             Später extrahierbar nach: index.html + Komponenten-Templates
+             ================================================================ -->
+        <!-- ══ SKIP LINKS ══════════════════════════════════════════════ -->
+        <nav class="skip-links" aria-label="Sprungnavigation">
+            <a class="skip-link" href="#main-content">Zum Hauptinhalt</a>
+            <a class="skip-link" href="#site-footer">Zum Footer</a>
+        </nav>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
+        <header>
+            <div class="nav-wrapper">
+                <!-- Desktop nav + A11y menu injected by JS -->
+                <button
+                    class="hamburger"
+                    id="hamburgerBtn"
+                    aria-label="Menü öffnen"
+                    aria-expanded="false"
+                >
+                    <span class="material-symbols-outlined" id="hamburgerIcon">menu</span>
+                </button>
+            </div>
+            <!-- Mobile nav injected by JS -->
+        </header>
+
+        <main class="route-planner" id="main-content" tabindex="-1">
+            <div class="topbar">
+                <div class="brand">
+                    <span class="brand-mark" aria-hidden="true"
+                        ><span class="material-symbols-outlined">alt_route</span></span
+                    >
+                    <div>Linienplan <small>WCAG Streckenplaner</small></div>
+                </div>
+                <div class="topbar-actions">
+                    <span class="topbar-note"
+                        >Ein Kriterienplan, den man auf einen Blick versteht.</span
+                    >
+                    <button
+                        class="quiet-button"
+                        id="debug-toggle"
+                        type="button"
+                        aria-expanded="false"
+                        aria-controls="debug-panel"
+                    >
+                        <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
+                        Debug
+                    </button>
+                </div>
+            </div>
+            <div class="page-wrap">
+                <section class="page-heading" aria-labelledby="page-title">
+                    <div>
+                        <p class="eyebrow">WCAG als Wegweiser</p>
+                        <h1 id="page-title">Dein Kriterien-Linienplan</h1>
+                        <p>
+                            Stelle aus WCAG-Kriterien eine verständliche Route zusammen. Die
+                            Haltestellen werden live in einen übersichtlichen Streckenplan
+                            übersetzt.
+                        </p>
+                    </div>
+                    <div class="heading-meta">
+                        <span class="material-symbols-outlined" aria-hidden="true">edit_road</span>
+                        Strecke frei zusammenstellen
+                    </div>
+                </section>
+
+                <section class="workspace" aria-label="Linienplan bearbeiten">
+                    <section class="panel editor-panel" aria-labelledby="editor-title">
+                        <div class="panel-header">
+                            <div>
+                                <h2 id="editor-title">Linie gestalten</h2>
+                                <p>Name, Kennung und Haltestellen festlegen</p>
+                            </div>
+                            <button
+                                class="outline-button"
+                                id="add-route"
+                                type="button"
+                                aria-label="Neue Linie hinzufügen"
+                            >
+                                <span class="material-symbols-outlined" aria-hidden="true">add</span
+                                ><span class="add-route-label">Neue Linie</span>
+                            </button>
+                        </div>
+                        <div class="route-tabs-wrap">
+                            <span class="route-tabs-label">Deine Linien</span>
+                            <nav
+                                class="route-tabs"
+                                id="route-tabs"
+                                aria-label="Linie auswählen"
+                            ></nav>
+                        </div>
+                        <div class="panel-body">
+                            <form id="route-form" novalidate>
+                                <div class="field-grid">
+                                    <div class="field">
+                                        <label for="route-name">Streckenname</label>
+                                        <input
+                                            id="route-name"
+                                            name="name"
+                                            type="text"
+                                            maxlength="48"
+                                            autocomplete="off"
+                                            aria-describedby="route-error"
+                                        />
+                                    </div>
+                                    <div class="field">
+                                        <label for="route-number">Liniennr.</label>
+                                        <input
+                                            id="route-number"
+                                            name="number"
+                                            type="text"
+                                            maxlength="8"
+                                            autocomplete="off"
+                                            aria-describedby="route-error"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <span class="field-label">Linienfarbe</span>
+                                    <div class="color-row">
+                                        <label class="sr-only" for="route-color"
+                                            >Linienfarbe auswählen</label
+                                        >
+                                        <input
+                                            id="route-color"
+                                            name="color"
+                                            type="color"
+                                            value="#116b78"
+                                        />
+                                        <span class="color-help"
+                                            >Wird im Streckenplan verwendet</span
+                                        >
+                                    </div>
+                                </div>
+                                <p
+                                    class="form-message"
+                                    id="route-error"
+                                    role="status"
+                                    aria-live="polite"
+                                ></p>
+                            </form>
+
+                            <div class="criteria-toolbar" aria-label="WCAG-Kriterien durchsuchen">
+                                <div class="search-wrap">
+                                    <label class="sr-only" for="criterion-search"
+                                        >Kriterien suchen</label
+                                    >
+                                    <span class="material-symbols-outlined" aria-hidden="true"
+                                        >search</span
+                                    >
+                                    <input
+                                        class="search-input"
+                                        id="criterion-search"
+                                        type="search"
+                                        placeholder="Kriterium oder Begriff suchen"
+                                        autocomplete="off"
+                                    />
+                                </div>
+                                <div>
+                                    <label class="sr-only" for="level-filter"
+                                        >Konformitätsstufe filtern</label
+                                    >
+                                    <select id="level-filter">
+                                        <option value="all">Alle Stufen</option>
+                                        <option value="A">Stufe A</option>
+                                        <option value="AA">Stufe AA</option>
+                                        <option value="AAA">Stufe AAA</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="results-summary">
+                                <span id="criteria-count">Kriterien</span><span>WCAG 2.2</span>
+                            </div>
+                            <div
+                                class="criteria-list"
+                                id="criteria-list"
+                                aria-label="Verfügbare WCAG-Kriterien"
+                            ></div>
+                            <section class="backup-tools" aria-labelledby="backup-title">
+                                <div class="backup-top">
+                                    <div class="backup-copy">
+                                        <h3 id="backup-title">Arbeitsstand sichern</h3>
+                                        <p>
+                                            Exportiere deine Linien als JSON-Datei und lade sie
+                                            später wieder.
+                                        </p>
+                                    </div>
+                                    <div class="backup-actions">
+                                        <button
+                                            class="outline-button"
+                                            id="export-json"
+                                            type="button"
+                                        >
+                                            <span
+                                                class="material-symbols-outlined"
+                                                aria-hidden="true"
+                                                >download</span
+                                            >JSON sichern
+                                        </button>
+                                        <button
+                                            class="outline-button"
+                                            id="import-json"
+                                            type="button"
+                                        >
+                                            <span
+                                                class="material-symbols-outlined"
+                                                aria-hidden="true"
+                                                >upload_file</span
+                                            >JSON laden
+                                        </button>
+                                        <input
+                                            class="sr-only"
+                                            id="import-file"
+                                            type="file"
+                                            accept=".json,application/json"
+                                            aria-label="Linienplan-JSON-Datei auswählen"
+                                        />
+                                    </div>
+                                </div>
+                                <p
+                                    class="backup-status"
+                                    id="backup-status"
+                                    role="status"
+                                    aria-live="polite"
+                                >
+                                    Änderungen werden automatisch in diesem Browser gespeichert.
+                                    JSON-Export und -Import bleiben als manuelle Sicherung
+                                    verfügbar.
+                                </p>
+                            </section>
+                        </div>
+                    </section>
+
+                    <section class="panel map-panel" aria-labelledby="map-heading">
+                        <div class="panel-header">
+                            <div class="map-title-wrap" id="map-heading"></div>
+                            <div class="map-actions">
+                                <button
+                                    class="outline-button"
+                                    id="remove-route"
+                                    type="button"
+                                    aria-label="Aktuelle Linie löschen"
+                                    title="Aktuelle Linie löschen"
+                                >
+                                    <span class="material-symbols-outlined" aria-hidden="true"
+                                        >delete</span
+                                    >
+                                </button>
+                            </div>
+                        </div>
+                        <div
+                            class="map-body"
+                            id="map-body"
+                            aria-live="polite"
+                            aria-atomic="false"
+                        ></div>
+                    </section>
+                </section>
+
+                <section class="panel network-panel" aria-labelledby="network-heading">
+                    <div class="panel-header">
+                        <div>
+                            <h2 id="network-heading">Streckengesamtnetz</h2>
+                            <p>Alle Linien zusammen mit ihren Umsteigebahnhöfen</p>
+                        </div>
+                        <span class="network-summary" id="network-summary"></span>
+                    </div>
+                    <div class="network-body" id="network-body"></div>
+                </section>
+
+                <aside class="notice" aria-label="Hinweis zum Prototyp">
+                    <strong>WCAG 2.2:</strong> Der Katalog enthält alle 86 aktiven Erfolgskriterien.
+                    Die Reihenfolge deiner Haltestellen ist frei; Kriterien können auf mehreren
+                    Linien vorkommen und werden dort als Umstieg markiert.
+                </aside>
+
+                <section
+                    class="debug-panel"
+                    id="debug-panel"
+                    hidden
+                    aria-labelledby="debug-heading"
+                >
+                    <div class="debug-head">
+                        <h2 id="debug-heading" tabindex="-1">Entwicklungsansicht</h2>
+                        <button class="outline-button" id="run-tests" type="button">
+                            <span class="material-symbols-outlined" aria-hidden="true"
+                                >science</span
+                            >
+                            Smoke-Tests ausführen
+                        </button>
+                    </div>
+                    <div class="debug-body">
+                        <ul class="debug-results" id="test-results" aria-live="polite">
+                            <li>Smoke-Tests noch nicht ausgeführt.</li>
+                        </ul>
+                        <pre
+                            class="debug-state"
+                            id="debug-state"
+                            aria-label="Aktueller App-Zustand"
+                        ></pre>
+                    </div>
+                </section>
+                <div class="sr-announcer" id="announcer" role="status" aria-live="polite"></div>
+            </div>
+        </main>
+
+        <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+        <footer id="site-footer" tabindex="-1">
+            <!-- injected by JS -->
+        </footer>
+
+        <script src="/accessibility-workshop/assets/js/main.js" type="module"></script>
+
+        <script>
+            "use strict"
+
+            /* ================================================================
+               JS-BEREICH 1/9: ZENTRALE CONFIG
+               Später extrahierbar nach: config/appConfig.js
+               ================================================================ */
+            const CONFIG = Object.freeze({
+                appName: "WCAG Linienplan",
+                wcagVersion: "WCAG 2.2",
+                maxRoutes: 12,
+                maxStopsPerRoute: 100,
+                storageKey: "accessibility-workshop:test-routes:v1",
+                defaultColor: "#116b78",
+                colors: [
+                    "#116b78",
+                    "#3457a4",
+                    "#a44835",
+                    "#6b4fa1",
+                    "#2b7558",
+                    "#b17815",
+                    "#176c87",
+                ],
+                defaultRoute: {
+                    name: "Grundlagen der Barrierefreiheit",
+                    number: "A1",
+                    color: "#116b78",
+                },
+            })
+
+            /* ================================================================
+               JS-BEREICH 2/9: VOLLSTÄNDIGER WCAG-2.2-KATALOG (86 aktive Kriterien)
+               Später extrahierbar nach: data/wcagCriteria.js oder API-Service
+               ================================================================ */
+            const CRITERIA = [
+                {
+                    id: "1.1.1",
+                    title: "Nicht-Text-Inhalt",
+                    level: "A",
+                    principle: "Wahrnehmbar",
+                    keywords: "Alternativtext Bilder Icons Grafiken",
+                },
+                {
+                    id: "1.2.1",
+                    title: "Nur Audio und nur Video (aufgezeichnet)",
+                    level: "A",
+                    principle: "Wahrnehmbar",
+                    keywords: "Transkript Medien",
+                },
+                {
+                    id: "1.2.2",
+                    title: "Untertitel (aufgezeichnet)",
+                    level: "A",
+                    principle: "Wahrnehmbar",
+                    keywords: "Captions Video",
+                },
+                {
+                    id: "1.2.3",
+                    title: "Audiodeskription oder Medienalternative (aufgezeichnet)",
+                    level: "A",
+                    principle: "Wahrnehmbar",
+                    keywords: "Video Audio Beschreibung",
+                },
+                {
+                    id: "1.2.4",
+                    title: "Untertitel (Live)",
+                    level: "AA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Captions Echtzeit",
+                },
+                {
+                    id: "1.2.5",
+                    title: "Audiodeskription (aufgezeichnet)",
+                    level: "AA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Video Audio Beschreibung",
+                },
+                {
+                    id: "1.3.1",
+                    title: "Info und Beziehungen",
+                    level: "A",
+                    principle: "Wahrnehmbar",
+                    keywords: "Struktur Semantik Überschriften Tabellen Formular",
+                },
+                {
+                    id: "1.3.2",
+                    title: "Bedeutungstragende Reihenfolge",
+                    level: "A",
+                    principle: "Wahrnehmbar",
+                    keywords: "Lesereihenfolge Fokus",
+                },
+                {
+                    id: "1.3.3",
+                    title: "Sensorische Eigenschaften",
+                    level: "A",
+                    principle: "Wahrnehmbar",
+                    keywords: "Form Farbe Position Größe Orientierung",
+                },
+                {
+                    id: "1.3.4",
+                    title: "Bildschirmausrichtung",
+                    level: "AA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Hochformat Querformat Rotation",
+                },
+                {
+                    id: "1.3.5",
+                    title: "Eingabezweck bestimmen",
+                    level: "AA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Autocomplete Formular persönliche Daten",
+                },
+                {
+                    id: "1.4.1",
+                    title: "Benutzung von Farbe",
+                    level: "A",
+                    principle: "Wahrnehmbar",
+                    keywords: "Kontrast Farbe Information",
+                },
+                {
+                    id: "1.4.2",
+                    title: "Audio-Steuerung",
+                    level: "A",
+                    principle: "Wahrnehmbar",
+                    keywords: "Ton Audio automatisch",
+                },
+                {
+                    id: "1.4.3",
+                    title: "Kontrast (Minimum)",
+                    level: "AA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Text Farbkontrast",
+                },
+                {
+                    id: "1.4.4",
+                    title: "Textgröße ändern",
+                    level: "AA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Zoom Skalierung Schrift",
+                },
+                {
+                    id: "1.4.5",
+                    title: "Bilder eines Textes",
+                    level: "AA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Text Bild Schrift",
+                },
+                {
+                    id: "1.4.10",
+                    title: "Umfluss",
+                    level: "AA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Reflow responsive Zoom Scrollen",
+                },
+                {
+                    id: "1.4.11",
+                    title: "Nicht-Text-Kontrast",
+                    level: "AA",
+                    principle: "Wahrnehmbar",
+                    keywords: "UI Komponenten Grafiken Kontrast",
+                },
+                {
+                    id: "1.4.12",
+                    title: "Textabstand",
+                    level: "AA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Zeilenabstand Buchstaben Wortabstand",
+                },
+                {
+                    id: "1.4.13",
+                    title: "Inhalt bei Hover oder Fokus",
+                    level: "AA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Tooltip Popover Maus Tastatur",
+                },
+                {
+                    id: "2.1.1",
+                    title: "Tastatur",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Keyboard Tab Fokus Bedienung",
+                },
+                {
+                    id: "2.1.2",
+                    title: "Keine Tastaturfalle",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Keyboard Fokus verlassen",
+                },
+                {
+                    id: "2.1.4",
+                    title: "Tastaturkurzbefehle mit einzelnen Zeichen",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Shortcuts Tastatur Sprache",
+                },
+                {
+                    id: "2.2.1",
+                    title: "Zeiteinteilung anpassbar",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Timeout Zeitlimit verlängern",
+                },
+                {
+                    id: "2.2.2",
+                    title: "Pausieren, beenden, ausblenden",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Bewegung Animation automatisch",
+                },
+                {
+                    id: "2.3.1",
+                    title: "Dreimaliges Aufblitzen oder weniger",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Blitze Epilepsie",
+                },
+                {
+                    id: "2.4.1",
+                    title: "Blöcke umgehen",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Skiplink Navigation",
+                },
+                {
+                    id: "2.4.2",
+                    title: "Seite mit Titel",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Seitentitel Dokument",
+                },
+                {
+                    id: "2.4.3",
+                    title: "Fokus-Reihenfolge",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Tastatur Tab Reihenfolge",
+                },
+                {
+                    id: "2.4.4",
+                    title: "Linkzweck (im Kontext)",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Links Linktext Zweck",
+                },
+                {
+                    id: "2.4.5",
+                    title: "Mehrere Wege",
+                    level: "AA",
+                    principle: "Bedienbar",
+                    keywords: "Navigation Suche Sitemap",
+                },
+                {
+                    id: "2.4.6",
+                    title: "Überschriften und Beschriftungen",
+                    level: "AA",
+                    principle: "Bedienbar",
+                    keywords: "Labels Formulare Struktur",
+                },
+                {
+                    id: "2.4.7",
+                    title: "Fokus sichtbar",
+                    level: "AA",
+                    principle: "Bedienbar",
+                    keywords: "Tastatur Fokusindikator",
+                },
+                {
+                    id: "2.4.11",
+                    title: "Fokus nicht verdeckt (Minimum)",
+                    level: "AA",
+                    principle: "Bedienbar",
+                    keywords: "Sticky Header Fokus Tastatur",
+                },
+                {
+                    id: "2.5.1",
+                    title: "Zeigergesten",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Touch Mehrfachgesten",
+                },
+                {
+                    id: "2.5.2",
+                    title: "Zeigerabbruch",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Klick Touch abbrechen",
+                },
+                {
+                    id: "2.5.3",
+                    title: "Beschriftung im Namen",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Sprache Spracherkennung Label",
+                },
+                {
+                    id: "2.5.4",
+                    title: "Bewegungsaktivierung",
+                    level: "A",
+                    principle: "Bedienbar",
+                    keywords: "Sensor Bewegung Alternative",
+                },
+                {
+                    id: "2.5.7",
+                    title: "Ziehen von Elementen",
+                    level: "AA",
+                    principle: "Bedienbar",
+                    keywords: "Drag and Drop Alternative",
+                },
+                {
+                    id: "2.5.8",
+                    title: "Zielgröße (Minimum)",
+                    level: "AA",
+                    principle: "Bedienbar",
+                    keywords: "Touch Targets Schaltflächen",
+                },
+                {
+                    id: "3.1.1",
+                    title: "Sprache der Seite",
+                    level: "A",
+                    principle: "Verständlich",
+                    keywords: "Sprache lang Sprachausgabe",
+                },
+                {
+                    id: "3.1.2",
+                    title: "Sprache von Teilen",
+                    level: "AA",
+                    principle: "Verständlich",
+                    keywords: "Sprachwechsel Wörter Screenreader",
+                },
+                {
+                    id: "3.2.1",
+                    title: "Bei Fokus",
+                    level: "A",
+                    principle: "Verständlich",
+                    keywords: "Kontextwechsel Tastatur",
+                },
+                {
+                    id: "3.2.2",
+                    title: "Bei Eingabe",
+                    level: "A",
+                    principle: "Verständlich",
+                    keywords: "Formular Kontextwechsel",
+                },
+                {
+                    id: "3.2.3",
+                    title: "Konsistente Navigation",
+                    level: "AA",
+                    principle: "Verständlich",
+                    keywords: "Menü Navigation einheitlich",
+                },
+                {
+                    id: "3.2.4",
+                    title: "Konsistente Erkennung",
+                    level: "AA",
+                    principle: "Verständlich",
+                    keywords: "Icons Funktionen gleich",
+                },
+                {
+                    id: "3.2.6",
+                    title: "Konsistente Hilfe",
+                    level: "A",
+                    principle: "Verständlich",
+                    keywords: "Kontakt Support Hilfe",
+                },
+                {
+                    id: "3.3.1",
+                    title: "Fehlererkennung",
+                    level: "A",
+                    principle: "Verständlich",
+                    keywords: "Formular Fehler",
+                },
+                {
+                    id: "3.3.2",
+                    title: "Beschriftungen oder Anweisungen",
+                    level: "A",
+                    principle: "Verständlich",
+                    keywords: "Labels Hinweise Formulare",
+                },
+                {
+                    id: "3.3.3",
+                    title: "Fehlervorschlag",
+                    level: "AA",
+                    principle: "Verständlich",
+                    keywords: "Korrektur Formular",
+                },
+                {
+                    id: "3.3.4",
+                    title: "Fehlervermeidung (rechtlich, finanziell, Daten)",
+                    level: "AA",
+                    principle: "Verständlich",
+                    keywords: "Bestätigung Transaktion",
+                },
+                {
+                    id: "3.3.7",
+                    title: "Redundante Eingabe",
+                    level: "A",
+                    principle: "Verständlich",
+                    keywords: "Formular erneut eingeben",
+                },
+                {
+                    id: "3.3.8",
+                    title: "Barrierefreie Authentifizierung (Minimum)",
+                    level: "AA",
+                    principle: "Verständlich",
+                    keywords: "Login CAPTCHA Passwort",
+                },
+                {
+                    id: "4.1.2",
+                    title: "Name, Rolle, Wert",
+                    level: "A",
+                    principle: "Robust",
+                    keywords: "ARIA Screenreader Komponenten",
+                },
+                {
+                    id: "4.1.3",
+                    title: "Statusmeldungen",
+                    level: "AA",
+                    principle: "Robust",
+                    keywords: "Live Region Screenreader Feedback",
+                },
+                {
+                    id: "1.2.6",
+                    title: "Gebärdensprache (aufgezeichnet)",
+                    level: "AAA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Gebärdensprache Video Ton",
+                },
+                {
+                    id: "1.2.7",
+                    title: "Erweiterte Audiodeskription (aufgezeichnet)",
+                    level: "AAA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Audiodeskription Video Pausen",
+                },
+                {
+                    id: "1.2.8",
+                    title: "Medienalternative (aufgezeichnet)",
+                    level: "AAA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Transkript Medien Video Audio",
+                },
+                {
+                    id: "1.2.9",
+                    title: "Reiner Audioinhalt (Live)",
+                    level: "AAA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Live Audio Transkript",
+                },
+                {
+                    id: "1.3.6",
+                    title: "Bestimmung des Zwecks",
+                    level: "AAA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Zweck Icons Bereiche UI Regionen",
+                },
+                {
+                    id: "1.4.6",
+                    title: "Kontrast (erweitert)",
+                    level: "AAA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Text Farbkontrast 7:1",
+                },
+                {
+                    id: "1.4.7",
+                    title: "Leiser oder kein Hintergrund-Audioinhalt",
+                    level: "AAA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Audio Hintergrundgeräusch Sprache",
+                },
+                {
+                    id: "1.4.8",
+                    title: "Visuelle Präsentation",
+                    level: "AAA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Textdarstellung Zeilenbreite Abstand Farben",
+                },
+                {
+                    id: "1.4.9",
+                    title: "Bilder eines Textes (keine Ausnahme)",
+                    level: "AAA",
+                    principle: "Wahrnehmbar",
+                    keywords: "Text Bild Schriftgrafik",
+                },
+                {
+                    id: "2.1.3",
+                    title: "Tastatur (keine Ausnahme)",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Keyboard ohne Ausnahme Tastatur",
+                },
+                {
+                    id: "2.2.3",
+                    title: "Keine Zeiteinteilung",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Zeitlimit Zeitdruck",
+                },
+                {
+                    id: "2.2.4",
+                    title: "Unterbrechungen",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Unterbrechung Benachrichtigung Pause",
+                },
+                {
+                    id: "2.2.5",
+                    title: "Erneute Authentifizierung",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Anmeldung Sitzung Datenverlust",
+                },
+                {
+                    id: "2.2.6",
+                    title: "Zeitüberschreitung",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Timeout Datenverlust Warnung",
+                },
+                {
+                    id: "2.3.2",
+                    title: "Drei Blitze",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Blitzen Licht Epilepsie",
+                },
+                {
+                    id: "2.3.3",
+                    title: "Animation durch Interaktionen",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Animation Bewegung Interaktion abschalten",
+                },
+                {
+                    id: "2.4.8",
+                    title: "Position",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Standort Orientierung Position Seite",
+                },
+                {
+                    id: "2.4.9",
+                    title: "Linkzweck (reiner Link)",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Linktext Linkziel Zweck",
+                },
+                {
+                    id: "2.4.10",
+                    title: "Abschnittsüberschriften",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Überschriften Abschnitte Struktur",
+                },
+                {
+                    id: "2.4.12",
+                    title: "Fokus nicht verdeckt (erweitert)",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Fokus verdeckt Tastatur sticky",
+                },
+                {
+                    id: "2.4.13",
+                    title: "Erscheinungsbild des Fokus",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Fokusindikator Fläche Kontrast",
+                },
+                {
+                    id: "2.5.5",
+                    title: "Zielgröße (erweitert)",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Touch Target 44 Pixel Zeiger",
+                },
+                {
+                    id: "2.5.6",
+                    title: "Gleichzeitig verfügbare Eingabemechanismen",
+                    level: "AAA",
+                    principle: "Bedienbar",
+                    keywords: "Tastatur Touch Maus Eingabe",
+                },
+                {
+                    id: "3.1.3",
+                    title: "Ungewöhnliche Wörter",
+                    level: "AAA",
+                    principle: "Verständlich",
+                    keywords: "Begriffe Fachwörter Redewendungen Erklärung",
+                },
+                {
+                    id: "3.1.4",
+                    title: "Abkürzungen",
+                    level: "AAA",
+                    principle: "Verständlich",
+                    keywords: "Abkürzung ausgeschrieben Erläuterung",
+                },
+                {
+                    id: "3.1.5",
+                    title: "Leseniveau",
+                    level: "AAA",
+                    principle: "Verständlich",
+                    keywords: "Lesbarkeit einfache Sprache Textverständnis",
+                },
+                {
+                    id: "3.1.6",
+                    title: "Aussprache",
+                    level: "AAA",
+                    principle: "Verständlich",
+                    keywords: "Aussprache Wörter Bedeutung",
+                },
+                {
+                    id: "3.2.5",
+                    title: "Änderung auf Anfrage",
+                    level: "AAA",
+                    principle: "Verständlich",
+                    keywords: "Kontextänderung Nutzer Anfrage",
+                },
+                {
+                    id: "3.3.5",
+                    title: "Hilfe",
+                    level: "AAA",
+                    principle: "Verständlich",
+                    keywords: "Hilfe kontextbezogen Unterstützung",
+                },
+                {
+                    id: "3.3.6",
+                    title: "Fehlervermeidung (alle)",
+                    level: "AAA",
+                    principle: "Verständlich",
+                    keywords: "Eingabefehler korrigieren bestätigen überprüfen",
+                },
+                {
+                    id: "3.3.9",
+                    title: "Barrierefreie Authentifizierung (erweitert)",
+                    level: "AAA",
+                    principle: "Verständlich",
+                    keywords: "Anmeldung Authentifizierung Passwort kognitiv",
+                },
+            ]
+
+            /* ================================================================
+               JS-BEREICH 3/9: ZENTRALER APP-STATE
+               Später extrahierbar nach: state/appState.js (Store)
+               ================================================================ */
+            const appState = {
+                routes: [createRoute(CONFIG.defaultRoute)],
+                activeRouteId: null,
+                searchQuery: "",
+                levelFilter: "all",
+                debugOpen: false,
+                lastSmokeTests: [],
+            }
+            appState.activeRouteId = appState.routes[0].id
+
+            function createRoute(data = {}) {
+                return {
+                    id: makeId("route"),
+                    name: String(data.name || "Neue Strecke"),
+                    number: String(data.number || "Linie"),
+                    color: isHexColor(data.color) ? data.color : CONFIG.defaultColor,
+                    stops: Array.isArray(data.stops) ? [...data.stops] : [],
+                }
+            }
+            function makeId(prefix) {
+                return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`
+            }
+
+            /* ================================================================
+               JS-BEREICH 4/9: VALIDIERUNG (keine DOM-/UI-Abhängigkeiten)
+               Später extrahierbar nach: validation/routeValidation.js
+               ================================================================ */
+            function isHexColor(value) {
+                return /^#[0-9a-fA-F]{6}$/.test(String(value || ""))
+            }
+            function validateRouteFields(fields) {
+                const errors = {}
+                const name = String(fields.name || "").trim()
+                const number = String(fields.number || "").trim()
+                if (!name) errors.name = "Bitte gib einen Streckennamen ein."
+                if (name.length > 48)
+                    errors.name = "Der Streckenname darf höchstens 48 Zeichen lang sein."
+                if (!number) errors.number = "Bitte gib eine Liniennummer ein."
+                if (number.length > 8)
+                    errors.number = "Die Liniennummer darf höchstens 8 Zeichen lang sein."
+                if (!isHexColor(fields.color))
+                    errors.color = "Bitte wähle eine gültige Linienfarbe."
+                return { valid: Object.keys(errors).length === 0, errors }
+            }
+            function validateImportPayload(payload) {
+                const errors = []
+                if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+                    return {
+                        valid: false,
+                        errors: ["Die Datei enthält kein gültiges JSON-Objekt."],
+                        routes: [],
+                        activeRouteIndex: 0,
+                    }
+                }
+                if (payload.schemaVersion !== 1) errors.push("Nicht unterstützte JSON-Version.")
+                if (!Array.isArray(payload.routes)) {
+                    return {
+                        valid: false,
+                        errors: [...errors, "Die Datei enthält keine Linienliste."],
+                        routes: [],
+                        activeRouteIndex: 0,
+                    }
+                }
+                if (payload.routes.length < 1 || payload.routes.length > CONFIG.maxRoutes) {
+                    errors.push(
+                        `Die Datei muss zwischen 1 und ${CONFIG.maxRoutes} Linien enthalten.`
+                    )
+                }
+                const routes = payload.routes.slice(0, CONFIG.maxRoutes).map((candidate, index) => {
+                    const route =
+                        candidate && typeof candidate === "object" && !Array.isArray(candidate)
+                            ? candidate
+                            : {}
+                    const fields = {
+                        name: typeof route.name === "string" ? route.name : "",
+                        number: typeof route.number === "string" ? route.number : "",
+                        color: typeof route.color === "string" ? route.color : "",
+                    }
+                    const fieldResult = validateRouteFields(fields)
+                    Object.values(fieldResult.errors).forEach((message) =>
+                        errors.push(`Linie ${index + 1}: ${message}`)
+                    )
+                    if (!Array.isArray(route.stops)) {
+                        errors.push(`Linie ${index + 1}: Haltestellen müssen als Liste vorliegen.`)
+                        return {
+                            name: fields.name,
+                            number: fields.number,
+                            color: fields.color,
+                            stops: [],
+                        }
+                    }
+                    if (route.stops.length > CONFIG.maxStopsPerRoute)
+                        errors.push(`Linie ${index + 1}: Zu viele Haltestellen.`)
+                    const seen = new Set()
+                    const validStops = []
+                    route.stops.slice(0, CONFIG.maxStopsPerRoute).forEach((id) => {
+                        if (typeof id !== "string" || !getCriterion(id)) {
+                            errors.push(`Linie ${index + 1}: Unbekanntes WCAG-Kriterium.`)
+                        } else if (seen.has(id)) {
+                            errors.push(
+                                `Linie ${index + 1}: Kriterium ${id} ist doppelt enthalten.`
+                            )
+                        } else {
+                            seen.add(id)
+                            validStops.push(id)
+                        }
+                    })
+                    return {
+                        name: fields.name.trim(),
+                        number: fields.number.trim(),
+                        color: fields.color,
+                        stops: validStops,
+                        sourceId: route.id,
+                    }
+                })
+                const activeRouteIndex = routes.findIndex(
+                    (route) => route.sourceId && route.sourceId === payload.activeRouteId
+                )
+                return {
+                    valid: errors.length === 0,
+                    errors,
+                    routes,
+                    activeRouteIndex: activeRouteIndex < 0 ? 0 : activeRouteIndex,
+                }
+            }
+            function validateStopAddition(route, criterionId) {
+                if (!route) return { valid: false, reason: "Keine Linie ausgewählt." }
+                if (!CRITERIA.some((item) => item.id === criterionId))
+                    return { valid: false, reason: "Kriterium ist nicht im Katalog." }
+                if (route.stops.includes(criterionId))
+                    return {
+                        valid: false,
+                        reason: "Dieses Kriterium ist auf der Linie bereits enthalten.",
+                    }
+                if (route.stops.length >= CONFIG.maxStopsPerRoute)
+                    return { valid: false, reason: "Maximale Zahl der Haltestellen erreicht." }
+                return { valid: true, reason: "" }
+            }
+
+            /* ================================================================
+               JS-BEREICH 5/9: GESCHÄFTSLOGIK / SELECTORS
+               Später extrahierbar nach: domain/routeService.js, selectors/*.js
+               ================================================================ */
+            function getActiveRoute() {
+                return appState.routes.find((route) => route.id === appState.activeRouteId) || null
+            }
+            function getCriterion(id) {
+                return CRITERIA.find((item) => item.id === id) || null
+            }
+            function routesForCriterion(routes, criterionId) {
+                return routes.filter((route) => route.stops.includes(criterionId))
+            }
+            function getTransferRoutes(criterionId) {
+                return routesForCriterion(appState.routes, criterionId)
+            }
+            function computeNetworkStationOrder(routes) {
+                const scores = new Map()
+                routes.forEach((route) => {
+                    const stops = route.stops.filter(
+                        (id, index, list) => getCriterion(id) && list.indexOf(id) === index
+                    )
+                    stops.forEach((id, index) => {
+                        const score = stops.length <= 1 ? 0.5 : index / (stops.length - 1)
+                        if (!scores.has(id)) scores.set(id, { sum: 0, appearances: 0 })
+                        const current = scores.get(id)
+                        current.sum += score
+                        current.appearances += 1
+                    })
+                })
+                return [...scores.entries()]
+                    .sort(
+                        ([idA, a], [idB, b]) =>
+                            a.sum / a.appearances - b.sum / b.appearances ||
+                            idA.localeCompare(idB, "de", { numeric: true })
+                    )
+                    .map(([id]) => id)
+            }
+            function getNetworkStationOrder() {
+                return computeNetworkStationOrder(appState.routes)
+            }
+            function filterCriteria(criteria, query, level) {
+                const normalizedQuery = String(query || "")
+                    .trim()
+                    .toLocaleLowerCase("de")
+                return criteria
+                    .filter((item) => {
+                        const textMatch =
+                            !normalizedQuery ||
+                            [item.id, item.title, item.principle, item.level, item.keywords]
+                                .join(" ")
+                                .toLocaleLowerCase("de")
+                                .includes(normalizedQuery)
+                        const levelMatch = level === "all" || item.level === level
+                        return textMatch && levelMatch
+                    })
+                    .sort((a, b) => a.id.localeCompare(b.id, "de", { numeric: true }))
+            }
+            function getFilteredCriteria() {
+                return filterCriteria(CRITERIA, appState.searchQuery, appState.levelFilter)
+            }
+            function addStop(routeId, criterionId) {
+                const route = appState.routes.find((item) => item.id === routeId)
+                const result = validateStopAddition(route, criterionId)
+                if (!result.valid) return result
+                route.stops.push(criterionId)
+                return { valid: true, reason: "Haltestelle hinzugefügt." }
+            }
+            function moveStop(routeId, fromIndex, direction) {
+                const route = appState.routes.find((item) => item.id === routeId)
+                if (!route) return false
+                const toIndex = fromIndex + direction
+                if (toIndex < 0 || toIndex >= route.stops.length) return false
+                ;[route.stops[fromIndex], route.stops[toIndex]] = [
+                    route.stops[toIndex],
+                    route.stops[fromIndex],
+                ]
+                return true
+            }
+            function removeStop(routeId, criterionId) {
+                const route = appState.routes.find((item) => item.id === routeId)
+                if (!route) return false
+                const index = route.stops.indexOf(criterionId)
+                if (index < 0) return false
+                route.stops.splice(index, 1)
+                return true
+            }
+
+            /* ================================================================
+               JS-BEREICH 6/9: RENDER-KOMPONENTEN (reine HTML-Templates)
+               Später extrahierbar nach: components/*.js
+               ================================================================ */
+            const escapeHTML = (value) =>
+                String(value).replace(
+                    /[&<>"']/g,
+                    (char) =>
+                        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+                            char
+                        ]
+                )
+            function renderRouteTab(route) {
+                const active = route.id === appState.activeRouteId
+                return `<button class="route-tab" type="button" data-action="select-route" data-route-id="${escapeHTML(route.id)}" aria-pressed="${active}"><span class="route-tab-mark" style="--route-color:${escapeHTML(route.color)}"></span><span>${escapeHTML(route.number)}</span></button>`
+            }
+            function renderCriterionRow(item, activeRoute) {
+                const alreadyAdded = activeRoute?.stops.includes(item.id) || false
+                return `<article class="criterion-row${alreadyAdded ? " is-added" : ""}" data-guideline="${escapeHTML(item.id.split(".").slice(0, 2).join("."))}">
+                    <div><div><span class="criterion-code">${escapeHTML(item.id)}</span><span class="criterion-title">${escapeHTML(item.title)}</span></div>
+                    <div class="criterion-meta"><span class="level-pill">${escapeHTML(item.level)}</span><span>${escapeHTML(item.principle)}</span></div></div>
+                    ${alreadyAdded ? `<span class="added-label"><span class="material-symbols-outlined" aria-hidden="true">check_circle</span>Enthalten</span>` : `<button class="add-criterion" type="button" data-action="add-stop" data-criterion-id="${escapeHTML(item.id)}" aria-label="${escapeHTML(item.id)} ${escapeHTML(item.title)} als Haltestelle hinzufügen"><span class="material-symbols-outlined" aria-hidden="true">add</span>Hinzufügen</button>`}
+                </article>`
+            }
+            function renderStation(criterionId, index, total, route) {
+                const item = getCriterion(criterionId)
+                if (!item) return ""
+                const guideline = item.id.split(".").slice(0, 2).join(".")
+                const firstDisabled = index === 0
+                const lastDisabled = index === total - 1
+                const transferRoutes = getTransferRoutes(item.id)
+                const isTransfer = transferRoutes.length > 1
+                const transferNames = transferRoutes.map((route) => route.number).join(", ")
+                return `<div class="station-row" role="listitem" data-guideline="${escapeHTML(guideline)}" style="--route-color:${escapeHTML(route.color)}">
+                    <span class="station-index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
+                    <span class="station-node-wrap"><span class="station-node" aria-hidden="true"></span></span>
+                    <article class="station-card">
+                        <div class="station-topline"><span class="station-code">${escapeHTML(item.id)}</span><span class="station-name">${escapeHTML(item.title)}</span></div>
+                        <div class="station-details"><span class="level-pill">Stufe ${escapeHTML(item.level)}</span><span>${escapeHTML(item.principle)}</span>${isTransfer ? `<span class="transfer-pill" title="Umstieg zwischen den Linien ${escapeHTML(transferNames)}"><span class="material-symbols-outlined" aria-hidden="true">swap_horiz</span>Umstieg · ${transferRoutes.length} Linien</span>` : ""}</div>
+                    </article>
+                    <div class="station-actions" aria-label="Aktionen für ${escapeHTML(item.id)}">
+                        <button class="icon-button" type="button" data-action="move-stop" data-index="${index}" data-direction="-1" aria-label="${escapeHTML(item.id)} nach oben verschieben" title="Nach oben" ${firstDisabled ? "disabled" : ""}><span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_up</span></button>
+                        <button class="icon-button" type="button" data-action="move-stop" data-index="${index}" data-direction="1" aria-label="${escapeHTML(item.id)} nach unten verschieben" title="Nach unten" ${lastDisabled ? "disabled" : ""}><span class="material-symbols-outlined" aria-hidden="true">keyboard_arrow_down</span></button>
+                        <button class="icon-button" type="button" data-action="remove-stop" data-criterion-id="${escapeHTML(item.id)}" aria-label="${escapeHTML(item.id)} aus der Linie entfernen" title="Haltestelle entfernen"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
+                    </div>
+                </div>`
+            }
+            function renderEmptyMap(route) {
+                return `<div class="map-empty"><div><div class="map-empty-icon"><span class="material-symbols-outlined" aria-hidden="true">add_road</span></div><h3>Deine Route startet hier</h3><p>Suche links ein WCAG-Kriterium und füge es als erste Haltestelle hinzu. Danach wächst der Linienplan mit jeder Auswahl.</p></div></div>`
+            }
+            function renderMap(route) {
+                const heading = document.getElementById("map-heading")
+                const body = document.getElementById("map-body")
+                if (!route) {
+                    heading.innerHTML = `<div><h2 class="map-title">Keine Linie ausgewählt</h2></div>`
+                    body.innerHTML = renderEmptyMap({})
+                    return
+                }
+                heading.innerHTML = `<div><div class="map-title-line"><span class="map-route-badge" style="background:${escapeHTML(route.color)}">${escapeHTML(route.number)}</span><h2 class="map-title">${escapeHTML(route.name)}</h2></div><div class="map-subtitle">${route.stops.length} ${route.stops.length === 1 ? "Haltestelle" : "Haltestellen"} · ${CONFIG.wcagVersion}</div></div>`
+                const stationMarkup = route.stops.length
+                    ? `<div class="route-map" role="list" aria-label="Haltestellen von ${escapeHTML(route.name)}">${route.stops.map((id, index) => renderStation(id, index, route.stops.length, route)).join("")}</div>`
+                    : renderEmptyMap(route)
+                body.innerHTML = `<div class="map-intro"><strong>Streckenverlauf</strong><span>Reihenfolge entspricht deiner Planung</span></div>${stationMarkup}<div class="map-footer"><span><strong>${route.stops.length} Stationen</strong> auf dieser Linie</span><span>Linienfarbe: ${escapeHTML(route.color.toUpperCase())}</span></div>`
+            }
+            function renderNetworkRoute(route, stationOrder) {
+                const columnById = new Map(stationOrder.map((id, index) => [id, index]))
+                const validStops = route.stops
+                    .map((id) => getCriterion(id))
+                    .filter(Boolean)
+                    .sort((a, b) => columnById.get(a.id) - columnById.get(b.id))
+                const stopCount = validStops.length
+                const stopMarkup = stopCount
+                    ? `<div class="network-stops" role="list" style="--column-count:${stationOrder.length};--route-color:${escapeHTML(route.color)}">${validStops
+                          .map((item) => {
+                              const transferRoutes = getTransferRoutes(item.id)
+                              const isTransfer = transferRoutes.length > 1
+                              const otherLines = transferRoutes
+                                  .map((line) => line.number)
+                                  .join(", ")
+                              const column = columnById.get(item.id) + 1
+                              return `<div class="network-stop${isTransfer ? " is-transfer" : ""}" data-guideline="${escapeHTML(item.id.split(".").slice(0, 2).join("."))}" role="listitem" style="grid-column:${column}" aria-label="${escapeHTML(item.id)} ${escapeHTML(item.title)}${isTransfer ? `, Umstieg zwischen ${escapeHTML(otherLines)}` : ""}">
+                            <span class="network-stop-node" data-network-node data-transfer-node data-station-id="${escapeHTML(item.id)}" data-route-id="${escapeHTML(route.id)}" aria-hidden="true"></span>
+                            <span class="network-stop-code">${escapeHTML(item.id)}</span>
+                            <span class="network-stop-title">${escapeHTML(item.title)}</span>
+                            ${isTransfer ? `<span class="network-transfer-label"><span class="material-symbols-outlined" aria-hidden="true">swap_horiz</span>${transferRoutes.length} Linien</span>` : ""}
+                        </div>`
+                          })
+                          .join("")}</div>`
+                    : `<div class="network-no-stops">Noch keine Haltestellen auf dieser Linie.</div>`
+                return `<section class="network-lane" role="group" data-route-color="${escapeHTML(route.color)}" aria-label="Linie ${escapeHTML(route.number)}: ${escapeHTML(route.name)}">
+                    <div class="network-line-label"><span class="network-line-badge" style="background:${escapeHTML(route.color)}">${escapeHTML(route.number)}</span><span><span class="network-line-name">${escapeHTML(route.name)}</span><span class="network-line-count">${stopCount} ${stopCount === 1 ? "Station" : "Stationen"}</span></span></div>
+                    ${stopMarkup}
+                </section>`
+            }
+            function drawNetworkConnections() {
+                const inner = document.getElementById("network-inner")
+                const svg = document.getElementById("network-connectors")
+                if (!inner || !svg) return
+                const bounds = inner.getBoundingClientRect()
+                const width = Math.max(inner.scrollWidth, bounds.width)
+                const height = Math.max(inner.scrollHeight, bounds.height)
+                svg.setAttribute("viewBox", `0 0 ${width} ${height}`)
+                svg.setAttribute("width", String(width))
+                svg.setAttribute("height", String(height))
+                svg.replaceChildren()
+                const svgNS = "http://www.w3.org/2000/svg"
+                const centerOf = (node) => {
+                    const rect = node.getBoundingClientRect()
+                    return {
+                        x: rect.left + rect.width / 2 - bounds.left,
+                        y: rect.top + rect.height / 2 - bounds.top,
+                    }
+                }
+                const addPath = (start, end, className, color) => {
+                    const path = document.createElementNS(svgNS, "path")
+                    path.classList.add(className)
+                    path.setAttribute("d", `M ${start.x} ${start.y} L ${end.x} ${end.y}`)
+                    if (color) path.setAttribute("stroke", color)
+                    path.setAttribute("aria-hidden", "true")
+                    svg.appendChild(path)
+                }
+                inner.querySelectorAll(".network-lane").forEach((lane) => {
+                    const nodes = [...lane.querySelectorAll("[data-network-node]")]
+                    for (let index = 0; index < nodes.length - 1; index += 1) {
+                        addPath(
+                            centerOf(nodes[index]),
+                            centerOf(nodes[index + 1]),
+                            "network-route-link",
+                            lane.dataset.routeColor
+                        )
+                    }
+                })
+                const byCriterion = new Map()
+                inner.querySelectorAll("[data-transfer-node]").forEach((node) => {
+                    const id = node.dataset.stationId
+                    if (!byCriterion.has(id)) byCriterion.set(id, [])
+                    byCriterion.get(id).push(node)
+                })
+                byCriterion.forEach((nodes) => {
+                    if (nodes.length < 2) return
+                    const first = centerOf(nodes[0])
+                    nodes
+                        .slice(1)
+                        .forEach((node) => addPath(first, centerOf(node), "network-transfer-link"))
+                })
+            }
+            function renderNetworkMap() {
+                const body = document.getElementById("network-body")
+                const stationIds = new Set(appState.routes.flatMap((route) => route.stops))
+                const stationOrder = getNetworkStationOrder()
+                const transferCount = [...stationIds].filter(
+                    (id) => getTransferRoutes(id).length > 1
+                ).length
+                const networkWidth = 206 + Math.max(700, stationOrder.length * 132)
+                document.getElementById("network-summary").textContent =
+                    `${appState.routes.length} Linien · ${stationIds.size} Stationen · ${transferCount} Umstiege`
+                body.innerHTML = `<div class="network-legend" aria-label="Legende"><span class="network-legend-item"><span class="legend-transfer" aria-hidden="true"></span>Umsteigebahnhof: Kriterium auf mehreren Linien</span><span class="network-legend-item">Farbige Verbindungen zeigen den Streckenverlauf.</span><span class="network-legend-item">Gleiche Kriterien stehen spaltenbündig; die Gesamtansicht ordnet Haltestellen dafür automatisch. Die Einzellinie behält deine Reihenfolge.</span></div>
+                    <div class="network-scroll" tabindex="0" aria-label="Streckengesamtnetz; auf schmalen Bildschirmen horizontal scrollbar"><div class="network-inner" id="network-inner" style="min-width:${Math.max(900, networkWidth)}px"><svg class="network-connectors" id="network-connectors" aria-hidden="true"></svg>${appState.routes.map((route) => renderNetworkRoute(route, stationOrder)).join("")}</div></div>`
+                window.requestAnimationFrame(drawNetworkConnections)
+            }
+            function renderDebug() {
+                document.getElementById("debug-panel").hidden = !appState.debugOpen
+                document
+                    .getElementById("debug-toggle")
+                    .setAttribute("aria-expanded", String(appState.debugOpen))
+                document.getElementById("debug-state").textContent = JSON.stringify(
+                    {
+                        routes: appState.routes,
+                        activeRouteId: appState.activeRouteId,
+                        searchQuery: appState.searchQuery,
+                        levelFilter: appState.levelFilter,
+                        catalogCount: CRITERIA.length,
+                    },
+                    null,
+                    2
+                )
+                const list = document.getElementById("test-results")
+                if (appState.lastSmokeTests.length) {
+                    list.innerHTML = appState.lastSmokeTests
+                        .map(
+                            (test) =>
+                                `<li class="${test.pass ? "pass" : "fail"}"><span class="material-symbols-outlined" aria-hidden="true">${test.pass ? "check_circle" : "error"}</span>${escapeHTML(test.name)}${test.detail ? ` — ${escapeHTML(test.detail)}` : ""}</li>`
+                        )
+                        .join("")
+                }
+            }
+            function renderApp() {
+                const route = getActiveRoute()
+                document.getElementById("route-tabs").innerHTML = appState.routes
+                    .map(renderRouteTab)
+                    .join("")
+                document.getElementById("route-name").value = route?.name || ""
+                document.getElementById("route-number").value = route?.number || ""
+                document.getElementById("route-color").value = route?.color || CONFIG.defaultColor
+                document.getElementById("remove-route").disabled = appState.routes.length <= 1
+                document.getElementById("add-route").disabled =
+                    appState.routes.length >= CONFIG.maxRoutes
+                const visible = getFilteredCriteria()
+                document.getElementById("criteria-count").textContent =
+                    `${visible.length} von ${CRITERIA.length} Kriterien`
+                document.getElementById("criteria-list").innerHTML = visible.length
+                    ? visible.map((item) => renderCriterionRow(item, route)).join("")
+                    : `<div class="empty-results">Keine Kriterien gefunden. Ändere den Suchbegriff oder den Filter.</div>`
+                renderMap(route)
+                renderNetworkMap()
+                renderDebug()
+                persistState()
+            }
+
+            /* ================================================================
+               JS-BEREICH 7/9: UI-CONTROLLER & EVENT-BINDING
+               Später extrahierbar nach: controllers/*.js, app/events.js
+               Keine Inline-Eventhandler im HTML.
+               ================================================================ */
+            function announce(message) {
+                document.getElementById("announcer").textContent = message
+            }
+            function setFormError(message = "") {
+                document.getElementById("route-error").textContent = message
+            }
+            function setBackupStatus(message, type = "") {
+                const status = document.getElementById("backup-status")
+                status.textContent = message
+                status.className = `backup-status${type ? ` ${type}` : ""}`
+            }
+            function serializeState() {
+                return {
+                    schemaVersion: 1,
+                    activeRouteId: appState.activeRouteId,
+                    routes: appState.routes.map((route) => ({
+                        id: route.id,
+                        name: route.name,
+                        number: route.number,
+                        color: route.color,
+                        stops: [...route.stops],
+                    })),
+                }
+            }
+            function persistState() {
+                try {
+                    window.localStorage.setItem(CONFIG.storageKey, JSON.stringify(serializeState()))
+                    setBackupStatus(
+                        "Arbeitsstand automatisch in diesem Browser gespeichert.",
+                        "is-success"
+                    )
+                } catch (error) {
+                    setBackupStatus(
+                        "Browserspeicherung nicht verfügbar. Nutze den JSON-Export zur Sicherung.",
+                        "is-error"
+                    )
+                    console.warn("Linienplan konnte nicht im Browser gespeichert werden:", error)
+                }
+            }
+            function restorePersistedState() {
+                let raw
+                try {
+                    raw = window.localStorage.getItem(CONFIG.storageKey)
+                } catch (error) {
+                    setBackupStatus(
+                        "Browserspeicherung nicht verfügbar. Nutze den JSON-Export zur Sicherung.",
+                        "is-error"
+                    )
+                    return
+                }
+                if (!raw) return
+                let payload
+                try {
+                    payload = JSON.parse(raw)
+                } catch (error) {
+                    setBackupStatus(
+                        "Gespeicherter Arbeitsstand ist ungültig und wurde nicht geladen.",
+                        "is-error"
+                    )
+                    return
+                }
+                const result = validateImportPayload(payload)
+                if (!result.valid) {
+                    setBackupStatus(
+                        "Gespeicherter Arbeitsstand ist ungültig und wurde nicht geladen.",
+                        "is-error"
+                    )
+                    return
+                }
+                appState.routes = result.routes.map((route) => createRoute(route))
+                appState.activeRouteId =
+                    appState.routes[result.activeRouteIndex]?.id || appState.routes[0].id
+                setBackupStatus(
+                    `Gespeicherter Arbeitsstand geladen: ${appState.routes.length} ${appState.routes.length === 1 ? "Linie" : "Linien"}.`,
+                    "is-success"
+                )
+            }
+            function exportJson() {
+                const payload = {
+                    schemaVersion: 1,
+                    exportedAt: new Date().toISOString(),
+                    activeRouteId: appState.activeRouteId,
+                    routes: appState.routes.map((route) => ({
+                        id: route.id,
+                        name: route.name,
+                        number: route.number,
+                        color: route.color,
+                        stops: [...route.stops],
+                    })),
+                }
+                const blob = new Blob([JSON.stringify(payload, null, 2)], {
+                    type: "application/json;charset=utf-8",
+                })
+                const objectUrl = URL.createObjectURL(blob)
+                const link = document.createElement("a")
+                link.href = objectUrl
+                link.download = `wcag-linienplan-${new Date().toISOString().slice(0, 10)}.json`
+                link.hidden = true
+                document.body.appendChild(link)
+                link.click()
+                link.remove()
+                window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000)
+                setBackupStatus(
+                    "JSON-Datei erstellt. Bewahre sie auf und lade sie bei Bedarf wieder.",
+                    "is-success"
+                )
+                announce("Linienplan als JSON-Datei exportiert.")
+            }
+            async function importJsonFile(event) {
+                const input = event.currentTarget
+                const file = input.files?.[0]
+                if (!file) return
+                try {
+                    if (file.size > 1000000) throw new Error("Die JSON-Datei ist größer als 1 MB.")
+                    const text = (await file.text()).replace(/^\uFEFF/, "")
+                    let payload
+                    try {
+                        payload = JSON.parse(text)
+                    } catch {
+                        throw new Error("Die Datei enthält kein gültiges JSON.")
+                    }
+                    const result = validateImportPayload(payload)
+                    if (!result.valid) throw new Error(result.errors.slice(0, 3).join(" "))
+                    const routes = result.routes.map((route) => createRoute(route))
+                    appState.routes = routes
+                    appState.activeRouteId = routes[result.activeRouteIndex]?.id || routes[0].id
+                    appState.searchQuery = ""
+                    appState.levelFilter = "all"
+                    document.getElementById("criterion-search").value = ""
+                    document.getElementById("level-filter").value = "all"
+                    setFormError("")
+                    renderApp()
+                    setBackupStatus(
+                        `${routes.length} ${routes.length === 1 ? "Linie" : "Linien"} geladen. Der importierte Stand ersetzt die vorherigen Linien.`,
+                        "is-success"
+                    )
+                    announce(`JSON-Import erfolgreich. ${routes.length} Linien geladen.`)
+                } catch (error) {
+                    setBackupStatus(`Import nicht möglich: ${error.message}`, "is-error")
+                    announce(`JSON-Import fehlgeschlagen. ${error.message}`)
+                } finally {
+                    input.value = ""
+                }
+            }
+            function updateRouteFromForm(event) {
+                const route = getActiveRoute()
+                if (!route) return
+                const target = event.target
+                const activeFieldId = target.id
+                const canRestoreSelection =
+                    target instanceof HTMLInputElement && ["text", "search"].includes(target.type)
+                const selectionStart = canRestoreSelection ? target.selectionStart : null
+                const selectionEnd = canRestoreSelection ? target.selectionEnd : null
+                const fields = {
+                    name: document.getElementById("route-name").value,
+                    number: document.getElementById("route-number").value,
+                    color: document.getElementById("route-color").value,
+                }
+                const result = validateRouteFields(fields)
+                if (!result.valid) {
+                    const firstError = Object.values(result.errors)[0]
+                    setFormError(firstError)
+                    return
+                }
+                route.name = fields.name
+                route.number = fields.number
+                route.color = fields.color
+                setFormError("")
+                renderApp()
+                if (canRestoreSelection) {
+                    const restoredField = document.getElementById(activeFieldId)
+                    restoredField.focus()
+                    if (selectionStart !== null && selectionEnd !== null)
+                        restoredField.setSelectionRange(selectionStart, selectionEnd)
+                }
+            }
+            function addNewRoute() {
+                if (appState.routes.length >= CONFIG.maxRoutes) return
+                const number = `L${appState.routes.length + 1}`
+                const color = CONFIG.colors[appState.routes.length % CONFIG.colors.length]
+                const route = createRoute({
+                    name: `Neue Strecke ${appState.routes.length + 1}`,
+                    number,
+                    color,
+                })
+                appState.routes.push(route)
+                appState.activeRouteId = route.id
+                setFormError("")
+                renderApp()
+                document.getElementById("route-name").focus()
+                announce(`Linie ${number} wurde angelegt.`)
+            }
+            function deleteActiveRoute() {
+                if (appState.routes.length <= 1) return
+                const route = getActiveRoute()
+                appState.routes = appState.routes.filter((item) => item.id !== route.id)
+                appState.activeRouteId = appState.routes[0].id
+                setFormError("")
+                renderApp()
+                announce(`Linie ${route.number} wurde gelöscht.`)
+            }
+            function handleActionClick(event) {
+                const button = event.target.closest("[data-action]")
+                if (!button) return
+                const action = button.dataset.action
+                if (action === "select-route") {
+                    appState.activeRouteId = button.dataset.routeId
+                    setFormError("")
+                    renderApp()
+                } else if (action === "add-stop") {
+                    const result = addStop(appState.activeRouteId, button.dataset.criterionId)
+                    if (result.valid)
+                        announce(`${button.dataset.criterionId} als Haltestelle hinzugefügt.`)
+                    renderApp()
+                } else if (action === "move-stop") {
+                    const index = Number(button.dataset.index)
+                    const direction = Number(button.dataset.direction)
+                    if (moveStop(appState.activeRouteId, index, direction)) renderApp()
+                } else if (action === "remove-stop") {
+                    if (removeStop(appState.activeRouteId, button.dataset.criterionId)) {
+                        announce(`${button.dataset.criterionId} aus der Linie entfernt.`)
+                        renderApp()
+                    }
+                }
+            }
+            function bindEvents() {
+                document.getElementById("add-route").addEventListener("click", addNewRoute)
+                document.getElementById("remove-route").addEventListener("click", deleteActiveRoute)
+                document.getElementById("export-json").addEventListener("click", exportJson)
+                document
+                    .getElementById("import-json")
+                    .addEventListener("click", () => document.getElementById("import-file").click())
+                document.getElementById("import-file").addEventListener("change", importJsonFile)
+                document.getElementById("route-tabs").addEventListener("click", handleActionClick)
+                document
+                    .getElementById("criteria-list")
+                    .addEventListener("click", handleActionClick)
+                document.getElementById("map-body").addEventListener("click", handleActionClick)
+                document.getElementById("route-form").addEventListener("input", updateRouteFromForm)
+                document
+                    .getElementById("route-form")
+                    .addEventListener("submit", (event) => event.preventDefault())
+                document.getElementById("criterion-search").addEventListener("input", (event) => {
+                    appState.searchQuery = event.currentTarget.value
+                    renderApp()
+                    const input = document.getElementById("criterion-search")
+                    input.focus()
+                    input.setSelectionRange(input.value.length, input.value.length)
+                })
+                document.getElementById("level-filter").addEventListener("change", (event) => {
+                    appState.levelFilter = event.currentTarget.value
+                    renderApp()
+                })
+                document.getElementById("debug-toggle").addEventListener("click", () => {
+                    appState.debugOpen = !appState.debugOpen
+                    renderDebug()
+                    if (appState.debugOpen) document.getElementById("debug-heading").focus?.()
+                })
+                document.getElementById("run-tests").addEventListener("click", () => {
+                    appState.lastSmokeTests = runSmokeTests()
+                    renderDebug()
+                    const passed = appState.lastSmokeTests.filter((item) => item.pass).length
+                    announce(
+                        `Smoke-Tests abgeschlossen: ${passed} von ${appState.lastSmokeTests.length} bestanden.`
+                    )
+                })
+                window.addEventListener("resize", () =>
+                    window.requestAnimationFrame(drawNetworkConnections)
+                )
+            }
+
+            /* ================================================================
+               JS-BEREICH 8/9: SMOKE-TESTS
+               Später extrahierbar nach: tests/smokeTests.js
+               Pure-Logic-Tests; verändern den Live-State nicht.
+               ================================================================ */
+            function runSmokeTests() {
+                const tests = []
+                const test = (name, callback) => {
+                    try {
+                        tests.push({ name, pass: Boolean(callback()), detail: "" })
+                    } catch (error) {
+                        tests.push({ name, pass: false, detail: error.message })
+                    }
+                }
+                test("Katalog enthält alle 86 aktiven WCAG-2.2-Kriterien mit eindeutigen IDs", () =>
+                    CRITERIA.length === 86 &&
+                    new Set(CRITERIA.map((item) => item.id)).size === 86 &&
+                    !CRITERIA.some((item) => item.id === "4.1.1"))
+                test("Gültige Streckenfelder werden akzeptiert", () =>
+                    validateRouteFields({ name: "Teststrecke", number: "T1", color: "#116b78" })
+                        .valid)
+                test("Leerer Streckenname wird abgelehnt", () =>
+                    !validateRouteFields({ name: " ", number: "T1", color: "#116b78" }).valid)
+                test("Gültige JSON-Sicherung wird erkannt", () =>
+                    validateImportPayload({
+                        schemaVersion: 1,
+                        activeRouteId: "r1",
+                        routes: [
+                            {
+                                id: "r1",
+                                name: "Test",
+                                number: "T1",
+                                color: "#116b78",
+                                stops: ["1.1.1"],
+                            },
+                        ],
+                    }).valid)
+                test("Ungültige oder doppelte JSON-Haltestellen werden abgelehnt", () =>
+                    !validateImportPayload({
+                        schemaVersion: 1,
+                        routes: [
+                            {
+                                name: "Test",
+                                number: "T1",
+                                color: "#116b78",
+                                stops: ["1.1.1", "1.1.1"],
+                            },
+                        ],
+                    }).valid)
+                test("Doppelte Haltestellen innerhalb einer Linie werden verhindert", () => {
+                    const route = { stops: ["1.1.1"] }
+                    return !validateStopAddition(route, "1.1.1").valid
+                })
+                test("Kriterium bleibt auf einer weiteren Linie auswählbar", () =>
+                    validateStopAddition({ stops: [] }, "1.1.1").valid)
+                test("Gemeinsames Kriterium wird als Umstieg erkannt", () => {
+                    const routes = [
+                        { number: "A1", stops: ["1.1.1"] },
+                        { number: "B2", stops: ["1.1.1"] },
+                    ]
+                    return routesForCriterion(routes, "1.1.1").length === 2
+                })
+                test("Netzplan ordnet gemeinsame Kriterien in eine Spalte", () => {
+                    const routes = [{ stops: ["1.4.3", "2.1.1"] }, { stops: ["3.1.1", "2.1.1"] }]
+                    const order = computeNetworkStationOrder(routes)
+                    return (
+                        order.length === 3 &&
+                        new Set(order).size === 3 &&
+                        order.filter((id) => id === "2.1.1").length === 1
+                    )
+                })
+                test("Berechnete Netzplanreihenfolge verändert die Einzelstrecken nicht", () => {
+                    const routes = [{ stops: ["1.4.3", "2.1.1"] }, { stops: ["3.1.1", "2.1.1"] }]
+                    const before = JSON.stringify(routes)
+                    computeNetworkStationOrder(routes)
+                    return JSON.stringify(routes) === before
+                })
+                test("Unbekannte Kriterien werden abgelehnt", () =>
+                    !validateStopAddition({ stops: [] }, "99.99.99").valid)
+                test("WCAG-Suche und Stufenfilter liefern passende Treffer", () =>
+                    filterCriteria(CRITERIA, "kontrast", "all").some(
+                        (item) => item.id === "1.4.3"
+                    ) && filterCriteria(CRITERIA, "", "A").every((item) => item.level === "A"))
+                test("Jeder Linienplan-Stopp lässt sich einem Katalogeintrag zuordnen", () =>
+                    appState.routes.every((route) =>
+                        route.stops.every((id) => Boolean(getCriterion(id)))
+                    ))
+                return tests
+            }
+
+            /* ================================================================
+               JS-BEREICH 9/9: BOOTSTRAP
+               Später extrahierbar nach: app/main.js
+               ================================================================ */
+            function init() {
+                restorePersistedState()
+                bindEvents()
+                renderApp()
+            }
+            init()
+
+            /*
+             * QA-CHECKLISTE FÜR SPÄTERE ÄNDERUNGEN
+             * [ ] Keine vorhandenen Features entfernen: Routen, Linienfarbe/-nummer,
+             *     Live-Suche, WCAG-Level-Filter, Haltestellenreihenfolge, Löschen,
+             *     Einzellinie, Gesamtnetz, Umsteige-Markierung, JSON-Export/-Import,
+             *     Debug-Ansicht und Smoke-Tests bleiben erhalten.
+             * [ ] Keine WCAG-Kriteriums-ID doppelt auf derselben Linie erlauben;
+             *     linienübergreifende Wiederverwendung als Umstieg darstellen.
+             * [ ] Netzplan: identische Kriterien in einer gemeinsamen Spalte ausrichten;
+             *     berechnete Umordnung gilt nur für die Gesamtansicht.
+             * [ ] Geschäftslogik, Validierung und Rendering getrennt halten.
+             * [ ] Keine Inline-Eventhandler; alle Aktionen über Event-Binding.
+             * [ ] Neue Interaktionen mit Tastatur bedienbar und verständlich beschriftet.
+             * [ ] Responsives Layout, Fokusdarstellung und reduzierte Bewegung prüfen.
+             * [ ] Nach Änderungen Smoke-Tests ausführen und visuell auf 320px, Tablet,
+             *     Desktop sowie leere, gefilterte und befüllte Zustände prüfen.
+             * [ ] Bei Katalog-Erweiterungen WCAG-Version und Erfolgskriterien fachlich
+             *     gegen die maßgebliche WCAG-Quelle verifizieren.
+             */
+        </script>
+    </body>
+</html>

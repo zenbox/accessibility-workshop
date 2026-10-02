@@ -116,20 +116,22 @@
 <h2 tabindex="0">Eine Gruppe von mehreren Fotos</h2>
 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 <ol>
-<li><p><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://picsum.photos/id/67/200</code></span></p>
+<li><p><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://picsum.photos/id/67/200</code></span>
+$1</p>
 <p> Beschreibung für das Bild hier ....</p>
 </li>
-<li><p><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://picsum.photos/id/68/200</code></span></p>
-</li>
-<li><p><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://picsum.photos/id/69/200</code></span></p>
-</li>
+</ol>
+<p>$1</p>
+<ol start="2">
+<li><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://picsum.photos/id/68/200</code></span></li>
+<li><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://picsum.photos/id/69/200</code></span></li>
 </ol>
 <p>Quelle: <a href="https://picsum.photos/">Picsum</a></p>
 <h2 tabindex="0">ASCII-Art</h2>
 <pre><code>|\__/,|   (`\
 </code></pre>
-<p>  <em>.|o o  |</em>   ) )
--(((---(((--------</p>
+<p>  <em>.|o o |</em> ) )</p>
+<p>-(((---(((--------</p>
 <p>ASCII-Art: Katze</p>
 <p>Aus Linien-Zeichen, Klammern, Satzzeichen entsteht eine Illustration einer Katze, die hinter einer Mauer hervorlugt.</p>
 <h2 tabindex="0">SVG Grafik für Screenreader</h2>
@@ -141,6 +143,611 @@
 <p><a href="https://www.netz-barrierefrei.de/wordpress/captchas-und-barrierefreiheit-warum-es-keine-barrierefreien-bild-codes-gibt/">Artikel - &quot;Warum es keine barrierefreien CAPTCHAs gibt.&quot;</a></p>
 <p>Beispiele für CAPTCHAs</p>
 <p><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://127.0.0.1:5504/v2/assets/figures/captcha-1.webp</code></span> <span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://127.0.0.1:5504/v2/assets/figures/captcha-2.jpg</code></span> <span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://127.0.0.1:5504/v2/assets/figures/captcha-3.png</code></span></p>
+<hr>
+<h1 tabindex="0">Nicht-Text-Inhalte – Bewertung, Beispiele und WCAG-Zuordnung</h1>
+<h2 tabindex="0">Welche Art von Nicht-Text-Inhalt liegt vor?</h2>
+<table>
+<thead>
+<tr>
+<th>Art</th>
+<th>Typische Umsetzung</th>
+<th>Anforderung an die Textalternative</th>
+<th>Zentrale WCAG-Kriterien</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Informativ</td>
+<td>Foto, Illustration, Diagramm mit eigener Aussage</td>
+<td>Zweck und wesentliche Information vermitteln</td>
+<td>1.1.1</td>
+</tr>
+<tr>
+<td>Funktional</td>
+<td>Bild als Link oder Button</td>
+<td>Funktion bzw. Ziel benennen, nicht nur das Aussehen</td>
+<td>1.1.1, 2.4.4, 4.1.2</td>
+</tr>
+<tr>
+<td>Dekorativ</td>
+<td>rein schmückendes Bild ohne eigene Information</td>
+<td>leerer Alternativtext: <code>alt=&quot;&quot;</code></td>
+<td>1.1.1</td>
+</tr>
+<tr>
+<td>Text als Bild</td>
+<td>Text wird als Grafik statt als echter Text dargestellt</td>
+<td>grundsätzlich vermeiden; Ausnahmen prüfen</td>
+<td>1.1.1, 1.4.5</td>
+</tr>
+<tr>
+<td>Komplex</td>
+<td>Diagramm, Karte, Infografik, technische Zeichnung</td>
+<td>kurze Kennzeichnung plus ausführliche Alternative</td>
+<td>1.1.1, 1.3.1</td>
+</tr>
+<tr>
+<td>CAPTCHA</td>
+<td>Prüfung, ob eine Eingabe von einem Menschen stammt</td>
+<td>Zweck erklären und unterschiedliche Wahrnehmungswege anbieten</td>
+<td>1.1.1; je nach Einsatz zusätzlich 3.3.8</td>
+</tr>
+</tbody></table>
+<p><strong>Grundsatz:</strong> Der Alternativtext soll nicht jedes sichtbare Detail aufzählen. Er soll die Information oder Funktion vermitteln, die eine sehende Person aus dem Nicht-Text-Inhalt erhält.</p>
+<h2 tabindex="0">Ein einfaches informatives Foto</h2>
+<h3 tabindex="0">Visuelle Darstellung</h3>
+<p><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://picsum.photos/id/106/320/240</code></span></p>
+<p><em>Rosa Rhododendronblüte im Seitenlicht.</em></p>
+<h3 tabindex="0">Gute und schlechte Alternativtexte</h3>
+<table>
+<thead>
+<tr>
+<th>Variante</th>
+<th>Bewertung</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>alt=&quot;&quot;</code></td>
+<td>Nur dann richtig, wenn das Foto keine eigene Information liefert oder die vollständige Information bereits gleichwertig im Umfeld steht.</td>
+</tr>
+<tr>
+<td><code>alt=&quot;bild.jpg&quot;</code></td>
+<td>Unbrauchbarer Dateiname; vermittelt weder Inhalt noch Zweck.</td>
+</tr>
+<tr>
+<td><code>alt=&quot;Foto&quot;</code></td>
+<td>Zu allgemein; beschreibt nur das Medium.</td>
+</tr>
+<tr>
+<td><code>alt=&quot;Rosa Rhododendronblüte im Seitenlicht&quot;</code></td>
+<td>Zweckentsprechende kurze Beschreibung.</td>
+</tr>
+<tr>
+<td><code>alt=&quot;Eine wunderschöne, sehr schöne rosa Blume mit vielen Blütenblättern in einem Garten&quot;</code></td>
+<td>Überladen und subjektiv; unnötige Details vermeiden.</td>
+</tr>
+</tbody></table>
+<h3 tabindex="0">Quelltext: informatives Bild</h3>
+<pre><code class="language-html">&lt;figure&gt;
+  &lt;img
+    src=&quot;/assets/rhododendron.jpg&quot;
+    alt=&quot;Rosa Rhododendronblüte im Seitenlicht.&quot;
+    width=&quot;320&quot;
+    height=&quot;240&quot;
+  &gt;
+  &lt;figcaption&gt;Rosa Rhododendronblüte im Seitenlicht.&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<p>Wenn die Bildunterschrift bereits vollständig denselben Informationsgehalt vermittelt und das Foto keine zusätzliche Information beiträgt, kann das Bild dekorativ behandelt werden:</p>
+<pre><code class="language-html">&lt;figure&gt;
+  &lt;img
+    src=&quot;/assets/rhododendron.jpg&quot;
+    alt=&quot;&quot;
+    width=&quot;320&quot;
+    height=&quot;240&quot;
+  &gt;
+  &lt;figcaption&gt;Rosa Rhododendronblüte im Seitenlicht.&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<p><strong>Wichtig:</strong> Ein leeres <code>alt</code>-Attribut ist nicht dasselbe wie ein fehlendes <code>alt</code>-Attribut. Das Attribut muss vorhanden und ausdrücklich leer sein.</p>
+<p><strong>WCAG-Zuordnung:</strong></p>
+<ul>
+<li><strong>1.1.1 Nicht-Text-Inhalte – Level A:</strong> Die Textalternative muss die wesentliche Information oder den Zweck des Fotos vermitteln.</li>
+<li><strong>1.3.1 Info und Beziehungen – Level A:</strong> <code>figure</code> und <code>figcaption</code> können die Beziehung zwischen Bild und Bildunterschrift semantisch ausdrücken.</li>
+</ul>
+<h2 tabindex="0">Funktionales Bild: Bild als Link oder Button</h2>
+<p>Bei einem funktionalen Bild wird nicht primär beschrieben, wie es aussieht. Der Alternativtext benennt die Funktion oder das Ziel.</p>
+<h3 tabindex="0">Visuelle Darstellung</h3>
+<p><a href="https://example.org/suche"><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://picsum.photos/id/106/48/48</code></span></a></p>
+<h3 tabindex="0">Quelltext: Bild als Link</h3>
+<pre><code class="language-html">&lt;a href=&quot;/suche&quot;&gt;
+  &lt;img src=&quot;/assets/search.svg&quot; alt=&quot;Suche&quot; width=&quot;24&quot; height=&quot;24&quot;&gt;
+&lt;/a&gt;
+</code></pre>
+<p>Nicht optimal wäre:</p>
+<pre><code class="language-html">&lt;a href=&quot;/suche&quot;&gt;
+  &lt;img src=&quot;/assets/search.svg&quot; alt=&quot;Lupe&quot; width=&quot;24&quot; height=&quot;24&quot;&gt;
+&lt;/a&gt;
+</code></pre>
+<p>„Lupe“ beschreibt das Aussehen, aber nicht das Ziel bzw. die Funktion des Links.</p>
+<h3 tabindex="0">Quelltext: dekoratives Symbol mit sichtbarem Linktext</h3>
+<p>Wenn neben dem Symbol bereits ein sichtbarer Linktext steht, ist das Symbol dekorativ:</p>
+<pre><code class="language-html">&lt;a href=&quot;/suche&quot;&gt;
+  &lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot;&gt;
+    &lt;path d=&quot;M10.5 4a6.5 6.5 0 1 0 4.1 11.5l4.4 4.4 1.4-1.4-4.4-4.4A6.5 6.5 0 0 0 10.5 4zM6 10.5a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0z&quot;/&gt;
+  &lt;/svg&gt;
+  &lt;span&gt;Suche&lt;/span&gt;
+&lt;/a&gt;
+</code></pre>
+<p><strong>WCAG-Zuordnung:</strong></p>
+<ul>
+<li><strong>1.1.1 Nicht-Text-Inhalte – Level A:</strong> Das Bild beziehungsweise Symbol benötigt eine funktionale Textalternative oder ist als dekorativ zu kennzeichnen.</li>
+<li><strong>2.4.4 Linkzweck im Kontext – Level A:</strong> Der Zweck des Links muss aus dem zugänglichen Namen oder aus dem Kontext hervorgehen.</li>
+<li><strong>4.1.2 Name, Rolle, Wert – Level A:</strong> Der Link bzw. Button muss einen zugänglichen Namen besitzen.</li>
+</ul>
+<h2 tabindex="0">Eine Gruppe von mehreren Fotos</h2>
+<p>Eine Gruppe von Fotos sollte als echte Liste ausgezeichnet werden, wenn die Reihenfolge oder Anzahl der Bilder inhaltlich relevant ist. Jedes informative Bild benötigt eine eigene passende Textalternative.</p>
+<h3 tabindex="0">Visuelle Darstellung</h3>
+<ol>
+<li><p><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://picsum.photos/id/67/200</code></span>
+$1</p>
+<p> <em>Blick in ein Tal bei schlechtem Wetter.</em></p>
+</li>
+</ol>
+<p>$1</p>
+<ol start="2">
+<li><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://picsum.photos/id/68/200</code></span></li>
+</ol>
+<p>$1</p>
+<pre><code>_Eine Bahnlinie führt durch eine weite Landschaft._
+</code></pre>
+<p>$1</p>
+<ol start="3">
+<li><span class="asset-missing" role="alert">⚠ Asset nicht gefunden: <code>https://picsum.photos/id/69/200</code></span></li>
+</ol>
+<p>$1</p>
+<pre><code>_Eine Bahnlinie führt geradeaus durch einen Wald._
+</code></pre>
+<p>$1</p>
+<p>Quelle: <a href="https://picsum.photos/">Picsum</a></p>
+<h3 tabindex="0">Quelltext: geordnete Bildgruppe</h3>
+<pre><code class="language-html">&lt;section aria-labelledby=&quot;foto-serie&quot;&gt;
+  &lt;h2 id=&quot;foto-serie&quot;&gt;Bahnreise durch die Landschaft&lt;/h2&gt;
+  &lt;p&gt;Die drei Fotos zeigen unterschiedliche Abschnitte einer Bahnstrecke.&lt;/p&gt;
+
+  &lt;ol&gt;
+    &lt;li&gt;
+      &lt;figure&gt;
+        &lt;img
+          src=&quot;/assets/tal-schlechtwetter.jpg&quot;
+          alt=&quot;Schwarz-Weiß-Foto eines Tals bei schlechtem Wetter.&quot;
+          width=&quot;200&quot;
+          height=&quot;200&quot;
+        &gt;
+        &lt;figcaption&gt;Blick in ein Tal bei schlechtem Wetter.&lt;/figcaption&gt;
+      &lt;/figure&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;figure&gt;
+        &lt;img
+          src=&quot;/assets/bahnlinie-landschaft.jpg&quot;
+          alt=&quot;Schwarz-Weiß-Foto einer Bahnlinie durch eine weite Landschaft.&quot;
+          width=&quot;200&quot;
+          height=&quot;200&quot;
+        &gt;
+        &lt;figcaption&gt;Eine Bahnlinie führt durch eine weite Landschaft.&lt;/figcaption&gt;
+      &lt;/figure&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;figure&gt;
+        &lt;img
+          src=&quot;/assets/bahnlinie-wald.jpg&quot;
+          alt=&quot;Foto einer geraden Bahnlinie durch einen Wald.&quot;
+          width=&quot;200&quot;
+          height=&quot;200&quot;
+        &gt;
+        &lt;figcaption&gt;Eine Bahnlinie führt geradeaus durch einen Wald.&lt;/figcaption&gt;
+      &lt;/figure&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+
+  &lt;p&gt;Quelle: &lt;a href=&quot;https://picsum.photos/&quot;&gt;Picsum&lt;/a&gt;&lt;/p&gt;
+&lt;/section&gt;
+</code></pre>
+<h3 tabindex="0">Wenn die Bildunterschrift bereits die vollständige Alternative ist</h3>
+<p>Bei einer Galerie kann die Bildunterschrift die inhaltliche Beschreibung übernehmen. Dann darf der <code>alt</code>-Text leer sein, wenn die Bildunterschrift im Kontext eindeutig zu diesem Bild gehört:</p>
+<pre><code class="language-html">&lt;figure&gt;
+  &lt;img src=&quot;/assets/tal-schlechtwetter.jpg&quot; alt=&quot;&quot; width=&quot;200&quot; height=&quot;200&quot;&gt;
+  &lt;figcaption&gt;Schwarz-Weiß-Foto: Blick in ein Tal bei schlechtem Wetter.&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<p>Diese Entscheidung muss mit einem Screenreader und im konkreten Layout überprüft werden. Ein bloßes Weglassen des <code>alt</code>-Attributs ist keine gleichwertige Lösung.</p>
+<p><strong>WCAG-Zuordnung:</strong></p>
+<ul>
+<li><strong>1.1.1 Nicht-Text-Inhalte – Level A:</strong> Jedes Bild erhält eine passende Alternative oder wird ausdrücklich als dekorativ behandelt.</li>
+<li><strong>1.3.1 Info und Beziehungen – Level A:</strong> Die Liste, die Bildunterschriften und die Abschnittsüberschrift bilden semantische Beziehungen ab.</li>
+<li><strong>1.3.2 Bedeutungsvolle Reihenfolge – Level A:</strong> Die Reihenfolge der Bilder und Beschreibungen muss bei linearer Ausgabe sinnvoll bleiben.</li>
+</ul>
+<h2 tabindex="0">ASCII-Art</h2>
+<p>ASCII-Art besteht aus Zeichen, die gemeinsam ein Bild erzeugen. Werden die Zeichen einzeln vorgelesen, entsteht häufig keine verständliche Alternative.</p>
+<h3 tabindex="0">Visuelle Darstellung</h3>
+<pre><code class="language-text">    |\__/,|   (`\
+  _.|o o  |_   ) )
+-(((---(((--------
+</code></pre>
+<p><em>ASCII-Art: Eine Katze schaut hinter einer Mauer hervor.</em></p>
+<h3 tabindex="0">Quelltext: informative ASCII-Art</h3>
+<pre><code class="language-html">&lt;figure&gt;
+  &lt;div
+    role=&quot;img&quot;
+    aria-labelledby=&quot;ascii-katze-titel&quot;
+    aria-describedby=&quot;ascii-katze-beschreibung&quot;
+  &gt;
+    &lt;pre aria-hidden=&quot;true&quot;&gt;    |\__/,|   (`\
+  _.|o o  |_   ) )
+-(((---(((--------&lt;/pre&gt;
+  &lt;/div&gt;
+  &lt;figcaption id=&quot;ascii-katze-titel&quot;&gt;
+    ASCII-Art: Eine Katze schaut hinter einer Mauer hervor.
+  &lt;/figcaption&gt;
+  &lt;p id=&quot;ascii-katze-beschreibung&quot;&gt;
+    Aus Linien, Klammern und Satzzeichen entsteht die Darstellung einer Katze,
+    die hinter einer waagerechten Mauer hervorschaut.
+  &lt;/p&gt;
+&lt;/figure&gt;
+</code></pre>
+<p>Die sichtbare Beschreibung ist wichtig. <code>aria-label</code> allein wäre für viele Nutzer nicht ausreichend, wenn die Information auch visuell verfügbar sein soll.</p>
+<h3 tabindex="0">Quelltext: rein dekorative ASCII-Art</h3>
+<pre><code class="language-html">&lt;pre aria-hidden=&quot;true&quot;&gt;    |\__/,|   (`\
+  _.|o o  |_   ) )
+-(((---(((--------&lt;/pre&gt;
+</code></pre>
+<p>Die dekorative Variante ist nur dann richtig, wenn die ASCII-Art keine eigene Information trägt und ohne sie keine Information verloren geht.</p>
+<p><strong>WCAG-Zuordnung:</strong></p>
+<ul>
+<li><strong>1.1.1 Nicht-Text-Inhalte – Level A:</strong> Die ASCII-Art benötigt eine zweckentsprechende Textalternative, wenn sie informativ ist.</li>
+<li><strong>1.3.1 Info und Beziehungen – Level A:</strong> Titel, Beschreibung und Darstellung müssen als zusammengehörig erkennbar sein.</li>
+<li><strong>4.1.2 Name, Rolle, Wert – Level A:</strong> Ein als Bild verwendeter nicht-nativer Inhalt benötigt einen zugänglichen Namen.</li>
+</ul>
+<h2 tabindex="0">Eine SVG-Grafik für Screenreader</h2>
+<p>Eine SVG-Grafik kann inline im HTML stehen. Für informative SVGs sind mindestens ein zugänglicher Name und bei komplexeren Grafiken eine Beschreibung erforderlich.</p>
+<h3 tabindex="0">Visuelle Darstellung</h3>
+<h3 tabindex="0">Quelltext: informatives Inline-SVG</h3>
+<pre><code class="language-html">&lt;svg
+  role=&quot;img&quot;
+  aria-labelledby=&quot;blatt-titel blatt-beschreibung&quot;
+  viewBox=&quot;0 0 240 120&quot;
+  width=&quot;240&quot;
+  height=&quot;120&quot;
+  xmlns=&quot;http://www.w3.org/2000/svg&quot;
+&gt;
+  &lt;title id=&quot;blatt-titel&quot;&gt;Stilisierte grüne Blattform&lt;/title&gt;
+  &lt;desc id=&quot;blatt-beschreibung&quot;&gt;
+    Eine grüne Blattform liegt schräg nach rechts. Eine helle Linie stellt die Mittelader dar.
+  &lt;/desc&gt;
+  &lt;path
+    d=&quot;M30 90 C55 18, 145 8, 210 28 C177 92, 103 116, 30 90 Z&quot;
+    fill=&quot;#2f7d32&quot;
+  /&gt;
+  &lt;path
+    d=&quot;M38 87 C95 66, 147 47, 202 29&quot;
+    fill=&quot;none&quot;
+    stroke=&quot;#ffffff&quot;
+    stroke-width=&quot;4&quot;
+  /&gt;
+&lt;/svg&gt;
+</code></pre>
+<h3 tabindex="0">Quelltext: dekoratives SVG</h3>
+<pre><code class="language-html">&lt;svg
+  aria-hidden=&quot;true&quot;
+  focusable=&quot;false&quot;
+  viewBox=&quot;0 0 24 24&quot;
+  width=&quot;24&quot;
+  height=&quot;24&quot;
+&gt;
+  &lt;path d=&quot;M4 12h16M12 4v16&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>Ein dekoratives SVG darf nicht gleichzeitig als einziges Bedienelement dienen. Wird es als Link- oder Button-Symbol eingesetzt, muss der Link beziehungsweise Button einen zugänglichen Namen besitzen.</p>
+<p><strong>WCAG-Zuordnung:</strong></p>
+<ul>
+<li><strong>1.1.1 Nicht-Text-Inhalte – Level A:</strong> Informative SVGs benötigen einen äquivalenten zugänglichen Namen bzw. eine Beschreibung.</li>
+<li><strong>1.3.1 Info und Beziehungen – Level A:</strong> <code>title</code> und <code>desc</code> stellen die Beziehung zwischen Name, Beschreibung und Grafik her.</li>
+<li><strong>4.1.2 Name, Rolle, Wert – Level A:</strong> <code>role=&quot;img&quot;</code> und die ARIA-Beziehungen müssen einen zugänglichen Namen ergeben.</li>
+</ul>
+<h2 tabindex="0">Ein Säulendiagramm</h2>
+<p>Ein Diagramm ist ein komplexer Nicht-Text-Inhalt. Ein kurzer Alternativtext wie „Säulendiagramm“ reicht nicht aus, weil damit die Daten und die Aussage des Diagramms fehlen.</p>
+<h3 tabindex="0">Visuelle Darstellung</h3>
+<p>04080536445JanuarFebruarMärz</p>
+<h3 tabindex="0">Zusammenfassung des Diagramms</h3>
+<p>Im ersten Quartal wurden im Januar 53, im Februar 64 und im März 45 Einheiten verkauft. Der höchste Wert wurde im Februar erreicht.</p>
+<h3 tabindex="0">Datentabelle als robuste Alternative</h3>
+<table>
+<thead>
+<tr>
+<th>Monat</th>
+<th align="right">Verkaufte Einheiten</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Januar</td>
+<td align="right">53</td>
+</tr>
+<tr>
+<td>Februar</td>
+<td align="right">64</td>
+</tr>
+<tr>
+<td>März</td>
+<td align="right">45</td>
+</tr>
+</tbody></table>
+<h3 tabindex="0">Quelltext: zugängliches Diagramm mit Datentabelle</h3>
+<pre><code class="language-html">&lt;figure&gt;
+  &lt;svg
+    role=&quot;img&quot;
+    aria-labelledby=&quot;verkauf-titel verkauf-desc&quot;
+    viewBox=&quot;0 0 420 260&quot;
+    width=&quot;420&quot;
+    height=&quot;260&quot;
+    xmlns=&quot;http://www.w3.org/2000/svg&quot;
+  &gt;
+    &lt;title id=&quot;verkauf-titel&quot;&gt;Verkaufte Einheiten im ersten Quartal&lt;/title&gt;
+    &lt;desc id=&quot;verkauf-desc&quot;&gt;
+      Januar: 53 Einheiten, Februar: 64 Einheiten, März: 45 Einheiten.
+      Im Februar wurden die meisten Einheiten verkauft.
+    &lt;/desc&gt;
+
+    &lt;line x1=&quot;55&quot; y1=&quot;210&quot; x2=&quot;395&quot; y2=&quot;210&quot; stroke=&quot;#222&quot; stroke-width=&quot;2&quot; /&gt;
+    &lt;line x1=&quot;55&quot; y1=&quot;30&quot; x2=&quot;55&quot; y2=&quot;210&quot; stroke=&quot;#222&quot; stroke-width=&quot;2&quot; /&gt;
+    &lt;line x1=&quot;55&quot; y1=&quot;120&quot; x2=&quot;395&quot; y2=&quot;120&quot; stroke=&quot;#aaa&quot; stroke-dasharray=&quot;4 4&quot; /&gt;
+
+    &lt;text x=&quot;22&quot; y=&quot;215&quot; font-size=&quot;14&quot;&gt;0&lt;/text&gt;
+    &lt;text x=&quot;14&quot; y=&quot;125&quot; font-size=&quot;14&quot;&gt;40&lt;/text&gt;
+    &lt;text x=&quot;14&quot; y=&quot;35&quot; font-size=&quot;14&quot;&gt;80&lt;/text&gt;
+
+    &lt;rect x=&quot;95&quot; y=&quot;91&quot; width=&quot;60&quot; height=&quot;119&quot; fill=&quot;#1769aa&quot; /&gt;
+    &lt;rect x=&quot;205&quot; y=&quot;66&quot; width=&quot;60&quot; height=&quot;144&quot; fill=&quot;#b54708&quot; /&gt;
+    &lt;rect x=&quot;315&quot; y=&quot;109&quot; width=&quot;60&quot; height=&quot;101&quot; fill=&quot;#4d7c0f&quot; /&gt;
+
+    &lt;text x=&quot;113&quot; y=&quot;82&quot; font-size=&quot;14&quot;&gt;53&lt;/text&gt;
+    &lt;text x=&quot;223&quot; y=&quot;57&quot; font-size=&quot;14&quot;&gt;64&lt;/text&gt;
+    &lt;text x=&quot;333&quot; y=&quot;100&quot; font-size=&quot;14&quot;&gt;45&lt;/text&gt;
+    &lt;text x=&quot;103&quot; y=&quot;235&quot; font-size=&quot;14&quot;&gt;Januar&lt;/text&gt;
+    &lt;text x=&quot;213&quot; y=&quot;235&quot; font-size=&quot;14&quot;&gt;Februar&lt;/text&gt;
+    &lt;text x=&quot;326&quot; y=&quot;235&quot; font-size=&quot;14&quot;&gt;März&lt;/text&gt;
+  &lt;/svg&gt;
+
+  &lt;figcaption&gt;Verkaufte Einheiten im ersten Quartal.&lt;/figcaption&gt;
+
+  &lt;table&gt;
+    &lt;caption&gt;Datentabelle zum Säulendiagramm&lt;/caption&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th scope=&quot;col&quot;&gt;Monat&lt;/th&gt;
+        &lt;th scope=&quot;col&quot;&gt;Verkaufte Einheiten&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Januar&lt;/th&gt;&lt;td&gt;53&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Februar&lt;/th&gt;&lt;td&gt;64&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;März&lt;/th&gt;&lt;td&gt;45&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/figure&gt;
+</code></pre>
+<h3 tabindex="0">Hinweise zur visuellen Zugänglichkeit</h3>
+<ul>
+<li>Die Datenwerte werden zusätzlich direkt an den Säulen angezeigt und nicht nur durch Farbe unterschieden.</li>
+<li>Die Farben müssen ausreichenden Kontrast besitzen; Farbe darf nicht die einzige Information sein.</li>
+<li>Für komplexe Diagramme ist eine Datentabelle oder eine gleichwertige ausführliche Textalternative besonders empfehlenswert.</li>
+<li>Bei interaktiven Diagrammen müssen zusätzlich Tastaturbedienung, Fokus, Tooltips und dynamische Statusmeldungen geprüft werden.</li>
+</ul>
+<p><strong>WCAG-Zuordnung:</strong></p>
+<ul>
+<li><strong>1.1.1 Nicht-Text-Inhalte – Level A:</strong> Name, Daten und wesentliche Aussage des Diagramms müssen als Textalternative verfügbar sein.</li>
+<li><strong>1.3.1 Info und Beziehungen – Level A:</strong> Tabellenüberschriften, Datenzellen und die Beziehung zwischen Diagramm und Tabelle müssen semantisch nachvollziehbar sein.</li>
+<li><strong>1.4.1 Verwendung von Farbe – Level A:</strong> Die Daten dürfen nicht ausschließlich über unterschiedliche Farben unterscheidbar sein.</li>
+<li><strong>1.4.3 Kontrast (Minimum) – Level AA:</strong> Text und relevante grafische Elemente müssen ausreichenden Kontrast besitzen.</li>
+<li><strong>1.4.11 Nicht-Text-Kontrast – Level AA:</strong> Für die wesentlichen Balken, Achsen und anderen grafischen Informationen ist der Nicht-Text-Kontrast zu prüfen.</li>
+</ul>
+<h2 tabindex="0">CAPTCHAs</h2>
+<p>CAPTCHAs sind ein Sonderfall. Die Aussage „CAPTCHAs sind nicht barrierefrei“ ist als allgemeine Aussage zu absolut. Richtig ist:</p>
+<ul>
+<li>Ein bildbasiertes CAPTCHA kann Menschen mit Sehbehinderung ausschließen.</li>
+<li>Ein Audiocaptcha kann Menschen mit Hörbehinderung, auditiver Verarbeitungsproblematik oder bestimmten technischen Einschränkungen ausschließen.</li>
+<li>Verzerrte Zeichen, Zeitdruck, Hintergrundgeräusche, unklare Fehlertexte und schwer bedienbare Widgets können zusätzliche Barrieren erzeugen.</li>
+<li>Eine alternative Wahrnehmungsform kann erforderlich sein, ist aber nicht automatisch verständlich oder barrierefrei.</li>
+<li>Für CAPTCHA verlangt WCAG 1.1.1 insbesondere eine Textalternative, die den Zweck des CAPTCHA erklärt, und unterschiedliche CAPTCHA-Formen für unterschiedliche sensorische Wahrnehmungen.</li>
+<li>Biometrische Verfahren können je nach Kontext eine Option sein, sind aber keine allgemeine Barrierefreiheitslösung. Datenschutz, Sicherheit, Verfügbarkeit, Geräteabhängigkeit und alternative Zugänge müssen zusätzlich berücksichtigt werden.</li>
+</ul>
+<h3 tabindex="0">Visuelle Beispiele</h3>
+<p><strong>Beispiel A: verzerrte Zeichen</strong></p>
+<pre><code class="language-text">+----------------------+
+|  7Kp4Z                |
+|  verzerrt dargestellt |
++----------------------+
+</code></pre>
+<p><strong>Beispiel B: Bildauswahl</strong></p>
+<pre><code class="language-text">+-----+-----+-----+
+| Bus | Baum| Bus |
++-----+-----+-----+
+| Haus| Bus | Weg |
++-----+-----+-----+
+Bitte alle Bilder mit einem Bus auswählen.
+</code></pre>
+<p><strong>Beispiel C: Checkbox-Widget</strong></p>
+<p>Eine Checkbox allein beweist nicht, dass die gesamte Sicherheitsprüfung zugänglich ist. Entscheidend sind Name, Tastaturbedienung, Statusmeldung, Fehlermeldung und eine alternative Prüfoption.</p>
+<h3 tabindex="0">Quelltext: bildbasiertes CAPTCHA mit Zweckbeschreibung und Alternative</h3>
+<pre><code class="language-html">&lt;fieldset&gt;
+  &lt;legend&gt;Sicherheitsprüfung&lt;/legend&gt;
+
+  &lt;p id=&quot;captcha-hinweis&quot;&gt;
+    Übertragen Sie die Zeichen aus dem Bild in das Eingabefeld.
+    Wenn Sie das Bild nicht lesen können, verwenden Sie die Audioalternative.
+  &lt;/p&gt;
+
+  &lt;img
+    src=&quot;/assets/captcha-zeichen.webp&quot;
+    alt=&quot;Sicherheitsprüfung mit verzerrten Zeichen. Die Zeichen müssen in das Eingabefeld übertragen werden.&quot;
+    width=&quot;240&quot;
+    height=&quot;80&quot;
+  &gt;
+
+  &lt;label for=&quot;captcha-code&quot;&gt;Zeichen aus dem Bild&lt;/label&gt;
+  &lt;input
+    id=&quot;captcha-code&quot;
+    name=&quot;captcha-code&quot;
+    type=&quot;text&quot;
+    aria-describedby=&quot;captcha-hinweis&quot;
+    autocomplete=&quot;off&quot;
+  &gt;
+
+  &lt;p&gt;
+    &lt;a href=&quot;/captcha/audio&quot;&gt;Audioalternative zur Sicherheitsprüfung&lt;/a&gt;
+  &lt;/p&gt;
+
+  &lt;p id=&quot;captcha-fehler&quot; role=&quot;alert&quot; hidden&gt;
+    Die Eingabe war nicht korrekt. Bitte versuchen Sie es erneut oder nutzen Sie die Audioalternative.
+  &lt;/p&gt;
+&lt;/fieldset&gt;
+</code></pre>
+<p>Das <code>alt</code>-Attribut nennt hier nicht die Lösung des CAPTCHA. Es erklärt den Zweck und die erforderliche Handlung. Die Audioalternative muss tatsächlich funktionieren, verständlich sein und mit Tastatur bedienbar sein.</p>
+<h3 tabindex="0">Quelltext: Bildauswahl-CAPTCHA – strukturelle Mindestanforderungen</h3>
+<pre><code class="language-html">&lt;fieldset&gt;
+  &lt;legend&gt;Sicherheitsprüfung: Bilder auswählen&lt;/legend&gt;
+  &lt;p id=&quot;bild-captcha-hinweis&quot;&gt;
+    Wählen Sie alle Bilder aus, auf denen ein Bus zu sehen ist.
+  &lt;/p&gt;
+
+  &lt;button
+    type=&quot;button&quot;
+    aria-pressed=&quot;false&quot;
+    aria-describedby=&quot;bild-captcha-hinweis&quot;
+  &gt;
+    &lt;img src=&quot;/assets/captcha-kachel-1.jpg&quot; alt=&quot;Bild 1: ein Bus vor einem Gebäude&quot;&gt;
+  &lt;/button&gt;
+
+  &lt;button
+    type=&quot;button&quot;
+    aria-pressed=&quot;false&quot;
+    aria-describedby=&quot;bild-captcha-hinweis&quot;
+  &gt;
+    &lt;img src=&quot;/assets/captcha-kachel-2.jpg&quot; alt=&quot;Bild 2: ein Baum an einem Weg&quot;&gt;
+  &lt;/button&gt;
+
+  &lt;button
+    type=&quot;button&quot;
+    aria-pressed=&quot;false&quot;
+    aria-describedby=&quot;bild-captcha-hinweis&quot;
+  &gt;
+    &lt;img src=&quot;/assets/captcha-kachel-3.jpg&quot; alt=&quot;Bild 3: ein Bus an einer Haltestelle&quot;&gt;
+  &lt;/button&gt;
+
+  &lt;p id=&quot;bild-captcha-status&quot; role=&quot;status&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
+  &lt;button type=&quot;submit&quot;&gt;Auswahl bestätigen&lt;/button&gt;
+  &lt;a href=&quot;/captcha/audio&quot;&gt;Andere Prüfart verwenden&lt;/a&gt;
+&lt;/fieldset&gt;
+</code></pre>
+<p>Dies ist nur ein strukturelles Beispiel. Bei einem echten CAPTCHA müssen zusätzlich Sicherheitslogik, Fokusverhalten, Statusänderungen, Nachladen der Kacheln, Fehlerbehandlung, Zeitlimits und die alternative Prüfart getestet werden.</p>
+<p><strong>WCAG-Zuordnung:</strong></p>
+<ul>
+<li><strong>1.1.1 Nicht-Text-Inhalte – Level A:</strong> Zweck des CAPTCHA erklären und geeignete unterschiedliche Formen für unterschiedliche sensorische Wahrnehmungen anbieten.</li>
+<li><strong>1.3.1 Info und Beziehungen – Level A:</strong> Anweisung, CAPTCHA, Eingabefeld, Status und Fehlermeldung müssen programmatisch zusammengehören.</li>
+<li><strong>2.1.1 Tastatur – Level A:</strong> CAPTCHA-Widget und alternative Prüfart müssen vollständig mit der Tastatur bedienbar sein.</li>
+<li><strong>3.3.1 Fehlererkennung – Level A:</strong> Fehlgeschlagene Eingaben müssen identifiziert und verständlich beschrieben werden.</li>
+<li><strong>3.3.2 Labels oder Anweisungen – Level A:</strong> Eingabefeld und Auswahlaufgabe benötigen verständliche Labels bzw. Anweisungen.</li>
+<li><strong>3.3.8 Zugängliche Authentifizierung (Minimum) – Level AA:</strong> Wenn das CAPTCHA Teil einer Authentifizierung ist, muss die Regel zu kognitiven Funktionstests und alternativen Authentifizierungswegen zusätzlich geprüft werden.</li>
+<li><strong>4.1.2 Name, Rolle, Wert – Level A:</strong> Buttons, Zustände, Eingabefeld und Widget müssen korrekt im Accessibility Tree erscheinen.</li>
+<li><strong>4.1.3 Statusmeldungen – Level AA:</strong> Auswahl- und Fehlermeldungen müssen angemessen angekündigt werden, ohne den Fokus unnötig zu verschieben.</li>
+</ul>
+<h2 tabindex="0">10. Typische Fehler im Quelltext</h2>
+<h3 tabindex="0">Fehlender Alternativtext</h3>
+<pre><code class="language-html">&lt;img src=&quot;/assets/diagramm.png&quot;&gt;
+</code></pre>
+<p>Das <code>alt</code>-Attribut fehlt. Bei einem informativen Bild ist nicht erkennbar, welche Alternative vorgesehen ist.</p>
+<h3 tabindex="0">Dateiname als Alternativtext</h3>
+<pre><code class="language-html">&lt;img src=&quot;/assets/img_2026_09_24_final2.jpg&quot; alt=&quot;img_2026_09_24_final2.jpg&quot;&gt;
+</code></pre>
+<p>Der Dateiname ist normalerweise keine verständliche Textalternative.</p>
+<h3 tabindex="0">Dekoratives Bild mit unnötigem Text</h3>
+<pre><code class="language-html">&lt;img src=&quot;/assets/trennlinie.svg&quot; alt=&quot;Trennlinie zwischen den Abschnitten&quot;&gt;
+</code></pre>
+<p>Wenn die Trennlinie keine Information vermittelt, ist dies in der Regel besser:</p>
+<pre><code class="language-html">&lt;img src=&quot;/assets/trennlinie.svg&quot; alt=&quot;&quot;&gt;
+</code></pre>
+<h3 tabindex="0">Funktionales Bild mit falscher Beschreibung</h3>
+<pre><code class="language-html">&lt;a href=&quot;/warenkorb&quot;&gt;
+  &lt;img src=&quot;/assets/cart.svg&quot; alt=&quot;Einkaufswagen-Symbol&quot;&gt;
+&lt;/a&gt;
+</code></pre>
+<p>Besser:</p>
+<pre><code class="language-html">&lt;a href=&quot;/warenkorb&quot;&gt;
+  &lt;img src=&quot;/assets/cart.svg&quot; alt=&quot;Warenkorb&quot;&gt;
+&lt;/a&gt;
+</code></pre>
+<h2 tabindex="0">11. Kompakte Prüfmatrix</h2>
+<table>
+<thead>
+<tr>
+<th>Beispiel</th>
+<th>Wichtige Prüfung</th>
+<th>Primäre WCAG-Kriterien</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Informative Fotografie</td>
+<td>Inhalt und Zweck des Fotos gleichwertig beschreiben</td>
+<td>1.1.1</td>
+</tr>
+<tr>
+<td>Dekoratives Foto oder Symbol</td>
+<td><code>alt=&quot;&quot;</code>; keine Information verlieren</td>
+<td>1.1.1</td>
+</tr>
+<tr>
+<td>Bild als Link/Button</td>
+<td>Funktion bzw. Ziel benennen</td>
+<td>1.1.1, 2.4.4, 4.1.2</td>
+</tr>
+<tr>
+<td>Bildgruppe/Galerie</td>
+<td>jedes Bild, Reihenfolge und Bildunterschriften prüfen</td>
+<td>1.1.1, 1.3.1, 1.3.2</td>
+</tr>
+<tr>
+<td>ASCII-Art</td>
+<td>Zeichen nicht einzeln als scheinbar bedeutungslosen Text vorlesen lassen</td>
+<td>1.1.1, 4.1.2</td>
+</tr>
+<tr>
+<td>Informative SVG-Grafik</td>
+<td><code>title</code>, <code>desc</code>, Name, Rolle und Beschreibung</td>
+<td>1.1.1, 1.3.1, 4.1.2</td>
+</tr>
+<tr>
+<td>Säulendiagramm</td>
+<td>Aussage, Datenwerte, Tabelle, Kontrast und Farbunabhängigkeit</td>
+<td>1.1.1, 1.3.1, 1.4.1, 1.4.3, 1.4.11</td>
+</tr>
+<tr>
+<td>CAPTCHA</td>
+<td>Zweck, alternative Wahrnehmungsform, Tastatur, Fehlermeldung</td>
+<td>1.1.1, 2.1.1, 3.3.1, 3.3.2, 3.3.8, 4.1.2, 4.1.3</td>
+</tr>
+</tbody></table>
+<h2 tabindex="0">12. Quellen</h2>
+<ul>
+<li><a href="https://www.w3.org/TR/WCAG22/#non-text-content">WCAG 2.2 – 1.1.1 Nicht-Text-Inhalte</a></li>
+<li><a href="https://www.w3.org/TR/WCAG22/#info-and-relationships">WCAG 2.2 – 1.3.1 Info und Beziehungen</a></li>
+<li><a href="https://www.w3.org/TR/WCAG22/#images-of-text">WCAG 2.2 – 1.4.5 Bilder von Text</a></li>
+<li><a href="https://www.w3.org/TR/WCAG22/#link-purpose-in-context">WCAG 2.2 – 2.4.4 Linkzweck im Kontext</a></li>
+<li><a href="https://www.w3.org/TR/WCAG22/#accessible-authentication-minimum">WCAG 2.2 – 3.3.8 Zugängliche Authentifizierung</a></li>
+<li><a href="https://www.w3.org/TR/WCAG22/#name-role-value">WCAG 2.2 – 4.1.2 Name, Rolle, Wert</a></li>
+<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html">W3C Understanding 1.1.1 – Non-text Content</a></li>
+<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html#captchas">W3C Understanding 1.1.1 – CAPTCHA-Ausnahme</a></li>
+</ul>
+<h2 tabindex="0">Kurzfazit</h2>
+<p>Der wichtigste didaktische Schritt ist die Unterscheidung zwischen <strong>informativ</strong>, <strong>funktional</strong>, <strong>dekorativ</strong> und <strong>komplex</strong>. Ein Alternativtext ist keine Bildunterschrift und keine technische Pflichtübung, sondern eine inhaltliche oder funktionale Repräsentation für Menschen, die den Nicht-Text-Inhalt nicht wahrnehmen können. Bei Diagrammen, SVGs, ASCII-Art und CAPTCHAs reicht ein kurzer <code>alt</code>-Text häufig nicht aus; hier sind strukturierte Beschreibungen, Datentabellen, Statusmeldungen und echte alternative Bedienwege erforderlich.</p>
 </main>
 
             <!-- ── TABLE OF CONTENTS ───────────────────────────────── -->
